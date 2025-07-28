@@ -1,6 +1,6 @@
 # Climb Trajectory Optimization Using Energy Height Theory
 
-This script models and visualizes aircraft climb trajectories using a **strategy-based energy framework**. It is rooted in the concept of **specific energy height**, where the aircraft’s total energy is treated as a combination of potential and kinetic components. The framework supports a wide variety of climb strategies, including linear allocation, altitude-biased exponential functions, constant-rate climbs, and eventually variable-energy climbs. This allows for both educational and performance-driven analyses of flight mechanics.
+This script models and visualizes aircraft climb trajectories using a **strategy-based energy framework**. It is rooted in the concept of **specific energy height**, where the aircraft’s total energy is treated as a combination of potential and kinetic components. The framework supports a wide variety of climb strategies, including linear allocation, altitude-biased exponential functions, constant-rate climbs, and eventually variable-energy climbs.  
 
 ---
 
@@ -134,7 +134,7 @@ Each strategy is explicitly defined under `StrategyProfiles.FixedEnergy.Exponent
 | `increasing_speed` | Delays acceleration until higher altitudes         |
 | `decreasing_speed` | Emphasizes acceleration early in the climb         |
 
-This class enables flexible mission adaptation, particularly useful for designing eco-climb profiles or optimizing fuel burn.
+ 
 
 ---
 
@@ -153,7 +153,7 @@ $$
 
 ## 5. **Simulation Logic**
 
-The function `simulate_climb_path()` integrates the state equations over time using **Euler's method**:
+The function `simulate_climb_path()` integrates the state equations over time:
 
 * At each time step, current altitude and velocity are passed to a strategy function.
 * The function returns $\frac{dh}{dt}$, $\frac{dV}{dt}$, which are used to update state variables.
@@ -174,8 +174,8 @@ This ensures numerical stability and accuracy of terminal conditions.
 
  ---
 
-
-# Summary of Climb Performance Concepts (Raymer, Chapter 17.3)
+# Literature Survey
+##  Summary of Climb Performance Concepts (Raymer, Chapter 17.3)
 
 This summary consolidates key concepts and equations related to **steady climb and descent** from Daniel Raymer's *Aircraft Design: A Conceptual Approach*, with a focus on climb gradient, best angle/rate of climb, and time/fuel to climb.
 
