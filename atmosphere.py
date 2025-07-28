@@ -2,7 +2,8 @@ import math
 
 class Atmosphere:
     """Layer-based ISA model using polytropic and exponential formulations.
-    Returns atmospheric properties as a function of geopotential altitude (in meters).
+    Returns atmospheric properties as a function of geopotential altitude (in meters),
+    and altitude-dependent gravity.
     """
 
     def calculate_atmospheric_properties(self, FL):
@@ -65,25 +66,20 @@ class Atmosphere:
         T = self.get_temperature(altitude_m)
         return math.sqrt(1.4 * 287.05 * T)
 
+    def get_gravity(self, altitude_m: float) -> float:
+        """Compute gravity as a function of altitude using the inverse-square law."""
+        R_e = 6371000.0  # Earth radius in meters
+        g0 = 9.80665     # Standard gravity at sea level
+        return g0 * (R_e / (R_e + altitude_m))**2
+
 
 # --- Dummy test cases for standalone testing ---
 if __name__ == "__main__":
     atm = Atmosphere()
 
-    # Example 1: Sea level
-    FL0 = 0
-    T, p, rho = atm.calculate_atmospheric_properties(FL0)
-    a = atm.get_speed_of_sound(FL0 * 0.3048)
-    print(f"FL{FL0} → T = {T:.2f} K, p = {p:.2f} Pa, ρ = {rho:.4f} kg/m³, a = {a:.2f} m/s")
-
-    # Example 2: FL350 (≈ 10.7 km)
-    FL350 = 35000
-    T, p, rho = atm.calculate_atmospheric_properties(FL350)
-    a = atm.get_speed_of_sound(FL350 * 0.3048)
-    print(f"FL{FL350} → T = {T:.2f} K, p = {p:.2f} Pa, ρ = {rho:.4f} kg/m³, a = {a:.2f} m/s")
-
-    # Example 3: FL600 (≈ 18.3 km)
-    FL600 = 60000
-    T, p, rho = atm.calculate_atmospheric_properties(FL600)
-    a = atm.get_speed_of_sound(FL600 * 0.3048)
-    print(f"FL{FL600} → T = {T:.2f} K, p = {p:.2f} Pa, ρ = {rho:.4f} kg/m³, a = {a:.2f} m/s")
+    for FL in [0, 35000, 60000]:
+        altitude_m = FL * 0.3048
+        T, p, rho = atm.calculate_atmospheric_properties(FL)
+        a = atm.get_speed_of_sound(altitude_m)
+        g = atm.get_gravity(altitude_m)
+        print(f"FL{FL} → T = {T:.2f} K, p = {p:.2f} Pa, ρ = {rho:.4f} kg/m³, a = {a:.2f} m/s, g = {g:.5f} m/s²")

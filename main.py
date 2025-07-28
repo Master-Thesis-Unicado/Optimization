@@ -1,18 +1,12 @@
-from mission_state import MissionState
-from atmosphere import Atmosphere
-from climb import run_climb
-from cruise import run_cruise
-from descent import run_descent
+from climb import generate_strategy, simulate_climb_path, TARGET_ALTITUDE
+from plotting import interactive_plot
 
 def main():
-    state = MissionState()
-    atm = Atmosphere()
-
-    state = run_climb(state, atm)
-    state = run_cruise(state, atm)
-    state = run_descent(state, atm)
-
-    print(state)
+    interactive_plot(
+        generate_strategy_func=generate_strategy,
+        simulate_func=simulate_climb_path,
+        target_altitude=TARGET_ALTITUDE
+    )
 
 if __name__ == "__main__":
     main()

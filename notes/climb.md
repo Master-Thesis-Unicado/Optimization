@@ -1,221 +1,312 @@
-# Mission Analysis — Notes and Derivations
+# Climb Trajectory Optimization Using Energy Height Theory
 
-This note explains the mathematical foundations and implementation details of the Python code used for aircraft mission segment analysis. Each section aligns closely with the structure of the source code and references the International Standard Atmosphere (ISA) model and Raymer’s fuel-burn formulations.
+This script models and visualizes aircraft climb trajectories using a **strategy-based energy framework**. It is rooted in the concept of **specific energy height**, where the aircraft’s total energy is treated as a combination of potential and kinetic components. The framework supports a wide variety of climb strategies, including linear allocation, altitude-biased exponential functions, constant-rate climbs, and eventually variable-energy climbs. This allows for both educational and performance-driven analyses of flight mechanics.
 
 ---
 
-## ISA Atmospheric Model
+## Theory Overview
 
-### 1. Temperature Variation with Altitude
+### 1. **Specific Energy Height**
 
-The International Standard Atmosphere (ISA) assumes a linear decrease in temperature with altitude within the troposphere (up to \~11 km):
+The total specific energy (per unit mass) of an aircraft is defined as:
 
 $$
-T(h) = T_0 + a \cdot h
+E = h + \frac{V^2}{2g_0}
 $$
 
 Where:
 
-* $T_0 = 288.15 \; \text{K}$: sea-level standard temperature
-* $a = -0.0065 \; \text{K/m}$: temperature lapse rate
-* $h$: geometric altitude in meters
+* $h$: altitude \[m]
+* $V$: true airspeed \[m/s]
+* $g_0$: standard gravitational acceleration \[m/s]
 
-This is implemented in the `get_temperature()` method of the `Atmosphere` class.
-
----
-
-### 2. Speed of Sound in the Atmosphere
-
-Speed of sound varies with temperature and is computed using the formula:
-
-$$
-a(h) = \sqrt{\gamma \cdot R \cdot T(h)}
-$$
-
-Where:
-
-* $\gamma = 1.4$: specific heat ratio of air
-* $R = 287.05 \; \text{J/(kg\,K)}$: specific gas constant
-* $T(h)$: temperature at altitude $h$
-
-This can be rewritten using the ISA relation for temperature as:
-
-$$
-a(h) = a_0 \cdot \sqrt{\Theta}, \quad \text{where } \Theta = \frac{T(h)}{T_0}, \quad a_0 = \sqrt{\gamma R T_0}
-$$
-
-The `get_speed_of_sound()` method applies this formulation.
+This representation expresses both potential and kinetic energy in terms of an equivalent height (in meters), allowing a unified way to measure and manage aircraft energy states.
 
 ---
 
-## Energy Height Framework
+### 2. **Rate of Energy Gain**
 
-### 3. Definition of Energy Height
-
-The total energy per unit weight, or energy height $E_s$, combines altitude and velocity:
+By differentiating the specific energy expression with respect to time, we obtain:
 
 $$
-E_s = h + \frac{V^2}{2g_0}
+\frac{dE}{dt} = \frac{dh}{dt} + \frac{V}{g_0} \cdot \frac{dV}{dt}
 $$
 
-Where:
-
-* $h$: altitude in meters
-* $V$: true airspeed (m/s)
-* $g_0 = 9.81 \; \text{m/s}^2$: standard gravity
-
-This framework provides a unified measure for potential and kinetic energy.
+This shows how energy gain (rate) is split between vertical motion (climb) and forward acceleration. It becomes the foundation for constructing energy-allocation strategies.
 
 ---
 
-### 4. Time Rate of Change of Energy Height
+### 3. **Energy Split Strategy via `altitude_fraction`**
 
-The rate of change of $E_s$ captures both climbing and accelerating:
+To control how the aircraft divides its energy input between climb and speed, a parameter $r \in [0, 1]$ (named `altitude_fraction`) is introduced:
+
+* $r$: fraction of energy allocated to altitude gain (climb)
+* $1 - r$: fraction allocated to speed increase (acceleration)
+
+Under this rule, and assuming constant total specific energy rate $\dot{E}$, we compute rates as:
 
 $$
-\frac{dE_s}{dt} = \frac{dh}{dt} + \frac{V}{g_0} \cdot \frac{dV}{dt}
+\frac{dh}{dt} = r \cdot \dot{E}, \quad \frac{dV}{dt} = (1 - r) \cdot \dot{E} \cdot \frac{g_0}{V}
 $$
 
-This expression supports the analysis of time-dependent energy changes in segments.
+This method generalizes well across strategies by varying $r$ and $\dot{E}$ independently.
 
 ---
 
-### 5. Power Available and Required
+## 4.1 **Fixed Energy Linear Strategy**
 
-The net specific power available is expressed as:
+In this simplest case, the energy rate $\dot{E} = E_{\text{DOT}}$ remains **constant**, and the allocation ratio $r$ is also fixed throughout the climb.
 
-$$
-P_s = \frac{F_n - D}{W} \cdot V
-$$
-
-Matching this to the rate of change of energy height:
+Resulting rate formulas are:
 
 $$
-\frac{dh}{dt} + \frac{V}{g_0} \cdot \frac{dV}{dt} = \frac{F_n - D}{W} \cdot V
+\frac{dh}{dt} = r \cdot E_{\text{DOT}}, \quad \frac{dV}{dt} = (1 - r) \cdot E_{\text{DOT}} \cdot \frac{g_0}{V}
 $$
 
-Where:
+The climb and speed rates are constant (with respect to time) for a given $r$, but speed gain will still cause nonlinear effects due to the $\frac{1}{V}$ dependence.
 
-* $F_n$: thrust
-* $D$: drag
-* $W$: weight of the aircraft
+**Implemented in**: `StrategyProfiles.FixedEnergy.Linear`
 
 ---
 
-## Fuel Burn Models for Mission Segments
+## 4.2 **Exponential Bias Strategy**
 
-### 6. Accelerated Climb (Raymer Eq 17.97)
+This strategy class allows **altitude-dependent** redistribution of energy while still assuming a **constant total specific energy rate** $\dot{E} = E_{\text{DOT}}$.
 
-In segments with both climb and acceleration:
+Unlike the linear case, the preference to climb or accelerate **evolves** with altitude, creating more realistic profiles.
+
+### 4.2.1 General Methodology
+
+Let:
+
+* $r \in (0, 1)$: base climb preference at sea level
+* $h$: current altitude
+* $h_{\text{target}}$: mission-defined target altitude
+
+We apply **exponential weighting** to adjust climb/speed priorities dynamically:
+
+#### Increasing Climb Bias
 
 $$
-\Delta E_s = \dot{h} \cdot \Delta t + \frac{(V_1 + \dot{V} \cdot \Delta t)^2 - V_1^2}{2g_0}
+\text{climb\_weight} = r \cdot e^{h / h_{\text{target}}}, \quad \text{speed\_weight} = (1 - r) \cdot e^{-h / h_{\text{target}}}
 $$
 
-The weight fraction becomes:
+#### Decreasing Climb Bias
 
 $$
-\frac{W_f}{W_i} = \exp\left( -\frac{\text{TSFC} \cdot g_0 \cdot \Delta E_s}{V (1 - D/T)} \right)
+\text{climb\_weight} = r \cdot e^{-h / h_{\text{target}}}, \quad \text{speed\_weight} = (1 - r) \cdot e^{h / h_{\text{target}}}
 $$
 
-Substituting:
+#### Increasing Speed Bias
 
-* $V = M \cdot a(h) = M \cdot a_0 \cdot \sqrt{\Theta}$
-* $\frac{D}{T} = \frac{C_D}{C_L} \cdot \frac{W}{T}$
+$$
+\text{speed\_weight} = r \cdot e^{h / h_{\text{target}}}, \quad \text{climb\_weight} = (1 - r) \cdot e^{-h / h_{\text{target}}}
+$$
 
-This is evaluated in the `accelerated_climb()` function.
+#### Decreasing Speed Bias
+
+$$
+\text{speed\_weight} = r \cdot e^{-h / h_{\text{target}}}, \quad \text{climb\_weight} = (1 - r) \cdot e^{h / h_{\text{target}}}
+$$
+
+Weights are **normalized** to obtain valid fractions:
+
+$$
+\text{climb\_fraction} = \frac{\text{climb\_weight}}{\text{climb\_weight} + \text{speed\_weight}}, \quad \text{speed\_fraction} = 1 - \text{climb\_fraction}
+$$
+
+And finally, rates are computed as:
+
+$$
+\frac{dh}{dt} = \text{climb\_fraction} \cdot E_{\text{DOT}}, \quad \frac{dV}{dt} = \text{speed\_fraction} \cdot E_{\text{DOT}} \cdot \frac{g(h)}{V}
+$$
+
+Where $g(h)$ is retrieved from the atmospheric model.
+
+### 4.2.2 Strategy Variants in Code
+
+Each strategy is explicitly defined under `StrategyProfiles.FixedEnergy.Exponential`:
+
+| Strategy Function  | Description                                        |
+| ------------------ | -------------------------------------------------- |
+| `increasing_climb` | Emphasizes climbing more as altitude increases     |
+| `decreasing_climb` | Prioritizes climb early, then transitions to speed |
+| `increasing_speed` | Delays acceleration until higher altitudes         |
+| `decreasing_speed` | Emphasizes acceleration early in the climb         |
+
+This class enables flexible mission adaptation, particularly useful for designing eco-climb profiles or optimizing fuel burn.
 
 ---
 
-### 7. Subsonic Loiter (Raymer Case 8)
+## 4.3 **Constant Rate Strategies**
 
-In steady-speed, level flight loiter conditions:
+Implemented in `StrategyProfiles.ConstantRates`  these assume fixed speed:
 
-Define Endurance Factor (EF):
-
-$$
-EF = \frac{C_L}{C_D \cdot \text{TSFC} \cdot g_0}
-$$
-
-Then the weight fraction is:
+### Constant Speed
 
 $$
-\frac{W_f}{W_i} = \exp\left( -\frac{\Delta t}{EF} \right)
+\frac{dh}{dt} = g_0, \quad \frac{dV}{dt} = 0
 $$
+ 
+ 
+---
 
-Used in `subsonic_loiter()`.
+## 5. **Simulation Logic**
+
+The function `simulate_climb_path()` integrates the state equations over time using **Euler's method**:
+
+* At each time step, current altitude and velocity are passed to a strategy function.
+* The function returns $\frac{dh}{dt}$, $\frac{dV}{dt}$, which are used to update state variables.
+* The climb ends **exactly** when $h = h_{\text{target}}$ without overshooting.
+
+This ensures numerical stability and accuracy of terminal conditions.
+
+---
+ 
+
+### Possible Extensions:
+
+* Thrust & drag model (based on atmosphere and engine map)
+* TSFC-based fuel burn tracking
+* Optimization for minimum fuel or time
+* Aerodynamic constraints (e.g., max $C_L$, $\alpha$, etc.)
+
+
+ ---
+
+
+# Summary of Climb Performance Concepts (Raymer, Chapter 17.3)
+
+This summary consolidates key concepts and equations related to **steady climb and descent** from Daniel Raymer's *Aircraft Design: A Conceptual Approach*, with a focus on climb gradient, best angle/rate of climb, and time/fuel to climb.
+
+
+
+## Steady Climbing Flight and Climb Gradient
+
+- **Climb gradient** \( G \) is the ratio of vertical to horizontal distance traveled.
+- It is equivalent to \( \sin(\gamma) \), where \( \gamma \) is the climb angle:
+  
+  \[
+  \gamma = \sin^{-1} \left( \frac{T - D}{W} \right) = \sin^{-1} \left( \frac{T}{W} - \frac{1}{L/D} \right) \tag{Eq. 17.38}
+  \]
+
+- The **vertical velocity** or **rate of climb** \( V_v \) is:
+
+  \[
+  V_v = V \sin(\gamma) = V \sqrt{ \frac{T}{W} - \frac{1}{L/D} } \tag{Eq. 17.39}
+  \]
+
+- Force balances used:
+
+  \[
+  \sum F_x = T - D - W \sin(\gamma) \tag{Eq. 17.6}
+  \]
+  \[
+  \sum F_z = L - W \cos(\gamma) \tag{Eq. 17.7}
+  \]
 
 ---
 
-### 8. Idle Thrust Segment (Raymer Eq 19.7)
+## Graphical Method: Best Angle and Rate of Climb
 
-For segments with low, fixed thrust:
+- **Best rate of climb** maximizes vertical velocity \( V_v \).
+- **Best angle of climb** maximizes altitude gain per unit horizontal distance (i.e., max \( \gamma \)).
+- Plot \( V_v \) vs airspeed (using Eq. 17.39) and superimpose thrust/drag data to identify:
 
-$$
-\frac{W_f}{W_i} = 1 - \text{TSFC} \cdot g_0 \cdot \frac{T \cdot \Delta t}{W}
-$$
-
-Where:
-
-* $T$: average thrust during the segment
-* $\Delta t$: time duration
-* $W$: initial weight
-
-Implemented in `idle_thrust()`.
+  - **Peak of the curve**: Best rate of climb.
+  - **Tangency from origin**: Best angle of climb.  
+    (Refer to Fig. 17.4 in Raymer)
 
 ---
 
-### 9. Constant Altitude Cruise (Breguet Range - Time Form)
+## Jet Aircraft: Best Climb Conditions
 
-Raymer’s time-based Breguet equation gives:
+- For jets, thrust \( T \) is mostly constant with speed.
+- Best rate of climb is found by maximizing:
 
-$$
-\frac{W_f}{W_i} = \exp\left( -\text{TSFC} \cdot g_0 \cdot \frac{C_D}{C_L} \cdot \Delta t \right)
-$$
+  \[
+  V_v = V \left( \frac{T}{W} - \frac{\rho V^2 C_D}{2(W/S)} - \frac{2K}{\rho V} \left( \frac{W}{S} \right) \right) \tag{Eq. 17.42}
+  \]
 
-Valid for steady, level, constant-speed cruise. Handled by `constant_altitude_cruise()`.
+- Setting \( \frac{dV_v}{dV} = 0 \) and solving gives:
 
----
+  \[
+  V = \sqrt{ \frac{W/S}{3 \rho C_{D_0}} \left( \frac{T}{W} + \sqrt{ \left( \frac{T}{W} \right)^2 + 12 C_{D_0} K } \right) } \tag{Eq. 17.43}
+  \]
 
-## TSFC Unit Conversion
-
-### Source Format
-
-Engine TSFC values are commonly tabulated as:
-
-$$
-\text{TSFC}_{\text{hb}} = \frac{\text{kg fuel}}{\text{kgf} \cdot \text{hr}}
-$$
-
-### Conversion to SI Units
-
-1. Convert time:
-
-$$
-\text{TSFC}_{s,\,kgf} = \frac{\text{TSFC}_{hb}}{3600}
-$$
-
-2. Convert kgf to Newtons:
-
-$$
-\text{TSFC}_{SI} = \text{TSFC}_{s,\,kgf} \cdot g_0
-$$
-
-This gives:
-
-$$
-\text{TSFC}_{SI} = \frac{\text{kg fuel}}{\text{N} \cdot \text{s}}
-$$
+- Example: The B-70 has a best climb speed of 583 kt (≈1080 km/h).
 
 ---
 
-## References
+## Time and Fuel to Climb
 
-All equations and modeling approaches are based on:
+- Time to climb a small height \( dh \):
 
-**Raymer, D.P. (2024). Aircraft Design: A Conceptual Approach (7th ed.)**
-American Institute of Aeronautics and Astronautics (AIAA)
+  \[
+  dt = \frac{dh}{V_v} \tag{Eq. 17.46}
+  \]
+
+- Fuel burn over that time:
+
+  \[
+  dW_f = -C_T T \, dt \tag{Eq. 17.47}
+  \]
+
+- Since \( V_v \) varies with altitude, it can be linearly approximated:
+
+  \[
+  V_v = V_{v_i} - a(h_{i+1} - h_i) \tag{Eq. 17.48}
+  \]
+  \[
+  a = \frac{V_{v_2} - V_{v_1}}{h_2 - h_1} \tag{Eq. 17.49}
+  \]
+
+- Total time and fuel between two altitudes:
+
+  \[
+  t_{i+1} - t_i = \frac{1}{a} \ln \left( \frac{V_{v_i}}{V_{v_{i+1}}} \right) \tag{Eq. 17.50}
+  \]
+  \[
+  \Delta W_{\text{fuel}} = -(CT)_{\text{avg}} (t_{i+1} - t_i) \tag{Eq. 17.51}
+  \]
+
+- Improved accuracy can be achieved via **iteration**, updating \( W \) after each step.
 
 ---
 
-This document provides a coherent, structured explanation of the physical principles and implementation strategies behind each mission segment in the code.
+## Reference
+
+Raymer, D. P. (2021). *Aircraft Design: A Conceptual Approach*, 6th ed., AIAA Education Series, Chapter 17.3.
+
+---
+
+
+
+## Future Considerations and Open Questions
+
+As development continues, several physical constraints and operational factors need to be addressed:
+
+### 1. **Thrust Limitations**
+- The climb energy rate is ultimately limited by the available engine thrust at a given altitude.
+- To model this accurately, engine performance data (e.g., thrust vs. altitude) is needed.
+
+### 2. **TSFC Clarification**
+- The thrust-specific fuel consumption (TSFC) is often provided in units such as lb fuel / lb thrust / hr.
+- A consistent unit system should be defined, and conversions should be handled clearly for modeling fuel flow.
+
+### 3. **Angle of Attack Constraints**
+- The maximum achievable angle of attack limits climb steepness and lift.
+- For steady climb, the angle of attack can be derived using Raymer's Equation 17.38 (refer to “Aircraft Design: A Conceptual Approach”).
+
+### 4. **Scenario Planning**
+We may consider simulating under different mission or design contexts:
+- Minimum fuel climb
+- Minimum time climb
+- Constant Mach  
+- Engine-out or degraded thrust condition
+
+### 5. **Boundary Conditions**
+We should consider the boundary conditions defined for each segment.
+
+ 
+
