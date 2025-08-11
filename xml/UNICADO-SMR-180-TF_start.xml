@@ -1,0 +1,682 @@
+<aircraft_exchange_file>
+    <requirements_and_specifications description="Requirements and specifications">
+        <general description="General aircraft information">
+            <type description="Aircraft type">
+                <value>UNICADO</value>
+            </type>
+            <model description="Model - Version">
+                <value>SMR-180-TF</value>
+            </model>
+        </general>
+        <mission_files description="Name of xml files which are located in the mission_data directory and contain the flight phase data" tool_level="0">
+            <design_mission_file description="Name of the design mission xml">
+                <value>design_mission.xml</value>
+            </design_mission_file>
+            <study_mission_file description="Name of the study mission xml">
+                <value>study_mission.xml</value>
+            </study_mission_file>
+            <requirements_mission_file description="Name of the  requirements mission xml">
+                <value>requirements_mission.xml</value>
+            </requirements_mission_file>
+        </mission_files>
+        <design_specification description="Design specification">
+            <configuration description="Configuration information">
+                <configuration_type description="Aircraft configuration. Selector: tube_and_wing">
+                    <value>tube_and_wing</value>
+                </configuration_type>
+                <fuselage_definition description="Design description of the fuselage.">
+                    <fuselage_type description="Fuselage type. Selector: single_aisle / wide_body">
+                        <value>single_aisle</value>
+                    </fuselage_type>
+                    <fuselage_pressurization description="Switch to enable pressurized fuselage. Switch: true (On) / false (Off)">
+                        <value>true</value>
+                    </fuselage_pressurization>
+                </fuselage_definition>
+                <propulsive_fuselage_definition description="Definitions for propulsive fuselage">
+                    <propulsive_fuselage_enabled description="Switch if propulsive fuselage is used. Switch: false (Off)">    
+                        <value>false</value>
+                    </propulsive_fuselage_enabled>
+                </propulsive_fuselage_definition>
+                <wing_definition description="Definitions for wing design">
+                    <mounting description="Wing mounting. Selector: low">
+                        <value>low</value>
+                    </mounting>
+                    <folding_wing_tips description="Switch if folding wing tips are used. Switch: false (Off)">
+                        <value>false</value>
+                    </folding_wing_tips>
+                </wing_definition>
+                <empennage_definition description="Definitions for empennage design">
+                    <empennage_type description="Empennage type. Selector: conventional">
+                        <value>conventional</value>
+                    </empennage_type>
+                </empennage_definition>
+                <undercarriage_definition description="Design description of the undercarriage.">
+                    <main_gear_mounting description="Mounting position of the main landing gear. Selector: wing_mounted">
+                        <value>wing_mounted</value>
+                    </main_gear_mounting>
+                    <undercarriage_retractability description="Set retractability of landing gear. Selector: retractable / non_retractable">
+                        <value>retractable</value>
+                    </undercarriage_retractability>
+                </undercarriage_definition>
+                <tank_definition description="Energy tanks information">
+                    <tank ID="0" description="Inner left tank">
+                        <energy_carrier_ID description="see energy carrier specification node">
+                            <value>0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>5</upper_boundary>
+                        </energy_carrier_ID>
+                        <location description="Component where the tank is located. Selector: fuselage / wing / horizontal_stabilizer">
+                            <value>wing</value>
+                        </location>
+                        <position description="Position of tank in location. Selector: center / inner_left / outer_left / inner_right / outer_right / total">
+                            <value>inner_left</value>
+                        </position>
+                        <energy_share description="Share of this tanks energy in relation to required mission energy (of same energy carrier). Equals 0.0 for kerosene tanks. Only relevant for liquid hydrogen (not impemented yet). ">
+                            <value>0.0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0.0</lower_boundary>
+                            <upper_boundary>1.0</upper_boundary>
+                        </energy_share>
+                    </tank>
+                    <tank ID="1" description="Outer left tank">
+                        <energy_carrier_ID description="see energy carrier specification node">
+                            <value>0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>5</upper_boundary>
+                        </energy_carrier_ID>
+                        <location description="Component where the tank is located: fuselage, wing, horizontal_stabilizer">
+                            <value>wing</value>
+                        </location>
+                        <position description="Position of tank in location. Selector: center / inner_left / outer_left / inner_right / outer_right / total">
+                            <value>outer_left</value>
+                        </position>
+                        <energy_share description="Share of this tanks energy in relation to required mission energy (of same energy carrier). Equals 0.0 for kerosene tanks. Only relevant for liquid hydrogen (not impemented yet). ">
+                            <value>0.0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0.0</lower_boundary>
+                            <upper_boundary>1.0</upper_boundary>
+                        </energy_share>
+                    </tank>
+                    <tank ID="2" description="Inner right tank">
+                        <energy_carrier_ID description="see energy carrier specification node">
+                            <value>0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>5</upper_boundary>
+                        </energy_carrier_ID>
+                        <location description="Component where the tank is located: fuselage, wing, horizontal_stabilizer">
+                            <value>wing</value>
+                        </location>
+                        <position description="Position of tank in location. Selector: center / inner_left / outer_left / inner_right / outer_right / total">
+                            <value>inner_right</value>
+                        </position>
+                        <energy_share description="Share of this tanks energy in relation to required mission energy (of same energy carrier). Equals 0.0 for kerosene tanks. Only relevant for liquid hydrogen (not impemented yet). ">
+                            <value>0.0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0.0</lower_boundary>
+                            <upper_boundary>1.0</upper_boundary>
+                        </energy_share>
+                    </tank>
+                    <tank ID="3" description="Outer right tank">
+                        <energy_carrier_ID description="see energy carrier specification node">
+                            <value>0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>5</upper_boundary>
+                        </energy_carrier_ID>
+                        <location description="Component where the tank is located: fuselage, wing, horizontal_stabilizer">
+                            <value>wing</value>
+                        </location>
+                        <position description="Position of tank in location. Selector: center / inner_left / outer_left / inner_right / outer_right / total">
+                            <value>outer_right</value>
+                        </position>
+                        <energy_share description="Share of this tanks energy in relation to required mission energy (of same energy carrier). Equals 0.0 for kerosene tanks. Only relevant for liquid hydrogen (not impemented yet). ">
+                            <value>0.0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0.0</lower_boundary>
+                            <upper_boundary>1.0</upper_boundary>
+                        </energy_share>
+                    </tank>
+                    <tank ID="4" description="Center wing tank">
+                        <energy_carrier_ID description="see energy carrier specification node">
+                            <value>0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>5</upper_boundary>
+                        </energy_carrier_ID>
+                        <location description="Component where the tank is located: fuselage, wing, horizontal_stabilizer">
+                            <value>wing</value>
+                        </location>
+                        <position description="Position of tank in location. Selector: center / inner_left / outer_left / inner_right / outer_right / total">
+                            <value>center</value>
+                        </position>
+                        <energy_share description="Share of this tanks energy in relation to required mission energy (of same energy carrier). Equals 0.0 for kerosene tanks. Only relevant for liquid hydrogen (not impemented yet). ">
+                            <value>0.0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0.0</lower_boundary>
+                            <upper_boundary>1.0</upper_boundary>
+                        </energy_share>
+                    </tank>
+                </tank_definition>
+                <loads description="Loads information">
+                    <design_load_factor description="Design load factor n">
+                        <maximum description="Maximum design load factor n">
+                            <value>2.5</value>
+                            <unit>1</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>4</upper_boundary>
+                        </maximum>
+                        <minimum description="Minimum design load factor n">
+                            <value>-1.0</value>
+                            <unit>1</unit>
+                            <lower_boundary>-2.0</lower_boundary>
+                            <upper_boundary>0.0</upper_boundary>
+                        </minimum>
+                        <maneuver description="Standard maneuver load factor for e.g. flare">
+                            <value>1.1</value>
+                            <unit>1</unit>
+                            <lower_boundary>0.0</lower_boundary>
+                            <upper_boundary>2.0</upper_boundary>
+                        </maneuver>
+                    </design_load_factor>
+                </loads>
+                <aerodynamic_technologies description="Integration of aerodynamic technologies on the aircraft: Switch: false (no additional aerodynamic technologies are considered)">
+                    <value>false</value>
+                </aerodynamic_technologies>
+            </configuration>
+            <transport_task description="Define the transport task for aircraft project.">
+                <passenger_definition description="Define the masses of the passengers">
+                    <total_number_passengers description="Design number of passengers">
+                        <value>180</value>
+                        <unit>1</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>1000</upper_boundary>
+                    </total_number_passengers>
+                    <mass_per_passenger description="Design mass of a single passenger WITHOUT luggage">
+                        <value>80</value>
+                        <unit>kg</unit>
+                        <lower_boundary>50</lower_boundary>
+                        <upper_boundary>200</upper_boundary>
+                    </mass_per_passenger>
+                    <luggage_mass_per_passenger description="Design mass of the luggage for a single passenger">
+                        <value>15</value>
+                        <unit>kg</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>25</upper_boundary>
+                    </luggage_mass_per_passenger>
+                </passenger_definition>
+                <multi_passenger_deck_layout description="Definition of multiple passenger decks">
+                    <enable description="Switch to select a multi passenger deck fuselage design. Switch: true (On) / false (Off)">
+                        <value>false</value>
+                        <default>false</default>
+                    </enable>
+                    <specific_number_of_passenger_decks description="Details for the multi passenger deck layout">
+                        <value>2</value>
+                        <unit>1</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>3</upper_boundary>
+                        <default>2</default>
+                    </specific_number_of_passenger_decks>
+                </multi_passenger_deck_layout>
+                <passenger_class_definition description="Definition of the passenger classes.">
+                    <class_distribution description="Relative passenger distribution for the classes: President Class/First Class/Business Class/Premium Economy/Economy. Sum must be equal to 1!">
+                        <value>0/0/0/0/1</value>
+                    </class_distribution>
+                </passenger_class_definition>
+                <cargo_definition description="Definition of cargo which does not belong to passengers">
+                    <additional_cargo_mass description="Mass of cargo which does not belong to passengers">
+                        <value>2200</value>
+                        <unit>kg</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>25000</upper_boundary>
+                    </additional_cargo_mass>
+                    <cargo_density description="Density of cargo which does not belong to passengers">
+                        <value>165</value>
+                        <unit>kg/m^3</unit>
+                        <lower_boundary>150</lower_boundary>
+                        <upper_boundary>200</upper_boundary>
+                    </cargo_density>
+                </cargo_definition>
+            </transport_task>
+            <energy_carriers description="Energy carriers information">
+                <energy_carrier ID="0" description="One specific energy carrier">
+                    <type description="Energy type (for multifuel engine create new ID). Selector: kerosene">
+                        <value>kerosene</value>
+                    </type>
+                    <density description="Energy carrier density.">
+                        <value>785</value>
+                        <unit>kg/m^3</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>10000</upper_boundary>
+                    </density>
+                </energy_carrier>
+            </energy_carriers>
+            <propulsion description="Propulsion information">
+                <propulsor ID="0" description="Information for specific propulsor">
+                    <powertrain description="Way the power is generated from the source. Selector: turbo">
+                        <value>turbo</value>
+                    </powertrain>
+                    <type description="Type of main thrust generator. Selector: fan">
+                        <value>fan</value>
+                    </type>
+                    <position description="Propulsor position (arrangement order acc to ID order)">
+                        <parent_component description="Position on component. Selector: wing / fuselage / empennage">
+                            <value>wing</value>
+                        </parent_component>
+                        <x description="X-position (aircraft coordinate system). Selector: front / back">
+                            <value>front</value>
+                        </x>
+                        <y description="Y-position (aircraft coordinate system). Selector: left / right">
+                            <value>left</value>
+                        </y>
+                        <z description="Z-position (aircraft coordinate system). Selector: over / mid / under / in">
+                            <value>under</value>
+                        </z>
+                    </position>
+                    <energy_carrier_ID description="See energy carrier specification node">
+                        <value>0</value>
+                        <unit>1</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>5</upper_boundary>
+                    </energy_carrier_ID>
+                    <thrust_share description="Share of this thrust in relation to required aircraft thrust">
+                        <value>0.5</value>
+                        <unit>1</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>1</upper_boundary>
+                    </thrust_share>
+                </propulsor>
+                <propulsor ID="1" description="Information for specific propulsor">
+                    <powertrain description="Way the power is generated from the source. Selector: turbo">
+                        <value>turbo</value>
+                    </powertrain>
+                    <type description="Type of main thrust generator. Selector: fan">
+                        <value>fan</value>
+                    </type>
+                    <position description="Propulsor position (arrangement order acc to ID order)">
+                        <parent_component description="Position on component. Selector: wing / fuselage / empennage">
+                            <value>wing</value>
+                        </parent_component>
+                        <x description="X-position (aircraft coordinate system). Selector: front / back">
+                            <value>front</value>
+                        </x>
+                        <y description="Y-position (aircraft coordinate system). Selector: left / right">
+                            <value>right</value>
+                        </y>
+                        <z description="Z-position (aircraft coordinate system). Selector: over / mid / under / in">
+                            <value>under</value>
+                        </z>
+                    </position>
+                    <energy_carrier_ID description="See energy carrier specification node">
+                        <value>0</value>
+                        <unit>1</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>5</upper_boundary>
+                    </energy_carrier_ID>
+                    <thrust_share description="Share of this thrust in relation to required aircraft thrust">
+                        <value>0.5</value>
+                        <unit>1</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>1</upper_boundary>
+                    </thrust_share>
+                </propulsor>
+                <energy_provider description="Source where energy is coming from per segment">
+                    <ground description="Source where energy is coming from in the ground mission segment">
+                        <energy_carrier_ID description="see energy carrier specification node">
+                            <value>0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>5</upper_boundary>
+                        </energy_carrier_ID>
+                    </ground>
+                    <taxi description="source where energy is coming from in the taxi mission segment">
+                        <energy_carrier_ID description="see energy carrier specification node">
+                            <value>0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>5</upper_boundary>
+                        </energy_carrier_ID>
+                    </taxi>
+                    <takeoff description="source where energy is coming from in the takeoff mission segment">
+                        <energy_carrier_ID description="see energy carrier specification node">
+                            <value>0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>5</upper_boundary>
+                        </energy_carrier_ID>
+                    </takeoff>
+                    <climb description="source where energy is coming from in the climb mission segment">
+                        <energy_carrier_ID description="see energy carrier specification node">
+                            <value>0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>5</upper_boundary>
+                        </energy_carrier_ID>
+                    </climb>
+                    <cruise description="source where energy is coming from in the cruise mission segment">
+                        <energy_carrier_ID description="see energy carrier specification node">
+                            <value>0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>5</upper_boundary>
+                        </energy_carrier_ID>
+                    </cruise>
+                    <descent description="source where energy is coming from in the descent mission segment">
+                        <energy_carrier_ID description="see energy carrier specification node">
+                            <value>0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>5</upper_boundary>
+                        </energy_carrier_ID>
+                    </descent>
+                    <landing description="source where energy is coming from in the landing mission segment">
+                        <energy_carrier_ID description="see energy carrier specification node">
+                            <value>0</value>
+                            <unit>1</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>5</upper_boundary>
+                        </energy_carrier_ID>
+                    </landing>
+                </energy_provider>
+            </propulsion>
+            <technology>
+                <variable_camber description="Switch if variable camber is used. Switch: false (Off)">
+                    <value>false</value>
+                </variable_camber>
+            </technology>
+        </design_specification>
+        <requirements description="Aircraft design requirements">
+            <top_level_aircraft_requirements description="Top level aircraft requirements (TLAR)">
+                <maximum_structrual_payload_mass description="Maximum payload mass which can be carried by the aircraft (e.g. for short trips)">
+                    <value>19300</value>
+                    <unit>kg</unit>
+                    <lower_boundary>100</lower_boundary>
+                    <upper_boundary>150000</upper_boundary>
+                </maximum_structrual_payload_mass>
+                <takeoff_distance description="Design takeoff distance (Balanced Field Length) at Sea Level with maximum takeoff mass (MTOM) and (ISA + deltaISA)-Conditions">
+                    <value>1951</value>
+                    <unit>m</unit>
+                    <lower_boundary>600</lower_boundary>
+                    <upper_boundary>5000</upper_boundary>
+                </takeoff_distance>
+                <landing_field_length description="Needed runway length at Sea Level with maximum landing mass (MLM) and (ISA + deltaISA)-Conditions (Safety-Landing Distance according to FAR 121.195: landing_field_required/0.6)">
+                    <value>2425.67</value>
+                    <unit>m</unit>
+                    <lower_boundary>600</lower_boundary>
+                    <upper_boundary>5000</upper_boundary>
+                </landing_field_length>
+                <icao_aerodrome_reference_code description="ICAO reference code - code_number 1-4 (field length) + code_letter A-F (wing span limits) + faa ADG code number I-VI (wing span limits + tail height limits) + Aircraft Approach Category letter  A-D">
+                    <value>3CIIIC</value>
+                </icao_aerodrome_reference_code>
+                <flight_envelope description="Maxima of design flight envelope">
+                    <maximum_operating_mach_number description="Maximum operating mach number">
+                        <value>0.82</value>
+                        <unit>1</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>1</upper_boundary>
+                    </maximum_operating_mach_number>
+                    <maximum_operating_velocity description="Maximum operating speed (maximum dynamic pressure)">
+                        <value>180</value>
+                        <unit>m/s</unit>
+                        <lower_boundary>50</lower_boundary>
+                        <upper_boundary>250</upper_boundary>
+                    </maximum_operating_velocity>
+                    <maximum_approach_speed description="Maximum allowed approach speed.">
+                        <value>67.65</value>
+                        <unit>m/s</unit>
+                        <lower_boundary>50</lower_boundary>
+                        <upper_boundary>90</upper_boundary>
+                    </maximum_approach_speed>
+                    <maximum_operating_altitude description="Maximum operating altitude">
+                        <value>12192</value>
+                        <unit>m</unit>
+                        <lower_boundary>4500</lower_boundary>
+                        <upper_boundary>20000</upper_boundary>
+                    </maximum_operating_altitude>
+                    <maximum_altitude_one_engine_inoperative description="Maximum operating altitude with one engine inoperative">
+                        <value>4572</value>
+                        <unit>m</unit>
+                        <lower_boundary>1500</lower_boundary>
+                        <upper_boundary>12000</upper_boundary>
+                    </maximum_altitude_one_engine_inoperative>
+                    <climb_or_descent_segment_gradient description="climb / descent segment gradient">
+                        <value>0.024</value>
+                        <unit>1</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>1</upper_boundary>
+                    </climb_or_descent_segment_gradient>
+                </flight_envelope>
+                <pavement_classification_number description="Runway pavement classification number (PCN) - limits the maximum allowed aircraft classification number of undercarriage">
+                    <value>55</value>
+                    <unit>1</unit>
+                    <lower_boundary>5</lower_boundary>
+                    <upper_boundary>120</upper_boundary>
+                </pavement_classification_number>
+                <design_mission description="Requirements regarding the design mission">
+                    <delta_ISA description="Temperature offset to the International Standard Atmosphere (ISA)">
+                        <value>0</value>
+                        <unit>K</unit>
+                        <lower_boundary>-100</lower_boundary>
+                        <upper_boundary>100</upper_boundary>
+                    </delta_ISA>
+                    <range description="Target range for design mission">
+                        <value>4537400</value>
+                        <unit>m</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>20000000</upper_boundary>
+                    </range>
+                    <contingency description="Contingency fuel in percentage (reserve fuel)">
+                        <value>0.06</value>
+                        <unit>1</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>0.08</upper_boundary>
+                    </contingency>
+                    <alt_dist description="Alternate distance in m (reserve fuel)">
+                        <value>370400</value>
+                        <unit>m</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>926000</upper_boundary>
+                    </alt_dist>
+                    <loiter_time description="Loiter time in seconds (reserve fuel)">
+                        <value>1800</value>
+                        <unit>s</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>3600</upper_boundary>
+                    </loiter_time>
+                    <initial_cruise_mach_number description="Initial cruise Mach number at top of descent. May be altered during cruise">
+                        <value>0.78</value>
+                        <unit>1</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>1</upper_boundary>
+                    </initial_cruise_mach_number>
+                    <initial_cruise_altitude description="Initial cruise altitude (ICA) at top of descent. May be altered during cruise">
+                        <value>10058.4</value>
+                        <unit>m</unit>
+                        <lower_boundary>1000</lower_boundary>
+                        <upper_boundary>20000</upper_boundary>
+                    </initial_cruise_altitude>
+                    <climb_speed_schedule description="Climb speed for different altitudes">
+                        <climb_speed_below_FL100 description="Calibrated airspeed in climb below FL100 (FL100 = 3048 m)">
+                            <value>128.6112</value>
+                            <unit>m/s</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>250</upper_boundary>
+                        </climb_speed_below_FL100>
+                        <climb_speed_above_FL100 description="Calibrated airspeed in climb above FL100 (FL100 = 3048 m)">
+                            <value>154.3334</value>
+                            <unit>m/s</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>250</upper_boundary>
+                        </climb_speed_above_FL100>
+                        <delta_mach_climb_cruise description="Difference between crossover altitude Mach number and cruise Mach number">
+                            <value>-0.02</value>
+                            <unit>1</unit>
+                            <lower_boundary>-0.3</lower_boundary>
+                            <upper_boundary>0.01</upper_boundary>
+                        </delta_mach_climb_cruise>
+                    </climb_speed_schedule>
+                    <descent_speed_schedule description="Descent speed for different altitudes">
+                        <descent_speed_below_FL100 description="Calibrated airspeed in descent below FL100 (FL100 = 3048 m)">
+                            <value>128.6112</value>
+                            <unit>m/s</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>250</upper_boundary>
+                        </descent_speed_below_FL100>
+                        <descent_speed_above_FL100 description="Calibrated airspeed in descent above FL100 (FL100 = 3048 m)">
+                            <value>154.3334</value>
+                            <unit>m/s</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>250</upper_boundary>
+                        </descent_speed_above_FL100>
+                    </descent_speed_schedule>
+                    <time_to_climb description="Time the aircraft takes to climb to cruise altitude">
+                        <value>2100</value>
+                        <unit>s</unit>
+                        <lower_boundary>600</lower_boundary>
+                        <upper_boundary>3600</upper_boundary>
+                    </time_to_climb>
+                    <fuel_planning description="Fuel planning according to the Joint Aviation Requirements (JAR) or the Federal Aviation Regulations (FAR)">
+                        <fuel_estimation_selector description="Fuel estimation method. Selector: mode_0 (Fuel planning according to JAR) / mode_1 (Domestic fuel planning according to FAR) / mode_2 (Flag or supplemental fuel planning according to FAR)">
+                            <value>mode_0</value>
+                        </fuel_estimation_selector>
+                    </fuel_planning>
+                </design_mission>
+                <study_mission description="Requirements regarding the study mission">
+                    <delta_ISA description="Temperature offset to the International Standard Atmosphere (ISA)">
+                        <value>0</value>
+                        <unit>K</unit>
+                        <lower_boundary>-100</lower_boundary>
+                        <upper_boundary>100</upper_boundary>
+                    </delta_ISA>
+                    <range description="Target range for the study mission">
+                        <value>1481600</value>
+                        <unit>m</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>20000000</upper_boundary>
+                    </range>
+                    <initial_cruise_mach_number description="Initial cruise Mach number at top of descent. May be altered during cruise">
+                        <value>0.78</value>
+                        <unit>1</unit>
+                        <lower_boundary>0</lower_boundary>
+                        <upper_boundary>1</upper_boundary>
+                    </initial_cruise_mach_number>
+                    <initial_cruise_altitude description="Initial cruise altitude at top of descent. May be altered during cruise">
+                        <value>10668</value>
+                        <unit>m</unit>
+                        <lower_boundary>1000</lower_boundary>
+                        <upper_boundary>20000</upper_boundary>
+                    </initial_cruise_altitude>
+                    <climb_speed_schedule description="Climb speed for different altitudes">
+                        <climb_speed_below_FL100 description="Calibrated airspeed in climb below FL100 (FL100 = 3048 m)">
+                            <value>128.6112</value>
+                            <unit>m/s</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>250</upper_boundary>
+                        </climb_speed_below_FL100>
+                        <climb_speed_above_FL100 description="Calibrated airspeed in climb above FL100 (FL100 = 3048 m)">
+                            <value>154.3334</value>
+                            <unit>m/s</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>250</upper_boundary>
+                        </climb_speed_above_FL100>
+                        <delta_mach_climb_cruise description="Difference between crossover altitude Mach number and cruise Mach number">
+                            <value>-0.02</value>
+                            <unit>1</unit>
+                            <lower_boundary>-0.3</lower_boundary>
+                            <upper_boundary>0.01</upper_boundary>
+                        </delta_mach_climb_cruise>
+                    </climb_speed_schedule>
+                    <descent_speed_schedule description="Descent speed for different altitudes">
+                        <descent_speed_below_FL100 description="Calibrated airspeed in descent below FL100 (FL100 = 3048 m)">
+                            <value>128.6112</value>
+                            <unit>m/s</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>250</upper_boundary>
+                        </descent_speed_below_FL100>
+                        <descent_speed_above_FL100 description="Calibrated airspeed in descent above FL100 (FL100 = 3048 m)">
+                            <value>154.3334</value>
+                            <unit>m/s</unit>
+                            <lower_boundary>0</lower_boundary>
+                            <upper_boundary>250</upper_boundary>
+                        </descent_speed_above_FL100>
+                    </descent_speed_schedule>
+                    <fuel_planning description="Fuel planning according to the Joint Aviation Requirements (JAR) or the Federal Aviation Regulations (FAR)">
+                        <fuel_estimation_selector description="Fuel estimation method. Selector: mode_0 (Fuel planning according to JAR) / mode_1 (Domestic fuel planning according to FAR) / mode_2 (Flag or supplemental fuel planning according to FAR)">
+                            <value>mode_0</value>
+                        </fuel_estimation_selector>
+                    </fuel_planning>
+                    <transport_task description="Define the transport task for the study mission.">
+                        <passenger_definition description="Define the masses of the passengers">
+                            <total_number_passengers description="Design number of passengers">
+                                <value>135</value>
+                                <unit>1</unit>
+                                <lower_boundary>0</lower_boundary>
+                                <upper_boundary>1000</upper_boundary>
+                            </total_number_passengers>
+                            <mass_per_passenger description="Design mass of a single passenger WITHOUT luggage">
+                                <value>80</value>
+                                <unit>kg</unit>
+                                <lower_boundary>50</lower_boundary>
+                                <upper_boundary>200</upper_boundary>
+                            </mass_per_passenger>
+                            <luggage_mass_per_passenger description="Design mass of the luggage for a single passenger">
+                                <value>15</value>
+                                <unit>kg</unit>
+                                <lower_boundary>0</lower_boundary>
+                                <upper_boundary>25</upper_boundary>
+                            </luggage_mass_per_passenger>
+                        </passenger_definition>
+                        <cargo_definition description="Definition of cargo which does not belong to passengers">
+                            <additional_cargo_mass description="Mass of cargo which does not belong to passengers">
+                                <value>1650</value>
+                                <unit>kg</unit>
+                                <lower_boundary>0</lower_boundary>
+                                <upper_boundary>25000</upper_boundary>
+                            </additional_cargo_mass>
+                            <cargo_density description="Density of cargo which does not belong to passengers">
+                                <value>165</value>
+                                <unit>kg/m^3</unit>
+                                <lower_boundary>150</lower_boundary>
+                                <upper_boundary>200</upper_boundary>
+                            </cargo_density>
+                        </cargo_definition>
+                    </transport_task>
+                </study_mission>
+            </top_level_aircraft_requirements>
+            <additional_requirements description="Additional requirements">
+                <landing_gear description="Landing gear requirements and operational conditions">
+                    <friction_coefficient description="Friction coefficient of tyres and pavement: Raymer p.486 - Table 17.1: 0.03 - 0.05">
+                        <value>0.03</value>
+                        <default>0.03</default>
+                        <unit>1</unit>
+                        <lower_boundary>0.02</lower_boundary>
+                        <upper_boundary>0.08</upper_boundary>
+                    </friction_coefficient>
+                    <braking_coefficient description="Raymer p.486 - Table 17.1: 0.3 - 0.5; Torenbeek: jet 0.4-0.5; prop 0.35-0.45; Airbus: Medium Deceleration = 11 ft/s^2 = 0.34189">
+                        <value>0.34189</value>
+                        <default>0.34189</default>
+                        <unit>1</unit>
+                        <lower_boundary>0.06</lower_boundary>
+                        <upper_boundary>0.5</upper_boundary>
+                    </braking_coefficient>
+                </landing_gear>
+            </additional_requirements>
+        </requirements>
+        <assessment_scenario description="Scenario for ecological and economical assessment">
+            <flights_per_year description="Number of flights per year">
+                <value>2227</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>4000</upper_boundary>
+            </flights_per_year>
+            <duration_operation description="Operating years of aircraft">
+                <value>25</value>
+                <unit>a</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>50</upper_boundary>
+            </duration_operation>
+        </assessment_scenario>
+    </requirements_and_specifications>
+</aircraft_exchange_file>

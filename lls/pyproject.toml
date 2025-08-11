@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-data]
+pyengine = ["*.so", "*.dll", "*.pyd"]
+
+[project]
+name = "pyengine"
+version = "0.0.0"
+description = "Python binding of the pyengine C++ library of UNICADO"
+requires-python = ">=3.10"
+authors = [
+    {name = "Max Mustermann", email = "max@mustermann.de"},
+]
+classifiers = [
+"License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+]

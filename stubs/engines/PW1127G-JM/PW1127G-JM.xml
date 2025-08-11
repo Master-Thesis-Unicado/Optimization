@@ -1,0 +1,187 @@
+<EngineDataFile>
+    <EngineDesignCondition Desc="Flight Condition for creating the bucket curve">
+        <flightAltitude Desc="Flight altitude for bucket curve" Unit="ft">35000</flightAltitude>
+        <flightMachNumber Desc="Mach number for bucket curve" Unit="-">0.78</flightMachNumber>
+        <thrust Desc="thrust at design point, ISA (value from source)" Unit="kN">19</thrust>
+        <SLST Desc="Sea level static thrust measured at SL, Mach 0, ISA (value from source)" Unit="kN">120.43</SLST>
+        <MCT Desc="Maximum continuous thrust measured at SL, Mach 0, ISA (value from source)" Unit="kN">117.18</MCT>
+        <FlatRatingTemp_MTO Desc="Delta ISA Temperature until the Maximum Takeoff Thrust (MTO) can be reached at sea level" Unit="K">32</FlatRatingTemp_MTO>
+        <FlatRatingTemp_MCT Desc="Delta ISA Temperature until the Maximum Continuous Thrust (MCT) can be reached at sea level" Unit="K">10</FlatRatingTemp_MCT>
+        <OPRMax_Climb Desc="Maximum overall pressure ratio in rating TO" Unit="-">32.8</OPRMax_Climb>
+    </EngineDesignCondition>
+    <MassProperties>
+        <Dry_mass Desc="Dry mass of the engine (value from source) excludes starter, exhaust nozzle and power source for ignition system" Unit="kg">2858</Dry_mass>
+    </MassProperties>´
+    <Geometry Desc="Dimensions of the engine">
+        <OuterDimensions Desc="Outer dimensions of the engine">
+            <w_Engine Desc="Width of the engine" Unit="m">2.224</w_Engine>
+            <h_Engine Desc="Height of the engine" Unit="m">2.224</h_Engine>
+            <l_Engine Desc="Length of the engine" Unit="m">3.401</l_Engine>
+        </OuterDimensions>
+        <jetSpecific>
+            <FanDiameter Desc="Diameter of the fan" Unit="m">2.050</FanDiameter>
+            <turbineNoise>
+                <turbineRotorDiameter Desc="Diameter of LP Turbine rotor blades" Unit="m">0</turbineRotorDiameter>
+                <turbineInletArea Desc="Inlet area of LP turbine" Unit="m2">0</turbineInletArea>
+                <turbineRotorBladeNo Desc="No of rotor blades of LP turbine" Unit="-">0</turbineRotorBladeNo>
+            </turbineNoise>
+            <fanNoise>
+                <fanInletArea Desc="Inlet area of the fan of the engine" Unit="m2">0</fanInletArea>
+                <fanExhaustArea Desc="Inlet area of the fan of the engine" Unit="m2">0</fanExhaustArea>
+                <fanRotorBladeNo Desc="Number of fan rotor blades" Unit="-">0</fanRotorBladeNo>
+                <fanStatorVaneNo Desc="Number of stator vanes in fan section of engine" Unit="-">0</fanStatorVaneNo>
+                <fanRotorStatorSpacing Desc="The spacing between rotor blades and stator vanes, actually the ratio spacing/rotorChord (s/C)" Unit="-">0</fanRotorStatorSpacing>
+                <fanInletRotorDiameter Desc="Diameter of the fan inlet rotor" Unit="m">0</fanInletRotorDiameter>
+                <fanExhaustRotorDiameter Desc="Diameter of the fan exhaust rotor" Unit="m">0</fanExhaustRotorDiameter>
+                <fanTipDesignMach Desc="Design Mach number of the fan rotors tip" Unit="-">0</fanTipDesignMach>
+                <IGV Desc="Whether engine has Inlet Guide Vanes or not: 1:No 2:Yes" Unit="-">0</IGV>
+                <IFD Desc="Whether Inlet Flow Distortion is present or not: 1:No 2:Yes" Unit="-">0</IFD>
+                <INBB Desc="Calculate inlet broadband noise or not: 0:No 1:Yes" Unit="-">0</INBB>
+                <INTON Desc="Calculate inlet tonal noise or not: 0:No 1:Yes" Unit="-">0</INTON>
+                <DISBB Desc="Calculate exhaust broadband noise or not: 0:No 1:Yes" Unit="-">0</DISBB>
+                <DISTON Desc="Calculate exhaust tonal noise or not: 0:No 1:Yes" Unit="-">0</DISTON>
+            </fanNoise>
+            <combustorNoise>
+                <combustorEntranceArea Desc="Cross-sectional area of the entrance of combustor" Unit="m2">0</combustorEntranceArea>
+            </combustorNoise>
+            <jetNoise>
+                <flightVectorEngineAxisAngle Desc="Distance from source to observer in dimensionless form" Unit="-">0</flightVectorEngineAxisAngle>
+                <plugNozzle Desc="Boolean for whether there is a plug at nozzle or not: 1: Yes 0: No" Unit="-">0</plugNozzle>
+                <plugDiameter Desc="Diameter of plug at nozzle" Unit="m">0</plugDiameter>
+                <coaxialNozzle Desc="Boolean for whether the nozzles are coaxial or a single nozzle is present: 1: Yes 0: No" Unit="-">0</coaxialNozzle>
+                <actualPrimaryArea Desc="Geometrical area of the primary jet" Unit="m2">0</actualPrimaryArea>
+                <actualSecondaryArea Desc="Geometrical area of the secondary jet" Unit="m2">0</actualSecondaryArea>
+            </jetNoise>
+        </jetSpecific>
+        <propSpecific>
+            <PropDiameter Desc="Diameter of the propeller" Unit="m">0.0</PropDiameter>
+            <PropBlades Desc="Number of propeller blades" Unit="---">0</PropBlades>
+        </propSpecific>
+    </Geometry>
+    <Deck Desc="Engine performance map (Performance Deck). All values apply to the unscaled deck!">
+        <UnscaledSLST Desc="Unscaled Flat-Rated static thrust of the deck" Unit="kN" ValueFromSource="120.43">120.9763516</UnscaledSLST>
+        <UnscaledRatedPower Desc="Unscaled Flat-Rated static power of the deck (Shaft power)" Unit="kW">0</UnscaledRatedPower>
+        <N1nominal Desc="Maximum rotational speed for low pressure rotor - Limit in TCDS" Unit="1/min">10047</N1nominal>
+        <N2nominal Desc="Maximum rotational speed for high pressure rotor - Limit in TCDS" Unit="1/min">22300</N2nominal>
+        <WFToP3min Desc="Minimum fraction of fuel flow and p3 to prevent flame-out" Unit="-">0</WFToP3min>
+        <WFToP3max_MTO Desc="Maximum ratio of fuel flow to flow pressure after compression in rating TO" Unit="-">102.460</WFToP3max_MTO>
+        <WFToP3max_MCT Desc="Maximum ratio of fuel flow to flow pressure after compression in rating MCT" Unit="-">101.325</WFToP3max_MCT>
+        <TempMax_MTO Desc="Temperature limit at turbine exit (T49 or T5). Calculated by returning UnscaledSLST at TO-rating and ambient conditions at FlatRatingTemp_MTO" Unit="K">1300</TempMax_MTO>
+        <TempMax_MCT Desc="Temperature limit at turbine exit (T49 or T5). Calculated by returning Maximum Continuous Thrust at MCT-rating and ambient conditions at FlatRatingTemp_MCT" Unit="K">1300</TempMax_MCT>
+        <N2max Desc="Maximum relative rotational speed for high pressure rotor - Limit in TCDS" Unit="-">1.034</N2max>
+        <RelBleedMax Desc="Maximum bleed air extraction of the engine for aircraft onboard systems as a fraction of core mass flow" Unit="-">0.3</RelBleedMax>
+        <ShaftPowerExtractionMax Desc="Maximum shaft power extraction of the engine for aircraft onboard systems" Unit="kW">150</ShaftPowerExtractionMax>
+        <NfractionClimbRating Desc="Fraction of N_Climb/N_MCT; calculated such that N_Climb is about 0.9*N1 at SL, Ma=0, and ISA conditions" Unit="-">0.96</NfractionClimbRating>
+        <NfractionCruiseRating Desc="Fraction of N_Cruise/N_MCT; calculated such that Cruise thrust is met at design point (cf. EngineDesignCondition)" Unit="-">0.91</NfractionCruiseRating>
+        <ThrustDeckName Desc="Name of the engine deck containing the thrust values as a function of N1, Mach, and altitude" Unit="-">PW1127G-JM_FN.csv</ThrustDeckName>
+        <FuelDeckName Desc="Name of the engine deck containing the fuel flow values as a function of N1, Mach, and altitude" Unit="-">PW1127G-JM_WF.csv</FuelDeckName>
+        <CoreMassFlowDeckName Desc="Name of the engine deck containing the air mass flow values through the engine core as a function of N1, Mach, and altitude" Unit="-">PW1127G-JM_W25.csv</CoreMassFlowDeckName>
+        <OPRDeckName Desc="Name of the engine deck containing the OPR values (p3/p2) as a function of N1, Mach, and altitude" Unit="-">PW1127G-JM_P3qP2.csv</OPRDeckName>
+        <EPRDeckName Desc="Name of the engine deck containing the EPR values (p5/p2) as a function of N1, Mach, and altitude" Unit="-">PW1127G-JM_EPR.csv</EPRDeckName>
+        <EGTDeckName Desc="Name of the engine deck containing the EGT values (exhaust gas temperature at LP turbine exit) as a function of N1, Mach, and altitude" Unit="-">PW1127G-JM_St5_T.csv</EGTDeckName>
+        <NLimitDeckName Desc="Name of the engine deck containing the rel. N2 values (maximum rel. rotation speed of HP shaft) as a function of N1, Mach, and altitude" Unit="-">PW1127G-JM_XN_HPC.csv</NLimitDeckName>
+        <WFToP3LimitDeckName Desc="Name of the engine deck containing the fraction values of fuel flow to p3 as a function of N1, Mach, and altitude" Unit="-">PW1127G-JM_WFqP3.csv</WFToP3LimitDeckName>
+        <TemperatureLimitDeckName Desc="Name of the engine deck containing the temperature limit values (GE uses TIT (turbine inlet temperature) where PW/IAE uses EGT (exhaust gas temperature measured at LP turbine exit) as a function of N1, Mach, and altitude" Unit="-">PW1127G-JM_St5_T.csv</TemperatureLimitDeckName>
+        <St2FuelAirDeckName Unit="-">PW1127G-JM_St2_fa.csv</St2FuelAirDeckName>
+        <St2MachDeckName Unit="-">PW1127G-JM_St2_Mn.csv</St2MachDeckName>
+        <St2TotalPressureDeckName Unit="-">PW1127G-JM_St2_P.csv</St2TotalPressureDeckName>
+        <St2TotalTemperatureDeckName Unit="-">PW1127G-JM_St2_T.csv</St2TotalTemperatureDeckName>
+        <St2StaticTemperatureDeckName Unit="-">PW1127G-JM_St2_Ts.csv</St2StaticTemperatureDeckName>
+        <St2MassFlowDeckName Unit="-">PW1127G-JM_St2_W.csv</St2MassFlowDeckName>
+        <St3FuelAirDeckName Unit="-">PW1127G-JM_St3_fa.csv</St3FuelAirDeckName>
+        <St3MachDeckName Unit="-">PW1127G-JM_St3_Mn.csv</St3MachDeckName>
+        <St3TotalPressureDeckName Unit="-">PW1127G-JM_St3_P.csv</St3TotalPressureDeckName>
+        <St3TotalTemperatureDeckName Unit="-">PW1127G-JM_St3_T.csv</St3TotalTemperatureDeckName>
+        <St3StaticTemperatureDeckName Unit="-">PW1127G-JM_St3_Ts.csv</St3StaticTemperatureDeckName>
+        <St3MassFlowDeckName Unit="-">PW1127G-JM_St3_W.csv</St3MassFlowDeckName>
+        <St4FuelAirDeckName Unit="-">PW1127G-JM_St4_fa.csv</St4FuelAirDeckName>
+        <St4MachDeckName Unit="-">PW1127G-JM_St4_Mn.csv</St4MachDeckName>
+        <St4TotalPressureDeckName Unit="-">PW1127G-JM_St4_P.csv</St4TotalPressureDeckName>
+        <St4TotalTemperatureDeckName Unit="-">PW1127G-JM_St4_T.csv</St4TotalTemperatureDeckName>
+        <St4StaticTemperatureDeckName Unit="-">PW1127G-JM_St4_Ts.csv</St4StaticTemperatureDeckName>
+        <St4MassFlowDeckName Unit="-">PW1127G-JM_St4_W.csv</St4MassFlowDeckName>
+        <St5FuelAirDeckName Unit="-">PW1127G-JM_St5_fa.csv</St5FuelAirDeckName>
+        <St5MachDeckName Unit="-">PW1127G-JM_St5_Mn.csv</St5MachDeckName>
+        <St5TotalPressureDeckName Unit="-">PW1127G-JM_St5_P.csv</St5TotalPressureDeckName>
+        <St5TotalTemperatureDeckName Unit="-">PW1127G-JM_St5_T.csv</St5TotalTemperatureDeckName>
+        <St5StaticTemperatureDeckName Unit="-">PW1127G-JM_St5_Ts.csv</St5StaticTemperatureDeckName>
+        <St5MassFlowDeckName Unit="-">PW1127G-JM_St5_W.csv</St5MassFlowDeckName>
+        <St13FuelAirDeckName Unit="-">PW1127G-JM_St13_fa.csv</St13FuelAirDeckName>
+        <St13MachDeckName Unit="-">PW1127G-JM_St13_Mn.csv</St13MachDeckName>
+        <St13TotalPressureDeckName Unit="-">PW1127G-JM_St13_P.csv</St13TotalPressureDeckName>
+        <St13TotalTemperatureDeckName Unit="-">PW1127G-JM_St13_T.csv</St13TotalTemperatureDeckName>
+        <St13StaticTemperatureDeckName Unit="-">PW1127G-JM_St13_Ts.csv</St13StaticTemperatureDeckName>
+        <St13MassFlowDeckName Unit="-">PW1127G-JM_St13_W.csv</St13MassFlowDeckName>
+        <St22FuelAirDeckName Unit="-">PW1127G-JM_St22_fa.csv</St22FuelAirDeckName>
+        <St22MachDeckName Unit="-">PW1127G-JM_St22_Mn.csv</St22MachDeckName>
+        <St22TotalPressureDeckName Unit="-">PW1127G-JM_St22_P.csv</St22TotalPressureDeckName>
+        <St22TotalTemperatureDeckName Unit="-">PW1127G-JM_St22_T.csv</St22TotalTemperatureDeckName>
+        <St22StaticTemperatureDeckName Unit="-">PW1127G-JM_St22_Ts.csv</St22StaticTemperatureDeckName>
+        <St22MassFlowDeckName Unit="-">PW1127G-JM_St22_W.csv</St22MassFlowDeckName>
+        <St25FuelAirDeckName Unit="-">PW1127G-JM_St25_fa.csv</St25FuelAirDeckName>
+        <St25MachDeckName Unit="-">PW1127G-JM_St25_Mn.csv</St25MachDeckName>
+        <St25TotalPressureDeckName Unit="-">PW1127G-JM_St25_P.csv</St25TotalPressureDeckName>
+        <St25TotalTemperatureDeckName Unit="-">PW1127G-JM_St25_T.csv</St25TotalTemperatureDeckName>
+        <St25StaticTemperatureDeckName Unit="-">PW1127G-JM_St25_Ts.csv</St25StaticTemperatureDeckName>
+        <St25MassFlowDeckName Unit="-">PW1127G-JM_St25_W.csv</St25MassFlowDeckName>
+        <St45FuelAirDeckName Unit="-">PW1127G-JM_St45_fa.csv</St45FuelAirDeckName>
+        <St45MachDeckName Unit="-">PW1127G-JM_St45_Mn.csv</St45MachDeckName>
+        <St45TotalPressureDeckName Unit="-">PW1127G-JM_St45_P.csv</St45TotalPressureDeckName>
+        <St45TotalTemperatureDeckName Unit="-">PW1127G-JM_St45_T.csv</St45TotalTemperatureDeckName>
+        <St45StaticTemperatureDeckName Unit="-">PW1127G-JM_St45_Ts.csv</St45StaticTemperatureDeckName>
+        <St45MassFlowDeckName Unit="-">PW1127G-JM_St45_W.csv</St45MassFlowDeckName>
+        <St18MachDeckName Unit="-">PW1127G-JM_St18_Mn.csv</St18MachDeckName>
+        <St18TotalTemperatureDeckName Unit="-">PW1127G-JM_St18_T.csv</St18TotalTemperatureDeckName>
+        <St18JetVelocityDeckName Unit="-">PW1127G-JM_St18_V.csv</St18JetVelocityDeckName>
+        <St18JetDensityDeckName Unit="-">PW1127G-JM_St18_Rh.csv</St18JetDensityDeckName>
+        <St18MassFlowDeckName Unit="-">PW1127G-JM_St18_W.csv</St18MassFlowDeckName>
+        <St8MachDeckName Unit="-">PW1127G-JM_St8_Mn.csv</St8MachDeckName>
+        <St8TotalTemperatureDeckName Unit="-">PW1127G-JM_St8_T.csv</St8TotalTemperatureDeckName>
+        <St8JetVelocityDeckName Unit="-">PW1127G-JM_St8_V.csv</St8JetVelocityDeckName>
+        <St8JetDensityDeckName Unit="-">PW1127G-JM_St8_Rh.csv</St8JetDensityDeckName>
+        <St8MassFlowDeckName Unit="-">PW1127G-JM_St8_W.csv</St8MassFlowDeckName>
+        <SNoxDeckName Unit="-">PW1127G-JM_sNOx.csv</SNoxDeckName>
+    </Deck>
+    <EmissionFactors Desc="Data for the emission calculation">
+        <NOxFactor Desc="Combustion chamber factor NOx Severity Parameter * x = EI_NOx 23 - 32">32</NOxFactor>
+        <CO2Factor Desc="Stoichiometric factor for the combustion of the fuel" Unit="kg/kgFuel">3.149</CO2Factor>
+        <H2OFactor Desc="Stoichiometric factor for the combustion of the fuel" Unit="kg/kgFuel">1.2</H2OFactor>
+        <SO2Factor Desc="Stoichiometric factor for fuel combustion" Unit="kg/kgFuel">0.84e-3</SO2Factor>
+        <SO4Factor Desc="Stoichiometric factor for fuel combustion" Unit="kg/kgFuel">2e-4</SO4Factor>
+        <SootFactor Desc="Factor for the combustion of the fuel" Unit="kg/kgFuel">0.025e-3</SootFactor>
+    </EmissionFactors>
+    <ICAOEngineData>
+        <LTOFuelFlow Desc=" Fuel Flow laut ICAO Aircraft Engine Emissions Databank fuer LTO Phasen">
+            <Taxi Desc="Fuel Flow fuer Taxi Phase laut ICAO (Idle, 7% Thrust Setting)" Unit="kg/s">0.128</Taxi>
+            <Takeoff Desc="EI Index fuer Takeoff Phase laut ICAO" Unit="kg/s">1.053</Takeoff>
+            <ClimbOut Desc="EI Index fuer ClimbOut Phase laut ICAO" Unit="kg/s">0.88</ClimbOut>
+            <Approach Desc="EI Index fuer Approach Phase laut ICAO" Unit="kg/s">0.319</Approach>
+        </LTOFuelFlow>
+        <LTOEmissions Desc="EI Index laut ICAO Aircraft Engine Emissions Databank  fuer LTO Phasen">
+            <HCFactor Desc=" EI Index laut ICAO Aircraft Engine Emissions Databank fuer LTO Phasen">
+                <Taxi Desc="EI Index fuer Taxi Phase laut ICAO (Idle, 7% Thrust Setting)" Unit="kg/kgFuel">0.105e-3</Taxi>
+                <Takeoff Desc="EI Index fuer Takeoff Phase laut ICAO" Unit="kg/kgFuel">0.041e-3</Takeoff>
+                <ClimbOut Desc="EI Index fuer ClimbOut Phase laut ICAO" Unit="kg/kgFuel">0.041e-3</ClimbOut>
+                <Approach Desc="EI Index fuer Approach Phase laut ICAO" Unit="kg/kgFuel">0.061e-3</Approach>
+            </HCFactor>
+            <COFactor Desc=" EI Index laut ICAO Aircraft Engine Emissions Databank  fuer LTO Phasen">
+                <Taxi Desc="EI Index fuer Taxi Phase laut ICAO (Idle, 7% Thrust Setting)" Unit="kg/kgFuel">12.43e-3</Taxi>
+                <Takeoff Desc="EI Index fuer Takeoff Phase laut ICAO" Unit="kg/kgFuel">0.53e-3</Takeoff>
+                <ClimbOut Desc="EI Index fuer ClimbOut Phase laut ICAO" Unit="kg/kgFuel">0.62e-3</ClimbOut>
+                <Approach Desc="EI Index fuer Approach Phase laut ICAO" Unit="kg/kgFuel">2.44e-3</Approach>
+            </COFactor>
+            <NOxFactor Desc=" EI Index laut ICAO Aircraft Engine Emissions Databank  fuer LTO Phasen">
+                <Taxi Desc="EI Index fuer Taxi Phase laut ICAO (Idle, 7% Thrust Setting)" Unit="kg/kgFuel">4.7e-3</Taxi>
+                <Takeoff Desc="EI Index fuer Takeoff Phase laut ICAO" Unit="kg/kgFuel">26.5e-3</Takeoff>
+                <ClimbOut Desc="EI Index fuer ClimbOut Phase laut ICAO" Unit="kg/kgFuel">22.3e-3</ClimbOut>
+                <Approach Desc="EI Index fuer Approach Phase laut ICAO" Unit="kg/kgFuel">8.9e-3</Approach>
+            </NOxFactor>
+            <SNFactor Desc=" Smoke Number laut ICAO Aircraft Engine Emissions Databank  fuer LTO Phasen">
+                <Taxi Desc="Smoke Number fuer Taxi Phase laut ICAO (Idle, 7% Thrust Setting)" Unit="-">2.6</Taxi>
+                <Takeoff Desc="Smoke Number fuer Takeoff Phase laut ICAO" Unit="-">5.2</Takeoff>
+                <ClimbOut Desc="Smoke Number fuer ClimbOut Phase laut ICAO" Unit="-">7.2</ClimbOut>
+                <Approach Desc="Smoke Number fuer Approach Phase laut ICAO" Unit="-">4.2</Approach>
+            </SNFactor>
+        </LTOEmissions>
+    </ICAOEngineData>
+</EngineDataFile>
