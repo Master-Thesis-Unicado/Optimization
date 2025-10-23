@@ -97,7 +97,7 @@ class DescentResults:
             'descent_time_minutes': self.total_time_s / 60.0,
             'descent_fuel_kg': self.total_fuel_consumed_kg,
             'avg_descent_rate_mps': self.average_descent_rate_mps,
-            'avg_descent_rate_fpm': self.average_descent_rate_mps * 196.85,  # Convert to ft/min
+            'avg_descent_rate_mpm': self.average_descent_rate_mps * 60.0,  # Convert to m/min
             'avg_fuel_flow_kg_h': self.average_fuel_flow_kgps * 3600.0,
             'initial_altitude_m': self.initial_altitude_m,
             'final_altitude_m': self.target_altitude_m,
@@ -682,14 +682,14 @@ class DescentCore:
                 'cost_matrix_3d': F,
                 'predecessor_matrix': prv,
                 'avg_descent_rate_mps': avg_descent_rate,
-                'avg_descent_rate_fpm': avg_descent_rate * 196.85,
+                'avg_descent_rate_mpm': avg_descent_rate * 60.0,
             }
             
             print(f"[DP-DESCENT] Optimization complete!")
             print(f"  Total fuel: {total_fuel:.2f} kg")
             print(f"  Total time: {total_time/60:.1f} min")
             print(f"  Final Mach: {final_mach:.3f} (target: {target_mach:.3f}, deviation: {abs(final_mach-target_mach):.4f})")
-            print(f"  Avg descent rate: {avg_descent_rate:.2f} m/s ({avg_descent_rate*196.85:.0f} ft/min)")
+            print(f"  Avg descent rate: {avg_descent_rate:.2f} m/s ({avg_descent_rate*60.0:.0f} m/min)")
             
             return descent_result, info
 

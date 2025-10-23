@@ -1,6 +1,6 @@
 # Penalty System Documentation
 
-> **Scope**: Complete documentation of the reachability-constrained penalty system, including Mach trajectory guidance, lever penalty guidance, and their integration with 3D Dynamic Programming for optimal climb trajectory generation.
+> **Scope**: Complete documentation of the reachability-constrained penalty system, including Mach trajectory guidance, lever penalty guidance, and their integration with 3D Dynamic Programming for optimal climb and descent trajectory generation.
 
 ---
 
@@ -11,10 +11,11 @@
 3. [System Architecture and Data Structures](#3-system-architecture-and-data-structures)
 4. [Mach Trajectory Guidance System](#4-mach-trajectory-guidance-system)
 5. [Lever Penalty Guidance System](#5-lever-penalty-guidance-system)
-6. [Penalty Integration and Balancing](#6-penalty-integration-and-balancing)
-7. [Code Execution Flow and Logic](#7-code-execution-flow-and-logic)
-8. [Integration and Interface](#8-integration-and-interface)
-9. [Validation and Quality Assurance](#9-validation-and-quality-assurance)
+6. [Descent-Specific Penalty System](#6-descent-specific-penalty-system)
+7. [Penalty Integration and Balancing](#7-penalty-integration-and-balancing)
+8. [Code Execution Flow and Logic](#8-code-execution-flow-and-logic)
+9. [Integration and Interface](#9-integration-and-interface)
+10. [Validation and Quality Assurance](#10-validation-and-quality-assurance)
 
 ---
 
@@ -22,15 +23,16 @@
 
 ### 1.1 Purpose and Scope
 
-The penalty system implements a sophisticated guidance framework that uses soft constraints to guide trajectory optimization toward realistic, operationally viable solutions. The system employs reachability-constrained Mach guidance and engine-friendly lever penalties to create balanced, cooperative optimization that produces smooth, realistic climb trajectories.
+The penalty system implements a sophisticated guidance framework that uses soft constraints to guide trajectory optimization toward realistic, operationally viable solutions. The system employs reachability-constrained Mach guidance and engine-friendly lever penalties to create balanced, cooperative optimization that produces smooth, realistic climb and descent trajectories.
 
 ### 1.2 System Objectives
 
 **Primary Objectives:**
-- **Trajectory Guidance**: Guide optimization toward realistic Mach trajectories
+- **Trajectory Guidance**: Guide optimization toward realistic Mach trajectories for both climb and descent
 - **Engine Protection**: Prevent excessive lever usage and engine wear
 - **Operational Viability**: Ensure generated trajectories are operationally feasible
 - **Balanced Optimization**: Create cooperative penalty interaction for smooth guidance
+- **Phase-Specific Adaptation**: Adapt penalty behavior for climb vs. descent characteristics
 
 **Key Components:**
 - Reachability-constrained Mach guidance system
@@ -38,6 +40,7 @@ The penalty system implements a sophisticated guidance framework that uses soft 
 - Adaptive penalty weighting with altitude progress
 - Integration with 3D Dynamic Programming
 - Cooperative penalty interaction and balancing
+- Descent-specific penalty adaptations for deceleration guidance
 
 ### 1.3 System Flow Overview
 
@@ -332,9 +335,207 @@ Where `w` is the base penalty weight.
 
 ---
 
-## 6) Penalty Integration and Balancing
+## 6) Descent-Specific Penalty System
 
-### 6.1 Total Cost Calculation
+### 6.1 Descent Penalty System Overview
+
+**Purpose**: The descent penalty system adapts the general penalty framework for descent-specific characteristics, focusing on deceleration guidance and approach speed targeting.
+
+**Key Differences from Climb:**
+- **Target Direction**: Descent targets LOW Mach (0.25) at LOW altitude (300m)
+- **Speed Evolution**: Aircraft must decelerate from cruise speed to approach speed
+- **Energy Management**: Descent requires energy dissipation rather than energy addition
+- **Final Phase Guidance**: Strong guidance in final 30% of descent for precise approach
+
+### 6.2 Descent Mach Trajectory Guidance
+
+**Function**: `compute_mach_penalty()` (Descent Version)
+
+**Purpose**: Calculate Mach trajectory guidance penalty for descent using reachability constraints.
+
+**Algorithm:**
+```python
+def compute_mach_penalty(current_mach: float, target_mach: float, prev_mach: float = None, 
+                        descent_fraction: float = None) -> float:
+    """
+    Compute penalty using reachability-constrained approach FOR DESCENT.
+    
+    INVERTED FROM CLIMB: For descent, target is LOW Mach (0.25) at LOW altitude (300m).
+    Creates a dynamic safety corridor that ensures target remains achievable
+    with realistic Mach change rates.
+    """
+    
+    if descent_fraction is None:
+        descent_fraction = 0.0
+    
+    # Calculate remaining descent fraction and steps
+    remaining_fraction = 1.0 - descent_fraction
+    estimated_steps_remaining = remaining_fraction * TOTAL_DESCENT_STEPS_ESTIMATE
+    
+    # Calculate maximum achievable Mach change with reasonable rates
+    max_achievable_change = MAX_REASONABLE_MACH_RATE * estimated_steps_remaining
+    
+    # Define reachability corridor bounds
+    # For descent: target is LOWER than start, so corridor is around target
+    min_reachable_mach = target_mach - max_achievable_change
+    max_reachable_mach = target_mach + max_achievable_change
+    
+    # Calculate urgency factor (increases as we approach target altitude)
+    urgency = (1.0 - remaining_fraction) * URGENCY_MULTIPLIER
+    
+    # Apply penalties based on position relative to corridor
+    if current_mach < min_reachable_mach:
+        # Below corridor - too slow, risk of stall
+        deviation = min_reachable_mach - current_mach
+        penalty = urgency * MACH_PENALTY_BASE_WEIGHT * (deviation ** 2)
+        
+    elif current_mach > max_reachable_mach:
+        # Above corridor - too fast, won't slow down in time
+        deviation = current_mach - max_reachable_mach  
+        penalty = urgency * MACH_PENALTY_BASE_WEIGHT * (deviation ** 2)
+        
+    else:
+        # Within corridor - apply progressive guidance toward target
+        if descent_fraction > 0.7:
+            # Strong final phase guidance (70-100% descent)
+            final_phase_strength = (descent_fraction - 0.7) / 0.3  # 0 to 1 scaling
+            mach_deviation = current_mach - target_mach
+            
+            # Extra penalty boost for final 10% of descent
+            if descent_fraction > 0.9:
+                final_boost = ((descent_fraction - 0.9) / 0.1) * 2.0  # 0 to 2x multiplier
+                final_phase_strength *= (1.0 + final_boost)
+                
+            penalty = final_phase_strength * GUIDANCE_PENALTY_WEIGHT * (mach_deviation ** 2)
+        else:
+            penalty = 0.0  # No penalty in early descent phase
+    
+    return penalty
+```
+
+### 6.3 Descent-Specific Parameters
+
+**Descent Penalty Parameters:**
+```python
+# Descent-specific constants
+TOTAL_DESCENT_STEPS_ESTIMATE = 50  # Matches N_PLOT_STEPS - actual DP grid steps
+MAX_REASONABLE_MACH_RATE = 0.02    # Max reasonable Mach change per optimization step
+MACH_PENALTY_BASE_WEIGHT = 0.3     # Base penalty weight (kg per Mach² deviation)
+URGENCY_MULTIPLIER = 2.0           # How much urgency scales with descent progress
+GUIDANCE_PENALTY_WEIGHT = 0.5     # Strong guidance penalty when inside reachable corridor
+TARGET_MACH_TOLERANCE = 0.015      # Tolerance for target Mach constraint in DP
+```
+
+**Descent Phase Characteristics:**
+- **Early Descent (0-70%)**: Minimal Mach guidance, focus on energy dissipation
+- **Final Phase (70-100%)**: Strong Mach guidance toward target approach speed
+- **Ultra-Final Phase (90-100%)**: Maximum guidance for precise approach
+
+### 6.4 Descent Lever Penalty System
+
+**Function**: `compute_lever_penalty()` (Descent Version)
+
+**Purpose**: Calculate engine-friendly lever penalties for descent, with altitude-independent engine limits.
+
+**Algorithm:**
+```python
+def compute_lever_penalty(current_lever: float, descent_fraction: float = None) -> float:
+    """
+    Compute penalty for high lever positions to encourage realistic engine usage.
+    
+    Engine limits are altitude-independent - high thrust settings cause the same
+    thermal and mechanical stress regardless of altitude.
+    
+    Real-world considerations:
+    - 85% lever = Maximum Continuous Thrust (MCT) - unlimited duration
+    - 90%+ lever = Takeoff/Go-around thrust - limited duration, high wear
+    - 95%+ lever = Maximum Takeoff Thrust - emergency use only, severe penalties
+    """
+    
+    penalty = 0.0
+    
+    # Only apply penalty if lever exceeds MCT threshold (85%)
+    if current_lever > LEVER_PENALTY_THRESHOLD:
+        # Calculate excess lever above MCT threshold
+        excess_lever = current_lever - LEVER_PENALTY_THRESHOLD
+        
+        # Base penalty using exponential curve for realistic behavior
+        lever_penalty = excess_lever ** LEVER_PENALTY_EXPONENT
+        
+        # Apply critical penalty for very high lever positions (90%+)
+        if current_lever > LEVER_PENALTY_CRITICAL_THRESHOLD:
+            critical_excess = current_lever - LEVER_PENALTY_CRITICAL_THRESHOLD
+            critical_penalty = critical_excess ** (LEVER_PENALTY_EXPONENT + 1.0)
+            lever_penalty += critical_penalty * LEVER_PENALTY_CRITICAL_MULTIPLIER
+        
+        # Apply ultra-critical penalty for maximum thrust positions (95%+)
+        if current_lever > LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD:
+            ultra_critical_excess = current_lever - LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD
+            ultra_critical_penalty = ultra_critical_excess ** (LEVER_PENALTY_EXPONENT + 2.0)
+            lever_penalty += ultra_critical_penalty * LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER
+        
+        # Use constant penalty weight - engine limits are altitude-independent
+        penalty_weight = LEVER_PENALTY_WEIGHT
+        
+        penalty = penalty_weight * lever_penalty
+    
+    return penalty
+```
+
+### 6.5 Descent Penalty Integration
+
+**Descent Cost Calculation:**
+```python
+def compute_descent_cost(aero: AeroTables, eng: EngineWrapper,
+                        altitude: float, mach: float, lever: float,
+                        mass_kg: float,
+                        target_mach: float = None,
+                        descent_fraction: float = None) -> float:
+    """
+    Compute fuel cost density J = mdot/|Ps| + penalties for a given 3D state.
+    """
+    
+    # Calculate base fuel cost
+    J = mdot / abs(Ps)  # Base fuel cost density
+    
+    # Add Mach penalty if guidance is enabled
+    if target_mach is not None and MACH_TRAJECTORY_GUIDANCE:
+        mach_penalty = compute_mach_penalty(
+            mach, target_mach, None, descent_fraction
+        )
+        J += mach_penalty
+    
+    # Add lever penalty if guidance is enabled
+    if LEVER_PENALTY_GUIDANCE:
+        lever_penalty = compute_lever_penalty(lever, descent_fraction)
+        J += lever_penalty
+    
+    return J
+```
+
+### 6.6 Descent-Specific Considerations
+
+**Energy Management:**
+- **Descent Physics**: Ps < 0 (energy dissipation required)
+- **Speed Deceleration**: Must slow from cruise Mach to approach Mach
+- **Altitude Loss**: Potential energy converted to kinetic energy dissipation
+
+**Operational Constraints:**
+- **Approach Speed**: Must reach precise target Mach (0.25) at approach altitude
+- **Stall Protection**: Minimum Mach constraints based on weight and altitude
+- **Engine Limits**: Same thermal limits as climb, but different usage patterns
+
+**Guidance Strategy:**
+- **Early Descent**: Minimal guidance, allow natural energy dissipation
+- **Mid Descent**: Moderate guidance toward target corridor
+- **Final Descent**: Strong guidance for precise approach speed
+- **Ultra-Final**: Maximum guidance for landing approach
+
+---
+
+## 7) Penalty Integration and Balancing
+
+### 7.1 Total Cost Calculation
 
 **Function**: `calculate_total_penalty_cost()`
 
@@ -360,7 +561,7 @@ def calculate_total_penalty_cost(base_fuel_cost: float, current_mach: float,
     return total_cost
 ```
 
-### 6.2 Cooperative Penalty Interaction
+### 7.2 Cooperative Penalty Interaction
 
 **Theory**: The system ensures penalties work together rather than against each other, creating balanced guidance.
 
@@ -370,7 +571,7 @@ def calculate_total_penalty_cost(base_fuel_cost: float, current_mach: float,
 3. **Adaptive weighting** ensures convergence
 4. **Cooperative balancing** prevents conflicting guidance
 
-### 6.3 Penalty Weight Balancing
+### 7.3 Penalty Weight Balancing
 
 **Weight Management:**
 ```python
@@ -398,9 +599,9 @@ def balance_penalty_weights(mach_penalty: float, lever_penalty: float,
 
 ---
 
-## 7) Code Execution Flow and Logic
+## 8) Code Execution Flow and Logic
 
-### 7.1 System Entry Point and Initialization
+### 8.1 System Entry Point and Initialization
 
 **Main Entry Function**: Integration with 3D Dynamic Programming
 
@@ -428,7 +629,7 @@ def initialize_penalty_system():
     return penalty_params
 ```
 
-### 7.2 Penalty Calculation Flow
+### 8.2 Penalty Calculation Flow
 
 **Function**: `calculate_penalties_for_state()`
 
@@ -517,7 +718,7 @@ def calculate_penalties_for_state(current_mach: float, current_lever: float,
     return penalty_results
 ```
 
-### 7.3 Integration with 3D Dynamic Programming
+### 8.3 Integration with 3D Dynamic Programming
 
 **Function**: `integrate_penalties_with_dp()`
 
@@ -541,7 +742,7 @@ def integrate_penalties_with_dp(base_cost: float, mach: float, lever: float,
     return total_cost
 ```
 
-### 7.4 Visual Code Flow Diagram
+### 8.4 Visual Code Flow Diagram
 
 ```
 PENALTY SYSTEM EXECUTION FLOW
@@ -613,7 +814,7 @@ PENALTY SYSTEM EXECUTION FLOW
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 7.5 Function Call Hierarchy
+### 8.5 Function Call Hierarchy
 
 ```
 3D Dynamic Programming Optimization
@@ -639,9 +840,9 @@ PENALTY SYSTEM EXECUTION FLOW
 
 ---
 
-## 8) Integration and Interface
+## 9) Integration and Interface
 
-### 8.1 3D Dynamic Programming Integration
+### 9.1 3D Dynamic Programming Integration
 
 **Function**: `integrate_with_3d_dp()`
 
@@ -669,7 +870,7 @@ def integrate_with_3d_dp():
     return enhanced_cost_calculation
 ```
 
-### 8.2 Main Interface Functions
+### 9.2 Main Interface Functions
 
 **Penalty System Interface:**
 ```python
@@ -706,7 +907,7 @@ def run_penalty_guided_optimization(aero: AeroTables, eng: EngineWrapper,
     return dp_result
 ```
 
-### 8.3 Configuration Interface
+### 9.3 Configuration Interface
 
 **Penalty Configuration:**
 ```python
@@ -732,9 +933,9 @@ def configure_penalty_system(mach_guidance: bool = True, lever_guidance: bool = 
 
 ---
 
-## 9) Validation and Quality Assurance
+## 10) Validation and Quality Assurance
 
-### 9.1 Penalty System Validation
+### 10.1 Penalty System Validation
 
 **Parameter Validation:**
 ```python
@@ -762,7 +963,7 @@ def validate_penalty_parameters() -> None:
         raise ValueError("Lever penalty exponent must be positive")
 ```
 
-### 9.2 Performance Monitoring
+### 10.2 Performance Monitoring
 
 **Penalty Effectiveness Monitoring:**
 ```python
@@ -795,7 +996,7 @@ def monitor_penalty_effectiveness(dp_result: MinFuelSchedule, target_mach: float
     return effectiveness_metrics
 ```
 
-### 9.3 Error Handling
+### 10.3 Error Handling
 
 **Penalty Calculation Errors:**
 ```python

@@ -315,8 +315,8 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     # Efficiency Indicators plot removed per user request
     
     # ========= ROW 3 COL 3: KEY PARAMETERS TABLE =========
-    avg_climb_rate_fpm = np.mean(np.abs(climb_result.Ps_mps)) * 196.85 if len(climb_result.Ps_mps) > 0 else 0
-    avg_descent_rate_fpm = np.mean(np.abs(descent_result.descent_rate_mps)) * 196.85 if len(descent_result.descent_rate_mps) > 0 else 0
+    avg_climb_rate_mpm = np.mean(np.abs(climb_result.Ps_mps)) * 60.0 if len(climb_result.Ps_mps) > 0 else 0
+    avg_descent_rate_mpm = np.mean(np.abs(descent_result.descent_rate_mps)) * 60.0 if len(descent_result.descent_rate_mps) > 0 else 0
     cruise_mach = cruise_result.mach_number[-1]
     cruise_altitude_ft = cruise_result.altitude_m[-1] * 3.28084
     
@@ -338,8 +338,8 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
                      f'{initial_mass_kg - descent_result.final_weight_kg:.0f} kg',
                      f'{cruise_altitude_ft:.0f} ft',
                      f'{cruise_mach:.3f}',
-                     f'{avg_climb_rate_fpm:.0f} ft/min',
-                     f'{avg_descent_rate_fpm:.0f} ft/min']
+                     f'{avg_climb_rate_mpm:.0f} m/min',
+                     f'{avg_descent_rate_mpm:.0f} m/min']
                 ],
                 fill_color=[['white', 'lightgray'] * 4],
                 align=['left', 'right'],

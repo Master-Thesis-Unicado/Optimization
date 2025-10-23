@@ -388,7 +388,7 @@ def main():
             print(f"\nDESCENT PHASE ({descent_result.strategy_name}):")
             print(f"  Fuel consumed: {descent_summary['descent_fuel_kg']:.2f} kg")
             print(f"  Time: {descent_summary['descent_time_minutes']:.1f} min")
-            print(f"  Avg descent rate: {descent_summary['avg_descent_rate_fpm']:.0f} ft/min")
+            print(f"  Avg descent rate: {descent_summary['avg_descent_rate_mpm']:.0f} m/min")
             print(f"  Altitude change: {descent_summary['descent_altitude_change_m']:.0f} m")
             print(f"  Final Mach: {descent_result.mach[-1]:.3f} (target: {descent_result.target_mach:.3f})")
             print(f"  Final altitude: {descent_result.alt_m[-1]:.0f} m (target: {descent_result.target_altitude_m:.0f} m)")

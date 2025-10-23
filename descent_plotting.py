@@ -783,7 +783,7 @@ def plot_descent_trajectory_interactive(descent_result: DescentResults,
     )
     
     time_min = descent_result.time_s / 60.0  # Convert to minutes
-    descent_rate_fpm = descent_result.descent_rate_mps * 196.85  # Convert to ft/min
+    descent_rate_mpm = descent_result.descent_rate_mps * 60.0  # Convert to m/min
     fuel_flow_kgh = descent_result.fuel_flow_kgps * 3600  # Convert to kg/h
     thrust_kn = descent_result.thrust_total_N / 1000  # Convert to kN
     drag_kn = descent_result.drag_N / 1000  # Convert to kN
@@ -910,7 +910,7 @@ def plot_descent_trajectory_interactive(descent_result: DescentResults,
         f"Altitude Change: {summary['descent_altitude_change_m']:.0f} m | "
         f"Time: {summary['descent_time_minutes']:.1f} min | "
         f"Fuel: {summary['descent_fuel_kg']:.2f} kg | "
-        f"Avg Rate: {summary['avg_descent_rate_fpm']:.0f} ft/min"
+        f"Avg Rate: {summary['avg_descent_rate_mpm']:.0f} m/min"
     )
     
     layout_config = get_standard_layout(
@@ -973,7 +973,7 @@ def plot_descent_trajectory_interactive(descent_result: DescentResults,
             f"Altitude Change: {summary['descent_altitude_change_m']:.0f} m | "
             f"Time: {summary['descent_time_minutes']:.1f} min | "
             f"Fuel: {summary['descent_fuel_kg']:.2f} kg | "
-            f"Avg Rate: {summary['avg_descent_rate_fpm']:.0f} ft/min"
+            f"Avg Rate: {summary['avg_descent_rate_mpm']:.0f} m/min"
         )
         
         # 1. Fuel Flow Rate
