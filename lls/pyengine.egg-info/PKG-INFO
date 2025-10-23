@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: pyengine
+Version: 0.0.0
+Summary: Python binding of the pyengine C++ library of UNICADO
+Author-email: Max Mustermann <max@mustermann.de>
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Requires-Python: >=3.10
