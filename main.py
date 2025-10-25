@@ -26,6 +26,15 @@ from aircraft_config import (
     INITIAL_MASS_KG, AERO_XLSX, AERO_SHEET, ENGINE_STUB_PATH,
     AtmosphericProperties, G_C
 )
+from mission_config import (
+    TARGET_ALT_M, N_PLOT_STEPS, ALT_STEP_M, Y_AXIS_TOP_M, MACH_COLS,
+    START_ALTITUDE_M, START_VELOCITY_MS, START_LEVER, LEVER_SAMPLES,
+    TARGET_MACH, TARGET_MACH_TOLERANCE, STRATEGY_DT_S,
+    CRUISE_DISTANCE_KM, CRUISE_TIME_STEP_S, 
+    TARGET_DESCENT_ALT_M, TARGET_DESCENT_MACH,
+    N_ALTITUDE_STEPS, N_MACH_SAMPLES, N_LEVER_SAMPLES,
+    MIN_DESCENT_MACH, MAX_DESCENT_MACH
+)
 import climb
 from climb import (
     AeroTables, EngineWrapper, compute_sep_grid_maxlever,
@@ -54,13 +63,20 @@ atmospheric_props = AtmosphericProperties()
 
 
 def main():
+    print("[MISSION] Using centralized mission configuration")
+    print(f"[MISSION] Target altitude: {TARGET_ALT_M:.0f} m")
+    print(f"[MISSION] Target Mach: {TARGET_MACH:.3f}")
+    print(f"[MISSION] Cruise distance: {CRUISE_DISTANCE_KM:.0f} km")
+    
     print("[READ] Aerodynamics (Excel Sheet4) …")
     aero = AeroTables(AERO_XLSX, AERO_SHEET)
 
     # Dense grids for contours
     M_min, M_max = float(aero.mach_grid[0]), float(aero.mach_grid[-1])
     M_dense = np.linspace(M_min, M_max, MACH_COLS)
-    H_plot  = np.arange(10.0, Y_AXIS_TOP_M + 0.5*ALT_STEP_M, ALT_STEP_M)  # Start from 10m
+    H_plot  = np.arange(START_ALTITUDE_M, 
+                        Y_AXIS_TOP_M + 0.5*ALT_STEP_M, 
+                        ALT_STEP_M)
 
     # Effective minimum Mach from sheet
     climb.M_MIN_EFFECTIVE = max(climb.M_MIN_DEFAULT, float(aero.mach_grid[0]))
@@ -87,30 +103,37 @@ def main():
                                                         M_grid=M_dense, H_grid=H_plot)
 
     # DP schedule on EXACT N_PLOT_STEPS rows
-    # Create uniform 200m altitude steps as requested
-    uniform_step_size = TARGET_ALT_M / N_PLOT_STEPS  # 200m steps
-    H_sched = np.arange(10.0, TARGET_ALT_M + uniform_step_size, uniform_step_size)  # Start from 10m altitude
+    # Create uniform altitude steps as requested
+    uniform_step_size = TARGET_ALT_M / N_PLOT_STEPS
+    H_sched = np.arange(START_ALTITUDE_M, 
+                        TARGET_ALT_M + uniform_step_size, 
+                        uniform_step_size)
     print("[DP] Solving 3D fixed-mass DP …")
-    # Calculate starting Mach from V0_ms=85.0 m/s at 10m altitude (realistic takeoff speed)
-    # At 10m altitude: a ≈ 340 m/s, so M = 85/340 ≈ 0.25
-    a = atmospheric_props.a_from_altitude(10.0)  # Speed of sound at 10m altitude
-    start_mach = 85.0 / a  # Starting Mach from V0_ms=85.0 m/s
+    # Calculate starting Mach from takeoff velocity at start altitude
+    a = atmospheric_props.a_from_altitude(START_ALTITUDE_M)
+    start_mach = START_VELOCITY_MS / a
     
     dp_sched, dp_info = ClimbingCore.DynamicProgrammingOptimizer.solve_3d_fixed_mass(
-        aero, eng, M_grid, H_sched, lever_samples=50, target_mach=0.7,
-        target_mach_tolerance=0.015, start_mach=start_mach, start_lever=0.85
+        aero, eng, M_grid, H_sched, 
+        lever_samples=LEVER_SAMPLES, 
+        target_mach=TARGET_MACH,
+        target_mach_tolerance=TARGET_MACH_TOLERANCE, 
+        start_mach=start_mach, 
+        start_lever=START_LEVER
     )
 
     # Strategies (fixed mass), resampled to N_PLOT_STEPS
     print("[STRAT] Simulating strategies …")
     strategies: list[climb.StrategyRun] = []
-    DT_S = 0.2
     for name, fn, af in ClimbingCore.StrategyManager.build_strategy_set():
         sr = ClimbingCore.StrategyManager.simulate_strategy_path(
             label=name,
             aero=aero, eng=eng,
-            mass0_kg=INITIAL_MASS_KG, h0_m=10.0, V0_ms=85.0,
-            target_alt_m=TARGET_ALT_M, dt=DT_S,
+            mass0_kg=INITIAL_MASS_KG, 
+            h0_m=START_ALTITUDE_M, 
+            V0_ms=START_VELOCITY_MS,
+            target_alt_m=TARGET_ALT_M, 
+            dt=STRATEGY_DT_S,
             strategy_fn=fn, altitude_fraction=af
         )
         sr = ClimbingCore.StrategyManager.resample_strategy_run(sr, N_PLOT_STEPS)
@@ -276,10 +299,9 @@ def main():
     print("STARTING CRUISE PHASE SIMULATION")
     print("="*60)
     
-    # Cruise simulation parameters (USER ADJUSTABLE)
-    # Modify these values according to your mission requirements:
-    cruise_distance_km = 1500.0  # Cruise distance in kilometers
-    cruise_time_step_s = 60.0    # Time step in seconds (60s = 1 minute)
+    # Cruise simulation parameters from mission configuration
+    cruise_distance_km = CRUISE_DISTANCE_KM
+    cruise_time_step_s = CRUISE_TIME_STEP_S
     
     # Run cruise simulation using 3D DP result
     try:
@@ -342,26 +364,31 @@ def main():
         
         try:
             # Run 3D DP optimization for descent (with penalty guidance similar to climb)
-            # Target: Mach 0.25 at 300m altitude (approach conditions)
+            # Target: Approach conditions from mission configuration
             descent_result, descent_info = run_descent_dp_optimization(
                 cruise_results=cruise_results,
                 climb_fuel_kg=climb_fuel,
                 climb_time_s=climb_time_hours * 3600,
                 aero=aero,
                 engine=eng,
-                target_altitude_m=300.0,  # Approach altitude (~1000 ft)
-                target_mach=0.25,         # Approach speed
-                n_altitude_steps=50,
-                n_mach_samples=41,
-                lever_samples=11
+                target_altitude_m=TARGET_DESCENT_ALT_M,
+                target_mach=TARGET_DESCENT_MACH,
+                n_altitude_steps=N_ALTITUDE_STEPS,
+                n_mach_samples=N_MACH_SAMPLES,
+                lever_samples=N_LEVER_SAMPLES
             )
             
             # Extract grids for 3D visualization (same as DP used)
             descent_initial_weight = cruise_results.weight_kg[-1]
-            H_descent = np.linspace(cruise_results.altitude_m[-1], 300.0, 50)
-            M_min_descent = max(0.2, 0.25 - 0.1)
-            M_max_descent = min(0.85, cruise_results.mach_number[-1] + 0.05)
-            M_grid_descent = np.linspace(M_min_descent, M_max_descent, 41)
+            H_descent = np.linspace(cruise_results.altitude_m[-1], 
+                                   TARGET_DESCENT_ALT_M, 
+                                   N_ALTITUDE_STEPS)
+            M_min_descent = max(MIN_DESCENT_MACH, 
+                               TARGET_DESCENT_MACH - 0.1)
+            M_max_descent = min(MAX_DESCENT_MACH, 
+                               cruise_results.mach_number[-1] + 0.05)
+            M_grid_descent = np.linspace(M_min_descent, M_max_descent, 
+                                        N_MACH_SAMPLES)
             
             print("\n" + "="*80)
             print("COMPLETE MISSION SUMMARY (CLIMB + CRUISE + DESCENT)")
