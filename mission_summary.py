@@ -238,7 +238,7 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     )
     
     # ========= ROW 2 COL 3: WEIGHT EVOLUTION =========
-    climb_weight = initial_mass_kg - climb_fuel_array
+    climb_weight = np.asarray(climb_result.mass_kg, float)  # Use actual dynamic weight from DP optimization
     cruise_weight = cruise_result.weight_kg
     descent_weight = descent_result.weight_kg
     
@@ -361,7 +361,13 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     fig.update_yaxes(**get_axis_config("Cumulative Fuel (kg)"), row=2, col=2)
     
     fig.update_xaxes(**get_axis_config("Time (min)"), row=2, col=3)
-    fig.update_yaxes(**get_axis_config("Weight (kg)"), row=2, col=3)
+    # Set y-axis range to zoom in on weight changes for better visibility
+    all_weights = np.concatenate([climb_weight, cruise_weight, descent_weight])
+    weight_min, weight_max = np.min(all_weights), np.max(all_weights)
+    weight_margin = (weight_max - weight_min) * 0.2  # Add 20% margin
+    fig.update_yaxes(**get_axis_config("Weight (kg)"), 
+                     range=[weight_min - weight_margin, weight_max + weight_margin], 
+                     row=2, col=3)
     
     # Efficiency Indicators axes removed (plot removed per user request)
     
@@ -475,7 +481,7 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
     climb_thrust_N = np.asarray(climb_result.T_total_N, float)
     climb_drag_N = np.asarray(climb_result.D_N, float)
     climb_fuel_kg = np.asarray(climb_result.cumFuel_kg, float)
-    climb_weight_kg = initial_mass_kg - climb_fuel_kg
+    climb_weight_kg = np.asarray(climb_result.mass_kg, float)  # Use actual dynamic weight from DP optimization
     
     # Calculate climb fuel flow rate
     climb_fuel_flow_kgh = []
@@ -846,7 +852,24 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
             elif col == 2:  # Thrust/Drag
                 fig.update_yaxes(title_text="Force (kN)", row=row, col=col, gridcolor='lightgray')
             elif col == 3:  # Weight
-                fig.update_yaxes(title_text="Weight (kg)", row=row, col=col, gridcolor='lightgray')
+                # Set y-axis range to zoom in on weight changes for better visibility
+                if row == 1:  # Climb
+                    weight_min, weight_max = np.min(climb_weight_kg), np.max(climb_weight_kg)
+                    weight_margin = (weight_max - weight_min) * 0.2
+                    fig.update_yaxes(title_text="Weight (kg)", row=row, col=col, gridcolor='lightgray',
+                                   range=[weight_min - weight_margin, weight_max + weight_margin])
+                elif row == 2:  # Cruise
+                    weight_min, weight_max = np.min(cruise_weight_kg), np.max(cruise_weight_kg)
+                    weight_margin = (weight_max - weight_min) * 0.2
+                    fig.update_yaxes(title_text="Weight (kg)", row=row, col=col, gridcolor='lightgray',
+                                   range=[weight_min - weight_margin, weight_max + weight_margin])
+                elif row == 3:  # Descent
+                    weight_min, weight_max = np.min(descent_weight_kg), np.max(descent_weight_kg)
+                    weight_margin = (weight_max - weight_min) * 0.2
+                    fig.update_yaxes(title_text="Weight (kg)", row=row, col=col, gridcolor='lightgray',
+                                   range=[weight_min - weight_margin, weight_max + weight_margin])
+                else:
+                    fig.update_yaxes(title_text="Weight (kg)", row=row, col=col, gridcolor='lightgray')
             elif col == 4:  # Lever
                 fig.update_yaxes(title_text="Lever (%)", row=row, col=col, gridcolor='lightgray')
             elif col == 5:  # Airspeed

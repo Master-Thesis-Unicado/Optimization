@@ -397,8 +397,9 @@ class DescentCore:
             # Create lever grid (same as climb: full range 0-100%)
             lever_grid = np.linspace(0.0, 1.0, L)
             
-            # Initialize 3D cost matrix and predecessor array
+            # Initialize 3D cost matrix, weight matrix, and predecessor array
             F = np.full((K, I, L), np.inf)
+            weight_matrix = np.full((K, I, L), np.nan)  # Track weight at each state
             prv = np.full((K, I, L, 3), -1, dtype=int)  # [alt_idx, mach_idx, lever_idx]
             
             # Set starting point (from cruise altitude)
@@ -406,13 +407,14 @@ class DescentCore:
             start_lever_idx = 0  # Start at idle
             actual_start_mach = M_grid[start_mach_idx]
             
-            dbg(f"[DP-DESCENT] Starting from cruise: h={H_sched[0]:.0f}m, M={actual_start_mach:.3f}")
+            dbg(f"[DP-DESCENT] Starting from cruise: h={H_sched[0]:.0f}m, M={actual_start_mach:.3f}, weight={initial_state.weight_kg:.0f}kg")
             
             # Verify starting point is in bounds
             if (actual_start_mach >= M_MIN_EFFECTIVE and 
                 actual_start_mach <= M_MMO):
                 F[0, start_mach_idx, start_lever_idx] = 0.0  # Starting cost is 0
-                dbg(f"[DP-DESCENT] Starting point verified at Mach {actual_start_mach:.3f}")
+                weight_matrix[0, start_mach_idx, start_lever_idx] = initial_state.weight_kg  # Starting weight
+                dbg(f"[DP-DESCENT] Starting point verified at Mach {actual_start_mach:.3f}, weight={initial_state.weight_kg:.0f}kg")
             else:
                 raise RuntimeError(f"[DP-DESCENT] Starting point out of bounds: M={actual_start_mach:.3f}")
             
@@ -440,6 +442,11 @@ class DescentCore:
                     if not np.isfinite(F[k, i, j]):
                         continue
                     
+                    # Get current weight at this state
+                    current_weight = weight_matrix[k, i, j]
+                    if not np.isfinite(current_weight) or current_weight <= 0:
+                        continue
+                    
                     current_mach = M_grid[i]
                     current_lever = lever_grid[j]
                     
@@ -457,8 +464,8 @@ class DescentCore:
                                 next_mach = M_grid[next_mach_idx]
                                 next_lever = lever_grid[next_lever_idx]
                                 
-                                # Calculate dynamic minimum Mach at next altitude
-                                min_mach_next = calculate_min_descent_mach(next_alt, initial_state.weight_kg)
+                                # Calculate dynamic minimum Mach at next altitude using current weight
+                                min_mach_next = calculate_min_descent_mach(next_alt, current_weight)
                                 
                                 # Check feasibility
                                 if (next_mach >= min_mach_next and 
@@ -466,14 +473,15 @@ class DescentCore:
                                     next_lever >= 0.0 and 
                                     next_lever <= 1.0):
                                     
-                                    # Compute fuel costs WITH PENALTIES
+                                    # Compute fuel costs WITH PENALTIES using dynamic weight
+                                    # Use current weight for both states (conservative approach)
                                     current_cost = DescentCore.compute_descent_cost(
                                         aero, eng, current_alt, current_mach, current_lever,
-                                        initial_state.weight_kg, target_mach, descent_fraction
+                                        current_weight, target_mach, descent_fraction
                                     )
                                     next_cost = DescentCore.compute_descent_cost(
                                         aero, eng, next_alt, next_mach, next_lever,
-                                        initial_state.weight_kg, target_mach, (k+1)/(K-1.0) if K > 1 else 1.0
+                                        current_weight, target_mach, (k+1)/(K-1.0) if K > 1 else 1.0
                                     )
                                     
                                     if (np.isfinite(current_cost) and np.isfinite(next_cost) and
@@ -483,9 +491,18 @@ class DescentCore:
                                         step_cost = 0.5 * (current_cost + next_cost) * abs(dh)
                                         total_cost = F[k, i, j] + step_cost
                                         
+                                        # Calculate fuel burned during this step
+                                        fuel_burned = step_cost
+                                        next_weight = current_weight - fuel_burned
+                                        
+                                        # Ensure weight doesn't go negative
+                                        if next_weight <= 0:
+                                            continue
+                                        
                                         # Update if this path is better
                                         if total_cost < F[k + 1, next_mach_idx, next_lever_idx]:
                                             F[k + 1, next_mach_idx, next_lever_idx] = total_cost
+                                            weight_matrix[k + 1, next_mach_idx, next_lever_idx] = next_weight
                                             prv[k + 1, next_mach_idx, next_lever_idx] = [k, i, j]
                                             feasible_count += 1
                 
@@ -531,6 +548,7 @@ class DescentCore:
             path_mach = []
             path_lever = []
             path_costs = []
+            path_weights = []
             
             current_state = [final_alt_idx, final_mach_idx, final_lever_idx]
             
@@ -541,6 +559,7 @@ class DescentCore:
                 path_mach.append(M_grid[mach_idx])
                 path_lever.append(lever_grid[lever_idx])
                 path_costs.append(F[alt_idx, mach_idx, lever_idx])
+                path_weights.append(weight_matrix[alt_idx, mach_idx, lever_idx])
                 
                 if alt_idx > 0:
                     current_state = prv[alt_idx, mach_idx, lever_idx].tolist()
@@ -552,12 +571,14 @@ class DescentCore:
             path_mach = path_mach[::-1]
             path_lever = path_lever[::-1]
             path_costs = path_costs[::-1]
+            path_weights = path_weights[::-1]
             
             # Convert to arrays
             alt_array = np.array(path_alt)
             mach_array = np.array(path_mach)
             lever_array = np.array(path_lever)
             fuel_array = np.array(path_costs)
+            weight_array = np.array(path_weights)
             
             # Calculate detailed trajectory data
             n_points = len(alt_array)
@@ -573,7 +594,7 @@ class DescentCore:
             rho_array = np.zeros(n_points)
             V_array = np.zeros(n_points)
             Ps_array = np.zeros(n_points)
-            weight_array = np.full(n_points, initial_state.weight_kg)
+            # weight_array already set from backtracking with dynamic weight values
             
             # Calculate time increments and performance data
             for i in range(n_points):
@@ -626,10 +647,8 @@ class DescentCore:
                     time_array[i + 1] = time_array[i] + dt
                     descent_rate_array[i] = Ps
                     
-                    # Update weight
-                    fuel_burned = mdot * dt
-                    if i + 1 < n_points:
-                        weight_array[i + 1] = weight_array[i] - fuel_burned
+                    # Weight already correctly set from DP backtracking
+                    # No need to update weight here - it's part of the optimal path
             
             # Final statistics
             total_time = time_array[-1]

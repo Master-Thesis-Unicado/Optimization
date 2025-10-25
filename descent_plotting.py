@@ -947,7 +947,12 @@ def plot_descent_trajectory_interactive(descent_result: DescentResults,
     fig.update_yaxes(**get_axis_config("Force (kN)"), row=1, col=2)
     
     fig.update_xaxes(**get_axis_config("Time (min)"), row=2, col=1)
-    fig.update_yaxes(**get_axis_config("Weight (kg)"), row=2, col=1)
+    # Set y-axis range to zoom in on weight changes for better visibility
+    weight_min, weight_max = np.min(weight_kg), np.max(weight_kg)
+    weight_margin = (weight_max - weight_min) * 0.2  # Add 20% margin
+    fig.update_yaxes(**get_axis_config("Weight (kg)"), 
+                     range=[weight_min - weight_margin, weight_max + weight_margin], 
+                     row=2, col=1)
     
     fig.update_xaxes(**get_axis_config("Time (min)"), row=2, col=2)
     fig.update_yaxes(**get_axis_config("Lever Position (%)"), row=2, col=2)
@@ -1001,7 +1006,11 @@ def plot_descent_trajectory_interactive(descent_result: DescentResults,
             line=dict(color=Colors.DESCENT, width=LineStyles.THICK), fill='tozeroy', fillcolor='rgba(220, 20, 60, 0.15)',
             hovertemplate='<b>Descent</b><br>Time: %{x:.1f} min<br>Weight: %{y:.0f} kg<extra></extra>'))
         fig3.update_layout(**get_standard_layout("DESCENT PERFORMANCE - Weight Evolution", subtitle_text, height=600, width=900))
-        fig3.update_xaxes(**get_axis_config("Time (min)")); fig3.update_yaxes(**get_axis_config("Weight (kg)"))
+        # Set y-axis range to zoom in on weight changes for better visibility
+        weight_min, weight_max = np.min(weight_kg), np.max(weight_kg)
+        weight_margin = (weight_max - weight_min) * 0.2  # Add 20% margin
+        fig3.update_xaxes(**get_axis_config("Time (min)")); 
+        fig3.update_yaxes(**get_axis_config("Weight (kg)"), range=[weight_min - weight_margin, weight_max + weight_margin])
         fig3.write_image(os.path.join(run_dir, f'{save_prefix}_weight.png'), width=1200, height=800, scale=2)
         
         # 4. Lever Position
@@ -1188,7 +1197,7 @@ def plot_complete_mission_profile_interactive(climb_result: MinFuelSchedule,
     fig.add_vline(x=cruise_time_min[-1], line_dash="dash", line_color="gray", row=2, col=1)
     
     # 3. Weight Profile
-    climb_weight = initial_mass_kg - climb_fuel
+    climb_weight = np.asarray(climb_result.mass_kg, float)  # Use actual dynamic weight from DP optimization
     cruise_weight = cruise_result.weight_kg
     descent_weight = descent_result.weight_kg
     

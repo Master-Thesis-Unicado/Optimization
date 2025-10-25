@@ -830,7 +830,7 @@ def plot_climb_performance_detailed(climb_result, climb_info: dict = None) -> No
     climb_thrust_N = np.asarray(climb_result.T_total_N, float)
     climb_drag_N = np.asarray(climb_result.D_N, float)
     climb_fuel_kg = np.asarray(climb_result.cumFuel_kg, float)
-    climb_weight_kg = INITIAL_MASS_KG - climb_fuel_kg
+    climb_weight_kg = np.asarray(climb_result.mass_kg, float)  # Use actual dynamic weight from DP optimization
     
     # Calculate fuel flow rate (kg/h) - approximate from fuel consumption
     fuel_flow_kgh = []
@@ -1019,7 +1019,12 @@ def plot_climb_performance_detailed(climb_result, climb_info: dict = None) -> No
     fig.update_yaxes(**get_axis_config("Force (kN)"), row=1, col=2)
     
     fig.update_xaxes(**get_axis_config("Time (min)"), row=2, col=1)
-    fig.update_yaxes(**get_axis_config("Weight (kg)"), row=2, col=1)
+    # Set y-axis range to zoom in on weight changes for better visibility
+    weight_min, weight_max = np.min(climb_weight_kg), np.max(climb_weight_kg)
+    weight_margin = (weight_max - weight_min) * 0.2  # Add 20% margin
+    fig.update_yaxes(**get_axis_config("Weight (kg)"), 
+                     range=[weight_min - weight_margin, weight_max + weight_margin], 
+                     row=2, col=1)
     
     fig.update_xaxes(**get_axis_config("Time (min)"), row=2, col=2)
     fig.update_yaxes(**get_axis_config("Lever Position (%)"), row=2, col=2)
@@ -1066,7 +1071,11 @@ def plot_climb_performance_detailed(climb_result, climb_info: dict = None) -> No
             line=dict(color=Colors.CLIMB, width=LineStyles.THICK), fill='tozeroy', fillcolor='rgba(65, 105, 225, 0.15)',
             hovertemplate='<b>Climb</b><br>Time: %{x:.1f} min<br>Weight: %{y:.0f} kg<extra></extra>'))
         fig3.update_layout(**get_standard_layout("CLIMB PERFORMANCE - Weight Evolution", subtitle, height=600, width=900))
-        fig3.update_xaxes(**get_axis_config("Time (min)")); fig3.update_yaxes(**get_axis_config("Weight (kg)"))
+        # Set y-axis range to zoom in on weight changes for better visibility
+        weight_min, weight_max = np.min(climb_weight_kg), np.max(climb_weight_kg)
+        weight_margin = (weight_max - weight_min) * 0.2  # Add 20% margin
+        fig3.update_xaxes(**get_axis_config("Time (min)")); 
+        fig3.update_yaxes(**get_axis_config("Weight (kg)"), range=[weight_min - weight_margin, weight_max + weight_margin])
         fig3.write_image(os.path.join(run_dir, f'{save_prefix}_weight.png'), width=1200, height=800, scale=2)
         
         # 4. Lever Position
@@ -1316,7 +1325,7 @@ def plot_climb_performance_detailed(climb_result, climb_info: dict = None) -> No
     climb_thrust_N = np.asarray(climb_result.T_total_N, float)
     climb_drag_N = np.asarray(climb_result.D_N, float)
     climb_fuel_kg = np.asarray(climb_result.cumFuel_kg, float)
-    climb_weight_kg = INITIAL_MASS_KG - climb_fuel_kg
+    climb_weight_kg = np.asarray(climb_result.mass_kg, float)  # Use actual dynamic weight from DP optimization
     
     # Calculate fuel flow rate (kg/h) - approximate from fuel consumption
     fuel_flow_kgh = []
@@ -1505,7 +1514,12 @@ def plot_climb_performance_detailed(climb_result, climb_info: dict = None) -> No
     fig.update_yaxes(**get_axis_config("Force (kN)"), row=1, col=2)
     
     fig.update_xaxes(**get_axis_config("Time (min)"), row=2, col=1)
-    fig.update_yaxes(**get_axis_config("Weight (kg)"), row=2, col=1)
+    # Set y-axis range to zoom in on weight changes for better visibility
+    weight_min, weight_max = np.min(climb_weight_kg), np.max(climb_weight_kg)
+    weight_margin = (weight_max - weight_min) * 0.2  # Add 20% margin
+    fig.update_yaxes(**get_axis_config("Weight (kg)"), 
+                     range=[weight_min - weight_margin, weight_max + weight_margin], 
+                     row=2, col=1)
     
     fig.update_xaxes(**get_axis_config("Time (min)"), row=2, col=2)
     fig.update_yaxes(**get_axis_config("Lever Position (%)"), row=2, col=2)
@@ -1552,7 +1566,11 @@ def plot_climb_performance_detailed(climb_result, climb_info: dict = None) -> No
             line=dict(color=Colors.CLIMB, width=LineStyles.THICK), fill='tozeroy', fillcolor='rgba(65, 105, 225, 0.15)',
             hovertemplate='<b>Climb</b><br>Time: %{x:.1f} min<br>Weight: %{y:.0f} kg<extra></extra>'))
         fig3.update_layout(**get_standard_layout("CLIMB PERFORMANCE - Weight Evolution", subtitle, height=600, width=900))
-        fig3.update_xaxes(**get_axis_config("Time (min)")); fig3.update_yaxes(**get_axis_config("Weight (kg)"))
+        # Set y-axis range to zoom in on weight changes for better visibility
+        weight_min, weight_max = np.min(climb_weight_kg), np.max(climb_weight_kg)
+        weight_margin = (weight_max - weight_min) * 0.2  # Add 20% margin
+        fig3.update_xaxes(**get_axis_config("Time (min)")); 
+        fig3.update_yaxes(**get_axis_config("Weight (kg)"), range=[weight_min - weight_margin, weight_max + weight_margin])
         fig3.write_image(os.path.join(run_dir, f'{save_prefix}_weight.png'), width=1200, height=800, scale=2)
         
         # 4. Lever Position

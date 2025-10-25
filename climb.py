@@ -962,8 +962,9 @@ class ClimbingCore:
             # Create lever grid
             lever_grid = np.linspace(0.0, 1.0, L)
             
-            # Initialize 3D cost matrix and predecessor array
+            # Initialize 3D cost matrix, weight matrix, and predecessor array
             F = np.full((K, I, L), np.inf)
+            weight_matrix = np.full((K, I, L), np.nan)  # Track weight at each state
             prv = np.full((K, I, L, 3), -1, dtype=int)  # [alt_idx, mach_idx, lever_idx]
         
             # Set starting Mach and lever
@@ -993,10 +994,11 @@ class ClimbingCore:
                 altitude_fraction = H_sched[0] / TARGET_ALT_M if TARGET_ALT_M > 0 else 0.0
                 
                 cost = ClimbingCore.compute_3d_cost(aero, eng, H_sched[0], M_grid[start_mach_idx], lever_grid[start_lever_idx],
-                                                  target_mach=target_mach, prev_mach=None, altitude_fraction=altitude_fraction)
+                                                  target_mach=target_mach, prev_mach=None, altitude_fraction=altitude_fraction, mass_kg=INITIAL_MASS_KG)
                 if np.isfinite(cost) and cost > 0:
                     F[0, start_mach_idx, start_lever_idx] = 0.0  # Starting cost is 0
-                    dbg(f"[3D-DP] Starting point verified: h={H_sched[0]:.0f}m, M={M_grid[start_mach_idx]:.3f}, lever={lever_grid[start_lever_idx]:.3f}")
+                    weight_matrix[0, start_mach_idx, start_lever_idx] = INITIAL_MASS_KG  # Starting weight
+                    dbg(f"[3D-DP] Starting point verified: h={H_sched[0]:.0f}m, M={M_grid[start_mach_idx]:.3f}, lever={lever_grid[start_lever_idx]:.3f}, weight={INITIAL_MASS_KG:.0f}kg")
                 else:
                     raise RuntimeError(f"[3D-DP] Starting point not feasible: h={H_sched[0]:.0f}m, M={M_grid[start_mach_idx]:.3f}, lever={lever_grid[start_lever_idx]:.3f}")
             else:
@@ -1025,6 +1027,11 @@ class ClimbingCore:
                     
                     if not np.isfinite(F[k, i, j]):
                         continue
+                    
+                    # Get current weight at this state
+                    current_weight = weight_matrix[k, i, j]
+                    if not np.isfinite(current_weight) or current_weight <= 0:
+                        continue
                         
                     current_mach = M_grid[i]
                     current_lever = lever_grid[j]
@@ -1050,7 +1057,7 @@ class ClimbingCore:
                                     next_lever >= 0.0 and 
                                     next_lever <= 1.0):
                                     
-                                    # Compute costs for both states with penalties
+                                    # Compute costs for both states with penalties using dynamic weight
                                     # Calculate altitude fraction for adaptive penalties
                                     current_alt_fraction = current_alt / GridConfig.TARGET_ALT_M if GridConfig.TARGET_ALT_M > 0 else 0.0
                                     next_alt_fraction = next_alt / GridConfig.TARGET_ALT_M if GridConfig.TARGET_ALT_M > 0 else 0.0
@@ -1058,12 +1065,13 @@ class ClimbingCore:
                                     # Get previous Mach for smoothness penalty
                                     prev_mach = M_grid[i] if k > 0 else None
                                     
+                                    # Use current weight for cost calculations (fuel burn will update weight)
                                     current_cost = ClimbingCore.compute_3d_cost(aero, eng, current_alt, current_mach, current_lever,
                                                                              target_mach=target_mach, prev_mach=prev_mach, 
-                                                                             altitude_fraction=current_alt_fraction)
+                                                                             altitude_fraction=current_alt_fraction, mass_kg=current_weight)
                                     next_cost = ClimbingCore.compute_3d_cost(aero, eng, next_alt, next_mach, next_lever,
                                                                           target_mach=target_mach, prev_mach=current_mach, 
-                                                                          altitude_fraction=next_alt_fraction)
+                                                                          altitude_fraction=next_alt_fraction, mass_kg=current_weight)
                                     
                                     if (np.isfinite(current_cost) and np.isfinite(next_cost) and
                                         current_cost > 0 and next_cost > 0):
@@ -1072,9 +1080,18 @@ class ClimbingCore:
                                         step_cost = 0.5 * (current_cost + next_cost) * dh
                                         total_cost = F[k, i, j] + step_cost
                                         
+                                        # Calculate fuel burned during this step
+                                        fuel_burned = step_cost
+                                        next_weight = current_weight - fuel_burned
+                                        
+                                        # Ensure weight doesn't go negative
+                                        if next_weight <= 0:
+                                            continue
+                                        
                                         # Update if this path is better
                                         if total_cost < F[k + 1, next_mach_idx, next_lever_idx]:
                                             F[k + 1, next_mach_idx, next_lever_idx] = total_cost
+                                            weight_matrix[k + 1, next_mach_idx, next_lever_idx] = next_weight
                                             prv[k + 1, next_mach_idx, next_lever_idx] = [k, i, j]
                                             feasible_count += 1
             
@@ -1116,6 +1133,7 @@ class ClimbingCore:
             path_mach = []
             path_lever = []
             path_costs = []
+            path_weights = []
             
             current_state = [final_alt_idx, final_mach_idx, final_lever_idx]
             
@@ -1126,6 +1144,7 @@ class ClimbingCore:
                 path_mach.append(M_grid[mach_idx])
                 path_lever.append(lever_grid[lever_idx])
                 path_costs.append(F[alt_idx, mach_idx, lever_idx])
+                path_weights.append(weight_matrix[alt_idx, mach_idx, lever_idx])
                 
                 # Debug: Check for altitude jumps
                 if len(path_alt) > 1:
@@ -1144,11 +1163,12 @@ class ClimbingCore:
             path_mach = path_mach[::-1]
             path_lever = path_lever[::-1]
             path_costs = path_costs[::-1]
+            path_weights = path_weights[::-1]
             
-            # Debug: Show altitude progression
+            # Debug: Show altitude progression with weight
             dbg(f"[3D-DP] Path altitude progression:")
             for i in range(min(10, len(path_alt))):  # Show first 10 points
-                dbg(f"  Step {i}: {path_alt[i]:.0f}m, M={path_mach[i]:.3f}, lever={path_lever[i]:.3f}")
+                dbg(f"  Step {i}: {path_alt[i]:.0f}m, M={path_mach[i]:.3f}, lever={path_lever[i]:.3f}, weight={path_weights[i]:.0f}kg")
             if len(path_alt) > 10:
                 dbg(f"  ... (showing first 10 of {len(path_alt)} points)")
             
@@ -1163,6 +1183,7 @@ class ClimbingCore:
             alt_array = np.array(path_alt)
             mach_array = np.array(path_mach)
             lever_array = np.array(path_lever)
+            weight_array = np.array(path_weights)
             
             # Calculate time and fuel increments
             n_segments = len(alt_array) - 1  # Number of segments between points
@@ -1173,25 +1194,27 @@ class ClimbingCore:
                 h_curr, h_next = alt_array[i], alt_array[i + 1]
                 M_curr, M_next = mach_array[i], mach_array[i + 1]
                 lever_curr, lever_next = lever_array[i], lever_array[i + 1]
+                weight_curr, weight_next = weight_array[i], weight_array[i + 1]
                 
                 # Average values for this segment
                 h_avg = 0.5 * (h_curr + h_next)
                 M_avg = 0.5 * (M_curr + M_next)
                 lever_avg = 0.5 * (lever_curr + lever_next)
+                weight_avg = 0.5 * (weight_curr + weight_next)  # Use average weight for segment
                 
-                # Compute segment properties
+                # Compute segment properties with dynamic weight
                 a = a_from_altitude(h_avg)
                 V = M_avg * a
                 D = aero.get_drag(M_avg, h_avg)
                 T_per = eng.thrust_with_lever(lever_avg, M_avg, h_avg)
                 T_tot = T_per * SystemConfiguration.N_ENGINES
-                Ps = ((T_tot - D) * V) / (INITIAL_MASS_KG * G_C)
+                Ps = ((T_tot - D) * V) / (weight_avg * G_C)  # Use dynamic weight
                 
                 if Ps > 0:
                     # Handle both vertical and horizontal moves
                     if abs(h_next - h_curr) > 1.0:  # Vertical move (altitude change)
                         dt_array[i] = (h_next - h_curr) / Ps
-                        dbg(f"[3D-DP] Vertical move {i}: h={h_curr:.0f}->{h_next:.0f}m, dt={dt_array[i]:.3f}s")
+                        dbg(f"[3D-DP] Vertical move {i}: h={h_curr:.0f}->{h_next:.0f}m, dt={dt_array[i]:.3f}s, weight={weight_avg:.0f}kg")
                     else:  # Horizontal move (same altitude, different Mach/lever)
                         # Calculate time based on velocity change
                         V_curr = M_curr * a
@@ -1199,7 +1222,7 @@ class ClimbingCore:
                         if abs(V_next - V_curr) > 0.1:  # Significant velocity change
                             # Use acceleration rate: dt = dV / a_accel
                             # Where a_accel = (T_tot - D) / mass
-                            a_accel = (T_tot - D) / INITIAL_MASS_KG
+                            a_accel = (T_tot - D) / weight_avg  # Use dynamic weight
                             if a_accel > 0:
                                 dt_array[i] = abs(V_next - V_curr) / a_accel
                                 dbg(f"[3D-DP] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, V={V_curr:.1f}->{V_next:.1f}m/s, dt={dt_array[i]:.3f}s")
@@ -1303,7 +1326,7 @@ class ClimbingCore:
                 lever=lever_array,
                 T_per_engine_N=np.array([eng.thrust_with_lever(lever, mach, alt) 
                                         for alt, mach, lever in zip(alt_array, mach_array, lever_array)]),
-                mass_kg=np.full_like(alt_array, INITIAL_MASS_KG),  # Constant mass
+                mass_kg=weight_array,  # Dynamic weight accounting for fuel burn
                 thrust_limited=np.isclose(lever_array, 1.0, atol=1e-3),
                 dt_s=dt_array_full,
                 dFuel_kg=dF_array_full,
@@ -1327,7 +1350,7 @@ class ClimbingCore:
     def compute_3d_cost(aero: AeroTables, eng: EngineWrapper, 
                        altitude: float, mach: float, lever: float,
                        target_mach: float = None, prev_mach: float = None,
-                       altitude_fraction: float = None) -> float:
+                       altitude_fraction: float = None, mass_kg: float = None) -> float:
         """
         Compute fuel cost density J = mdot/Ps + penalties for a given 3D state.
         
@@ -1340,11 +1363,16 @@ class ClimbingCore:
             target_mach: Target Mach number for penalty calculation
             prev_mach: Previous Mach number for smoothness penalty
             altitude_fraction: Fraction of altitude progress for adaptive penalties
+            mass_kg: Aircraft mass in kg (defaults to INITIAL_MASS_KG for backward compatibility)
         
         Returns:
             float: Fuel cost density in kg/m + penalties, or inf if infeasible
         """
         try:
+            # Use provided mass or default to initial mass for backward compatibility
+            if mass_kg is None:
+                mass_kg = INITIAL_MASS_KG
+            
             # Get atmospheric properties
             a = a_from_altitude(altitude)
             V = mach * a
@@ -1361,8 +1389,8 @@ class ClimbingCore:
             if not np.isfinite(D) or D < 0:
                 return np.inf
             
-            # Calculate specific excess power
-            W = INITIAL_MASS_KG * G_C
+            # Calculate specific excess power using dynamic mass
+            W = mass_kg * G_C
             Ps = ((T_tot - D) * V) / W
             
             if not np.isfinite(Ps) or Ps <= 0:
@@ -1903,9 +1931,9 @@ def solve_dp_3d_fixed_mass(aero: AeroTables, eng: EngineWrapper,
 def compute_3d_cost(aero: AeroTables, eng: EngineWrapper, 
                    altitude: float, mach: float, lever: float,
                    target_mach: float = None, prev_mach: float = None,
-                   altitude_fraction: float = None) -> float:
+                   altitude_fraction: float = None, mass_kg: float = None) -> float:
     """Backward compatibility wrapper for ClimbingCore.compute_3d_cost"""
-    return ClimbingCore.compute_3d_cost(aero, eng, altitude, mach, lever, target_mach, prev_mach, altitude_fraction)
+    return ClimbingCore.compute_3d_cost(aero, eng, altitude, mach, lever, target_mach, prev_mach, altitude_fraction, mass_kg)
 
 # Backward compatibility for Strategy System classes
 StrategyProfiles = ClimbingCore.StrategyManager.StrategyProfiles

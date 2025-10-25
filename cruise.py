@@ -247,7 +247,7 @@ def extract_cruise_initial_state(climb_result: ClimbingCore.MinFuelSchedule,
     
     Args:
         climb_result: Results from 3D DP climb optimization
-        initial_mass_kg: Initial aircraft mass before climb
+        initial_mass_kg: Initial aircraft mass before climb (used only for fuel consumed calculation)
         
     Returns:
         CruiseInitialState object with extracted parameters
@@ -258,13 +258,15 @@ def extract_cruise_initial_state(climb_result: ClimbingCore.MinFuelSchedule,
     fuel_consumed_climb = float(climb_result.cumFuel_kg[-1]) if len(climb_result.cumFuel_kg) > 0 else 0.0
     climb_time = float(np.sum(climb_result.dt_s)) if len(climb_result.dt_s) > 0 else 0.0
     
-    # Calculate current weight after climb
-    current_weight = initial_mass_kg - fuel_consumed_climb
+    # Get actual weight at end of climb from dynamic weight tracking
+    # This is more accurate than calculating by subtraction
+    current_weight = float(climb_result.mass_kg[-1]) if len(climb_result.mass_kg) > 0 else (initial_mass_kg - fuel_consumed_climb)
     
     print(f"[CRUISE] Extracted initial state:")
     print(f"  Altitude: {final_altitude:.0f} m")
     print(f"  Mach: {final_mach:.3f}")
     print(f"  Weight: {current_weight:.1f} kg (consumed {fuel_consumed_climb:.1f} kg in climb)")
+    print(f"  Initial weight: {initial_mass_kg:.1f} kg")
     print(f"  Climb time: {climb_time:.0f} s ({climb_time/60:.1f} min)")
     
     return CruiseInitialState(
