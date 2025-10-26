@@ -23,7 +23,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from aircraft_config import (
-    INITIAL_MASS_KG, AERO_XLSX, AERO_SHEET, ENGINE_STUB_PATH,
+    INITIAL_MASS_KG, ENGINE_STUB_PATH,
     AtmosphericProperties, G_C
 )
 from mission_config import (
@@ -37,11 +37,12 @@ from mission_config import (
 )
 import climb
 from climb import (
-    AeroTables, EngineWrapper, compute_sep_grid_maxlever,
+    EngineWrapper, compute_sep_grid_maxlever,
     MACH_COLS, Y_AXIS_TOP_M, ALT_STEP_M,
     TARGET_ALT_M, N_PLOT_STEPS, dbg, compute_full_engine_envelope,
     ClimbingCore
 )
+from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 import cruise
 from cruise import run_cruise_simulation
 from cruise_plotting import plot_cruise_performance_detailed
@@ -69,7 +70,7 @@ def main():
     print(f"[MISSION] Cruise distance: {CRUISE_DISTANCE_KM:.0f} km")
     
     print("[READ] Aerodynamics (Excel Sheet4) …")
-    aero = AeroTables(AERO_XLSX, AERO_SHEET)
+    aero = PyAerodynamicsWrapper()
 
     # Dense grids for contours
     M_min, M_max = float(aero.mach_grid[0]), float(aero.mach_grid[-1])
@@ -84,7 +85,7 @@ def main():
 
     print("[ENGINE] Loading engine stub …")
     
-    eng = EngineWrapper(ENGINE_STUB_PATH)
+    eng = EngineWrapper("lls/stubs/engines/PW1127G-JM")
 
     # Performance optimization: Pre-compute grids for caching
     print("[OPTIMIZATION] Pre-computing engine and drag grids for performance...")
@@ -485,13 +486,19 @@ def main():
             
             # Create combined performance analysis
             print(f"\n[PLOT] Creating combined performance analysis...")
-            plot_combined_performance_analysis(
-                climb_result=dp_sched,
-                cruise_result=cruise_results,
-                descent_result=descent_result,
-                initial_mass_kg=INITIAL_MASS_KG,
-                save_html='combined_performance_analysis.html'
-            )
+            try:
+                plot_combined_performance_analysis(
+                    climb_result=dp_sched,
+                    cruise_result=cruise_results,
+                    descent_result=descent_result,
+                    initial_mass_kg=INITIAL_MASS_KG,
+                    save_html='combined_performance_analysis.html'
+                )
+                print(f"[PLOT] Combined performance analysis completed successfully!")
+            except Exception as e:
+                print(f"[ERROR] Combined performance analysis failed: {str(e)}")
+                import traceback
+                traceback.print_exc()
             
         except Exception as e:
             print(f"[ERROR] Descent simulation failed: {str(e)}")

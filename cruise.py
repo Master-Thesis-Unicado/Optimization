@@ -8,7 +8,8 @@ import time
 from atmosphere import Atmosphere
 from aircraft_config import N_ENGINES, isa_properties, G_C
 import climb
-from climb import AeroTables, EngineWrapper, ClimbingCore
+from climb import EngineWrapper, ClimbingCore
+from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 
 # ========= CRUISE CONSTANTS AND SETTINGS =============================================
 
@@ -327,7 +328,7 @@ def find_required_lever(engine: EngineWrapper, required_thrust_N: float,
 
 def simulate_steady_cruise(initial_state: CruiseInitialState,
                           target_distance_km: float,
-                          aero: AeroTables,
+                          aero: PyAerodynamicsWrapper,
                           engine: EngineWrapper,
                           time_step_s: float = DEFAULT_TIME_STEP_S) -> CruiseResults:
     """
@@ -518,7 +519,7 @@ def simulate_steady_cruise(initial_state: CruiseInitialState,
 def run_cruise_simulation(climb_result: ClimbingCore.MinFuelSchedule, 
                          initial_mass_kg: float,
                          target_distance_km: float,
-                         aero: AeroTables,
+                         aero: PyAerodynamicsWrapper,
                          engine: EngineWrapper,
                          time_step_s: float = DEFAULT_TIME_STEP_S,
                          create_plots: bool = True) -> CruiseResults:

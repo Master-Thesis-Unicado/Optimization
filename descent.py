@@ -19,7 +19,8 @@ from aircraft_config import (
 
 # Import necessary components from climb module
 import climb
-from climb import AeroTables, EngineWrapper, dbg, GridAndPlotting
+from climb import EngineWrapper, dbg, GridAndPlotting
+from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 
 # Import cruise module for initial state extraction
 import cruise
@@ -134,9 +135,9 @@ def calculate_min_descent_mach(altitude_m: float, weight_kg: float,
         - Returns 0.15 as fallback if CLmax is not available
         - Applies reasonable bounds (0.15 to 0.40) to prevent unrealistic values
     """
-    # Use defaults from climb module if not provided
+    # Use defaults if not provided
     if cl_max is None:
-        cl_max = climb.CL_MAX  # Access dynamically from climb module
+        cl_max = 1.4  # Typical CL_MAX for commercial aircraft
     if s_ref_m2 is None:
         s_ref_m2 = S_REF_M2
     if safety_margin is None:
@@ -358,7 +359,7 @@ class DescentCore:
         """3D Dynamic Programming optimizer for minimum fuel descent with penalty guidance."""
         
         @staticmethod
-        def solve_descent_dp(aero: AeroTables, eng: EngineWrapper,
+        def solve_descent_dp(aero: PyAerodynamicsWrapper, eng: EngineWrapper,
                             M_grid: np.ndarray, H_sched: np.ndarray,
                             initial_state: DescentInitialState,
                             lever_samples: int = 10,
@@ -714,7 +715,7 @@ class DescentCore:
 
     # ========= COST COMPUTATION (Similar to ClimbingCore.compute_3d_cost) =========
     @staticmethod
-    def compute_descent_cost(aero: AeroTables, eng: EngineWrapper,
+    def compute_descent_cost(aero: PyAerodynamicsWrapper, eng: EngineWrapper,
                             altitude: float, mach: float, lever: float,
                             mass_kg: float,
                             target_mach: float = None,
@@ -795,7 +796,7 @@ class DescentCore:
     
     # ========= ENGINE ENVELOPE SYSTEM =========
     @staticmethod
-    def compute_full_descent_envelope(aero: AeroTables, eng: EngineWrapper,
+    def compute_full_descent_envelope(aero: PyAerodynamicsWrapper, eng: EngineWrapper,
                                       M_grid: np.ndarray, H_sched: np.ndarray,
                                       initial_weight_kg: float,
                                       lever_samples: int = 50,
@@ -919,7 +920,7 @@ def extract_descent_initial_state(cruise_results: CruiseResults,
 def run_descent_dp_optimization(cruise_results: CruiseResults,
                                 climb_fuel_kg: float,
                                 climb_time_s: float,
-                                aero: AeroTables,
+                                aero: PyAerodynamicsWrapper,
                                 engine: EngineWrapper,
                                 target_altitude_m: float = None,
                                 target_mach: float = None,
@@ -1027,7 +1028,7 @@ TARGET_MACH_TOLERANCE = DescentCore.PenaltySystem.TARGET_MACH_TOLERANCE
 PenaltySystem = DescentCore.PenaltySystem
 
 # Backward compatibility functions
-def compute_descent_cost(aero: AeroTables, eng: EngineWrapper, 
+def compute_descent_cost(aero: PyAerodynamicsWrapper, eng: EngineWrapper, 
                         altitude: float, mach: float, lever: float,
                         mass_kg: float,
                         target_mach: float = None,
@@ -1049,7 +1050,7 @@ def compute_full_descent_envelope(aero, eng, M_grid, H_sched, initial_weight_kg,
     """Backward compatibility wrapper for DescentCore.compute_full_descent_envelope"""
     return DescentCore.compute_full_descent_envelope(aero, eng, M_grid, H_sched, initial_weight_kg, lever_samples, target_mach)
 
-def solve_descent_dp(aero: AeroTables, eng: EngineWrapper,
+def solve_descent_dp(aero: PyAerodynamicsWrapper, eng: EngineWrapper,
                     M_grid: np.ndarray, H_sched: np.ndarray,
                     initial_state: DescentInitialState,
                     lever_samples: int = 10,

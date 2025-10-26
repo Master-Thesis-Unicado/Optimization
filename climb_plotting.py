@@ -89,10 +89,11 @@ def plot_strategies_interactive(
     # CLmax + MMO + operating fill
     def _compute_mstall_curve():
         W = INITIAL_MASS_KG * g
+        CL_MAX = 1.4  # Typical CL_MAX for commercial aircraft
         out = np.full_like(H_plot, np.nan, float)
         for k, h in enumerate(H_plot):
             _, _, rho = isa_properties(float(h)); a = a_from_altitude(float(h))
-            q_req = W / (S_REF_M2 * 2.1)
+            q_req = W / (S_REF_M2 * CL_MAX)
             if rho > 0:
                 V = np.sqrt(2*q_req/max(rho,1e-12))
                 out[k] = V / max(a,1e-12)
@@ -116,7 +117,7 @@ def plot_strategies_interactive(
         for t in ax_left.clabel(cs_pos, fmt=lambda v: f"Ps={v:g}", inline=True, fontsize=8):
             t.set_path_effects([pe.withStroke(linewidth=3, foreground="white")])
     try:
-        cs0 = ax_left.contour(Mm, Hm, Ps_base, levels=[0.0], colors="k", linewidths=2.0, zorder=5)
+        cs0 = ax_left.contour(Mm, Hm, Ps_base, levels=[0.0], colors="k", linestyles="--", linewidths=2.0, zorder=5)
         ax_left.clabel(cs0, fmt={0.0: "Ps=0"}, inline=True, fontsize=9)
     except Exception:
         pass
@@ -373,13 +374,13 @@ def plot_J_3d_plotly(M_grid, H_sched, lever_grid, J_grid_3d, min_path=None, titl
     
     # 2. CLmax (stall) limit - compute stall curve
     def _compute_mstall_curve():
-        import climb  # Import at runtime to get updated CL_MAX
         W = INITIAL_MASS_KG * G_C
+        CL_MAX = 1.4  # Default CL_MAX for commercial aircraft
         out = np.full_like(H_sched, np.nan, float)
         for k, h in enumerate(H_sched):
             _, _, rho = isa_properties(float(h))
             a = a_from_altitude(float(h))
-            q_req = W / (S_REF_M2 * climb.CL_MAX)
+            q_req = W / (S_REF_M2 * CL_MAX)
             if rho > 0:
                 V = np.sqrt(2*q_req/max(rho,1e-12))
                 out[k] = V / max(a,1e-12)

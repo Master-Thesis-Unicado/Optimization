@@ -13,12 +13,15 @@ import pyengine as engine
 # Import aircraft configuration from centralized module
 from aircraft_config import (
     SystemConfiguration, AtmosphericProperties,
-    AERO_XLSX, AERO_SHEET, ENGINE_STUB_PATH,
+    ENGINE_STUB_PATH,
     N_ENGINES, INITIAL_MASS_KG, S_REF_M2,
-    ENGINE_ALT_CLIP, M_MIN_DEFAULT, M_MIN_EFFECTIVE, M_MMO, CL_MAX,
+    ENGINE_ALT_CLIP, M_MIN_DEFAULT, M_MIN_EFFECTIVE, M_MMO,
     G_C, DEBUG, AUTO_APPLY_PARAMS_FROM_EXCEL,
     isa_properties, a_from_altitude, _atmospheric_properties
 )
+
+# Import pyaerodynamics wrapper
+from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 
 # =========  3 - ENGINE WRAPPER ========================
 class EngineWrapper:
@@ -129,273 +132,8 @@ class EngineWrapper:
         print(f"[ENGINE-CACHE] Cache stats: {self.get_cache_stats()}")
 
 # =========  4 - AERODYNAMICS SYSTEM =================
-class AeroTables:
-    """
-    Computational system for aerodynamic data retrieval from Excel spreadsheets.
-    
-    This class implements aerodynamic data loading (lift and drag coefficients) from Excel
-    spreadsheets with computational interpolation and caching for mission analysis.
-    The system automatically extracts aircraft parameters from Excel files and may
-    override global configuration settings.
-    
-    Computational Features:
-    - Loads CL (lift coefficient) and drag coefficient tables from Excel with Mach/altitude grids
-    - Implements drag calculation caching based on (Mach number, altitude) for optimization efficiency
-    - Automatically extracts aircraft parameters (S_REF_M2, M_MMO, CL_MAX, etc.) from Excel cells
-    - Pre-computes drag values across parameter grids for optimization algorithms
-    - Employs bilinear interpolation for continuous data interpolation between grid points
-    
-    Excel Format Specification:
-    - Required data blocks: 'CL' and 'Drag' headers with Mach numbers in header row and altitudes [m] in first column
-    - CL_MAX must be specified in cell 10A (row 10, column A)
-    - Optional scalar parameters may be located anywhere in the sheet (e.g., S_REF_M2, M_MMO, TARGET_ALT_M)
-    
-    Implementation:
-        aero = AeroTables("aircraft_data.xlsx", "Sheet4")
-        drag = aero.get_drag(M=0.8, h_m=10000)  # Drag coefficient at Mach 0.8, 10km altitude
-        cl = aero.get_cl(M=0.7, h_m=8000)       # Lift coefficient lookup
-        aero.precompute_drag_grid(M_grid, H_grid)  # Pre-compute for optimization
-    """
-    def __init__(self, xlsx_path: str, sheet: str):
-        self.path = xlsx_path
-        self.sheet = sheet
-        self._M: np.ndarray = np.empty(0)
-        self._H: np.ndarray = np.empty(0)
-        # Initialize drag calculation caching system
-        self._drag_cache = {}
-        self._cache_hits = 0
-        self._cache_misses = 0
-        self._CL: np.ndarray = np.empty((0,0))
-        self._D:  np.ndarray = np.empty((0,0))
-        self.params: Dict[str, Any] = {}
-        self._load()
-
-    @property
-    def mach_grid(self) -> np.ndarray: return self._M
-    @property
-    def alt_grid_m(self) -> np.ndarray: return self._H
-
-    def get_drag(self, M: float, h_m: float) -> float:
-        # Check computational cache for existing drag values
-        cache_key = (round(M, 3), round(h_m, 1))
-        if cache_key in self._drag_cache:
-            self._cache_hits += 1
-            return self._drag_cache[cache_key]
-        
-        # Compute drag value
-        result = float(self._bilinear(M, h_m, self._M, self._H, self._D))
-        
-        # Store drag calculation result in cache
-        self._drag_cache[cache_key] = result
-        self._cache_misses += 1
-        return result
-
-    def get_cl(self, M: float, h_m: float) -> float:
-        return float(self._bilinear(M, h_m, self._M, self._H, self._CL))
-    
-    def get_cache_stats(self) -> dict:
-        """Get cache performance statistics."""
-        total = self._cache_hits + self._cache_misses
-        hit_rate = self._cache_hits / total if total > 0 else 0
-        return {
-            'hits': self._cache_hits,
-            'misses': self._cache_misses,
-            'hit_rate': hit_rate,
-            'cache_size': len(self._drag_cache)
-        }
-    
-    def precompute_drag_grid(self, M_grid: np.ndarray, H_grid: np.ndarray):
-        """Pre-compute drag values for entire grid."""
-        print(f"[DRAG-CACHE] Pre-computing drag grid: {len(M_grid)}×{len(H_grid)} = {len(M_grid)*len(H_grid)} points")
-        start_time = time.time()
-        
-        total_points = len(M_grid) * len(H_grid)
-        computed = 0
-        
-        for h in H_grid:
-            for m in M_grid:
-                cache_key = (round(m, 3), round(h, 1))
-                if cache_key not in self._drag_cache:
-                    self.get_drag(m, h)
-                    computed += 1
-                    
-                    if computed % 500 == 0:
-                        progress = computed / total_points * 100
-                        print(f"[DRAG-CACHE] Progress: {progress:.1f}% ({computed}/{total_points})")
-        
-        elapsed = time.time() - start_time
-        print(f"[DRAG-CACHE] Pre-computation completed in {elapsed:.2f}s")
-        print(f"[DRAG-CACHE] Cache stats: {self.get_cache_stats()}")
-
-    def _load(self):
-        df = pd.read_excel(self.path, sheet_name=self.sheet, header=None, dtype=object)
-
-        def find_all(tok: str):
-            out=[]
-            for i in range(df.shape[0]):
-                for j in range(df.shape[1]):
-                    if str(df.iat[i,j]).strip().lower()==tok.lower():
-                        out.append((i,j))
-            return out
-
-        rCL,_ = find_all("CL")[0]
-        rDR,_ = find_all("Drag")[0]
-        rMach_after_drag = [rc for rc in find_all("Mach") if rc[0] > rDR]
-        rStop = rMach_after_drag[0][0] if rMach_after_drag else df.shape[0]
-
-        def read_block(row_header:int, next_row:int):
-            # read Mach header row starting from column 4
-            mach=[]; j=4; started=False
-            while j<df.shape[1]:
-                v=df.iat[row_header, j]
-                if pd.isna(v) or str(v).strip()=="":
-                    if started: break
-                    j+=1; continue
-                try:
-                    mach.append(float(str(v).replace(",",".")))
-                    started=True
-                except:
-                    if started: break
-                j+=1
-
-            # read altitude column starting from row_header+1
-            alt=[]; i=row_header+1
-            while i<next_row:
-                v=df.iat[i, 0]
-                if pd.isna(v) or str(v).strip()=="": break
-                try:
-                    alt.append(float(str(v).replace(",",".")))
-                except: break
-                i+=1
-
-            # read data block
-            data=np.zeros((len(alt), len(mach)))
-            for ii, a in enumerate(alt):
-                for jj, m in enumerate(mach):
-                    v=df.iat[row_header+1+ii, 4+jj]
-                    try:
-                        data[ii,jj]=float(str(v).replace(",","."))
-                    except:
-                        data[ii,jj]=np.nan
-
-            return np.array(mach), np.array(alt), data
-
-        self._M, self._H, self._CL = read_block(rCL, rDR)
-        _, _, self._D = read_block(rDR, rStop)
-
-        # Parse CL_MAX from specific cell (Sheet4, cell 10A = row 9, col 0)
-        clmax_value = self._parse_clmax_from_cell(df)
-        if clmax_value is not None:
-            self.params["CL_MAX"] = clmax_value
-            dbg(f"[Excel] CL_MAX found in cell 10A: {clmax_value}")
-        else:
-            raise ValueError("CL_MAX value not found in Excel cell 10A. Please ensure cell 10A contains a valid CLmax value.")
-
-        # Parse scalar parameters from the sheet
-        self.params.update(self._parse_scalar_params(df))
-
-        # Apply parameters to globals if enabled
-        if AUTO_APPLY_PARAMS_FROM_EXCEL:
-            _apply_params_to_globals(self.params)
-
-        # Fill NaN values in data arrays
-        self._CL = _nanfill2d(self._CL)
-        self._D = _nanfill2d(self._D)
-
-        dbg(f"[Excel] Mach grid read: {self._M}")
-        dbg(f"[Excel] Altitudes (m): {self._H}")
-
-    @staticmethod
-    def _parse_clmax_from_cell(df: pd.DataFrame) -> Optional[float]:
-        """
-        Parse CLmax value from specific cell (Sheet4, cell 10A = row 9, col 0).
-        
-        Args:
-            df: DataFrame containing the Excel sheet data
-            
-        Returns:
-            CLmax value if found and valid, None otherwise
-        """
-        try:
-            # Cell 10A = row 9 (0-indexed), column 0 (0-indexed)
-            if df.shape[0] > 9 and df.shape[1] > 0:
-                value = df.iat[9, 0]
-                if value is not None and str(value).strip():
-                    clmax_val = float(str(value).replace(",", "."))
-                    if np.isfinite(clmax_val) and clmax_val > 0:
-                        return clmax_val
-        except Exception as e:
-            dbg(f"[Excel] Error parsing CL_MAX from cell 10A: {e}")
-        return None
-
-    @staticmethod
-    def _parse_scalar_params(df: pd.DataFrame) -> Dict[str, Any]:
-        """
-        Search the entire sheet for known scalar parameter keys and read
-        the numeric value from the right neighbor OR the cell below.
-        Keys are case-insensitive; common aliases are supported.
-        """
-        key_aliases = {
-            "s_ref_m2": "S_REF_M2",
-            "s_ref": "S_REF_M2",
-            "sref": "S_REF_M2",
-            "wing_area": "S_REF_M2",
-            "m_mmo": "M_MMO",
-            "mmo": "M_MMO",
-            "cl_max": "CL_MAX",
-            "clmax": "CL_MAX",
-            "target_alt_m": "TARGET_ALT_M",
-            "y_axis_top_m": "Y_AXIS_TOP_M",
-            "alt_step_m": "ALT_STEP_M",
-            "mach_cols": "MACH_COLS",
-            "n_plot_steps": "N_PLOT_STEPS",
-            "e_dot_cmd": "E_DOT_CMD",
-        }
-        params = {}
-        for i in range(df.shape[0]):
-            for j in range(df.shape[1]):
-                cell_val = str(df.iat[i, j]).strip().lower()
-                if cell_val in key_aliases:
-                    canon = key_aliases[cell_val]
-                    # Try right neighbor first, then cell below
-                    for di, dj in [(0, 1), (1, 0)]:
-                        if i + di < df.shape[0] and j + dj < df.shape[1]:
-                            try:
-                                val_str = str(df.iat[i + di, j + dj]).replace(",", ".")
-                                val = float(val_str)
-                                if np.isfinite(val):
-                                    params[canon] = val
-                                    dbg(f"[Excel] Found {canon} = {val}")
-                                    break
-                            except:
-                                continue
-                    # Special handling for integer parameters
-                    if canon in params:
-                        if canon in ("MACH_COLS", "N_PLOT_STEPS"):
-                            params[canon] = int(round(params[canon]))
-                        else:
-                            params[canon] = float(params[canon])
-        return params
-
-    @staticmethod
-    def _bilinear(x: float, y: float, xs: np.ndarray, ys: np.ndarray, Z: np.ndarray) -> float:
-        """Bilinear interpolation in 2D array Z with coordinates xs, ys."""
-        if len(xs) == 0 or len(ys) == 0:
-            return np.nan
-        i0 = max(0, min(len(xs) - 2, np.searchsorted(xs, x) - 1))
-        i1 = i0 + 1
-        j0 = max(0, min(len(ys) - 2, np.searchsorted(ys, y) - 1))
-        j1 = j0 + 1
-        if i1 >= len(xs) or j1 >= len(ys):
-            return np.nan
-        tx = (x - xs[i0]) / (xs[i1] - xs[i0]) if abs(xs[i1] - xs[i0]) > 1e-12 else 0.0
-        if abs(ys[j1] - ys[j0]) < 1e-12:
-            ty = 0.0
-        else:
-            ty = (y - ys[j0]) / (ys[j1] - ys[j0])
-        z00 = Z[j0, i0]; z01 = Z[j0, i1]; z10 = Z[j1, i0]; z11 = Z[j1, i1]
-        z0 = z00 * (1 - tx) + z01 * tx; z1 = z10 * (1 - tx) + z11 * tx
-        return float(z0 * (1 - ty) + z1 * ty)
+# Note: AeroTables class replaced with PyAerodynamicsWrapper from pyaerodynamics_wrapper.py
+# The PyAerodynamicsWrapper provides the same interface as AeroTables but uses pyaerodynamics library
 
 # =========  5 - CLIMBING CORE SYSTEM =====================
 class ClimbingCore:
@@ -606,7 +344,7 @@ class ClimbingCore:
             return out
         
         @staticmethod
-        def simulate_strategy_path(*, label: str, aero: AeroTables, eng: EngineWrapper,
+        def simulate_strategy_path(*, label: str, aero: PyAerodynamicsWrapper, eng: EngineWrapper,
                                   mass0_kg: float, h0_m: float, V0_ms: float,
                                   target_alt_m: float, dt: float,
                                   strategy_fn: Callable[[float,float,Optional[float]], tuple],
@@ -930,7 +668,7 @@ class ClimbingCore:
         """Handles 3D dynamic programming optimization for minimum fuel climb paths."""
         
         @staticmethod
-        def solve_3d_fixed_mass(aero: AeroTables, eng: EngineWrapper,
+        def solve_3d_fixed_mass(aero: PyAerodynamicsWrapper, eng: EngineWrapper,
                                 M_grid: np.ndarray, H_sched: np.ndarray,
                                 lever_samples: int = 10,
                                 target_mach: float = None,
@@ -1347,7 +1085,7 @@ class ClimbingCore:
             return schedule, info
     
     @staticmethod
-    def compute_3d_cost(aero: AeroTables, eng: EngineWrapper, 
+    def compute_3d_cost(aero: PyAerodynamicsWrapper, eng: EngineWrapper, 
                        altitude: float, mach: float, lever: float,
                        target_mach: float = None, prev_mach: float = None,
                        altitude_fraction: float = None, mass_kg: float = None) -> float:
@@ -1567,7 +1305,7 @@ class ClimbingCore:
     
     # ========= ENGINE ENVELOPE SYSTEM =========
     @staticmethod
-    def compute_full_engine_envelope(aero: AeroTables, eng: EngineWrapper, M_grid: np.ndarray, 
+    def compute_full_engine_envelope(aero: PyAerodynamicsWrapper, eng: EngineWrapper, M_grid: np.ndarray, 
                                    H_sched: np.ndarray, lever_samples: int = 50):
         """
         Compute the full engine envelope showing all possible J points (fuel cost density)
@@ -1654,7 +1392,7 @@ class ClimbingCore:
             a = atmospheric_props.get_speed_of_sound(float(alt))
             V = mach * a
             W = INITIAL_MASS_KG * G_C
-            q_req = W / (S_REF_M2 * CL_MAX)
+            q_req = W / (S_REF_M2 * aero.cl_max)
             
             if rho > 0:
                 V_stall = np.sqrt(2 * q_req / rho)
@@ -1748,7 +1486,7 @@ class GridAndPlotting:
     """Handles computational grid generation and data preparation for visualization."""
     
     @staticmethod
-    def compute_sep_grid_maxlever(aero: AeroTables, engine: EngineWrapper, ref_mass_kg: float,
+    def compute_sep_grid_maxlever(aero: PyAerodynamicsWrapper, engine: EngineWrapper, ref_mass_kg: float,
                                   M_grid: np.ndarray | None = None,
                                   H_grid: np.ndarray | None = None):
         """Compute specific excess power Ps = ((T-D)V)/W at maximum lever for visualization backgrounds."""
@@ -1835,7 +1573,7 @@ class GridAndPlotting:
 _grid_and_plotting = GridAndPlotting()
 
 # Backward compatibility functions
-def compute_sep_grid_maxlever(aero: AeroTables, engine: EngineWrapper, ref_mass_kg: float,
+def compute_sep_grid_maxlever(aero: PyAerodynamicsWrapper, engine: EngineWrapper, ref_mass_kg: float,
                               M_grid: np.ndarray | None = None,
                               H_grid: np.ndarray | None = None):
     """Compute specific excess power Ps = ((T-D)V)/W at maximum lever for visualization backgrounds."""
@@ -1854,7 +1592,7 @@ class PlottingConfig:
     # Specific excess power contour levels for visualization
     PS_LEVELS = np.array(
         [-30,-25,-20,-15,-12,-10,-8,-6,-4,-2,-1,-0.5,
-          0.5,1,2,3,4,5,6,8,10,12,15,20,25,30,35,40],
+          0.5,1,2,3,4,5,6,8,10,12,15,20,24,25],
         dtype=float
     )
     
@@ -1917,7 +1655,7 @@ def compute_lever_penalty(current_lever: float, altitude_fraction: float = None)
     return ClimbingCore.PenaltySystem.compute_lever_penalty(current_lever, altitude_fraction)
 
 # Backward compatibility for 3D Dynamic Programming functions
-def solve_dp_3d_fixed_mass(aero: AeroTables, eng: EngineWrapper,
+def solve_dp_3d_fixed_mass(aero: PyAerodynamicsWrapper, eng: EngineWrapper,
                           M_grid: np.ndarray, H_sched: np.ndarray,
                           lever_samples: int = 10,
                           target_mach: float = None,
@@ -1928,7 +1666,7 @@ def solve_dp_3d_fixed_mass(aero: AeroTables, eng: EngineWrapper,
     return ClimbingCore.solve_dp_3d_fixed_mass(aero, eng, M_grid, H_sched, lever_samples, 
                                              target_mach, target_mach_tolerance, start_mach, start_lever)
 
-def compute_3d_cost(aero: AeroTables, eng: EngineWrapper, 
+def compute_3d_cost(aero: PyAerodynamicsWrapper, eng: EngineWrapper, 
                    altitude: float, mach: float, lever: float,
                    target_mach: float = None, prev_mach: float = None,
                    altitude_fraction: float = None, mass_kg: float = None) -> float:
@@ -1940,282 +1678,16 @@ StrategyProfiles = ClimbingCore.StrategyManager.StrategyProfiles
 StrategyRun = ClimbingCore.EnergyCalculator.StrategyRun
 
 # Backward compatibility wrappers
-def compute_full_engine_envelope(aero, eng, M_grid, H_sched, lever_samples=50):
+def compute_full_engine_envelope(aero: PyAerodynamicsWrapper, eng: EngineWrapper, M_grid: np.ndarray, H_sched: np.ndarray, lever_samples: int = 50):
     """Backward compatibility wrapper for ClimbingCore.compute_full_engine_envelope"""
     return ClimbingCore.compute_full_engine_envelope(aero, eng, M_grid, H_sched, lever_samples)
 
-def check_envelope_exceedance(strategy, aero):
+def check_envelope_exceedance(strategy, aero: PyAerodynamicsWrapper):
     """Backward compatibility wrapper for ClimbingCore.check_envelope_exceedance"""
     return ClimbingCore.check_envelope_exceedance(strategy, aero)
 
 # =========  5 - AERODYNAMICS SYSTEM =================
-class AeroTables:
-    """
-    Excel-driven aerodynamics:
-      - Required blocks: 'CL' and 'Drag' with Mach header row and altitude [m] column.
-      - Optional scalars: one-cell parameters (e.g., S_REF_M2, M_MMO, CL_MAX, TARGET_ALT_M, etc.).
-        These may appear anywhere; if found, they can auto-override module-level defaults.
-    """
-    def __init__(self, xlsx_path: str, sheet: str):
-        self.path = xlsx_path
-        self.sheet = sheet
-        self._M: np.ndarray = np.empty(0)
-        self._H: np.ndarray = np.empty(0)
-        # Initialize drag calculation caching system
-        self._drag_cache = {}
-        self._cache_hits = 0
-        self._cache_misses = 0
-        self._CL: np.ndarray = np.empty((0,0))
-        self._D:  np.ndarray = np.empty((0,0))
-        self.params: Dict[str, Any] = {}
-        self._load()
-
-    @property
-    def mach_grid(self) -> np.ndarray: return self._M
-    @property
-    def alt_grid_m(self) -> np.ndarray: return self._H
-
-    def get_drag(self, M: float, h_m: float) -> float:
-        # Check computational cache for existing drag values
-        cache_key = (round(M, 3), round(h_m, 1))
-        if cache_key in self._drag_cache:
-            self._cache_hits += 1
-            return self._drag_cache[cache_key]
-        
-        # Compute drag value
-        result = float(self._bilinear(M, h_m, self._M, self._H, self._D))
-        
-        # Store drag calculation result in cache
-        self._drag_cache[cache_key] = result
-        self._cache_misses += 1
-        return result
-
-    def get_cl(self, M: float, h_m: float) -> float:
-        return float(self._bilinear(M, h_m, self._M, self._H, self._CL))
-    
-    def get_cache_stats(self) -> dict:
-        """Get cache performance statistics."""
-        total = self._cache_hits + self._cache_misses
-        hit_rate = self._cache_hits / total if total > 0 else 0
-        return {
-            'hits': self._cache_hits,
-            'misses': self._cache_misses,
-            'hit_rate': hit_rate,
-            'cache_size': len(self._drag_cache)
-        }
-    
-    def precompute_drag_grid(self, M_grid: np.ndarray, H_grid: np.ndarray):
-        """Pre-compute drag values for entire grid."""
-        print(f"[DRAG-CACHE] Pre-computing drag grid: {len(M_grid)}×{len(H_grid)} = {len(M_grid)*len(H_grid)} points")
-        start_time = time.time()
-        
-        total_points = len(M_grid) * len(H_grid)
-        computed = 0
-        
-        for h in H_grid:
-            for m in M_grid:
-                cache_key = (round(m, 3), round(h, 1))
-                if cache_key not in self._drag_cache:
-                    self.get_drag(m, h)
-                    computed += 1
-                    
-                    if computed % 500 == 0:
-                        progress = computed / total_points * 100
-                        print(f"[DRAG-CACHE] Progress: {progress:.1f}% ({computed}/{total_points})")
-        
-        elapsed = time.time() - start_time
-        print(f"[DRAG-CACHE] Pre-computation completed in {elapsed:.2f}s")
-        print(f"[DRAG-CACHE] Cache stats: {self.get_cache_stats()}")
-
-    def _load(self):
-        df = pd.read_excel(self.path, sheet_name=self.sheet, header=None, dtype=object)
-
-        def find_all(tok: str):
-            out=[]
-            for i in range(df.shape[0]):
-                for j in range(df.shape[1]):
-                    if str(df.iat[i,j]).strip().lower()==tok.lower():
-                        out.append((i,j))
-            return out
-
-        rCL,_ = find_all("CL")[0]
-        rDR,_ = find_all("Drag")[0]
-        rMach_after_drag = [rc for rc in find_all("Mach") if rc[0] > rDR]
-        rStop = rMach_after_drag[0][0] if rMach_after_drag else df.shape[0]
-
-        def read_block(row_header:int, next_row:int):
-            # read Mach header row starting from column 4
-            mach=[]; j=4; started=False
-            while j<df.shape[1]:
-                v=df.iat[row_header, j]
-                try:
-                    x=float(str(v).replace(',','.'))
-                    if np.isnan(x):
-                        if started: break
-                        j+=1; continue
-                    mach.append(x); started=True
-                except Exception:
-                    if started: break
-                j+=1
-            M=np.array(mach,float)
-
-            # read altitude column and data rows
-            alts=[]; rows=[]
-            for r in range(row_header+2, next_row):
-                alt=df.iat[r,3]
-                try:
-                    a=float(str(alt).replace(',','.'))
-                    if np.isnan(a): continue
-                except Exception:
-                    continue
-                alts.append(a)  # meters
-                vals=[]
-                for j in range(4, 4+len(M)):
-                    try:
-                        vals.append(float(str(df.iat[r,j]).replace(',','.')))
-                    except Exception:
-                        vals.append(np.nan)
-                rows.append(vals)
-            H=np.array(alts,float)
-            Z=np.array(rows,float)
-            return M,H,Z
-
-        Mcl,Hcl,CL = read_block(rCL,rDR)
-        Md, Hd, D  = read_block(rDR,rStop)
-        if not np.allclose(Hcl, Hd):
-            raise ValueError("Altitude grids differ between CL & Drag blocks.")
-
-        self._M, self._H = Mcl, Hcl
-        self._CL = SystemUtilities.nanfill2d(CL)
-        self._D  = SystemUtilities.nanfill2d(D)
-        dbg(f"[Excel] Mach grid read: {self._M.tolist()}")
-        dbg(f"[Excel] Altitudes (m): {self._H.tolist()}")
-
-        # Update effective minimum Mach from sheet
-        global M_MIN_EFFECTIVE
-        if len(self._M) > 0:
-            M_MIN_EFFECTIVE = max(M_MIN_DEFAULT, float(self._M[0]))
-            dbg(f"[INFO] Effective M_MIN set to {M_MIN_EFFECTIVE:.3f} (sheet min Mach={self._M[0]:.3f}).")
-
-        # Parse optional scalar parameters and auto-apply if enabled
-        self.params = self._parse_scalar_params(df)
-        
-        # Parse CLmax from specific cell (Sheet4, cell 10A = row 9, col 0)
-        clmax_value = self._parse_clmax_from_cell(df)
-        if clmax_value is not None:
-            self.params["CL_MAX"] = clmax_value
-            dbg(f"[Excel] CL_MAX found in cell 10A: {clmax_value}")
-        else:
-            raise ValueError("CL_MAX value not found in Excel cell 10A. Please ensure cell 10A contains a valid CLmax value.")
-        
-        if self.params:
-            dbg(f"[Excel] Scalar params found: {self.params}")
-            if AUTO_APPLY_PARAMS_FROM_EXCEL:
-                SystemUtilities.apply_params_to_globals(self.params)
-
-    @staticmethod
-    def _bilinear(x: float, y: float, xs: np.ndarray, ys: np.ndarray, Z: np.ndarray) -> float:
-        x=float(x); y=float(y)
-        if x<=xs[0]: i0=i1=0; tx=0.0
-        elif x>=xs[-1]: i0=i1=len(xs)-1; tx=0.0
-        else:
-            i1=int(np.searchsorted(xs,x)); i0=i1-1
-            # Safety check for identical grid points
-            if abs(xs[i1]-xs[i0]) < 1e-12:
-                tx=0.0
-            else:
-                tx=(x-xs[i0])/(xs[i1]-xs[i0])
-        if y<=ys[0]: j0=j1=0; ty=0.0
-        elif y>=ys[-1]: j0=j1=len(ys)-1; ty=0.0
-        else:
-            j1=int(np.searchsorted(ys,y)); j0=j1-1
-            # Safety check for identical grid points
-            if abs(ys[j1]-ys[j0]) < 1e-12:
-                ty=0.0
-            else:
-                ty=(y-ys[j0])/(ys[j1]-ys[j0])
-        z00=Z[j0,i0]; z01=Z[j0,i1]; z10=Z[j1,i0]; z11=Z[j1,i1]
-        z0=z00*(1-tx)+z01*tx; z1=z10*(1-tx)+z11*tx
-        return float(z0*(1-ty)+z1*ty)
-
-    @staticmethod
-    def _parse_clmax_from_cell(df: pd.DataFrame) -> Optional[float]:
-        """
-        Parse CLmax value from specific cell (Sheet4, cell 10A = row 9, col 0).
-        
-        Args:
-            df: DataFrame containing the Excel sheet data
-            
-        Returns:
-            CLmax value if found and valid, None otherwise
-        """
-        try:
-            # Cell 10A = row 9 (0-indexed), column 0 (0-indexed)
-            if df.shape[0] > 9 and df.shape[1] > 0:
-                value = df.iat[9, 0]
-                if value is not None and str(value).strip():
-                    clmax_val = float(str(value).replace(",", "."))
-                    if np.isfinite(clmax_val) and clmax_val > 0:
-                        return clmax_val
-        except Exception as e:
-            dbg(f"[Excel] Error parsing CL_MAX from cell 10A: {e}")
-        return None
-
-    @staticmethod
-    def _parse_scalar_params(df: pd.DataFrame) -> Dict[str, Any]:
-        """
-        Search the entire sheet for known scalar parameter keys and read
-        the numeric value from the right neighbor OR the cell below.
-        Keys are case-insensitive; common aliases are supported.
-        """
-        key_aliases = {
-            "s_ref_m2": "S_REF_M2",
-            "s_ref": "S_REF_M2",
-            "sref": "S_REF_M2",
-            "wing_area": "S_REF_M2",
-            "m_mmo": "M_MMO",
-            "mmo": "M_MMO",
-            "cl_max": "CL_MAX",
-            "clmax": "CL_MAX",
-            "target_alt_m": "TARGET_ALT_M",
-            "y_axis_top_m": "Y_AXIS_TOP_M",
-            "alt_step_m": "ALT_STEP_M",
-            "mach_cols": "MACH_COLS",
-            "n_plot_steps": "N_PLOT_STEPS",
-            "e_dot_cmd": "E_DOT_CMD",
-        }
-        params: Dict[str, Any] = {}
-
-        R, C = df.shape
-        def _to_float(v) -> Optional[float]:
-            try:
-                return float(str(v).replace(",", "."))
-            except Exception:
-                return None
-
-        for r in range(R):
-            for c in range(C):
-                raw = str(df.iat[r, c]).strip()
-                if not raw or raw.lower() in ("nan", "none"):
-                    continue
-                k = raw.strip().lower().replace(" ", "_")
-                if k in key_aliases:
-                    canon = key_aliases[k]
-                    val: Optional[float] = None
-                    # Prefer right neighbor, then below
-                    if c+1 < C:
-                        val = _to_float(df.iat[r, c+1])
-                    if (val is None) and (r+1 < R):
-                        val = _to_float(df.iat[r+1, c])
-                    if val is not None and np.isfinite(val):
-                        # Cast to int for obvious integer keys
-                        if canon in ("MACH_COLS", "N_PLOT_STEPS"):
-                            params[canon] = int(round(val))
-                        else:
-                            params[canon] = float(val)
-        return params
-
-# Note: AeroTablesUtilities functions moved to SystemUtilities class
+# Note: AeroTables class removed - now using PyAerodynamicsWrapper from pyaerodynamics_wrapper.py
 
 
 
@@ -2270,7 +1742,7 @@ def resample_strategy_run(sr: StrategyRun, n_samples: int) -> StrategyRun:
     return ClimbingCore.resample_strategy_run(sr, n_samples)
 
 # =========  12 - STRATEGY INTEGRATOR ================
-def simulate_strategy_path(*, label: str, aero: AeroTables, eng: EngineWrapper,
+def simulate_strategy_path(*, label: str, aero: PyAerodynamicsWrapper, eng: EngineWrapper,
                            mass0_kg: float, h0_m: float, V0_ms: float,
                            target_alt_m: float, dt: float,
                            strategy_fn: Callable[[float,float,Optional[float]], tuple],

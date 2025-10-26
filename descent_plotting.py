@@ -1557,8 +1557,10 @@ def plot_descent_J_3d_plotly(M_grid: np.ndarray, H_sched: np.ndarray,
         for k, h in enumerate(H_sched):
             _, _, rho = isa_properties(float(h))
             a = a_from_altitude(float(h))
-            if climb.CL_MAX is not None and climb.CL_MAX > 0:  # Access dynamically
-                q_req = W / (S_REF_M2 * climb.CL_MAX)
+            # Use default CL_MAX for commercial aircraft
+            CL_MAX = 1.4  # Default CL_MAX for commercial aircraft
+            if CL_MAX is not None and CL_MAX > 0:
+                q_req = W / (S_REF_M2 * CL_MAX)
                 if rho > 0:
                     V = np.sqrt(2*q_req/max(rho,1e-12))
                     out[k] = V / max(a,1e-12)

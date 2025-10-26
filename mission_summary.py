@@ -23,6 +23,7 @@ from aircraft_config import G_C, a_from_altitude
 from climb import MinFuelSchedule
 from cruise import CruiseResults
 from descent import DescentResults
+from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 
 # Import visualization configuration for consistent styling
 from visualization_config import (
@@ -31,6 +32,98 @@ from visualization_config import (
     get_table_header_style, get_table_cell_style, HoverTemplates,
     get_or_create_run_directory
 )
+
+
+def calculate_aerodynamic_data_throughout_mission(climb_result: MinFuelSchedule,
+                                                cruise_result: CruiseResults,
+                                                descent_result: DescentResults,
+                                                initial_mass_kg: float):
+    """
+    Calculate comprehensive aerodynamic data throughout the entire mission.
+    
+    Args:
+        climb_result: Results from climb phase
+        cruise_result: Results from cruise phase
+        descent_result: Results from descent phase
+        initial_mass_kg: Initial aircraft mass
+        
+    Returns:
+        Dictionary containing aerodynamic data for each phase
+    """
+    aero = PyAerodynamicsWrapper()
+    
+    # Initialize data storage
+    aero_data = {
+        'climb': {'altitude': [], 'mach': [], 'weight': [], 'cd': [], 'cl': [], 'ld': [], 'drag': []},
+        'cruise': {'altitude': [], 'mach': [], 'weight': [], 'cd': [], 'cl': [], 'ld': [], 'drag': []},
+        'descent': {'altitude': [], 'mach': [], 'weight': [], 'cd': [], 'cl': [], 'ld': [], 'drag': []}
+    }
+    
+    # Calculate climb aerodynamic data (sample every 5th point for efficiency)
+    if len(climb_result.alt_m) > 0:
+        sample_rate = max(1, len(climb_result.alt_m) // 20)  # Sample max 20 points
+        print(f"[AERO] Processing {len(climb_result.alt_m)} climb points (sampling every {sample_rate}th point)...")
+        for i in range(0, len(climb_result.alt_m), sample_rate):
+            if i % (sample_rate * 5) == 0:  # Progress indicator every 5 samples
+                print(f"[AERO] Climb progress: {i//sample_rate + 1}/{(len(climb_result.alt_m) + sample_rate - 1)//sample_rate}")
+            
+            alt = climb_result.alt_m[i]
+            mach = climb_result.mach[i]
+            weight = climb_result.mass_kg[i] if i < len(climb_result.mass_kg) else initial_mass_kg
+            
+            # Get comprehensive aerodynamic data
+            aero_comp = aero.get_comprehensive_aerodynamics(mach, alt, weight)
+            
+            aero_data['climb']['altitude'].append(alt)
+            aero_data['climb']['mach'].append(mach)
+            aero_data['climb']['weight'].append(weight)
+            aero_data['climb']['cd'].append(aero_comp['cd'])
+            aero_data['climb']['cl'].append(aero_comp['cl'])
+            aero_data['climb']['ld'].append(aero_comp['ld'])
+            aero_data['climb']['drag'].append(aero_comp['drag_force_N'])
+    
+    # Calculate cruise aerodynamic data (sample at key points)
+    if hasattr(cruise_result, 'altitude_m') and hasattr(cruise_result, 'mach'):
+        cruise_alt = getattr(cruise_result, 'altitude_m', cruise_result.initial_state.altitude_m)
+        cruise_mach = getattr(cruise_result, 'mach', cruise_result.initial_state.mach)
+        cruise_weight = getattr(cruise_result, 'weight_kg', cruise_result.initial_state.weight_kg)
+        
+        # Sample at start, middle, and end of cruise
+        for weight in [cruise_weight, cruise_weight * 0.95, cruise_weight * 0.9]:
+            aero_comp = aero.get_comprehensive_aerodynamics(cruise_mach, cruise_alt, weight)
+            
+            aero_data['cruise']['altitude'].append(cruise_alt)
+            aero_data['cruise']['mach'].append(cruise_mach)
+            aero_data['cruise']['weight'].append(weight)
+            aero_data['cruise']['cd'].append(aero_comp['cd'])
+            aero_data['cruise']['cl'].append(aero_comp['cl'])
+            aero_data['cruise']['ld'].append(aero_comp['ld'])
+            aero_data['cruise']['drag'].append(aero_comp['drag_force_N'])
+    
+    # Calculate descent aerodynamic data (sample every 5th point for efficiency)
+    if len(descent_result.alt_m) > 0:
+        sample_rate = max(1, len(descent_result.alt_m) // 20)  # Sample max 20 points
+        print(f"[AERO] Processing {len(descent_result.alt_m)} descent points (sampling every {sample_rate}th point)...")
+        for i in range(0, len(descent_result.alt_m), sample_rate):
+            if i % (sample_rate * 5) == 0:  # Progress indicator every 5 samples
+                print(f"[AERO] Descent progress: {i//sample_rate + 1}/{(len(descent_result.alt_m) + sample_rate - 1)//sample_rate}")
+            
+            alt = descent_result.alt_m[i]
+            mach = descent_result.mach[i]
+            weight = descent_result.weight_kg[i] if i < len(descent_result.weight_kg) else initial_mass_kg * 0.85
+            
+            # Get comprehensive aerodynamic data
+            aero_comp = aero.get_comprehensive_aerodynamics(mach, alt, weight)
+            
+            aero_data['descent']['altitude'].append(alt)
+            aero_data['descent']['mach'].append(mach)
+            aero_data['descent']['weight'].append(weight)
+            aero_data['descent']['cd'].append(aero_comp['cd'])
+            aero_data['descent']['cl'].append(aero_comp['cl'])
+            aero_data['descent']['ld'].append(aero_comp['ld'])
+            aero_data['descent']['drag'].append(aero_comp['drag_force_N'])
+    
+    return aero_data
 
 
 def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
@@ -51,6 +144,12 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
         initial_mass_kg: Initial aircraft mass
         save_html: Optional path to save HTML file
     """
+    # Calculate aerodynamic data throughout mission
+    print("[AERO] Calculating aerodynamic data throughout mission...")
+    aero_data = calculate_aerodynamic_data_throughout_mission(
+        climb_result, cruise_result, descent_result, initial_mass_kg
+    )
+    
     # Calculate comprehensive statistics
     climb_time_s = np.sum(climb_result.dt_s) if len(climb_result.dt_s) > 0 else 0.0
     climb_fuel = climb_result.cumFuel_kg[-1]
@@ -93,24 +192,28 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     total_fuel = climb_fuel + cruise_fuel + descent_fuel
     total_distance_km = climb_distance_km + cruise_distance_km + descent_distance_km
     
-    # Create figure with subplots
+    # Create figure with subplots including aerodynamic data
     fig = make_subplots(
-        rows=3, cols=3,
+        rows=4, cols=3,
         subplot_titles=(
             '<b>Mission Profile</b>',
             '<b>Phase Breakdown</b>',
             '<b>Fuel Consumption</b>',
             '<b>Weight Evolution</b>',
+            '<b>Drag Coefficient (CD)</b>',
+            '<b>Lift Coefficient (CL)</b>',
+            '<b>Lift-to-Drag Ratio (L/D)</b>',
             '<b>Mission Statistics</b>',
             '<b>Key Parameters</b>'
         ),
         specs=[
             [{"colspan": 3, "type": "scatter"}, None, None],
             [{"type": "bar"}, {"type": "scatter"}, {"type": "scatter"}],
+            [{"type": "scatter"}, {"type": "scatter"}, {"type": "scatter"}],
             [{"colspan": 2, "type": "table"}, None, {"type": "table"}]
         ],
-        row_heights=[0.35, 0.35, 0.30],
-        vertical_spacing=0.12,
+        row_heights=[0.25, 0.25, 0.25, 0.25],
+        vertical_spacing=0.08,
         horizontal_spacing=0.10
     )
     
@@ -278,9 +381,148 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
         row=2, col=3
     )
     
-    # ========= ROW 3 COL 1: MISSION STATISTICS TABLE =========
+    # ========= ROW 3: AERODYNAMIC DATA PLOTS =========
+    # Drag Coefficient (CD) vs Altitude
+    if len(aero_data['climb']['altitude']) > 0:
+        fig.add_trace(
+            go.Scatter(
+                x=aero_data['climb']['altitude'],
+                y=aero_data['climb']['cd'],
+                mode='lines+markers',
+                name='Climb CD',
+                line=dict(color=Colors.CLIMB, width=2),
+                marker=dict(size=4),
+                hovertemplate='<b>Climb</b><br>Altitude: %{x:.0f} m<br>CD: %{y:.4f}<extra></extra>'
+            ),
+            row=3, col=1
+        )
+    
+    if len(aero_data['cruise']['altitude']) > 0:
+        fig.add_trace(
+            go.Scatter(
+                x=aero_data['cruise']['altitude'],
+                y=aero_data['cruise']['cd'],
+                mode='lines+markers',
+                name='Cruise CD',
+                line=dict(color=Colors.CRUISE, width=2),
+                marker=dict(size=4),
+                hovertemplate='<b>Cruise</b><br>Altitude: %{x:.0f} m<br>CD: %{y:.4f}<extra></extra>'
+            ),
+            row=3, col=1
+        )
+    
+    if len(aero_data['descent']['altitude']) > 0:
+        fig.add_trace(
+            go.Scatter(
+                x=aero_data['descent']['altitude'],
+                y=aero_data['descent']['cd'],
+                mode='lines+markers',
+                name='Descent CD',
+                line=dict(color=Colors.DESCENT, width=2),
+                marker=dict(size=4),
+                hovertemplate='<b>Descent</b><br>Altitude: %{x:.0f} m<br>CD: %{y:.4f}<extra></extra>'
+            ),
+            row=3, col=1
+        )
+    
+    # Lift Coefficient (CL) vs Altitude
+    if len(aero_data['climb']['altitude']) > 0:
+        fig.add_trace(
+            go.Scatter(
+                x=aero_data['climb']['altitude'],
+                y=aero_data['climb']['cl'],
+                mode='lines+markers',
+                name='Climb CL',
+                line=dict(color=Colors.CLIMB, width=2),
+                marker=dict(size=4),
+                hovertemplate='<b>Climb</b><br>Altitude: %{x:.0f} m<br>CL: %{y:.4f}<extra></extra>',
+                showlegend=False
+            ),
+            row=3, col=2
+        )
+    
+    if len(aero_data['cruise']['altitude']) > 0:
+        fig.add_trace(
+            go.Scatter(
+                x=aero_data['cruise']['altitude'],
+                y=aero_data['cruise']['cl'],
+                mode='lines+markers',
+                name='Cruise CL',
+                line=dict(color=Colors.CRUISE, width=2),
+                marker=dict(size=4),
+                hovertemplate='<b>Cruise</b><br>Altitude: %{x:.0f} m<br>CL: %{y:.4f}<extra></extra>',
+                showlegend=False
+            ),
+            row=3, col=2
+        )
+    
+    if len(aero_data['descent']['altitude']) > 0:
+        fig.add_trace(
+            go.Scatter(
+                x=aero_data['descent']['altitude'],
+                y=aero_data['descent']['cl'],
+                mode='lines+markers',
+                name='Descent CL',
+                line=dict(color=Colors.DESCENT, width=2),
+                marker=dict(size=4),
+                hovertemplate='<b>Descent</b><br>Altitude: %{x:.0f} m<br>CL: %{y:.4f}<extra></extra>',
+                showlegend=False
+            ),
+            row=3, col=2
+        )
+    
+    # Lift-to-Drag Ratio (L/D) vs Altitude
+    if len(aero_data['climb']['altitude']) > 0:
+        fig.add_trace(
+            go.Scatter(
+                x=aero_data['climb']['altitude'],
+                y=aero_data['climb']['ld'],
+                mode='lines+markers',
+                name='Climb L/D',
+                line=dict(color=Colors.CLIMB, width=2),
+                marker=dict(size=4),
+                hovertemplate='<b>Climb</b><br>Altitude: %{x:.0f} m<br>L/D: %{y:.2f}<extra></extra>',
+                showlegend=False
+            ),
+            row=3, col=3
+        )
+    
+    if len(aero_data['cruise']['altitude']) > 0:
+        fig.add_trace(
+            go.Scatter(
+                x=aero_data['cruise']['altitude'],
+                y=aero_data['cruise']['ld'],
+                mode='lines+markers',
+                name='Cruise L/D',
+                line=dict(color=Colors.CRUISE, width=2),
+                marker=dict(size=4),
+                hovertemplate='<b>Cruise</b><br>Altitude: %{x:.0f} m<br>L/D: %{y:.2f}<extra></extra>',
+                showlegend=False
+            ),
+            row=3, col=3
+        )
+    
+    if len(aero_data['descent']['altitude']) > 0:
+        fig.add_trace(
+            go.Scatter(
+                x=aero_data['descent']['altitude'],
+                y=aero_data['descent']['ld'],
+                mode='lines+markers',
+                name='Descent L/D',
+                line=dict(color=Colors.DESCENT, width=2),
+                marker=dict(size=4),
+                hovertemplate='<b>Descent</b><br>Altitude: %{x:.0f} m<br>L/D: %{y:.2f}<extra></extra>',
+                showlegend=False
+            ),
+            row=3, col=3
+        )
+    
+    # ========= ROW 4 COL 1: MISSION STATISTICS TABLE =========
     header_style = get_table_header_style()
     cell_style = get_table_cell_style()
+    
+    # Override cell_style to remove fixed height and prevent scrollbar
+    cell_style_no_height = {k: v for k, v in cell_style.items() if k != 'height'}
     
     fig.add_trace(
         go.Table(
@@ -299,10 +541,10 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
                      f'{descent_distance_km:.1f}', f'<b>{total_distance_km:.0f}</b>']
                 ],
                 fill_color=[['white', 'lightgray', 'white', 'lightblue']],
-                **cell_style
+                **cell_style_no_height
             )
         ),
-        row=3, col=1
+        row=4, col=1
     )
     
     # ========= ROW 3 COL 2: EFFICIENCY INDICATORS =========
@@ -343,11 +585,10 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
                 ],
                 fill_color=[['white', 'lightgray'] * 4],
                 align=['left', 'right'],
-                font=dict(size=Typography.HOVER_SIZE, family=Typography.FONT_FAMILY),
-                height=30
+                font=dict(size=Typography.HOVER_SIZE, family=Typography.FONT_FAMILY)
             )
         ),
-        row=3, col=3
+        row=4, col=3
     )
     
     # ========= LAYOUT AND STYLING =========
@@ -369,7 +610,15 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
                      range=[weight_min - weight_margin, weight_max + weight_margin], 
                      row=2, col=3)
     
-    # Efficiency Indicators axes removed (plot removed per user request)
+    # Row 3: Aerodynamic plots
+    fig.update_xaxes(**get_axis_config("Altitude (m)"), row=3, col=1)
+    fig.update_yaxes(**get_axis_config("CD"), row=3, col=1)
+    
+    fig.update_xaxes(**get_axis_config("Altitude (m)"), row=3, col=2)
+    fig.update_yaxes(**get_axis_config("CL"), row=3, col=2)
+    
+    fig.update_xaxes(**get_axis_config("Altitude (m)"), row=3, col=3)
+    fig.update_yaxes(**get_axis_config("L/D"), row=3, col=3)
     
     # Main title with comprehensive summary
     subtitle = (
@@ -453,6 +702,12 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
         initial_mass_kg: Initial aircraft mass
         save_html: Optional path to save HTML file
     """
+    
+    # Calculate aerodynamic data throughout mission
+    print("[AERO] Calculating aerodynamic data for combined analysis...")
+    aero_data = calculate_aerodynamic_data_throughout_mission(
+        climb_result, cruise_result, descent_result, initial_mass_kg
+    )
     
     # Create combined subplots: 3 phases × 6 metrics = 3 rows × 6 columns
     fig = make_subplots(
@@ -823,6 +1078,41 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
     # Calculate mission totals
     total_fuel = climb_fuel_kg[-1] + cruise_fuel_consumed[-1] + descent_cum_fuel_kg[-1]
     total_time_min = climb_time_min[-1] + cruise_time_min[-1] + descent_time_min[-1]
+    
+    # ========= AERODYNAMIC SUMMARY TABLE =========
+    # Get table styling
+    header_style = get_table_header_style()
+    cell_style = get_table_cell_style()
+    
+    # Calculate aerodynamic statistics
+    aero_stats = []
+    
+    # Climb statistics
+    if len(aero_data['climb']['cd']) > 0:
+        climb_cd_avg = np.mean(aero_data['climb']['cd'])
+        climb_cl_avg = np.mean(aero_data['climb']['cl'])
+        climb_ld_avg = np.mean(aero_data['climb']['ld'])
+        climb_drag_avg = np.mean(aero_data['climb']['drag'])
+        aero_stats.append(['Climb', f'{climb_cd_avg:.4f}', f'{climb_cl_avg:.4f}', f'{climb_ld_avg:.2f}', f'{climb_drag_avg:.0f}'])
+    
+    # Cruise statistics
+    if len(aero_data['cruise']['cd']) > 0:
+        cruise_cd_avg = np.mean(aero_data['cruise']['cd'])
+        cruise_cl_avg = np.mean(aero_data['cruise']['cl'])
+        cruise_ld_avg = np.mean(aero_data['cruise']['ld'])
+        cruise_drag_avg = np.mean(aero_data['cruise']['drag'])
+        aero_stats.append(['Cruise', f'{cruise_cd_avg:.4f}', f'{cruise_cl_avg:.4f}', f'{cruise_ld_avg:.2f}', f'{cruise_drag_avg:.0f}'])
+    
+    # Descent statistics
+    if len(aero_data['descent']['cd']) > 0:
+        descent_cd_avg = np.mean(aero_data['descent']['cd'])
+        descent_cl_avg = np.mean(aero_data['descent']['cl'])
+        descent_ld_avg = np.mean(aero_data['descent']['ld'])
+        descent_drag_avg = np.mean(aero_data['descent']['drag'])
+        aero_stats.append(['Descent', f'{descent_cd_avg:.4f}', f'{descent_cl_avg:.4f}', f'{descent_ld_avg:.2f}', f'{descent_drag_avg:.0f}'])
+    
+    # Aerodynamic summary table removed - layout has only 3 rows
+    # The aerodynamic data is already visualized in the mission summary dashboard
     
     # Update layout
     fig.update_layout(
