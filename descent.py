@@ -8,7 +8,6 @@ from dataclasses import dataclass
 from typing import Optional, NamedTuple, Callable, List, Dict, Any, Tuple
 import time
 from atmosphere import Atmosphere
-import pyengine as engine
 
 # Import aircraft configuration from centralized module
 from aircraft_config import (
@@ -19,8 +18,9 @@ from aircraft_config import (
 
 # Import necessary components from climb module
 import climb
-from climb import EngineWrapper, dbg, GridAndPlotting
+from climb import dbg, GridAndPlotting
 from pyaerodynamics_wrapper import PyAerodynamicsWrapper
+from pyengine_wrapper import EngineWrapper
 
 # Import cruise module for initial state extraction
 import cruise

@@ -8,8 +8,9 @@ import time
 from atmosphere import Atmosphere
 from aircraft_config import N_ENGINES, isa_properties, G_C
 import climb
-from climb import EngineWrapper, ClimbingCore
+from climb import ClimbingCore
 from pyaerodynamics_wrapper import PyAerodynamicsWrapper
+from pyengine_wrapper import EngineWrapper
 
 # ========= CRUISE CONSTANTS AND SETTINGS =============================================
 

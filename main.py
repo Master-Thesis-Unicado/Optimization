@@ -37,12 +37,13 @@ from mission_config import (
 )
 import climb
 from climb import (
-    EngineWrapper, compute_sep_grid_maxlever,
+    compute_sep_grid_maxlever,
     MACH_COLS, Y_AXIS_TOP_M, ALT_STEP_M,
     TARGET_ALT_M, N_PLOT_STEPS, dbg, compute_full_engine_envelope,
     ClimbingCore
 )
 from pyaerodynamics_wrapper import PyAerodynamicsWrapper
+from pyengine_wrapper import EngineWrapper
 import cruise
 from cruise import run_cruise_simulation
 from cruise_plotting import plot_cruise_performance_detailed
@@ -480,8 +481,7 @@ def main():
                 climb_result=dp_sched,
                 cruise_result=cruise_results,
                 descent_result=descent_result,
-                initial_mass_kg=INITIAL_MASS_KG,
-                save_html='mission_summary_dashboard.html'
+                initial_mass_kg=INITIAL_MASS_KG
             )
             
             # Create combined performance analysis
@@ -491,8 +491,7 @@ def main():
                     climb_result=dp_sched,
                     cruise_result=cruise_results,
                     descent_result=descent_result,
-                    initial_mass_kg=INITIAL_MASS_KG,
-                    save_html='combined_performance_analysis.html'
+                    initial_mass_kg=INITIAL_MASS_KG
                 )
                 print(f"[PLOT] Combined performance analysis completed successfully!")
             except Exception as e:
