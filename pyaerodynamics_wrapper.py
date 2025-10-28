@@ -7,16 +7,23 @@ with real-time calculations from the pyaerodynamics library.
 
 The wrapper maintains compatibility with the existing AeroTables interface while
 providing dynamic aerodynamic calculations based on current flight conditions.
+
+The module uses pathlib to dynamically locate the pyaerodynamics library relative
+to this file's location, ensuring robust operation regardless of the current
+working directory or import location.
 """
 
 import os
 import sys
 import numpy as np
+from pathlib import Path
 from typing import Dict, Any, Optional, Tuple
 from dataclasses import dataclass
 
-# Add the correct path to the pyaerodynamics module
-sys.path.append('Aero/pyaerodynamics/pyaerodynamics/Release')
+# Add the correct path to the pyaerodynamics module relative to this file
+_current_file = Path(__file__).resolve()
+_pyaerodynamics_path = _current_file.parent / 'Aero' / 'pyaerodynamics' / 'pyaerodynamics' / 'Release'
+sys.path.append(str(_pyaerodynamics_path))
 
 from pyaerodynamics import Aircraft, Flight_Condition
 

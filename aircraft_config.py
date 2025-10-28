@@ -54,7 +54,7 @@ class SystemConfiguration:
     DEFAULT_PASSENGERS = 180       # A320 typical passenger capacity (180-200 seats)
     
     # Fuel weight (A320 specifications)
-    MAX_FUEL_KG      = 23860.0   # A320 maximum fuel capacity
+    MAX_FUEL_KG      = 5000   # 
     
     # Calculated weights
     @property

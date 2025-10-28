@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 
 from aircraft_config import (
     INITIAL_MASS_KG, ENGINE_STUB_PATH,
-    AtmosphericProperties, G_C
+    AtmosphericProperties, G_C, MAX_FUEL_KG, W_OE_KG, W_PL_KG
 )
 from mission_config import (
     TARGET_ALT_M, N_PLOT_STEPS, ALT_STEP_M, Y_AXIS_TOP_M, MACH_COLS,
@@ -65,6 +65,16 @@ atmospheric_props = AtmosphericProperties()
 
 
 def main():
+    print("\n" + "="*80)
+    print("AIRCRAFT CONFIGURATION")
+    print("="*80)
+    print(f"[CONFIG] MAX_FUEL_KG: {MAX_FUEL_KG:.1f} kg")
+    print(f"[CONFIG] W_OE_KG: {W_OE_KG:.1f} kg")
+    print(f"[CONFIG] W_PL_KG: {W_PL_KG:.1f} kg")
+    print(f"[CONFIG] INITIAL_MASS_KG (W_TO_KG): {INITIAL_MASS_KG:.1f} kg")
+    print(f"[CONFIG] = W_OE + W_PL + MAX_FUEL = {W_OE_KG + W_PL_KG + MAX_FUEL_KG:.1f} kg")
+    print("="*80 + "\n")
+    
     print("[MISSION] Using centralized mission configuration")
     print(f"[MISSION] Target altitude: {TARGET_ALT_M:.0f} m")
     print(f"[MISSION] Target Mach: {TARGET_MACH:.3f}")
@@ -317,9 +327,9 @@ def main():
             create_plots=True
         )
         
-        # Print combined mission summary
+        # Print intermediate mission summary (climb + cruise only)
         print("\n" + "="*80)
-        print("COMPLETE MISSION SUMMARY (CLIMB + CRUISE)")
+        print("INTERMEDIATE MISSION SUMMARY (CLIMB + CRUISE PHASES)")
         print("="*80)
         
         # Climb summary
@@ -346,12 +356,11 @@ def main():
         print(f"  Time: {cruise_summary['cruise_time_hours']:.2f} hours")
         print(f"  Average fuel flow: {cruise_summary['avg_fuel_flow_kg_h']:.0f} kg/h")
         
-        print(f"\nTOTAL MISSION:")
-        print(f"  Total fuel consumed: {total_fuel:.1f} kg ({total_fuel/INITIAL_MASS_KG*100:.1f}% of initial weight)")
-        print(f"  Total time: {total_time_hours:.2f} hours")
-        print(f"  Initial weight: {INITIAL_MASS_KG:.0f} kg")
-        print(f"  Final weight: {final_mission_weight:.0f} kg")
-        print(f"  Weight reduction: {INITIAL_MASS_KG - final_mission_weight:.1f} kg")
+        print(f"\nCLIMB + CRUISE TOTALS (Descent phase to follow):")
+        print(f"  Total fuel consumed (climb+cruise): {total_fuel:.1f} kg ({total_fuel/INITIAL_MASS_KG*100:.1f}% of initial weight)")
+        print(f"  Total time (climb+cruise): {total_time_hours:.2f} hours")
+        print(f"  Weight after cruise: {final_mission_weight:.0f} kg")
+        print(f"  Note: Complete mission totals will be shown after descent phase")
         
         print("="*80)
         
@@ -422,12 +431,22 @@ def main():
             print(f"  Final Mach: {descent_result.mach[-1]:.3f} (target: {descent_result.target_mach:.3f})")
             print(f"  Final altitude: {descent_result.alt_m[-1]:.0f} m (target: {descent_result.target_altitude_m:.0f} m)")
             
-            print(f"\nTOTAL MISSION:")
+            print("\n" + "="*80)
+            print("COMPLETE MISSION SUMMARY (ALL THREE PHASES)")
+            print("="*80)
+            print(f"TOTAL MISSION (CLIMB + CRUISE + DESCENT):")
             print(f"  Total fuel consumed: {total_mission_fuel:.1f} kg ({total_mission_fuel/INITIAL_MASS_KG*100:.1f}% of initial weight)")
-            print(f"  Total time: {total_mission_time_hours:.2f} hours")
+            print(f"  Total time: {total_mission_time_hours:.2f} hours ({total_mission_time_hours*60:.1f} minutes)")
             print(f"  Initial weight: {INITIAL_MASS_KG:.0f} kg")
             print(f"  Final weight: {final_mission_weight:.0f} kg")
             print(f"  Weight reduction: {INITIAL_MASS_KG - final_mission_weight:.1f} kg")
+            
+            # Phase breakdown for reference
+            descent_summary = descent_result.get_summary_dict()
+            print(f"\nPHASE BREAKDOWN:")
+            print(f"  Climb fuel:   {climb_fuel:.1f} kg ({climb_fuel/total_mission_fuel*100:.1f}% of total)")
+            print(f"  Cruise fuel:  {cruise_summary['cruise_fuel_kg']:.1f} kg ({cruise_summary['cruise_fuel_kg']/total_mission_fuel*100:.1f}% of total)")
+            print(f"  Descent fuel: {descent_summary['descent_fuel_kg']:.1f} kg ({descent_summary['descent_fuel_kg']/total_mission_fuel*100:.1f}% of total)")
             
             print("="*80)
             

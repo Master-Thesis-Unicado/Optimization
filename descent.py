@@ -597,7 +597,10 @@ class DescentCore:
             Ps_array = np.zeros(n_points)
             # weight_array already set from backtracking with dynamic weight values
             
-            # Calculate time increments and performance data
+            # Calculate time increments and performance data with enhanced accuracy
+            n_segments = n_points - 1  # Number of segments between points
+            dt_segment_array = np.zeros(n_segments)  # Time for each segment
+            
             for i in range(n_points):
                 h = alt_array[i]
                 M = mach_array[i]
@@ -633,23 +636,78 @@ class DescentCore:
                 W = weight_array[i] * G_C
                 Ps = ((T_tot - D) * V) / W if W > 0 else 0.0
                 Ps_array[i] = Ps
+                descent_rate_array[i] = Ps
+            
+            # Enhanced time calculation for segments (similar to climb accuracy)
+            for i in range(n_segments):
+                h_curr, h_next = alt_array[i], alt_array[i + 1]
+                M_curr, M_next = mach_array[i], mach_array[i + 1]
+                lever_curr, lever_next = lever_array[i], lever_array[i + 1]
+                weight_curr, weight_next = weight_array[i], weight_array[i + 1]
                 
-                # Time increment for next step
-                if i < n_points - 1:
-                    h_next = alt_array[i + 1]
-                    dh = h_next - h  # Negative for descent
-                    
-                    if abs(Ps) > 0.1:
-                        dt = abs(dh) / abs(Ps)
+                # Average values for this segment
+                h_avg = 0.5 * (h_curr + h_next)
+                M_avg = 0.5 * (M_curr + M_next)
+                lever_avg = 0.5 * (lever_curr + lever_next)
+                weight_avg = 0.5 * (weight_curr + weight_next)
+                
+                # Compute segment properties with dynamic weight
+                a = a_from_altitude(h_avg)
+                V_avg = M_avg * a
+                D_avg = aero.get_drag(M_avg, h_avg)
+                T_per_avg = eng.thrust_with_lever(lever_avg, M_avg, h_avg)
+                if T_per_avg is None or T_per_avg < 0:
+                    T_per_avg = 0.0
+                T_tot_avg = T_per_avg * N_ENGINES
+                Ps_avg = ((T_tot_avg - D_avg) * V_avg) / (weight_avg * G_C)
+                
+                # Enhanced time calculation - handle both vertical and horizontal moves
+                if abs(h_next - h_curr) > 1.0:  # Vertical move (altitude change)
+                    if abs(Ps_avg) > 0.1:
+                        dt_segment_array[i] = abs(h_next - h_curr) / abs(Ps_avg)
+                        dbg(f"[DP-DESCENT] Vertical move {i}: h={h_curr:.0f}->{h_next:.0f}m, dt={dt_segment_array[i]:.3f}s, weight={weight_avg:.0f}kg")
                     else:
-                        dt = 1.0
-                    
-                    dt_array[i + 1] = dt
-                    time_array[i + 1] = time_array[i] + dt
-                    descent_rate_array[i] = Ps
-                    
-                    # Weight already correctly set from DP backtracking
-                    # No need to update weight here - it's part of the optimal path
+                        dt_segment_array[i] = 1.0
+                        dbg(f"[DP-DESCENT] Vertical move {i}: h={h_curr:.0f}->{h_next:.0f}m, dt={dt_segment_array[i]:.3f}s (low Ps)")
+                else:  # Horizontal move (same altitude, different Mach/lever)
+                    # Calculate time based on velocity change with proper deceleration physics
+                    V_curr = M_curr * a
+                    V_next = M_next * a
+                    if abs(V_next - V_curr) > 0.1:  # Significant velocity change
+                        # Use deceleration rate: dt = dV / a_decel
+                        # For descent: deceleration magnitude = |T_tot - D| / mass
+                        a_decel = abs(T_tot_avg - D_avg) / weight_avg  # Use dynamic weight
+                        if a_decel > 0.1:
+                            dt_segment_array[i] = abs(V_next - V_curr) / a_decel
+                            dbg(f"[DP-DESCENT] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, V={V_curr:.1f}->{V_next:.1f}m/s, dt={dt_segment_array[i]:.3f}s")
+                        else:
+                            dt_segment_array[i] = 0.1  # Small time step for horizontal moves
+                            dbg(f"[DP-DESCENT] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, dt={dt_segment_array[i]:.3f}s (small step)")
+                    else:
+                        dt_segment_array[i] = 0.1  # Small time step for minimal changes
+                        dbg(f"[DP-DESCENT] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, dt={dt_segment_array[i]:.3f}s (minimal change)")
+                
+                # Debug the final segments for validation
+                if i >= n_segments - 2:  # Last two segments
+                    dbg(f"[DP-DESCENT] Segment {i} (step {i}->{i+1}): h={h_curr:.0f}->{h_next:.0f}m, dt={dt_segment_array[i]:.3f}s")
+            
+            # Construct proper time array from segments
+            time_array = np.zeros(n_points)
+            dt_array = np.zeros(n_points)
+            
+            # Fill in times: time[i+1] = time[i] + dt_segment[i]
+            for i in range(n_segments):
+                if i + 1 < n_points:
+                    time_array[i + 1] = time_array[i] + dt_segment_array[i]
+            
+            # Create dt_array for output (dt[i] = time[i] - time[i-1])
+            dt_array[1:] = np.diff(time_array)
+            dt_array[0] = 0.0  # First point has dt=0
+            
+            dbg(f"[DP-DESCENT] Enhanced time array constructed: start=0, end={time_array[-1]:.3f}s")
+            dbg(f"[DP-DESCENT] Sample time progression: {time_array[:5]} (first 5 points)")
+            dbg(f"[DP-DESCENT] Final time progression: {time_array[-3:]} (last 3 points)")
+            dbg(f"[DP-DESCENT] Final dt values: {dt_segment_array[-3:]} (last 3 segments)")
             
             # Final statistics
             total_time = time_array[-1]

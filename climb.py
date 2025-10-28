@@ -567,7 +567,8 @@ class ClimbingCore:
                                 target_mach: float = None,
                                 target_mach_tolerance: float = 0.02,
                                 start_mach: float = None,
-                                start_lever: float = None):
+                                start_lever: float = None,
+                                mass_kg: float = None):
             """
             True 3D Dynamic Programming solver for minimum fuel climb optimization.
             
@@ -624,12 +625,15 @@ class ClimbingCore:
                 # Calculate altitude fraction for starting point (10m altitude)
                 altitude_fraction = H_sched[0] / TARGET_ALT_M if TARGET_ALT_M > 0 else 0.0
                 
+                # Use provided mass or default to INITIAL_MASS_KG
+                initial_mass = mass_kg if mass_kg is not None else INITIAL_MASS_KG
+                
                 cost = ClimbingCore.compute_3d_cost(aero, eng, H_sched[0], M_grid[start_mach_idx], lever_grid[start_lever_idx],
-                                                  target_mach=target_mach, prev_mach=None, altitude_fraction=altitude_fraction, mass_kg=INITIAL_MASS_KG)
+                                                  target_mach=target_mach, prev_mach=None, altitude_fraction=altitude_fraction, mass_kg=initial_mass)
                 if np.isfinite(cost) and cost > 0:
                     F[0, start_mach_idx, start_lever_idx] = 0.0  # Starting cost is 0
-                    weight_matrix[0, start_mach_idx, start_lever_idx] = INITIAL_MASS_KG  # Starting weight
-                    dbg(f"[3D-DP] Starting point verified: h={H_sched[0]:.0f}m, M={M_grid[start_mach_idx]:.3f}, lever={lever_grid[start_lever_idx]:.3f}, weight={INITIAL_MASS_KG:.0f}kg")
+                    weight_matrix[0, start_mach_idx, start_lever_idx] = initial_mass  # Starting weight
+                    dbg(f"[3D-DP] Starting point verified: h={H_sched[0]:.0f}m, M={M_grid[start_mach_idx]:.3f}, lever={lever_grid[start_lever_idx]:.3f}, weight={initial_mass:.0f}kg")
                 else:
                     raise RuntimeError(f"[3D-DP] Starting point not feasible: h={H_sched[0]:.0f}m, M={M_grid[start_mach_idx]:.3f}, lever={lever_grid[start_lever_idx]:.3f}")
             else:
@@ -646,7 +650,12 @@ class ClimbingCore:
                 next_alt = H_sched[k + 1]
                 dh = next_alt - current_alt
                 
-                dbg(f"[3D-DP] Processing altitude {current_alt:.0f}m -> {next_alt:.0f}m")
+                # Calculate climb fraction for consistent progress reporting
+                climb_fraction = k / (K - 1.0) if K > 1 else 0.0
+                
+                if k % 10 == 0:
+                    dbg(f"[DP-CLIMB] Processing altitude {current_alt:.0f}m -> {next_alt:.0f}m "
+                        f"(progress: {climb_fraction*100:.1f}%)")
                 
                 # Find all feasible current states
                 feasible_states = np.where(np.isfinite(F[k]))
@@ -726,17 +735,18 @@ class ClimbingCore:
                                             prv[k + 1, next_mach_idx, next_lever_idx] = [k, i, j]
                                             feasible_count += 1
             
-                dbg(f"[3D-DP] Found {feasible_count} feasible transitions at altitude {current_alt:.0f}m")
+                if k % 10 == 0 or feasible_count == 0:
+                    dbg(f"[DP-CLIMB] Found {feasible_count} feasible transitions at altitude {current_alt:.0f}m")
         
             # Apply terminal Mach constraint
             if target_mach is not None:
-                dbg(f"[3D-DP] Applying target Mach constraint: {target_mach:.3f} ± {target_mach_tolerance:.3f}")
+                dbg(f"[DP-CLIMB] Applying target Mach constraint: {target_mach:.3f} ± {target_mach_tolerance:.3f}")
                 
                 # Find valid final states
                 valid_final = np.abs(M_grid - target_mach) < target_mach_tolerance
                 
                 if not valid_final.any():
-                    dbg(f"[3D-DP] Warning: No Mach values within tolerance. Using closest Mach.")
+                    dbg(f"[DP-CLIMB] Warning: No Mach values within tolerance. Using closest Mach.")
                     closest_idx = np.argmin(np.abs(M_grid - target_mach))
                     valid_final = np.zeros_like(valid_final, dtype=bool)
                     valid_final[closest_idx] = True
@@ -748,16 +758,16 @@ class ClimbingCore:
             
             # Check if any path reached the final altitude
             if not np.isfinite(F[-1]).any():
-                raise RuntimeError("[3D-DP] No feasible path reached the final altitude")
+                raise RuntimeError("[DP-CLIMB] No feasible path reached the final altitude")
             
             # Find optimal final state
             final_flat_idx = np.nanargmin(F[-1])
             final_mach_idx, final_lever_idx = np.unravel_index(final_flat_idx, F[-1].shape)
             final_alt_idx = K - 1  # Final altitude index
             
-            dbg(f"[3D-DP] Optimal final state: h={H_sched[final_alt_idx]:.0f}m, "
+            dbg(f"[DP-CLIMB] Optimal final state: h={H_sched[final_alt_idx]:.0f}m, "
                 f"M={M_grid[final_mach_idx]:.3f}, lever={lever_grid[final_lever_idx]:.3f}")
-            dbg(f"[3D-DP] Total fuel cost: {F[final_alt_idx, final_mach_idx, final_lever_idx]:.1f} kg")
+            dbg(f"[DP-CLIMB] Total fuel cost: {F[final_alt_idx, final_mach_idx, final_lever_idx]:.1f} kg")
             
             # Backtrack to find optimal path
             path_alt = []
@@ -781,7 +791,7 @@ class ClimbingCore:
                 if len(path_alt) > 1:
                     alt_diff = path_alt[-1] - path_alt[-2]
                     if abs(alt_diff) > (H_sched[1] - H_sched[0]) * 1.5:  # More than 1.5x the altitude step
-                        dbg(f"[3D-DP] WARNING: Potential altitude jump detected: {path_alt[-2]:.0f}m -> {path_alt[-1]:.0f}m (diff: {alt_diff:.0f}m)")
+                        dbg(f"[DP-CLIMB] WARNING: Potential altitude jump detected: {path_alt[-2]:.0f}m -> {path_alt[-1]:.0f}m (diff: {alt_diff:.0f}m)")
                 
                 # Move to predecessor
                 if alt_idx > 0:
@@ -797,7 +807,7 @@ class ClimbingCore:
             path_weights = path_weights[::-1]
             
             # Debug: Show altitude progression with weight
-            dbg(f"[3D-DP] Path altitude progression:")
+            dbg(f"[DP-CLIMB] Path altitude progression:")
             for i in range(min(10, len(path_alt))):  # Show first 10 points
                 dbg(f"  Step {i}: {path_alt[i]:.0f}m, M={path_mach[i]:.3f}, lever={path_lever[i]:.3f}, weight={path_weights[i]:.0f}kg")
             if len(path_alt) > 10:
@@ -808,7 +818,7 @@ class ClimbingCore:
                 alt_diff = path_alt[i] - path_alt[i-1]
                 expected_diff = H_sched[1] - H_sched[0]  # Expected altitude step
                 if abs(alt_diff - expected_diff) > expected_diff * 0.1:  # More than 10% deviation
-                    dbg(f"[3D-DP] WARNING: Non-uniform altitude step at point {i}: {path_alt[i-1]:.0f}m -> {path_alt[i]:.0f}m (diff: {alt_diff:.0f}m, expected: {expected_diff:.0f}m)")
+                    dbg(f"[DP-CLIMB] WARNING: Non-uniform altitude step at point {i}: {path_alt[i-1]:.0f}m -> {path_alt[i]:.0f}m (diff: {alt_diff:.0f}m, expected: {expected_diff:.0f}m)")
             
             # Compute additional trajectory data
             alt_array = np.array(path_alt)
@@ -845,7 +855,7 @@ class ClimbingCore:
                     # Handle both vertical and horizontal moves
                     if abs(h_next - h_curr) > 1.0:  # Vertical move (altitude change)
                         dt_array[i] = (h_next - h_curr) / Ps
-                        dbg(f"[3D-DP] Vertical move {i}: h={h_curr:.0f}->{h_next:.0f}m, dt={dt_array[i]:.3f}s, weight={weight_avg:.0f}kg")
+                        dbg(f"[DP-CLIMB] Vertical move {i}: h={h_curr:.0f}->{h_next:.0f}m, dt={dt_array[i]:.3f}s, weight={weight_avg:.0f}kg")
                     else:  # Horizontal move (same altitude, different Mach/lever)
                         # Calculate time based on velocity change
                         V_curr = M_curr * a
@@ -856,23 +866,23 @@ class ClimbingCore:
                             a_accel = (T_tot - D) / weight_avg  # Use dynamic weight
                             if a_accel > 0:
                                 dt_array[i] = abs(V_next - V_curr) / a_accel
-                                dbg(f"[3D-DP] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, V={V_curr:.1f}->{V_next:.1f}m/s, dt={dt_array[i]:.3f}s")
+                                dbg(f"[DP-CLIMB] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, V={V_curr:.1f}->{V_next:.1f}m/s, dt={dt_array[i]:.3f}s")
                             else:
                                 dt_array[i] = 0.1  # Small time step for horizontal moves
-                                dbg(f"[3D-DP] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, dt={dt_array[i]:.3f}s (small step)")
+                                dbg(f"[DP-CLIMB] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, dt={dt_array[i]:.3f}s (small step)")
                         else:
                             dt_array[i] = 0.1  # Small time step for horizontal moves
-                            dbg(f"[3D-DP] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, dt={dt_array[i]:.3f}s (minimal change)")
+                            dbg(f"[DP-CLIMB] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, dt={dt_array[i]:.3f}s (minimal change)")
                     
                     dF_array[i] = path_costs[i + 1] - path_costs[i]
                     
                     # Debug the final segment (step 49->50 issue)
                     if i >= n_segments - 2:  # Last two segments
-                        dbg(f"[3D-DP] Segment {i} (step {i}->{i+1}): h={h_curr:.0f}->{h_next:.0f}m, dt={dt_array[i]:.3f}s")
+                        dbg(f"[DP-CLIMB] Segment {i} (step {i}->{i+1}): h={h_curr:.0f}->{h_next:.0f}m, dt={dt_array[i]:.3f}s")
                 else:
                     dt_array[i] = 0.0
                     dF_array[i] = 0.0
-                    dbg(f"[3D-DP] Invalid segment {i}: Ps={Ps:.3f}, dt=0.0s")
+                    dbg(f"[DP-CLIMB] Invalid segment {i}: Ps={Ps:.3f}, dt=0.0s")
             
             # Time array construction with proper temporal progression
             n_points = len(alt_array)
@@ -891,10 +901,10 @@ class ClimbingCore:
                     if i + 1 < n_points:
                         time_array[i + 1] = time_array[i] + dt_array[i]
                 
-                dbg(f"[3D-DP] Time array constructed: start=0, end={time_array[-1]:.3f}s")
-                dbg(f"[3D-DP] Sample time progression: {time_array[:5]} (first 5 points)")
-                dbg(f"[3D-DP] Final time progression: {time_array[-3:]} (last 3 points: steps 47,48,49)")
-                dbg(f"[3D-DP] Final dt values: {dt_array[-3:]} (last 3 segments: 46->47, 47->48, 48->49)")
+                dbg(f"[DP-CLIMB] Time array constructed: start=0, end={time_array[-1]:.3f}s")
+                dbg(f"[DP-CLIMB] Sample time progression: {time_array[:5]} (first 5 points)")
+                dbg(f"[DP-CLIMB] Final time progression: {time_array[-3:]} (last 3 points: steps 47,48,49)")
+                dbg(f"[DP-CLIMB] Final dt values: {dt_array[-3:]} (last 3 segments: 46->47, 47->48, 48->49)")
                 
                 # Create dt_array_full for output (should match time differences)
                 dt_array_full = np.zeros(n_points)
@@ -1485,7 +1495,7 @@ class PlottingConfig:
     # Specific excess power contour levels for visualization
     PS_LEVELS = np.array(
         [-30,-25,-20,-15,-12,-10,-8,-6,-4,-2,-1,-0.5,
-          0.5,1,2,3,4,5,6,8,10,12,15,20,24,25],
+          0.5,1,2,3,4,5,6,8,10,12,15,20,23,25,30,33,35,40,45,50],
         dtype=float
     )
     
