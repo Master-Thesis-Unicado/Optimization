@@ -475,37 +475,69 @@ class DescentCore:
                                     next_lever <= 1.0):
                                     
                                     # Compute fuel costs WITH PENALTIES using dynamic weight
-                                    # Use current weight for both states (conservative approach)
+                                    # Calculate current cost with current weight
                                     current_cost = DescentCore.compute_descent_cost(
                                         aero, eng, current_alt, current_mach, current_lever,
                                         current_weight, target_mach, descent_fraction
                                     )
-                                    next_cost = DescentCore.compute_descent_cost(
+                                    
+                                    if not (np.isfinite(current_cost) and current_cost > 0):
+                                        continue
+                                    
+                                    # Single recalculation approach (consistent with climb.py):
+                                    # First pass - calculate next_cost with current_weight
+                                    # Then recalculate with updated weight to capture first-order weight effects
+                                    next_cost_initial = DescentCore.compute_descent_cost(
                                         aero, eng, next_alt, next_mach, next_lever,
                                         current_weight, target_mach, (k+1)/(K-1.0) if K > 1 else 1.0
                                     )
                                     
-                                    if (np.isfinite(current_cost) and np.isfinite(next_cost) and
-                                        current_cost > 0 and next_cost > 0):
-                                        
-                                        # Trapezoidal integration for fuel cost
-                                        step_cost = 0.5 * (current_cost + next_cost) * abs(dh)
-                                        total_cost = F[k, i, j] + step_cost
-                                        
-                                        # Calculate fuel burned during this step
-                                        fuel_burned = step_cost
-                                        next_weight = current_weight - fuel_burned
-                                        
-                                        # Ensure weight doesn't go negative
-                                        if next_weight <= 0:
-                                            continue
-                                        
-                                        # Update if this path is better
-                                        if total_cost < F[k + 1, next_mach_idx, next_lever_idx]:
-                                            F[k + 1, next_mach_idx, next_lever_idx] = total_cost
-                                            weight_matrix[k + 1, next_mach_idx, next_lever_idx] = next_weight
-                                            prv[k + 1, next_mach_idx, next_lever_idx] = [k, i, j]
-                                            feasible_count += 1
+                                    if not (np.isfinite(next_cost_initial) and next_cost_initial > 0):
+                                        continue
+                                    
+                                    # Calculate initial fuel burn estimate using trapezoidal integration
+                                    step_cost_initial = 0.5 * (current_cost + next_cost_initial) * abs(dh)
+                                    fuel_burned_initial = step_cost_initial
+                                    
+                                    # Calculate next weight after fuel burn
+                                    next_weight = current_weight - fuel_burned_initial
+                                    
+                                    # Ensure weight is positive
+                                    if next_weight <= 0:
+                                        continue
+                                    
+                                    # Recalculation: compute next_cost with updated weight
+                                    # This accounts for weight-dependent effects: Ps = (T-D)V/W, J = mdot/|Ps| ∝ W
+                                    next_cost_refined = DescentCore.compute_descent_cost(
+                                        aero, eng, next_alt, next_mach, next_lever,
+                                        next_weight, target_mach, (k+1)/(K-1.0) if K > 1 else 1.0
+                                    )
+                                    
+                                    if not (np.isfinite(next_cost_refined) and next_cost_refined > 0):
+                                        # Fallback to initial calculation if refinement fails
+                                        next_cost = next_cost_initial
+                                    else:
+                                        # Use refined cost for improved accuracy
+                                        next_cost = next_cost_refined
+                                    
+                                    # Final trapezoidal integration with refined cost
+                                    step_cost = 0.5 * (current_cost + next_cost) * abs(dh)
+                                    total_cost = F[k, i, j] + step_cost
+                                    
+                                    # Calculate final fuel burned and update next weight
+                                    fuel_burned = step_cost
+                                    next_weight = current_weight - fuel_burned
+                                    
+                                    # Final safety check
+                                    if next_weight <= 0:
+                                        continue
+                                    
+                                    # Update if this path is better
+                                    if total_cost < F[k + 1, next_mach_idx, next_lever_idx]:
+                                        F[k + 1, next_mach_idx, next_lever_idx] = total_cost
+                                        weight_matrix[k + 1, next_mach_idx, next_lever_idx] = next_weight
+                                        prv[k + 1, next_mach_idx, next_lever_idx] = [k, i, j]
+                                        feasible_count += 1
                 
                 if feasible_count == 0 and k < K - 2:
                     dbg(f"[DP-DESCENT] WARNING: No feasible transitions at altitude {current_alt:.0f}m")
@@ -585,7 +617,7 @@ class DescentCore:
             n_points = len(alt_array)
             time_array = np.zeros(n_points)
             dt_array = np.zeros(n_points)
-            dFuel_array = np.diff(fuel_array, prepend=0)
+            # Note: dFuel_array will be calculated during reconstruction with consistent method
             
             thrust_array = np.zeros(n_points)
             drag_array = np.zeros(n_points)
@@ -638,58 +670,138 @@ class DescentCore:
                 Ps_array[i] = Ps
                 descent_rate_array[i] = Ps
             
-            # Enhanced time calculation for segments (similar to climb accuracy)
+            # Enhanced time and fuel calculation for segments (consistent method, similar to climb.py)
+            dFuel_segment_array = np.zeros(n_segments)  # Fuel for each segment
+            
             for i in range(n_segments):
                 h_curr, h_next = alt_array[i], alt_array[i + 1]
                 M_curr, M_next = mach_array[i], mach_array[i + 1]
                 lever_curr, lever_next = lever_array[i], lever_array[i + 1]
                 weight_curr, weight_next = weight_array[i], weight_array[i + 1]
                 
-                # Average values for this segment
-                h_avg = 0.5 * (h_curr + h_next)
-                M_avg = 0.5 * (M_curr + M_next)
-                lever_avg = 0.5 * (lever_curr + lever_next)
-                weight_avg = 0.5 * (weight_curr + weight_next)
+                # Calculate altitude difference for segment
+                dh = abs(h_next - h_curr) if abs(h_next - h_curr) > 1.0 else 0.0
                 
-                # Compute segment properties with dynamic weight
-                a = a_from_altitude(h_avg)
-                V_avg = M_avg * a
-                D_avg = aero.get_drag(M_avg, h_avg)
-                T_per_avg = eng.thrust_with_lever(lever_avg, M_avg, h_avg)
-                if T_per_avg is None or T_per_avg < 0:
-                    T_per_avg = 0.0
-                T_tot_avg = T_per_avg * N_ENGINES
-                Ps_avg = ((T_tot_avg - D_avg) * V_avg) / (weight_avg * G_C)
+                # Calculate descent fraction for penalty system
+                descent_fraction_curr = i / (n_points - 1.0) if n_points > 1 else 0.0
+                descent_fraction_next = (i + 1) / (n_points - 1.0) if n_points > 1 else 1.0
                 
-                # Enhanced time calculation - handle both vertical and horizontal moves
-                if abs(h_next - h_curr) > 1.0:  # Vertical move (altitude change)
-                    if abs(Ps_avg) > 0.1:
-                        dt_segment_array[i] = abs(h_next - h_curr) / abs(Ps_avg)
-                        dbg(f"[DP-DESCENT] Vertical move {i}: h={h_curr:.0f}->{h_next:.0f}m, dt={dt_segment_array[i]:.3f}s, weight={weight_avg:.0f}kg")
-                    else:
-                        dt_segment_array[i] = 1.0
-                        dbg(f"[DP-DESCENT] Vertical move {i}: h={h_curr:.0f}->{h_next:.0f}m, dt={dt_segment_array[i]:.3f}s (low Ps)")
-                else:  # Horizontal move (same altitude, different Mach/lever)
-                    # Calculate time based on velocity change with proper deceleration physics
+                # Calculate current cost with current weight (consistent with forward pass)
+                current_cost = DescentCore.compute_descent_cost(
+                    aero, eng, h_curr, M_curr, lever_curr,
+                    weight_curr, target_mach, descent_fraction_curr
+                )
+                
+                if not (np.isfinite(current_cost) and current_cost > 0):
+                    dt_segment_array[i] = 0.0
+                    dFuel_segment_array[i] = 0.0
+                    continue
+                
+                # Single recalculation approach (consistent with forward pass)
+                # First pass: calculate next_cost with current_weight
+                next_cost_initial = DescentCore.compute_descent_cost(
+                    aero, eng, h_next, M_next, lever_next,
+                    weight_curr, target_mach, descent_fraction_next
+                )
+                
+                if not (np.isfinite(next_cost_initial) and next_cost_initial > 0):
+                    dt_segment_array[i] = 0.0
+                    dFuel_segment_array[i] = 0.0
+                    continue
+                
+                # Estimate fuel burned using trapezoidal integration
+                if dh > 1.0:  # Vertical move (altitude change)
+                    fuel_burned_initial = 0.5 * (current_cost + next_cost_initial) * dh
+                else:  # Horizontal move - use small distance approximation
+                    # For horizontal moves, approximate distance from velocity change
+                    a = a_from_altitude(h_curr)
                     V_curr = M_curr * a
                     V_next = M_next * a
+                    ds = 0.5 * (V_curr + V_next) * 0.1 if abs(V_next - V_curr) > 0.1 else 1.0  # Approximate distance
+                    fuel_burned_initial = 0.5 * (current_cost + next_cost_initial) * ds
+                
+                # Estimate next weight after fuel burn
+                weight_estimate = weight_curr - fuel_burned_initial
+                
+                if weight_estimate <= 0:
+                    dt_segment_array[i] = 0.0
+                    dFuel_segment_array[i] = 0.0
+                    continue
+                
+                # Recalculation: compute next_cost with estimated weight
+                next_cost_refined = DescentCore.compute_descent_cost(
+                    aero, eng, h_next, M_next, lever_next,
+                    weight_estimate, target_mach, descent_fraction_next
+                )
+                
+                if not (np.isfinite(next_cost_refined) and next_cost_refined > 0):
+                    # Fallback to initial calculation
+                    next_cost = next_cost_initial
+                else:
+                    next_cost = next_cost_refined
+                
+                # Final fuel calculation using refined cost (consistent with forward pass)
+                if dh > 1.0:  # Vertical move
+                    fuel_burned = 0.5 * (current_cost + next_cost) * dh
+                else:  # Horizontal move
+                    a = a_from_altitude(h_curr)
+                    V_curr = M_curr * a
+                    V_next = M_next * a
+                    ds = 0.5 * (V_curr + V_next) * 0.1 if abs(V_next - V_curr) > 0.1 else 1.0
+                    fuel_burned = 0.5 * (current_cost + next_cost) * ds
+                
+                dFuel_segment_array[i] = fuel_burned
+                
+                # Calculate time for this segment (consistent with fuel calculation)
+                if dh > 1.0:  # Vertical move (altitude change)
+                    # Use average weight for Ps calculation (consistent with fuel)
+                    weight_avg = 0.5 * (weight_curr + weight_estimate)
+                    a = a_from_altitude(0.5 * (h_curr + h_next))
+                    M_avg = 0.5 * (M_curr + M_next)
+                    lever_avg = 0.5 * (lever_curr + lever_next)
+                    V_avg = M_avg * a
+                    D_avg = aero.get_drag(M_avg, 0.5 * (h_curr + h_next))
+                    T_per_avg = eng.thrust_with_lever(lever_avg, M_avg, 0.5 * (h_curr + h_next))
+                    if T_per_avg is None or T_per_avg < 0:
+                        T_per_avg = 0.0
+                    T_tot_avg = T_per_avg * N_ENGINES
+                    Ps_avg = ((T_tot_avg - D_avg) * V_avg) / (weight_avg * G_C)
+                    
+                    if abs(Ps_avg) > 0.1:
+                        dt_segment_array[i] = dh / abs(Ps_avg)
+                        dbg(f"[DP-DESCENT] Vertical move {i}: h={h_curr:.0f}->{h_next:.0f}m, dt={dt_segment_array[i]:.3f}s, fuel={fuel_burned:.3f}kg, weight={weight_avg:.0f}kg")
+                    else:
+                        dt_segment_array[i] = 1.0
+                        dFuel_segment_array[i] = 0.0
+                        dbg(f"[DP-DESCENT] Vertical move {i}: h={h_curr:.0f}->{h_next:.0f}m, dt={dt_segment_array[i]:.3f}s, fuel={fuel_burned:.3f}kg (low Ps)")
+                else:  # Horizontal move (same altitude, different Mach/lever)
+                    # Calculate time based on velocity change
+                    a = a_from_altitude(h_curr)
+                    V_curr = M_curr * a
+                    V_next = M_next * a
+                    weight_avg = 0.5 * (weight_curr + weight_estimate)
+                    
                     if abs(V_next - V_curr) > 0.1:  # Significant velocity change
                         # Use deceleration rate: dt = dV / a_decel
-                        # For descent: deceleration magnitude = |T_tot - D| / mass
-                        a_decel = abs(T_tot_avg - D_avg) / weight_avg  # Use dynamic weight
+                        D = aero.get_drag(M_curr, h_curr)
+                        T_per = eng.thrust_with_lever(lever_curr, M_curr, h_curr)
+                        if T_per is None or T_per < 0:
+                            T_per = 0.0
+                        T_tot = T_per * N_ENGINES
+                        a_decel = abs(T_tot - D) / weight_avg
                         if a_decel > 0.1:
                             dt_segment_array[i] = abs(V_next - V_curr) / a_decel
-                            dbg(f"[DP-DESCENT] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, V={V_curr:.1f}->{V_next:.1f}m/s, dt={dt_segment_array[i]:.3f}s")
+                            dbg(f"[DP-DESCENT] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, V={V_curr:.1f}->{V_next:.1f}m/s, dt={dt_segment_array[i]:.3f}s, fuel={fuel_burned:.3f}kg")
                         else:
-                            dt_segment_array[i] = 0.1  # Small time step for horizontal moves
-                            dbg(f"[DP-DESCENT] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, dt={dt_segment_array[i]:.3f}s (small step)")
+                            dt_segment_array[i] = 0.1
+                            dbg(f"[DP-DESCENT] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, dt={dt_segment_array[i]:.3f}s, fuel={fuel_burned:.3f}kg (small step)")
                     else:
-                        dt_segment_array[i] = 0.1  # Small time step for minimal changes
-                        dbg(f"[DP-DESCENT] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, dt={dt_segment_array[i]:.3f}s (minimal change)")
+                        dt_segment_array[i] = 0.1
+                        dbg(f"[DP-DESCENT] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, dt={dt_segment_array[i]:.3f}s, fuel={fuel_burned:.3f}kg (minimal change)")
                 
-                # Debug the final segments for validation
+                # Debug the final segment
                 if i >= n_segments - 2:  # Last two segments
-                    dbg(f"[DP-DESCENT] Segment {i} (step {i}->{i+1}): h={h_curr:.0f}->{h_next:.0f}m, dt={dt_segment_array[i]:.3f}s")
+                    dbg(f"[DP-DESCENT] Segment {i} (step {i}->{i+1}): h={h_curr:.0f}->{h_next:.0f}m, dt={dt_segment_array[i]:.3f}s, fuel={dFuel_segment_array[i]:.3f}kg")
             
             # Construct proper time array from segments
             time_array = np.zeros(n_points)
@@ -703,6 +815,11 @@ class DescentCore:
             # Create dt_array for output (dt[i] = time[i] - time[i-1])
             dt_array[1:] = np.diff(time_array)
             dt_array[0] = 0.0  # First point has dt=0
+            
+            # Create dFuel_array from segments (consistent with time calculation)
+            dFuel_array = np.zeros(n_points)
+            dFuel_array[1:] = dFuel_segment_array  # Fuel consumed in each segment
+            dFuel_array[0] = 0.0  # First point has no fuel consumed
             
             dbg(f"[DP-DESCENT] Enhanced time array constructed: start=0, end={time_array[-1]:.3f}s")
             dbg(f"[DP-DESCENT] Sample time progression: {time_array[:5]} (first 5 points)")

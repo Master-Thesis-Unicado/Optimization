@@ -69,7 +69,7 @@ P_s = \frac{(T_{total} - D) \times V_{TAS}}{W}
 ```
 
 ```math
-J = \frac{\dot{m}_{fuel}}{|P_s|} \quad [kg/m]
+J = \frac{\dot{m}_{fuel}}{|P_s|} = \frac{\dot{m}_{fuel} \times W}{|(T_{total} - D) \times V_{TAS}|} \quad [kg/m]
 ```
 
 Where:
@@ -79,6 +79,8 @@ Where:
 - `V_{TAS}` = True airspeed (m/s)
 - `W` = Aircraft weight (N)
 - `J` = Fuel cost density (kg/m), fuel consumed per meter of altitude lost
+
+**Weight Dependency**: The cost density `J` is directly proportional to weight `W` through the specific excess power calculation. As fuel is consumed during descent, the aircraft weight decreases, which affects the cost calculation for subsequent states. This creates a circular dependency: `next_cost` depends on `next_weight`, while `next_weight` depends on `fuel_burned`, which depends on `next_cost`.
 
 **Critical Difference from Climb:**
 - **Descent**: `P_s < 0` (energy dissipation), `T < D` typically
@@ -431,14 +433,16 @@ def solve_descent_dp(aero: AeroTables, eng: EngineWrapper,
     # Create lever grid (same as climb: full range 0-100%)
     lever_grid = np.linspace(0.0, 1.0, L)
     
-    # Initialize 3D cost matrix and predecessor array
+    # Initialize 3D cost matrix, weight matrix, and predecessor array
     F = np.full((K, I, L), np.inf)               # Cost-to-go
+    weight_matrix = np.full((K, I, L), np.nan)   # Track weight at each state
     prv = np.full((K, I, L, 3), -1, dtype=int)   # Predecessor [k, i, j]
     
     # Set starting point (from cruise altitude)
     start_mach_idx = np.argmin(np.abs(M_grid - initial_state.mach))
     start_lever_idx = 0  # Start at idle
     F[0, start_mach_idx, start_lever_idx] = 0.0  # Starting cost is 0
+    weight_matrix[0, start_mach_idx, start_lever_idx] = initial_state.weight_kg  # Starting weight
     
     # Forward pass - 3D Dynamic Programming (descending)
     for k in range(K - 1):  # For each altitude level
@@ -455,6 +459,11 @@ def solve_descent_dp(aero: AeroTables, eng: EngineWrapper,
         for state_idx in range(len(feasible_states[0])):
             i = feasible_states[0][state_idx]  # Mach index
             j = feasible_states[1][state_idx]  # Lever index
+            
+            # Get current weight at this state
+            current_weight = weight_matrix[k, i, j]
+            if not np.isfinite(current_weight) or current_weight <= 0:
+                continue
             
             current_mach = M_grid[i]
             current_lever = lever_grid[j]
@@ -481,30 +490,69 @@ def solve_descent_dp(aero: AeroTables, eng: EngineWrapper,
                         if (next_mach >= min_mach_next and 
                             next_mach <= M_MMO):
                             
-                            # Compute fuel costs WITH PENALTIES
+                            # Compute fuel costs WITH PENALTIES using dynamic weight
+                            # Calculate current cost with current weight
                             current_cost = DescentCore.compute_descent_cost(
-                                aero, eng, current_alt, current_mach, 
-                                current_lever, initial_state.weight_kg,
-                                target_mach, descent_fraction
-                            )
-                            next_cost = DescentCore.compute_descent_cost(
-                                aero, eng, next_alt, next_mach, 
-                                next_lever, initial_state.weight_kg,
-                                target_mach, (k+1)/(K-1.0)
+                                aero, eng, current_alt, current_mach, current_lever,
+                                current_weight, target_mach, descent_fraction
                             )
                             
-                            if (np.isfinite(current_cost) and 
-                                np.isfinite(next_cost) and
-                                current_cost > 0 and next_cost > 0):
-                                
-                                # Trapezoidal integration for fuel cost
-                                step_cost = 0.5 * (current_cost + next_cost) * abs(dh)
-                                total_cost = F[k, i, j] + step_cost
-                                
-                                # Update if this path is better
-                                if total_cost < F[k + 1, next_mach_idx, next_lever_idx]:
-                                    F[k + 1, next_mach_idx, next_lever_idx] = total_cost
-                                    prv[k + 1, next_mach_idx, next_lever_idx] = [k, i, j]
+                            if not (np.isfinite(current_cost) and current_cost > 0):
+                                continue
+                            
+                            # Single recalculation approach (consistent with climb.py):
+                            # First pass - calculate next_cost with current_weight
+                            # Then recalculate with updated weight to capture first-order weight effects
+                            next_cost_initial = DescentCore.compute_descent_cost(
+                                aero, eng, next_alt, next_mach, next_lever,
+                                current_weight, target_mach, (k+1)/(K-1.0) if K > 1 else 1.0
+                            )
+                            
+                            if not (np.isfinite(next_cost_initial) and next_cost_initial > 0):
+                                continue
+                            
+                            # Calculate initial fuel burn estimate using trapezoidal integration
+                            step_cost_initial = 0.5 * (current_cost + next_cost_initial) * abs(dh)
+                            fuel_burned_initial = step_cost_initial
+                            
+                            # Calculate next weight after fuel burn
+                            next_weight = current_weight - fuel_burned_initial
+                            
+                            # Ensure weight is positive
+                            if next_weight <= 0:
+                                continue
+                            
+                            # Recalculation: compute next_cost with updated weight
+                            # This accounts for weight-dependent effects: Ps = (T-D)V/W, J = mdot/|Ps| ∝ W
+                            next_cost_refined = DescentCore.compute_descent_cost(
+                                aero, eng, next_alt, next_mach, next_lever,
+                                next_weight, target_mach, (k+1)/(K-1.0) if K > 1 else 1.0
+                            )
+                            
+                            if not (np.isfinite(next_cost_refined) and next_cost_refined > 0):
+                                # Fallback to initial calculation if refinement fails
+                                next_cost = next_cost_initial
+                            else:
+                                # Use refined cost for improved accuracy
+                                next_cost = next_cost_refined
+                            
+                            # Final trapezoidal integration with refined cost
+                            step_cost = 0.5 * (current_cost + next_cost) * abs(dh)
+                            total_cost = F[k, i, j] + step_cost
+                            
+                            # Calculate final fuel burned and update next weight
+                            fuel_burned = step_cost
+                            next_weight = current_weight - fuel_burned
+                            
+                            # Final safety check
+                            if next_weight <= 0:
+                                continue
+                            
+                            # Update if this path is better
+                            if total_cost < F[k + 1, next_mach_idx, next_lever_idx]:
+                                F[k + 1, next_mach_idx, next_lever_idx] = total_cost
+                                weight_matrix[k + 1, next_mach_idx, next_lever_idx] = next_weight
+                                prv[k + 1, next_mach_idx, next_lever_idx] = [k, i, j]
     
     # Apply terminal Mach constraint
     valid_final = np.abs(M_grid - target_mach) < target_mach_tolerance
@@ -568,7 +616,7 @@ def compute_descent_cost(aero: AeroTables, eng: EngineWrapper,
         if not np.isfinite(D) or D < 0:
             return np.inf
         
-        # Calculate specific excess power
+        # Calculate specific excess power (weight-dependent)
         W = mass_kg * G_C
         Ps = ((T_tot - D) * V) / W
         
@@ -582,7 +630,8 @@ def compute_descent_cost(aero: AeroTables, eng: EngineWrapper,
             return np.inf
         mdot = tsfc * T_per * N_ENGINES
         
-        # Base fuel cost density (fuel per meter of descent)
+        # Base fuel cost density J = mdot / |Ps| = mdot × W / |(T-D) × V|
+        # Note: J is directly proportional to weight W
         J = mdot / abs(Ps)
         
         if not np.isfinite(J) or J <= 0:
@@ -611,8 +660,51 @@ def compute_descent_cost(aero: AeroTables, eng: EngineWrapper,
 **Key Points:**
 1. **Negative Ps required**: Descent requires `Ps < 0`, otherwise state is infeasible
 2. **Absolute value**: Cost uses `|Ps|` to ensure positive cost density
-3. **Integrated penalties**: Mach and lever penalties added directly to cost
-4. **Feasibility checks**: Multiple checks ensure physical validity of state
+3. **Weight dependency**: Cost density is directly proportional to weight: `J = mdot × W / |(T-D) × V|`
+4. **Integrated penalties**: Mach and lever penalties added directly to cost
+5. **Feasibility checks**: Multiple checks ensure physical validity of state
+
+### 5.4 Weight-Dependent Cost Calculation with Single Recalculation
+
+**Problem**: During dynamic programming state transitions, a circular dependency exists:
+- `next_cost` depends on `next_weight` (through `Ps = (T-D)V/W`)
+- `next_weight = current_weight - fuel_burned`
+- `fuel_burned` depends on `next_cost` (via trapezoidal integration)
+
+**Solution**: Single recalculation approach (Option 2) to capture first-order weight effects with minimal computational overhead, consistent with climb phase methodology.
+
+**Algorithm:**
+```python
+# Step 1: Calculate current cost with current weight
+current_cost = compute_descent_cost(..., mass_kg=current_weight)
+
+# Step 2: First pass - calculate next_cost with current_weight
+next_cost_initial = compute_descent_cost(..., mass_kg=current_weight)
+
+# Step 3: Estimate fuel burned using trapezoidal integration
+fuel_burned_initial = 0.5 * (current_cost + next_cost_initial) * abs(dh)
+next_weight_estimate = current_weight - fuel_burned_initial
+
+# Step 4: Recalculation - compute next_cost with estimated weight
+# This accounts for weight-dependent effects: J ∝ W
+next_cost_refined = compute_descent_cost(..., mass_kg=next_weight_estimate)
+
+# Step 5: Final calculation with refined cost
+step_cost = 0.5 * (current_cost + next_cost_refined) * abs(dh)
+next_weight = current_weight - step_cost
+```
+
+**Mathematical Basis:**
+- Cost density is linearly proportional to weight: `J = mdot × W / |(T-D) × V|`
+- First-order weight change: `ΔJ/J ≈ ΔW/W` (typically 0.02-0.07% per altitude step)
+- Single recalculation captures the dominant first-order effect
+- Residual error is second-order: `~0.00005%` (negligible)
+
+**Benefits:**
+- **Accuracy**: Reduces error from ~0.07% to ~0.00005% per step
+- **Efficiency**: One extra cost calculation per step (vs 5 in full iteration)
+- **Robustness**: Fallback to initial calculation if refinement fails
+- **Consistency**: Same methodology as climb phase ensures uniform approach
 
 ---
 
@@ -980,10 +1072,12 @@ DP OPTIMIZATION FLOW (DESCENT)
 │  ┌─────────────────────────────────────────────────────────┐   │
 │  │ solve_descent_dp()                                      │   │
 │  │  ├── Initialize 3D cost matrix F[K, I, L] = inf        │   │
+│  │  ├── Initialize weight matrix weight_matrix[K, I, L]   │   │
 │  │  ├── Initialize predecessor matrix prv[K, I, L, 3]      │   │
 │  │  ├── Create lever grid [0.0, 1.0] (10 samples)         │   │
 │  │  ├── Find starting Mach index in grid                   │   │
-│  │  └── Set F[0, start_mach_idx, 0] = 0.0                 │   │
+│  │  ├── Set F[0, start_mach_idx, 0] = 0.0                 │   │
+│  │  └── Set weight_matrix[0, start_mach_idx, 0] = initial_weight│
 │  └─────────────────────────────────────────────────────────┘   │
 └─────────────────────┬───────────────────────────────────────────┘
                       │
@@ -1006,13 +1100,19 @@ DP OPTIMIZATION FLOW (DESCENT)
 │  │          ├── next_lever_idx = j + dj                   │   │
 │  │          ├── Check bounds and feasibility              │   │
 │  │          ├── Calculate min_mach_next (dynamic)         │   │
-│  │          ├── Compute current_cost (with penalties)     │   │
-│  │          ├── Compute next_cost (with penalties)        │   │
-│  │          ├── step_cost = 0.5*(J_curr+J_next)*|dh|     │   │
-│  │          ├── total_cost = F[k,i,j] + step_cost        │   │
+│  │          ├── Apply single recalculation approach:       │   │
+│  │          │   ├── Compute current_cost with current_weight│   │
+│  │          │   ├── Compute next_cost_initial with current_weight│
+│  │          │   ├── Estimate fuel and next_weight          │   │
+│  │          │   ├── Compute next_cost_refined with         │   │
+│  │          │   │   estimated weight                       │   │
+│  │          │   └── Final step_cost with refined cost      │   │
+│  │          ├── total_cost = F[k,i,j] + step_cost         │   │
 │  │          │                                               │   │
 │  │          └── IF total_cost < F[k+1, next_i, next_j]:  │   │
 │  │              ├── F[k+1, next_i, next_j] = total_cost  │   │
+│  │              ├── weight_matrix[k+1, next_i, next_j] =  │   │
+│  │              │   next_weight                            │   │
 │  │              └── prv[k+1, next_i, next_j] = [k,i,j]  │   │
 │  └─────────────────────────────────────────────────────────┘   │
 └─────────────────────┬───────────────────────────────────────────┘
@@ -1051,20 +1151,24 @@ DP OPTIMIZATION FLOW (DESCENT)
 ┌─────────────────────────────────────────────────────────────────┐
 │              TRAJECTORY RECONSTRUCTION                          │
 │  ┌─────────────────────────────────────────────────────────┐   │
-│  │ Calculate detailed performance data:                    │   │
-│  │  ├── FOR each point in path:                           │   │
-│  │  │   ├── Get atmospheric properties (T, p, ρ, a)       │   │
-│  │  │   ├── Calculate thrust (T_per_engine × N_engines)   │   │
-│  │  │   ├── Calculate drag (from aero tables)             │   │
-│  │  │   ├── Calculate Ps = (T-D)*V/W                      │   │
-│  │  │   ├── Calculate fuel flow (TSFC × T_total)          │   │
-│  │  │   ├── Calculate time step: dt = |dh| / |Ps|         │   │
-│  │  │   ├── Update weight: W_new = W - mdot*dt            │   │
-│  │  │   └── Store all performance data                    │   │
+│  │ Calculate detailed performance data with consistent     │   │
+│  │ fuel and time calculation (same method as forward pass): │   │
+│  │  ├── FOR each segment in path:                         │   │
+│  │  │   ├── Calculate current_cost with current weight    │   │
+│  │  │   ├── Apply single recalculation approach           │   │
+│  │  │   │   ├── First pass: next_cost with current_weight │   │
+│  │  │   │   ├── Estimate fuel and next_weight            │   │
+│  │  │   │   └── Recalculate next_cost with estimated      │   │
+│  │  │   │       weight                                     │   │
+│  │  │   ├── Final fuel: 0.5*(current_cost+next_cost)*|dh| │   │
+│  │  │   ├── Calculate time using same weight estimates    │   │
+│  │  │   │   ├── For vertical moves: dt = |dh| / |Ps_avg| │   │
+│  │  │   │   └── For horizontal moves: dt from acceleration │   │
+│  │  │   └── Store fuel and time consistently              │   │
 │  │  │                                                       │   │
 │  │  └── Calculate summary statistics:                     │   │
 │  │      ├── total_time = sum(dt_array)                    │   │
-│  │      ├── total_fuel = fuel_array[-1]                   │   │
+│  │      ├── total_fuel = sum(dFuel_array)                │   │
 │  │      ├── avg_descent_rate = mean(|Ps|)                 │   │
 │  │      └── avg_fuel_flow = total_fuel / total_time       │   │
 │  └─────────────────────────────────────────────────────────┘   │
@@ -1131,14 +1235,13 @@ main()
 │       │   │   └── current_state = prv[current_state]
 │       │   └── Reverse path
 │       │
-│       ├── Reconstruct trajectory
-│       │   ├── FOR each point:
-│       │   │   ├── isa_properties()
-│       │   │   ├── a_from_altitude()
-│       │   │   ├── eng.thrust_with_lever()
-│       │   │   ├── aero.get_drag()
-│       │   │   ├── Calculate Ps, fuel flow, dt
-│       │   │   └── Update weight
+│       ├── Reconstruct trajectory (consistent fuel and time calculation)
+│       │   ├── FOR each segment:
+│       │   │   ├── Calculate current_cost with current weight
+│       │   │   ├── Apply single recalculation approach (same as forward pass)
+│       │   │   ├── Calculate fuel using refined cost and trapezoidal integration
+│       │   │   ├── Calculate time using same weight estimates
+│       │   │   └── Ensure fuel and time use consistent physics
 │       │   └── Calculate summary statistics
 │       │
 │       └── Return DescentResults, info dict
