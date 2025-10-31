@@ -9,7 +9,7 @@ Key Components:
 - Iterative optimization loop that runs full mission (climb + cruise + descent)
 - Fuel consumption tracking and convergence analysis
 - Intermediate results storage without plot generation
-- Automatic convergence detection with relative tolerance (0.1%)
+- Automatic convergence detection with relative tolerance (0.5%)
 - Safety buffer application (5%) after convergence
 """
 
@@ -45,7 +45,8 @@ from pyengine_wrapper import EngineWrapper
 
 # ========= CONVERGENCE PARAMETERS =============================================
 
-CONVERGENCE_TOLERANCE_RELATIVE = 0.001  # 0.1% relative tolerance
+CONVERGENCE_TOLERANCE_RELATIVE = 0.005  # 0.5% relative tolerance
+CONVERGENCE_TOLERANCE_PERCENT = CONVERGENCE_TOLERANCE_RELATIVE * 100.0  # 0.5% in percentage units for clarity
 SAFETY_BUFFER_PERCENT = 0.05  # 5% safety buffer
 MAX_ITERATIONS = 100  # Safety limit (should rarely be reached)
 
@@ -133,7 +134,7 @@ class ConvergenceHistory:
         prev, curr = self.get_last_two_iterations()
         delta = curr.convergence_delta_percent
         
-        return abs(delta) < (CONVERGENCE_TOLERANCE_RELATIVE * 100.0)
+        return abs(delta) < CONVERGENCE_TOLERANCE_PERCENT
 
 
 # ========= SINGLE MISSION ITERATION =============================================
@@ -505,7 +506,7 @@ def optimize_fuel_capacity(
     1. Start with MAX_FUEL_KG as initial guess
     2. Run full mission and record fuel consumed
     3. Use fuel consumed as new initial fuel for next iteration
-    4. Repeat until convergence (fuel difference < 0.1%)
+    4. Repeat until convergence (fuel difference < 0.5%)
     5. Apply 5% safety buffer to final result
     
     Args:
@@ -523,7 +524,7 @@ def optimize_fuel_capacity(
     print("FUEL CAPACITY OPTIMIZATION")
     print("="*80)
     print(f"Objective: Determine minimum required fuel for mission completion")
-    print(f"Convergence criterion: {CONVERGENCE_TOLERANCE_RELATIVE*100:.2f}% relative")
+    print(f"Convergence criterion: {CONVERGENCE_TOLERANCE_PERCENT:.2f}% relative")
     print(f"Safety buffer: {SAFETY_BUFFER_PERCENT*100:.0f}%")
     print("="*80)
     
@@ -592,7 +593,7 @@ def optimize_fuel_capacity(
         # Print convergence status
         if iteration_count > 1:
             print(f"[CONVERGENCE] Delta: {iteration_result.convergence_delta_percent:.3f}% "
-                  f"({abs(iteration_result.convergence_delta_percent) < CONVERGENCE_TOLERANCE_RELATIVE*100})")
+                  f"({abs(iteration_result.convergence_delta_percent) < CONVERGENCE_TOLERANCE_PERCENT})")
         
         # Check convergence
         if history.is_converged():

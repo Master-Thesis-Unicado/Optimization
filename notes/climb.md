@@ -69,7 +69,7 @@ P_s = \frac{(T_{total} - D) \times V_{TAS}}{W}
 ```
 
 ```math
-J = \frac{\dot{m}_{fuel}}{P_s} \quad [kg/m]
+J = \frac{\dot{m}_{fuel}}{P_s} = \frac{\dot{m}_{fuel} \times W}{(T_{total} - D) \times V_{TAS}} \quad [kg/m]
 ```
 
 Where:
@@ -79,6 +79,8 @@ Where:
 - `V_{TAS}` = True airspeed (m/s)
 - `W` = Aircraft weight (N)
 - `J` = Fuel cost density (kg/m)
+
+**Weight Dependency**: The cost density `J` is directly proportional to weight `W` through the specific excess power calculation. As fuel is consumed during climb, the aircraft weight decreases, which affects the cost calculation for subsequent states. This creates a circular dependency: `next_cost` depends on `next_weight`, while `next_weight` depends on `fuel_burned`, which depends on `next_cost`.
 
 ### 2.2 Dynamic Programming Formulation
 
@@ -357,40 +359,54 @@ def solve_3d_fixed_mass(aero: AeroTables, eng: EngineWrapper,
                        target_mach: float = None,
                        target_mach_tolerance: float = 0.02,
                        start_mach: float = None,
-                       start_lever: float = None) -> MinFuelSchedule:
+                       start_lever: float = None,
+                       mass_kg: float = None) -> MinFuelSchedule:
     
-    # Initialize 3D cost grid
-    J_grid_3d = np.full((len(H_sched), len(M_grid), lever_samples), np.inf)
+    # Initialize 3D cost grid and weight matrix
+    F = np.full((K, I, L), np.inf)
+    weight_matrix = np.full((K, I, L), np.nan)  # Track weight at each state
     
     # Set terminal condition
-    J_grid_3d[0, :, :] = 0.0  # At initial altitude
+    F[0, start_mach_idx, start_lever_idx] = 0.0  # Starting cost is 0
+    weight_matrix[0, start_mach_idx, start_lever_idx] = initial_mass
     
-    # Forward pass - Bellman's equation
-    for k in range(1, len(H_sched)):  # For each altitude level
-        h_current = H_sched[k]
-        h_previous = H_sched[k-1]
-        dh = h_current - h_previous
+    # Forward pass - Bellman's equation with weight-dependent costs
+    for k in range(K - 1):  # For each altitude level
+        current_alt = H_sched[k]
+        next_alt = H_sched[k + 1]
+        dh = next_alt - current_alt
         
-        for i, M in enumerate(M_grid):  # For each Mach
-            for j, lever in enumerate(lever_grid):  # For each lever
+        for each feasible state (k, i, j):
+            current_weight = weight_matrix[k, i, j]
+            
+            # Calculate current cost with current weight
+            current_cost = compute_3d_cost(..., mass_kg=current_weight)
+            
+            # Single recalculation approach (see Section 5.4)
+            # 1. First pass: next_cost with current_weight
+            # 2. Estimate fuel and next_weight
+            # 3. Recalculate next_cost with estimated weight
+            # 4. Final trapezoidal integration
+            
+            # Find optimal transition from previous altitude
+            for each next state (k+1, i', j'):
+                # Calculate transition cost using weight-dependent calculation
+                step_cost = 0.5 * (current_cost + next_cost) * dh
+                total_cost = F[k, i, j] + step_cost
                 
-                # Calculate cost for this state
-                cost = compute_3d_cost(aero, eng, M, h_current, lever, mass0_kg)
-                
-                # Find optimal transition from previous altitude
-                min_cost_prev = np.inf
-                for i_prev in range(len(M_grid)):
-                    for j_prev in range(lever_samples):
-                        if J_grid_3d[k-1, i_prev, j_prev] < np.inf:
-                            transition_cost = cost * dh
-                            total_cost = J_grid_3d[k-1, i_prev, j_prev] + transition_cost
-                            min_cost_prev = min(min_cost_prev, total_cost)
-                
-                J_grid_3d[k, i, j] = min_cost_prev
+                # Update if this path is better
+                if total_cost < F[k+1, i', j']:
+                    F[k+1, i', j'] = total_cost
+                    weight_matrix[k+1, i', j'] = next_weight
     
     # Backtracking to find optimal path
-    return backtrack_optimal_path(J_grid_3d, M_grid, H_sched, lever_grid)
+    return backtrack_optimal_path(F, weight_matrix, M_grid, H_sched, lever_grid)
 ```
+
+**Key Implementation Details:**
+- **Weight Tracking**: The `weight_matrix` tracks aircraft weight at each DP state, accounting for fuel consumption during climb
+- **Weight-Dependent Costs**: Cost calculations use the appropriate weight for each state (see Section 5.4)
+- **Trapezoidal Integration**: Fuel consumption between states uses trapezoidal rule for improved accuracy
 
 ### 5.3 Cost Function Calculation
 
@@ -413,7 +429,7 @@ def compute_3d_cost(aero: AeroTables, eng: EngineWrapper,
     thrust_total = N_ENGINES * thrust_per_engine if thrust_per_engine else 0.0
     drag = aero.get_drag(mach, altitude_m)
     
-    # Calculate specific excess power
+    # Calculate specific excess power (weight-dependent)
     weight = mass_kg * G_C
     Ps = (thrust_total - drag) * V_tas / weight if weight > 0 else 0.0
     
@@ -421,7 +437,8 @@ def compute_3d_cost(aero: AeroTables, eng: EngineWrapper,
     tsfc = eng.tsfc_current()
     fuel_flow = thrust_total * tsfc if tsfc > 0 else 0.0
     
-    # Calculate cost density J = fuel_flow / Ps
+    # Calculate cost density J = fuel_flow / Ps = fuel_flow * W / ((T-D) * V)
+    # Note: J is directly proportional to weight W
     if Ps > 0:
         J = fuel_flow / Ps  # kg/m
     else:
@@ -429,6 +446,47 @@ def compute_3d_cost(aero: AeroTables, eng: EngineWrapper,
     
     return J
 ```
+
+### 5.4 Weight-Dependent Cost Calculation with Single Recalculation
+
+**Problem**: During dynamic programming state transitions, a circular dependency exists:
+- `next_cost` depends on `next_weight` (through `Ps = (T-D)V/W`)
+- `next_weight = current_weight - fuel_burned`
+- `fuel_burned` depends on `next_cost` (via trapezoidal integration)
+
+**Solution**: Single recalculation approach (Option 2) to capture first-order weight effects with minimal computational overhead.
+
+**Algorithm:**
+```python
+# Step 1: Calculate current cost with current weight
+current_cost = compute_3d_cost(..., mass_kg=current_weight)
+
+# Step 2: First pass - calculate next_cost with current_weight
+next_cost_initial = compute_3d_cost(..., mass_kg=current_weight)
+
+# Step 3: Estimate fuel burned using trapezoidal integration
+fuel_burned_initial = 0.5 * (current_cost + next_cost_initial) * dh
+next_weight_estimate = current_weight - fuel_burned_initial
+
+# Step 4: Recalculation - compute next_cost with estimated weight
+# This accounts for weight-dependent effects: J ∝ W
+next_cost_refined = compute_3d_cost(..., mass_kg=next_weight_estimate)
+
+# Step 5: Final calculation with refined cost
+step_cost = 0.5 * (current_cost + next_cost_refined) * dh
+next_weight = current_weight - step_cost
+```
+
+**Mathematical Basis:**
+- Cost density is linearly proportional to weight: `J = mdot × W / ((T-D) × V)`
+- First-order weight change: `ΔJ/J ≈ ΔW/W` (typically 0.02-0.07% per 200m step)
+- Single recalculation captures the dominant first-order effect
+- Residual error is second-order: `~0.00005%` (negligible)
+
+**Benefits:**
+- **Accuracy**: Reduces error from ~0.07% to ~0.00005% per step
+- **Efficiency**: One extra cost calculation per step (vs 5 in full iteration)
+- **Robustness**: Fallback to initial calculation if refinement fails
 
 ---
 

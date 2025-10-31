@@ -705,35 +705,66 @@ class ClimbingCore:
                                     # Get previous Mach for smoothness penalty
                                     prev_mach = M_grid[i] if k > 0 else None
                                     
-                                    # Use current weight for cost calculations (fuel burn will update weight)
+                                    # Calculate current cost with current weight
                                     current_cost = ClimbingCore.compute_3d_cost(aero, eng, current_alt, current_mach, current_lever,
                                                                              target_mach=target_mach, prev_mach=prev_mach, 
                                                                              altitude_fraction=current_alt_fraction, mass_kg=current_weight)
-                                    next_cost = ClimbingCore.compute_3d_cost(aero, eng, next_alt, next_mach, next_lever,
-                                                                          target_mach=target_mach, prev_mach=current_mach, 
-                                                                          altitude_fraction=next_alt_fraction, mass_kg=current_weight)
                                     
-                                    if (np.isfinite(current_cost) and np.isfinite(next_cost) and
-                                        current_cost > 0 and next_cost > 0):
-                                        
-                                        # Trapezoidal integration for fuel cost
-                                        step_cost = 0.5 * (current_cost + next_cost) * dh
-                                        total_cost = F[k, i, j] + step_cost
-                                        
-                                        # Calculate fuel burned during this step
-                                        fuel_burned = step_cost
-                                        next_weight = current_weight - fuel_burned
-                                        
-                                        # Ensure weight doesn't go negative
-                                        if next_weight <= 0:
-                                            continue
-                                        
-                                        # Update if this path is better
-                                        if total_cost < F[k + 1, next_mach_idx, next_lever_idx]:
-                                            F[k + 1, next_mach_idx, next_lever_idx] = total_cost
-                                            weight_matrix[k + 1, next_mach_idx, next_lever_idx] = next_weight
-                                            prv[k + 1, next_mach_idx, next_lever_idx] = [k, i, j]
-                                            feasible_count += 1
+                                    if not (np.isfinite(current_cost) and current_cost > 0):
+                                        continue
+                                    
+                                    # Single recalculation approach (Option 2): 
+                                    # First pass - calculate next_cost with current_weight
+                                    # Then recalculate with updated weight to capture first-order weight effects
+                                    next_cost_initial = ClimbingCore.compute_3d_cost(aero, eng, next_alt, next_mach, next_lever,
+                                                                                   target_mach=target_mach, prev_mach=current_mach, 
+                                                                                   altitude_fraction=next_alt_fraction, mass_kg=current_weight)
+                                    
+                                    if not (np.isfinite(next_cost_initial) and next_cost_initial > 0):
+                                        continue
+                                    
+                                    # Calculate initial fuel burn estimate using trapezoidal integration
+                                    step_cost_initial = 0.5 * (current_cost + next_cost_initial) * dh
+                                    fuel_burned_initial = step_cost_initial
+                                    
+                                    # Calculate next weight after fuel burn
+                                    next_weight = current_weight - fuel_burned_initial
+                                    
+                                    # Ensure weight is positive
+                                    if next_weight <= 0:
+                                        continue
+                                    
+                                    # Recalculation: compute next_cost with updated weight
+                                    # This accounts for weight-dependent effects: Ps = (T-D)V/W, J = mdot/Ps ∝ W
+                                    next_cost_refined = ClimbingCore.compute_3d_cost(aero, eng, next_alt, next_mach, next_lever,
+                                                                                   target_mach=target_mach, prev_mach=current_mach, 
+                                                                                   altitude_fraction=next_alt_fraction, mass_kg=next_weight)
+                                    
+                                    if not (np.isfinite(next_cost_refined) and next_cost_refined > 0):
+                                        # Fallback to initial calculation if refinement fails
+                                        next_cost = next_cost_initial
+                                    else:
+                                        # Use refined cost for improved accuracy
+                                        next_cost = next_cost_refined
+                                    
+                                    # Final trapezoidal integration with refined cost
+                                    step_cost = 0.5 * (current_cost + next_cost) * dh
+                                    total_cost = F[k, i, j] + step_cost
+                                    
+                                    # Calculate final fuel burned and update next weight
+                                    fuel_burned = step_cost
+                                    next_weight = current_weight - fuel_burned
+                                    
+                                    # Final safety check
+                                    if next_weight <= 0:
+                                        continue
+                                    
+                                    # Update if this path is better
+                                    if total_cost < F[k + 1, next_mach_idx, next_lever_idx]:
+                                        F[k + 1, next_mach_idx, next_lever_idx] = total_cost
+                                        weight_matrix[k + 1, next_mach_idx, next_lever_idx] = next_weight
+                                        prv[k + 1, next_mach_idx, next_lever_idx] = [k, i, j]
+                                        feasible_count += 1
             
                 if k % 10 == 0 or feasible_count == 0:
                     dbg(f"[DP-CLIMB] Found {feasible_count} feasible transitions at altitude {current_alt:.0f}m")
