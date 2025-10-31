@@ -868,52 +868,123 @@ class ClimbingCore:
                 lever_curr, lever_next = lever_array[i], lever_array[i + 1]
                 weight_curr, weight_next = weight_array[i], weight_array[i + 1]
                 
-                # Average values for this segment
-                h_avg = 0.5 * (h_curr + h_next)
-                M_avg = 0.5 * (M_curr + M_next)
-                lever_avg = 0.5 * (lever_curr + lever_next)
-                weight_avg = 0.5 * (weight_curr + weight_next)  # Use average weight for segment
+                # Calculate altitude difference for segment
+                dh = abs(h_next - h_curr) if abs(h_next - h_curr) > 1.0 else 0.0
                 
-                # Compute segment properties with dynamic weight
-                a = a_from_altitude(h_avg)
-                V = M_avg * a
-                D = aero.get_drag(M_avg, h_avg)
-                T_per = eng.thrust_with_lever(lever_avg, M_avg, h_avg)
-                T_tot = T_per * SystemConfiguration.N_ENGINES
-                Ps = ((T_tot - D) * V) / (weight_avg * G_C)  # Use dynamic weight
+                # Calculate current cost with current weight (consistent with forward pass)
+                current_cost = ClimbingCore.compute_3d_cost(
+                    aero, eng, h_curr, M_curr, lever_curr,
+                    target_mach=target_mach, prev_mach=None,
+                    altitude_fraction=None, mass_kg=weight_curr
+                )
                 
-                if Ps > 0:
-                    # Handle both vertical and horizontal moves
-                    if abs(h_next - h_curr) > 1.0:  # Vertical move (altitude change)
-                        dt_array[i] = (h_next - h_curr) / Ps
-                        dbg(f"[DP-CLIMB] Vertical move {i}: h={h_curr:.0f}->{h_next:.0f}m, dt={dt_array[i]:.3f}s, weight={weight_avg:.0f}kg")
-                    else:  # Horizontal move (same altitude, different Mach/lever)
-                        # Calculate time based on velocity change
-                        V_curr = M_curr * a
-                        V_next = M_next * a
-                        if abs(V_next - V_curr) > 0.1:  # Significant velocity change
-                            # Use acceleration rate: dt = dV / a_accel
-                            # Where a_accel = (T_tot - D) / mass
-                            a_accel = (T_tot - D) / weight_avg  # Use dynamic weight
-                            if a_accel > 0:
-                                dt_array[i] = abs(V_next - V_curr) / a_accel
-                                dbg(f"[DP-CLIMB] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, V={V_curr:.1f}->{V_next:.1f}m/s, dt={dt_array[i]:.3f}s")
-                            else:
-                                dt_array[i] = 0.1  # Small time step for horizontal moves
-                                dbg(f"[DP-CLIMB] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, dt={dt_array[i]:.3f}s (small step)")
-                        else:
-                            dt_array[i] = 0.1  # Small time step for horizontal moves
-                            dbg(f"[DP-CLIMB] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, dt={dt_array[i]:.3f}s (minimal change)")
-                    
-                    dF_array[i] = path_costs[i + 1] - path_costs[i]
-                    
-                    # Debug the final segment (step 49->50 issue)
-                    if i >= n_segments - 2:  # Last two segments
-                        dbg(f"[DP-CLIMB] Segment {i} (step {i}->{i+1}): h={h_curr:.0f}->{h_next:.0f}m, dt={dt_array[i]:.3f}s")
-                else:
+                if not (np.isfinite(current_cost) and current_cost > 0):
                     dt_array[i] = 0.0
                     dF_array[i] = 0.0
-                    dbg(f"[DP-CLIMB] Invalid segment {i}: Ps={Ps:.3f}, dt=0.0s")
+                    continue
+                
+                # Single recalculation approach (consistent with forward pass)
+                # First pass: calculate next_cost with current_weight
+                next_cost_initial = ClimbingCore.compute_3d_cost(
+                    aero, eng, h_next, M_next, lever_next,
+                    target_mach=target_mach, prev_mach=M_curr,
+                    altitude_fraction=None, mass_kg=weight_curr
+                )
+                
+                if not (np.isfinite(next_cost_initial) and next_cost_initial > 0):
+                    dt_array[i] = 0.0
+                    dF_array[i] = 0.0
+                    continue
+                
+                # Estimate fuel burned using trapezoidal integration
+                if dh > 1.0:  # Vertical move (altitude change)
+                    fuel_burned_initial = 0.5 * (current_cost + next_cost_initial) * dh
+                else:  # Horizontal move - use small distance approximation
+                    # For horizontal moves, approximate distance from velocity change
+                    a = a_from_altitude(h_curr)
+                    V_curr = M_curr * a
+                    V_next = M_next * a
+                    ds = 0.5 * (V_curr + V_next) * 0.1 if abs(V_next - V_curr) > 0.1 else 1.0  # Approximate distance
+                    fuel_burned_initial = 0.5 * (current_cost + next_cost_initial) * ds
+                
+                # Estimate next weight after fuel burn
+                weight_estimate = weight_curr - fuel_burned_initial
+                
+                if weight_estimate <= 0:
+                    dt_array[i] = 0.0
+                    dF_array[i] = 0.0
+                    continue
+                
+                # Recalculation: compute next_cost with estimated weight
+                next_cost_refined = ClimbingCore.compute_3d_cost(
+                    aero, eng, h_next, M_next, lever_next,
+                    target_mach=target_mach, prev_mach=M_curr,
+                    altitude_fraction=None, mass_kg=weight_estimate
+                )
+                
+                if not (np.isfinite(next_cost_refined) and next_cost_refined > 0):
+                    # Fallback to initial calculation
+                    next_cost = next_cost_initial
+                else:
+                    next_cost = next_cost_refined
+                
+                # Final fuel calculation using refined cost (consistent with forward pass)
+                if dh > 1.0:  # Vertical move
+                    fuel_burned = 0.5 * (current_cost + next_cost) * dh
+                else:  # Horizontal move
+                    a = a_from_altitude(h_curr)
+                    V_curr = M_curr * a
+                    V_next = M_next * a
+                    ds = 0.5 * (V_curr + V_next) * 0.1 if abs(V_next - V_curr) > 0.1 else 1.0
+                    fuel_burned = 0.5 * (current_cost + next_cost) * ds
+                
+                dF_array[i] = fuel_burned
+                
+                # Calculate time for this segment (consistent with fuel calculation)
+                if dh > 1.0:  # Vertical move (altitude change)
+                    # Use average weight for Ps calculation (consistent with fuel)
+                    weight_avg = 0.5 * (weight_curr + weight_estimate)
+                    a = a_from_altitude(0.5 * (h_curr + h_next))
+                    M_avg = 0.5 * (M_curr + M_next)
+                    lever_avg = 0.5 * (lever_curr + lever_next)
+                    V = M_avg * a
+                    D = aero.get_drag(M_avg, 0.5 * (h_curr + h_next))
+                    T_per = eng.thrust_with_lever(lever_avg, M_avg, 0.5 * (h_curr + h_next))
+                    T_tot = T_per * SystemConfiguration.N_ENGINES
+                    Ps = ((T_tot - D) * V) / (weight_avg * G_C)
+                    
+                    if Ps > 0:
+                        dt_array[i] = dh / Ps
+                        dbg(f"[DP-CLIMB] Vertical move {i}: h={h_curr:.0f}->{h_next:.0f}m, dt={dt_array[i]:.3f}s, fuel={fuel_burned:.3f}kg, weight={weight_avg:.0f}kg")
+                    else:
+                        dt_array[i] = 0.0
+                        dF_array[i] = 0.0
+                else:  # Horizontal move (same altitude, different Mach/lever)
+                    # Calculate time based on velocity change
+                    a = a_from_altitude(h_curr)
+                    V_curr = M_curr * a
+                    V_next = M_next * a
+                    weight_avg = 0.5 * (weight_curr + weight_estimate)
+                    
+                    if abs(V_next - V_curr) > 0.1:  # Significant velocity change
+                        # Use acceleration rate: dt = dV / a_accel
+                        D = aero.get_drag(M_curr, h_curr)
+                        T_per = eng.thrust_with_lever(lever_curr, M_curr, h_curr)
+                        T_tot = T_per * SystemConfiguration.N_ENGINES
+                        a_accel = (T_tot - D) / weight_avg
+                        if a_accel > 0:
+                            dt_array[i] = abs(V_next - V_curr) / a_accel
+                            dbg(f"[DP-CLIMB] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, V={V_curr:.1f}->{V_next:.1f}m/s, dt={dt_array[i]:.3f}s, fuel={fuel_burned:.3f}kg")
+                        else:
+                            dt_array[i] = 0.1
+                            dbg(f"[DP-CLIMB] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, dt={dt_array[i]:.3f}s, fuel={fuel_burned:.3f}kg (small step)")
+                    else:
+                        dt_array[i] = 0.1
+                        dbg(f"[DP-CLIMB] Horizontal move {i}: M={M_curr:.3f}->{M_next:.3f}, dt={dt_array[i]:.3f}s, fuel={fuel_burned:.3f}kg (minimal change)")
+                
+                # Debug the final segment
+                if i >= n_segments - 2:  # Last two segments
+                    dbg(f"[DP-CLIMB] Segment {i} (step {i}->{i+1}): h={h_curr:.0f}->{h_next:.0f}m, dt={dt_array[i]:.3f}s, fuel={dF_array[i]:.3f}kg")
             
             # Time array construction with proper temporal progression
             n_points = len(alt_array)
