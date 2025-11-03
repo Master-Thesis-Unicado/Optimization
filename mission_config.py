@@ -18,7 +18,7 @@ TARGET_ALT_M = 10000.0          # Target climb altitude [m]
 N_PLOT_STEPS = 50               # Number of altitude steps for plotting
 ALT_STEP_M = 200.0              # Altitude step size [m]
 Y_AXIS_TOP_M = 12000.0          # Maximum altitude for plots [m]
-MACH_COLS = 41                  # Number of Mach grid points
+MACH_COLS = 61                  # Number of Mach grid points (increased from 41 for better resolution)
 
 # Starting conditions (from main.py)
 START_ALTITUDE_M = 10.0         # Takeoff altitude [m]
@@ -50,9 +50,9 @@ TARGET_DESCENT_ALT_M = 300.0    # Approach altitude [m] (~1000 ft)
 TARGET_DESCENT_MACH = 0.25      # Approach Mach number
 
 # Descent optimization parameters (from main.py)
-N_ALTITUDE_STEPS = 50           # Number of altitude steps for DP
-N_MACH_SAMPLES = 41             # Number of Mach samples for DP
-N_LEVER_SAMPLES = 11            # Number of lever samples for DP
+N_ALTITUDE_STEPS = 50           # Number of altitude steps for DP (matches climb N_PLOT_STEPS for consistency)
+N_MACH_SAMPLES = 61             # Number of Mach samples for DP (matches climb MACH_COLS for consistency)
+N_LEVER_SAMPLES = 21            # Number of lever samples for DP (increased from 11 for finer control)
 
 # Descent constraints (from descent.py)
 MIN_DESCENT_MACH = 0.2          # Minimum descent Mach

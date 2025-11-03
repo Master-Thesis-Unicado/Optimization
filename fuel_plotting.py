@@ -199,7 +199,7 @@ def plot_convergence_trajectory(history: ConvergenceHistory, save_plots: bool = 
     )
     
     if save_plots:
-        run_dir = get_or_create_run_directory()
+        run_dir = get_or_create_run_directory(phase="Optimized")
         html_path = os.path.join(run_dir, 'fuel_convergence.html')
         fig.write_html(html_path)
         print(f"[EXPORT] Convergence analysis saved to: {html_path}")
@@ -479,7 +479,7 @@ def plot_kpp_evolution(history: ConvergenceHistory, save_plots: bool = True):
     )
     
     if save_plots:
-        run_dir = get_or_create_run_directory()
+        run_dir = get_or_create_run_directory(phase="Optimized")
         html_path = os.path.join(run_dir, 'kpp_evolution.html')
         png_path = os.path.join(run_dir, 'kpp_evolution.png')
         fig.write_html(html_path)
@@ -648,7 +648,7 @@ def plot_optimization_comparison(history: ConvergenceHistory, save_plots: bool =
     )
     
     if save_plots:
-        run_dir = get_or_create_run_directory()
+        run_dir = get_or_create_run_directory(phase="Optimized")
         html_path = os.path.join(run_dir, 'optimization_comparison.html')
         fig.write_html(html_path)
         print(f"[EXPORT] Optimization comparison saved to: {html_path}")
@@ -765,7 +765,7 @@ def plot_aerodynamic_performance_analysis(history: ConvergenceHistory, save_plot
     fig.update_yaxes(title_text="Lever Position (0-1)", row=2, col=1)
     
     if save_plots:
-        run_dir = get_or_create_run_directory()
+        run_dir = get_or_create_run_directory(phase="Optimized")
         html_path = os.path.join(run_dir, 'aerodynamic_performance_analysis.html')
         fig.write_html(html_path)
         print(f"[EXPORT] Aerodynamic performance analysis saved to: {html_path}")
@@ -907,7 +907,7 @@ def plot_3d_trajectory_comparison(history: ConvergenceHistory, save_plots: bool 
     )
     
     if save_plots:
-        run_dir = get_or_create_run_directory()
+        run_dir = get_or_create_run_directory(phase="Optimized")
         html_path = os.path.join(run_dir, '3d_trajectory_comparison.html')
         fig.write_html(html_path)
         print(f"[EXPORT] 3D trajectory comparison saved to: {html_path}")
@@ -1028,7 +1028,7 @@ def plot_specific_energy_evolution(history: ConvergenceHistory, save_plots: bool
     )
     
     if save_plots:
-        run_dir = get_or_create_run_directory()
+        run_dir = get_or_create_run_directory(phase="Optimized")
         html_path = os.path.join(run_dir, 'specific_energy_evolution.html')
         fig.write_html(html_path)
         print(f"[EXPORT] Specific energy evolution saved to: {html_path}")

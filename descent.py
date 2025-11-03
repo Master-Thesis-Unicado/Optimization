@@ -173,7 +173,10 @@ def calculate_min_descent_mach(altitude_m: float, weight_kg: float,
         m_min = v_min_mps / a
         
         # Apply reasonable bounds 
-        m_min_bounded = np.clip(m_min, 0.15, 0.40)
+        # Upper bound set to 0.25 to match target approach Mach
+        # At low altitude/weight, aircraft can safely fly at approach speeds
+        # At high altitude/weight, higher minimum will be naturally enforced by physics
+        m_min_bounded = np.clip(m_min, 0.15, 0.25)
         
 
 
@@ -223,12 +226,12 @@ class DescentCore:
         # Mach targeting constants
         TARGET_MACH_TOLERANCE = 0.015  # Tolerance for target Mach constraint in DP
         
-        # Mach trajectory guidance constants
-        MACH_PENALTY_BASE_WEIGHT = 0.3  # Base penalty weight (kg per Mach² deviation)
-        MAX_REASONABLE_MACH_RATE = 0.02  # Max reasonable Mach change per optimization step
-        TOTAL_DESCENT_STEPS_ESTIMATE = 50  # Matches N_PLOT_STEPS - actual DP grid steps
-        URGENCY_MULTIPLIER = 2.0  # How much urgency scales with descent progress
-        GUIDANCE_PENALTY_WEIGHT = 0.5  # Strong guidance penalty when inside reachable corridor
+        # Mach trajectory guidance constants (adjusted to match climb penalties for consistency)
+        MACH_PENALTY_BASE_WEIGHT = 0.5  # Base penalty weight (kg per Mach² deviation) - slightly higher than climb (0.3) for target achievement
+        MAX_REASONABLE_MACH_RATE = 0.018  # Max reasonable Mach change per optimization step - slightly lower than climb (0.02) for smoother deceleration
+        TOTAL_DESCENT_STEPS_ESTIMATE = 75  # Updated to match new N_ALTITUDE_STEPS (increased from 50)
+        URGENCY_MULTIPLIER = 2.5  # How much urgency scales with descent progress - slightly higher than climb (2.0) for approach criticality
+        GUIDANCE_PENALTY_WEIGHT = 0.8  # Guidance penalty when inside reachable corridor - moderately higher than climb (0.5) to ensure target Mach
         
         # Lever penalty guidance constants
         LEVER_PENALTY_WEIGHT = 3.0  # Base weight for lever penalty (kg per lever unit above threshold)
@@ -451,9 +454,10 @@ class DescentCore:
                     current_mach = M_grid[i]
                     current_lever = lever_grid[j]
                     
-                    # Consider neighboring states (5x5 grid in Mach-Lever space)
-                    for di in [-2, -1, 0, 1, 2]:  # Mach change
-                        for dj in [-2, -1, 0, 1, 2]:  # Lever change
+                    # Consider neighboring states (7x7 grid in Mach-Lever space for smoother transitions)
+                    # Expanded from 5x5 to allow better Mach deceleration paths
+                    for di in [-3, -2, -1, 0, 1, 2, 3]:  # Mach change
+                        for dj in [-3, -2, -1, 0, 1, 2, 3]:  # Lever change
                             next_mach_idx = i + di
                             next_lever_idx = j + dj
                             
@@ -652,7 +656,7 @@ class DescentCore:
                 if T_per is None or T_per < 0:
                     T_per = 0.0
                 T_tot = T_per * N_ENGINES
-                D = aero.get_drag(M, h)
+                D = aero.get_drag(M, h, weight_array[i])
                 
                 thrust_array[i] = T_tot
                 drag_array[i] = D
@@ -760,7 +764,7 @@ class DescentCore:
                     M_avg = 0.5 * (M_curr + M_next)
                     lever_avg = 0.5 * (lever_curr + lever_next)
                     V_avg = M_avg * a
-                    D_avg = aero.get_drag(M_avg, 0.5 * (h_curr + h_next))
+                    D_avg = aero.get_drag(M_avg, 0.5 * (h_curr + h_next), weight_avg)
                     T_per_avg = eng.thrust_with_lever(lever_avg, M_avg, 0.5 * (h_curr + h_next))
                     if T_per_avg is None or T_per_avg < 0:
                         T_per_avg = 0.0
@@ -783,7 +787,7 @@ class DescentCore:
                     
                     if abs(V_next - V_curr) > 0.1:  # Significant velocity change
                         # Use deceleration rate: dt = dV / a_decel
-                        D = aero.get_drag(M_curr, h_curr)
+                        D = aero.get_drag(M_curr, h_curr, weight_avg)
                         T_per = eng.thrust_with_lever(lever_curr, M_curr, h_curr)
                         if T_per is None or T_per < 0:
                             T_per = 0.0
@@ -926,8 +930,8 @@ class DescentCore:
             
             T_tot = T_per * N_ENGINES
             
-            # Get drag
-            D = aero.get_drag(mach, altitude)
+            # Get drag with dynamic weight
+            D = aero.get_drag(mach, altitude, mass_kg)
             if not np.isfinite(D) or D < 0:
                 return np.inf
             
@@ -1145,11 +1149,22 @@ def run_descent_dp_optimization(cruise_results: CruiseResults,
     dbg(f"[DP-DESCENT] Dynamic min Mach at start: {min_mach_start:.3f} "
         f"(h={initial_state.altitude_m:.0f}m, W={initial_state.weight_kg:.0f}kg)")
     
-    # Create Mach grid (from dynamic minimum to high Mach)
-    # Ensure target_mach is in the grid
+    # Create Mach grid (from target approach speed to cruise Mach)
+    # CRITICAL: Grid must include target_mach to allow optimizer to reach it
+    # At high altitude, low Mach states will be naturally rejected as infeasible (stall)
+    # At low altitude, they become feasible as weight decreases
     M_max = min(0.85, initial_state.mach + 0.05)  # Slightly above cruise Mach
-    M_min = max(min_mach_start, target_mach - 0.1)  # Ensure we can reach target
+    
+    # Start grid from target Mach (or slightly below) to ensure it's reachable
+    # The DP cost function will return np.inf for infeasible states (e.g., below stall speed)
+    M_min = max(0.20, target_mach - 0.03)  # Minimum of 0.20 or target - 0.03
+    
+    # Ensure the grid captures both ends of the descent
+    # Low Mach states at high altitude will be naturally infeasible (Ps >= 0 or stall)
     M_grid = np.linspace(M_min, M_max, n_mach_samples)
+    
+    dbg(f"[DP-DESCENT] Note: Low Mach states at high altitude will be infeasible (stall-limited)")
+    dbg(f"[DP-DESCENT] These states become feasible at lower altitudes as weight decreases")
     
     dbg(f"[DP-DESCENT] Mach grid: {M_min:.3f} to {M_max:.3f} ({n_mach_samples} samples)")
     

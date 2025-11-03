@@ -99,10 +99,11 @@ def main():
                         ALT_STEP_M)
     
     # Pre-compute grids for performance
-    print("[OPTIMIZATION] Pre-computing engine and drag grids...")
+    print("[OPTIMIZATION] Pre-computing engine grids...")
     lever_grid = np.linspace(0.0, 1.0, 21)
     eng.precompute_grid(M_dense, H_plot, lever_grid)
-    aero.precompute_drag_grid(M_dense, H_plot)
+    # Note: Drag grid precomputation skipped - drag is weight-dependent and varies during mission
+    # The drag cache will populate naturally during optimization with correct dynamic weights
     
     # Run fuel optimization
     print("\n[OPTIMIZATION] Starting fuel capacity optimization loop...")

@@ -2,11 +2,13 @@
 Fuel Optimization Loop Module
 
 This module implements the convergent optimization loop to determine the minimum 
-required fuel capacity for mission completion. The optimization process iteratively 
-refines the initial fuel load until convergence is achieved.
+required fuel capacity for mission completion. The optimization process employs
+damped fixed-point iteration to iteratively refine the initial fuel load until 
+convergence is achieved.
 
 Key Components:
-- Iterative optimization loop that runs full mission (climb + cruise + descent)
+- Damped fixed-point iteration loop that runs full mission (climb + cruise + descent)
+- Damping factor (0.7) prevents oscillations from DP grid discretization
 - Fuel consumption tracking and convergence analysis
 - Intermediate results storage without plot generation
 - Automatic convergence detection with relative tolerance (0.5%)
@@ -40,7 +42,7 @@ from mission_config import (
 
 # Import wrappers
 from pyaerodynamics_wrapper import PyAerodynamicsWrapper
-from pyengine_wrapper import EngineWrapper
+from pyengine_wrapper import EngineWrapper 
 
 
 # ========= CONVERGENCE PARAMETERS =============================================
@@ -48,7 +50,11 @@ from pyengine_wrapper import EngineWrapper
 CONVERGENCE_TOLERANCE_RELATIVE = 0.005  # 0.5% relative tolerance
 CONVERGENCE_TOLERANCE_PERCENT = CONVERGENCE_TOLERANCE_RELATIVE * 100.0  # 0.5% in percentage units for clarity
 SAFETY_BUFFER_PERCENT = 0.05  # 5% safety buffer
-MAX_ITERATIONS = 100  # Safety limit (should rarely be reached)
+MAX_ITERATIONS = 5  # Safety limit to prevent infinite loops  
+DAMPING_FACTOR = 0.4  # Initial relaxation parameter for fixed-point iteration
+USE_AITKEN_ACCELERATION = True  # Enable Aitken's Δ² acceleration method for convergence enhancement
+AITKEN_MIN_DAMPING = 0.1  # Minimum damping factor to prevent excessive updates
+AITKEN_MAX_DAMPING = 0.9  # Maximum damping factor to maintain stability
 
 
 # ========= DATA STRUCTURES =============================================
@@ -201,6 +207,7 @@ def run_single_mission_iteration(
     
     if print_progress:
         print(f"[CLIMB] Completed: {climb_time_s/60:.1f} min, {climb_fuel:.1f} kg fuel")
+        print(f"[CLIMB] Mass: {initial_mass_kg:.1f} kg → {climb_mass_end:.1f} kg (burned {climb_fuel:.1f} kg, {climb_fuel/initial_mass_kg*100:.2f}%)")
     
     # ========= CRUISE PHASE =========================================
     if print_progress:
@@ -208,7 +215,7 @@ def run_single_mission_iteration(
     
     cruise_results = run_cruise_simulation(
         climb_result=dp_sched,
-                    initial_mass_kg=initial_mass_kg,
+        initial_mass_kg=climb_mass_end,
         target_distance_km=CRUISE_DISTANCE_KM,
         aero=aero,
         engine=eng,
@@ -218,9 +225,11 @@ def run_single_mission_iteration(
     
     cruise_fuel = cruise_results.total_fuel_consumed_kg
     cruise_time_s = cruise_results.total_time_s
+    cruise_mass_end = climb_mass_end - cruise_fuel
     
     if print_progress:
         print(f"[CRUISE] Completed: {cruise_time_s/3600:.2f} hours, {cruise_fuel:.1f} kg fuel")
+        print(f"[CRUISE] Mass: {climb_mass_end:.1f} kg → {cruise_mass_end:.1f} kg (burned {cruise_fuel:.1f} kg, {cruise_fuel/climb_mass_end*100:.2f}%)")
     
     # ========= DESCENT PHASE =========================================
     if print_progress:
@@ -249,17 +258,27 @@ def run_single_mission_iteration(
     
     descent_fuel = descent_result.total_fuel_consumed_kg
     descent_time_s = descent_result.total_time_s
+    descent_mass_end = cruise_mass_end - descent_fuel
     
     if print_progress:
         print(f"[DESCENT] Completed: {descent_time_s/60:.1f} min, {descent_fuel:.2f} kg fuel")
+        print(f"[DESCENT] Mass: {cruise_mass_end:.1f} kg → {descent_mass_end:.1f} kg (burned {descent_fuel:.1f} kg, {descent_fuel/cruise_mass_end*100:.2f}%)")
     
     # ========= COMPUTE SUMMARY =========================================
     total_fuel = climb_fuel + cruise_fuel + descent_fuel
     total_time_s = climb_time_s + cruise_time_s + descent_time_s
     
+    # Validation check: Fuel consumed should not exceed initial fuel
+    initial_fuel_kg = initial_mass_kg - W_OE_KG - W_PL_KG
+    if total_fuel > initial_fuel_kg:
+        if print_progress:
+            print(f"[WARNING] Fuel consumed ({total_fuel:.1f} kg) exceeds initial fuel ({initial_fuel_kg:.1f} kg)!")
+            print(f"[WARNING] This indicates incorrect physics or DP cost calculations")
+            print(f"[WARNING] Overage: {total_fuel - initial_fuel_kg:.1f} kg ({(total_fuel/initial_fuel_kg - 1)*100:.1f}%)")
+    
     # Calculate total mission distance using actual calculated values from each phase
     
-    # Climb distance: Calculate from velocity and time
+    # Climb distance: Calculate horizontal distance accounting for climb angle
     climb_distance_km = 0.0
     if hasattr(dp_sched, 'mach') and hasattr(dp_sched, 'alt_m') and hasattr(dp_sched, 'dt_s'):
         if len(dp_sched.mach) > 0 and len(dp_sched.alt_m) > 0 and len(dp_sched.dt_s) > 0:
@@ -269,8 +288,21 @@ def run_single_mission_iteration(
                     # Calculate true airspeed at each point
                     a = atmospheric_props.a_from_altitude(dp_sched.alt_m[i])
                     velocity_mps = dp_sched.mach[i] * a
-                    # Add horizontal distance for this time step
-                    climb_distance_m += velocity_mps * dp_sched.dt_s[i]
+                    
+                    # Calculate horizontal distance accounting for climb angle
+                    if i > 0 and i < len(dp_sched.alt_m):
+                        dh = dp_sched.alt_m[i] - dp_sched.alt_m[i-1]
+                        ds_total = velocity_mps * dp_sched.dt_s[i]
+                        # Horizontal distance using Pythagorean theorem: ds_horizontal^2 + dh^2 = ds_total^2
+                        if ds_total**2 > dh**2:
+                            horizontal_distance = np.sqrt(ds_total**2 - dh**2)
+                        else:
+                            # Vertical climb case (rare, but handle it)
+                            horizontal_distance = 0.0
+                        climb_distance_m += horizontal_distance
+                    else:
+                        # First point, assume level flight
+                        climb_distance_m += velocity_mps * dp_sched.dt_s[i]
             climb_distance_km = climb_distance_m / 1000.0
     
     # Cruise distance: Use actual distance from cruise results
@@ -281,7 +313,7 @@ def run_single_mission_iteration(
         # Fallback to target distance if distance array not available
         cruise_distance_km = CRUISE_DISTANCE_KM
     
-    # Descent distance: Calculate from velocity and time
+    # Descent distance: Calculate horizontal distance accounting for descent angle
     descent_distance_km = 0.0
     if hasattr(descent_result, 'mach') and hasattr(descent_result, 'alt_m') and hasattr(descent_result, 'dt_s'):
         if len(descent_result.mach) > 0 and len(descent_result.alt_m) > 0 and len(descent_result.dt_s) > 0:
@@ -291,8 +323,21 @@ def run_single_mission_iteration(
                     # Calculate true airspeed at each point
                     a = atmospheric_props.a_from_altitude(descent_result.alt_m[i])
                     velocity_mps = descent_result.mach[i] * a
-                    # Add horizontal distance for this time step
-                    descent_distance_m += velocity_mps * descent_result.dt_s[i]
+                    
+                    # Calculate horizontal distance accounting for descent angle
+                    if i > 0 and i < len(descent_result.alt_m):
+                        dh = descent_result.alt_m[i] - descent_result.alt_m[i-1]
+                        ds_total = velocity_mps * descent_result.dt_s[i]
+                        # Horizontal distance using Pythagorean theorem: ds_horizontal^2 + dh^2 = ds_total^2
+                        if ds_total**2 > dh**2:
+                            horizontal_distance = np.sqrt(ds_total**2 - dh**2)
+                        else:
+                            # Vertical descent case (rare, but handle it)
+                            horizontal_distance = 0.0
+                        descent_distance_m += horizontal_distance
+                    else:
+                        # First point, assume level flight
+                        descent_distance_m += velocity_mps * descent_result.dt_s[i]
             descent_distance_km = descent_distance_m / 1000.0
     
     total_distance_km = climb_distance_km + cruise_distance_km + descent_distance_km
@@ -500,14 +545,28 @@ def optimize_fuel_capacity(
     lever_samples: int = 50
 ) -> Tuple[MissionIterationResults, ConvergenceHistory]:
     """
-    Main optimization loop to determine minimum required fuel capacity.
+    Main optimization loop to determine minimum required fuel capacity using fixed-point 
+    iteration with Aitken acceleration.
     
     Process:
     1. Start with MAX_FUEL_KG as initial guess
     2. Run full mission and record fuel consumed
-    3. Use fuel consumed as new initial fuel for next iteration
+    3. Update fuel using Aitken's Δ² acceleration method (if enabled) or simple damping
     4. Repeat until convergence (fuel difference < 0.5%)
     5. Apply 5% safety buffer to final result
+    
+    Aitken Acceleration (Aitken, 1926):
+    Adaptive relaxation method that computes optimal damping factor based on convergence
+    history. For linearly convergent sequences, achieves quadratic convergence acceleration.
+    
+    Mathematical formulation:
+        Δf_k = f_consumed_k - f_consumed_{k-1}
+        Δf_{k-1} = f_consumed_{k-1} - f_consumed_{k-2}
+        ω_k = ω_{k-1} × (1 - Δf_k / (Δf_k - Δf_{k-1}))
+        f_next = ω_k × f_consumed + (1-ω_k) × f_current
+    
+    This approach prevents oscillations from DP grid discretization while maintaining
+    fast convergence. Widely used in aerospace optimization and CFD applications.
     
     Args:
         aero: Aerodynamics wrapper instance
@@ -518,19 +577,28 @@ def optimize_fuel_capacity(
         
     Returns:
         Tuple of (final optimized result, convergence history)
+        
+    References:
+        - Aitken, A.C. (1926). "On Bernoulli's numerical solution of algebraic equations"
+        - Burden & Faires, "Numerical Analysis" (Fixed-point iteration chapter)
     """
     
     print("\n" + "="*80)
-    print("FUEL CAPACITY OPTIMIZATION")
+    print("FUEL CAPACITY OPTIMIZATION WITH AITKEN ACCELERATION")
     print("="*80)
     print(f"Objective: Determine minimum required fuel for mission completion")
     print(f"Convergence criterion: {CONVERGENCE_TOLERANCE_PERCENT:.2f}% relative")
     print(f"Safety buffer: {SAFETY_BUFFER_PERCENT*100:.0f}%")
+    print(f"Method: {'Aitken Δ² Acceleration' if USE_AITKEN_ACCELERATION else 'Fixed Damping'}")
+    print(f"Initial damping factor: {DAMPING_FACTOR:.2f}")
     print("="*80)
     
     # Initialize with maximum fuel capacity
     initial_fuel_current_kg = MAX_FUEL_KG
     history = ConvergenceHistory()
+    
+    # Aitken acceleration variables
+    current_damping = DAMPING_FACTOR  # Adaptive damping factor
     
     iteration_count = 0
     
@@ -543,7 +611,7 @@ def optimize_fuel_capacity(
         print(f"\n[ITERATION {iteration_count}] Initial fuel: {initial_fuel_current_kg:.1f} kg")
         print(f"[ITERATION {iteration_count}] Total mass: {current_total_mass:.1f} kg")
         
-        # Run single mission iteration (with error handling)
+        # Run single mission iteration (pure fixed-point: no recovery logic)
         try:
             iteration_result = run_single_mission_iteration(
                 initial_mass_kg=current_total_mass,
@@ -555,21 +623,32 @@ def optimize_fuel_capacity(
                 print_progress=True
             )
         except RuntimeError as e:
-            print(f"[ERROR] Mission failed at iteration {iteration_count}: {str(e)}")
-            if "No feasible path" in str(e):
-                print(f"[INFO] Not enough fuel ({initial_fuel_current_kg:.1f} kg) to reach target altitude")
-                if iteration_count == 1:
-                    raise RuntimeError(f"Even with MAX_FUEL_KG ({MAX_FUEL_KG:.1f} kg), mission failed. Check TARGET_ALT_M or mission parameters.")
-                # Try with more fuel (binary search approach)
-                if len(history.iterations) > 0:
-                    last_successful = history.iterations[-1].initial_fuel_kg
-                    # Use midpoint between last successful and current failed
-                    initial_fuel_current_kg = (last_successful + initial_fuel_current_kg) / 2.0
-                    print(f"[RECOVERY] Retrying with {initial_fuel_current_kg:.1f} kg")
-                    continue
-                else:
-                    raise
+            print(f"\n[ERROR] Mission failed at iteration {iteration_count}: {str(e)}")
+            print(f"[ERROR] Initial fuel: {initial_fuel_current_kg:.1f} kg")
+            
+            if iteration_count == 1:
+                # First iteration with MAX_FUEL failed - mission is infeasible
+                raise RuntimeError(
+                    f"Mission infeasible even with MAX_FUEL_KG ({MAX_FUEL_KG:.1f} kg). "
+                    f"Check TARGET_ALT_M, CRUISE_DISTANCE_KM, or other mission parameters."
+                )
+            elif len(history.iterations) > 0:
+                # Fixed-point iteration reached boundary - report last successful
+                last_successful = history.iterations[-1]
+                print(f"\n[INFO] Fixed-point iteration reached numerical boundary")
+                print(f"[INFO] Last successful fuel: {last_successful.initial_fuel_kg:.1f} kg")
+                print(f"[INFO] Fuel consumed: {last_successful.fuel_consumed_kg:.1f} kg")
+                print(f"[INFO] This suggests DP grid resolution limits or physical minimum boundary")
+                print(f"[INFO] Consider:")
+                print(f"  - Using last successful iteration with safety buffer")
+                print(f"  - Increasing DP grid resolution (N_MACH_SAMPLES, N_ALTITUDE_STEPS)")
+                print(f"  - Reducing convergence tolerance")
+                raise RuntimeError(
+                    f"Fixed-point iteration failed. Last successful fuel: {last_successful.initial_fuel_kg:.1f} kg. "
+                    f"See suggestions above."
+                )
             else:
+                # No history - unexpected failure
                 raise
         
         # Store iteration number and compute convergence delta
@@ -579,6 +658,32 @@ def optimize_fuel_capacity(
             delta_kg = iteration_result.fuel_consumed_kg - prev_result.fuel_consumed_kg
             delta_percent = (delta_kg / prev_result.fuel_consumed_kg) * 100.0 if prev_result.fuel_consumed_kg > 0 else 0.0
             iteration_result.convergence_delta_percent = delta_percent
+            
+            # ========= PHYSICAL ANOMALY DETECTION =========
+            # Check for physically implausible fuel increases when mass decreases
+            mass_reduction_percent = (prev_result.initial_mass_kg - current_total_mass) / prev_result.initial_mass_kg * 100.0
+            
+            if mass_reduction_percent > 0.5 and delta_percent > 5.0:
+                print(f"\n{'='*80}")
+                print(f"[ANOMALY WARNING] Physical inconsistency detected:")
+                print(f"{'='*80}")
+                print(f"  Aircraft mass reduced by {mass_reduction_percent:.2f}%")
+                print(f"  But fuel consumption increased by {delta_percent:.2f}%")
+                print(f"  ")
+                print(f"  This violates basic aircraft performance principles where:")
+                print(f"  - Lighter aircraft require less lift → less induced drag")
+                print(f"  - Lower weight requires less thrust → better fuel efficiency")
+                print(f"  ")
+                print(f"  Possible causes:")
+                print(f"  1. Grid discretization artifacts (DP grid resolution too coarse)")
+                print(f"  2. Cruise thrust convergence to different local equilibrium")
+                print(f"  3. Operating point shift landing on suboptimal grid nodes")
+                print(f"  ")
+                print(f"  Recommendations:")
+                print(f"  - Increase grid resolution (MACH_COLS, N_ALTITUDE_STEPS, N_LEVER_SAMPLES)")
+                print(f"  - Review cruise phase convergence logs")
+                print(f"  - Consider multi-start optimization")
+                print(f"{'='*80}\n")
         else:
             iteration_result.convergence_delta_percent = float('inf')
         
@@ -610,22 +715,115 @@ def optimize_fuel_capacity(
             
             break
         
-        # Update fuel for next iteration (use consumed fuel as initial guess)
-        initial_fuel_current_kg = iteration_result.fuel_consumed_kg
+        # ========= FUEL UPDATE WITH AITKEN ACCELERATION =========
+        # Aitken's Δ² method adaptively computes optimal relaxation parameter
+        # Reference: Aitken (1926), "On Bernoulli's numerical solution of algebraic equations"
         
-        # Prevent infinite loop if fuel becomes negative or too small
-        if initial_fuel_current_kg < W_OE_KG * 0.1:  # Must have at least 10% of empty weight
-            print(f"[WARNING] Fuel estimate too low ({initial_fuel_current_kg:.1f} kg), using minimum")
-            initial_fuel_current_kg = W_OE_KG * 0.1
+        if USE_AITKEN_ACCELERATION and len(history.iterations) >= 3:
+            # Full Aitken acceleration with 3+ iterations
+            # Extract last three fuel consumption values
+            f_consumed_k = history.iterations[-1].fuel_consumed_kg      # Current
+            f_consumed_k_minus_1 = history.iterations[-2].fuel_consumed_kg  # Previous
+            f_consumed_k_minus_2 = history.iterations[-3].fuel_consumed_kg  # Two iterations ago
+            
+            # Compute successive differences (Δ² operator)
+            delta_f_k = f_consumed_k - f_consumed_k_minus_1
+            delta_f_k_minus_1 = f_consumed_k_minus_1 - f_consumed_k_minus_2
+            
+            # Compute Aitken acceleration factor
+            # ω_k = ω_{k-1} × (1 - Δf_k / (Δf_k - Δf_{k-1}))
+            denominator = delta_f_k - delta_f_k_minus_1
+            
+            if abs(denominator) > 1e-6:  # Avoid division by zero
+                # Aitken update formula
+                aitken_factor = 1.0 - (delta_f_k / denominator)
+                new_damping = current_damping * aitken_factor
+                
+                # Bound damping factor to prevent instability
+                new_damping = np.clip(new_damping, AITKEN_MIN_DAMPING, AITKEN_MAX_DAMPING)
+                
+                print(f"[AITKEN] Computed adaptive damping: {new_damping:.4f} (previous: {current_damping:.4f})")
+                print(f"[AITKEN] Δf_k = {delta_f_k:.2f} kg, Δf_k-1 = {delta_f_k_minus_1:.2f} kg")
+                
+                current_damping = new_damping
+            else:
+                print(f"[AITKEN] Denominator too small, using previous damping: {current_damping:.4f}")
+        
+        elif USE_AITKEN_ACCELERATION and len(history.iterations) == 2:
+            # Simplified adaptive damping for iteration 2 (2 points available)
+            # Use convergence rate to adaptively adjust damping
+            f_consumed_curr = history.iterations[-1].fuel_consumed_kg
+            f_consumed_prev = history.iterations[-2].fuel_consumed_kg
+            delta_f = f_consumed_curr - f_consumed_prev
+            
+            # Calculate convergence rate as percentage
+            delta_percent = abs(delta_f / f_consumed_prev) * 100.0 if f_consumed_prev > 0 else 0.0
+            
+            # Adaptive strategy based on convergence behavior:
+            # - If converging quickly (small delta): increase damping (more aggressive)
+            # - If diverging or changing rapidly: decrease damping (more conservative)
+            if delta_percent < 1.0:
+                # Very close to convergence - be more aggressive
+                new_damping = min(0.7, current_damping * 1.5)
+            elif delta_percent < 5.0:
+                # Moderate convergence - slightly increase damping
+                new_damping = min(0.6, current_damping * 1.2)
+            elif delta_percent < 15.0:
+                # Slow convergence - maintain current damping
+                new_damping = current_damping
+            else:
+                # Large changes - be more conservative
+                new_damping = max(0.2, current_damping * 0.7)
+            
+            # Bound damping factor
+            new_damping = np.clip(new_damping, AITKEN_MIN_DAMPING, AITKEN_MAX_DAMPING)
+            
+            print(f"[ADAPTIVE-DAMP] Iteration 2: delta = {delta_percent:.2f}%")
+            print(f"[ADAPTIVE-DAMP] Adjusted damping: {current_damping:.4f} → {new_damping:.4f}")
+            
+            current_damping = new_damping
+        
+        else:
+            if USE_AITKEN_ACCELERATION:
+                print(f"[AITKEN] Insufficient history (iteration {len(history.iterations)}), using fixed damping: {current_damping:.4f}")
+        
+        # Apply relaxation update (either fixed or Aitken-adapted)
+        # Formula: f_next = ω × f_consumed + (1-ω) × f_current
+        fuel_update = (
+            current_damping * iteration_result.fuel_consumed_kg +
+            (1.0 - current_damping) * initial_fuel_current_kg
+        )
+        
+        print(f"[UPDATE] Fuel for next iteration: {fuel_update:.1f} kg (damping: {current_damping:.4f})")
+        print(f"[UPDATE] Change: {fuel_update - initial_fuel_current_kg:+.1f} kg ({(fuel_update - initial_fuel_current_kg)/initial_fuel_current_kg*100:+.2f}%)")
+        
+        initial_fuel_current_kg = fuel_update
     
+    # Check convergence status before returning results
     if iteration_count >= MAX_ITERATIONS:
-        print(f"[WARNING] Maximum iterations ({MAX_ITERATIONS}) reached")
+        if not history.is_converged():
+            last_delta = history.iterations[-1].convergence_delta_percent if len(history.iterations) > 0 else float('inf')
+            raise RuntimeError(
+                f"Optimization failed to converge after {MAX_ITERATIONS} iterations. "
+                f"Last convergence delta: {last_delta:.3f}% (tolerance: {CONVERGENCE_TOLERANCE_PERCENT:.3f}%). "
+                f"Consider increasing MAX_ITERATIONS or reviewing mission parameters."
+            )
+        else:
+            print(f"[WARNING] Reached MAX_ITERATIONS but converged")
     
     # Return final result and history
     if len(history.iterations) == 0:
         raise RuntimeError("No successful iterations completed! Check mission configuration.")
     
     final_result = history.iterations[-1]
+    
+    # Verify convergence before returning
+    if not history.is_converged():
+        raise RuntimeError(
+            f"Cannot return non-converged result. "
+            f"Last convergence delta: {final_result.convergence_delta_percent:.3f}% "
+            f"(tolerance: {CONVERGENCE_TOLERANCE_PERCENT:.3f}%)"
+        )
     
     print("\n" + "="*80)
     print("OPTIMIZATION COMPLETE")
@@ -692,16 +890,14 @@ def apply_optimized_fuel_to_configuration(
             raise RuntimeError(f"Updated value {optimized_fuel_kg:.1f} not found in new content")
         
         # Write back to file
+        import os
         with open(config_file, 'w', encoding='utf-8') as f:
             f.write(new_content)
-            f.flush()  # Ensure write is committed to disk
+            f.flush()  # Ensure write buffer is flushed
+            os.fsync(f.fileno())  # Force write to disk
         
         print(f"[CONFIG UPDATE] Successfully updated {config_file}")
         print(f"[CONFIG UPDATE] MAX_FUEL_KG is now set to {optimized_fuel_kg:.1f} kg")
-        
-        # Small delay to ensure file system has synced
-        import time
-        time.sleep(0.5)
         
     except Exception as e:
         print(f"[CONFIG UPDATE ERROR] Failed to update {config_file}: {e}")

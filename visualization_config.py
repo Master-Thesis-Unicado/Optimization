@@ -28,7 +28,7 @@ def get_or_create_run_directory(base_dir: str = None, phase: str = None) -> str:
     
     Args:
         base_dir: Base directory path. If None, uses Images folder in workspace.
-        phase: Phase name ('Climb', 'Cruise', 'Descent'). If None, returns base run directory.
+        phase: Phase name ('Climb', 'Cruise', 'Descent', 'Optimized'). If None, returns base run directory.
     
     Returns:
         Path to the phase subdirectory (or base run directory if phase is None)

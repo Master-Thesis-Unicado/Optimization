@@ -396,14 +396,8 @@ def simulate_steady_cruise(initial_state: CruiseInitialState,
         temperature_array[step] = T
         density_array[step] = rho
         
-        # Get base drag from aero tables and adjust for current weight
-        base_drag_N = aero.get_drag(initial_state.mach, initial_state.altitude_m)
-        
-        # Calculate weight-adjusted drag (accounts for induced drag variation with weight)
-        drag_N = calculate_weight_adjusted_drag(
-            base_drag_N, current_weight, initial_state.weight_kg, 
-            initial_state.mach, initial_state.altitude_m
-        )
+        # Get drag from aero tables with current dynamic weight
+        drag_N = aero.get_drag(initial_state.mach, initial_state.altitude_m, current_weight)
         
         # For steady cruise: thrust = drag (now properly accounts for weight effects on drag)
         thrust_required_N = calculate_required_thrust_cruise(drag_N, current_weight, 

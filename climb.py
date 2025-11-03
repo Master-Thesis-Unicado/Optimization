@@ -290,7 +290,7 @@ class ClimbingCore:
                 # Compute energy allocation using centralized method
                 dh_dt, dv_dt = ClimbingCore.EnergyCalculator.compute_energy_allocation(strategy_fn, w_c, w_s, h, V, a)
                 
-                D = float(aero.get_drag(Mq, h))
+                D = float(aero.get_drag(Mq, h, mass_kg))
                 W = mass_kg * g0
                 
                 # Compute required thrust using centralized method
@@ -948,7 +948,7 @@ class ClimbingCore:
                     M_avg = 0.5 * (M_curr + M_next)
                     lever_avg = 0.5 * (lever_curr + lever_next)
                     V = M_avg * a
-                    D = aero.get_drag(M_avg, 0.5 * (h_curr + h_next))
+                    D = aero.get_drag(M_avg, 0.5 * (h_curr + h_next), weight_avg)
                     T_per = eng.thrust_with_lever(lever_avg, M_avg, 0.5 * (h_curr + h_next))
                     T_tot = T_per * SystemConfiguration.N_ENGINES
                     Ps = ((T_tot - D) * V) / (weight_avg * G_C)
@@ -968,7 +968,7 @@ class ClimbingCore:
                     
                     if abs(V_next - V_curr) > 0.1:  # Significant velocity change
                         # Use acceleration rate: dt = dV / a_accel
-                        D = aero.get_drag(M_curr, h_curr)
+                        D = aero.get_drag(M_curr, h_curr, weight_avg)
                         T_per = eng.thrust_with_lever(lever_curr, M_curr, h_curr)
                         T_tot = T_per * SystemConfiguration.N_ENGINES
                         a_accel = (T_tot - D) / weight_avg
@@ -1065,7 +1065,7 @@ class ClimbingCore:
                 Ps_mps=Ps_mps,
                 T_total_N=np.array([eng.thrust_with_lever(lever, mach, alt) * SystemConfiguration.N_ENGINES 
                                    for alt, mach, lever in zip(alt_array, mach_array, lever_array)]),
-                D_N=np.array([aero.get_drag(mach, alt) for alt, mach in zip(alt_array, mach_array)]),
+                D_N=np.array([aero.get_drag(mach, alt, weight) for alt, mach, weight in zip(alt_array, mach_array, weight_array)]),
                 lever=lever_array,
                 T_per_engine_N=np.array([eng.thrust_with_lever(lever, mach, alt) 
                                         for alt, mach, lever in zip(alt_array, mach_array, lever_array)]),
@@ -1127,8 +1127,8 @@ class ClimbingCore:
                 
             T_tot = T_per * SystemConfiguration.N_ENGINES
             
-            # Get drag
-            D = aero.get_drag(mach, altitude)
+            # Get drag with dynamic weight
+            D = aero.get_drag(mach, altitude, mass_kg)
             if not np.isfinite(D) or D < 0:
                 return np.inf
             
@@ -1507,7 +1507,7 @@ class GridAndPlotting:
                 if T_per is None:
                     continue
                 T_tot = T_per * SystemConfiguration.N_ENGINES
-                D = aero.get_drag(M, h)
+                D = aero.get_drag(M, h, ref_mass_kg)
                 Ps[k, i] = ((T_tot - D) * V) / W
         return M_grid, H_grid, Ps
     

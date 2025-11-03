@@ -41,20 +41,21 @@ class SystemConfiguration:
 
     # Aircraft / engines
     N_ENGINES        = 2
-    S_REF_M2         = 122.4     # used for CLmax curve (can be overridden from Excel)
+    S_REF_M2         = 122.4     # used for CLmax curve  
     
-    # ========= WEIGHT BREAKDOWN COMPONENTS (A320 SPECIFICATIONS) =========
+    # ========= WEIGHT BREAKDOWN COMPONENTS (SCALED AIRCRAFT - 0.5× ENGINE) =========
     # Operating Empty Weight (W_OE) components
-    W_AIRFRAME_KG    = 15620.0   # Weight of airframe structure (A320)
-    W_PROPULSION_KG  = 11000.0   # Weight of propulsion system (A320 engines + nacelles)
-    W_SYSTEMS_KG     = 7000.0    # Weight of systems (A320 avionics, hydraulics, etc.)
+    # Scaled from A320 baseline using power law scaling for 0.5× engine size
+    W_AIRFRAME_KG    = 10153.0   # Weight of airframe structure (0.65× scaling)
+    W_PROPULSION_KG  = 5500.0    # Weight of propulsion system (0.5× scaling - tied to engine)
+    W_SYSTEMS_KG     = 5250.0    # Weight of systems (0.75× scaling - less size-dependent)
     
-    # Payload weight estimation (A320 typical configuration)
+    # Payload weight estimation (scaled configuration)
     PAYLOAD_PER_PERSON_KG = 100.0  # 100 kg per person (passenger + luggage)
-    DEFAULT_PASSENGERS = 180       # A320 typical passenger capacity (180-200 seats)
+    DEFAULT_PASSENGERS = 108       # Scaled passenger capacity (0.6× of 180 = 108 seats)
     
-    # Fuel weight (A320 specifications)
-    MAX_FUEL_KG      = 5000   # 
+    # Fuel weight (scaled for smaller aircraft)
+    MAX_FUEL_KG      = 2500   # Scaled fuel capacity (0.5× of 5000 kg) 
     
     # Calculated weights
     @property
