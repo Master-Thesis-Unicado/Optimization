@@ -1,0 +1,2 @@
+mach_min,mach_max,altitude_min_ft,altitude_max_ft,lever_min,lever_max,tsfc_min_kg_per_Ns,tsfc_max_kg_per_Ns,num_valid_points,num_total_points
+0.0,0.9400000000000001,0.0,14000.0,0.0,1.0,6.188472068032637e-06,0.0004379496082621082,2304,6426

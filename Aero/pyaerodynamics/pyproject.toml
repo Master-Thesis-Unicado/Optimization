@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-data]
+pyaerodynamics = ["*.so", "*.dll", "*.pyd"]
+
+[project]
+name = "pyaerodynamics"
+version = "0.0.0"
+description = "Python binding of the pyaerodynamics2 C++ library of UNICADO"
+requires-python = ">=3.10"
+authors = [
+    {name = "Smt", email = "meric.taneri@tum.de"},
+]
+classifiers = [
+"License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+]
