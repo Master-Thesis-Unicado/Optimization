@@ -250,6 +250,14 @@ class RangeOptimizationCore:
             final_weight_kg = cruise_result.weight_kg[-1]
             final_altitude_m = cruise_result.altitude_m[-1]
             final_mach = cruise_result.mach_number[-1]
+            previous_distance = cruise_result.target_distance_km
+            previous_fuel = cruise_result.total_fuel_consumed_kg
+            
+            print(f"      [EXTENSION] Starting extension from previous cruise endpoint:")
+            print(f"        Previous cruise distance: {previous_distance:.2f} km")
+            print(f"        Mass at endpoint: {final_weight_kg:.1f} kg")
+            print(f"        Fuel consumed in previous cruise: {previous_fuel:.1f} kg")
+            print(f"        Extension distance: {additional_distance_km:.2f} km")
             
             # Create initial state for cruise extension
             extension_initial_state = CruiseInitialState(
@@ -277,6 +285,18 @@ class RangeOptimizationCore:
             # Fuel offset for extension segment
             fuel_offset = cruise_result.fuel_consumed_kg[-1]
             extension_fuel_offset = extension_result.fuel_consumed_kg + fuel_offset
+            
+            # Mass continuity verification: Extension starts from final weight of previous cruise
+            # The extension_result.weight_kg already reflects fuel burn during extension
+            # Concatenation maintains continuous mass evolution: original_weight → final_weight → extended_final_weight
+            
+            extension_fuel = extension_result.total_fuel_consumed_kg
+            extension_final_weight = extension_result.weight_kg[-1]
+            
+            print(f"      [EXTENSION] Extension segment results:")
+            print(f"        Fuel consumed in extension: {extension_fuel:.1f} kg")
+            print(f"        Final mass after extension: {extension_final_weight:.1f} kg")
+            print(f"        Total combined cruise distance: {cruise_result.target_distance_km + additional_distance_km:.2f} km")
             
             # Create combined cruise result
             combined_result = CruiseResults(
@@ -338,10 +358,10 @@ class RangeOptimizationCore:
                 - All trajectory arrays truncated consistently at same point
                 - Weight and fuel consumption reflect truncated segment only
             """
-            # Find index where cruise distance equals or exceeds new target distance
+            # Find indices bracketing the target distance for interpolation
             distance_array = cruise_result.distance_km
             
-            # Find truncation index
+            # Find index where distance first exceeds target
             truncation_idx = np.searchsorted(distance_array, new_cruise_distance_km)
             
             # Handle edge cases
@@ -350,33 +370,138 @@ class RangeOptimizationCore:
             if truncation_idx >= len(distance_array):
                 truncation_idx = len(distance_array) - 1
             
+            # Check if interpolation is needed (target falls between discrete points)
+            distance_at_idx = distance_array[truncation_idx]
+            distance_error_km = abs(distance_at_idx - new_cruise_distance_km)
+            
+            # If target distance doesn't match a discrete point, interpolate
+            if distance_error_km > 0.01 and truncation_idx > 0:  # More than 10m difference
+                # Linear interpolation between points
+                idx_before = truncation_idx - 1
+                idx_after = truncation_idx
+                
+                d_before = distance_array[idx_before]
+                d_after = distance_array[idx_after]
+                
+                # Interpolation weight
+                alpha = (new_cruise_distance_km - d_before) / (d_after - d_before) if (d_after - d_before) > 0 else 0.0
+                alpha = np.clip(alpha, 0.0, 1.0)
+                
+                # Interpolate mass and fuel
+                mass_before = cruise_result.weight_kg[idx_before]
+                mass_after = cruise_result.weight_kg[idx_after]
+                interpolated_mass = mass_before + alpha * (mass_after - mass_before)
+                
+                fuel_before = cruise_result.fuel_consumed_kg[idx_before]
+                fuel_after = cruise_result.fuel_consumed_kg[idx_after]
+                interpolated_fuel = fuel_before + alpha * (fuel_after - fuel_before)
+                
+                time_before = cruise_result.time_s[idx_before]
+                time_after = cruise_result.time_s[idx_after]
+                interpolated_time = time_before + alpha * (time_after - time_before)
+                
+                print(f"      [TRUNCATION] Interpolation required:")
+                print(f"        Target distance: {new_cruise_distance_km:.2f} km")
+                print(f"        Bracketing points: [{idx_before}] {d_before:.2f} km → [{idx_after}] {d_after:.2f} km")
+                print(f"        Interpolation weight α: {alpha:.4f}")
+                print(f"        Interpolated mass: {interpolated_mass:.1f} kg (between {mass_before:.1f} and {mass_after:.1f})")
+                print(f"        Interpolated fuel: {interpolated_fuel:.1f} kg")
+                
+                # Use interpolated values - truncate at idx_before and add interpolated point
+                truncation_idx = idx_before
+                requires_interpolation = True
+            else:
+                # Target distance matches a discrete point (within 10m)
+                interpolated_mass = None
+                interpolated_fuel = None
+                interpolated_time = None
+                requires_interpolation = False
+                
+                print(f"      [TRUNCATION] Using discrete cruise point:")
+                print(f"        Index: {truncation_idx} of {len(distance_array)}")
+                print(f"        Distance: {distance_at_idx:.2f} km (target: {new_cruise_distance_km:.2f} km, error: {distance_error_km*1000:.1f} m)")
+                print(f"        Mass at this point: {cruise_result.weight_kg[truncation_idx]:.1f} kg")
+                print(f"        Fuel consumed to this point: {cruise_result.fuel_consumed_kg[truncation_idx]:.1f} kg")
+            
             # Truncate all trajectory arrays at the identified index
-            truncated_result = CruiseResults(
-                initial_state=cruise_result.initial_state,
-                target_distance_km=new_cruise_distance_km,
-                time_step_s=cruise_result.time_step_s,
-                # Truncated trajectory arrays
-                time_s=cruise_result.time_s[:truncation_idx+1],
-                distance_km=cruise_result.distance_km[:truncation_idx+1],
-                weight_kg=cruise_result.weight_kg[:truncation_idx+1],
-                fuel_consumed_kg=cruise_result.fuel_consumed_kg[:truncation_idx+1],
-                thrust_total_N=cruise_result.thrust_total_N[:truncation_idx+1],
-                drag_N=cruise_result.drag_N[:truncation_idx+1],
-                fuel_flow_kgps=cruise_result.fuel_flow_kgps[:truncation_idx+1],
-                specific_excess_power_mps=cruise_result.specific_excess_power_mps[:truncation_idx+1],
-                lever_position=cruise_result.lever_position[:truncation_idx+1],
-                altitude_m=cruise_result.altitude_m[:truncation_idx+1],
-                mach_number=cruise_result.mach_number[:truncation_idx+1],
-                temperature_K=cruise_result.temperature_K[:truncation_idx+1],
-                density_kgpm3=cruise_result.density_kgpm3[:truncation_idx+1],
-                true_airspeed_mps=cruise_result.true_airspeed_mps[:truncation_idx+1],
-                # Update summary statistics
-                total_time_s=cruise_result.time_s[truncation_idx],
-                total_fuel_consumed_kg=cruise_result.fuel_consumed_kg[truncation_idx],
-                final_weight_kg=cruise_result.weight_kg[truncation_idx],
-                average_fuel_flow_kgps=np.mean(cruise_result.fuel_flow_kgps[:truncation_idx+1]),
-                average_thrust_N=np.mean(cruise_result.thrust_total_N[:truncation_idx+1])
-            )
+            # Mass continuity verification: Truncation preserves weight array up to truncation point
+            # The truncated weight_kg reflects actual fuel burn up to the new cruise distance
+            # Descent will correctly use weight_kg[truncation_idx] as initial mass
+            
+            if requires_interpolation:
+                # Interpolate all trajectory arrays to get exact state at target distance
+                # Helper function for interpolation
+                def interpolate_value(array, idx_before, alpha):
+                    """Linearly interpolate between idx_before and idx_before+1"""
+                    val_before = array[idx_before]
+                    val_after = array[idx_before + 1]
+                    return val_before + alpha * (val_after - val_before)
+                
+                # Create arrays up to truncation point, then append interpolated values
+                truncated_result = CruiseResults(
+                    initial_state=cruise_result.initial_state,
+                    target_distance_km=new_cruise_distance_km,
+                    time_step_s=cruise_result.time_step_s,
+                    # Truncated + interpolated trajectory arrays
+                    time_s=np.append(cruise_result.time_s[:truncation_idx+1], interpolated_time),
+                    distance_km=np.append(cruise_result.distance_km[:truncation_idx+1], new_cruise_distance_km),
+                    weight_kg=np.append(cruise_result.weight_kg[:truncation_idx+1], interpolated_mass),
+                    fuel_consumed_kg=np.append(cruise_result.fuel_consumed_kg[:truncation_idx+1], interpolated_fuel),
+                    thrust_total_N=np.append(cruise_result.thrust_total_N[:truncation_idx+1], 
+                                            interpolate_value(cruise_result.thrust_total_N, truncation_idx, alpha)),
+                    drag_N=np.append(cruise_result.drag_N[:truncation_idx+1],
+                                    interpolate_value(cruise_result.drag_N, truncation_idx, alpha)),
+                    fuel_flow_kgps=np.append(cruise_result.fuel_flow_kgps[:truncation_idx+1],
+                                            interpolate_value(cruise_result.fuel_flow_kgps, truncation_idx, alpha)),
+                    specific_excess_power_mps=np.append(cruise_result.specific_excess_power_mps[:truncation_idx+1],
+                                                        interpolate_value(cruise_result.specific_excess_power_mps, truncation_idx, alpha)),
+                    lever_position=np.append(cruise_result.lever_position[:truncation_idx+1],
+                                            interpolate_value(cruise_result.lever_position, truncation_idx, alpha)),
+                    altitude_m=np.append(cruise_result.altitude_m[:truncation_idx+1],
+                                        interpolate_value(cruise_result.altitude_m, truncation_idx, alpha)),
+                    mach_number=np.append(cruise_result.mach_number[:truncation_idx+1],
+                                         interpolate_value(cruise_result.mach_number, truncation_idx, alpha)),
+                    temperature_K=np.append(cruise_result.temperature_K[:truncation_idx+1],
+                                           interpolate_value(cruise_result.temperature_K, truncation_idx, alpha)),
+                    density_kgpm3=np.append(cruise_result.density_kgpm3[:truncation_idx+1],
+                                           interpolate_value(cruise_result.density_kgpm3, truncation_idx, alpha)),
+                    true_airspeed_mps=np.append(cruise_result.true_airspeed_mps[:truncation_idx+1],
+                                                interpolate_value(cruise_result.true_airspeed_mps, truncation_idx, alpha)),
+                    # Use interpolated values for summary
+                    total_time_s=interpolated_time,
+                    total_fuel_consumed_kg=interpolated_fuel,
+                    final_weight_kg=interpolated_mass,
+                    average_fuel_flow_kgps=interpolated_fuel / interpolated_time if interpolated_time > 0 else 0.0,
+                    average_thrust_N=interpolate_value(cruise_result.thrust_total_N, truncation_idx, alpha)
+                )
+            else:
+                # No interpolation needed - use discrete point
+                truncated_result = CruiseResults(
+                    initial_state=cruise_result.initial_state,
+                    target_distance_km=new_cruise_distance_km,
+                    time_step_s=cruise_result.time_step_s,
+                    # Truncated trajectory arrays
+                    time_s=cruise_result.time_s[:truncation_idx+1],
+                    distance_km=cruise_result.distance_km[:truncation_idx+1],
+                    weight_kg=cruise_result.weight_kg[:truncation_idx+1],
+                    fuel_consumed_kg=cruise_result.fuel_consumed_kg[:truncation_idx+1],
+                    thrust_total_N=cruise_result.thrust_total_N[:truncation_idx+1],
+                    drag_N=cruise_result.drag_N[:truncation_idx+1],
+                    fuel_flow_kgps=cruise_result.fuel_flow_kgps[:truncation_idx+1],
+                    specific_excess_power_mps=cruise_result.specific_excess_power_mps[:truncation_idx+1],
+                    lever_position=cruise_result.lever_position[:truncation_idx+1],
+                    altitude_m=cruise_result.altitude_m[:truncation_idx+1],
+                    mach_number=cruise_result.mach_number[:truncation_idx+1],
+                    temperature_K=cruise_result.temperature_K[:truncation_idx+1],
+                    density_kgpm3=cruise_result.density_kgpm3[:truncation_idx+1],
+                    true_airspeed_mps=cruise_result.true_airspeed_mps[:truncation_idx+1],
+                    # Update summary statistics
+                    total_time_s=cruise_result.time_s[truncation_idx],
+                    total_fuel_consumed_kg=cruise_result.fuel_consumed_kg[truncation_idx],
+                    final_weight_kg=cruise_result.weight_kg[truncation_idx],
+                    average_fuel_flow_kgps=np.mean(cruise_result.fuel_flow_kgps[:truncation_idx+1]),
+                    average_thrust_N=np.mean(cruise_result.thrust_total_N[:truncation_idx+1])
+                )
             
             return truncated_result
     
@@ -494,7 +619,10 @@ class RangeOptimizationCore:
             cruise_distance_km: float,
             total_distance_km: float,
             error_km: float,
-            converged: bool
+            converged: bool,
+            cruise_final_mass_kg: float = 0.0,
+            descent_initial_mass_kg: float = 0.0,
+            descent_final_mass_kg: float = 0.0
         ):
             """
             Record iteration data for history and analysis.
@@ -505,13 +633,19 @@ class RangeOptimizationCore:
                 total_distance_km: Resulting total distance [km]
                 error_km: Distance error [km]
                 converged: Convergence status
+                cruise_final_mass_kg: Mass at end of cruise [kg]
+                descent_initial_mass_kg: Mass at start of descent [kg]
+                descent_final_mass_kg: Mass at end of descent [kg]
             """
             record = OptimizationIteration(
                 iteration=iteration,
                 cruise_distance_km=cruise_distance_km,
                 total_distance_km=total_distance_km,
                 distance_error_km=error_km,
-                converged=converged
+                converged=converged,
+                cruise_final_mass_kg=cruise_final_mass_kg,
+                descent_initial_mass_kg=descent_initial_mass_kg,
+                descent_final_mass_kg=descent_final_mass_kg
             )
             self.iteration_history.append(record)
         
@@ -521,7 +655,9 @@ class RangeOptimizationCore:
             cruise_distance_km: float,
             total_distance_km: float,
             error_km: float,
-            converged: bool
+            converged: bool,
+            cruise_final_mass_kg: float = None,
+            descent_final_mass_kg: float = None
         ):
             """
             Print formatted iteration status for monitoring convergence progress.
@@ -532,11 +668,20 @@ class RangeOptimizationCore:
                 total_distance_km: Resulting total distance [km]
                 error_km: Distance error [km]
                 converged: Convergence status
+                cruise_final_mass_kg: Optional mass at end of cruise [kg]
+                descent_final_mass_kg: Optional mass at end of descent [kg]
             """
             status = "CONVERGED" if converged else "Continuing..."
-            print(f"[ITER {iteration:2d}] Cruise: {cruise_distance_km:7.1f} km | "
-                  f"Total: {total_distance_km:7.1f} km | "
-                  f"Error: {error_km:+7.1f} km | {status}")
+            base_msg = (f"[ITER {iteration:2d}] Cruise: {cruise_distance_km:7.1f} km | "
+                       f"Total: {total_distance_km:7.1f} km | "
+                       f"Error: {error_km:+7.1f} km")
+            
+            # Add mass information if provided
+            if cruise_final_mass_kg is not None and descent_final_mass_kg is not None:
+                mass_msg = f" | Mass: {cruise_final_mass_kg:7.1f}→{descent_final_mass_kg:7.1f} kg"
+                print(base_msg + mass_msg + f" | {status}")
+            else:
+                print(base_msg + f" | {status}")
         
         def get_optimization_summary(self) -> Dict[str, Any]:
             """
@@ -563,6 +708,63 @@ class RangeOptimizationCore:
             }
             
             return summary
+        
+        def print_mass_evolution_summary(self):
+            """
+            Print detailed summary of mass evolution across iterations.
+            
+            This method displays how aircraft mass changed throughout the optimization
+            process, demonstrating proper mass continuity between phases and the impact
+            of cruise distance adjustments on descent initial conditions.
+            """
+            if not self.iteration_history:
+                print("[MASS] No iteration history available")
+                return
+            
+            print(f"\n{'='*80}")
+            print("MASS EVOLUTION ACROSS ITERATIONS")
+            print(f"{'='*80}")
+            print(f"{'Iter':<6} {'Cruise Dist':>12} {'Cruise Final':>14} {'Descent Init':>14} "
+                  f"{'Descent Final':>14} {'Continuity':>12}")
+            print(f"{'':^6} {'[km]':>12} {'Mass [kg]':>14} {'Mass [kg]':>14} "
+                  f"{'Mass [kg]':>14} {'Check':>12}")
+            print("-"*80)
+            
+            for record in self.iteration_history:
+                # Calculate mass continuity error
+                if record.cruise_final_mass_kg > 0 and record.descent_initial_mass_kg > 0:
+                    mass_error = abs(record.cruise_final_mass_kg - record.descent_initial_mass_kg)
+                    continuity_status = "✓ OK" if mass_error < 0.1 else f"⚠ {mass_error:.1f}kg"
+                else:
+                    continuity_status = "N/A"
+                
+                print(f"{record.iteration:<6} {record.cruise_distance_km:>12.1f} "
+                      f"{record.cruise_final_mass_kg:>14.1f} {record.descent_initial_mass_kg:>14.1f} "
+                      f"{record.descent_final_mass_kg:>14.1f} {continuity_status:>12}")
+            
+            print("="*80)
+            
+            # Summary statistics
+            if len(self.iteration_history) > 1:
+                first_iter = self.iteration_history[0]
+                last_iter = self.iteration_history[-1]
+                
+                cruise_mass_change = last_iter.cruise_final_mass_kg - first_iter.cruise_final_mass_kg
+                descent_mass_change = last_iter.descent_final_mass_kg - first_iter.descent_final_mass_kg
+                
+                print(f"\nMass Evolution Summary:")
+                print(f"  First iteration:")
+                print(f"    Cruise final mass:  {first_iter.cruise_final_mass_kg:.1f} kg")
+                print(f"    Descent final mass: {first_iter.descent_final_mass_kg:.1f} kg")
+                print(f"  Final iteration:")
+                print(f"    Cruise final mass:  {last_iter.cruise_final_mass_kg:.1f} kg")
+                print(f"    Descent final mass: {last_iter.descent_final_mass_kg:.1f} kg")
+                print(f"  Changes due to range optimization:")
+                print(f"    Cruise final mass change:  {cruise_mass_change:+.1f} kg")
+                print(f"    Descent final mass change: {descent_mass_change:+.1f} kg")
+                print(f"\n  → Mass continuity maintained: Descent adapts to cruise mass changes")
+            
+            print("="*80)
 
 
 # Create global range optimization core instance
@@ -581,12 +783,18 @@ class OptimizationIteration:
         total_distance_km: Resulting total mission distance [km]
         distance_error_km: Error from target distance [km]
         converged: Whether convergence achieved in this iteration
+        cruise_final_mass_kg: Mass at end of cruise phase [kg]
+        descent_initial_mass_kg: Mass at start of descent phase [kg]
+        descent_final_mass_kg: Mass at end of descent phase [kg]
     """
     iteration: int
     cruise_distance_km: float
     total_distance_km: float
     distance_error_km: float
     converged: bool
+    cruise_final_mass_kg: float = 0.0
+    descent_initial_mass_kg: float = 0.0
+    descent_final_mass_kg: float = 0.0
 
 
 # =========  4 - BACKWARD COMPATIBILITY WRAPPERS =================

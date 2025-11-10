@@ -259,11 +259,17 @@ def main():
             else:
                 # Determine if cruise distance increased or decreased
                 previous_cruise_distance = optimizer.iteration_history[-1].cruise_distance_km
+                previous_cruise_final_mass = optimizer.iteration_history[-1].cruise_final_mass_kg
+                
+                print(f"[CRUISE] Previous iteration: {previous_cruise_distance:.1f} km, ending mass: {previous_cruise_final_mass:.1f} kg")
+                print(f"[CRUISE] Current iteration target: {current_cruise_distance_km:.1f} km")
                 
                 if current_cruise_distance_km > previous_cruise_distance:
                     # Extension: Resume from last cruise point
                     additional_distance_km = current_cruise_distance_km - previous_cruise_distance
-                    print(f"[CRUISE] Extending cruise by {additional_distance_km:.1f} km from previous endpoint")
+                    print(f"[CRUISE] → EXTENDING cruise by {additional_distance_km:.1f} km from previous endpoint")
+                    print(f"[CRUISE]   Starting extension from mass: {cruise_results.weight_kg[-1]:.1f} kg")
+                    
                     cruise_results = adjust_cruise_segment_extension(
                         cruise_result=cruise_results,
                         additional_distance_km=additional_distance_km,
@@ -271,20 +277,48 @@ def main():
                         engine=eng,
                         time_step_s=CRUISE_TIME_STEP_S
                     )
+                    
+                    print(f"[CRUISE]   After extension, cruise ends at mass: {cruise_results.weight_kg[-1]:.1f} kg")
                 else:
                     # Truncation: Return to earlier cruise point
-                    print(f"[CRUISE] Truncating cruise to {current_cruise_distance_km:.1f} km")
+                    print(f"[CRUISE] → TRUNCATING cruise from {previous_cruise_distance:.1f} km to {current_cruise_distance_km:.1f} km")
+                    print(f"[CRUISE]   Before truncation: {len(cruise_results.weight_kg)} points, final mass: {cruise_results.weight_kg[-1]:.1f} kg")
+                    
                     cruise_results = adjust_cruise_segment_truncation(
                         cruise_result=cruise_results,
                         new_cruise_distance_km=current_cruise_distance_km
                     )
+                    
+                    print(f"[CRUISE]   After truncation: {len(cruise_results.weight_kg)} points, final mass: {cruise_results.weight_kg[-1]:.1f} kg")
         
         except Exception as e:
             print(f"[ERROR] Cruise simulation failed: {str(e)}")
             break
         
+        # ========= MASS CONTINUITY VERIFICATION ===============================
+        # Extract actual masses from phase results
+        climb_final_mass_kg = float(dp_sched.mass_kg[-1]) if len(dp_sched.mass_kg) > 0 else (INITIAL_MASS_KG - climb_fuel)
+        cruise_initial_mass_kg = float(cruise_results.weight_kg[0])
+        cruise_final_mass_kg = float(cruise_results.weight_kg[-1])
+        cruise_fuel_consumed_kg = float(cruise_results.total_fuel_consumed_kg)
+        
+        print(f"\n[MASS] Phase-wise mass tracking:")
+        print(f"  Initial takeoff mass: {INITIAL_MASS_KG:.1f} kg")
+        print(f"  Climb ending mass:    {climb_final_mass_kg:.1f} kg (burned {climb_fuel:.1f} kg)")
+        print(f"  Cruise starting mass: {cruise_initial_mass_kg:.1f} kg")
+        
+        # Verify climb→cruise continuity
+        climb_cruise_error = abs(climb_final_mass_kg - cruise_initial_mass_kg)
+        if climb_cruise_error > 0.1:
+            print(f"  [WARNING] Climb→Cruise mass mismatch: {climb_cruise_error:.2f} kg difference!")
+        else:
+            print(f"")
+        
+        print(f"  Cruise ending mass:   {cruise_final_mass_kg:.1f} kg (burned {cruise_fuel_consumed_kg:.1f} kg)")
+        print(f"  → Descent will start with mass: {cruise_final_mass_kg:.1f} kg")
+        
         # ========= DESCENT PHASE OPTIMIZATION =================================
-        print(f"[DESCENT] Running descent optimization...")
+        print(f"\n[DESCENT] Running descent optimization with initial mass {cruise_final_mass_kg:.1f} kg...")
         
         try:
             descent_results, descent_info = run_descent_dp_optimization(
@@ -299,6 +333,24 @@ def main():
                 n_mach_samples=N_MACH_SAMPLES_DESCENT,
                 lever_samples=N_LEVER_SAMPLES_DESCENT
             )
+            
+            # Extract and verify descent mass
+            descent_initial_mass_kg = float(descent_results.weight_kg[0]) if len(descent_results.weight_kg) > 0 else cruise_final_mass_kg
+            descent_final_mass_kg = float(descent_results.final_weight_kg)
+            descent_fuel_kg = float(descent_results.total_fuel_consumed_kg)
+            
+            # Verify mass continuity
+            mass_continuity_error = abs(descent_initial_mass_kg - cruise_final_mass_kg)
+            if mass_continuity_error > 0.1:  # More than 0.1 kg difference
+                print(f"[WARNING] Mass continuity issue detected!")
+                print(f"  Cruise final mass: {cruise_final_mass_kg:.1f} kg")
+                print(f"  Descent initial mass: {descent_initial_mass_kg:.1f} kg")
+                print(f"  Difference: {mass_continuity_error:.2f} kg")
+            else:
+                print(f"[MASS] ✓ Mass continuity verified: Descent initial mass matches cruise final mass")
+            
+            print(f"  Descent ending mass: {descent_final_mass_kg:.1f} kg (burned {descent_fuel_kg:.1f} kg)")
+            
         except Exception as e:
             print(f"[ERROR] Descent simulation failed: {str(e)}")
             break
@@ -313,22 +365,27 @@ def main():
         # ========= CHECK CONVERGENCE ==========================================
         converged, error_km = optimizer.check_convergence(total_distance_km)
         
-        # Record iteration
+        # Record iteration with mass tracking
         optimizer.record_iteration(
             iteration=iteration,
             cruise_distance_km=current_cruise_distance_km,
             total_distance_km=total_distance_km,
             error_km=error_km,
-            converged=converged
+            converged=converged,
+            cruise_final_mass_kg=cruise_final_mass_kg,
+            descent_initial_mass_kg=descent_initial_mass_kg,
+            descent_final_mass_kg=descent_final_mass_kg
         )
         
-        # Print iteration status
+        # Print iteration status with mass tracking
         optimizer.print_iteration_status(
             iteration=iteration,
             cruise_distance_km=current_cruise_distance_km,
             total_distance_km=total_distance_km,
             error_km=error_km,
-            converged=converged
+            converged=converged,
+            cruise_final_mass_kg=cruise_final_mass_kg,
+            descent_final_mass_kg=descent_final_mass_kg
         )
         
         # Store final results if converged
@@ -352,6 +409,16 @@ def main():
             current_cruise_distance_km = next_cruise_distance_km
     
     # ========= OPTIMIZATION SUMMARY ===========================================
+    # Check if any iterations were completed
+    if len(optimizer.iteration_history) == 0:
+        print(f"\n{'='*80}")
+        print("OPTIMIZATION FAILED - NO ITERATIONS COMPLETED")
+        print(f"{'='*80}")
+        print("[ERROR] The optimization loop exited before completing any iterations.")
+        print("Please check the error messages above for details.")
+        print(f"{'='*80}\n")
+        return  # Exit early - cannot continue without iteration data
+    
     if not converged:
         print(f"\n{'='*80}")
         print("MAXIMUM ITERATIONS REACHED WITHOUT CONVERGENCE")
@@ -376,6 +443,9 @@ def main():
     print(f"Total iterations: {summary['total_iterations']}")
     print(f"Converged: {'Yes' if summary['converged'] else 'No'}")
     print(f"{'='*80}\n")
+    
+    # Print mass evolution summary to verify mass continuity
+    optimizer.print_mass_evolution_summary()
     
     # ========= FINAL MISSION SUMMARY ==========================================
     print("="*80)
