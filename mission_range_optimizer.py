@@ -278,13 +278,17 @@ class RangeOptimizationCore:
             )
             
             # Concatenate trajectories: original + extension
+            # CRITICAL: Skip first point of extension to avoid duplicate at junction
+            # The first point of extension represents the same state as the last point of original cruise
+            # Including both creates discontinuities in plots (sudden jumps in fuel flow, etc.)
+            
             # Time offset for extension segment
             time_offset = cruise_result.time_s[-1]
-            extension_time_offset = extension_result.time_s + time_offset
+            extension_time_offset = extension_result.time_s[1:] + time_offset  # Skip first point
             
             # Fuel offset for extension segment
             fuel_offset = cruise_result.fuel_consumed_kg[-1]
-            extension_fuel_offset = extension_result.fuel_consumed_kg + fuel_offset
+            extension_fuel_offset = extension_result.fuel_consumed_kg[1:] + fuel_offset  # Skip first point
             
             # Mass continuity verification: Extension starts from final weight of previous cruise
             # The extension_result.weight_kg already reflects fuel burn during extension
@@ -297,30 +301,32 @@ class RangeOptimizationCore:
             print(f"        Fuel consumed in extension: {extension_fuel:.1f} kg")
             print(f"        Final mass after extension: {extension_final_weight:.1f} kg")
             print(f"        Total combined cruise distance: {cruise_result.target_distance_km + additional_distance_km:.2f} km")
+            print(f"        Junction smoothing: Skipping first extension point to avoid duplication")
             
             # Create combined cruise result
+            # All extension arrays skip first element [1:] to ensure smooth transitions
             combined_result = CruiseResults(
                 initial_state=cruise_result.initial_state,
                 target_distance_km=cruise_result.target_distance_km + additional_distance_km,
                 time_step_s=time_step_s,
-                # Concatenate trajectory arrays
+                # Concatenate trajectory arrays (skip first extension point)
                 time_s=np.concatenate([cruise_result.time_s, extension_time_offset]),
                 distance_km=np.concatenate([cruise_result.distance_km, 
-                                           cruise_result.distance_km[-1] + extension_result.distance_km]),
-                weight_kg=np.concatenate([cruise_result.weight_kg, extension_result.weight_kg]),
+                                           cruise_result.distance_km[-1] + extension_result.distance_km[1:]]),
+                weight_kg=np.concatenate([cruise_result.weight_kg, extension_result.weight_kg[1:]]),
                 fuel_consumed_kg=np.concatenate([cruise_result.fuel_consumed_kg, extension_fuel_offset]),
-                thrust_total_N=np.concatenate([cruise_result.thrust_total_N, extension_result.thrust_total_N]),
-                drag_N=np.concatenate([cruise_result.drag_N, extension_result.drag_N]),
-                fuel_flow_kgps=np.concatenate([cruise_result.fuel_flow_kgps, extension_result.fuel_flow_kgps]),
+                thrust_total_N=np.concatenate([cruise_result.thrust_total_N, extension_result.thrust_total_N[1:]]),
+                drag_N=np.concatenate([cruise_result.drag_N, extension_result.drag_N[1:]]),
+                fuel_flow_kgps=np.concatenate([cruise_result.fuel_flow_kgps, extension_result.fuel_flow_kgps[1:]]),
                 specific_excess_power_mps=np.concatenate([cruise_result.specific_excess_power_mps, 
-                                                          extension_result.specific_excess_power_mps]),
-                lever_position=np.concatenate([cruise_result.lever_position, extension_result.lever_position]),
-                altitude_m=np.concatenate([cruise_result.altitude_m, extension_result.altitude_m]),
-                mach_number=np.concatenate([cruise_result.mach_number, extension_result.mach_number]),
-                temperature_K=np.concatenate([cruise_result.temperature_K, extension_result.temperature_K]),
-                density_kgpm3=np.concatenate([cruise_result.density_kgpm3, extension_result.density_kgpm3]),
+                                                          extension_result.specific_excess_power_mps[1:]]),
+                lever_position=np.concatenate([cruise_result.lever_position, extension_result.lever_position[1:]]),
+                altitude_m=np.concatenate([cruise_result.altitude_m, extension_result.altitude_m[1:]]),
+                mach_number=np.concatenate([cruise_result.mach_number, extension_result.mach_number[1:]]),
+                temperature_K=np.concatenate([cruise_result.temperature_K, extension_result.temperature_K[1:]]),
+                density_kgpm3=np.concatenate([cruise_result.density_kgpm3, extension_result.density_kgpm3[1:]]),
                 true_airspeed_mps=np.concatenate([cruise_result.true_airspeed_mps, 
-                                                 extension_result.true_airspeed_mps]),
+                                                 extension_result.true_airspeed_mps[1:]]),
                 # Update summary statistics
                 total_time_s=cruise_result.total_time_s + extension_result.total_time_s,
                 total_fuel_consumed_kg=cruise_result.total_fuel_consumed_kg + extension_result.total_fuel_consumed_kg,
