@@ -35,6 +35,13 @@ STRATEGY_DT_CLIMB_S = 0.2       # Time step for climb strategy simulation [s]
 CRUISE_DISTANCE_KM = 1500.0     # Cruise distance [km]
 CRUISE_TIME_STEP_S = 60.0       # Time step for cruise simulation [s]
 
+# Range optimization parameters (for mission_range_optimizer.py)
+TARGET_MISSION_RANGE_KM = 2000.0        # Target total mission range [km]
+INITIAL_CRUISE_DISTANCE_KM = 1500.0     # Initial cruise distance estimate [km]
+RANGE_OPTIMIZATION_TOLERANCE_KM = 10.0  # Convergence tolerance [km] (±10 km)
+MAX_RANGE_OPTIMIZATION_ITERATIONS = 10  # Maximum optimization iterations
+RANGE_OPTIMIZATION_DAMPING_FACTOR = 0.8 # Damping factor for cruise distance adjustment (0 < factor ≤ 1)
+
 # Cruise constraints (from cruise.py)
 MIN_CRUISE_MACH = 0.3           # Minimum safe cruise Mach
 MAX_CRUISE_MACH = 0.9           # Maximum reasonable cruise Mach

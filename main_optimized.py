@@ -7,24 +7,25 @@ a dynamically optimized value.
 
 Features:
 - Iterative fuel optimization (climb + cruise + descent)
-- Convergence tracking with relative tolerance (0.1%)
+- Convergence tracking with Aitken Δ² acceleration
 - No intermediate plots during convergence
 - Final plots generated only after convergence
-- KPP evolution tracking across iterations
+- Comprehensive performance metrics tracking
 
 The optimization process:
 1. Start with MAX_FUEL_KG as initial guess
 2. Run full mission simulation (climb → cruise → descent)
-3. Use consumed fuel as new initial fuel for next iteration3
-
-4. Repeat until convergence
+3. Apply Aitken acceleration for adaptive damping
+4. Repeat until convergence (0.5% relative tolerance)
 5. Apply 5% safety buffer to final result
 """
 
+# ========= IMPORTS AND BASIC SETUP ===========================================
 from __future__ import annotations
 import numpy as np
 import matplotlib.pyplot as plt
 
+# ========= AIRCRAFT AND MISSION CONFIGURATION ================================
 from aircraft_config import (
     INITIAL_MASS_KG, ENGINE_STUB_PATH, MAX_FUEL_KG, W_OE_KG, W_PL_KG,
     AtmosphericProperties, G_C
@@ -40,46 +41,64 @@ from mission_config import (
     N_MACH_SAMPLES_DESCENT, N_ALTITUDE_STEPS_DESCENT, N_LEVER_SAMPLES_DESCENT,
     MIN_DESCENT_MACH, MAX_DESCENT_MACH
 )
+
+# ========= CLIMB MODULE ===========================================
 import climb
 from climb import (
     compute_sep_grid_maxlever,
     dbg, compute_full_engine_envelope,
     ClimbingCore
 )
+
+# ========= AERODYNAMICS AND ENGINE WRAPPERS ===========================
 from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 from pyengine_wrapper import EngineWrapper
+
+# ========= CRUISE MODULE ==============================================
 import cruise
 from cruise import run_cruise_simulation
-from cruise_plotting import plot_cruise_performance_detailed
-from climb_plotting import (plot_strategies_interactive, plot_J_3d_plotly, 
-                           create_strategy_comparison_plots, plot_climb_performance_detailed)
+
+# ========= DESCENT MODULE =============================================
 import descent
 from descent import run_descent_dp_optimization, compute_full_descent_envelope
-from descent_plotting import (plot_descent_trajectory_interactive, 
-                              plot_descent_3d_trajectory,
-                              plot_complete_mission_3d_interactive,
-                              plot_descent_J_3d_plotly)
-from mission_summary import (plot_mission_summary_dashboard, 
-                            plot_combined_performance_analysis)
 
-# Import optimization modules
+# ========= PLOTTING MODULES (FINAL VISUALIZATION ONLY) ================
+from cruise_plotting import plot_cruise_performance_detailed
+from climb_plotting import (
+    plot_strategies_interactive, plot_J_3d_plotly, 
+    create_strategy_comparison_plots, plot_climb_performance_detailed
+)
+from descent_plotting import (
+    plot_descent_trajectory_interactive, 
+    plot_descent_3d_trajectory,
+    plot_complete_mission_3d_interactive,
+    plot_descent_J_3d_plotly
+)
+from mission_summary import (
+    plot_mission_summary_dashboard, 
+    plot_combined_performance_analysis
+)
+
+# ========= FUEL OPTIMIZATION MODULES ==================================
 from fuel_optimizer import optimize_fuel_capacity, SAFETY_BUFFER_PERCENT
 from fuel_plotting import visualize_convergence_analysis
 
-# ========= CONSTANTS AND SETTINGS =============================================
 
+# ========= CONSTANTS AND SETTINGS =========================================
 # Create atmospheric properties instance
 atmospheric_props = AtmosphericProperties()
 
 
+# ========= MAIN EXECUTION FUNCTION ========================================
 def main():
     """
-    Main mission analysis with fuel capacity optimization.
+    Main execution function for mission analysis with fuel capacity optimization.
     
-    Process:
-    1. Run optimization loop to determine minimum fuel
-    2. Use optimized fuel for final mission execution
-    3. Generate all plots and visualizations
+    Executes complete fuel optimization process:
+    1. Run iterative optimization loop to determine minimum fuel
+    2. Generate convergence analysis visualizations
+    3. Use optimized fuel for final mission results
+    4. Generate comprehensive mission visualizations
     """
     
     # ========= OPTIMIZATION LOOP =========================================
