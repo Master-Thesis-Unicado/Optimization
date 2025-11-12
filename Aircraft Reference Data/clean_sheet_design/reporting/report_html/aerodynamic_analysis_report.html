@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<title>Aerodynamic Analysis of SMR-01</title>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="logo"></div>
+<div class="content">
+<h1>Report - Aerodynamic Analysis of SMR-01<br/>
+<span><font size="2">All outputs of the program 'aerodynamic_analysis' were created with version 0.5.0</span></h1>
+<!-- Begin CeRAS Report -->
+<!-- ################################################################################################### -->
+<div class="container">
+<div class="box data">
+<h2>Data</h2>
+<table class="content-table">
+<caption>Reference values</caption>
+<thead>
+<tr>
+<th>Parameter</th><th>Symbol</th><th>Unit</th><th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Wing span</td><td>b</td><td>m</td><td>33.53</td></tr>
+<tr><td>Mean aerodynamic chord</td><td>MAC</td><td>m</td><td>4.21</td></tr>
+<tr><td>Reference area</td><td>S<sub>ref</sub></td><td>m2</td><td>118.4</td></tr>
+<tr><td>Neutral point</td><td>x</td><td>m</td><td>17.21</td></tr>
+</tbody>
+</table>
+<table class="content-table">
+<caption>Design cruise conditions</caption>
+<thead>
+<tr>
+<th>Parameter</th><th>Symbol</th><th>Unit</th><th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Mach number</td><td>Ma<sub>Cr</sub></td><td>-</td><td>0.78</td></tr>
+<tr><td>Best L/D</td><td>L/D<sub>,opt,cruise</sub></td><td>-</td><td>17.54</td></tr>
+<tr><td>Optimum lift coefficient at cruise (for L/D max)</td><td>C<sub>L,opt,cruise</sub></td><td>-</td><td>0.520</td></tr>
+<tr><td>Cruise L/D</td><td>L/D<sub>cruise</sub></td><td>-</td><td>17.28</td></tr>
+<tr><td>Average lift coefficient at cruise (for L/D<sub>cr</sub>)</td><td>C<sub>L,cruise</sub></td><td>-</td><td>0.545</td></tr>
+<tr><td>Total drag at optimum lift coefficient</td><td>C<sub>D,total,opt,cruise</sub></td><td>-</td><td>0.02965</td></tr>
+<tr><td>Induced drag at optimum lift coefficient</td><td>C<sub>D,induced,opt,cruise</sub></td><td>-</td><td>0.01082</td><td>(36.49 %)</td></tr>
+<tr><td>Viscous drag at optimum lift coefficient</td><td>C<sub>D,viscous,opt,cruise</sub></td><td>-</td><td>0.01787</td><td>(60.28 %)</td></tr>
+<tr><td>Wave drag at optimum lift coefficient</td><td>C<sub>D,wave,opt,cruise</sub></td><td>-</td><td>0.00096</td><td>(3.23 %)</td></tr>
+<tr><td>Moment coefficient at optimum lift coefficient</td><td>C<sub>M,opt,cruise</sub></td><td>-</td><td>0.00000</td></tr>
+</tbody>
+</table>
+<table class="content-table">
+<caption>Lift coefficients</caption>
+<thead>
+<tr>
+<th>Parameter</th><th>Symbol</th><th>Unit</th><th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Max. lift coeff. landing</td><td>C<sub>L,max,LD</sub></td><td>-</td><td>2.860</td></tr>
+<tr><td>Max. lift coeff. take-off</td><td>C<sub>L,max,TO</sub></td><td>-</td><td>2.480</td></tr>
+</tbody>
+</table>
+</tbody>
+</table>
+</div>
+<div class="box plot">
+<h2>Plots</h2>
+<img src="..\plots\aerodynamic_analysis_polar_clean.svg" alt="Lift vs. Drag"/><br>
+<img src="..\plots\aerodynamic_analysis_lift_curve_clean.svg" alt="Lift curve"/><br>
+<img src="..\plots\aerodynamic_analysis_moment_polar.svg" alt="Moment Polar"/><br>
+<img src="..\plots\aerodynamic_analysis_loverD_polar.svg" alt="L over D Polar"/><br>
+<img src="..\plots\aerodynamic_analysis_Dtotal_polar.svg" alt="Total Drag Polar"/><br>
+<h2>Drag Components Polars</h2>
+<img src="..\plots\aerodynamic_analysis_Dind_polar.svg" alt="Induced Drag Polar"/><br>
+<img src="..\plots\aerodynamic_analysis_Dwave_polar.svg" alt="Wave Drag Polar"/><br>
+<img src="..\plots\aerodynamic_analysis_Dvisc_polar.svg" alt="Viscous Drag Polar"/><br>
+<h2>High-Lift Polars</h2>
+<img src="..\plots\aerodynamic_analysis_hiLi_drag_polar.svg" alt="High Lift Drag Polar"/><br>
+<img src="..\plots\aerodynamic_analysis_hiLi_loverD_polar.svg" alt="High Lift L/D curve"/><br>
+</div>
+</div></div></div></body>
+</html>

@@ -1,0 +1,212 @@
+<html lang="en">
+<head>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<title>Wing Design of SMR-01</title>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="logo"></div>
+<div class="content">
+<h1>Report - Wing Design of SMR-01<br/>
+<span><font size="2">All outputs of the program 'wing_design' were created with version 0.5.0</span></h1>
+<!-- Begin CeRAS Report -->
+<!-- ################################################################################################### -->
+<div class="container">
+<div class="box data">
+<h2>Data</h2>
+<table class="content-table">
+<caption>General parameters</caption>
+<thead>
+<tr>
+<th>parameter</th><th>symbol</th><th>unit</th><th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reference area</td><td>S<sub>ref</sub></td><td>m<sup>2</sup></td><td>118.36</td>
+</tr>
+<tr>
+<td>Mean aero. chord</td><td>MAC</td><td>m</td><td>4.21</td>
+</tr>
+<tr>
+<td>Span</td><td>b</td><td>m</td><td>33.53</td>
+</tr>
+<tr>
+<td>Aspect ratio</td><td>AR</td><td>1</td><td>9.50</td>
+</tr>
+<tr>
+<td>Taper ratio</td><td>&lambda;</td><td>1</td><td>0.17</td>
+</tr>
+</tbody>
+</table>
+<table class="content-table">
+<caption>Section parameters</caption>
+<thead>
+<tr>
+<th>parameter</th><th>symbol</th><th>unit</th><th>S<sub>00</sub></th><th>S<sub>01</sub></th><th>S<sub>02</sub></th><th>S<sub>03</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dimensionless half span</td><td>&eta;</td><td>1</td><td>0.00</td><td>0.12</td><td>0.30</td><td>1.00</td>
+</tr>
+<tr>
+<td>Spanwise coordinate</td><td>y</td><td>m</td><td>0.00</td><td>1.98</td><td>5.03</td><td>16.77</td>
+</tr>
+<tr>
+<td>Chord</td><td>c</td><td>m</td><td>6.02</td><td>6.02</td><td>4.34</td><td>1.02</td>
+</tr>
+<tr>
+<td>Sweep leading edge</td><td>&phi;<sub>LE</sub></td><td>&deg;</td><td>0.00</td><td>31.14</td><td>28.23</td><td>28.23</td>
+</tr>
+<tr>
+<td>Sweep quarter chord</td><td>&phi;<sub>25</sub></td><td>&deg;</td><td>0.00</td><td>25.00</td><td>25.00</td><td>25.00</td>
+</tr>
+<tr>
+<td>Sweep Trailing edge</td><td>&phi;<sub>TE</sub></td><td>&deg;</td><td>0.00</td><td>3.00</td><td>14.28</td><td>14.28</td>
+</tr>
+<tr>
+<td>Dihedral</td><td>&nu;</td><td>&deg;</td><td>0.00</td><td>4.00</td><td>4.00</td><td>4.00</td>
+</tr>
+<tr>
+<td>Twist angle</td><td>&epsilon;</td><td>&deg;</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td>
+</tr>
+<tr>
+<td>Thickness ratio</td><td>t/c</td><td>%</td><td>15.00</td><td>15.00</td><td>13.69</td><td>8.64</td>
+</tr>
+<tr>
+<td>Airfoil</td><td>-</td><td>-</td><td>F15_15</td><td>F15_15</td><td>F15_15</td><td>F15_15</td>
+</tr>
+</tbody>
+</table>
+<table class="content-table">
+<caption>Spar parameters</caption>
+<thead>
+<tr>
+<th>front_spar</th><th>&eta; [1]<th>x/c [%]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>from</td><td>0.00</td><td>0.20</td>
+
+</tr>
+<tr>
+<td>to</td><td>1.00</td><td>0.20</td>
+
+</tr>
+</tbody>
+</table>
+<table class="content-table">
+<thead>
+<tr>
+<th>rear_spar </th><th>&eta; [1]<th>x/c [%]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>from</td><td>0.00</td><td>0.60</td>
+
+</tr>
+<tr>
+<td>to</td><td>1.00</td><td>0.60</td>
+
+</tr>
+</tbody>
+</table>
+<table class="content-table">
+<caption>Leading edge control devices</caption>
+<thead>
+<tr>
+<th>Device</th><th>&eta;<sub>from</sub></th><th>x/c<sub>from,start</sub></th><th>x/c<sub>from,end</sub></th><th>&eta;<sub>to</sub></th><th>x/c<sub>to,start</sub></th><th>x/c<sub>to,end</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>slat</td><td>0.12</td><td>0.00</td><td>0.20</td><td>0.29</td><td>0.00</td><td>0.20</td>
+
+</tr>
+<tr>
+<td>slat</td><td>0.31</td><td>0.00</td><td>0.20</td><td>0.95</td><td>0.00</td><td>0.20</td>
+
+</tr>
+</tbody>
+</table>
+<table class="content-table">
+<caption>Trailing edge control devices</caption>
+<thead>
+<tr>
+<th>Device</th><th>&eta;<sub>from</sub></th><th>x/c<sub>from,start</sub></th><th>x/c<sub>from,end</sub></th><th>&eta;<sub>to</sub></th><th>x/c<sub>to,start</sub></th><th>x/c<sub>to,end</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>flap_fowler</td><td>0.12</td><td>0.75</td><td>1.00</td><td>0.30</td><td>0.75</td><td>1.00</td>
+
+</tr>
+<tr>
+<td>flap_fowler</td><td>0.30</td><td>0.75</td><td>1.00</td><td>0.78</td><td>0.75</td><td>1.00</td>
+
+</tr>
+<tr>
+<td>aileron</td><td>0.80</td><td>0.70</td><td>1.00</td><td>0.98</td><td>0.70</td><td>1.00</td>
+
+</tr>
+</tbody>
+</table>
+<table class="content-table">
+<caption>Other control devices</caption>
+<thead>
+<tr>
+<th>Device</th><th>&eta;<sub>from</sub></th><th>x/c<sub>from,start</sub></th><th>x/c<sub>from,end</sub></th><th>&eta;<sub>to</sub></th><th>x/c<sub>to,start</sub></th><th>x/c<sub>to,end</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>spoiler_ground</td><td>0.21</td><td>0.70</td><td>0.85</td><td>0.29</td><td>0.70</td><td>0.85</td>
+
+</tr>
+<tr>
+<td>spoiler_air</td><td>0.31</td><td>0.70</td><td>0.85</td><td>0.42</td><td>0.70</td><td>0.85</td>
+
+</tr>
+<tr>
+<td>spoiler_air</td><td>0.42</td><td>0.70</td><td>0.85</td><td>0.53</td><td>0.70</td><td>0.85</td>
+
+</tr>
+<tr>
+<td>spoiler_air</td><td>0.53</td><td>0.70</td><td>0.85</td><td>0.65</td><td>0.70</td><td>0.85</td>
+
+</tr>
+<tr>
+<td>spoiler_air</td><td>0.65</td><td>0.70</td><td>0.85</td><td>0.76</td><td>0.70</td><td>0.85</td>
+
+</tr>
+</tbody>
+</table>
+<table class="content-table">
+<caption>Mass and COG</caption>
+<thead>
+<tr>
+<th>Mass</th><th>CoG<sub>x</sub></th><th>CoG<sub>y</sub></th><th>CoG<sub>z</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7763.34kg</td><td>16.43m</td><td>0.00m</td><td>-0.73m</td>
+<tr>
+</tbody>
+</table>
+</div>
+<div class="box plot">
+<h2>Plots</h2>
+<h3>Geometry</h3>
+<img class="image-plot" src="..\plots\wing_design_wing_planform.svg"/>
+<h3>Airfoils</h3>
+<img class="image-plot" src="..\plots\wing_design_F15_15_airfoil.svg"/>
+<h3>Thickness & Geometric Twist</h3>
+<img class="image-plot" src="..\plots\wing_design_thickness_and_twist_distribution.svg"/>
+</div>
+</div></div></div></body>
+</html>

@@ -1,0 +1,38 @@
+*******************************************************************************
+16.10.2025 09:30:15 - Start report_generator
+16.10.2025 09:30:16 - [MODULE RUNTIMEINFO] - report_generator
+16.10.2025 09:30:16 -    [CONSOLE  ] - [ON]
+16.10.2025 09:30:16 -    [LOG      ] - [ON]
+16.10.2025 09:30:16 -    [PLOT     ] - [ON]
+16.10.2025 09:30:16 -       [COPY  ] - [ON]
+16.10.2025 09:30:16 -       [DELETE] - [ON]
+16.10.2025 09:30:16 -    [REPORT   ] - [ON]
+16.10.2025 09:30:16 -    [TEX      ] - [ON]
+16.10.2025 09:30:16 -    [INFOFILES] - [OFF]
+16.10.2025 09:30:16 -    [GNUPLOT]
+16.10.2025 09:30:16 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:30:16 -       [FILENAME] - 
+16.10.2025 09:30:16 -    [INKSCAPE]
+16.10.2025 09:30:16 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:30:16 -       [FILENAME] - 
+16.10.2025 09:30:16 -    [LOGFILE]
+16.10.2025 09:30:16 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:30:16 -       [FILENAME] - report_generator.log
+16.10.2025 09:30:16 -    [IO/ACXML]
+16.10.2025 09:30:16 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:30:16 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:30:16 -    [MODCONFIG]
+16.10.2025 09:30:16 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:30:16 -       [FILENAME] - report_generator_conf.xml
+16.10.2025 09:30:16 - Checking directory... [REPORT]
+16.10.2025 09:30:16 - Checking directory... [TEX]
+16.10.2025 09:30:16 - Checking directory... [HTML]
+16.10.2025 09:30:16 - Checking directory... [PLOT]
+16.10.2025 09:30:16 - Checking directory... [CSVFILES]
+16.10.2025 09:30:16 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:30:16 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:30:16 - Checking directory... [PLOTFILES]
+16.10.2025 09:30:16 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:30:16 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:30:16 - Checking directory... [LOGFILES]
+16.10.2025 09:30:16 - Finish report_generator

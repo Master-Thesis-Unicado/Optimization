@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="windows-1252"  standalone="no"?>
+<svg 
+ width="700" height="500"
+ viewBox="0 0 700 500"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<title>Gnuplot</title>
+<desc>Produced by GNUPLOT 6.0 patchlevel 1 </desc>
+
+<g id="gnuplot_canvas">
+
+<rect x="0" y="0" width="700" height="500" fill="none"/>
+<defs>
+
+	<circle id='gpDot' r='0.5' stroke-width='0.5' stroke='currentColor'/>
+	<path id='gpPt0' stroke-width='0.133' stroke='currentColor' d='M-1,0 h2 M0,-1 v2'/>
+	<path id='gpPt1' stroke-width='0.133' stroke='currentColor' d='M-1,-1 L1,1 M1,-1 L-1,1'/>
+	<path id='gpPt2' stroke-width='0.133' stroke='currentColor' d='M-1,0 L1,0 M0,-1 L0,1 M-1,-1 L1,1 M-1,1 L1,-1'/>
+	<rect id='gpPt3' stroke-width='0.133' stroke='currentColor' x='-1' y='-1' width='2' height='2'/>
+	<rect id='gpPt4' stroke-width='0.133' stroke='currentColor' fill='currentColor' x='-1' y='-1' width='2' height='2'/>
+	<circle id='gpPt5' stroke-width='0.133' stroke='currentColor' cx='0' cy='0' r='1'/>
+	<use xlink:href='#gpPt5' id='gpPt6' fill='currentColor' stroke='none'/>
+	<path id='gpPt7' stroke-width='0.133' stroke='currentColor' d='M0,-1.33 L-1.33,0.67 L1.33,0.67 z'/>
+	<use xlink:href='#gpPt7' id='gpPt8' fill='currentColor' stroke='none'/>
+	<use xlink:href='#gpPt7' id='gpPt9' stroke='currentColor' transform='rotate(180)'/>
+	<use xlink:href='#gpPt9' id='gpPt10' fill='currentColor' stroke='none'/>
+	<use xlink:href='#gpPt3' id='gpPt11' stroke='currentColor' transform='rotate(45)'/>
+	<use xlink:href='#gpPt11' id='gpPt12' fill='currentColor' stroke='none'/>
+	<path id='gpPt13' stroke-width='0.133' stroke='currentColor' d='M0,1.330 L1.265,0.411 L0.782,-1.067 L-0.782,-1.076 L-1.265,0.411 z'/>
+	<use xlink:href='#gpPt13' id='gpPt14' fill='currentColor' stroke='none'/>
+	<filter id='textbox' filterUnits='objectBoundingBox' x='0' y='0' height='1' width='1'>
+	  <feFlood flood-color='white' flood-opacity='1' result='bgnd'/>
+	  <feComposite in='SourceGraphic' in2='bgnd' operator='atop'/>
+	</filter>
+	<filter id='greybox' filterUnits='objectBoundingBox' x='0' y='0' height='1' width='1'>
+	  <feFlood flood-color='lightgrey' flood-opacity='1' result='grey'/>
+	  <feComposite in='SourceGraphic' in2='grey' operator='atop'/>
+	</filter>
+</defs>
+<g fill="none" color="white" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="white" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+	<g id="gnuplot_plot_1a" ><title>'-'</title>
+<g fill="none" color="white" stroke="rgb( 38,  38,  38)" stroke-width="1.20" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.20" stroke-linecap="butt" stroke-linejoin="miter">
+	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '359.90,150.72 353.43,150.89 346.98,151.40 340.57,152.25 334.22,153.42 327.93,154.93 321.73,156.77 315.63,158.93 309.66,161.40 303.82,164.19 298.14,167.27 292.63,170.65 287.30,174.31 282.17,178.25 277.25,182.45 272.56,186.90
+268.11,191.59 263.91,196.51 259.97,201.64 256.31,206.97 252.93,212.48 249.85,218.16 247.06,224.00 244.59,229.97 242.43,236.07 240.59,242.27 239.08,248.56 237.91,254.91 237.06,261.32 236.39,273.71 359.90,274.23 '/>
+	</g>
+	<path stroke='rgb(  0,   0,   0)'  d='M359.90,150.72 L353.43,150.89 L346.98,151.40 L340.57,152.25 L334.22,153.42 L327.93,154.93 L321.73,156.77 L315.63,158.93
+		L309.66,161.40 L303.82,164.19 L298.14,167.27 L292.63,170.65 L287.30,174.31 L282.17,178.25 L277.25,182.45 L272.56,186.90
+		L268.11,191.59 L263.91,196.51 L259.97,201.64 L256.31,206.97 L252.93,212.48 L249.85,218.16 L247.06,224.00 L244.59,229.97
+		L242.43,236.07 L240.59,242.27 L239.08,248.56 L237.91,254.91 L237.06,261.32 L236.39,273.71 L359.90,274.23 L359.90,150.72
+		Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(  0, 158, 115)' points = '236.39,273.71 236.53,280.18 237.01,286.63 237.83,293.04 238.98,299.41 240.46,305.70 242.27,311.91 244.40,318.01 246.85,324.00 249.61,329.84 252.67,335.54 256.03,341.07 259.67,346.41 263.58,351.56 267.76,356.49 272.19,361.20
+276.86,365.67 281.76,369.89 286.88,373.85 292.19,377.53 297.69,380.94 303.36,384.05 309.18,386.85 315.15,389.35 321.23,391.54 327.43,393.40 333.71,394.94 340.06,396.14 346.47,397.01 352.91,397.55 359.37,397.74 365.84,397.60
+372.29,397.12 378.70,396.30 385.07,395.15 391.36,393.67 397.57,391.86 403.67,389.73 409.66,387.28 415.50,384.52 421.20,381.46 426.73,378.10 432.07,374.46 437.22,370.55 442.15,366.37 446.86,361.94 451.33,357.27 455.55,352.37
+459.51,347.25 463.19,341.94 466.60,336.44 469.71,330.77 472.51,324.95 475.01,318.98 477.20,312.90 479.06,306.70 480.60,300.42 482.23,291.22 359.90,274.23 '/>
+	</g>
+	<path stroke='rgb(  0,   0,   0)'  d='M236.39,273.71 L236.53,280.18 L237.01,286.63 L237.83,293.04 L238.98,299.41 L240.46,305.70 L242.27,311.91 L244.40,318.01
+		L246.85,324.00 L249.61,329.84 L252.67,335.54 L256.03,341.07 L259.67,346.41 L263.58,351.56 L267.76,356.49 L272.19,361.20
+		L276.86,365.67 L281.76,369.89 L286.88,373.85 L292.19,377.53 L297.69,380.94 L303.36,384.05 L309.18,386.85 L315.15,389.35
+		L321.23,391.54 L327.43,393.40 L333.71,394.94 L340.06,396.14 L346.47,397.01 L352.91,397.55 L359.37,397.74 L365.84,397.60
+		L372.29,397.12 L378.70,396.30 L385.07,395.15 L391.36,393.67 L397.57,391.86 L403.67,389.73 L409.66,387.28 L415.50,384.52
+		L421.20,381.46 L426.73,378.10 L432.07,374.46 L437.22,370.55 L442.15,366.37 L446.86,361.94 L451.33,357.27 L455.55,352.37
+		L459.51,347.25 L463.19,341.94 L466.60,336.44 L469.71,330.77 L472.51,324.95 L475.01,318.98 L477.20,312.90 L479.06,306.70
+		L480.60,300.42 L482.23,291.22 L359.90,274.23 L236.39,273.71 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb( 86, 180, 233)' points = '482.23,291.22 482.95,284.79 483.34,278.34 483.38,271.87 483.09,265.41 482.46,258.98 481.49,252.59 480.19,246.25 478.56,239.99 476.61,233.83 474.33,227.78 471.75,221.85 468.85,216.07 465.66,210.45 462.17,205.00 458.41,199.74
+454.38,194.69 450.08,189.85 445.54,185.25 440.77,180.89 435.77,176.78 430.57,172.94 425.17,169.38 419.59,166.11 413.85,163.14 407.97,160.46 398.69,156.98 359.90,274.23 '/>
+	</g>
+	<path stroke='rgb(  0,   0,   0)'  d='M482.23,291.22 L482.95,284.79 L483.34,278.34 L483.38,271.87 L483.09,265.41 L482.46,258.98 L481.49,252.59 L480.19,246.25
+		L478.56,239.99 L476.61,233.83 L474.33,227.78 L471.75,221.85 L468.85,216.07 L465.66,210.45 L462.17,205.00 L458.41,199.74
+		L454.38,194.69 L450.08,189.85 L445.54,185.25 L440.77,180.89 L435.77,176.78 L430.57,172.94 L425.17,169.38 L419.59,166.11
+		L413.85,163.14 L407.97,160.46 L398.69,156.98 L359.90,274.23 L482.23,291.22 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(230, 159,   0)' points = '398.69,156.98 392.50,155.11 386.22,153.56 379.87,152.35 373.46,151.47 367.02,150.93 359.90,150.72 359.90,274.23 '/>
+	</g>
+	<path stroke='rgb(  0,   0,   0)'  d='M398.69,156.98 L392.50,155.11 L386.22,153.56 L379.87,152.35 L373.46,151.47 L367.02,150.93 L359.90,150.72 L359.90,274.23
+		L398.69,156.98 Z  '/></g>
+	</g>
+	<g id="gnuplot_plot_2a" ><title>'-'</title>
+<g fill="none" color="white" stroke="rgb(  0,   0,   0)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(246.61,170.59)" stroke="none" fill="rgb(0,0,0)" font-family="Helvetica" font-size="14.00"  text-anchor="middle">
+		<text><tspan font-family="Helvetica" >Elec. Secondary (24.9%)</tspan></text>
+	</g>
+	<g transform="translate(348.49,431.06)" stroke="none" fill="rgb(0,0,0)" font-family="Helvetica" font-size="14.00"  text-anchor="middle">
+		<text><tspan font-family="Helvetica" >Elec. Primary Factor (47.9%)</tspan></text>
+	</g>
+	<g transform="translate(496.21,198.11)" stroke="none" fill="rgb(0,0,0)" font-family="Helvetica" font-size="14.00"  text-anchor="middle">
+		<text><tspan font-family="Helvetica" >Heat Secondary (22.1%)</tspan></text>
+	</g>
+	<g transform="translate(385.44,128.05)" stroke="none" fill="rgb(0,0,0)" font-family="Helvetica" font-size="14.00"  text-anchor="middle">
+		<text><tspan font-family="Helvetica" >Heat Primary Factor (5.1%)</tspan></text>
+	</g>
+</g>
+	</g>
+<g fill="none" color="white" stroke="rgb(  0,   0,   0)" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(384.99,65.04)" stroke="none" fill="rgb(0,0,0)" font-family="Arial" font-size="17.00"  text-anchor="middle">
+		<text><tspan font-family="Arial"  font-weight="bold" >Cumulative Energy Demand (CED) Breakdown</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+</g>
+</svg>
+

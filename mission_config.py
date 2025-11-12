@@ -24,9 +24,9 @@ START_VELOCITY_CLIMB_MS = 85.0  # Takeoff velocity [m/s]
 START_LEVER_CLIMB = 0.85        # Initial throttle lever position
 
 # Climb optimization parameters (from main.py) - Consistent phase-specific naming
-N_MACH_SAMPLES_CLIMB = 61       # Number of Mach samples for DP optimization
-N_ALTITUDE_STEPS_CLIMB = 50     # Number of altitude steps for DP optimization
-N_LEVER_SAMPLES_CLIMB = 50      # Number of lever samples for DP optimization
+N_MACH_SAMPLES_CLIMB = 31       # Number of Mach samples for DP optimization
+N_ALTITUDE_STEPS_CLIMB = 20     # Number of altitude steps for DP optimization
+N_LEVER_SAMPLES_CLIMB = 20      # Number of lever samples for DP optimization
 TARGET_MACH_CRUISE = 0.7        # Target Mach number at end of climb (cruise Mach)
 TARGET_MACH_TOLERANCE_CLIMB = 0.015  # Tolerance for target Mach achievement in climb
 STRATEGY_DT_CLIMB_S = 0.2       # Time step for climb strategy simulation [s]
@@ -37,7 +37,7 @@ CRUISE_TIME_STEP_S = 60.0       # Time step for cruise simulation [s]
 
 # Range optimization parameters (for mission_range_optimizer.py)
 TARGET_MISSION_RANGE_KM = 2000.0        # Target total mission range [km]
-INITIAL_CRUISE_DISTANCE_KM = 1700.0     # Initial cruise distance estimate [km]
+INITIAL_CRUISE_DISTANCE_KM = 1000.0     # Initial cruise distance estimate [km]
 RANGE_OPTIMIZATION_TOLERANCE_KM = 10.0  # Convergence tolerance [km] (±10 km)
 MAX_RANGE_OPTIMIZATION_ITERATIONS = 10  # Maximum optimization iterations
 RANGE_OPTIMIZATION_DAMPING_FACTOR = 0.8 # Damping factor for cruise distance adjustment (0 < factor ≤ 1)
@@ -57,9 +57,9 @@ TARGET_DESCENT_ALT_M = 300.0    # Approach altitude [m] (~1000 ft)
 TARGET_DESCENT_MACH = 0.25      # Approach Mach number
 
 # Descent optimization parameters (from main.py) - Consistent naming with climb convention
-N_MACH_SAMPLES_DESCENT = 61     # Number of Mach samples for DP optimization (matches climb N_MACH_SAMPLES_CLIMB)
-N_ALTITUDE_STEPS_DESCENT = 50   # Number of altitude steps for DP optimization (matches climb N_ALTITUDE_STEPS_CLIMB)
-N_LEVER_SAMPLES_DESCENT = 50    # Number of lever samples for DP optimization (matches climb N_LEVER_SAMPLES_CLIMB)
+N_MACH_SAMPLES_DESCENT = 31     # Number of Mach samples for DP optimization (matches climb N_MACH_SAMPLES_CLIMB)
+N_ALTITUDE_STEPS_DESCENT = 20   # Number of altitude steps for DP optimization (matches climb N_ALTITUDE_STEPS_CLIMB)
+N_LEVER_SAMPLES_DESCENT = 20    # Number of lever samples for DP optimization (matches climb N_LEVER_SAMPLES_CLIMB)
 
 # Descent constraints (from descent.py)
 MIN_DESCENT_MACH = 0.2          # Minimum descent Mach

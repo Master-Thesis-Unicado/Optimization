@@ -1,0 +1,118 @@
+<html lang="en">
+<head>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<title>Systems Design of SMR-01</title>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="logo"></div>
+<div class="content">
+<h1>Report - Systems Design of SMR-01<br/>
+<span><font size="2">All outputs of the program 'systems_design' were created with version 0.5.0</span></h1>
+<!-- Begin CeRAS Report -->
+<!-- ################################################################################################### -->
+<div class="container">
+<div class="box data">
+<caption>Program Mode: </caption>Sizing Mode
+<h2>Systems Masses</h2>
+<div id="leftCol">
+<table>
+<tr>
+<td><h3>Systems Group</h3></td>
+</tr>
+<tr>
+<td>ATA-21</td><td>Air Conditioning</td><td>762.6 kg</td>
+</tr>
+<tr>
+<td>ATA-24</td><td>Electric System</td><td>1292 kg</td>
+</tr>
+<tr>
+<td>ATA-26</td><td>Fire Protection</td><td>91.96 kg</td>
+</tr>
+<tr>
+<td>ATA-27</td><td>Flight Control</td><td>670.2 kg</td>
+</tr>
+<tr>
+<td>ATA-29</td><td>Hydraulic System</td><td>766.1 kg</td>
+</tr>
+<tr>
+<td>ATA-30</td><td>Anti-Icing</td><td>42.99 kg</td>
+</tr>
+<tr>
+<td>ATA-XX</td><td>Remaining Consumers (including Avionics)</td><td>1073 kg</td>
+</tr>
+<tr>
+<td>ATA-49</td><td>APU</td><td>265.4 kg</td>
+</tr>
+<tr>
+<td><h2>Power Unit Group</h2></td>
+</tr>
+<tr>
+<td>ATA-28</td><td>Fuel System</td><td>234.5 kg</td>
+</tr>
+<tr>
+<td>ATA-36</td><td>Bleed Air</td><td>173 kg</td>
+</tr>
+<tr>
+<td><h2>Furnishing Group</h2></td>
+</tr>
+<tr>
+<td>ATA-25</td><td>Furnishing</td><td>290 kg</td>
+</tr>
+<tr>
+<td>ATA-33</td><td>Lighting</td><td>261 kg</td>
+</tr>
+<tr>
+<td><h2>Operator Items</h2></td>
+</tr>
+<tr>
+<td>---</td><td>Op. items calc. in systemsDesign (liquid)</td><td>372.2 kg</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>---</td><td>not Alloc</td><td>0 kg</td>
+</tr>
+</table>
+</div>
+<div id="rightCol">
+<img class="image-plot" src="..\plots/systems_design_design_systems_mass_plot.svg">
+</div>
+<!-- CeRAS Report Systems -->
+<!-- ################################################################################################### -->
+<div id="wrapper">
+<div id="leftCol">
+<h2>Required Power during the Mission</h2>
+<font size="-1">Values at the end of the mission step are given in each case.</font>
+<img class="image-plot" src="..\plots/systems_design_design_mission_steps_plot.svg">
+<img class="image-plot" src="..\plots/systems_design_design_accumulated_power_plot.svg">
+</div>
+<div id="rightCol">
+<h2>Power Off-takes</h2>
+<img class="image-plot" src="..\plots/systems_design_design_mission_power_ATA-49_plot.svg">
+<img class="image-plot" src="..\plots/systems_design_design_mission_power_ATA-70_plot.svg">
+<font size="-1">APU is sized (only) for ground operations at gate (not visible in this mission).</font>
+</div>
+</div>
+<h2>Energy Conductors</h2>
+<img class="ceras2Col" src="..\plots/systems_design_design_mission_power_ATA-36_plot.svg">
+<img class="ceras2Col" src="..\plots/systems_design_design_mission_power_ATA-24_plot.svg">
+<img class="ceras2Col" src="..\plots/systems_design_design_mission_power_ATA-29_plot.svg">
+<h2>Energy Sinks</h2>
+<img class="ceras2Col" src="..\plots/systems_design_design_mission_power_ATA-27_plot.svg">
+<img class="ceras2Col" src="..\plots/systems_design_design_mission_power_ATA-26_plot.svg">
+<img class="ceras2Col" src="..\plots/systems_design_design_mission_power_ATA-28_plot.svg">
+<img class="ceras2Col" src="..\plots/systems_design_design_mission_power_ATA-25_plot.svg">
+<img class="ceras2Col" src="..\plots/systems_design_design_mission_power_ATA-30_plot.svg">
+<img class="ceras2Col" src="..\plots/systems_design_design_mission_power_ATA-32_plot.svg">
+<img class="ceras2Col" src="..\plots/systems_design_design_mission_power_ATA-33_plot.svg">
+<img class="ceras2Col" src="..\plots/systems_design_design_mission_power_ATA-XX_plot.svg">
+<img class="ceras2Col" src="..\plots/systems_design_design_mission_power_ATA-21_plot.svg">
+<h2>Design Power: </h2>
+<img class="ceras2Col" src="..\plots/systems_design_design_energy_sinks_max_energy_plot.svg">
+</div>
+<!-- ################################################################################################### -->
+</div></div></div></body>
+</html>

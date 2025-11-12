@@ -1,28 +1,5 @@
 # =========  1 - MODULE INITIALIZATION =================
 # ========= IMPORTS AND BASIC SETUP ===========================================
-"""
-Mission Range Optimization Visualization Module
-
-This module provides comprehensive visualization capabilities for mission range
-optimization analysis. Plots demonstrate convergence behavior, adjustment strategies,
-and phase-wise distance contributions throughout the iterative optimization process.
-
-Scientific Visualization Principles:
-- Clear indication of convergence criteria and tolerance bounds
-- Quantitative metrics for optimization performance assessment
-- Phase-wise breakdown of mission distance contributions
-- Convergence rate analysis for algorithm performance evaluation
-
-Module Structure:
-1. Convergence Visualization System
-2. Adjustment Strategy Visualization
-3. Distance Breakdown Visualization
-4. Dashboard Generation System
-5. Utility Functions
-
-Author: Mission Analysis System
-"""
-
 from __future__ import annotations
 import numpy as np
 from typing import Dict, Any, List, Optional
@@ -49,12 +26,11 @@ pio.renderers.default = "browser"
 # =========  2 - VISUALIZATION CORE SYSTEM =================
 class RangeOptimizationVisualization:
     """
-    Comprehensive range optimization visualization framework for convergence analysis.
+    Range optimization visualization framework for convergence analysis.
     
     This class implements a complete visualization system for mission range optimization
     through four integrated subsystems: convergence history plotting, cruise adjustment
     visualization, distance breakdown analysis, and comprehensive dashboard generation.
-    The system provides scientific-quality plots following standardized styling conventions.
     
     System Components:
     - ConvergencePlotter: Generates interactive plots showing optimization convergence
@@ -71,32 +47,25 @@ class RangeOptimizationVisualization:
     - Standardized styling from visualization_config.py for consistency
     - Convergence criteria visualization with tolerance bands
     - Phase contribution analysis with stacked bar charts
-    - Complete mission documentation with organized output structure
     
     Implementation:
-        # Individual plots
         fig = RangeOptimizationVisualization.ConvergencePlotter.plot_convergence_history(...)
-        
-        # Complete dashboard
         figures = RangeOptimizationVisualization.DashboardGenerator.create_optimization_dashboard(...)
-        
-        # Utility reports
-        RangeOptimizationVisualization.Utilities.print_optimization_report(summary)
     """
     
     # ========= COLOR CONFIGURATION =========
     class ColorPalette:
         """Color palette for optimization visualizations."""
-        PRIMARY = Colors.CLIMB  # royalblue
-        SECONDARY = Colors.CRUISE  # green
-        ACCENT_GREEN = Colors.CRUISE  # green
-        ACCENT_RED = Colors.DESCENT  # crimson
+        PRIMARY = Colors.CLIMB
+        SECONDARY = Colors.CRUISE
+        ACCENT_GREEN = Colors.CRUISE
+        ACCENT_RED = Colors.DESCENT
         GRAY = 'gray'
-        SUCCESS = 'rgba(76, 175, 80, 0.15)'  # Light green for tolerance bands
+        SUCCESS = 'rgba(76, 175, 80, 0.15)'
     
     # ========= CONVERGENCE VISUALIZATION SYSTEM =========
     class ConvergencePlotter:
-        """Manages convergence history visualization and error evolution plotting."""
+        """Convergence history visualization and error evolution plotting."""
         
         @staticmethod
         def plot_convergence_history(
@@ -120,23 +89,15 @@ class RangeOptimizationVisualization:
                 
             Returns:
                 Plotly figure object
-                
-            Scientific Features:
-                - Logarithmic error scale option for wide-range visualization
-                - Tolerance bands clearly marked
-                - Convergence point highlighted
-                - Asymptotic approach visualization
             """
             if not iteration_history:
                 print("[WARNING] No iteration history available for plotting")
                 return None
             
-            # Extract data from iteration history
             iterations = [record.iteration for record in iteration_history]
             errors = [record.distance_error_km for record in iteration_history]
             total_distances = [record.total_distance_km for record in iteration_history]
             
-            # Create figure with secondary y-axis
             fig = make_subplots(
                 rows=2, cols=1,
                 subplot_titles=(
@@ -163,7 +124,6 @@ class RangeOptimizationVisualization:
                 row=1, col=1
             )
             
-            # Target line
             fig.add_trace(
                 go.Scatter(
                     x=[iterations[0], iterations[-1]],
@@ -176,7 +136,6 @@ class RangeOptimizationVisualization:
                 row=1, col=1
             )
             
-            # Tolerance bands
             fig.add_trace(
                 go.Scatter(
                     x=iterations + iterations[::-1],
@@ -208,7 +167,6 @@ class RangeOptimizationVisualization:
                 row=2, col=1
             )
             
-            # Zero error reference line
             fig.add_trace(
                 go.Scatter(
                     x=[iterations[0], iterations[-1]],
@@ -222,7 +180,6 @@ class RangeOptimizationVisualization:
                 row=2, col=1
             )
             
-            # Tolerance lines on error plot
             fig.add_hline(
                 y=tolerance_km, 
                 line_dash="dash", 
@@ -248,7 +205,6 @@ class RangeOptimizationVisualization:
                     break
             
             if converged_idx is not None:
-                # Add convergence marker on both plots
                 fig.add_trace(
                     go.Scatter(
                         x=[iterations[converged_idx]],
@@ -270,13 +226,11 @@ class RangeOptimizationVisualization:
                     row=1, col=1
                 )
             
-            # Apply standard styling
             fig.update_xaxes(get_axis_config("Iteration"), row=1, col=1)
             fig.update_xaxes(get_axis_config("Iteration"), row=2, col=1)
             fig.update_yaxes(get_axis_config("Mission Range [km]"), row=1, col=1)
             fig.update_yaxes(get_axis_config("Distance Error [km]"), row=2, col=1)
             
-            # Apply standard layout
             layout_config = get_standard_layout(
                 title="Mission Range Optimization: Convergence Analysis",
                 subtitle=f"Target: {target_range_km:.0f} km | Tolerance: ±{tolerance_km:.0f} km",
@@ -289,7 +243,6 @@ class RangeOptimizationVisualization:
             })
             fig.update_layout(**layout_config)
             
-            # Save if path provided
             if save_path:
                 Path(save_path).parent.mkdir(parents=True, exist_ok=True)
                 fig.write_html(save_path)
@@ -299,7 +252,7 @@ class RangeOptimizationVisualization:
     
     # ========= ADJUSTMENT STRATEGY VISUALIZATION =========
     class AdjustmentPlotter:
-        """Manages cruise distance adjustment strategy visualization."""
+        """Cruise distance adjustment strategy visualization."""
         
         @staticmethod
         def plot_cruise_adjustment_strategy(
@@ -318,28 +271,19 @@ class RangeOptimizationVisualization:
                 
             Returns:
                 Plotly figure object
-                
-            Scientific Features:
-                - Adjustment magnitude per iteration
-                - Direction indicators (increase/decrease)
-                - Convergence point marking
-                - Damping effect visualization
             """
             if not iteration_history:
                 print("[WARNING] No iteration history available for plotting")
                 return None
             
-            # Extract data
             iterations = [record.iteration for record in iteration_history]
             cruise_distances = [record.cruise_distance_km for record in iteration_history]
             
-            # Calculate adjustments
-            adjustments = [0.0]  # First iteration has no adjustment
+            adjustments = [0.0]
             for i in range(1, len(cruise_distances)):
                 adj = cruise_distances[i] - cruise_distances[i-1]
                 adjustments.append(adj)
             
-            # Create figure
             fig = make_subplots(
                 rows=2, cols=1,
                 subplot_titles=(
@@ -386,7 +330,6 @@ class RangeOptimizationVisualization:
                 row=2, col=1
             )
             
-            # Zero line on adjustment plot
             fig.add_hline(
                 y=0, 
                 line_dash="solid", 
@@ -395,13 +338,11 @@ class RangeOptimizationVisualization:
                 row=2, col=1
             )
             
-            # Apply standard styling
             fig.update_xaxes(get_axis_config("Iteration"), row=1, col=1)
             fig.update_xaxes(get_axis_config("Iteration"), row=2, col=1)
             fig.update_yaxes(get_axis_config("Cruise Distance [km]"), row=1, col=1)
             fig.update_yaxes(get_axis_config("Adjustment [km]"), row=2, col=1)
             
-            # Apply standard layout
             layout_config = get_standard_layout(
                 title="Cruise Distance Adjustment Strategy",
                 subtitle="Iterative Optimization with Damping",
@@ -414,7 +355,6 @@ class RangeOptimizationVisualization:
             })
             fig.update_layout(**layout_config)
             
-            # Save if path provided
             if save_path:
                 Path(save_path).parent.mkdir(parents=True, exist_ok=True)
                 fig.write_html(save_path)
@@ -424,7 +364,7 @@ class RangeOptimizationVisualization:
     
     # ========= DISTANCE BREAKDOWN VISUALIZATION =========
     class BreakdownPlotter:
-        """Manages phase-wise distance breakdown visualization."""
+        """Phase-wise distance breakdown visualization."""
         
         @staticmethod
         def plot_distance_breakdown_evolution(
@@ -444,25 +384,17 @@ class RangeOptimizationVisualization:
                 
             Returns:
                 Plotly figure object
-                
-            Scientific Features:
-                - Stacked area chart for phase contributions
-                - Absolute and relative (percentage) views
-                - Clear phase separation with distinct colors
-                - Evolution tracking across iterations
             """
             if not iteration_data:
                 print("[WARNING] No iteration data available for plotting")
                 return None
             
-            # Extract data
             iterations = [data['iteration'] for data in iteration_data]
             climb_distances = [data['climb_km'] for data in iteration_data]
             cruise_distances = [data['cruise_km'] for data in iteration_data]
             descent_distances = [data['descent_km'] for data in iteration_data]
             total_distances = [data['total_km'] for data in iteration_data]
             
-            # Create figure
             fig = make_subplots(
                 rows=1, cols=2,
                 subplot_titles=(
@@ -547,13 +479,11 @@ class RangeOptimizationVisualization:
                 row=1, col=2
             )
             
-            # Apply standard styling
             fig.update_xaxes(get_axis_config("Iteration"), row=1, col=1)
             fig.update_xaxes(get_axis_config("Iteration"), row=1, col=2)
             fig.update_yaxes(get_axis_config("Distance [km]"), row=1, col=1)
             fig.update_yaxes(get_axis_config("Percentage [%]"), row=1, col=2)
             
-            # Apply standard layout
             layout_config = get_standard_layout(
                 title="Mission Distance Phase Breakdown Evolution",
                 subtitle="Climb | Cruise | Descent Contributions",
@@ -565,7 +495,6 @@ class RangeOptimizationVisualization:
             })
             fig.update_layout(**layout_config)
             
-            # Save if path provided
             if save_path:
                 Path(save_path).parent.mkdir(parents=True, exist_ok=True)
                 fig.write_html(save_path)
@@ -575,7 +504,7 @@ class RangeOptimizationVisualization:
     
     # ========= DASHBOARD GENERATION SYSTEM =========
     class DashboardGenerator:
-        """Manages comprehensive dashboard creation and phase plot integration."""
+        """Comprehensive dashboard creation and phase plot integration."""
         
         @staticmethod
         def save_converged_mission_plots(
@@ -593,8 +522,7 @@ class RangeOptimizationVisualization:
             Save all detailed phase plots from the converged mission.
             
             This function generates and saves comprehensive visualizations for climb,
-            cruise, and descent phases after optimization convergence, providing
-            complete mission profile documentation.
+            cruise, and descent phases after optimization convergence.
             
             Args:
                 climb_result: Climb optimization result (MinFuelSchedule)
@@ -606,24 +534,11 @@ class RangeOptimizationVisualization:
                 engine: Engine wrapper
                 initial_mass_kg: Initial aircraft mass [kg]
                 base_output_dir: Base directory for saving plots
-                
-            Directory Structure:
-                base_output_dir/
-                ├── Climb/
-                │   ├── climb_performance_detailed.png
-                │   └── [other climb plots]
-                ├── Cruise/
-                │   ├── cruise_performance_detailed.png
-                │   └── [other cruise plots]
-                └── Descent/
-                    ├── descent_trajectory.html
-                    └── [other descent plots]
             """
             print("\n" + "="*80)
             print("SAVING CONVERGED MISSION PHASE PLOTS")
             print("="*80)
             
-            # Import phase-specific plotting functions
             try:
                 from climb_plotting import plot_climb_performance_detailed
                 from cruise_plotting import plot_cruise_performance_detailed
@@ -633,7 +548,6 @@ class RangeOptimizationVisualization:
                 print(f"[WARNING] Could not import phase plotting functions: {e}")
                 return
             
-            # Create phase subdirectories
             climb_dir = base_output_dir / "Climb"
             cruise_dir = base_output_dir / "Cruise"
             descent_dir = base_output_dir / "Descent"
@@ -642,7 +556,6 @@ class RangeOptimizationVisualization:
             for directory in [climb_dir, cruise_dir, descent_dir, mission_dir]:
                 directory.mkdir(parents=True, exist_ok=True)
             
-            # Save climb phase plots
             print(f"\n[CLIMB] Generating and saving climb phase plots...")
             try:
                 plot_climb_performance_detailed(climb_result, climb_info)
@@ -650,7 +563,6 @@ class RangeOptimizationVisualization:
             except Exception as e:
                 print(f"[ERROR] Failed to save climb plots: {e}")
             
-            # Save cruise phase plots
             print(f"\n[CRUISE] Generating and saving cruise phase plots...")
             try:
                 plot_cruise_performance_detailed(cruise_result)
@@ -658,7 +570,6 @@ class RangeOptimizationVisualization:
             except Exception as e:
                 print(f"[ERROR] Failed to save cruise plots: {e}")
             
-            # Save descent phase plots
             print(f"\n[DESCENT] Generating and saving descent phase plots...")
             try:
                 plot_descent_trajectory_interactive(descent_result)
@@ -666,7 +577,6 @@ class RangeOptimizationVisualization:
             except Exception as e:
                 print(f"[ERROR] Failed to save descent plots: {e}")
             
-            # Save complete mission summary
             print(f"\n[MISSION] Generating and saving complete mission summary...")
             try:
                 plot_mission_summary_dashboard(
@@ -728,32 +638,20 @@ class RangeOptimizationVisualization:
                 
             Returns:
                 Dictionary of figure objects keyed by plot name
-                
-            Dashboard Components:
-                1. Convergence history
-                2. Cruise adjustment strategy
-                3. Distance breakdown evolution
-                4. Optimization summary table
-                5. Detailed phase plots (climb, cruise, descent)
-                6. Complete mission summary
             """
             figures = {}
             
-            # Create output directory if specified
             if save_dir:
                 output_path = Path(save_dir)
                 output_path.mkdir(parents=True, exist_ok=True)
                 print(f"\n[DASHBOARD] Creating optimization dashboard in: {output_path}")
             else:
-                # Use default directory structure
                 output_path = Path(get_or_create_run_directory())
                 output_path.mkdir(parents=True, exist_ok=True)
             
-            # Create Range_Optimization subdirectory
             range_opt_path = output_path / "Range_Optimization"
             range_opt_path.mkdir(parents=True, exist_ok=True)
             
-            # Generate range optimization plots
             print("[DASHBOARD] Generating convergence history plot...")
             fig_convergence = RangeOptimizationVisualization.ConvergencePlotter.plot_convergence_history(
                 iteration_history,
@@ -778,7 +676,6 @@ class RangeOptimizationVisualization:
                 )
                 figures['breakdown'] = fig_breakdown
             
-            # Generate summary table figure
             print("[DASHBOARD] Generating optimization summary table...")
             fig_summary = RangeOptimizationVisualization.SummaryGenerator.create_optimization_summary_table(
                 optimization_summary,
@@ -788,7 +685,6 @@ class RangeOptimizationVisualization:
             
             print(f"[DASHBOARD] Range optimization plots saved to: {range_opt_path}")
             
-            # Generate detailed phase plots if data provided
             if (climb_result is not None and cruise_result is not None and 
                 descent_result is not None and optimization_summary.get('converged', False)):
                 print("\n[DASHBOARD] Generating detailed phase plots from converged mission...")
@@ -815,7 +711,7 @@ class RangeOptimizationVisualization:
     
     # ========= SUMMARY TABLE GENERATION =========
     class SummaryGenerator:
-        """Manages summary table creation and formatting."""
+        """Summary table creation and formatting."""
         
         @staticmethod
         def create_optimization_summary_table(
@@ -832,7 +728,6 @@ class RangeOptimizationVisualization:
             Returns:
                 Plotly figure object with formatted table
             """
-            # Prepare table data
             labels = [
                 '<b>Target Range</b>',
                 '<b>Tolerance</b>',
@@ -845,7 +740,6 @@ class RangeOptimizationVisualization:
                 '<b>Convergence Rate</b>'
             ]
             
-            # Calculate convergence rate
             if len(summary.get('iteration_history', [])) > 1:
                 first_error = abs(summary['iteration_history'][0].distance_error_km)
                 last_error = abs(summary['iteration_history'][-1].distance_error_km)
@@ -868,15 +762,12 @@ class RangeOptimizationVisualization:
                 f"{convergence_rate:.1f}%"
             ]
             
-            # Create table figure with standard styling
             header_style = get_table_header_style()
             cell_style = get_table_cell_style()
             
-            # Customize header for this specific table
             header_style['values'] = ['<b>Parameter</b>', '<b>Value</b>']
             header_style['align'] = 'left'
             
-            # Customize cells
             cell_style['values'] = [labels, values]
             cell_style['fill_color'] = [['white']*len(labels)]
             cell_style['align'] = 'left'
@@ -887,7 +778,6 @@ class RangeOptimizationVisualization:
                 cells=cell_style
             )])
             
-            # Apply standard layout
             layout_config = get_standard_layout(
                 title="Range Optimization Summary",
                 subtitle="Convergence Statistics and Results",
@@ -896,7 +786,6 @@ class RangeOptimizationVisualization:
             layout_config['margin'] = dict(l=20, r=20, t=80, b=20)
             fig.update_layout(**layout_config)
             
-            # Save if path provided
             if save_path:
                 Path(save_path).parent.mkdir(parents=True, exist_ok=True)
                 fig.write_html(save_path)
@@ -942,12 +831,7 @@ class RangeOptimizationVisualization:
             print("="*80)
 
 
-# Create global visualization instance
-_range_optimization_visualization = RangeOptimizationVisualization()
-
-
 # =========  3 - BACKWARD COMPATIBILITY WRAPPERS =================
-# Convergence plotting functions
 def plot_convergence_history(
     iteration_history: List,
     target_range_km: float,

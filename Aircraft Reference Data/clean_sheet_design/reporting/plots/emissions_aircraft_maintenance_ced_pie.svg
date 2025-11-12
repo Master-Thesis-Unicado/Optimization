@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="windows-1252"  standalone="no"?>
+<svg 
+ width="800" height="600"
+ viewBox="0 0 800 600"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<title>Gnuplot</title>
+<desc>Produced by GNUPLOT 6.0 patchlevel 1 </desc>
+
+<g id="gnuplot_canvas">
+
+<rect x="0" y="0" width="800" height="600" fill="none"/>
+<defs>
+
+	<circle id='gpDot' r='0.5' stroke-width='0.5' stroke='currentColor'/>
+	<path id='gpPt0' stroke-width='0.267' stroke='currentColor' d='M-1,0 h2 M0,-1 v2'/>
+	<path id='gpPt1' stroke-width='0.267' stroke='currentColor' d='M-1,-1 L1,1 M1,-1 L-1,1'/>
+	<path id='gpPt2' stroke-width='0.267' stroke='currentColor' d='M-1,0 L1,0 M0,-1 L0,1 M-1,-1 L1,1 M-1,1 L1,-1'/>
+	<rect id='gpPt3' stroke-width='0.267' stroke='currentColor' x='-1' y='-1' width='2' height='2'/>
+	<rect id='gpPt4' stroke-width='0.267' stroke='currentColor' fill='currentColor' x='-1' y='-1' width='2' height='2'/>
+	<circle id='gpPt5' stroke-width='0.267' stroke='currentColor' cx='0' cy='0' r='1'/>
+	<use xlink:href='#gpPt5' id='gpPt6' fill='currentColor' stroke='none'/>
+	<path id='gpPt7' stroke-width='0.267' stroke='currentColor' d='M0,-1.33 L-1.33,0.67 L1.33,0.67 z'/>
+	<use xlink:href='#gpPt7' id='gpPt8' fill='currentColor' stroke='none'/>
+	<use xlink:href='#gpPt7' id='gpPt9' stroke='currentColor' transform='rotate(180)'/>
+	<use xlink:href='#gpPt9' id='gpPt10' fill='currentColor' stroke='none'/>
+	<use xlink:href='#gpPt3' id='gpPt11' stroke='currentColor' transform='rotate(45)'/>
+	<use xlink:href='#gpPt11' id='gpPt12' fill='currentColor' stroke='none'/>
+	<path id='gpPt13' stroke-width='0.267' stroke='currentColor' d='M0,1.330 L1.265,0.411 L0.782,-1.067 L-0.782,-1.076 L-1.265,0.411 z'/>
+	<use xlink:href='#gpPt13' id='gpPt14' fill='currentColor' stroke='none'/>
+	<filter id='textbox' filterUnits='objectBoundingBox' x='0' y='0' height='1' width='1'>
+	  <feFlood flood-color='white' flood-opacity='1' result='bgnd'/>
+	  <feComposite in='SourceGraphic' in2='bgnd' operator='atop'/>
+	</filter>
+	<filter id='greybox' filterUnits='objectBoundingBox' x='0' y='0' height='1' width='1'>
+	  <feFlood flood-color='lightgrey' flood-opacity='1' result='grey'/>
+	  <feComposite in='SourceGraphic' in2='grey' operator='atop'/>
+	</filter>
+</defs>
+<g fill="none" color="white" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="white" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+	<g id="gnuplot_plot_1a" ><title>'-'</title>
+<g fill="none" color="white" stroke="rgb( 38,  38,  38)" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '373.73,98.00 363.15,98.28 352.61,99.11 342.13,100.49 331.73,102.42 321.44,104.89 311.30,107.89 301.33,111.42 291.56,115.47 282.02,120.02 272.73,125.07 263.71,130.59 254.99,136.58 246.60,143.02 238.56,149.89 230.89,157.17
+223.61,164.84 216.74,172.88 210.30,181.27 204.31,189.99 198.79,199.00 193.74,208.30 189.19,217.84 185.14,227.61 181.61,237.58 178.61,247.72 176.14,258.01 174.21,268.41 172.83,278.89 172.00,289.43 171.73,300.00 172.00,310.58
+172.83,321.12 174.21,331.60 176.14,342.00 178.61,352.29 181.61,362.43 185.14,372.40 189.19,382.17 193.74,391.71 198.79,401.00 204.31,410.02 210.30,418.74 216.74,427.13 223.61,435.17 230.89,442.84 238.56,450.12 246.60,456.99
+254.99,463.43 271.05,473.96 373.73,300.00 '/>
+	</g>
+	<path stroke='rgb(  0,   0,   0)'  d='M373.73,98.00 L363.15,98.28 L352.61,99.11 L342.13,100.49 L331.73,102.42 L321.44,104.89 L311.30,107.89 L301.33,111.42
+		L291.56,115.47 L282.02,120.02 L272.73,125.07 L263.71,130.59 L254.99,136.58 L246.60,143.02 L238.56,149.89 L230.89,157.17
+		L223.61,164.84 L216.74,172.88 L210.30,181.27 L204.31,189.99 L198.79,199.00 L193.74,208.30 L189.19,217.84 L185.14,227.61
+		L181.61,237.58 L178.61,247.72 L176.14,258.01 L174.21,268.41 L172.83,278.89 L172.00,289.43 L171.73,300.00 L172.00,310.58
+		L172.83,321.12 L174.21,331.60 L176.14,342.00 L178.61,352.29 L181.61,362.43 L185.14,372.40 L189.19,382.17 L193.74,391.71
+		L198.79,401.00 L204.31,410.02 L210.30,418.74 L216.74,427.13 L223.61,435.17 L230.89,442.84 L238.56,450.12 L246.60,456.99
+		L254.99,463.43 L271.05,473.96 L373.73,300.00 L373.73,98.00 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(  0, 158, 115)' points = '271.05,473.96 280.30,479.10 289.80,483.74 299.53,487.88 309.46,491.51 319.57,494.61 329.83,497.18 340.21,499.21 350.68,500.69 361.22,501.62 371.79,502.00 382.36,501.82 392.91,501.09 403.41,499.81 413.82,497.98 424.13,495.61
+434.30,492.71 444.30,489.27 454.11,485.32 463.70,480.86 473.04,475.90 482.11,470.46 490.88,464.56 499.33,458.20 507.44,451.41 515.18,444.21 522.54,436.60 529.48,428.63 536.00,420.30 542.07,411.64 547.68,402.68 552.82,393.43
+557.46,383.93 561.60,374.20 565.23,364.27 568.33,354.16 570.90,343.90 572.93,333.52 574.41,323.05 575.34,312.51 575.72,301.94 575.54,291.37 574.81,280.82 573.53,270.32 571.70,259.91 569.33,249.60 566.43,239.43 562.99,229.43
+559.04,219.62 554.58,210.03 549.62,200.69 544.18,191.62 538.28,182.85 531.92,174.40 525.13,166.29 517.93,158.55 510.32,151.19 502.35,144.25 494.02,137.73 485.36,131.66 476.40,126.05 467.15,120.91 457.65,116.27 447.92,112.13
+437.99,108.50 427.88,105.40 417.62,102.83 407.24,100.80 396.77,99.32 386.23,98.39 373.73,98.00 373.73,300.00 '/>
+	</g>
+	<path stroke='rgb(  0,   0,   0)'  d='M271.05,473.96 L280.30,479.10 L289.80,483.74 L299.53,487.88 L309.46,491.51 L319.57,494.61 L329.83,497.18 L340.21,499.21
+		L350.68,500.69 L361.22,501.62 L371.79,502.00 L382.36,501.82 L392.91,501.09 L403.41,499.81 L413.82,497.98 L424.13,495.61
+		L434.30,492.71 L444.30,489.27 L454.11,485.32 L463.70,480.86 L473.04,475.90 L482.11,470.46 L490.88,464.56 L499.33,458.20
+		L507.44,451.41 L515.18,444.21 L522.54,436.60 L529.48,428.63 L536.00,420.30 L542.07,411.64 L547.68,402.68 L552.82,393.43
+		L557.46,383.93 L561.60,374.20 L565.23,364.27 L568.33,354.16 L570.90,343.90 L572.93,333.52 L574.41,323.05 L575.34,312.51
+		L575.72,301.94 L575.54,291.37 L574.81,280.82 L573.53,270.32 L571.70,259.91 L569.33,249.60 L566.43,239.43 L562.99,229.43
+		L559.04,219.62 L554.58,210.03 L549.62,200.69 L544.18,191.62 L538.28,182.85 L531.92,174.40 L525.13,166.29 L517.93,158.55
+		L510.32,151.19 L502.35,144.25 L494.02,137.73 L485.36,131.66 L476.40,126.05 L467.15,120.91 L457.65,116.27 L447.92,112.13
+		L437.99,108.50 L427.88,105.40 L417.62,102.83 L407.24,100.80 L396.77,99.32 L386.23,98.39 L373.73,98.00 L373.73,300.00
+		L271.05,473.96 Z  '/></g>
+	</g>
+	<g id="gnuplot_plot_2a" ><title>'-'</title>
+<g fill="none" color="white" stroke="rgb(  0,   0,   0)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(120.40,238.77)" stroke="none" fill="rgb(0,0,0)" font-family="Helvetica" font-size="14.00"  text-anchor="middle">
+		<text><tspan font-family="Helvetica" >Spare Parts (41.5%)</tspan></text>
+	</g>
+	<g transform="translate(627.07,370.34)" stroke="none" fill="rgb(0,0,0)" font-family="Helvetica" font-size="14.00"  text-anchor="middle">
+		<text><tspan font-family="Helvetica" >Maintenance Labour (58.4%)</tspan></text>
+	</g>
+</g>
+	</g>
+<g fill="none" color="white" stroke="rgb(  0,   0,   0)" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(399.99,39.59)" stroke="none" fill="rgb(0,0,0)" font-family="Arial" font-size="11.00"  text-anchor="middle">
+		<text><tspan font-family="Arial"  font-weight="bold" >Maintenance CED Breakdown</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+</g>
+</svg>
+

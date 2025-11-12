@@ -1,0 +1,2647 @@
+<module_configuration_file name="systems_design_conf.xml">
+	<control_settings description="General control settings for this tool">
+        <aircraft_exchange_file_name description="Specify the name of the exchange file">
+			<value>UNICADO-SMR-01.xml</value>
+		</aircraft_exchange_file_name>
+        <aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+			<value>../projects/UNICADO/UNICADO-SMR-01/</value>
+		</aircraft_exchange_file_directory>
+        <own_tool_level description="Specify the tool level of this tool">
+			<value>1</value>
+		</own_tool_level>
+        <console_output description="Selector to specify the console output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+			<value>mode_1</value>
+		</console_output>
+        <log_file_output description="Selector to specify the log file output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+			<value>mode_1</value>
+		</log_file_output>
+        <plot_output description="Specify the way plotting shall be handled">
+			<enable description="Switch to enable plotting. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</enable>
+			<copy_plotting_files description="Switch if plotting files shall be copied. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</copy_plotting_files>
+			<delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</delete_plotting_files_from_tool_folder>
+		</plot_output>
+        <report_output description="Switch to generate an HTML report. Switch: true (On) / false (Off)">
+			<value>true</value>
+		</report_output>
+        <tex_report description="Switch to generate a Tex report. Switch: true (On) / false (Off)">
+			<value>true</value>
+		</tex_report>
+        <write_info_files description="Switch to generate info files. Switch: true (On) / false (Off)">
+			<value>false</value>
+		</write_info_files>
+        <log_file description="Specify the name of the log file">
+			<value>systems.log</value>
+		</log_file>
+        <inkscape_path description="Path to the inkscape application (DEFAULT: Use inkscape from the UNICADO repo structure)">
+			<value>C:/Programs/UNICADOworkflow/inkscape/</value>
+		</inkscape_path>
+        <gnuplot_path description="Path to the gnuplot application (DEFAULT: Use gnuplot from the UNICADO repo structure)">
+			<value>C:/Programs/UNICADOworkflow/gnuplot/</value>
+		</gnuplot_path>
+    </control_settings>
+	<program_settings>
+	    <modes description="Mode selection. The standard method for full system architecture sizing and a simpler method only introducing a virtual system are available. Selector: standard / virtual">
+		    <value>standard</value>
+			<default>standard</default>
+		</modes>
+		<mission_mode description="Mission file that will be used for calculation. When the design mission is selected, the systems are sized and their masses calculated. Otherwise only the power required by the systems is calculated. Selector: design / study / requirement">
+		    <value>study</value>
+			<default>design</default>
+		</mission_mode>
+		<scaling_factors description="Variable scaling factors to change the calculated masses">
+			<environmental_control_system description="Scaling factor for the environmental control system.">
+				<value>1</value>
+				<unit>1</unit>
+				<lower_boundary>0</lower_boundary>
+				<upper_boundary>inf</upper_boundary>
+				<default>1</default>
+			</environmental_control_system>
+			<electric_system description="Scaling factor for the electric system.">
+				<value>1</value>
+				<unit>1</unit>
+				<lower_boundary>0</lower_boundary>
+				<upper_boundary>inf</upper_boundary>
+				<default>1</default>
+			</electric_system>
+			<fire_protection_system description="Scaling factor for the fire protection system.">
+				<value>1</value>
+				<unit>1</unit>
+				<lower_boundary>0</lower_boundary>
+				<upper_boundary>inf</upper_boundary>
+				<default>1</default>
+			</fire_protection_system>
+			<flight_control_system description="Scaling factor for the flight control system.">
+				<value>1</value>
+				<unit>1</unit>
+				<lower_boundary>0</lower_boundary>
+				<upper_boundary>inf</upper_boundary>
+				<default>1</default>
+			</flight_control_system>
+			<fuel_system description="Scaling factor for the fuel system.">
+				<value>1</value>
+				<unit>1</unit>
+				<lower_boundary>0</lower_boundary>
+				<upper_boundary>inf</upper_boundary>
+				<default>1</default>
+			</fuel_system>
+			<hydraulic_system description="Scaling factor for the hydraulic system.">
+				<value>1</value>
+				<unit>1</unit>
+				<lower_boundary>0</lower_boundary>
+				<upper_boundary>inf</upper_boundary>
+				<default>1</default>
+			</hydraulic_system>
+			<ice_rain_protection_system description="Scaling factor for the ice and rain protection system.">
+				<value>1</value>
+				<unit>1</unit>
+				<lower_boundary>0</lower_boundary>
+				<upper_boundary>inf</upper_boundary>
+				<default>1</default>
+			</ice_rain_protection_system>
+			<lighting_system description="Scaling factor for the lighting system.">
+				<value>1</value>
+				<unit>1</unit>
+				<lower_boundary>0</lower_boundary>
+				<upper_boundary>inf</upper_boundary>
+				<default>1</default>
+			</lighting_system>
+			<bleed_air_system description="Scaling factor for the bleed air system.">
+				<value>1</value>
+				<unit>1</unit>
+				<lower_boundary>0</lower_boundary>
+				<upper_boundary>inf</upper_boundary>
+				<default>1</default>
+			</bleed_air_system>
+			<auxiliary_power_unit description="Scaling factor for the auxiliary power unit (APU).">
+				<value>1</value>
+				<unit>1</unit>
+				<lower_boundary>0</lower_boundary>
+				<upper_boundary>inf</upper_boundary>
+				<default>1</default>
+			</auxiliary_power_unit>
+			<operator_items description="Scaling factor for the operator items.">
+				<value>1</value>
+				<unit>1</unit>
+				<lower_boundary>0</lower_boundary>
+				<upper_boundary>inf</upper_boundary>
+				<default>1</default>
+			</operator_items>
+			<remaining_consumers description="Scaling factor for the remaining consumers.">
+				<value>1</value>
+				<unit>1</unit>
+				<lower_boundary>0</lower_boundary>
+				<upper_boundary>inf</upper_boundary>
+				<default>1</default>
+			</remaining_consumers>
+		</scaling_factors>
+		<tex_report_without_masses description="Switch: true (TeX report only with approvals, since mass breakdown comes from massEstimation) / false (tex report with masses)">
+			<value>true</value>
+			<default>true</default>
+		</tex_report_without_masses>
+		<control_device_warning description="Switch to set if warnings are issued when there is no method for a control device type. Switch: true (Warning is issued if no suitable method is available for ControlDevice) / false (no warnings issued).">
+			<value>true</value>
+			<default>true</default>
+		</control_device_warning>
+		<aircraft_systems>
+			<overall_systems_architecture>
+				<system ID="APU" type="source">
+					<ATA>ATA-49</ATA>
+					<systemUsesFuel>1</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>conventionalAPU</systemClass>
+					<inputs>
+						<port type="Kerosene" uID="FuelIn">
+							<distribution sourcePortUID="KeroseneOut" sourceSystemUID="KeroseneInterface">1/1</distribution>
+						</port>
+					</inputs>
+					<outputs>
+						<port type="Bleed" uID="BleedOut" />
+						<port type="ShaftPower" uID="ShaftPowerOut" />
+					</outputs>
+				</system>
+				<system ID="BleedAirInterface" type="interface">
+					<ATA>ATA-interface</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>interface</systemClass>
+					<inputs />
+					<outputs>
+						<port type="Bleed" uID="BleedOut" />
+					</outputs>
+				</system>
+				<system ID="BleedAirSystem" type="conductor">
+					<ATA>ATA-36</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>BleedAirSystem</systemClass>
+					<inputs>
+						<port type="Bleed" uID="BleedIn">
+							<distribution sourcePortUID="BleedOut" sourceSystemUID="Engine">1/1</distribution>
+							<distribution sourcePortUID="BleedOut" sourceSystemUID="APU">0.3/0</distribution>
+						</port>
+					</inputs>
+					<outputs>
+						<port type="Bleed" uID="BleedOut" />
+					</outputs>
+				</system>
+				<system ID="ECS" type="ecs">
+					<ATA>ATA-21</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>conventionalECS</systemClass>
+					<inputs>
+						<port type="Bleed" uID="BleedIn">
+							<distribution sourcePortUID="BleedOut" sourceSystemUID="BleedAirSystem">1/1</distribution>
+						</port>
+						<port type="Electric" uID="ElectricIn">
+							<distribution sourcePortUID="ElectricOut" sourceSystemUID="ElectricSystem">1/1</distribution>
+						</port>
+					</inputs>
+					<outputs />
+				</system>
+				<system ID="ElectricSystem" type="conductor">
+					<ATA>ATA-24</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>ElectricSystem</systemClass>
+					<inputs>
+						<port type="ShaftPower" uID="ShaftPowerIn">
+							<distribution sourcePortUID="ShaftPowerOut" sourceSystemUID="Engine">1/1</distribution>
+							<distribution sourcePortUID="ShaftPowerOut" sourceSystemUID="APU">0.5/0</distribution>
+						</port>
+					</inputs>
+					<outputs>
+						<port type="Electric" uID="ElectricOut" />
+					</outputs>
+				</system>
+				<system ID="Engine" type="source">
+					<ATA>ATA-70</ATA>
+					<systemUsesFuel>1</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>conventionalPropulsion</systemClass>
+					<inputs>
+						<port type="Bleed" uID="BleedIn">
+							<distribution sourcePortUID="BleedOut" sourceSystemUID="BleedAirInterface">1/1</distribution>
+						</port>
+						<port type="ShaftPower" uID="ShaftPowerIn">
+							<distribution sourcePortUID="ShaftPowerOut" sourceSystemUID="ShaftPowerInterface">1/1</distribution>
+						</port>
+					</inputs>
+					<outputs>
+						<port type="Bleed" uID="BleedOut" />
+						<port type="ShaftPower" uID="ShaftPowerOut" />
+					</outputs>
+				</system>
+				<system ID="FCS" type="consumer">
+					<ATA>ATA-27</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>conventionalFlightControl</systemClass>
+					<inputs>
+						<port type="Electric" uID="ElectricIn">
+							<distribution sourcePortUID="ElectricOut" sourceSystemUID="ElectricSystem">1/1</distribution>
+						</port>
+						<port type="Hydraulic" uID="HydraulicIn">
+							<distribution sourcePortUID="HydraulicOut" sourceSystemUID="HydraulicSystem">1/1</distribution>
+						</port>
+					</inputs>
+					<outputs />
+				</system>
+				<system ID="FireProtection" type="consumer">
+					<ATA>ATA-26</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>conventionalFireProtection</systemClass>
+					<inputs />
+					<outputs />
+				</system>
+				<system ID="FuelSystem" type="consumer">
+					<ATA>ATA-28</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>conventionalFuel</systemClass>
+					<inputs>
+						<port type="Electric" uID="ElectricIn">
+							<distribution sourcePortUID="ElectricOut" sourceSystemUID="ElectricSystem">1/1</distribution>
+						</port>
+					</inputs>
+					<outputs />
+				</system>
+				<system ID="Furnishings" type="consumer">
+					<ATA>ATA-25</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>conventionalFurnishing</systemClass>
+					<inputs>
+						<port type="Electric" uID="ElectricIn">
+							<distribution sourcePortUID="ElectricOut" sourceSystemUID="ElectricSystem">1/1</distribution>
+						</port>
+					</inputs>
+					<outputs />
+				</system>
+				<system ID="HydraulicSystem" type="conductor">
+					<ATA>ATA-29</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>HydraulicSystem</systemClass>
+					<inputs>
+						<port type="Electric" uID="ElectricIn">
+							<distribution sourcePortUID="ElectricOut" sourceSystemUID="ElectricSystem">1/1</distribution>
+						</port>
+						<port type="ShaftPower" uID="ShaftPowerIn">
+							<distribution sourcePortUID="ShaftPowerOut" sourceSystemUID="Engine">1/1</distribution>
+							<distribution sourcePortUID="ShaftPowerOut" sourceSystemUID="APU">0/0</distribution>
+						</port>
+					</inputs>
+					<outputs>
+						<port type="Hydraulic" uID="HydraulicOut" />
+					</outputs>
+				</system>
+				<system ID="IceRainProtection" type="consumer">
+					<ATA>ATA-30</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>conventionalIceRainProtection</systemClass>
+					<inputs>
+						<port type="Bleed" uID="BleedIn">
+							<distribution sourcePortUID="BleedOut" sourceSystemUID="BleedAirSystem">1/1</distribution>
+						</port>
+						<port type="Electric" uID="ElectricIn">
+							<distribution sourcePortUID="ElectricOut" sourceSystemUID="ElectricSystem">1/1</distribution>
+						</port>
+					</inputs>
+					<outputs />
+				</system>
+				<system ID="KeroseneInterface" type="interface">
+					<ATA>ATA-interface</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>interface</systemClass>
+					<inputs />
+					<outputs>
+						<port type="Kerosene" uID="KeroseneOut" />
+					</outputs>
+				</system>
+				<system ID="LandingGear" type="consumer">
+					<ATA>ATA-32</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>conventionalGear</systemClass>
+					<inputs>
+						<port type="Hydraulic" uID="HydraulicIn">
+							<distribution sourcePortUID="HydraulicOut" sourceSystemUID="HydraulicSystem">1/1</distribution>
+						</port>
+					</inputs>
+					<outputs />
+				</system>
+				<system ID="LightingSystem" type="consumer">
+					<ATA>ATA-33</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>conventionalLighting</systemClass>
+					<inputs>
+						<port type="Electric" uID="ElectricIn">
+							<distribution sourcePortUID="ElectricOut" sourceSystemUID="ElectricSystem">1/1</distribution>
+						</port>
+					</inputs>
+					<outputs />
+				</system>
+				<system ID="RemainingConsumers" type="consumer">
+					<ATA>ATA-XX</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>remainingConsumers</systemClass>
+					<inputs>
+						<port type="Electric" uID="ElectricIn">
+							<distribution sourcePortUID="ElectricOut" sourceSystemUID="ElectricSystem">1/1</distribution>
+						</port>
+						<port type="Hydraulic" uID="HydraulicIn">
+							<distribution sourcePortUID="HydraulicOut" sourceSystemUID="HydraulicSystem">1/1</distribution>
+						</port>
+					</inputs>
+					<outputs />
+				</system>
+				<system ID="ShaftPowerInterface" type="interface">
+					<ATA>ATA-interface</ATA>
+					<systemUsesFuel>0</systemUsesFuel>
+					<systemOperating>1</systemOperating>
+					<systemClass>interface</systemClass>
+					<inputs />
+					<outputs>
+						<port type="ShaftPower" uID="ShaftPowerOut" />
+					</outputs>
+				</system>
+        	</overall_systems_architecture>
+			<virtual_systems>
+				<number_of_virtual_systems description="Number of energy systems">
+					<value>0</value>
+					<default>0</default>
+				</number_of_virtual_systems>
+				<system ID="0">
+					<system_description description="Type of virtual system">
+						<value>virtualSystem</value>
+					</system_description>
+					<operating_switch description="Switch whether the system is operated. Switch: true (on) / false (off, mass is determined anyway!)">
+						<value>true</value>
+						<default>true</default>
+					</operating_switch>
+					<mass description="mass of the system">
+						<value>5000.0</value>
+						<unit>kg</unit>
+						<default>0.0</default>
+					</mass>
+					<center_of_gravity description="position of mass item to global point of reference">
+						<x description="Position of reference in x-direction">
+							<value>0</value>
+							<unit>m</unit>
+						</x>
+						<y description="Position of reference in y-direction">
+							<value>0</value>
+							<unit>m</unit>
+						</y>
+						<z description="Position of reference in z-direction">
+							<value>0</value>
+							<unit>m</unit>
+						</z>
+					</center_of_gravity>
+					<power_demand>
+						<departure>
+							<bleed_air description="Bleed air requirement during departure">
+								<value>3.0</value>
+								<unit>kg/s</unit>
+								<default>0.0</default>
+							</bleed_air>
+							<hydraulic description="Hydraulic requirements during departure">
+								<value>10000.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</hydraulic>
+							<electric description="Electrical requirements during departure">
+								<value>15000.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</electric>
+							<heat_load description="Heat emission during departure">
+								<value>0.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</heat_load>
+						</departure>
+						<cruise>
+							<bleed_air description="Bleed air requirement during departure">
+								<value>0.5</value>
+								<unit>kg/s</unit>
+								<default>0.0</default>
+							</bleed_air>
+							<hydraulic description="Hydraulic requirements during departure">
+								<value>0.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</hydraulic>
+							<electric description="Electrical requirements during departure">
+								<value>20000.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</electric>
+							<heat_load description="Heat emission during departure">
+								<value>0.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</heat_load>
+						</cruise>
+						<approach>
+							<bleed_air description="Bleed air requirement during departure">
+								<value>3.5</value>
+								<unit>kg/s</unit>
+								<default>0.0</default>
+							</bleed_air>
+							<hydraulic description="Hydraulic requirements during departure">
+								<value>7500.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</hydraulic>
+							<electric description="Electrical requirements during departure">
+								<value>18000.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</electric>
+							<heat_load description="Heat emission during departure">
+								<value>0.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</heat_load>
+						</approach>
+					</power_demand>
+				</system>
+				<system ID="0">
+					<system_description description="Type of system">
+						<value>virtualSystem</value>
+					</system_description>
+					<operating_switch description="Switch whether the system is operated. Switch: true (on) / false (off, mass is determined anyway!)">
+						<value>true</value>
+						<default>true</default>
+					</operating_switch>
+					<mass description="mass of the system">
+						<value>1000.0</value>
+						<unit>kg</unit>
+						<default>0.0</default>
+					</mass>
+					<center_of_gravity description="position of mass item to global point of reference">
+						<x description="Position of reference in x-direction">
+							<value>0</value>
+							<unit>m</unit>
+						</x>
+						<y description="Position of reference in y-direction">
+							<value>0</value>
+							<unit>m</unit>
+						</y>
+						<z description="Position of reference in z-direction">
+							<value>0</value>
+							<unit>m</unit>
+						</z>
+					</center_of_gravity>
+										<power_demand>
+						<departure>
+							<bleed_air description="Bleed air requirement during departure">
+								<value>0.0</value>
+								<unit>kg/s</unit>
+								<default>0.0</default>
+							</bleed_air>
+							<hydraulic description="Hydraulic requirements during departure">
+								<value>0.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</hydraulic>
+							<electric description="Electrical requirements during departure">
+								<value>0.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</electric>
+							<heat_load description="Heat emission during departure">
+								<value>0.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</heat_load>
+						</departure>
+						<cruise>
+							<bleed_air description="Bleed air requirement during departure">
+								<value>0.0</value>
+								<unit>kg/s</unit>
+								<default>0.0</default>
+							</bleed_air>
+							<hydraulic description="Hydraulic requirements during departure">
+								<value>0.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</hydraulic>
+							<electric description="Electrical requirements during departure">
+								<value>0.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</electric>
+							<heat_load description="Heat emission during departure">
+								<value>0.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</heat_load>
+						</cruise>
+						<approach>
+							<bleed_air description="Bleed air requirement during departure">
+								<value>0.0</value>
+								<unit>kg/s</unit>
+								<default>0.0</default>
+							</bleed_air>
+							<hydraulic description="Hydraulic requirements during departure">
+								<value>0.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</hydraulic>
+							<electric description="Electrical requirements during departure">
+								<value>0.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</electric>
+							<heat_load description="Heat emission during departure">
+								<value>0.0</value>
+								<unit>W</unit>
+								<default>0.0</default>
+							</heat_load>
+						</approach>
+					</power_demand>
+				</system>
+			</virtual_systems>
+		</aircraft_systems>
+		<systems_constants>
+			<environmental_control_system>
+				<airflow_per_pax description="Constant air mass flow per passenger">
+					<value>0.00567</value>
+					<unit>kg/s</unit>
+					<default>0.00567</default>
+				</airflow_per_pax>
+				<recirculation description="Percentage of cabin air that is reused (0.0 - 1.0)">
+					<value>0.40</value>
+					<unit>1</unit>
+					<default>0.40</default>
+				</recirculation>
+				<heat_convection description="Heat convection over aircraft skin based on Airbus air conditioning system design">
+					<value>-0.56</value>
+					<unit>W/(m^2*K)</unit>
+					<default>-0.56</default>
+				</heat_convection>
+				<cabin_temperature description="Cabin temperature">
+					<value>24</value>
+					<unit>C</unit>
+					<default>24</default>
+				</cabin_temperature>
+				<heat_sun description="specific heat flow of the sun">
+					<value>1300</value>
+					<unit>W/m2</unit>
+					<default>1300</default>
+				</heat_sun>
+				<window_area description="Window area">
+					<value>0.07</value>
+					<unit>m2</unit>
+					<default>0.07</default>
+				</window_area>
+				<heat_per_pax description="Heat emission per passenger">
+					<value>75</value>
+					<unit>W</unit>
+					<default>75</default>
+				</heat_per_pax>
+				<efficiency_factor description="Efficiency of the ACP">
+					<value>0.7</value>
+					<unit>1</unit>
+					<default>0.7</default>
+					<lower_boundary>0.0</lower_boundary>
+					<upper_boundary>1.0</upper_boundary>
+				</efficiency_factor>
+				<heat_capacity_air description="Heat capacity of air">
+					<value>1005.0</value>
+					<unit>J/(kg*K)</unit>
+					<default>1005.0</default>
+				</heat_capacity_air>
+				<off_on_take_off description="Switch off ACP during take off (Airbus Getting Grips on Fuel Savings). Switch: true (ACP off during take off) / false (ACP always on)">
+					<value>true</value>
+					<unit>1</unit>
+					<default>true</default>
+				</off_on_take_off>
+				<eco_mode description="ECO Mode switch: 25% reduction in bleed air withdrawal (Airbus Getting Grips on Fuel Savings). Switch : true (ECO Mode) / false (normal mode)">
+					<value>true</value>
+					<unit>1</unit>
+					<default>true</default>
+				</eco_mode>
+			</environmental_control_system>
+			<furnishing>
+				<galley_load_fraction_takeoff description="Workload relative to design Power consumption during Climb, see DA Buente p. 76">
+					<value>0.2</value>
+					<unit>1</unit>
+					<default>0.2</default>
+				</galley_load_fraction_takeoff>
+				<galley_load_fraction_cruise description="Workload relative to design Power consumption during cruise, see DA Buente p. 76">
+					<value>0.6</value>
+					<unit>1</unit>
+					<default>0.7</default>
+				</galley_load_fraction_cruise>
+				<galley_load_fraction_descent description="Workload relative to design Power consumption during Descent, see DA Buente p. 76">
+					<value>0.2</value>
+					<unit>1</unit>
+					<default>0.2</default>
+				</galley_load_fraction_descent>
+				<non_personal_ife_power description="Basic power consumption of non personnel IFE system per PAX">
+					<value>1.25</value>
+					<unit>W</unit>
+					<default>1.25</default>
+				</non_personal_ife_power>
+				<power_personal_ife description="Power consumption of the personnel IFE system per PAX">
+					<value>50</value>
+					<unit>W</unit>
+					<default>50</default>
+				</power_personal_ife>
+				<personal_ife_load_fraction_climb description="Workload relative to design Power consumption during Climb">
+					<value>0.58</value>
+					<unit>1</unit>
+					<default>0.58</default>
+				</personal_ife_load_fraction_climb>
+				<personal_ife_load_fraction_cruise description="Workload relative to design Power consumption during cruise">
+					<value>1.0</value>
+					<unit>1</unit>
+					<default>0.58</default>
+				</personal_ife_load_fraction_cruise>
+				<personal_ife_load_fraction_descent description="Workload relative to design Power consumption during Descent">
+					<value>0.50</value>
+					<unit>1</unit>
+					<default>0.58</default>
+				</personal_ife_load_fraction_descent>
+			</furnishing>
+			<ice_rain_protection>
+				<switch_off_wing_anti_icing description="Switch to turn off anti-icing. Switch: true (anti-icing off) / false (anti-icing on)">
+					<value>false</value>
+					<unit>1</unit>
+					<default>false</default>
+				</switch_off_wing_anti_icing>
+				<top_operating_altitude description="Flight altitude up to which the wings are de-iced">
+					<value>3658</value>
+					<unit>m</unit>
+					<default>3658</default>
+				</top_operating_altitude>
+				<engine_anti_ice description="Hot air anti-icing per engine nacelle">
+					<value>0.055</value>
+					<unit>kg/s</unit>
+					<default>0.055</default>
+				</engine_anti_ice>
+				<elec_power_departure description="Electric consumption during departure, see DA Buente p. 70">
+					<value>14026.9</value>
+					<unit>W</unit>
+					<default>14026.9</default>
+				</elec_power_departure>
+				<elec_power_cruise description="Electric consumption during cruise, see DA Buente p. 70">
+					<value>13070.9</value>
+					<unit>W</unit>
+					<default>13070.9</default>
+				</elec_power_cruise>
+				<elec_power_approach description="Electric consumption during approach, see DA Buente p. 70">
+					<value>14026.9</value>
+					<unit>W</unit>
+					<default>14026.9</default>
+				</elec_power_approach>
+				<elec_power_land description="Electric consumption during Landing, see DA Buente p. 70">
+					<value>7192.9</value>
+					<unit>W</unit>
+					<default>7192.9</default>
+				</elec_power_land>
+				<skin_thickness description="Thickness of the wing skin">
+					<value>0.01</value>
+					<unit>m</unit>
+					<default>0.01</default>
+				</skin_thickness>
+				<rel_span_anti_icing_start description="Relative half span width at the start of de-icing. If DEFAULT, rel. pos of first LE device after kink (with 5% safety margin) is used.">
+					<value>0.4</value>
+					<unit>1</unit>
+				</rel_span_anti_icing_start>
+				<heat_conductivity_wing description="Thermal conductivity of the wing skin, e.g. aluminum">
+					<value>235.0</value>
+					<unit>W/mK</unit>
+					<default>235.0</default>
+				</heat_conductivity_wing>
+				<drop_diameter description="Water drop diameter, relevant between 15 and 40, default 20 microns (CS-25 Book 1 Appendix C)">
+					<value>20</value>
+					<unit>micro meter</unit>
+					<default>20</default>
+				</drop_diameter>
+				<efficiency_factor_electro_thermic_anti_icing description="Efficiency for electro-thermal de-icing">
+					<value>0.8</value>
+					<unit>1</unit>
+					<default>0.8</default>
+					<lower_boundary>0.0</lower_boundary>
+					<upper_boundary>1.0</upper_boundary>
+				</efficiency_factor_electro_thermic_anti_icing>
+				<percentage_of_OME description="Mass of ATA30 is percentage of operating mass empty (OME)">
+					<value>0.001</value>
+					<unit>1</unit>
+				</percentage_of_OME>
+			</ice_rain_protection>
+			<lights>
+				<navigation_light_power description="Navigation Light (red, green, white tail = 6*50) power consumption, see LTH A320 (not LED)">
+					<value>300</value>
+					<unit>W</unit>
+					<default>300</default>
+				</navigation_light_power>
+				<rotating_beacon_light_power description="Rotating Beacon light power consumption, no ref">
+					<value>400</value>
+					<unit>W</unit>
+					<default>400</default>
+				</rotating_beacon_light_power>
+				<wing_light_power description="Wing light power consumption, DA Steinke">
+					<value>500</value>
+					<unit>W</unit>
+					<default>400</default>
+				</wing_light_power>
+				<rto_light_power description="Runway turn-off light power consumption, see LTH A320 (not LED)">
+					<value>150</value>
+					<unit>W</unit>
+					<default>150</default>
+				</rto_light_power>
+				<taxi_light_power description="Taxi light power consumption, DA Steinke">
+					<value>500</value>
+					<unit>W</unit>
+					<default>500</default>
+				</taxi_light_power>
+				<landing_light_power description="Landing Light power consumption, see Honeywell A320 (not LED)">
+					<value>1200</value>
+					<unit>W</unit>
+					<default>1200</default>
+				</landing_light_power>
+				<logo_light_power description="Landing Light power consumption, see Honeywell A320 (not LED)">
+					<value>200</value>
+					<unit>W</unit>
+					<default>200</default>
+				</logo_light_power>
+				<strobe_light_power description="Strobes Light power consumption, no ref">
+					<value>100</value>
+					<unit>W</unit>
+					<default>100</default>
+				</strobe_light_power>
+				<specific_emergency_light_power description="Emergency light power consumption specific to cabin volume, see DA Buente p. 73">
+					<value>1.46</value>
+					<unit>W/m³</unit>
+					<default>1.46</default>
+				</specific_emergency_light_power>
+				<specific_cabin_light_power description="Cabin light power consumption specific to cabin volume, see DA Buente p. 73">
+					<value>18.04</value>
+					<unit>W/m³</unit>
+					<default>18.04</default>
+				</specific_cabin_light_power>
+				<flight_deck_light_power description="Flight Deck light power consumption, see DA Buente p. 73">
+					<value>904.4</value>
+					<unit>W</unit>
+					<default>904.4</default>
+				</flight_deck_light_power>
+			</lights>
+			<gear>
+				<efficiency_factor description="Landing gear efficiency">
+					<value>0.95</value>
+					<unit>1</unit>
+					<default>0.95</default>
+					<lower_boundary>0.0</lower_boundary>
+					<upper_boundary>1.0</upper_boundary>
+				</efficiency_factor>
+				<retraction_time description="Time to retract the landing gear">
+					<value>10.0</value>
+					<unit>s</unit>
+					<default>10.0</default>
+				</retraction_time>
+				<extension_time description="Time to extend the landing gear">
+					<value>10.0</value>
+					<unit>s</unit>
+					<default>10.0</default>
+				</extension_time>
+			</gear>
+			<flight_controls>
+				<calculate_mission_loads description="Switch for the detailed calculation of the mission loads. Otherwise average values are calculated. Switch: true (detailed mission loads) / false (average loads)">
+					<value>true</value>
+					<default>true</default>
+				</calculate_mission_loads>
+				<electrical_fc_system description="Switch for electrical flight control system. Switch: true (electric FCS) / false (hydraulic FCS)">
+					<value>true</value>
+					<default>true</default>
+				</electrical_fc_system>
+				<common_installation_weight_factor description="Percentage of flight control system for common installation weight">
+					<value>0.25</value>
+					<default>0.25</default>
+				</common_installation_weight_factor>
+				<default_actuator description="Actuator description for automatic flight control architecture">
+					<power_source description="energy source">
+						<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+							<value>Hydraulic</value>
+							<default>Hydraulic</default>
+						</type>
+						<source_ID description="ID of the energy source" Default="1">
+							<value>HydraulicIn</value>
+							<default>1</default>
+						</source_ID>
+					</power_source>
+					<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+						<value>active</value>
+						<default>active</default>
+					</operation_mode>
+					<efficiency description="Actuator efficiency in average operation">
+						<value>0.85</value>
+						<default>0.85</default>
+						<unit>1</unit>
+						<lower_boundary>0.0</lower_boundary>
+						<upper_boundary>1.0</upper_boundary>
+					</efficiency>
+					<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+						<value>0.</value>
+						<unit>W</unit>
+						<default>0.0</default>
+					</standby_power>
+					<active_power description="Average basic power in active operation (due to rudder deflections)">
+						<value>0.</value>
+						<unit>W</unit>
+						<default>0.0</default>
+					</active_power>
+				</default_actuator>
+				<ailerons>
+					<electric_flight_control_system_weight_factor description="Weight factor for electrical Flight Control system">
+						<value>0.25</value>
+						<default>0.5</default>
+					</electric_flight_control_system_weight_factor>
+					<default_actuator_architecture_switch description="Enables the default layout for the actuator architecture. Switch: true / false">
+						<value>true</value>
+						<unit>1</unit>
+						<default>true</default>
+					</default_actuator_architecture_switch>
+					<default_actuator_architecture description="Definition of the default actuator architecture">
+						<number_of_actuators_per_control_surface description="Number of actuators per control surface">
+							<value>2</value>
+							<unit>1</unit>
+							<default>2</default>
+						</number_of_actuators_per_control_surface>
+						<default_deflection_speed description="Deflection speed">
+							<value>50</value>
+							<unit>deg/s</unit>
+							<default>50</default>
+						</default_deflection_speed>
+					</default_actuator_architecture>
+					<manual_actuator_architecture description="Definition of the manual actuator architecture">
+						<number_of_control_surfaces description="Number of control surfaces to be initialized">
+							<value>2</value>
+							<unit>1</unit>
+							<default>2</default>
+						</number_of_control_surfaces>
+						<aileron ID="0" description="Control surface parameters">
+							<side description="Side control surface is mounted on.">
+								<value>right</value>
+								<unit>1</unit>
+							</side>
+							<deflection_speed description="Deflection speed">
+								<value>50</value>
+								<unit>deg/s</unit>
+								<default>50</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for Ailerons 2 actuators per control surface) (active/damping mode)">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>2</value>
+									<unit>1</unit>
+									<default>2</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>0.85</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+								<actuator ID="1" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+											<default />
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>damping</value>
+										<default>damping</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>0.85</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</aileron>
+						<aileron ID="1" description="Control surface parameters">
+							<side description="Side control surface is mounted on.">
+								<value>left</value>
+								<unit>1</unit>
+							</side>
+							<deflection_speed description="Deflection speed">
+								<value>50</value>
+								<unit>deg/s</unit>
+								<default>50</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for Ailerons 2 actuators per control surface) (active/damping mode)">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>2</value>
+									<unit>1</unit>
+									<default>2</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>0.85</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+								<actuator ID="1" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+											<default />
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>damping</value>
+										<default>damping</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>0.85</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</aileron>
+					</manual_actuator_architecture>
+				</ailerons>
+				<rudders>
+					<electric_flight_control_system_weight_factor description="Weight factor for electrical Flight Control system">
+						<value>0.25</value>
+						<default>0.5</default>
+					</electric_flight_control_system_weight_factor>
+					<default_actuator_architecture_switch description="Enables the default layout for the actuator architecture. Switch: true / false">
+						<value>true</value>
+						<unit>1</unit>
+						<default>true</default>
+					</default_actuator_architecture_switch>
+					<default_actuator_architecture description="Definition of the default actuator architecture">
+						<number_of_actuators_per_control_surface description="Number of actuators per control surface">
+							<value>3</value>
+							<unit>1</unit>
+							<default>3</default>
+						</number_of_actuators_per_control_surface>
+						<default_deflection_speed description="Deflection speed">
+							<value>60</value>
+							<unit>deg/s</unit>
+							<default>60</default>
+						</default_deflection_speed>
+					</default_actuator_architecture>
+					<manual_actuator_architecture description="Definition of the manual actuator architecture">
+						<number_of_control_surfaces description="Number of control surfaces to be initialized">
+							<value>1</value>
+							<unit>1</unit>
+							<default>1</default>
+						</number_of_control_surfaces>
+						<rudder ID="0" description="Control surface parameters">
+							<deflection_speed description="deflection speed">
+								<value>60</value>
+								<unit>deg/s</unit>
+								<default>60</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for Rudder 3 actuators per control surface (all active))">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>3</value>
+									<unit>1</unit>
+									<default>3</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+								<actuator ID="1" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+								<actuator ID="2" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+								<actuator ID="3" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>damping</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>1.</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+								<actuator ID="4" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>damping</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>1.</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</rudder>
+					</manual_actuator_architecture>
+				</rudders>
+				<elevators>
+					<electric_flight_control_system_weight_factor description="Weight factor for electrical Flight Control system">
+						<value>0.25</value>
+						<unit />
+						<default>0.5</default>
+					</electric_flight_control_system_weight_factor>
+					<default_actuator_architecture_switch description="Enables the default layout for the actuator architecture. Switch: true / false">
+						<value>true</value>
+						<unit>1</unit>
+						<default>true</default>
+					</default_actuator_architecture_switch>
+					<default_actuator_architecture description="Definition of the default actuator architecture">
+						<number_of_actuators_per_control_surface description="Number of actuators per control surface">
+							<value>2</value>
+							<unit>1</unit>
+							<default>2</default>
+						</number_of_actuators_per_control_surface>
+						<default_deflection_speed description="Deflection speed">
+							<value>50</value>
+							<unit>deg/s</unit>
+							<default>50</default>
+						</default_deflection_speed>
+					</default_actuator_architecture>
+					<manual_actuator_architecture description="Definition of the manual actuator architecture">
+						<number_of_control_surfaces description="Number of control surfaces to be initialized">
+							<value>2</value>
+							<default>1</default>
+						</number_of_control_surfaces>
+						<elevator ID="0" description="Control surface parameters">
+							<side>right</side>
+							<deflection_speed description="deflection speed">
+								<value>50</value>
+								<unit>deg/s</unit>
+								<default>50</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for elevator 2 actuators per control surface (one active, one damping))">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>2</value>
+									<unit>1</unit>
+									<default>2</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+								<actuator ID="1" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>damping</value>
+										<default>damping</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</elevator>
+						<elevator ID="1" description="Control surface parameters">
+							<side>right</side>
+							<deflection_speed description="deflection speed">
+								<value>50</value>
+								<unit>deg/s</unit>
+								<default>50</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for elevator 2 actuators per control surface (one active, one damping))">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>2</value>
+									<unit>1</unit>
+									<default>2</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+								<actuator ID="1" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>damping</value>
+										<default>damping</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</elevator>
+					</manual_actuator_architecture>
+				</elevators>
+				<spoilers>
+					<electric_flight_control_system_weight_factor description="Weight factor for electrical Flight Control system">
+						<value>0.25</value>
+						<unit />
+						<default>0.5</default>
+					</electric_flight_control_system_weight_factor>
+					<default_actuator_architecture_switch description="Enables the default layout for the actuator architecture. Switch: true / false">
+						<value>true</value>
+						<unit>1</unit>
+						<default>true</default>
+					</default_actuator_architecture_switch>
+					<default_actuator_architecture description="Definition of the default actuator architecture">
+						<number_of_actuators_per_control_surface description="Number of actuators per control surface">
+							<value>1</value>
+							<unit>1</unit>
+							<default>1</default>
+						</number_of_actuators_per_control_surface>
+						<default_deflection_speed description="Deflection speed">
+							<value>50</value>
+							<unit>deg/s</unit>
+							<default>50</default>
+						</default_deflection_speed>
+					</default_actuator_architecture>
+					<manual_actuator_architecture description="Definition of the manual actuator architecture">
+						<number_of_control_surfaces description="Number of control surfaces to be initialized">
+							<value>10</value>
+							<default>1</default>
+						</number_of_control_surfaces>
+						<spoiler ID="0" description="spoiler description">
+							<side>right</side>
+							<deflection_speed description="deflection speed">
+								<value>50</value>
+								<unit>deg/s</unit>
+								<default>50</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for spoiler 1 actuator per control surface)">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>1</value>
+									<unit>1</unit>
+									<default>1</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</spoiler>
+						<spoiler ID="1" description="spoiler description">
+							<side>right</side>
+							<deflection_speed description="deflection speed">
+								<value>50</value>
+								<unit>deg/s</unit>
+								<default>50</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for spoiler 1 actuator per control surface)">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>1</value>
+									<unit>1</unit>
+									<default>1</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</spoiler>
+						<spoiler ID="2" description="spoiler description">
+							<side>right</side>
+							<deflection_speed description="deflection speed">
+								<value>50</value>
+								<unit>deg/s</unit>
+								<default>50</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for spoiler 1 actuator per control surface)">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>1</value>
+									<unit>1</unit>
+									<default>1</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</spoiler>
+						<spoiler ID="3" description="spoiler description">
+							<side>right</side>
+							<deflection_speed description="deflection speed">
+								<value>50</value>
+								<unit>deg/s</unit>
+								<default>50</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for spoiler 1 actuator per control surface)">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>1</value>
+									<unit>1</unit>
+									<default>1</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</spoiler>
+						<spoiler ID="4" description="spoiler description">
+							<side>right</side>
+							<deflection_speed description="deflection speed">
+								<value>50</value>
+								<unit>deg/s</unit>
+								<default>50</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for spoiler 1 actuator per control surface)">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>1</value>
+									<unit>1</unit>
+									<default>1</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</spoiler>
+						<spoiler ID="5" description="spoiler description">
+							<side>right</side>
+							<deflection_speed description="deflection speed">
+								<value>50</value>
+								<unit>deg/s</unit>
+								<default>50</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for spoiler 1 actuator per control surface)">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>1</value>
+									<unit>1</unit>
+									<default>1</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</spoiler>
+						<spoiler ID="6" description="spoiler description">
+							<side>right</side>
+							<deflection_speed description="deflection speed">
+								<value>50</value>
+								<unit>deg/s</unit>
+								<default>50</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for spoiler 1 actuator per control surface)">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>1</value>
+									<unit>1</unit>
+									<default>1</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</spoiler>
+						<spoiler ID="7" description="spoiler description">
+							<side>right</side>
+							<deflection_speed description="deflection speed">
+								<value>50</value>
+								<unit>deg/s</unit>
+								<default>50</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for spoiler 1 actuator per control surface)">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>1</value>
+									<unit>1</unit>
+									<default>1</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</spoiler>
+						<spoiler ID="8" description="spoiler description">
+							<side>right</side>
+							<deflection_speed description="deflection speed">
+								<value>50</value>
+								<unit>deg/s</unit>
+								<default>50</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for spoiler 1 actuator per control surface)">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>1</value>
+									<unit>1</unit>
+									<default>1</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</spoiler>
+						<spoiler ID="9" description="spoiler description">
+							<side>right</side>
+							<deflection_speed description="deflection speed">
+								<value>50</value>
+								<unit>deg/s</unit>
+								<default>50</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for spoiler 1 actuator per control surface)">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>1</value>
+									<unit>1</unit>
+									<default>1</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</spoiler>
+					</manual_actuator_architecture>
+				</spoilers>
+				<trimmable_horizontal_stabilizer>
+					<number_of_trimmable_horizontal_stabilizers description="Number of all trimmable horizontal stabilizers (thsa)">
+						<value>1</value>
+						<default>1</default>
+					</number_of_trimmable_horizontal_stabilizers>
+					<electric_flight_control_system_weight_factor description="Weight factor for electrical Flight Control system">
+						<value>0.5</value>
+						<unit />
+						<default>0.5</default>
+					</electric_flight_control_system_weight_factor>
+					<default_actuator_architecture_switch description="Enables the default layout for the actuator architecture. Switch: true / false">
+						<value>ture</value>
+						<unit>1</unit>
+						<default>true</default>
+					</default_actuator_architecture_switch>
+					<default_actuator_architecture description="Definition of the default actuator architecture">
+						<number_of_actuators_per_control_surface description="Number of actuators per control surface">
+							<value>2</value>
+							<unit>1</unit>
+							<default>2</default>
+						</number_of_actuators_per_control_surface>
+						<default_deflection_speed description="Deflection speed">
+							<value>0.5</value>
+							<unit>deg/s</unit>
+							<default>0.5</default>
+						</default_deflection_speed>
+					</default_actuator_architecture>
+					<manual_actuator_architecture description="Definition of the manual actuator architecture">
+						<number_of_control_surfaces description="Number of control surfaces to be initialized">
+							<value>2</value>
+							<default>1</default>
+						</number_of_control_surfaces>
+						<trimmable_horizontal_stabilizer ID="0" description="Control surface parameters">
+							<deflection_speed description="deflection speed">
+								<value>0.5</value>
+								<unit>deg/s</unit>
+								<default>0.5</default>
+							</deflection_speed>
+							<actuator_layout description="Actuator layouts (standard for THSA 2 actuators (both active))">
+								<number_of_actuators description="Number of actuator layouts">
+									<value>2</value>
+									<unit>1</unit>
+									<default>2</default>
+								</number_of_actuators>
+								<actuator ID="0" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+								<actuator ID="1" description="Actuator description">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<efficiency description="Actuator efficiency in average operation">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>1.</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</actuator>
+							</actuator_layout>
+						</trimmable_horizontal_stabilizer>
+					</manual_actuator_architecture>	
+				</trimmable_horizontal_stabilizer>
+				<high_lift_system>
+					<trailing_edge>
+						<electric_flight_control_system_weight_factor description="Weight factor for electrical Flight Control system">
+							<value>1.0</value>
+							<unit>1</unit>
+							<default>2.0</default>
+						</electric_flight_control_system_weight_factor>
+						<number_of_devices description="Number of trailing edge systems">
+							<value>2</value>
+							<unit>1</unit>
+							<default>1</default>
+						</number_of_devices>
+						<trailing_edge_device ID="0">
+							<power_control_unit>
+								<number_of_power_control_unit_motors description="Number of PCU motors">
+									<value>2</value>
+									<unit>1</unit>
+									<default>2</default>
+								</number_of_power_control_unit_motors>
+								<power_control_unit_motor ID="0">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+									</active_power>
+								</power_control_unit_motor>
+								<power_control_unit_motor ID="1">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+									</active_power>
+								</power_control_unit_motor>
+							</power_control_unit>
+						</trailing_edge_device>
+						<trailing_edge_device ID="1">
+							<power_control_unit>
+								<number_of_power_control_unit_motors description="Number of PCU motors">
+									<value>2</value>
+									<unit>1</unit>
+									<default>2</default>
+								</number_of_power_control_unit_motors>
+								<power_control_unit_motor ID="0">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+									</active_power>
+								</power_control_unit_motor>
+								<power_control_unit_motor ID="1">
+									<power_source description="Energy source">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+									</active_power>
+								</power_control_unit_motor>
+							</power_control_unit>
+						</trailing_edge_device>
+					</trailing_edge>
+					<leading_edge>
+						<electric_flight_control_system_weight_factor description="Weight factor for electrical Flight Control system">
+							<value>1.0</value>
+							<unit>1</unit>
+							<default>1.0</default>
+						</electric_flight_control_system_weight_factor>
+						<number_of_devices description="Number of front edge systems">
+							<value>0</value>
+							<unit>1</unit>
+							<default>1</default>
+						</number_of_devices>
+						<leading_edge_device ID="0">
+							<power_control_unit>
+								<number_of_power_control_unit_motors description="Number of PCU motors">
+									<value>2</value>
+									<unit>1</unit>
+									<default>2</default>
+								</number_of_power_control_unit_motors>
+								<power_control_unit_motor ID="0">
+									<power_source description="Energy source" default="-">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU" default="-">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<default>active</default>
+									</operation_mode>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</power_control_unit_motor>
+								<power_control_unit_motor ID="1">
+									<power_source description="Energy source" default="-">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU" default="-">
+											<value>Hydraulic</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>HydraulicIn</value>
+										</source_ID>
+									</power_source>
+									<operation_mode description="Activity of the actuator during normal operation. Selector: active / standby / damping">
+										<value>active</value>
+										<unit />
+										<default>active</default>
+									</operation_mode>
+									<standby_power description="Average basic power in standby operation (e.g. due to leakage)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</standby_power>
+									<active_power description="Average basic power in Active operation (due to rudder deflections)">
+										<value>0.0</value>
+										<unit>W</unit>
+										<default>0.0</default>
+									</active_power>
+								</power_control_unit_motor>
+							</power_control_unit>
+						</leading_edge_device>
+					</leading_edge>
+					<duration_high_lift_deployment description="Extension time of the high-lift system">
+						<value>22.0</value>
+						<unit>s</unit>
+						<default>22.0</default>
+					</duration_high_lift_deployment>
+				</high_lift_system>
+			</flight_controls>
+			<bleed_air>
+				<temperature_bleed_air description="Temperature of Bleed Air during extraction">
+					<value>200</value>
+					<unit>C</unit>
+					<default>200</default>
+				</temperature_bleed_air>
+				<efficiency_factor_bleed_air_system description="Efficiency of the Bleed Air system, e.g. leakage losses">
+					<value>0.95</value>
+					<unit>1</unit>
+					<default>0.95</default>
+				</efficiency_factor_bleed_air_system>
+				<efficiency_factor_bleed_air_extraction description="Efficiency of Bleed Air withdrawal">
+					<value>0.95</value>
+					<unit>-</unit>
+					<default>0.95</default>
+				</efficiency_factor_bleed_air_extraction>
+				<specific_ducting_mass description="Specific weight of Bleed Air pipes">
+					<value>4.5</value>
+					<unit>kg/m</unit>
+					<default>4.5</default>
+				</specific_ducting_mass>
+			</bleed_air>
+			<hydraulic_system>
+				<efficiency_factor_hydraulic_system description="Efficiency of the hydraulic system, e.g. leakage losses">
+					<value>0.9595</value>
+					<unit>1</unit>
+					<default>0.9595</default>
+					<lower_boundary>0.0</lower_boundary>
+					<upper_boundary>1.0</upper_boundary>
+				</efficiency_factor_hydraulic_system>
+				<rel_max_power description="Ratio of maximum permanent power and maximum required power of all pumps">
+					<value>1.0</value>
+					<unit>1</unit>
+					<default>1.0</default>
+					<lower_boundary>1.0</lower_boundary>
+					<upper_boundary>10.0</upper_boundary>
+				</rel_max_power>
+				<specific_ducting_mass description="Specific weight of hydraulic lines">
+					<value>2.5</value>
+					<unit>kg/m</unit>
+					<default>2.5</default>
+				</specific_ducting_mass>
+				<specific_fluid_mass description="Specific weight of hydraulic fluid">
+					<value>0.75</value>
+					<unit>kg/m</unit>
+					<default>0.75</default>
+				</specific_fluid_mass>
+				<specific_pump_mass description="Specific weight of hydraulic pumps">
+					<value>0.00125</value>
+					<unit>kg/W</unit>
+					<default>0.00125</default>
+				</specific_pump_mass>
+				<hydraulic_circuits description="Detailed description of the hydraulic circuits">
+					<number_of_circuits description="Number of hydraulic circuits">
+						<value>1</value>
+						<unit>1</unit>
+						<default>1</default>
+					</number_of_circuits>
+					<hydraulic_circuit ID="0" description="Hydraulic circuit description">
+						<compartment_reference_point description="Reference point of the Hydraulic Compartment (distributor seat, reservoir, etc.)">
+							<x description="X-Distance to nose in relation to fuselage length">
+								<value>0.4</value>
+								<unit>1</unit>
+								<default>0.4</default>
+							</x>
+							<y description="Y-Distance to symmetry line in relation to half span">
+								<value>0.0</value>
+								<unit>1</unit>
+								<default>0.0</default>
+							</y>
+							<z description="Z-distance to symmetry line in relation to fuselage height">
+								<value>0.0</value>
+								<unit>1</unit>
+								<default>0.0</default>
+							</z>
+						</compartment_reference_point>
+						<components description="Components within the circuit">
+							<pumps description="Pumps">
+								<number_of_pumps description="Number of pumps">
+									<value>2</value>
+									<unit>1</unit>
+									<default>1</default>
+								</number_of_pumps>
+								<pump ID="0" description="Pump description">
+									<name description="Name of the pump">
+										<value>EDP</value>
+									</name>
+									<type description="Type of pump. Selector: Electric / EngineDriven / RAT">
+										<value>EngineDriven</value>
+										<default>EngineDriven</default>
+									</type>
+									<efficiency description="Pump efficiency">
+										<value>0.85</value>
+										<unit>1</unit>
+										<default>0.85</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<operation_factor description="Percentage of total pump power in normal operation (value must be between">
+										<value>0.8</value>
+										<unit />
+										<default>1</default>
+									</operation_factor>
+									<power_source description="Energy source for the pump">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Engine</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>ShaftPowerIn</value>
+										</source_ID>
+									</power_source>
+								</pump>
+								<pump ID="1" description="Pump description">
+									<name description="Name of the pump">
+										<value>EMP</value>
+									</name>
+									<type description="Type of pump. Selector: Electric / EngineDriven / RAT">
+										<value>Electric</value>
+										<default>EngineDriven</default>
+									</type>
+									<efficiency description="Pump efficiency">
+										<value>0.7</value>
+										<unit>1</unit>
+										<default>0.95</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</efficiency>
+									<operation_factor description="Percentage of total pump power in normal operation (value must be between 0 and 1. 0=off, 1=total)">
+										<value>0.2</value>
+										<unit>1</unit>
+										<default>1</default>
+									</operation_factor>
+									<power_source description="Energy source for the pump">
+										<type description="Selector to specify type of power source. Selector: Hydraulic / Electric / Engine / APU">
+											<value>Electric</value>
+										</type>
+										<source_ID description="ID of the energy source">
+											<value>ElectricIn</value>
+										</source_ID>
+									</power_source>
+								</pump>
+							</pumps>
+							<not_specified description="Description of the remaining components in the hydraulic circuit (without lines... are calculated internally!)">
+								<mass_factor description="Mass fraction of remaining components in the hydraulic circuit">
+									<value>0.</value>
+									<unit>1</unit>
+									<default>0.</default>
+								</mass_factor>
+							</not_specified>
+						</components>
+					</hydraulic_circuit>
+				</hydraulic_circuits>				
+				<power_transfer_units description="System description of the Power Transfer Units">
+					<number_of_power_transfer_units description="Number of PTUs">
+						<value>0</value>
+						<unit>1</unit>
+						<default>0</default>
+					</number_of_power_transfer_units>
+					<power_transfer_unit ID="0" description="System description of the PTU">
+						<power_transfer_unit_connection ID="0" description="1. Circuit to which the PTU is connected">
+							<value>-</value>
+						</power_transfer_unit_connection>
+						<power_transfer_unit_connection ID="1" description="2. Circuit to which the PTU is connected">
+							<value>-</value>
+						</power_transfer_unit_connection>
+					</power_transfer_unit>
+				</power_transfer_units>
+			</hydraulic_system>
+			<electric_system>
+				<efficiency_factor_electric_system description="Efficiency of the electrical system, e.g. resistance of the cables">
+					<value>1.0</value>
+					<unit>1</unit>
+					<default>1.0</default>
+					<lower_boundary>0.0</lower_boundary>
+					<upper_boundary>1.0</upper_boundary>
+				</efficiency_factor_electric_system>
+				<rel_max_power description="Ratio of maximum permanent power and maximum required power of all generators">
+					<value>1.0</value>
+					<unit>1</unit>
+					<default>1.0</default>
+					<lower_boundary>1.0</lower_boundary>
+					<upper_boundary>10.0</upper_boundary>
+				</rel_max_power>
+				<specific_cable_mass description="Specific weight of electrical wiring">
+					<value>6.5</value>
+					<unit>kg/m</unit>
+					<default>6.5</default>
+				</specific_cable_mass>
+				<electric_circuits description="Detailed description of the electrical circuits">
+					<number_of_circuits description="Number of electric circuits">
+						<value>1</value>
+						<unit>1</unit>
+						<default>1</default>
+					</number_of_circuits>
+					<electric_circuit ID="0" description="System description electrical circuit">
+						<components description="Components within the cycle">
+							<generators description="Generators">
+								<number_of_generators description="Number of generators">
+									<value>1</value>
+									<unit>1</unit>
+									<default>1</default>
+								</number_of_generators>
+								<generator ID="0" description="System description of the generator">
+									<name description="Name of generator">
+										<value>IDG1</value>
+									</name>
+									<type description="Type of generators">
+										<value>IDG</value>
+									</type>
+									<generator_efficiency description="Efficiency of the generator including accessory gear box">
+										<value>0.665</value>
+										<unit>1</unit>
+										<default>0.665</default>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</generator_efficiency>
+									<operation_factor description="Share of total power in normal operation (value must be between 0 and 1. 0=off, 1=total)">
+										<value>1</value>
+										<default>1</default>
+									</operation_factor>
+								</generator>
+							</generators>
+							<not_specified description="System description of the remaining components in the electrical circuit (without cable/plug... are calculated internally!)">
+								<mass_factor description="Mass fraction of the remaining components">
+									<value>0.</value>
+									<unit>1</unit>
+									<default>0.</default>
+								</mass_factor>
+							</not_specified>
+						</components>
+					</electric_circuit>
+				</electric_circuits>
+			</electric_system>
+			<propulsion_system>
+				<percentage_bleed_air description="Percentage of bleed air generated by the engine">
+					<value>1.00</value>
+					<unit>1</unit>
+					<default>1.00</default>
+				</percentage_bleed_air>
+				<percentage_electrical_power description="Percentage of electrical energy generated by the engine">
+					<value>1.00</value>
+					<unit>1</unit>
+					<default>1.00</default>
+				</percentage_electrical_power>
+				<percentage_hydraulic_power description="Percentage of hydraulic energy generated by the engine">
+					<value>1.00</value>
+					<unit>1</unit>
+					<default>1.00</default>
+				</percentage_hydraulic_power>
+				<efficiency_factor_bleed_air description="Efficiency of Bleed Air withdrawal">
+					<value>0.95</value>
+					<unit>1</unit>
+					<default>0.95</default>
+					<lower_boundary>0.0</lower_boundary>
+					<upper_boundary>1.0</upper_boundary>
+				</efficiency_factor_bleed_air>
+			</propulsion_system>
+			<auxiliary_power_unit>
+				<position_of_auxiliary_power_unit_in_fuselage_length description="Relative position of the APU in reference to the total fuselage length">
+					<value>0.95</value>
+					<unit>1</unit>
+					<default>0.95</default>
+				</position_of_auxiliary_power_unit_in_fuselage_length>
+				<efficiency_factor_bleed_air description="Efficiency of Bleed Air withdrawal">
+					<value>0.90</value>
+					<unit>1</unit>
+					<default>0.90</default>
+					<lower_boundary>0.0</lower_boundary>
+					<upper_boundary>1.0</upper_boundary>
+				</efficiency_factor_bleed_air>
+				<installation_factor description="Installation factor for attached parts such as fire protection, noise protection, etc.">
+					<value>1.5</value>
+					<unit>1</unit>
+					<default>1.5</default>
+				</installation_factor>
+			</auxiliary_power_unit>
+			<fuel_cell>
+				<nominal_voltage description="nominal fuel cell stack voltage">
+				    <value>1000</value>
+					<unit>V</unit>
+					<default>1000</default>
+				</nominal_voltage>
+				<operating_temperature description="operating temperature">
+				    <value>453</value>
+					<unit>K</unit>
+					<default>453</default>
+				</operating_temperature>
+				<operating_pressure description="operating pressure">
+				    <value>300000</value>
+					<unit>Pa</unit>
+					<default>300000</default>
+				</operating_pressure>
+				<charge_transfer_coefficient description="charge transfer coefficient">
+				    <value>0.5</value>
+					<unit>-</unit>
+					<default>0.5</default>
+				</charge_transfer_coefficient>
+				<area_specific_resistance description="area specific resistance">
+				    <value>3e-05</value>
+					<unit>kOhm/cm^2</unit>
+					<default>3e-05</default>
+				</area_specific_resistance>
+				<alpha description="stoichiometric index of hydrogen (1 for pure hydrogen)">
+				    <value>1</value>
+					<unit>-</unit>
+					<default>1</default>
+				</alpha>
+				<beta description="stoichiometric index of oxygen (1 for pure oxygen, 0.21 for air)">
+				    <value>0.21</value>
+					<unit>-</unit>
+					<default>0.21</default>
+				</beta>
+				<exchange_current_density description="Exchange current density (Dicks: Fuel Cell Systems Explained p. 49)">
+				    <value>0.2236</value>
+					<unit>-</unit>
+					<default>0.2236</default>
+				</exchange_current_density>
+				<H2_fuel_efficiency description="efficiency of hydrogen usage">
+				    <value>0.95</value>
+					<unit>-</unit>
+					<default>0.95</default>
+				</H2_fuel_efficiency>
+				<relative_current_density_design description="relative current density for design point to oversize the fuel cell and increase efficiency">
+				    <value>0.8</value>
+					<unit>-</unit>
+					<default>0.8</default>
+				</relative_current_density_design>
+				<grav_power_density description="gravimetric power density of the fuel cell">
+				    <value>5</value>
+					<unit>kW/kg</unit>
+					<default>5</default>
+				</grav_power_density>
+				<vol_power_density description="volumetric power density of the fuel cell">
+				    <value>3.4</value>
+					<unit>kW/L</unit>
+					<default>3.4</default>
+				</vol_power_density>
+				<number_of_cells_in_stack description="number of individual cell in fuel cell stack">
+				    <value>0</value>
+					<unit>-</unit>
+					<default>0</default>
+				</number_of_cells_in_stack>
+				<P_electric_max description="maximum electrical output power">
+				    <value>0</value>
+					<unit>W</unit>
+					<default>0</default>
+				</P_electric_max>
+			</fuel_cell>
+			<avionics description="Components grouped inside ATAXX">
+				<location_of_aviationics_bay description="Selector: 0 (Wing root) / 1 (Nose) / 2 (Behind cockpit)">
+					<value>1</value>
+					<unit>1</unit>
+					<default>0</default>
+				</location_of_aviationics_bay>
+			</avionics>
+			<remaining_consumers>
+				<power description="Additional percentages of bleed, electric, and hydraulic power for ATA-XX">
+					<percentage_bleed_air description="Percentage of unrecorded performances">
+						<value>0.00</value>
+						<unit>1</unit>
+						<default>0.0</default>
+					</percentage_bleed_air>
+					<percentage_electric description="Percentage of unrecorded performances">
+						<value>0.104</value>
+						<unit>1</unit>
+						<default>0.104</default>
+					</percentage_electric>
+					<percentage_hydraulic description="Percentage of unrecorded performances">
+						<value>0.05</value>
+						<unit>1</unit>
+						<default>0.05</default>
+					</percentage_hydraulic>
+				</power>
+				<mass>
+					<scaling_factor description="Scaling of ATA-XX mass">
+						<value>1</value>
+						<unit>1</unit>
+						<default>1</default>
+					</scaling_factor>
+					<distribution description="Distribution of ATA-XX mass to single components">
+						<percentage_instrumentation_of_ATAXX description="Percentage of instrumentation in ATA-XX">
+							<value>0.08</value>
+							<unit>1</unit>
+							<default>0.08</default>
+						</percentage_instrumentation_of_ATAXX>
+						<percentage_auto_flight_of_ATAXX description="Percentage of AFS in ATA-XX">
+							<value>0.13</value>
+							<unit>1</unit>
+							<default>0.13</default>
+						</percentage_auto_flight_of_ATAXX>
+						<percentage_navigation_of_ATAXX description="Percentage of the navigation system in ATA-XX">
+							<value>0.53</value>
+							<unit>1</unit>
+							<default>0.53</default>
+						</percentage_navigation_of_ATAXX>
+						<percentage_communication_of_ATAXX description="Percentage of the communication system in ATA-XX">
+							<value>0.26</value>
+							<unit>1</unit>
+							<default>0.26</default>
+						</percentage_communication_of_ATAXX>
+					</distribution>
+				</mass>
+			</remaining_consumers>
+		</systems_constants>
+	</program_settings>
+</module_configuration_file>

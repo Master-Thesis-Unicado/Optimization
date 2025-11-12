@@ -1,0 +1,220 @@
+<module_configuration_file name="initial_sizing_conf.xml">
+    <control_settings description="General control settings for this tool">
+        <aircraft_exchange_file_name description="Specify the name of the exchange file">
+            <value>UNICADO-SMR-01.xml</value>
+        </aircraft_exchange_file_name>
+        <aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+            <value>../projects/UNICADO/UNICADO-SMR-01/</value>
+        </aircraft_exchange_file_directory>
+        <own_tool_level description="Specify the tool level of this tool">
+            <value>1</value>
+        </own_tool_level>
+        <console_output description="Selector to specify the console output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+            <value>mode_1</value>
+        </console_output>
+        <log_file_output description="Selector to specify the log file output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+            <value>mode_1</value>
+        </log_file_output>
+        <plot_output description="Specify the way plotting shall be handled">
+            <enable description="Switch to enable plotting. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </enable>
+            <copy_plotting_files description="Switch if plotting files shall be copied. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </copy_plotting_files>
+            <delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </delete_plotting_files_from_tool_folder>
+        </plot_output>
+        <report_output description="Switch to generate an HTML report. Switch: true (On) / false (Off)">
+            <value>true</value>
+        </report_output>
+        <tex_report description="Switch to generate a Tex report. Switch: true (On) / false (Off)">
+            <value>true</value>
+        </tex_report>
+        <write_info_files description="Switch to generate info files. Switch: true (On) / false (Off)">
+            <value>false</value>
+        </write_info_files>
+        <log_file description="Specify the name of the log file">
+            <value>initial_sizing.log</value>
+        </log_file>
+        <inkscape_path description="Path to the inkscape application (DEFAULT: Use inkscape from the UNICADO repo structure)">
+            <value>C:/Programs/UNICADOworkflow/inkscape/</value>
+        </inkscape_path>
+        <gnuplot_path description="Path to the gnuplot application (DEFAULT: Use gnuplot from the UNICADO repo structure)">
+            <value>C:/Programs/UNICADOworkflow/gnuplot/</value>
+        </gnuplot_path>
+    </control_settings>
+    <program_settings description="program settings">
+        <design_case description="Switch for system sizing. 1: Sizing, 0: ONLY determination of a load profile for a specific mission">
+            <value>1</value>
+            <default>1</default>
+        </design_case>
+        <tube_and_wing description="settings for tube and wing (TAW)">
+            <approach_selection description="selection of approach level; analytical / readonly">
+                <value>analytical</value>
+            </approach_selection>
+            <analytical_approach>
+                <General>
+                     <OswaldFactor description="Oswald efficency factor in clean configuration" Unit="-">
+                          <value>0.85</value>
+                         <default>0.85</default>
+                     </OswaldFactor>
+                     <AspectRatio description="aspect ratio" Unit="count">
+                         <value>9.5</value>
+                         <default>9.5</default>
+                     </AspectRatio>
+                     <n_pilots description="Number of Pilots" Unit="count">
+                         <value>2</value>
+                         <default>2</default>
+                     </n_pilots>
+                     <n_engines description="Number of engines" Unit="count">
+                         <value>2</value>
+                         <default>2</default>
+                     </n_engines>
+                     <Cf description="equivalent friction coefficient" Unit="count">
+                         <value>0.002</value>
+                         <default>0.002</default>
+                     </Cf>      
+                </General>
+                <Constants>
+                    <SFC_kerosene description="Specific Fuel Consumption factor for Kerosene">
+                        <value>0.0001389</value>
+                        <default>0.0001389</default>
+                    </SFC_kerosene>
+                </Constants>
+                <TOFL description="takeoff distance requirement">
+                     <CLmax_TO description="Maximum lift coefficient at takeoff" Unit="-">
+                       <value>2.55</value>
+                       <default>2.28</default>
+                     </CLmax_TO>
+                </TOFL>
+                <LDN description="landing distance requirement">
+                     <CLmax_L description="Maximum lift coefficient at landing" Unit="-">
+                       <value>2.9</value>
+                       <default>2.85</default>
+                     </CLmax_L>
+                     <mlmo description="ratio between maximum landing mass and takeoff mass" Unit="-">
+                       <value>0.82</value>
+                       <default>0.82</default>
+                     </mlmo>
+                </LDN>
+                <Climb description="climb performance requirement">
+                     <deltaCD_HL description="Delta CD0 with TO-Flaps" Unit="-">
+                       <value>0.07</value>
+                       <default>0.07</default>
+                     </deltaCD_HL>
+                </Climb>
+                <Cruise description="maximum cruise speed requirement">
+                     <mcr_mto description="ratio between cruise mass and takeoff mass - default for mid- and short-range: 0.956, default for long range: 0.924">
+                         <value>0.956</value>
+                         <default>0.956</default>
+                     </mcr_mto>
+                     <optimalCL description="design CL for initial cruise">
+                         <value>0.57</value>
+                         <default>0.57</default>
+                     </optimalCL>
+                </Cruise>
+                <LiftToDragRatios description="initial cruise and loiter lift to drag ratios ">
+                    <LD_initial_cruise description="cruise requirements">
+                         <value>15</value>
+                         <default>15</default>
+                    </LD_initial_cruise>
+                    <LD_initial_loiter description="loiter requirements">
+                         <value>16</value>
+                         <default>16</default>
+                    </LD_initial_loiter>
+                </LiftToDragRatios>
+                <Masses description="mass estimation methodology">
+                    <Fractions description="fuel mass fractions">
+                       <mf_warmup description="Warmup (according to Raymer: 0.97(A340)-0.99(A320))" Unit="-" Default="0.99">
+                           <value>0.99</value>
+                           <default>0.99</default>
+                       </mf_warmup>
+                       <mf_taxi description="Taxi (according to Raymer: 0.97(A340)-0.99(A320))" Unit="-" Default="0.99">
+                           <value>0.99</value>
+                           <default>0.99</default>
+                       </mf_taxi>
+                       <mf_to description="Takeoff (according to Raymer: 0.97(A340)-0.99(A320))" Unit="-" Default="0.995">
+                           <value>0.995</value>
+                           <default>0.995</default>
+                       </mf_to>
+                       <mf_climb description="Climb (according to Raymer: 0.97(A340)-0.99(A320))" Unit="-" Default="0.98">
+                           <value>0.98</value>
+                           <default>0.98</default>
+                       </mf_climb>
+                       <mf_descent description="Descent (according to Raymer: 0.99(A340)-0.995(A320))" Unit="-" Default="0.99">
+                           <value>0.99</value>
+                           <default>0.99</default>
+                       </mf_descent>
+                       <mf_missedandclimb description="missed approach and climb to alternate airport (according to Raymer: 0.992(A340)-0.997(A320))" Unit="-" Default="0.988">
+                           <value>0.988</value>
+                           <default>0.988</default>
+                       </mf_missedandclimb>
+                       <mf_land description="Landing and Taxi out (according to Raymer: 0.992(A340)-0.997(A320))" Unit="-" Default="0.995">
+                           <value>0.995</value>
+                           <default>0.995</default>
+                       </mf_land>
+                     </Fractions>
+                </Masses>
+            </analytical_approach>
+            <readonly_approach>
+                <wing_loading description="User specified wing loading as sizing point for aircraft design loop.">
+                    <value>645.425</value>
+                    <unit>kg/m^2</unit>
+                    <lower_boundary>400</lower_boundary>
+                    <upper_boundary>800</upper_boundary>
+                </wing_loading>
+                <thrust_loading description="User specified thrust loading as sizing point for aircraft design loop.">
+                    <value>0.311</value>
+                    <unit>1</unit>
+                    <lower_boundary>0.2</lower_boundary>
+                    <upper_boundary>0.5</upper_boundary>
+                </thrust_loading>
+                <maximum_takeoff_mass_start description="User specified maximum takeoff mass as starting point for aircraft design loop.">
+                    <value>77000</value>
+                    <unit>kg</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>500000</upper_boundary>
+                </maximum_takeoff_mass_start>
+                <operating_mass_empty_start description="User specified operating mass empty as starting point for aircraft design loop.">
+                    <value>42100</value>
+                    <unit>kg</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>500000</upper_boundary>
+                </operating_mass_empty_start>
+            </readonly_approach> 
+        </tube_and_wing>
+        <blended_wing_body description="settings for blended wing body (BWB)">
+            <approach_selection description="selection of approach level; analytical / readonly">
+                <value>readonly</value>
+            </approach_selection>
+            <readonly_approach>
+                <wing_loading description="User specified wing loading as sizing point for aircraft design loop.">
+                    <value>250</value>
+                    <unit>kg/m^2</unit>
+                    <lower_boundary>150</lower_boundary>
+                    <upper_boundary>800</upper_boundary>
+                </wing_loading>
+                <thrust_loading description="User specified thrust loading as sizing point for aircraft design loop.">
+                    <value>0.311</value>
+                    <unit>1</unit>
+                    <lower_boundary>0.2</lower_boundary>
+                    <upper_boundary>0.5</upper_boundary>
+                </thrust_loading>
+                <maximum_takeoff_mass_start description="User specified maximum takeoff mass as starting point for aircraft design loop.">
+                    <value>200000</value>
+                    <unit>kg</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>500000</upper_boundary>
+                </maximum_takeoff_mass_start>
+                <operating_mass_empty_start description="User specified operating mass empty as starting point for aircraft design loop.">
+                    <value>130000</value>
+                    <unit>kg</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>500000</upper_boundary>
+                </operating_mass_empty_start>
+            </readonly_approach>
+        </blended_wing_body>
+    </program_settings>
+</module_configuration_file>

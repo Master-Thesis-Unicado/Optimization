@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<title>Mission Analysis of SMR-01</title>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="logo"></div>
+<div class="content">
+<h1>Report - Mission Analysis of SMR-01<br/>
+<span><font size="2">All outputs of the program 'mission_analysis' were created with version 0.5.0</span></h1>
+<!-- Begin CeRAS Report -->
+<!-- ################################################################################################### -->
+<div class="container">
+<div class="box">
+<h2>Calculated performance values for TLARs</h2>
+<table class="content-table">
+<thead>
+<tr>
+<th >Parameter</th>
+<th >Comment</th>
+<th >Unit</th>
+<th >Value</th>
+<th >Required value</th>
+<th >Check</th>
+</tr>
+</thead>
+<tr>
+<td>Initial cruise altitude (ICA)</td><td>ISA + 0</td><td>ft</td><td>33000</td><td>33000</td><td><span style="color:green;">&#10004;</span></td></tr>
+<tr>
+<td>Initial cruise Mach number</td><td>ISA + 0</td><td>-</td><td>0.78</td><td>0.78</td><td><span style="color:green;">&#10004;</span></td></tr>
+<tr>
+<td>Max. operating altitude</td><td>climb with 100ft/min, ISA + 0 *</td><td>ft</td><td>36953</td><td>40000</td><td><span style="color:red;">&#10006;</span></td></tr>
+<tr>
+<td>One-engine out (OEI) net ceiling</td><td>after T/O @ MTOM, 100ft/min, ISA + 0 *</td><td>ft</td><td>20098</td><td>15000</td><td><span style="color:green;">&#10004;</span></td></tr>
+<tr>
+<td>Time-to-1500ft</td><td>from break release to 1500 ft **</td><td>min</td><td>1</td><td>Not specified</td><td>-</td></tr>
+<tr>
+<td>Time-to-climb</td><td>from 1500 ft to ICA **</td><td>min</td><td>22</td><td>35</td><td><span style="color:green;">&#10004;</span></td></tr>
+<tr>
+<td>Time-to-ICA</td><td>from break release to ICA **</td><td>min</td><td>23</td><td>Not specified</td><td>-</td></tr>
+<tr>
+<td>Range-to-ICA</td><td>from break release to ICA **</td><td>NM</td><td>144</td><td>Not specified</td><td>-</td></tr>
+<tr>
+<td>Fuel-to-ICA</td><td>from break release to ICA **</td><td>kg</td><td>1469</td><td>Not specified</td><td>-</td></tr>
+</table>
+<p style="text-align: right; margin-right: 3rem;">* Engine rating: Max. Continuous<br>** Engine rating: Climb</p>
+</div>
+</div></div></div></body>
+</html>

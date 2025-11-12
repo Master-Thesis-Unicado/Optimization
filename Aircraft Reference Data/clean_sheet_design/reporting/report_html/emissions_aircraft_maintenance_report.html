@@ -1,0 +1,103 @@
+<html lang="en">
+<head>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<title>Emissions Aircraft Maintenance of SMR-01</title>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="logo"></div>
+<div class="content">
+<h1>Report - Emissions Aircraft Maintenance of SMR-01<br/>
+<span><font size="2">All outputs of the program 'emissions_aircraft_maintenance' were created with version 0.1.0</span></h1>
+<!-- Begin CeRAS Report -->
+<!-- ################################################################################################### -->
+<div class="container">
+<div class="box data">
+<h2>Aircraft Maintenance Emissions & Energy Demand</h2>
+<h3>Methodology Note</h3>
+<p>The environmental impact of spare parts is determined by scaling the full production impact(including raw materials and manufacturing) of an original component.<br>If the primary material recycling is accounted for in the production phase, the credit entry method is therefore assumed here as well.<br>The scaling factor is the ratio of the component's total maintenance material cost over theaircraft's lifetime to the component's initial recurring cost.</p>
+<h3>Spare Part Scaling Factors</h3><table class="content-table">
+<thead>
+<tr>
+<th >Component</th>
+<th >Maintenance Material Cost [$]</th>
+<th >Recurring Cost [$]</th>
+<th >Scaling Factor [-]</th>
+</tr>
+</thead>
+<tr>
+<td>wing</td><td>1.81e+05</td><td>2.24e+06</td><td>0.0810</td></tr>
+<tr>
+<td>fuselage</td><td>2.14e+06</td><td>4.74e+06</td><td>0.4512</td></tr>
+<tr>
+<td>tailplane</td><td>5.41e+04</td><td>2.82e+05</td><td>0.1917</td></tr>
+<tr>
+<td>fin</td><td>3.94e+04</td><td>2.05e+05</td><td>0.1917</td></tr>
+<tr>
+<td>landinggear</td><td>5.15e+06</td><td>7.42e+05</td><td>6.9387</td></tr>
+<tr>
+<td>pylon</td><td>2.17e+04</td><td>8.74e+05</td><td>0.0248</td></tr>
+<tr>
+<td>powerunit</td><td>5.88e+05</td><td>1.48e+07</td><td>0.0397</td></tr>
+</table>
+<h3>Emissions Inventory</h3><table class="content-table">
+<thead>
+<tr>
+<th >Category</th>
+<th >CO₂ [kg]</th>
+<th >H₂O [kg]</th>
+<th >NOx [kg]</th>
+<th >CO [kg]</th>
+<th >SO₂ [kg]</th>
+<th >CH₄ [kg]</th>
+<th >PM₁₀ [kg]</th>
+</tr>
+</thead>
+<tr>
+<td><b>Total</b></td><td>1.67e+06</td><td>1.06e+07</td><td>2.52e+03</td><td>2.17e+03</td><td>3.92e+03</td><td>3.79e+03</td><td>2.36e+01</td></tr>
+<tr>
+<td>Maintenance Labour</td><td>1.02e+06</td><td>4.81e+06</td><td>1.25e+03</td><td>5.13e+02</td><td>1.81e+03</td><td>2.43e+03</td><td>1.31e+01</td></tr>
+<tr>
+<td>Spare Parts Production</td><td>6.51e+05</td><td>5.79e+06</td><td>1.27e+03</td><td>1.65e+03</td><td>2.11e+03</td><td>1.36e+03</td><td>1.05e+01</td></tr>
+</table>
+<h3>Secondary Energy Demand</h3><table class="content-table">
+<thead>
+<tr>
+<th >Category</th>
+<th >electricity [J]</th>
+<th >heat [J]</th>
+</tr>
+</thead>
+<tr>
+<td>Spare Parts Production</td><td>—</td><td>—</td></tr>
+<tr>
+<td>Maintenance Labour</td><td>3.87e+12</td><td>8.45e+12</td></tr>
+</table>
+<h3>Cumulative Energy Demand (CED) Breakdown</h3><table class="content-table">
+<thead>
+<tr>
+<th >Category</th>
+<th >from electricity [J]</th>
+<th >from heat [J]</th>
+<th >Direct Primary [J]</th>
+<th ><b>Total CED [J]</b></th>
+</tr>
+</thead>
+<tr>
+<td>Spare Parts Production</td><td>—</td><td>—</td><td>1.54e+13</td><td><b>1.54e+13</b></td></tr>
+<tr>
+<td>Maintenance Labour</td><td>1.13e+13</td><td>1.04e+13</td><td>—</td><td><b>2.17e+13</b></td></tr>
+<tr>
+<td><b>Total</b></td><td><b>1.13e+13</b></td><td><b>1.04e+13</b></td><td><b>1.54e+13</b></td><td><b>3.71e+13</b></td></tr>
+</table>
+</div>
+<div class="box plot">
+<h2>Plots</h2>
+<h3>Visualizations of Emissions & Energy Demand</h3>
+<img src="..\plots\emissions_aircraft_maintenance_emissions.svg" >
+<br>
+<img src="..\plots\emissions_aircraft_maintenance_ced_pie.svg" >
+</div>
+</div></div></div></body>
+</html>

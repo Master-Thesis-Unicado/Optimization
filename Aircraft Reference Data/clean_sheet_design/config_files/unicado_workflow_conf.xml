@@ -1,0 +1,247 @@
+<module_configuration_file Name="UNICADOworkflow Runtime Configuration.">
+    <control_settings description="General control settings for tool behavior.">
+        <aircraft_exchange_file_name description="Specify the name of the exchange file">
+            <value>UNICADO-SMR-01.xml</value>
+        </aircraft_exchange_file_name>
+        <aircraft_exchange_file_directory description="Specify the directory in which the aircraft exchange file can be found">
+            <value>../projects/UNICADO/UNICADO-SMR-01/</value>
+        </aircraft_exchange_file_directory>
+        <own_tool_level description="Specify the tool level of this tool">
+            <value>1</value>
+        </own_tool_level>
+        <console_output description="Selector to specify the console output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+            <value>mode_1</value>
+        </console_output>
+        <log_file_output description="Selector to specify the log file output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+            <value>mode_1</value>
+        </log_file_output>
+        <plot_output description="Specify the way plotting shall be handled">
+            <enable description="Switch to enable plotting. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </enable>
+            <copy_plotting_files description="Switch if plotting files shall be copied. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </copy_plotting_files>
+            <delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </delete_plotting_files_from_tool_folder>
+        </plot_output>
+        <report_output description="Switch to generate an HTML report. Switch: true (On) / false (Off)">
+            <value>true</value>
+        </report_output>
+        <tex_report description="Switch to generate a Tex report. Switch: true (On) / false (Off)">
+            <value>true</value>
+        </tex_report>
+        <write_info_files description="Switch to generate info files. Switch: true (On) / false (Off)">
+            <value>false</value>
+        </write_info_files>
+        <log_file description="Specify the name of the log file">
+            <value>unicado_workflow.log</value>
+        </log_file>
+        <inkscape_path description="Path to the inkscape application (if inkscape is not installed and available in PATH, set here the path to the local inkscape folder)">
+            <value>../inkscape/</value>
+        </inkscape_path>
+        <gnuplot_path description="Path to the gnuplot application (if gnuplot is not installed and available in PATH, set here the path to the local inkscape folder)">
+            <value>../gnuplot/</value>
+        </gnuplot_path>
+        <program_specific_settings description="Program settings">
+            <pre_workflow_operation_settings description="Parameter for the pre operation functionalities of workflow">
+                <set_project_folder_to_default description="Delete all old files from project folder and set to default. Switch: true (project folder is set to default) / false (no files are deleted)">
+                    <value>false</value>
+                    <default>false</default>
+                </set_project_folder_to_default>
+                <delete_plots_before_run description="Old plots and reports are deleted from folders (especially useful for studies). Switch: true (reporting/plots folder is cleared) / false (no files are deleted)">
+                    <value>true</value>
+                    <default>true</default>
+                </delete_plots_before_run>
+                <delete_engines_before_run description="Old engine data are deleted from from project folder. Switch: true (engine_data folder is cleared) / false (no files are deleted)">
+                    <value>true</value>
+                    <default>true</default>
+                </delete_engines_before_run>
+                <clear_old_log_files_before_run description="Clear all subtool logfiles at start. Switch: true (log_files of submodules are deleted before workflow start) / false (no files are deleted)">
+                    <value>true</value>
+                    <default>true</default>
+                </clear_old_log_files_before_run>
+            </pre_workflow_operation_settings>
+            <iteration_settings description="Special handling during iteration.">
+                <switch_off_plots description="Switch to switch off plots during the iteration loop. Switch: true (no plots during iteration) / false (plotting in every iteration loop if plot_output is true)">
+                    <value>true</value>
+                </switch_off_plots>
+                <switch_off_html_report description="Switch to switch off HTML report during the iteration loop. Switch: true (no HTML report during iteration) / false (HTML report is written in every iteration loop if report_output is true)">
+                    <value>true</value>
+                </switch_off_html_report>
+                <switch_off_tex_report description="Switch to switch off TeX report during the iteration loop. Switch: true (no TeX report during iteration) / false (TeX report is written in every iteration loop if tex_report is true)">
+                    <value>true</value>
+                </switch_off_tex_report>
+                <switch_off_info_files description="Switch to switch off info file generation during the iteration loop. Switch: true (no info files are written during iteration) / false (info files are written in every iteration loop if write_info_files is true)">
+                    <value>true</value>
+                </switch_off_info_files>
+                <check_settings_for_design_logic description="Settings of submodules are checked and adapted according to the design mode given in ./program_settings/design_case_settings/design_mode. Switch: true (check settings of submodules for design mode and adapt accordingly) / false (no checks of settings in submodules) ">
+                    <value>true</value>
+                    <default>true</default>
+                </check_settings_for_design_logic>
+                <use_control_settings_for_subprograms description="The control settings of the workflow are copied to all submodules. Switch: true (the control_settings of workflow are also taken in submodules) / false (no adaption of submodule control settings)">
+                    <value>true</value>
+                    <default>true</default>
+                </use_control_settings_for_subprograms>
+                <use_range_type_specific_factors description="Adapt aircraft specific factors in all used modules. Selector: mode_0 (No adaptation) / mode_1 (based on design range) / mode_2 (use short-range values) / mode_3 (use medium-range values) / mode_4 (use long-range values)">
+                    <value>mode_0</value>
+                    <default>mode_0</default>
+                </use_range_type_specific_factors>
+                <use_configs_from_existing_project description="Handles configuration parameter of copy mode of used config files">
+                    <config_copy_mode  description="Choose the place where the module configuration files for the current project should be taken from. Selector: mode_0 (Use current configuration files; either from project/config_files or from tool directory) / mode_1 (Use configuration files from clean sheet design folder) / mode_2 (Use configuration files from engine calibrated design folder) / mode_3 (Use configuration files from aero calibrated design folder) / mode_4 (Use configuration files from without calibration design folder) / mode_5 (Use configuration files from UNICADO aircraft-references repository folder)">
+                        <value>mode_1</value>
+                        <default>mode_0</default>
+                    </config_copy_mode>
+                    <mode_specific_settings>
+                        <mode_5 description="Specific settings for mode_4 (Use configuration files from local repository folder)">
+                            <config_repository_branch_name description="Name of branch for aircraft-references repository to be checked out.">
+                                <value>main</value>
+                                <default>main</default>
+                            </config_repository_branch_name>
+                            <name_of_config_checkout_dir description="Choose the local repository folder where to pick the configs from. Selector: clean_sheet_design / engine_calibration / aerodynamic_calibration / without_calibration)">
+                                <value>clean_sheet_design</value>
+                                <default>clean_sheet_design</default>
+                            </name_of_config_checkout_dir>
+                        </mode_5>
+                    </mode_specific_settings>
+                </use_configs_from_existing_project>
+                <use_engine_from_existing_project description="Handles configuration parameter of copy mode of used engine data">
+                    <engine_copy_mode description="Choose the place where the engine for the current project should be taken from. Selector: mode_0 (Use current engine; either from project folder/engine_data or from propulsion_design/engines) / mode_1 (Use engine from clean sheet design folder) / mode_2 (Use engine from engine calibrated design folder) / mode_3 (Use engine from aero calibrated design folder) / mode_4 (Use engine from without calibration design folder) / mode_5 (Use engine from UNICADO aircraft-references repository folder)">
+                        <value>mode_0</value>
+                        <default>mode_0</default>
+                    </engine_copy_mode>
+                    <mode_specific_settings>
+                        <mode_5 description="Specific settings for mode_4 (Use engine from local repository folder)">
+                            <engine_repository_branch_name description="Name of branch for aircraft-references repository to be checked out.">
+                                <value>main</value>
+                                <default>main</default>
+                            </engine_repository_branch_name>
+                            <name_of_engine_checkout_dir description="Choose the local repository folder where to pick the engine from. Selector: clean_sheet_design / engine_calibration / aerodynamic_calibration / without_calibration)">
+                                <value>clean_sheet_design</value>
+                                <default>clean_sheet_design</default>
+                            </name_of_engine_checkout_dir>
+                        </mode_5>
+                    </mode_specific_settings>
+                </use_engine_from_existing_project>
+                <save_aircraft_exchange_files_to_result_folder description="Switch to switch of saving of aircraft exchange files. Switch: true (save aircraft exchange file) / false (disable saving of aircraft exchange files)">
+                    <value>true</value>
+                    <default>true</default>
+                </save_aircraft_exchange_files_to_result_folder>
+            </iteration_settings>
+            <post_workflow_operation_settings description="Parameter for the post operation functionalities of workflow">
+                <save_configs_to_result_folder description="Configs of the subprograms are stored in the folder ../workflowResults/[Workflow name]/config_files. Switch: true (configs are saved in the results folder) / false (configs are not copied to the results folder)">
+                    <value>true</value>
+                    <default>true</default>
+                </save_configs_to_result_folder>
+                <save_log_files_to_result_folder description="Logfiles of the subprograms are stored in the folder ../workflowResults/[Workflow name]/reporting/log_files. Switch: true (log_files are saved in the results folder) / false (log_files are not copied to the results folder)">
+                    <value>true</value>
+                    <default>true</default>
+                </save_log_files_to_result_folder>
+                <save_final_aircraft_exchange_file_to_result_folder description="Aircraft exchange files of each iteration are stored in the folder ../workflowResults/[Workflow name]/aircraft_exchange_files. Switch: true (aircraft exchange files are saved in the results folder) / false (aircraft exchange files are not copied to the results folder)">
+                    <value>true</value>
+                    <default>true</default>
+                </save_final_aircraft_exchange_file_to_result_folder>
+            </post_workflow_operation_settings>
+        </program_specific_settings>
+    </control_settings>
+    <program_settings description="Parameter settings for workflow behavior.">
+        <program_mode description="Selector for execution mode of the program. Selector: mode_0 (single aircraft design) / mode_1 (parameter study) / mode_2 (optimization)">
+            <value>mode_0</value>
+        </program_mode>
+        <design_case_settings>
+            <design_mode description="Selector for design mode. Selector: mode_0 (standard design; no check in subprograms) / mode_1 (clean sheet design) / mode_2 (retrofit design with existing geometry) / mode_3 (mission study analysis without design sizing loop) / mode_4 (design sizing without mission study analysis)">
+                <value>mode_1</value>
+                <default>mode_0</default>
+            </design_mode>
+            <iteration_settings>
+                <convergence_criteria description="permitted relative change to achieve convergence">
+                    <value>2.5e-3</value>
+                    <default>2.5e-3</default>
+                </convergence_criteria>
+                <max_number_of_iterations_before_exit description="Number of iterations before the loop is aborted by exit(1)">
+                    <value>30</value>
+                    <default>30</default>
+                </max_number_of_iterations_before_exit>
+                <bridge_constraint_analyzer description="Switch to bridge the module constraint_analysis. Switch: true (Module is bridged and not executed) / false (Module is executed during iteration)">
+                    <value>true</value>
+                    <default>false</default>
+                </bridge_constraint_analyzer>
+                <damp_MTOM_during_iteration description="Switch to activate damping MTOM during iteration; Switch: true (Mean value of the last 2 MTOM values is used to suppress vibrations if necessary.) / false (Damping MTOM is deactivated)">
+                    <value>false</value>
+                    <default>false</default>
+                </damp_MTOM_during_iteration>
+            </iteration_settings>
+            <parallel_execution description="Switch if a parallel execution of the workflow is planned; Switch: true (Parallel execution is planned (configuration files will not be restored at the end)) / false (No parallel execution is planned (configuration files will be restored at the end))">
+                <value>false</value>
+                <default>false</default>
+            </parallel_execution>
+            <calibration_settings description="Detailed settings to design calibrated aircraft configurations.">
+                <ome_calibration_mode description="Selector for OME calibration mode. Selector: mode_0 (no calibration active) / mode_1 (calibration using fuselage mass)">
+                    <value>mode_0</value>
+                    <default>mode_0</default>
+                </ome_calibration_mode>
+                <mtom_calibration_mode description="Selector for MTOM calibration mode. Selector: mode_0 (no calibration active) / mode_1 (calibration using engine fuel flow) / mode_2 (calibration using aerodynamic drag counts)">
+                    <value>mode_0</value>
+                    <default>mode_0</default>
+                </mtom_calibration_mode>
+                <target_values description="Preset target values for MTOM and OME">
+                    <ome description="Preset value for target OME">
+                        <value>42100</value>
+                    </ome>
+                    <mtom description="Preset value for target MTOM">
+                        <value>77000</value>
+                    </mtom>
+                </target_values>
+                <reset_calibration_factors_at_start description="Switches to reset calibration values at start.">
+                    <reset_fuselage_mass description="Reset the fuselage_mass calibration value for OME calibration at start. Switch: true (reset of value) / false (value is kept)">
+                        <value>true</value>
+                        <default>true</default>
+                    </reset_fuselage_mass>
+                    <reset_viscous_drag_counts description="Reset the aerodynamic calibration value for MTOM calibration at start. Switch: true (reset of value) / false (value is kept)">
+                        <value>true</value>
+                        <default>true</default>
+                    </reset_viscous_drag_counts>
+                    <reset_engine_fuel_flow_factor description="Reset the fuel flow calibration value for MTOM calibration at start. Switch: true (reset of value) / false (value is kept)">
+                        <value>true</value>
+                        <default>true</default>
+                    </reset_engine_fuel_flow_factor>
+                </reset_calibration_factors_at_start>
+                <iteration_settings>
+                    <number_of_before_new_mtom_calibration_step description="Number of iterations after which each MTOM calibration is performed">
+                        <value>4</value>
+                        <default>4</default>
+                    </number_of_before_new_mtom_calibration_step>
+                    <factor_for_convergence_criteria description="Termination criterion: As factor regarding convergenceCriteria (see ./program_settings/design_case_settings/iteration_settings/convergence_criteria)">
+                        <value>5</value>
+                        <default>5</default>
+                    </factor_for_convergence_criteria>
+                    <max_number_of_iterations_before_ome_calibration_exit description="Number of iterations before the OME calibration loop is aborted by exit(1)">
+                        <value>20</value>
+                        <default>20</default>
+                    </max_number_of_iterations_before_ome_calibration_exit>
+                    <damp_MTOM_calibration description="Switch to activate damping MTOM during MTOM calibration.">
+                        <enable description="Enable MTOM damping during calibration. If relativ change exceeds maximum_extrapolation_lever, it is automatically damped to that value. Switch: true (damping is on) / false (damping is off)">
+                            <value>false</value>
+                            <default>false</default>
+                        </enable>
+                        <maximum_mtom_extrapolation_lever description="Maximum allowable relative change in MTOM between two calibrations">
+                            <value>2</value>
+                            <default>2</default>
+                        </maximum_mtom_extrapolation_lever>
+                    </damp_MTOM_calibration>
+                    <damp_OME_calibration description="Switch to activate damping OME during OME calibration.">
+                        <enable description="Enable OME damping during calibration. If relativ change exceeds maximum_extrapolation_lever, it is automatically damped to that value. Switch: true (damping is on) / false (damping is off)">
+                            <value>false</value>
+                            <default>false</default>
+                        </enable>
+                        <maximum_ome_extrapolation_lever description="Maximum allowable relative change in OME between two calibrations">
+                            <value>2</value>
+                            <default>2</default>
+                        </maximum_ome_extrapolation_lever>
+                    </damp_OME_calibration>
+                </iteration_settings>
+            </calibration_settings>
+        </design_case_settings>
+    </program_settings>
+</module_configuration_file>

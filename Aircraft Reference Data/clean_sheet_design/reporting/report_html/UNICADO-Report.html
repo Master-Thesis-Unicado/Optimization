@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNICADO Report</title>
+    <link href="style.css" rel="stylesheet" />
+    <link rel="icon" href= "UNICADO_logo_refined.svg" type="image/x-icon" />
+</head>
+
+<body>
+    <div class="content">
+        <h1>UNICADO Report
+            <font size="2">Version #number
+        </h1>
+        <div class="container">
+            <div class="box data" id="left-box">
+                <div class="left">
+                    <h2>Top Level Aircraft Requirements (TLARs)</h2>
+                    <div class="left">
+                        <button class="select-items-btn" onclick="openPopup()">Select TLARs</button>
+                        <button class="select-items-btn" onclick="resetSelection()">Reset Selection</button>
+                        <div class="popup" id="popup">
+                            <div class="popup-content">
+                                <button class="close-btn" onclick="closePopup()">x</button>
+                                <div id="dropdownContent" class="dropdown-content">
+<label><input type = checkbox value = "Maximum structrual payload mass" data-value=19300 data-unit=kg data-lower=100 data-upper=150000 checked> maximum_structrual_payload_mass</label>
+<label><input type = checkbox value = "Takeoff distance" data-value=1951 data-unit=m data-lower=600 data-upper=5000 checked> takeoff_distance</label>
+<label><input type = checkbox value = "Landing field length" data-value=2425.67 data-unit=m data-lower=600 data-upper=5000> landing_field_length</label>
+<label><input type = checkbox value = "Icao aerodrome reference code" data-value=3CIIIC data-unit=n/a data-lower=n/a data-upper=n/a> icao_aerodrome_reference_code</label>
+<label><input type = checkbox value = "Maximum operating mach number" data-value=0.82 data-unit=1 data-lower=0 data-upper=1 checked> maximum_operating_mach_number</label>
+<label><input type = checkbox value = "Maximum operating velocity" data-value=180 data-unit=m/s data-lower=50 data-upper=250> maximum_operating_velocity</label>
+<label><input type = checkbox value = "Maximum approach speed" data-value=67.65 data-unit=m/s data-lower=50 data-upper=90 checked> maximum_approach_speed</label>
+<label><input type = checkbox value = "Maximum operating altitude" data-value=12192 data-unit=m data-lower=4500 data-upper=20000 checked> maximum_operating_altitude</label>
+<label><input type = checkbox value = "Maximum altitude one engine inoperative" data-value=4572 data-unit=m data-lower=1500 data-upper=12000> maximum_altitude_one_engine_inoperative</label>
+<label><input type = checkbox value = "Climb or descent segment gradient" data-value=0.024 data-unit=1 data-lower=0 data-upper=1> climb_or_descent_segment_gradient</label>
+<label><input type = checkbox value = "Flight envelope" data-value=0.82 data-unit=1 data-lower=0 data-upper=1> flight_envelope</label>
+<label><input type = checkbox value = "Pavement classification number" data-value=55 data-unit=1 data-lower=5 data-upper=120> pavement_classification_number</label>
+<label><input type = checkbox value = "Delta ISA" data-value=0 data-unit=K data-lower=-100 data-upper=100> delta_ISA</label>
+<label><input type = checkbox value = "Range" data-value=4537400 data-unit=m data-lower=0 data-upper=20000000 checked> range</label>
+<label><input type = checkbox value = "Contingency" data-value=0.06 data-unit=1 data-lower=0 data-upper=0.08> contingency</label>
+<label><input type = checkbox value = "Alt dist" data-value=370400 data-unit=m data-lower=0 data-upper=926000> alt_dist</label>
+<label><input type = checkbox value = "Loiter time" data-value=1800 data-unit=s data-lower=0 data-upper=3600> loiter_time</label>
+<label><input type = checkbox value = "Initial cruise mach number" data-value=0.78 data-unit=1 data-lower=0 data-upper=1 checked> initial_cruise_mach_number</label>
+<label><input type = checkbox value = "Initial cruise altitude" data-value=10058.4 data-unit=m data-lower=1000 data-upper=20000 checked> initial_cruise_altitude</label>
+<label><input type = checkbox value = "Climb speed below FL100" data-value=128.6112 data-unit=m/s data-lower=0 data-upper=250> climb_speed_below_FL100</label>
+<label><input type = checkbox value = "Climb speed above FL100" data-value=154.3334 data-unit=m/s data-lower=0 data-upper=250> climb_speed_above_FL100</label>
+<label><input type = checkbox value = "Delta mach climb cruise" data-value=-0.02 data-unit=1 data-lower=-0.3 data-upper=0.01> delta_mach_climb_cruise</label>
+<label><input type = checkbox value = "Climb speed schedule" data-value=128.6112 data-unit=m/s data-lower=0 data-upper=250> climb_speed_schedule</label>
+<label><input type = checkbox value = "Descent speed below FL100" data-value=128.6112 data-unit=m/s data-lower=0 data-upper=250> descent_speed_below_FL100</label>
+<label><input type = checkbox value = "Descent speed above FL100" data-value=154.3334 data-unit=m/s data-lower=0 data-upper=250> descent_speed_above_FL100</label>
+<label><input type = checkbox value = "Descent speed schedule" data-value=128.6112 data-unit=m/s data-lower=0 data-upper=250> descent_speed_schedule</label>
+<label><input type = checkbox value = "Time to climb" data-value=2100 data-unit=s data-lower=600 data-upper=3600 checked> time_to_climb</label>
+<label><input type = checkbox value = "Fuel estimation selector" data-value=mode_0 data-unit=n/a data-lower=n/a data-upper=n/a> fuel_estimation_selector</label>
+<label><input type = checkbox value = "Fuel planning" data-value=mode_0 data-unit=n/a data-lower=n/a data-upper=n/a> fuel_planning</label>
+<label><input type = checkbox value = "Design mission" data-value=0 data-unit=K data-lower=-100 data-upper=100> design_mission</label>
+<label><input type = checkbox value = "Delta ISA" data-value=0 data-unit=K data-lower=-100 data-upper=100> delta_ISA</label>
+<label><input type = checkbox value = "Range" data-value=1481600 data-unit=m data-lower=0 data-upper=20000000 checked> range</label>
+<label><input type = checkbox value = "Initial cruise mach number" data-value=0.78 data-unit=1 data-lower=0 data-upper=1 checked> initial_cruise_mach_number</label>
+<label><input type = checkbox value = "Initial cruise altitude" data-value=10668 data-unit=m data-lower=1000 data-upper=20000 checked> initial_cruise_altitude</label>
+<label><input type = checkbox value = "Climb speed below FL100" data-value=128.6112 data-unit=m/s data-lower=0 data-upper=250> climb_speed_below_FL100</label>
+<label><input type = checkbox value = "Climb speed above FL100" data-value=154.3334 data-unit=m/s data-lower=0 data-upper=250> climb_speed_above_FL100</label>
+<label><input type = checkbox value = "Delta mach climb cruise" data-value=-0.02 data-unit=1 data-lower=-0.3 data-upper=0.01> delta_mach_climb_cruise</label>
+<label><input type = checkbox value = "Climb speed schedule" data-value=128.6112 data-unit=m/s data-lower=0 data-upper=250> climb_speed_schedule</label>
+<label><input type = checkbox value = "Descent speed below FL100" data-value=128.6112 data-unit=m/s data-lower=0 data-upper=250> descent_speed_below_FL100</label>
+<label><input type = checkbox value = "Descent speed above FL100" data-value=154.3334 data-unit=m/s data-lower=0 data-upper=250> descent_speed_above_FL100</label>
+<label><input type = checkbox value = "Descent speed schedule" data-value=128.6112 data-unit=m/s data-lower=0 data-upper=250> descent_speed_schedule</label>
+<label><input type = checkbox value = "Fuel estimation selector" data-value=mode_0 data-unit=n/a data-lower=n/a data-upper=n/a> fuel_estimation_selector</label>
+<label><input type = checkbox value = "Fuel planning" data-value=mode_0 data-unit=n/a data-lower=n/a data-upper=n/a> fuel_planning</label>
+<label><input type = checkbox value = "Total number passengers" data-value=135 data-unit=1 data-lower=0 data-upper=1000> total_number_passengers</label>
+<label><input type = checkbox value = "Mass per passenger" data-value=80 data-unit=kg data-lower=50 data-upper=200> mass_per_passenger</label>
+<label><input type = checkbox value = "Luggage mass per passenger" data-value=15 data-unit=kg data-lower=0 data-upper=25> luggage_mass_per_passenger</label>
+<label><input type = checkbox value = "Passenger definition" data-value=135 data-unit=1 data-lower=0 data-upper=1000> passenger_definition</label>
+<label><input type = checkbox value = "Additional cargo mass" data-value=1650 data-unit=kg data-lower=0 data-upper=25000> additional_cargo_mass</label>
+<label><input type = checkbox value = "Cargo density" data-value=165 data-unit=kg/m^3 data-lower=150 data-upper=200> cargo_density</label>
+<label><input type = checkbox value = "Cargo definition" data-value=1650 data-unit=kg data-lower=0 data-upper=25000> cargo_definition</label>
+<label><input type = checkbox value = "Transport task" data-value=135 data-unit=1 data-lower=0 data-upper=1000> transport_task</label>
+<label><input type = checkbox value = "Study mission" data-value=0 data-unit=K data-lower=-100 data-upper=100> study_mission</label>
+<label><input type = checkbox value = "Top level aircraft requirements" data-value=19300 data-unit=kg data-lower=100 data-upper=150000> top_level_aircraft_requirements</label>
+</div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="content-table" id="resultTable">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Value</th>
+                                <th>Unit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Selected items will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="left" id="mission-profile-box">
+                    <h2>Mission Profile</h2>
+                    <label for="csvFileInput" class="select-items-btn">Choose Mission Profile</label>
+                    <input type="file" accept=".csv" id="csvFileInput" style="display: none;">
+                    <div class="center" id="graph-container">
+                        <svg id="graph"></svg>
+                        <div id="tooltip" class="tooltip"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="box link">
+                <div class="right">
+                    <h2>Aircraft Specifications</h2>
+                    <div class="left">
+                        <button class="cluster-selection off" id="assessment" onclick="toggleButton(this)">Assessment</button>
+                        <button class="cluster-selection off" id="sizingPoint" onclick="toggleButton(this)">Sizing Point</button>
+                        <button class="cluster-selection off" id="aerodynamics" onclick="toggleButton(this)">Aerodynamics</button>
+                        <button class="cluster-selection off" id="liftCoefficients" onclick="toggleButton(this)">Lift Coefficients</button>
+                        <button class="cluster-selection off" id="masses" onclick="toggleButton(this)">Masses</button>
+                        <button class="cluster-selection off" id="cost" onclick="toggleButton(this)">Cost</button>
+                    </div>
+                    <table class="content-table" id="aircraftTable">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Value</th>
+                                <th>Unit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Selected items will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="right">
+                    <h2>Aircraft Geometry</h2>
+                    <div class="left" id="3d-view-container">
+                        <!-- Placeholder for 3D model -->
+                        <canvas id="3d-canvas" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                    <button class="select-items-btn" onclick="switchImage()">Reset View</button>
+                </div>
+                <div class="right">
+                    <h3>More Information</h3>
+                    <h4>Explore detailed reports:</h4>
+                    <ul id = "list of linked reports">
+<li><a href = "aerodynamic_analysis_report.html" target = "_blank">Aerodynamic analysis report </a> </li>
+<li><a href = "air_quality_index_report.html" target = "_blank">Air quality index report </a> </li>
+<li><a href = "climate_model_report.html" target = "_blank">Climate model report </a> </li>
+<li><a href = "cost_aircraft_operations_report.html" target = "_blank">Cost aircraft operations report </a> </li>
+<li><a href = "emissions_aircraft_development_report.html" target = "_blank">Emissions aircraft development report </a> </li>
+<li><a href = "emissions_aircraft_end_of_life_report.html" target = "_blank">Emissions aircraft end of life report </a> </li>
+<li><a href = "emissions_aircraft_maintenance_report.html" target = "_blank">Emissions aircraft maintenance report </a> </li>
+<li><a href = "emissions_aircraft_operations_report.html" target = "_blank">Emissions aircraft operations report </a> </li>
+<li><a href = "emissions_aircraft_production_report.html" target = "_blank">Emissions aircraft production report </a> </li>
+<li><a href = "emissions_aircraft_testing_report.html" target = "_blank">Emissions aircraft testing report </a> </li>
+<li><a href = "emissions_energy_carrier_production_report.html" target = "_blank">Emissions energy carrier production report </a> </li>
+<li><a href = "empennage_design_report.html" target = "_blank">Empennage design report </a> </li>
+<li><a href = "fuselage_design_report.html" target = "_blank">Fuselage design report </a> </li>
+<li><a href = "initial_sizing_report.html" target = "_blank">Initial sizing report </a> </li>
+<li><a href = "landing_gear_design_report.html" target = "_blank">Landing gear design report </a> </li>
+<li><a href = "mission_analysis_design_mission_report.html" target = "_blank">Mission analysis design mission report </a> </li>
+<li><a href = "mission_analysis_requirements_mission_report.html" target = "_blank">Mission analysis requirements mission report </a> </li>
+<li><a href = "mission_analysis_study_mission_report.html" target = "_blank">Mission analysis study mission report </a> </li>
+<li><a href = "performance_assessment_report.html" target = "_blank">Performance assessment report </a> </li>
+<li><a href = "propulsion_design_report.html" target = "_blank">Propulsion design report </a> </li>
+<li><a href = "systems_design_design_report.html" target = "_blank">Systems design design report </a> </li>
+<li><a href = "systems_design_requirement_report.html" target = "_blank">Systems design requirement report </a> </li>
+<li><a href = "systems_design_study_report.html" target = "_blank">Systems design study report </a> </li>
+<li><a href = "tank_design_report.html" target = "_blank">Tank design report </a> </li>
+<li><a href = "weight_and_balance_analysis_design_mission_report.html" target = "_blank">Weight and balance analysis design mission report </a> </li>
+<li><a href = "weight_and_balance_analysis_study_mission_report.html" target = "_blank">Weight and balance analysis study mission report </a> </li>
+<li><a href = "wing_design_report.html" target = "_blank">Wing design report </a> </li>
+</ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+  <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.154.0/build/three.module.js",
+          "stl-loader": "https://cdn.jsdelivr.net/npm/three@0.154.0/examples/jsm/loaders/STLLoader.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.154.0/examples/jsm/"
+        }
+      }
+  </script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+
+<script>
+    function updateMissionProfile (segments) {
+    // The Mission Profile Graph Script
+
+    const width = 800;
+    const height = 480;
+    const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+    const svg = d3.select("#graph").attr("width", width).attr("height", height);
+
+    const xScale = d3.scaleLinear().domain([0, 4600]).range([margin.left, width - margin.right]);
+    const yScale = d3.scaleLinear().domain([0, 11000]).range([height - margin.bottom, margin.top]);
+
+    const xAxis = d3.axisBottom(xScale).ticks(8).tickFormat(d3.format('d'));
+    const yAxis = d3.axisLeft(yScale).ticks(6);
+
+    svg.append("g")
+        .attr("transform", `translate(0,${height - margin.bottom})`)
+        .call(xAxis);
+    
+    svg.append("g")
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(yAxis);
+
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height - margin.bottom + 40)
+        .attr("text-anchor", "middle")
+        .attr("class", "axis-label")
+        .text("Range (km)");
+
+    svg.append("text")
+        .attr("x", -height / 2)
+        .attr("y", margin.left - 40)
+        .attr("text-anchor", "middle")
+        .attr("transform", "rotate(-90)")
+        .attr("class", "axis-label")
+        .text("Altitude (m)");
+
+    // Create gridlines with proper visibility
+svg.append('g')
+    .attr('class', 'gridlines')
+    .selectAll('.gridline')
+    .data(xScale.ticks(8))  // Data for x-axis ticks
+    .enter()
+    .append('line')
+    .attr('class', 'gridline')
+    .attr('x1', d => xScale(d))
+    .attr('x2', d => xScale(d))
+    .attr('y1', margin.top)
+    .attr('y2', height - margin.bottom)
+    .attr('stroke', 'lightgray')  // Gridline color
+    .attr('stroke-width', 0.5)    // Gridline width
+    .attr('stroke-dasharray', '2,2');  // Dashed lines
+
+svg.append('g')
+    .attr('class', 'gridlines')
+    .selectAll('.gridline')
+    .data(yScale.ticks(6))  // Data for y-axis ticks
+    .enter()
+    .append('line')
+    .attr('class', 'gridline')
+    .attr('x1', margin.left)
+    .attr('x2', width - margin.right)
+    .attr('y1', d => yScale(d))
+    .attr('y2', d => yScale(d))
+    .attr('stroke', 'lightgray')  // Gridline color
+    .attr('stroke-width', 0.5)    // Gridline width
+    .attr('stroke-dasharray', '2,2');  // Dashed lines
+
+
+// Create the tooltip and add basic styling
+const tooltip = d3.select("#tooltip")
+    .style("position", "absolute")
+    .style("pointer-events", "none")
+    .style("color", "white")
+    .style("padding", "8px")
+    .style("border-radius", "4px")
+    .style("font-size", "12px")
+    .style("z-index", "10")
+    .style("display", "none")  // Initially hide the tooltip
+    .style("background-color", "#2c3e50bd");
+
+// Draw the mission profile lines with circular ends
+segments.forEach(segment => {
+    const line = svg.append("line")
+        .attr("x1", xScale(segment.start))
+        .attr("y1", yScale(segment.startAlt))
+        .attr("x2", xScale(segment.end))
+        .attr("y2", yScale(segment.endAlt))
+        .attr("stroke", "#2c3e50")        // Initial color of the lines
+        .attr("stroke-width", 4)       // Set line width to 4
+        .attr("stroke-linecap", "round")  // Apply circular ends to the lines
+        .on("mouseover", function(event) {
+            // Change color to red and make the line bold on hover
+            d3.select(this)
+                .attr("stroke", "#ee5253")
+                .attr("stroke-width", 6);  // Make line thicker when hovered
+
+            // Display the tooltip and position it
+            tooltip.style("display", "block")
+                .html(`<strong>${segment.label}</strong><br>Range: ${segment.start.toPrecision(5)} km to ${segment.end.toPrecision(5)} km<br>Altitude: ${segment.startAlt.toPrecision(5)} m to ${segment.endAlt.toPrecision(5)} m<br>Time: ${segment.startTime.toPrecision(3)} min to ${segment.endTime.toPrecision(3)} min`);
+
+            const el = (sel, par) => (par||document).querySelector(sel);
+            const elMissionProfile = el("#graph-container");
+            const elLeftBox = el("#left-box");
+
+            // Dynamically adjust the tooltip position
+            const mouseX = event.clientX; // Adding a small offset to the right
+            const mouseY = event.clientY; // Adding a small offset below the cursor
+            tooltip.style("left", `${mouseX - elMissionProfile.offsetLeft + elLeftBox.scrollLeft}px`)
+                .style("top", `${mouseY - elMissionProfile.offsetTop + elLeftBox.scrollTop - 150}px`);
+        })
+        .on("mouseout", function() {
+            // Reset line color and thickness when mouse leaves
+            d3.select(this)
+                .attr("stroke", "#2c3e50")
+                .attr("stroke-width", 4);  // Reset to original thickness
+
+            // Hide the tooltip
+            tooltip.style("display", "none");
+        });
+});
+
+// Tooltip follows cursor based on screen coordinates
+svg.on("mousemove", function(event) {
+
+    const el = (sel, par) => (par||document).querySelector(sel);
+    const elMissionProfile = el("#graph-container");
+    const elLeftBox = el("#left-box");
+    // Get the mouse position relative to the viewport (clientX, clientY)
+    const [mouseX, mouseY] = [event.clientX, event.clientY];
+    
+    if (tooltip.style("display") === "block") {
+        tooltip.style("left", (mouseX - elMissionProfile.offsetLeft + elLeftBox.scrollLeft) + "px")  // Add an offset so the tooltip doesn't overlap with the pointer
+               .style("top", (mouseY - elMissionProfile.offsetTop + elLeftBox.scrollTop - 150) + "px");
+    }
+});
+    };
+
+    document.getElementById('csvFileInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+    
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const text = e.target.result;
+            const rows = text.split('\n').map(row => row.trim()).filter(row => row.length > 0);
+            const header = rows[0].split(';');
+    
+            // Identify the column indices for Altitude, Range, and Flight mode
+            const altitudeIndex = header.indexOf(' Altitude [m]');
+            const rangeIndex = header.indexOf(' Range [m]');
+            const modeIndex = header.indexOf(' Mode name [-]');
+            const timeIndex = header.indexOf('Time [s]');
+    
+            if (altitudeIndex === -1 || rangeIndex === -1 || modeIndex === -1) {
+                console.error('CSV file is missing required headers.');
+                return;
+            }
+    
+            const data = rows.slice(1).map(row => {
+                const columns = row.split(';');
+                return {
+                    altitude: parseFloat(columns[altitudeIndex]),
+                    range: parseFloat(columns[rangeIndex])/1000,
+                    mode: columns[modeIndex],
+                    time: parseFloat(columns[timeIndex])/(60),
+                };
+            });
+    
+            // Clear and populate segments based on mode changes
+            segments = [];
+            let currentSegment = null;
+    
+            data.forEach((point, index) => {
+                if (index === 0 || point.mode !== data[index - 1].mode) {
+                    if (currentSegment) {
+                        currentSegment.end = point.range;
+                        currentSegment.endAlt = point.altitude;
+                        currentSegment.endTime = point.time;
+                        segments.push(currentSegment);
+                    }
+                    currentSegment = {
+                        start: point.range,
+                        end: null,
+                        startAlt: point.altitude,
+                        endAlt: null,
+                        label: point.mode,
+                        startTime: point.time,
+                        endTime: null
+                    };
+                }
+    
+                if (index === data.length - 1 && currentSegment) {
+                    currentSegment.end = point.range;
+                    currentSegment.endAlt = point.altitude;
+                    currentSegment.endTime = point.time;
+                    segments.push(currentSegment);
+                }
+            });
+    
+            console.log('Updated segments:', segments);
+            updateMissionProfile(segments);
+        };
+    
+        reader.readAsText(file);
+    });
+
+</script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { STLLoader } from 'stl-loader';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js'; // Import OrbitControls
+
+    // Get the canvas element where the 3D model will be displayed
+    const canvas = document.getElementById('3d-canvas');
+    // Create scene
+    const scene = new THREE.Scene();
+
+    // Create an Orthographic Camera for isometric view
+    const aspectRatio = window.innerWidth / window.innerHeight;
+    const zoom = 15; // Controls the "zoom" (distance) of the scene
+    const camera = new THREE.OrthographicCamera(
+        -zoom * aspectRatio,   // left
+        zoom * aspectRatio,    // right
+        zoom,                  // top
+        -zoom,                 // bottom
+        1,                     // near plane
+        1000                   // far plane
+    );
+
+    // Position the camera for an isometric view
+    camera.position.set(0, -75, 45);  // Position at an angle to get an isometric view
+    camera.lookAt(0, 0, 0); 
+
+    // Set up renderer to use the canvas
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+    renderer.setClearColor(0xecf0f1, 1);
+    // Dynamically set the size of the renderer based on the canvas size
+    const resizeRenderer = () => {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+    };
+
+    // Initialize OrbitControls (for interactivity)
+    const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true; // Add smooth motion
+        controls.dampingFactor = 0.1; // Smooth factor
+        controls.screenSpacePanning = false;  // Don't allow panning in screen space
+    
+    // Initialize renderer size
+    resizeRenderer();
+
+    // Step 2: Create a light source
+    const light = new THREE.AmbientLight(0x404040); // Ambient light
+    scene.add(light);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(1, 1, 1).normalize();
+    scene.add(directionalLight);
+
+    // Step 3: Load the STL file using STLLoader
+    const loadObject = () => {
+      const loader = new STLLoader();
+      loader.load("AircraftMesh.stl", function (geometry) {
+        const material = new THREE.MeshStandardMaterial({ color: 0x2f7ecc, flatShading: true });
+
+        // Step 5: Create the mesh from geometry and material
+        const mesh = new THREE.Mesh(geometry, material);
+
+        // Create a group to center the rotation around the mesh's center
+        const group = new THREE.Group();
+        scene.add(group);  // Add the group to the scene
+
+        // Compute the bounding box of the mesh to get the center
+        geometry.computeBoundingBox();
+        const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+
+        // Center the mesh within the group by adjusting its position
+        mesh.position.sub(center);  // Move the mesh so its center is at the origin of the group
+
+        // Add the mesh to the group
+        group.add(mesh);
+
+        // Adjust the camera to view the model
+        camera.position.z = 25;
+        camera.position.y = -25;
+        camera.position.x = -1;
+        camera.lookAt(0, 0, 0);  // Ensure camera is facing the center of the model
+
+        // Animation loop
+        function animate() {
+          requestAnimationFrame(animate);
+
+          // Rotate the group (the mesh will rotate around the group’s origin)
+          // group.rotation.x += 0.01;  // Rotate on the x-axis
+          // group.rotation.y += 0.01;  // Rotate on the y-axis
+          group.rotation.z += 0.001;
+
+          renderer.render(scene, camera);
+        }
+
+        animate();
+      }, undefined, (error) => {
+        console.error('An error occurred while loading the STL file:', error);
+      });
+    };
+
+    // Load the object when the script is ready
+    loadObject();
+
+    // Step 8: Handle window resizing
+    window.addEventListener('resize', () => {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+    });
+  </script>
+
+    <script>
+        const clusters = {
+            assessment: [
+{ item: "takeoff distance normal safety", value : "1228.08525", unit : "m" },
+{ item: "needed runway length",value : "1758.796936", unit : "m" }
+            ],
+            sizingPoint: [
+{ item: "thrust to weight ratio", value : "0.3185737265", unit : "1" },
+{ item: "wing loading",value : "647.4483091", unit : "kg/m^2" }
+            ],
+            aerodynamics: [
+{ item: "span", value : "33.53199858", unit : "m" },
+{ item: "mean aerodynamic chord",value : "4.21409388", unit : "m" },
+{ item: "wing area", value : "118.3573609", unit : "m^2" },
+            ],
+            liftCoefficients: [
+{ item: "CL optimum cruise", value : "0.52", unit : "1" },
+{ item: "CL max landing",value : "2.86", unit : "1" },
+{ item: "CL max take-off", value : "2.48", unit : "1" },
+{ item: "CL ground roll",value : "0.4", unit : "1" }
+            ],
+            masses: [
+{ item: "maximum takeoff mass", value : "76707.4396", unit : "kg" },
+{ item: "operating mass empty",value : "43039.3224", unit : "kg" },
+{ item: "design mass", value : "76707.4396", unit : "kg" },
+{ item: "manufacturer mass empty",value : "38467.4386", unit : "kg" },
+{ item: "zero fuel mass", value : "62339.3224", unit : "kg" },
+{ item: "maximum payload mass", value : "19300", unit : "kg" },
+{ item: "maximum fuel mass",value : "19229.1299", unit : "kg" }
+            ],
+            cost: [
+{ item: "direct operating cost",value : "808", unit : "1" }
+            ]
+        };  
+        let initialCheckedState = []; // Store initial state of checkboxes
+
+        // Function to store the initial checked state of each checkbox
+        function storeInitialState() {
+            const checkboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                initialCheckedState.push({
+                    checkbox: checkbox,
+                    checked: checkbox.checked
+                });
+            });
+        }
+
+        // Function to reset the checkboxes and table to initial state
+        function resetSelection() {
+            // Restore the initial checked state
+            initialCheckedState.forEach(state => {
+                state.checkbox.checked = state.checked; // Set each checkbox to its initial checked state
+            });
+            
+            // Update the table based on the restored checked items
+            updateTable();
+        }
+        // Get references to popup and its content
+        const popup = document.getElementById('popup');
+
+        // Function to open the popup
+        function openPopup() {
+            popup.style.display = 'flex';
+        }
+
+        // Function to close the popup
+        function closePopup() {
+            popup.style.display = 'none';
+        }
+
+        // Function to update the table automatically when a checkbox is clicked
+        function updateTable() {
+            const resultTableBody = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+            resultTableBody.innerHTML = ''; // Clear the table
+
+            // Get the checked checkboxes
+            const checkedItems = Array.from(document.querySelectorAll('.dropdown-content input[type="checkbox"]:checked'));
+
+            // Insert checked items into the table
+            checkedItems.forEach(checkbox => {
+                const item = checkbox.value;
+                const value = checkbox.getAttribute('data-value');
+                const unit = checkbox.getAttribute('data-unit');
+
+                const row = resultTableBody.insertRow();
+                row.insertCell(0).textContent = item;
+                row.insertCell(1).textContent = value;
+                row.insertCell(2).textContent = unit;
+            });
+        }
+
+        // Add event listeners to all checkboxes
+        popup.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', updateTable);
+        });
+
+        function toggleButton(button) {
+            const clusterKey = button.id;
+            if (button.classList.contains('off')) {
+                button.classList.remove('off');
+                button.classList.add('on');
+                displayCluster(clusterKey, true);
+            } else {
+                button.classList.remove('on');
+                button.classList.add('off');
+                displayCluster(clusterKey, false);
+            }
+        }
+
+
+        // Function to display or hide a cluster in the table
+        function displayCluster(clusterKey, show) {
+            const tableBody = document.getElementById('aircraftTable').getElementsByTagName('tbody')[0];
+
+            if (show) {
+                clusters[clusterKey].forEach(item => {
+                    // Ensure each row has a unique `data-cluster` value
+                    const row = tableBody.insertRow();
+                    row.insertCell(0).textContent = item.item;
+                    row.insertCell(1).textContent = item.value;
+                    row.insertCell(2).textContent = item.unit;
+                    row.dataset.cluster = clusterKey;  // Set the cluster key as a data attribute
+                });
+            } else {
+                // Delete rows that belong to the cluster being hidden
+                const rows = tableBody.getElementsByTagName('tr');
+                for (let i = rows.length - 1; i >= 0; i--) {  // Loop backwards to avoid skipping rows
+                    const row = rows[i];
+                    if (row.dataset.cluster === clusterKey) {
+                        tableBody.deleteRow(i);
+                    }
+                }
+            }
+        }
+
+        // Store all images
+        const images = document.querySelectorAll('.aircraft-image');
+        let currentIndex = 0; // Keep track of which image is currently visible
+
+        // Function to switch to the next image
+        function switchImage() {
+            // Hide the current image
+            images[currentIndex].style.display = 'none';
+            
+            // Increment index, and if we reach the end, loop back to the first image
+            currentIndex = (currentIndex + 1) % images.length;
+            
+            // Show the next image
+            images[currentIndex].style.display = 'block';
+        }
+
+        window.onload = function() {
+            storeInitialState();
+            updateTable();
+        }
+
+    </script>
+
+</body>
+
+</html>

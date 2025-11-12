@@ -1,0 +1,15 @@
+# C:\Programs\UNICADOworkflow\workingDirectoryRCE\UNICADOworkflow_2025-10-16_09-20-18_13\UNICADO-SMR-01\reporting\plots\csv_files/systems_design_design_systems_mass_plot.csv
+# Mass of the individual systems
+# (1)ATA; (2) Name; (3) Mass [kg];
+ATA-21;Air Conditioning;762.646
+ATA-24;Electric System;1291.66
+ATA-25;Furnishing;290.01
+ATA-26;Fire Protection;91.9563
+ATA-27;Flight Control;670.238
+ATA-28;Fuel System;234.538
+ATA-29;Hydraulic System;766.068
+ATA-30;Anti-Icing;42.9858
+ATA-33;Lighting;260.951
+ATA-36;Oxygen;172.963
+ATA-49;FC;265.418
+ATA-XX;APU;1073.15

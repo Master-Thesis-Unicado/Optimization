@@ -1,0 +1,702 @@
+<html lang="en">
+ <head>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta charset="utf-8"/>
+  <title>
+   Landing gear design
+  </title>
+  <link href="style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div class="logo">
+  </div>
+  <div class="content">
+   <h1>
+    Report - Landing gear design of UNICADO-SMR-01
+    <br/>
+    <span>
+     <font size="2">
+      All outputs of the program 'landing_gear_design' were created with version 0.5.0
+     </font>
+    </span>
+   </h1>
+   <div class="container">
+    <div class="box data">
+     <h2>
+      General landing gear data
+     </h2>
+     <table class="content-table">
+      <caption>
+       Aircraft classification numbers
+      </caption>
+      <tbody>
+       <tr style="">
+        <td style="text-align: left;">
+         CBR
+        </td>
+        <td style="text-align: right;">
+         3
+        </td>
+        <td style="text-align: right;">
+         6
+        </td>
+        <td style="text-align: right;">
+         10
+        </td>
+        <td style="text-align: right;">
+         15
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         ACN
+        </td>
+        <td style="text-align: right;">
+         53.1
+        </td>
+        <td style="text-align: right;">
+         47.3
+        </td>
+        <td style="text-align: right;">
+         43.2
+        </td>
+        <td style="text-align: right;">
+         41.4
+        </td>
+       </tr>
+      </tbody>
+     </table>
+     <table class="content-table">
+      <caption>
+       Positions
+      </caption>
+      <thead>
+       <tr>
+        <th style="text-align: left;">
+         Parameter
+        </th>
+        <th style="text-align: right;">
+         Value
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr style="">
+        <td style="text-align: left;">
+         Nose gear x position
+        </td>
+        <td style="text-align: right;">
+         7.05 m
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Main gear x position
+        </td>
+        <td style="text-align: right;">
+         17.19 m
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Temporary center of gravity
+        </td>
+        <td style="text-align: right;">
+         16.50 m
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Main gear z position outer strut
+        </td>
+        <td style="text-align: right;">
+         -0.86 m
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Nose gear strut y position
+        </td>
+        <td style="text-align: right;">
+         0.00 m
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Main gear outer strut y position
+        </td>
+        <td style="text-align: right;">
+         4.40 m
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Nose gear z position
+        </td>
+        <td style="text-align: right;">
+         -1.66 m
+        </td>
+       </tr>
+      </tbody>
+     </table>
+     <table class="content-table">
+      <caption>
+       Masses
+      </caption>
+      <thead>
+       <tr>
+        <th style="text-align: left;">
+         Component
+        </th>
+        <th style="text-align: right;">
+         Mass
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr style="">
+        <td style="text-align: left;">
+         Nose landing gear mass per strut
+        </td>
+        <td style="text-align: right;">
+         449.77 kg
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Nose landing gear mass
+        </td>
+        <td style="text-align: right;">
+         449.77 kg
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Main landing gear mass per strut
+        </td>
+        <td style="text-align: right;">
+         1,275.24 kg
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Main landing gear mass
+        </td>
+        <td style="text-align: right;">
+         2,550.48 kg
+        </td>
+       </tr>
+       <tr style="font-weight: normal;">
+        <td style="text-align: left;">
+         Landing gear total mass
+        </td>
+        <td style="text-align: right;">
+         3,000.25 kg
+        </td>
+       </tr>
+      </tbody>
+     </table>
+     <table class="content-table">
+      <caption>
+       Limitations
+      </caption>
+      <thead>
+       <tr>
+        <th style="text-align: left;">
+         Parameter
+        </th>
+        <th style="text-align: right;">
+         Value
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr style="">
+        <td style="text-align: left;">
+         Tail tipping angle
+        </td>
+        <td style="text-align: right;">
+         15.36 deg
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Turnover angle
+        </td>
+        <td style="text-align: right;">
+         31.06 deg
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Wing tip clearance
+        </td>
+        <td style="text-align: right;">
+         18.92 deg
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Minimum forward position of nose gear
+        </td>
+        <td style="text-align: right;">
+         6.97 m
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Maximum aft position of nose gear
+        </td>
+        <td style="text-align: right;">
+         7.55 m
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Minimum forward position of main gear
+        </td>
+        <td style="text-align: right;">
+         17.19 m
+        </td>
+       </tr>
+      </tbody>
+     </table>
+     <h2>
+      Nose landing gear data
+     </h2>
+     <table class="content-table">
+      <caption>
+       Nose gear data
+      </caption>
+      <thead>
+       <tr>
+        <th style="text-align: left;">
+         Parameter
+        </th>
+        <th style="text-align: right;">
+         Value
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr style="">
+        <td style="text-align: left;">
+         Nose gear tire design load
+        </td>
+        <td style="text-align: right;">
+         12,937 lbs
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Number of nose gear struts
+        </td>
+        <td style="text-align: right;">
+         1
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Number of nose gear axis per strut
+        </td>
+        <td style="text-align: right;">
+         1
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Number of nose gear tires per strut
+        </td>
+        <td style="text-align: right;">
+         2
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Number of nose gear tires per strut
+        </td>
+        <td style="text-align: right;">
+         2.01 m
+        </td>
+       </tr>
+      </tbody>
+     </table>
+     <table class="content-table">
+      <caption>
+       Nose gear tire data
+      </caption>
+      <thead>
+       <tr>
+        <th style="text-align: left;">
+         Parameter
+        </th>
+        <th style="text-align: right;">
+         APS01203
+        </th>
+        <th style="text-align: right;">
+         APR05145
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr style="">
+        <td style="text-align: left;">
+         Tire size
+        </td>
+        <td style="text-align: right;">
+         30✕8.8
+        </td>
+        <td style="text-align: right;">
+         30✕8.8R15
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Max outside diameter in inch
+        </td>
+        <td style="text-align: right;">
+         30.31
+        </td>
+        <td style="text-align: right;">
+         31.17
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Min outside diameter in inch
+        </td>
+        <td style="text-align: right;">
+         29.53
+        </td>
+        <td style="text-align: right;">
+         29.55
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Max section width in inch
+        </td>
+        <td style="text-align: right;">
+         8.85
+        </td>
+        <td style="text-align: right;">
+         9.25
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Min section width in inch
+        </td>
+        <td style="text-align: right;">
+         8.27
+        </td>
+        <td style="text-align: right;">
+         8.33
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Rated pressure in psi
+        </td>
+        <td style="text-align: right;">
+         203.00
+        </td>
+        <td style="text-align: right;">
+         203.00
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Rated speed in mph
+        </td>
+        <td style="text-align: right;">
+         225.00
+        </td>
+        <td style="text-align: right;">
+         225.00
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Rated load in lbs
+        </td>
+        <td style="text-align: right;">
+         14,340.00
+        </td>
+        <td style="text-align: right;">
+         14,340.00
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Rated ply
+        </td>
+        <td style="text-align: right;">
+         16.00
+        </td>
+        <td style="text-align: right;">
+         16.00
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Tire weight in lbs
+        </td>
+        <td style="text-align: right;">
+         not_available
+        </td>
+        <td style="text-align: right;">
+         not_available
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Unloaded operational pressure in psi
+        </td>
+        <td style="text-align: right;">
+         189.70
+        </td>
+        <td style="text-align: right;">
+         189.70
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Maximum burst pressure in psi
+        </td>
+        <td style="text-align: right;">
+         246.60
+        </td>
+        <td style="text-align: right;">
+         246.60
+        </td>
+       </tr>
+      </tbody>
+     </table>
+     <h2>
+      Main landing gear data
+     </h2>
+     <table class="content-table">
+      <caption>
+       Main gear data
+      </caption>
+      <thead>
+       <tr>
+        <th style="text-align: left;">
+         Parameter
+        </th>
+        <th style="text-align: right;">
+         Value
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr style="">
+        <td style="text-align: left;">
+         Main gear tire design load
+        </td>
+        <td style="text-align: right;">
+         42,664.05 lbs
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Number of main gear struts
+        </td>
+        <td style="text-align: right;">
+         2
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Number of main gear outer struts
+        </td>
+        <td style="text-align: right;">
+         2
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Number of main gear axis per outer strut
+        </td>
+        <td style="text-align: right;">
+         1
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Number of main gear tires per outer strut
+        </td>
+        <td style="text-align: right;">
+         2
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Main landing gear wing mounting position in z direction
+        </td>
+        <td style="text-align: right;">
+         -0.86 m
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Main gear outer strut length
+        </td>
+        <td style="text-align: right;">
+         2.80 m
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Main landing gear track
+        </td>
+        <td style="text-align: right;">
+         8.80 m
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Wheel base
+        </td>
+        <td style="text-align: right;">
+         0 m
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Wheel track
+        </td>
+        <td style="text-align: right;">
+         0.93 m
+        </td>
+       </tr>
+      </tbody>
+     </table>
+     <table class="content-table">
+      <caption>
+       Main gear tire data
+      </caption>
+      <thead>
+       <tr>
+        <th style="text-align: left;">
+         Parameter
+        </th>
+        <th style="text-align: right;">
+         APS00524-E
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr style="">
+        <td style="text-align: left;">
+         Tire size
+        </td>
+        <td style="text-align: right;">
+         46✕16
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Max outside diameter in inch
+        </td>
+        <td style="text-align: right;">
+         45.25
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Min outside diameter in inch
+        </td>
+        <td style="text-align: right;">
+         44.30
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Max section width in inch
+        </td>
+        <td style="text-align: right;">
+         16.00
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Min section width in inch
+        </td>
+        <td style="text-align: right;">
+         15.05
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Rated pressure in psi
+        </td>
+        <td style="text-align: right;">
+         225.00
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Rated speed in mph
+        </td>
+        <td style="text-align: right;">
+         225.00
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Rated load in lbs
+        </td>
+        <td style="text-align: right;">
+         44,800.00
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Rated ply
+        </td>
+        <td style="text-align: right;">
+         30.00
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Tire weight in lbs
+        </td>
+        <td style="text-align: right;">
+         not_available
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Unloaded operational pressure in psi
+        </td>
+        <td style="text-align: right;">
+         210.30
+        </td>
+       </tr>
+       <tr style="">
+        <td style="text-align: left;">
+         Maximum burst pressure in psi
+        </td>
+        <td style="text-align: right;">
+         273.40
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <div class="box plot">
+     <h2>
+      Plots
+      <h3>
+       Front view of landing gear arrangement
+      </h3>
+      <img class="image-plot" src="../plots/landing_gear_design_Front view of landing gear arrangement.svg" style="margin-bottom: 20px;"/>
+     </h2>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

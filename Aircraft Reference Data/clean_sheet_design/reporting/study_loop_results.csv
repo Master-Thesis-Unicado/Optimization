@@ -1,0 +1,4 @@
+count_of_iteration; m_take_off_max in kg; residual_m_take_off_max; mission_energy in J; residual_mission_energy; fl_initial_cruise; residual_fl_initial_cruise; range in nm; residual_range;
+0;0.0nan;0.0nan;0.0;nan;0.0;nan;
+1;63678.14;1.0;274601369300.0;1.0;10668.0;1.0;1482600.99;1.0;
+2;63678.77;1e-05;274628675000.0;9.9e-05;10668.0;0.0;1482600.98;0.0;

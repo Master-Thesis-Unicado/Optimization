@@ -1,0 +1,401 @@
+*******************************************************************************
+16.10.2025 09:20:23 - Start empennage_design
+16.10.2025 09:20:23 - [MODULE RUNTIMEINFO] - empennage_design
+16.10.2025 09:20:23 -    [CONSOLE  ] - [ON]
+16.10.2025 09:20:23 -    [LOG      ] - [ON]
+16.10.2025 09:20:23 -    [PLOT     ] - [OFF]
+16.10.2025 09:20:23 -       [COPY  ] - [ON]
+16.10.2025 09:20:23 -       [DELETE] - [ON]
+16.10.2025 09:20:23 -    [REPORT   ] - [OFF]
+16.10.2025 09:20:23 -    [TEX      ] - [OFF]
+16.10.2025 09:20:23 -    [INFOFILES] - [OFF]
+16.10.2025 09:20:23 -    [GNUPLOT]
+16.10.2025 09:20:23 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:20:23 -       [FILENAME] - 
+16.10.2025 09:20:23 -    [INKSCAPE]
+16.10.2025 09:20:23 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:20:23 -       [FILENAME] - 
+16.10.2025 09:20:23 -    [LOGFILE]
+16.10.2025 09:20:23 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:20:23 -       [FILENAME] - empennage_design.log
+16.10.2025 09:20:23 -    [IO/ACXML]
+16.10.2025 09:20:23 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:20:23 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:20:23 -    [MODCONFIG]
+16.10.2025 09:20:23 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:20:23 -       [FILENAME] - empennage_design_conf.xml
+16.10.2025 09:20:23 - Checking directory... [REPORT]
+16.10.2025 09:20:23 - Checking directory... [TEX]
+16.10.2025 09:20:23 - Checking directory... [LOGFILES]
+16.10.2025 09:20:23 - Initializing empennage
+16.10.2025 09:20:23 - Empennage type -> conventional tail (vertical_stabilizer/horizontal_stabilizer)
+16.10.2025 09:20:23 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:20:23 - Running empennage -> conventional tail
+16.10.2025 09:20:23 - Mode active -> Design
+16.10.2025 09:20:23 - Lower root chord boundary @ 0 ... and f(lower): -395.631
+16.10.2025 09:20:23 - Upper root chord boundary @ 15.5381 ... and f(upper): 2826.9
+16.10.2025 09:20:23 - Current root chord -> 5.301454
+16.10.2025 09:20:23 - Lower root chord boundary @ 0 ... and f(lower): -440.997
+16.10.2025 09:20:23 - Upper root chord boundary @ 16.1479 ... and f(upper): 9520.21
+16.10.2025 09:20:23 - Current root chord -> 3.323389
+16.10.2025 09:20:23 - Empennage position (x y z) -> 30.4897 0 0.924292
+16.10.2025 09:20:23 - Mode active -> Mass computation - FLOPS
+16.10.2025 09:20:23 - Vertical stabilizer mass ... 380.81519280669875
+16.10.2025 09:20:23 - Horizontal stabilizer mass ... 482.67
+16.10.2025 09:20:23 - Empennage mass ... 863.4898253691379
+16.10.2025 09:20:23 - Empennage cog  ... 34.55, 0.00, 2.95
+16.10.2025 09:20:23 - Updating empennage -> conventional tail
+16.10.2025 09:20:23 - Reporting empennage -> conventional tail
+16.10.2025 09:20:23 - Finish empennage_design
+*******************************************************************************
+16.10.2025 09:20:44 - Start empennage_design
+16.10.2025 09:20:44 - [MODULE RUNTIMEINFO] - empennage_design
+16.10.2025 09:20:44 -    [CONSOLE  ] - [ON]
+16.10.2025 09:20:44 -    [LOG      ] - [ON]
+16.10.2025 09:20:44 -    [PLOT     ] - [OFF]
+16.10.2025 09:20:44 -       [COPY  ] - [ON]
+16.10.2025 09:20:44 -       [DELETE] - [ON]
+16.10.2025 09:20:44 -    [REPORT   ] - [OFF]
+16.10.2025 09:20:44 -    [TEX      ] - [OFF]
+16.10.2025 09:20:44 -    [INFOFILES] - [OFF]
+16.10.2025 09:20:44 -    [GNUPLOT]
+16.10.2025 09:20:44 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:20:44 -       [FILENAME] - 
+16.10.2025 09:20:44 -    [INKSCAPE]
+16.10.2025 09:20:44 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:20:44 -       [FILENAME] - 
+16.10.2025 09:20:44 -    [LOGFILE]
+16.10.2025 09:20:44 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:20:44 -       [FILENAME] - empennage_design.log
+16.10.2025 09:20:44 -    [IO/ACXML]
+16.10.2025 09:20:44 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:20:44 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:20:44 -    [MODCONFIG]
+16.10.2025 09:20:44 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:20:44 -       [FILENAME] - empennage_design_conf.xml
+16.10.2025 09:20:44 - Checking directory... [REPORT]
+16.10.2025 09:20:44 - Checking directory... [TEX]
+16.10.2025 09:20:44 - Checking directory... [LOGFILES]
+16.10.2025 09:20:44 - Initializing empennage
+16.10.2025 09:20:44 - Empennage type -> conventional tail (vertical_stabilizer/horizontal_stabilizer)
+16.10.2025 09:20:44 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:20:44 - Running empennage -> conventional tail
+16.10.2025 09:20:44 - Mode active -> Design
+16.10.2025 09:20:44 - Lower root chord boundary @ 0 ... and f(lower): -404.183
+16.10.2025 09:20:44 - Upper root chord boundary @ 15.7392 ... and f(upper): 2951.72
+16.10.2025 09:20:44 - Current root chord -> 5.318416
+16.10.2025 09:20:44 - Lower root chord boundary @ 0 ... and f(lower): -480.569
+16.10.2025 09:20:44 - Upper root chord boundary @ 16.3178 ... and f(upper): 9840.24
+16.10.2025 09:20:44 - Current root chord -> 3.444972
+16.10.2025 09:20:44 - Empennage position (x y z) -> 30.4728 0 0.924292
+16.10.2025 09:20:44 - Mode active -> Mass computation - FLOPS
+16.10.2025 09:20:44 - Vertical stabilizer mass ... 406.02360743146403
+16.10.2025 09:20:44 - Horizontal stabilizer mass ... 539.32
+16.10.2025 09:20:44 - Empennage mass ... 945.3469147802853
+16.10.2025 09:20:44 - Empennage cog  ... 34.53, 0.00, 2.99
+16.10.2025 09:20:44 - Updating empennage -> conventional tail
+16.10.2025 09:20:44 - Reporting empennage -> conventional tail
+16.10.2025 09:20:44 - Finish empennage_design
+*******************************************************************************
+16.10.2025 09:21:22 - Start empennage_design
+16.10.2025 09:21:22 - [MODULE RUNTIMEINFO] - empennage_design
+16.10.2025 09:21:22 -    [CONSOLE  ] - [ON]
+16.10.2025 09:21:22 -    [LOG      ] - [ON]
+16.10.2025 09:21:22 -    [PLOT     ] - [OFF]
+16.10.2025 09:21:22 -       [COPY  ] - [ON]
+16.10.2025 09:21:22 -       [DELETE] - [ON]
+16.10.2025 09:21:22 -    [REPORT   ] - [OFF]
+16.10.2025 09:21:22 -    [TEX      ] - [OFF]
+16.10.2025 09:21:22 -    [INFOFILES] - [OFF]
+16.10.2025 09:21:22 -    [GNUPLOT]
+16.10.2025 09:21:22 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:21:22 -       [FILENAME] - 
+16.10.2025 09:21:22 -    [INKSCAPE]
+16.10.2025 09:21:22 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:21:22 -       [FILENAME] - 
+16.10.2025 09:21:22 -    [LOGFILE]
+16.10.2025 09:21:22 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:22 -       [FILENAME] - empennage_design.log
+16.10.2025 09:21:22 -    [IO/ACXML]
+16.10.2025 09:21:22 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:21:22 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:21:22 -    [MODCONFIG]
+16.10.2025 09:21:22 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:22 -       [FILENAME] - empennage_design_conf.xml
+16.10.2025 09:21:22 - Checking directory... [REPORT]
+16.10.2025 09:21:22 - Checking directory... [TEX]
+16.10.2025 09:21:22 - Checking directory... [LOGFILES]
+16.10.2025 09:21:22 - Initializing empennage
+16.10.2025 09:21:22 - Empennage type -> conventional tail (vertical_stabilizer/horizontal_stabilizer)
+16.10.2025 09:21:22 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:21:22 - Running empennage -> conventional tail
+16.10.2025 09:21:22 - Mode active -> Design
+16.10.2025 09:21:22 - Lower root chord boundary @ 0 ... and f(lower): -407.805
+16.10.2025 09:21:22 - Upper root chord boundary @ 15.8712 ... and f(upper): 3035.34
+16.10.2025 09:21:22 - Current root chord -> 5.317808
+16.10.2025 09:21:22 - Lower root chord boundary @ 0 ... and f(lower): -497.578
+16.10.2025 09:21:22 - Upper root chord boundary @ 16.4409 ... and f(upper): 10071.7
+16.10.2025 09:21:22 - Current root chord -> 3.490298
+16.10.2025 09:21:22 - Empennage position (x y z) -> 30.4734 0 0.924292
+16.10.2025 09:21:22 - Mode active -> Mass computation - FLOPS
+16.10.2025 09:21:22 - Vertical stabilizer mass ... 414.3330554577508
+16.10.2025 09:21:22 - Horizontal stabilizer mass ... 561.21
+16.10.2025 09:21:22 - Empennage mass ... 975.5419238940443
+16.10.2025 09:21:22 - Empennage cog  ... 34.53, 0.00, 3.00
+16.10.2025 09:21:22 - Updating empennage -> conventional tail
+16.10.2025 09:21:23 - Reporting empennage -> conventional tail
+16.10.2025 09:21:23 - Finish empennage_design
+*******************************************************************************
+16.10.2025 09:21:55 - Start empennage_design
+16.10.2025 09:21:55 - [MODULE RUNTIMEINFO] - empennage_design
+16.10.2025 09:21:55 -    [CONSOLE  ] - [ON]
+16.10.2025 09:21:55 -    [LOG      ] - [ON]
+16.10.2025 09:21:55 -    [PLOT     ] - [OFF]
+16.10.2025 09:21:55 -       [COPY  ] - [ON]
+16.10.2025 09:21:55 -       [DELETE] - [ON]
+16.10.2025 09:21:55 -    [REPORT   ] - [OFF]
+16.10.2025 09:21:55 -    [TEX      ] - [OFF]
+16.10.2025 09:21:55 -    [INFOFILES] - [OFF]
+16.10.2025 09:21:55 -    [GNUPLOT]
+16.10.2025 09:21:55 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:21:55 -       [FILENAME] - 
+16.10.2025 09:21:55 -    [INKSCAPE]
+16.10.2025 09:21:55 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:21:55 -       [FILENAME] - 
+16.10.2025 09:21:55 -    [LOGFILE]
+16.10.2025 09:21:55 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:55 -       [FILENAME] - empennage_design.log
+16.10.2025 09:21:55 -    [IO/ACXML]
+16.10.2025 09:21:55 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:21:55 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:21:55 -    [MODCONFIG]
+16.10.2025 09:21:55 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:55 -       [FILENAME] - empennage_design_conf.xml
+16.10.2025 09:21:55 - Checking directory... [REPORT]
+16.10.2025 09:21:55 - Checking directory... [TEX]
+16.10.2025 09:21:55 - Checking directory... [LOGFILES]
+16.10.2025 09:21:55 - Initializing empennage
+16.10.2025 09:21:55 - Empennage type -> conventional tail (vertical_stabilizer/horizontal_stabilizer)
+16.10.2025 09:21:55 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:21:55 - Running empennage -> conventional tail
+16.10.2025 09:21:55 - Mode active -> Design
+16.10.2025 09:21:55 - Lower root chord boundary @ 0 ... and f(lower): -409.444
+16.10.2025 09:21:55 - Upper root chord boundary @ 15.9611 ... and f(upper): 3093.43
+16.10.2025 09:21:55 - Current root chord -> 5.312372
+16.10.2025 09:21:55 - Lower root chord boundary @ 0 ... and f(lower): -505.305
+16.10.2025 09:21:55 - Upper root chord boundary @ 16.5276 ... and f(upper): 10237.3
+16.10.2025 09:21:55 - Current root chord -> 3.507218
+16.10.2025 09:21:55 - Empennage position (x y z) -> 30.4788 0 0.924292
+16.10.2025 09:21:55 - Mode active -> Mass computation - FLOPS
+16.10.2025 09:21:55 - Vertical stabilizer mass ... 417.1891254749102
+16.10.2025 09:21:55 - Horizontal stabilizer mass ... 569.92
+16.10.2025 09:21:55 - Empennage mass ... 987.1138186624619
+16.10.2025 09:21:55 - Empennage cog  ... 34.52, 0.00, 3.00
+16.10.2025 09:21:55 - Updating empennage -> conventional tail
+16.10.2025 09:21:55 - Reporting empennage -> conventional tail
+16.10.2025 09:21:55 - Finish empennage_design
+*******************************************************************************
+16.10.2025 09:22:35 - Start empennage_design
+16.10.2025 09:22:35 - [MODULE RUNTIMEINFO] - empennage_design
+16.10.2025 09:22:35 -    [CONSOLE  ] - [ON]
+16.10.2025 09:22:35 -    [LOG      ] - [ON]
+16.10.2025 09:22:35 -    [PLOT     ] - [OFF]
+16.10.2025 09:22:35 -       [COPY  ] - [ON]
+16.10.2025 09:22:35 -       [DELETE] - [ON]
+16.10.2025 09:22:35 -    [REPORT   ] - [OFF]
+16.10.2025 09:22:35 -    [TEX      ] - [OFF]
+16.10.2025 09:22:35 -    [INFOFILES] - [OFF]
+16.10.2025 09:22:35 -    [GNUPLOT]
+16.10.2025 09:22:35 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:22:35 -       [FILENAME] - 
+16.10.2025 09:22:35 -    [INKSCAPE]
+16.10.2025 09:22:35 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:22:35 -       [FILENAME] - 
+16.10.2025 09:22:35 -    [LOGFILE]
+16.10.2025 09:22:35 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:22:35 -       [FILENAME] - empennage_design.log
+16.10.2025 09:22:35 -    [IO/ACXML]
+16.10.2025 09:22:35 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:22:35 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:22:35 -    [MODCONFIG]
+16.10.2025 09:22:35 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:22:35 -       [FILENAME] - empennage_design_conf.xml
+16.10.2025 09:22:35 - Checking directory... [REPORT]
+16.10.2025 09:22:35 - Checking directory... [TEX]
+16.10.2025 09:22:35 - Checking directory... [LOGFILES]
+16.10.2025 09:22:35 - Initializing empennage
+16.10.2025 09:22:35 - Empennage type -> conventional tail (vertical_stabilizer/horizontal_stabilizer)
+16.10.2025 09:22:35 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:22:35 - Running empennage -> conventional tail
+16.10.2025 09:22:35 - Mode active -> Design
+16.10.2025 09:22:35 - Lower root chord boundary @ 0 ... and f(lower): -410.17
+16.10.2025 09:22:35 - Upper root chord boundary @ 16.0162 ... and f(upper): 3129.44
+16.10.2025 09:22:35 - Current root chord -> 5.307370
+16.10.2025 09:22:35 - Lower root chord boundary @ 0 ... and f(lower): -508.733
+16.10.2025 09:22:35 - Upper root chord boundary @ 16.5814 ... and f(upper): 10341.5
+16.10.2025 09:22:35 - Current root chord -> 3.512990
+16.10.2025 09:22:35 - Empennage position (x y z) -> 30.4838 0 0.924292
+16.10.2025 09:22:35 - Mode active -> Mass computation - FLOPS
+16.10.2025 09:22:35 - Vertical stabilizer mass ... 418.0639585234263
+16.10.2025 09:22:35 - Horizontal stabilizer mass ... 573.21
+16.10.2025 09:22:35 - Empennage mass ... 991.2768197169378
+16.10.2025 09:22:35 - Empennage cog  ... 34.52, 0.00, 3.00
+16.10.2025 09:22:35 - Updating empennage -> conventional tail
+16.10.2025 09:22:36 - Reporting empennage -> conventional tail
+16.10.2025 09:22:36 - Finish empennage_design
+*******************************************************************************
+16.10.2025 09:23:46 - Start empennage_design
+16.10.2025 09:23:46 - [MODULE RUNTIMEINFO] - empennage_design
+16.10.2025 09:23:46 -    [CONSOLE  ] - [ON]
+16.10.2025 09:23:46 -    [LOG      ] - [ON]
+16.10.2025 09:23:46 -    [PLOT     ] - [OFF]
+16.10.2025 09:23:46 -       [COPY  ] - [ON]
+16.10.2025 09:23:46 -       [DELETE] - [ON]
+16.10.2025 09:23:46 -    [REPORT   ] - [OFF]
+16.10.2025 09:23:46 -    [TEX      ] - [OFF]
+16.10.2025 09:23:46 -    [INFOFILES] - [OFF]
+16.10.2025 09:23:46 -    [GNUPLOT]
+16.10.2025 09:23:46 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:23:46 -       [FILENAME] - 
+16.10.2025 09:23:46 -    [INKSCAPE]
+16.10.2025 09:23:46 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:23:46 -       [FILENAME] - 
+16.10.2025 09:23:46 -    [LOGFILE]
+16.10.2025 09:23:46 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:23:46 -       [FILENAME] - empennage_design.log
+16.10.2025 09:23:46 -    [IO/ACXML]
+16.10.2025 09:23:46 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:23:46 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:23:46 -    [MODCONFIG]
+16.10.2025 09:23:46 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:23:46 -       [FILENAME] - empennage_design_conf.xml
+16.10.2025 09:23:46 - Checking directory... [REPORT]
+16.10.2025 09:23:46 - Checking directory... [TEX]
+16.10.2025 09:23:46 - Checking directory... [LOGFILES]
+16.10.2025 09:23:46 - Initializing empennage
+16.10.2025 09:23:46 - Empennage type -> conventional tail (vertical_stabilizer/horizontal_stabilizer)
+16.10.2025 09:23:46 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:23:46 - Running empennage -> conventional tail
+16.10.2025 09:23:46 - Mode active -> Design
+16.10.2025 09:23:46 - Lower root chord boundary @ 0 ... and f(lower): -410.488
+16.10.2025 09:23:46 - Upper root chord boundary @ 16.0479 ... and f(upper): 3150.35
+16.10.2025 09:23:46 - Current root chord -> 5.303892
+16.10.2025 09:23:46 - Lower root chord boundary @ 0 ... and f(lower): -510.239
+16.10.2025 09:23:46 - Upper root chord boundary @ 16.6127 ... and f(upper): 10402.5
+16.10.2025 09:23:46 - Current root chord -> 3.514696
+16.10.2025 09:23:46 - Empennage position (x y z) -> 30.4873 0 0.924292
+16.10.2025 09:23:46 - Mode active -> Mass computation - FLOPS
+16.10.2025 09:23:46 - Vertical stabilizer mass ... 418.2678736105464
+16.10.2025 09:23:46 - Horizontal stabilizer mass ... 574.38
+16.10.2025 09:23:46 - Empennage mass ... 992.6507655964951
+16.10.2025 09:23:46 - Empennage cog  ... 34.53, 0.00, 3.00
+16.10.2025 09:23:46 - Updating empennage -> conventional tail
+16.10.2025 09:23:46 - Reporting empennage -> conventional tail
+16.10.2025 09:23:46 - Finish empennage_design
+*******************************************************************************
+16.10.2025 09:24:57 - Start empennage_design
+16.10.2025 09:24:57 - [MODULE RUNTIMEINFO] - empennage_design
+16.10.2025 09:24:57 -    [CONSOLE  ] - [ON]
+16.10.2025 09:24:57 -    [LOG      ] - [ON]
+16.10.2025 09:24:57 -    [PLOT     ] - [OFF]
+16.10.2025 09:24:57 -       [COPY  ] - [ON]
+16.10.2025 09:24:57 -       [DELETE] - [ON]
+16.10.2025 09:24:57 -    [REPORT   ] - [OFF]
+16.10.2025 09:24:57 -    [TEX      ] - [OFF]
+16.10.2025 09:24:57 -    [INFOFILES] - [OFF]
+16.10.2025 09:24:57 -    [GNUPLOT]
+16.10.2025 09:24:57 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:24:57 -       [FILENAME] - 
+16.10.2025 09:24:57 -    [INKSCAPE]
+16.10.2025 09:24:57 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:24:57 -       [FILENAME] - 
+16.10.2025 09:24:57 -    [LOGFILE]
+16.10.2025 09:24:57 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:24:57 -       [FILENAME] - empennage_design.log
+16.10.2025 09:24:57 -    [IO/ACXML]
+16.10.2025 09:24:57 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:24:57 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:24:57 -    [MODCONFIG]
+16.10.2025 09:24:57 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:24:57 -       [FILENAME] - empennage_design_conf.xml
+16.10.2025 09:24:57 - Checking directory... [REPORT]
+16.10.2025 09:24:57 - Checking directory... [TEX]
+16.10.2025 09:24:57 - Checking directory... [LOGFILES]
+16.10.2025 09:24:57 - Initializing empennage
+16.10.2025 09:24:57 - Empennage type -> conventional tail (vertical_stabilizer/horizontal_stabilizer)
+16.10.2025 09:24:57 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:24:57 - Running empennage -> conventional tail
+16.10.2025 09:24:57 - Mode active -> Design
+16.10.2025 09:24:57 - Lower root chord boundary @ 0 ... and f(lower): -410.628
+16.10.2025 09:24:57 - Upper root chord boundary @ 16.0653 ... and f(upper): 3161.88
+16.10.2025 09:24:57 - Current root chord -> 5.301767
+16.10.2025 09:24:57 - Lower root chord boundary @ 0 ... and f(lower): -510.897
+16.10.2025 09:24:57 - Upper root chord boundary @ 16.6299 ... and f(upper): 10436.3
+16.10.2025 09:24:57 - Current root chord -> 3.515054
+16.10.2025 09:24:57 - Empennage position (x y z) -> 30.4894 0 0.924292
+16.10.2025 09:24:57 - Mode active -> Mass computation - FLOPS
+16.10.2025 09:24:57 - Vertical stabilizer mass ... 418.2739889347117
+16.10.2025 09:24:57 - Horizontal stabilizer mass ... 574.77
+16.10.2025 09:24:57 - Empennage mass ... 993.040375623533
+16.10.2025 09:24:57 - Empennage cog  ... 34.53, 0.00, 3.00
+16.10.2025 09:24:57 - Updating empennage -> conventional tail
+16.10.2025 09:24:57 - Reporting empennage -> conventional tail
+16.10.2025 09:24:57 - Finish empennage_design
+*******************************************************************************
+16.10.2025 09:26:08 - Start empennage_design
+16.10.2025 09:26:08 - [MODULE RUNTIMEINFO] - empennage_design
+16.10.2025 09:26:08 -    [CONSOLE  ] - [ON]
+16.10.2025 09:26:08 -    [LOG      ] - [ON]
+16.10.2025 09:26:08 -    [PLOT     ] - [ON]
+16.10.2025 09:26:08 -       [COPY  ] - [ON]
+16.10.2025 09:26:08 -       [DELETE] - [ON]
+16.10.2025 09:26:08 -    [REPORT   ] - [ON]
+16.10.2025 09:26:08 -    [TEX      ] - [ON]
+16.10.2025 09:26:08 -    [INFOFILES] - [OFF]
+16.10.2025 09:26:08 -    [GNUPLOT]
+16.10.2025 09:26:08 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:26:08 -       [FILENAME] - 
+16.10.2025 09:26:08 -    [INKSCAPE]
+16.10.2025 09:26:08 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:26:08 -       [FILENAME] - 
+16.10.2025 09:26:08 -    [LOGFILE]
+16.10.2025 09:26:08 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:26:08 -       [FILENAME] - empennage_design.log
+16.10.2025 09:26:08 -    [IO/ACXML]
+16.10.2025 09:26:08 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:26:08 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:26:08 -    [MODCONFIG]
+16.10.2025 09:26:08 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:26:08 -       [FILENAME] - empennage_design_conf.xml
+16.10.2025 09:26:08 - Checking directory... [REPORT]
+16.10.2025 09:26:08 - Checking directory... [TEX]
+16.10.2025 09:26:08 - Checking directory... [HTML]
+16.10.2025 09:26:08 - Checking directory... [PLOT]
+16.10.2025 09:26:08 - Checking directory... [CSVFILES]
+16.10.2025 09:26:08 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:26:08 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:26:08 - Checking directory... [PLOTFILES]
+16.10.2025 09:26:08 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:26:08 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:26:08 - Checking directory... [LOGFILES]
+16.10.2025 09:26:08 - Initializing empennage
+16.10.2025 09:26:08 - Empennage type -> conventional tail (vertical_stabilizer/horizontal_stabilizer)
+16.10.2025 09:26:08 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:26:08 - Running empennage -> conventional tail
+16.10.2025 09:26:08 - Mode active -> Design
+16.10.2025 09:26:08 - Lower root chord boundary @ 0 ... and f(lower): -410.628
+16.10.2025 09:26:08 - Upper root chord boundary @ 16.0653 ... and f(upper): 3161.88
+16.10.2025 09:26:08 - Current root chord -> 5.301767
+16.10.2025 09:26:08 - Lower root chord boundary @ 0 ... and f(lower): -510.897
+16.10.2025 09:26:08 - Upper root chord boundary @ 16.6299 ... and f(upper): 10436.3
+16.10.2025 09:26:08 - Current root chord -> 3.515054
+16.10.2025 09:26:08 - Empennage position (x y z) -> 30.4894 0 0.924292
+16.10.2025 09:26:08 - Mode active -> Mass computation - FLOPS
+16.10.2025 09:26:08 - Vertical stabilizer mass ... 418.2739889347117
+16.10.2025 09:26:08 - Horizontal stabilizer mass ... 574.77
+16.10.2025 09:26:08 - Empennage mass ... 993.040375623533
+16.10.2025 09:26:08 - Empennage cog  ... 34.53, 0.00, 3.00
+16.10.2025 09:26:08 - Updating empennage -> conventional tail
+16.10.2025 09:26:08 - Reporting empennage -> conventional tail
+16.10.2025 09:26:13 - CSS code written to style.css successfully.
+16.10.2025 09:26:13 - Finish empennage_design

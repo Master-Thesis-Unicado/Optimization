@@ -1,0 +1,3705 @@
+<module_configuration_file Name="Fuselage Design Runtime Configuration.">
+	<control_settings description="General control settings for this tool">
+		<aircraft_exchange_file_name description="Specify the name of the exchange file">
+			<value>UNICADO-SMR-01.xml</value>
+		</aircraft_exchange_file_name>
+		<aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+			<value>../projects/UNICADO/UNICADO-SMR-01/</value>
+		</aircraft_exchange_file_directory>
+		<own_tool_level description="Specify the tool level of this tool">
+			<value>1</value>
+		</own_tool_level>
+		<console_output description="Selector to specify the console output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+			<value>mode_1</value>
+		</console_output>
+		<log_file_output description="Selector to specify the log file output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+			<value>mode_1</value>
+		</log_file_output>
+		<plot_output description="Specify the way plotting shall be handled">
+			<enable description="Switch to enable plotting. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</enable>
+			<copy_plotting_files description="Switch if plotting files shall be copied. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</copy_plotting_files>
+			<delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</delete_plotting_files_from_tool_folder>
+		</plot_output>
+		<report_output description="Switch to generate an HTML report. Switch: true (On) / false (Off)">
+			<value>true</value>
+		</report_output>
+		<tex_report description="Switch to generate a Tex report. Switch: true (On) / false (Off)">
+			<value>true</value>
+		</tex_report>
+		<xml_output description="Switch to export module specific data to XML ('true': On, 'false': Off)">
+				<value>true</value>
+			</xml_output>
+		<write_info_files description="Switch to generate info files. Switch: true (On) / false (Off)">
+			<value>false</value>
+		</write_info_files>
+		<log_file description="Specify the name of the log file">
+			<value>fuselage_design.log</value>
+		</log_file>
+		<inkscape_path description="Path to the inkscape application (DEFAULT: Use inkscape from the UNICADO repo structure)">
+			<value>C:/Programs/UNICADOworkflow/inkscape/</value>
+		</inkscape_path>
+		<gnuplot_path description="Path to the gnuplot application (DEFAULT: Use gnuplot from the UNICADO repo structure)">
+			<value>C:/Programs/UNICADOworkflow/gnuplot/</value>
+		</gnuplot_path>
+    </control_settings>
+	<program_settings description="Program settings.">
+		<program_mode description="Select the fuselage design sizing mode. Selector: mode_0: (Initial sizing) / mode_1: (Use existing fuselage)">
+			<value>mode_0</value>
+			<default>mode_0</default>
+			<setting_use_existing_geometry description="Specific settings for use existing geometry mode.">
+				<apth_to_existing_geometry_file description="Name of the xml file containing an existing fuselage geometry.">
+					<value>./geometry_data/existing_component_geometries/existing_fuselage_geometry.xml</value>
+					<default>./geometry_data/existing_component_geometries/existing_fuselage_geometry.xml</default>
+				</apth_to_existing_geometry_file>
+				<use_as_starting_point description="Switch to select if the existing geometry should be used as an starting point for calculation or use the geometry without further calculation. Switch: false (no further calculation) / true (use as starting point)">
+					<value>false</value>
+					<default>false</default>
+				</use_as_starting_point>
+			</setting_use_existing_geometry>
+		</program_mode>
+		<configuration ID="tube_and_wing">
+			<fidelity_name description="Select fidelity name (options: empirical, numerical,...). Selector: empirical">
+				<value>empirical</value>
+			</fidelity_name>
+			<method_name description="Select method name (options: fuselage_design_tu_berlin). Selector: fuselage_design_tu_berlin">
+				<value>fuselage_design_tu_berlin</value>
+				<default>fuselage_design_tu_berlin</default>
+			</method_name>
+			<fidelity ID="empirical">
+				<fuselage_design_tu_berlin description="Empirical method for fuselage and cabin design.">
+					<general description="General parameter setting for fuselage and cabin design.">
+						<flight_attendant_mass description="Mass of one flight attendant.">
+							<value>70</value>
+							<unit>kg</unit>
+							<lower_boundary>65</lower_boundary>
+							<upper_boundary>85</upper_boundary>
+							<default>70</default>
+						</flight_attendant_mass>
+						<flight_crew_member_mass description="Mass of one flight crew member.">
+							<value>85</value>
+							<unit>kg</unit>
+							<lower_boundary>70</lower_boundary>
+							<upper_boundary>95</upper_boundary>
+							<default>85</default>
+						</flight_crew_member_mass>
+						<force_circular_cross_section description="Switch to force identically fuselage width and hight. (true: force, false: do not force)">
+							<value>false</value>
+							<default>false</default>
+						</force_circular_cross_section>
+						<high_density_seat_pitch description="Seat pitch definition for high density layouts.">
+							<high_density_seat_pitch_for_single_aisle description="Minimum seat pitch for single-aisle aircraft in high density layout.">
+								<value>28</value>
+								<unit>inch</unit>
+								<lower_boundary>27</lower_boundary>
+								<upper_boundary>30</upper_boundary>
+								<default>28</default>
+							</high_density_seat_pitch_for_single_aisle>
+							<high_density_seat_pitch_for_wide_body description="Minimum seat pitch for wide-body aircraft in high density layout.">
+								<value>30</value>
+								<unit>inch</unit>
+								<lower_boundary>29</lower_boundary>
+								<upper_boundary>32</upper_boundary>
+								<default>30</default>
+							</high_density_seat_pitch_for_wide_body>
+						</high_density_seat_pitch>
+						<length_of_flight_deck description="Length of the cockpit. (According to Jenkinson, CS-25: 3.75, GA: 0)">
+							<value>3.75</value>
+							<unit>m</unit>
+							<lower_boundary>0</lower_boundary>
+							<upper_boundary>5</upper_boundary>
+							<default>3.75</default>
+						</length_of_flight_deck>
+						<mass_technology_factors description="Mass technology factors.">
+							<fuselage_structural_mass_technology_factor description="Technology factor for the fuselage structure mass.">
+								<value>0.94</value>
+								<unit>-</unit>
+								<lower_boundary>0.5</lower_boundary>
+								<upper_boundary>1.5</upper_boundary>
+								<default>1.0</default>
+							</fuselage_structural_mass_technology_factor>
+							<furnishings_mass_technology_factor description="Technology factor for the furnishing and equipment group mass.">
+								<value>1.0</value>
+								<unit>-</unit>
+								<lower_boundary>0.5</lower_boundary>
+								<upper_boundary>1.5</upper_boundary>
+								<default>1.0</default>
+							</furnishings_mass_technology_factor>
+							<operator_item_mass_technology_factor description="Technology factor for the operator item group mass.">
+								<value>1.0</value>
+								<unit>-</unit>
+								<lower_boundary>0.5</lower_boundary>
+								<upper_boundary>1.5</upper_boundary>
+								<default>1.0</default>
+							</operator_item_mass_technology_factor>
+						</mass_technology_factors>
+						<name_of_fuselage description="Name of the fuselage.">
+							<value>fuselage</value>
+							<default>fuselage</default>
+						</name_of_fuselage>
+						<on_board_service_load description="Definition of range dependent on-board service load in pax per full-size trolley.">
+							<pax_per_full_size_trolley_long_range description="Passenger per full-size trolley for lang range mission.">
+								<value>9</value>
+								<unit>-</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>15</upper_boundary>
+								<default>9</default>
+							</pax_per_full_size_trolley_long_range>
+							<pax_per_full_size_trolley_medium_range description="Passenger per full-size trolley for mid range mission.">
+								<value>16</value>
+								<unit>-</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>25</upper_boundary>
+								<default>16</default>
+							</pax_per_full_size_trolley_medium_range>
+							<pax_per_full_size_trolley_short_range description="Passenger per full-size trolley for short range mission.">
+								<value>22</value>
+								<unit>-</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>30</upper_boundary>
+								<default>22</default>
+							</pax_per_full_size_trolley_short_range>
+							<pax_per_full_size_trolley_regional_range description="Passenger per full-size trolley for regional mission.">
+								<value>26</value>
+								<unit>-</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>35</upper_boundary>
+								<default>26</default>
+							</pax_per_full_size_trolley_regional_range>
+						</on_board_service_load>					
+						<system_bay_height_above_cabin description="Height of the volume space for systems above the passenger cabin.">
+							<value>5</value>
+							<unit>inch</unit>
+							<lower_boundary>0</lower_boundary>
+							<upper_boundary>20</upper_boundary>
+							<default>5</default>
+						</system_bay_height_above_cabin>
+					</general>	
+					<specific description="Method specific parameter settings.">
+						<cabin_floor_offset description="Distance between cabin floor an fuselage ellipse center.">
+							<value>19</value>
+							<unit>inch</unit>
+							<lower_boundary>0</lower_boundary>
+							<upper_boundary>25</upper_boundary>
+							<default>19</default>
+						</cabin_floor_offset>
+						<cargo_accommodation description="Definition of cargo accommodation.">
+							<uld_type description="Select the type of unit load device. Selector: container / pallet / mixed">
+								<value>container</value>
+								<default>container</default>			
+								<container description="Description of the ld-container.">
+									<name description="Name of the ld-container. Selector: LD3-45 / LD3 / LD6 / LD8)">
+										<value>LD3-45</value>
+										<default>LD3-45</default>
+									</name>
+									<use_specific_number_of_ld_container description="Switch to select a specific number of ld-container to use. Switch: true (use pecific number of container) / false (automatic calculation)">
+										<value>false</value>
+										<default>false</default>
+										<specific_number_of_ld_container>
+											<value>5</value>
+											<unit>-</unit>
+											<lower_boundary>0</lower_boundary>
+											<upper_boundary>50</upper_boundary>
+											<default>5</default>
+										</specific_number_of_ld_container>
+									</use_specific_number_of_ld_container>
+								</container>
+								<pallet description="Description of the cargo pallet.">
+									<name description="Name of the cargo pallet. Selector: PKC-A320 / PKC-Standard / PMC-Standard)">
+										<value>PKC-A320</value>
+										<default>PKC-A320</default>
+									</name>
+									<use_specific_number_of_cargo_pallet description="Switch to select a specific number of cargo pallets to use. Switch: true (use pecific number of pallets) / false (automatic calculation)">
+										<value>false</value>
+										<default>false</default>
+										<specific_number_of_cargo_pallet>
+											<value>0</value>
+											<unit>-</unit>
+											<lower_boundary>0</lower_boundary>
+											<upper_boundary>50</upper_boundary>
+											<default>0</default>
+										</specific_number_of_cargo_pallet>
+									</use_specific_number_of_cargo_pallet>
+								</pallet>
+							</uld_type>
+							<use_internal_bulk_area description="Switch to select cabin internal bulk compartments. (true: use internal bulk, false: do not use internal bulk)">
+								<value>false</value>
+								<default>false</default>
+								<specific_internal_bulk_area description="Area per passenger for cabin internal bulk compartments.">
+									<value>30</value>
+									<unit>inch^2</unit>
+									<lower_boundary>0</lower_boundary>
+									<upper_boundary>50</upper_boundary>
+									<default>30</default>
+								</specific_internal_bulk_area>
+							</use_internal_bulk_area>
+						</cargo_accommodation>
+						<dead_end_cabin_arrangement description="Switch to select a dead end cabin arrangement. Switch: true (allow dead end cabin) / false (deny dead end cabin)">
+							<value>false</value>
+							<default>false</default>
+							<dead_end_cabin_arrangement_in_front description="Switch to select a dead end cabin arrangement in front of cabin. Switch: true (allow dead end in front) / false (deny dead end in front)">
+								<value>false</value>
+								<default>false</default>
+							</dead_end_cabin_arrangement_in_front>
+							<dead_end_cabin_arrangement_in_aft description="Switch to select a dead end cabin arrangement in aft of cabin. Switch: true (allow dead end in aft) / false (deny dead end in aft)">
+								<value>false</value>
+								<default>false</default>
+							</dead_end_cabin_arrangement_in_aft>
+						</dead_end_cabin_arrangement>
+						<exit_definition description="Exit definition of current project.">
+							<auto_select_exit_types description="Enables the automatic selection of exit types. Switch: true (On) / false (Off)">
+								<value>true</value>
+								<default>true</default>
+								<select_specific_exit_types description="Select specific type of exit pairs for the project, if the auto select mode is set to false.">
+									<exit ID="0" description="Type of exit pair. Selector: None / Type A / Type B / Type C / Type I / Type II FL / Type II OWE / Type III FL / Type III OWE / Type IV OWE">
+										<value>Type C</value>
+									</exit>
+									<exit ID="1" description="Type of exit pair. Selector: None / Type A / Type B / Type C / Type I / Type II FL / Type II OWE / Type III FL / Type III OWE / Type IV OWE">
+										<value>Type III OWE</value>
+									</exit>
+									<exit ID="2" description="Type of exit pair. Selector: None / Type A / Type B / Type C / Type I / Type II FL / Type II OWE / Type III FL / Type III OWE / Type IV OWE">
+										<value>Type III OWE</value>
+									</exit>
+									<exit ID="3" description="Type of exit pair. Selector: None / Type A / Type B / Type C / Type I / Type II FL / Type II OWE / Type III FL / Type III OWE / Type IV OWE">
+										<value>Type C</value>
+									</exit>
+									<exit ID="4" description="Type of exit pair. Selector: None / Type A / Type B / Type C / Type I / Type II FL / Type II OWE / Type III FL / Type III OWE / Type IV OWE">
+										<value>None</value>
+									</exit>
+									<exit ID="5" description="Type of exit pair. Selector: None / Type A / Type B / Type C / Type I / Type II FL / Type II OWE / Type III FL / Type III OWE / Type IV OWE">
+										<value>None</value>
+									</exit>
+								</select_specific_exit_types>
+							</auto_select_exit_types>
+							<plus_certification_allowed description="Type plus certification adds 10PAX to rate of PAX, is only allowed for Typ A, B and C emergency exits. Switch: true (allowed) / false (prohibited)">
+								<value>true</value>
+								<default>false</default>
+							</plus_certification_allowed>
+						</exit_definition>
+						<fuselage_frame_distance description="Distance between frames of fuselage.">
+							<value>23</value>
+							<unit>inch</unit>
+							<lower_boundary>20</lower_boundary>
+							<upper_boundary>27</upper_boundary>
+							<default>23</default>
+						</fuselage_frame_distance>
+						<passenger_accommodation description="Definition of passenger accommodation.">
+							<divider_definition description="Description of class divider.">
+								<set_divider_automatically description="Switch to place class divider automatically. Switch: true (place automatically) / false (no divider placement)">
+									<value>true</value>
+									<default>true</default>	
+									<use_soft_divider description="Switch to use soft divider in current aircraft project to separate classes Switch: true (use soft divider) / false (use hard divider)">
+										<value>false</value>
+										<default>false</default>
+										<hard_divider_thickness description="Thickness of a hard divider">
+											<value>2</value>
+											<unit>inch</unit>
+											<lower_boundary>1</lower_boundary>
+											<upper_boundary>3</upper_boundary>
+											<default>2</default>
+										</hard_divider_thickness>
+									</use_soft_divider>
+									<divider_width description="Thickness of class divider.">
+										<set_divider_width_automatically description="Switch to estimate class divider width automatically. Switch: true: (estiamte automatically) / false (use specific values)">
+											<value>true</value>
+											<default>true</default>
+											<specific_class_divider_width>
+												<value>50</value>
+												<unit>inch</unit>
+												<lower_boundary>20</lower_boundary>
+												<upper_boundary>80</upper_boundary>
+												<default>50</default>
+											</specific_class_divider_width>
+										</set_divider_width_automatically>									
+									</divider_width>
+								</set_divider_automatically>
+							</divider_definition>						
+							<galley_definition description="Description of the aircraft galleys.">	
+								<use_specific_number_of_full_size_trolleys description="Switch to select a specific number of full-size trolleys. Switch: true (use specific number) / false (estimate via on_board_service_load)">
+									<value>false</value>
+									<default>false</default>
+									<specific_number_of_full_size_trolleys description="Set a specific number of full-size trolleys to use.">
+										<value>7</value>
+										<unit>-</unit>
+										<lower_boundary>0</lower_boundary>
+										<upper_boundary>100</upper_boundary>
+										<default>7</default>
+									</specific_number_of_full_size_trolleys>
+								</use_specific_number_of_full_size_trolleys>
+								<use_specific_number_of_half_size_trolleys description="Switch to select a specific number of half-size trolleys. Switch: true (use specific number) / false (estimate via on_board_service_load)">
+									<value>false</value>
+									<default>false</default>
+									<specific_number_of_half_size_trolleys description="Set a specific number of half-size trolleys to use.">
+										<value>6</value>
+										<unit>-</unit>
+										<lower_boundary>0</lower_boundary>
+										<upper_boundary>100</upper_boundary>
+										<default>6</default>
+									</specific_number_of_half_size_trolleys>
+								</use_specific_number_of_half_size_trolleys>
+								<use_specific_number_of_standard_units description="Switch to select a specific number of standard units. Switch: true (use specific number) / false (estimate via on_board_service_load)">
+									<value>false</value>
+									<default>false</default>
+									<specific_number_of_standard_units description="Set a specific number of standard units to use.">
+										<value>12</value>
+										<unit>-</unit>
+										<lower_boundary>0</lower_boundary>
+										<upper_boundary>100</upper_boundary>
+										<default>12</default>
+									</specific_number_of_standard_units>
+								</use_specific_number_of_standard_units>
+							</galley_definition>
+							<in_flight_entertainment description="Description of the aircraft in flight entertainment.">
+								<use_in_flight_entertainment description="Switch to select in flight entertainment systems for passenger classes. Switch: true (use) / false (dont use)">
+									<value>true</value>
+									<default>true</default>
+								</use_in_flight_entertainment>
+							</in_flight_entertainment>
+							<passenger_classes description="Description of the aircraft passenger classes.">
+								<class description="Description of the passenger class." ID="0">
+									<name description="Name of passenger class.">
+										<value>president</value>
+									</name>
+									<abreast_single_aisle description="Seat abreast of current passenger class. int_int (single aisle aircraft)">
+										<value>1_1</value>
+										<default>1_1</default>
+									</abreast_single_aisle>
+									<abreast_wide_body description="Seat abreast of current passenger class. int_int_int (wide body aircraft)">
+										<value>1_1_1</value>
+										<default>1_1_1</default>
+									</abreast_wide_body>
+									<seats description="Definiton of passenger class seats.">
+										<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+											<name description="Name of selected seat type.">
+												<value>B747-230-president</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>80</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>80</default>
+											</seat_pitch>
+										</seat_on_left_side>
+										<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+											<name description="Name of selected seat type.">
+												<value>B747-230-president</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>80</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>80</default>
+											</seat_pitch>
+										</seat_on_right_side>
+										<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+											<name description="Name of selected seat type.">
+												<value>B747-230-president</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>80</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>80</default>
+											</seat_pitch>
+										</seat_in_the_center>
+									</seats>
+									<seat_space description="Distance between outer armrest and cabin wall.">
+										<value>20</value>
+										<unit>inch</unit>
+										<lower_boundary>1</lower_boundary>
+										<upper_boundary>20</upper_boundary>
+										<default>20</default>
+									</seat_space>
+									<lavatories description="Description of the lavatory of current passenger class">
+										<name description="Name of lavatory type.">
+											<value>swiss_business_lavatory</value>
+										</name>
+										<pax_per_lavatory description="Number of passenger per lavatories.">
+											<value>8</value>
+											<unit>-</unit>
+											<lower_boundary>1</lower_boundary>
+											<upper_boundary>75</upper_boundary>
+											<default>8</default>
+										</pax_per_lavatory>
+										<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatories. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+											<value>false</value>
+											<default>false</default>
+											<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+												<value>1</value>
+												<unit>-</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>10</upper_boundary>
+												<default>1</default>
+											</specific_number_of_class_lavatories>
+										</use_specific_number_of_class_lavatories>
+									</lavatories>
+									<wardrobe description="Description of wardrobe of current passenger class">
+										<use_wardrobe_for_passenger_class description="Switch to select if a wardrobe should be used for current passenger class. Switch: true (use) / false (dont use)">
+											<value>true</value>
+											<default>true</default>
+											<space_per_passenger description="Space per passenger required for wardrobe.">
+												<value>3</value>
+												<unit>inch</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>3</upper_boundary>
+												<default>3</default>
+											</space_per_passenger>
+										</use_wardrobe_for_passenger_class>
+									</wardrobe>
+								</class>
+								<class description="Description of the passenger class." ID="1">
+									<name description="Name of passenger class.">
+										<value>first</value>
+									</name>
+									<abreast_single_aisle description="Seat abreast of current passenger class. int_int (single aisle aircraft) / int_int_int (wide body aircraft)">
+										<value>1_1</value>
+										<default>1_1</default>
+									</abreast_single_aisle>
+									<abreast_wide_body description="Seat abreast of current passenger class. int_int_int (wide body aircraft)">
+										<value>1_2_1</value>
+										<default>1_2_1</default>
+									</abreast_wide_body>
+									<seats description="Definiton of passenger class seats.">
+										<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+											<name description="Name of selected seat type.">
+												<value>B777-first</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>74</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>74</default>
+											</seat_pitch>
+										</seat_on_left_side>
+										<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+											<name description="Name of selected seat type.">
+												<value>B777-first</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>74</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>74</default>
+											</seat_pitch>
+										</seat_on_right_side>
+										<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+											<name description="Name of selected seat type.">
+												<value>B777-first</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>74</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>74</default>
+											</seat_pitch>
+										</seat_in_the_center>
+									</seats>
+									<seat_space description="Distance between outer armrest and cabin wall.">
+										<value>15</value>
+										<unit>inch</unit>
+										<lower_boundary>1</lower_boundary>
+										<upper_boundary>20</upper_boundary>
+										<default>15</default>
+									</seat_space>
+									<lavatories description="Description of the lavatory of current passenger class">
+										<name description="Name of lavatory type.">
+											<value>swiss_business_lavatory</value>
+										</name>
+										<pax_per_lavatory description="Number of passenger per lavatories.">
+											<value>16</value>
+											<unit>-</unit>
+											<lower_boundary>1</lower_boundary>
+											<upper_boundary>75</upper_boundary>
+											<default>16</default>
+										</pax_per_lavatory>
+										<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatories. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+											<value>false</value>
+											<default>false</default>
+											<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+												<value>1</value>
+												<unit>-</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>10</upper_boundary>
+												<default>1</default>
+											</specific_number_of_class_lavatories>
+										</use_specific_number_of_class_lavatories>
+									</lavatories>
+									<wardrobe description="Description of wardrobe of current passenger class">
+										<use_wardrobe_for_passenger_class description="Switch to select if a wardrobe should be used for current passenger class. Switch: true (use) / false (dont use)">
+											<value>true</value>
+											<default>true</default>
+											<space_per_passenger description="Space per passenger required for wardrobe.">
+												<value>2</value>
+												<unit>inch</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>3</upper_boundary>
+												<default>2</default>
+											</space_per_passenger>
+										</use_wardrobe_for_passenger_class>
+									</wardrobe>
+								</class>
+								<class description="Description of the passenger class." ID="2">
+									<name description="Name of passenger class.">
+										<value>business</value>
+									</name>
+									<abreast_single_aisle description="Seat abreast of current passenger class. int_int (single aisle aircraft) / int_int_int (wide body aircraft)">
+										<value>2_2</value>
+										<default>2_2</default>
+									</abreast_single_aisle>
+									<abreast_wide_body description="Seat abreast of current passenger class. int_int_int (wide body aircraft)">
+										<value>1_2_1</value>
+										<default>1_2_1</default>
+									</abreast_wide_body>
+									<seats description="Definiton of passenger class seats.">
+										<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+											<name description="Name of selected seat type.">
+												<value>A320-200-AF-business</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>62</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>62</default>
+											</seat_pitch>
+										</seat_on_left_side>
+										<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+											<name description="Name of selected seat type.">
+												<value>A320-200-AF-business</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>62</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>62</default>
+											</seat_pitch>
+										</seat_on_right_side>
+										<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+											<name description="Name of selected seat type.">
+												<value>A320-200-AF-business</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>62</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>62</default>
+											</seat_pitch>
+										</seat_in_the_center>
+									</seats>
+									<seat_space description="Distance between outer armrest and cabin wall.">
+										<value>10</value>
+										<unit>inch</unit>
+										<lower_boundary>1</lower_boundary>
+										<upper_boundary>20</upper_boundary>
+										<default>10</default>
+									</seat_space>
+									<lavatories description="Description of the lavatory of current passenger class">
+										<name description="Name of lavatory type.">
+											<value>swiss_business_lavatory</value>
+										</name>
+										<pax_per_lavatory description="Number of passenger per lavatories.">
+											<value>32</value>
+											<unit>-</unit>
+											<lower_boundary>1</lower_boundary>
+											<upper_boundary>75</upper_boundary>
+											<default>32</default>
+										</pax_per_lavatory>
+										<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatories. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+											<value>false</value>
+											<default>false</default>
+											<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+												<value>1</value>
+												<unit>-</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>10</upper_boundary>
+												<default>1</default>
+											</specific_number_of_class_lavatories>
+										</use_specific_number_of_class_lavatories>
+									</lavatories>
+									<wardrobe description="Description of wardrobe of current passenger class">
+										<use_wardrobe_for_passenger_class description="Switch to select if a wardrobe should be used for current passenger class. Switch: true (use) / false (do not use)">
+											<value>true</value>
+											<default>true</default>
+											<space_per_passenger description="Space per passenger required for wardrobe.">
+												<value>1</value>
+												<unit>inch</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>3</upper_boundary>
+												<default>1</default>
+											</space_per_passenger>
+										</use_wardrobe_for_passenger_class>
+									</wardrobe>
+								</class>
+								<class description="Description of the passenger class." ID="3">
+									<name description="Name of passenger class.">
+										<value>premium economy</value>
+									</name>
+									<abreast_single_aisle description="Seat abreast of current passenger class. int_int (single aisle aircraft) / int_int_int (wide body aircraft)">
+										<value>3_3</value>
+										<default>3_3</default>
+									</abreast_single_aisle>
+									<abreast_wide_body description="Seat abreast of current passenger class. int_int_int (wide body aircraft)">
+										<value>2_3_2</value>
+										<default>2_3_2</default>
+									</abreast_wide_body>
+									<seats description="Definition of passenger class seats.">
+										<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+											<name description="Name of selected seat type.">
+												<value>A320-200-premium_economy</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>38</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>38</default>
+											</seat_pitch>
+										</seat_on_left_side>
+										<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+											<name description="Name of selected seat type.">
+												<value>A320-200-premium_economy</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>38</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>38</default>
+											</seat_pitch>
+										</seat_on_right_side>
+										<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+											<name description="Name of selected seat type.">
+												<value>A320-200-premium_economy</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>38</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>38</default>
+											</seat_pitch>
+										</seat_in_the_center>
+									</seats>
+									<seat_space description="Distance between outer armrest and cabin wall.">
+										<value>5</value>
+										<unit>inch</unit>
+										<lower_boundary>1</lower_boundary>
+										<upper_boundary>20</upper_boundary>
+										<default>5</default>
+									</seat_space>
+									<lavatories description="Description of the lavatory of current passenger class">
+										<name description="Name of lavatory type.">
+											<value>sidewall_lavatory</value>
+										</name>
+										<pax_per_lavatory description="Number of passenger per lavatories.">
+											<value>65</value>
+											<unit>-</unit>
+											<lower_boundary>1</lower_boundary>
+											<upper_boundary>75</upper_boundary>
+											<default>65</default>
+										</pax_per_lavatory>
+										<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatories. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+											<value>false</value>
+											<default>false</default>
+											<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+												<value>1</value>
+												<unit>-</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>10</upper_boundary>
+												<default>1</default>
+											</specific_number_of_class_lavatories>
+										</use_specific_number_of_class_lavatories>
+									</lavatories>
+									<wardrobe description="Description of wardrobe of current passenger class">
+										<use_wardrobe_for_passenger_class description="Switch to select if a wardrobe should be used for current passenger class. Switch: true (use) / false (dont use)">
+											<value>false</value>
+											<default>false</default>
+											<space_per_passenger description="Space per passenger required for wardrobe.">
+												<value>0</value>
+												<unit>inch</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>3</upper_boundary>
+												<default>0</default>
+											</space_per_passenger>
+										</use_wardrobe_for_passenger_class>
+									</wardrobe>
+								</class>				
+								<class description="Description of the passenger class." ID="4">
+									<name description="Name of passenger class.">
+										<value>economy</value>
+									</name>
+									<abreast_single_aisle description="Seat abreast of current passenger class. int_int (single aisle aircraft) / int_int_int (wide body aircraft)">
+										<value>3_3</value>
+										<default>3_3</default>
+									</abreast_single_aisle>
+									<abreast_wide_body description="Seat abreast of current passenger class. int_int_int (wide body aircraft)">
+										<value>2_4_2</value>
+										<default>2_4_2</default>
+									</abreast_wide_body>
+									<seats description="Definition of passenger class seats.">
+										<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+											<name description="Name of selected seat type.">
+												<value>A320-200-economy</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>30</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>30</default>
+											</seat_pitch>
+										</seat_on_left_side>
+										<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+											<name description="Name of selected seat type.">
+												<value>A320-200-economy</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>30</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>30</default>
+											</seat_pitch>
+										</seat_on_right_side>
+										<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+											<name description="Name of selected seat type.">
+												<value>A320-200-economy</value>
+											</name>
+											<seat_pitch description="Seat pitch of current seat row.">
+												<value>30</value>
+												<unit>inch</unit>
+												<lower_boundary>27</lower_boundary>
+												<upper_boundary>100</upper_boundary>
+												<default>30</default>
+											</seat_pitch>
+										</seat_in_the_center>
+									</seats>
+									<seat_space description="Distance between outer armrest and cabin wall.">
+										<value>2.5</value>
+										<unit>inch</unit>
+										<lower_boundary>1</lower_boundary>
+										<upper_boundary>20</upper_boundary>
+										<default>2.5</default>
+									</seat_space>
+									<lavatories description="Description of the lavatory of current passenger class">
+										<name description="Name of lavatory type.">
+											<value>sidewall_lavatory</value>
+										</name>
+										<pax_per_lavatory description="Number of passenger per lavatories.">
+											<value>65</value>
+											<unit>-</unit>
+											<lower_boundary>1</lower_boundary>
+											<upper_boundary>75</upper_boundary>
+											<default>65</default>
+										</pax_per_lavatory>
+										<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatories. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+											<value>false</value>
+											<default>false</default>
+											<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+												<value>1</value>
+												<unit>-</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>10</upper_boundary>
+												<default>1</default>
+											</specific_number_of_class_lavatories>
+										</use_specific_number_of_class_lavatories>
+									</lavatories>
+									<wardrobe description="Description of wardrobe of current passenger class">
+										<use_wardrobe_for_passenger_class description="Switch to select if a wardrobe should be used for current passenger class. Switch: true (use) / false (dont use)">
+											<value>false</value>
+											<default>false</default>
+											<space_per_passenger description="Space per passenger required for wardrobe.">
+												<value>0</value>
+												<unit>inch</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>3</upper_boundary>
+												<default>0</default>
+											</space_per_passenger>
+										</use_wardrobe_for_passenger_class>
+									</wardrobe>
+								</class>
+							</passenger_classes>
+						</passenger_accommodation>
+						<passenger_aisle description="Description of main aisle. (passenger aisle)">
+							<width description="Passenger aisle width of current aircraft project.">
+								<value>19</value>
+								<unit>inch</unit>
+								<lower_boundary>15</lower_boundary>
+								<upper_boundary>30</upper_boundary>
+								<default>18</default>
+							</width>
+							<standing_height description="Passenger aisle standing height of current aircraft project.">
+								<value>84</value>
+								<unit>inch</unit>
+								<lower_boundary>65</lower_boundary>
+								<upper_boundary>88</upper_boundary>
+								<default>84</default>
+							</standing_height>
+							<standing_height_seat_row description="Seat row standing height of current aircraft project.">
+								<value>68</value>
+								<unit>inch</unit>
+								<lower_boundary>62</lower_boundary>
+								<upper_boundary>72</upper_boundary>
+								<default>68</default>
+							</standing_height_seat_row>
+						</passenger_aisle>
+					</specific>
+				</fuselage_design_tu_berlin>
+			</fidelity>
+		</configuration>
+		<configuration ID="blended_wing_body">
+			<fidelity_name description="Select fidelity name (options: empirical, numerical,...). Selector: empirical">
+				<value>empirical</value>
+			</fidelity_name>
+			<method_name description="Select method name (options: blended_wing_body_design_tu_berlin). Selector: blended_wing_body_design_tu_berlin">
+				<value>blended_wing_body_design_tu_berlin</value>
+				<default>blended_wing_body_design_tu_berlin</default>
+			</method_name>
+			<fidelity ID="empirical">
+				<blended_wing_body_design_tu_berlin description="Empirical method for blended wing body and cabin design.">
+					<general description="General parameter setting for blended wing body and cabin design.">
+						<flight_attendant_mass description="Mass of one flight attendant.">
+							<value>70</value>
+							<unit>kg</unit>
+							<lower_boundary>65</lower_boundary>
+							<upper_boundary>85</upper_boundary>
+							<default>70</default>
+						</flight_attendant_mass>
+						<flight_crew_member_mass description="Mass of one flight crew member.">
+							<value>85</value>
+							<unit>kg</unit>
+							<lower_boundary>70</lower_boundary>
+							<upper_boundary>95</upper_boundary>
+							<default>85</default>
+						</flight_crew_member_mass>
+						<force_circular_cross_section description="Switch to force identically fuselage width and hight. (true: force, false: do not force)">
+							<value>false</value>
+							<default>false</default>
+						</force_circular_cross_section>
+						<high_density_seat_pitch description="Seat pitch definition for high density layouts.">
+							<high_density_seat_pitch_for_single_aisle description="Minimum seat pitch for single-aisle aircraft in high density layout.">
+								<value>28</value>
+								<unit>inch</unit>
+								<lower_boundary>27</lower_boundary>
+								<upper_boundary>30</upper_boundary>
+								<default>18</default>
+							</high_density_seat_pitch_for_single_aisle>
+							<high_density_seat_pitch_for_wide_body description="Minimum seat pitch for wide-body aircraft in high density layout.">
+								<value>30</value>
+								<unit>inch</unit>
+								<lower_boundary>29</lower_boundary>
+								<upper_boundary>32</upper_boundary>
+								<default>30</default>
+							</high_density_seat_pitch_for_wide_body>
+						</high_density_seat_pitch>
+						<length_of_flight_deck description="Length of the cockpit. (According to Jenkinson, CS-25: 3.75, GA: 0)">
+							<value>3.75</value>
+							<unit>m</unit>
+							<lower_boundary>0</lower_boundary>
+							<upper_boundary>5</upper_boundary>
+							<default>3.75</default>
+						</length_of_flight_deck>
+						<mass_technology_factors description="Mass technology factors.">
+							<fuselage_structural_mass_technology_factor description="Technology factor for the fuselage structure mass.">
+								<value>1.0</value>
+								<unit>-</unit>
+								<lower_boundary>0.5</lower_boundary>
+								<upper_boundary>1.5</upper_boundary>
+								<default>1.0</default>
+							</fuselage_structural_mass_technology_factor>
+							<furnishings_mass_technology_factor description="Technology factor for the furnishing and equipment group mass.">
+								<value>1.0</value>
+								<unit>-</unit>
+								<lower_boundary>0.5</lower_boundary>
+								<upper_boundary>1.5</upper_boundary>
+								<default>1.0</default>
+							</furnishings_mass_technology_factor>
+							<operator_item_mass_technology_factor description="Technology factor for the operator item group mass.">
+								<value>1.0</value>
+								<unit>-</unit>
+								<lower_boundary>0.5</lower_boundary>
+								<upper_boundary>1.5</upper_boundary>
+								<default>1.0</default>
+							</operator_item_mass_technology_factor>
+						</mass_technology_factors>
+						<name_of_fuselage description="Name of the center body part.">
+							<value>center_body</value>
+							<default>center_body</default>
+						</name_of_fuselage>
+						<on_board_service_load description="Definition of range dependent on-board service load in pax per full-size trolley.">
+							<pax_per_full_size_trolley_long_range description="Passenger per full-size trolley for lang range mission.">
+								<value>9</value>
+								<unit>-</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>15</upper_boundary>
+								<default>9</default>
+							</pax_per_full_size_trolley_long_range>
+							<pax_per_full_size_trolley_medium_range description="Passenger per full-size trolley for mid range mission.">
+								<value>16</value>
+								<unit>-</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>25</upper_boundary>
+								<default>16</default>
+							</pax_per_full_size_trolley_medium_range>
+							<pax_per_full_size_trolley_short_range description="Passenger per full-size trolley for short range mission.">
+								<value>22</value>
+								<unit>-</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>30</upper_boundary>
+								<default>22</default>
+							</pax_per_full_size_trolley_short_range>
+							<pax_per_full_size_trolley_regional_range description="Passenger per full-size trolley for regional mission.">
+								<value>26</value>
+								<unit>-</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>35</upper_boundary>
+								<default>26</default>
+							</pax_per_full_size_trolley_regional_range>
+						</on_board_service_load>
+						<sizing_mode description="Select the fuselage design sizing mode. Selector: mode_0: (Initial sizing) / mode_1: (Use existing fuselage)">
+							<value>mode_0</value>
+							<default>mode_0</default>
+							<setting_use_existing_payload_tubes description="Specific settings for use existing geometry mode.">
+								<name_of_existing_geometry_file description="Name of the xml file containing an existing payload tube geometry.">
+									<value>existing_paylaod_tube_geometry.xml</value>
+									<default>existing_paylaod_tube_geometry.xml</default>
+								</name_of_existing_geometry_file>
+								<use_as_starting_point description="Switch to select if the existing geometry should be used as an starting point for calculation or use the geometry without further calculation. Switch: false (no further calculation) / true (use as starting point)">
+									<value>false</value>
+									<default>false</default>
+								</use_as_starting_point>
+							</setting_use_existing_payload_tubes>
+						</sizing_mode>						
+						<system_bay description="Heights for system bay above and below passenger cabin and cargo bay.">
+							<system_bay_height_above_cabin description="Height of the volume space for systems above the passenger cabin.">
+								<value>5</value>
+								<unit>inch</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>20</upper_boundary>
+								<default>5</default>
+							</system_bay_height_above_cabin>
+						</system_bay>						
+					</general>	
+					<specific description="Method specific parameter settings."> 
+						<cabin_floor_offset description="Distance between cabin floor an fuselage ellipse center.">
+							<value>16</value>
+							<unit>inch</unit>
+							<lower_boundary>0</lower_boundary>
+							<upper_boundary>25</upper_boundary>
+							<default>16</default>
+						</cabin_floor_offset>
+						<dead_end_cabin_arrangement description="Switch to select a dead end cabin arrangement. Switch: true (allow dead end cabin) / false (deny dead end cabin)">
+							<value>false</value>
+							<default>false</default>
+							<dead_end_cabin_arrangement_in_front description="Switch to select a dead end cabin arrangement in front of cabin. Switch: true (allow dead end in front) / false (deny dead end in front)">
+								<value>false</value>
+								<default>false</default>
+							</dead_end_cabin_arrangement_in_front>
+							<dead_end_cabin_arrangement_in_aft description="Switch to select a dead end cabin arrangement in aft of cabin. Switch: true (allow dead end in aft) / false (deny dead end in aft)">
+								<value>false</value>
+								<default>false</default>
+							</dead_end_cabin_arrangement_in_aft>
+						</dead_end_cabin_arrangement>
+						<exit_definition description="Exit definition of current project.">
+							<auto_select_exit_types description="Enables the automatic selection of exit types. Switch: true (On) / false (Off)">
+								<value>false</value>
+								<default>true</default>
+								<select_specific_exit_types description="Select specific type of exit pairs for the project, if the auto select mode is set to false.">
+									<exit ID="0" description="Type of exit pair. Selector: None / Type A / Type B / Type C / Type I / Type II FL / Type II OWE / Type III FL / Type III OWE / Type IV OWE">
+										<value>Type A</value>
+									</exit>
+									<exit ID="1" description="Type of exit pair. Selector: None / Type A / Type B / Type C / Type I / Type II FL / Type II OWE / Type III FL / Type III OWE / Type IV OWE">
+										<value>Type A</value>
+									</exit>
+									<exit ID="2" description="Type of exit pair. Selector: None / Type A / Type B / Type C / Type I / Type II FL / Type II OWE / Type III FL / Type III OWE / Type IV OWE">
+										<value>Type A</value>
+									</exit>
+									<exit ID="3" description="Type of exit pair. Selector: None / Type A / Type B / Type C / Type I / Type II FL / Type II OWE / Type III FL / Type III OWE / Type IV OWE">
+										<value>None</value>
+									</exit>
+									<exit ID="4" description="Type of exit pair. Selector: None / Type A / Type B / Type C / Type I / Type II FL / Type II OWE / Type III FL / Type III OWE / Type IV OWE">
+										<value>None</value>
+									</exit>
+									<exit ID="5" description="Type of exit pair. Selector: None / Type A / Type B / Type C / Type I / Type II FL / Type II OWE / Type III FL / Type III OWE / Type IV OWE">
+										<value>None</value>
+									</exit>
+								</select_specific_exit_types>
+							</auto_select_exit_types>
+							<plus_certification_allowed description="Type plus certification adds 10PAX to rate of PAX, is only allowed for Typ A, B and C emergency exits. Switch: true (allowed) / false (prohibited)">
+								<value>true</value>
+								<default>false</default>
+							</plus_certification_allowed>
+						</exit_definition>
+						<passenger_aisle description="Description of main aisle. (passenger aisle)">
+							<width description="Passenger aisle width of current aircraft project.">
+								<value>18</value>
+								<unit>inch</unit>
+								<lower_boundary>15</lower_boundary>
+								<upper_boundary>30</upper_boundary>
+								<default>18</default>
+							</width>
+							<standing_height description="Passenger aisle standing height of current aircraft project.">
+								<value>84</value>
+								<unit>inch</unit>
+								<lower_boundary>65</lower_boundary>
+								<upper_boundary>88</upper_boundary>
+								<default>84</default>
+							</standing_height>
+							<standing_height_seat_row description="Seat row standing height of current aircraft project.">
+								<value>68</value>
+								<unit>inch</unit>
+								<lower_boundary>62</lower_boundary>
+								<upper_boundary>72</upper_boundary>
+								<default>68</default>
+							</standing_height_seat_row>
+						</passenger_aisle>
+						<payload_tube_definition description="Description of the payload tubes.">
+							<cargo_accommodation description="Definition of cargo accommodation.">
+									<payload_tube ID="0" decription="Definition of cargo arrangement of current payload tube.">
+										<uld_type description="Select the type of unit load device. Selector: None / container / pallet / mixed">
+											<value>container</value>
+											<default>container</default>			
+											<container description="Description of the ld-container.">
+												<name description="Name of the ld-container. Selector: LD3-45 / LD3 / LD6 / LD8)">
+													<value>LD3-45</value>
+													<default>LD3-45</default>
+												</name>
+												<use_specific_number_of_ld_container description="Switch to select a specific number of ld-container to use. Switch: true (use specific number of container) / false (automatic calculation)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_ld_container>
+														<value>5</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>50</upper_boundary>
+														<default>5</default>
+													</specific_number_of_ld_container>
+												</use_specific_number_of_ld_container>
+											</container>
+											<pallet description="Description of the cargo pallet.">
+												<name description="Name of the cargo pallet. Selector: PKC-A320 / PKC-A220 / PKC-Standard / PMC-Standard)">
+													<value>PMC-Standard</value>
+													<default>PMC-Standard</default>
+												</name>
+												<use_specific_number_of_cargo_pallet description="Switch to select a specific number of cargo pallets to use. Switch: true (use specific number of pallets) / false (automatic calculation)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_cargo_pallet>
+														<value>0</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>50</upper_boundary>
+														<default>0</default>
+													</specific_number_of_cargo_pallet>
+												</use_specific_number_of_cargo_pallet>
+											</pallet>
+										</uld_type>
+										<use_internal_bulk_area description="Switch to select cabin internal bulk compartments. (true: use internal bulk, false: do not use internal bulk)">
+											<value>false</value>
+											<default>false</default>
+											<specific_internal_bulk_area description="Area per passenger for cabin internal bulk compartments.">
+												<value>30</value>
+												<unit>inch^2</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>50</upper_boundary>
+												<default>30</default>
+											</specific_internal_bulk_area>
+										</use_internal_bulk_area>
+									</payload_tube>
+									<payload_tube ID="1" decription="Definition of cargo arrangement of current payload tube.">
+										<uld_type description="Select the type of unit load device. Selector: None / container / pallet / mixed">
+											<value>pallet</value>
+											<default>pallet</default>			
+											<container description="Description of the ld-container.">
+												<name description="Name of the ld-container. Selector: LD3-45 / LD3 / LD6 / LD8)">
+													<value>PKC-A220</value>
+													<default>PKC-A220</default>
+												</name>
+												<use_specific_number_of_ld_container description="Switch to select a specific number of ld-container to use. Switch: true (use specific number of container) / false (automatic calculation)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_ld_container>
+														<value>5</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>50</upper_boundary>
+														<default>5</default>
+													</specific_number_of_ld_container>
+												</use_specific_number_of_ld_container>
+											</container>
+											<pallet description="Description of the cargo pallet.">
+												<name description="Name of the cargo pallet. Selector: PKC-A320 / PKC-A220 / PKC-Standard / PMC-Standard)">
+													<value>PKC-A220</value>
+													<default>PKC-A220</default>
+												</name>
+												<use_specific_number_of_cargo_pallet description="Switch to select a specific number of cargo pallets to use. Switch: true (use specific number of pallets) / false (automatic calculation)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_cargo_pallet>
+														<value>0</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>50</upper_boundary>
+														<default>0</default>
+													</specific_number_of_cargo_pallet>
+												</use_specific_number_of_cargo_pallet>
+											</pallet>
+										</uld_type>
+										<use_internal_bulk_area description="Swich to select cabion internal bulk compartments. (true: use internal bulk, false: dont use internal bulk)">
+											<value>false</value>
+											<default>false</default>
+											<specific_internal_bulk_area description="Area per passenger for cabin interanl bulk compartments.">
+												<value>30</value>
+												<unit>inch^2</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>50</upper_boundary>
+												<default>30</default>
+											</specific_internal_bulk_area>
+										</use_internal_bulk_area>
+									</payload_tube>
+									<payload_tube ID="2" decription="Definition of cargo arrangement of current payload tube.">
+										<uld_type description="Select the type of unit load device. Selector: None / container / pallet / mixed">
+											<value>pallet</value>
+											<default>pallet</default>			
+											<container description="Description of the ld-container.">
+												<name description="Name of the ld-container. Selector: LD3-45 / LD3 / LD6 / LD8)">
+													<value>LD3-45</value>
+													<default>LD3-45</default>
+												</name>
+												<use_specific_number_of_ld_container description="Switch to select a specific number of ld-container to use. Switch: true (use pecific number of container) / false (automatic calculation)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_ld_container>
+														<value>5</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>50</upper_boundary>
+														<default>5</default>
+													</specific_number_of_ld_container>
+												</use_specific_number_of_ld_container>
+											</container>
+											<pallet description="Description of the cargo pallet.">
+												<name description="Name of the cargo pallet. Selector: PKC-A320 / PKC-A220 / PKC-Standard / PMC-Standard)">
+													<value>PKC-A220</value>
+													<default>PKC-A220</default>
+												</name>
+												<use_specific_number_of_cargo_pallet description="Switch to select a specific number of cargo pallets to use. Switch: true (use pecific number of pallets) / false (automatic calculation)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_cargo_pallet>
+														<value>0</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>50</upper_boundary>
+														<default>0</default>
+													</specific_number_of_cargo_pallet>
+												</use_specific_number_of_cargo_pallet>
+											</pallet>
+										</uld_type>
+										<use_internal_bulk_area description="Swich to select cabion internal bulk compartments. (true: use internal bulk, false: dont use internal bulk)">
+											<value>false</value>
+											<default>false</default>
+											<specific_internal_bulk_area description="Area per passenger for cabin interanl bulk compartments.">
+												<value>30</value>
+												<unit>inch^2</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>50</upper_boundary>
+												<default>30</default>
+											</specific_internal_bulk_area>
+										</use_internal_bulk_area>
+									</payload_tube>
+									<payload_tube ID="3" decription="Definition of cargo arrangement of current payload tube.">
+										<uld_type description="Select the type of unit load device. Selector: None / container / pallet / mixed">
+											<value>None</value>
+											<default>None</default>			
+											<container description="Description of the ld-container.">
+												<name description="Name of the ld-container. Selector: LD3-45 / LD3 / LD6 / LD8)">
+													<value>LD3-45</value>
+													<default>LD3-45</default>
+												</name>
+												<use_specific_number_of_ld_container description="Switch to select a specific number of ld-container to use. Switch: true (use pecific number of container) / false (automatic calculation)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_ld_container>
+														<value>5</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>50</upper_boundary>
+														<default>5</default>
+													</specific_number_of_ld_container>
+												</use_specific_number_of_ld_container>
+											</container>
+											<pallet description="Description of the cargo pallet.">
+												<name description="Name of the cargo pallet. Selector: PKC-A320 / PKC-A220 / PKC-Standard / PMC-Standard)">
+													<value>PKC-A220</value>
+													<default>None</default>
+												</name>
+												<use_specific_number_of_cargo_pallet description="Switch to select a specific number of cargo pallets to use. Switch: true (use pecific number of pallets) / false (automatic calculation)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_cargo_pallet>
+														<value>0</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>50</upper_boundary>
+														<default>0</default>
+													</specific_number_of_cargo_pallet>
+												</use_specific_number_of_cargo_pallet>
+											</pallet>
+										</uld_type>
+										<use_internal_bulk_area description="Swich to select cabion internal bulk compartments. (true: use internal bulk, false: dont use internal bulk)">
+											<value>false</value>
+											<default>false</default>
+											<specific_internal_bulk_area description="Area per passenger for cabin interanl bulk compartments.">
+												<value>30</value>
+												<unit>inch^2</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>50</upper_boundary>
+												<default>30</default>
+											</specific_internal_bulk_area>
+										</use_internal_bulk_area>
+									</payload_tube>
+									<payload_tube ID="4" decription="Definition of cargo arrangement of current payload tube.">
+										<uld_type description="Select the type of unit load device. Selector: None / container / pallet / mixed">
+											<value>None</value>
+											<default>None</default>			
+											<container description="Description of the ld-container.">
+												<name description="Name of the ld-container. Selector: LD3-45 / LD3 / LD6 / LD8)">
+													<value>LD3-45</value>
+													<default>LD3-45</default>
+												</name>
+												<use_specific_number_of_ld_container description="Switch to select a specific number of ld-container to use. Switch: true (use pecific number of container) / false (automatic calculation)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_ld_container>
+														<value>5</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>50</upper_boundary>
+														<default>5</default>
+													</specific_number_of_ld_container>
+												</use_specific_number_of_ld_container>
+											</container>
+											<pallet description="Description of the cargo pallet.">
+												<name description="Name of the cargo pallet. Selector: PKC-A320 / PKC-A220 / PKC-Standard / PMC-Standard)">
+													<value>PKC-A220</value>
+													<default>None</default>
+												</name>
+												<use_specific_number_of_cargo_pallet description="Switch to select a specific number of cargo pallets to use. Switch: true (use pecific number of pallets) / false (automatic calculation)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_cargo_pallet>
+														<value>0</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>50</upper_boundary>
+														<default>0</default>
+													</specific_number_of_cargo_pallet>
+												</use_specific_number_of_cargo_pallet>
+											</pallet>
+										</uld_type>
+										<use_internal_bulk_area description="Swich to select cabion internal bulk compartments. (true: use internal bulk, false: dont use internal bulk)">
+											<value>false</value>
+											<default>false</default>
+											<specific_internal_bulk_area description="Area per passenger for cabin interanl bulk compartments.">
+												<value>30</value>
+												<unit>inch^2</unit>
+												<lower_boundary>0</lower_boundary>
+												<upper_boundary>50</upper_boundary>
+												<default>30</default>
+											</specific_internal_bulk_area>
+										</use_internal_bulk_area>
+									</payload_tube>
+								</cargo_accommodation>
+							<floor_angle_between_passenger_tubes Desc="Angle of cabin floor sloop between passenger tubes referenced to the BWB center line.">
+								<value>-5</value>
+								<unit>degree</unit>
+								<lower_boundary>-5</lower_boundary>
+								<upper_boundary>5</upper_boundary>
+								<default>0</default>
+							</floor_angle_between_passenger_tubes>
+							<floor_angle_of_passenger_tubes Desc="Angle of cabin floor sloop of eachj passenger tube referenced to the tube reference point in x-direction.">
+								<value>5</value>
+								<unit>degree</unit>
+								<lower_boundary>-8</lower_boundary>
+								<upper_boundary>8</upper_boundary>
+								<default>0</default>
+							</floor_angle_of_passenger_tubes>
+							<passenger_accommodation description="Definition of passenger accommodation.">
+								<divider_definition description="Description of class divider.">
+									<set_divider_automatically description="Switch to place class divider automatically. Switch: true (place automatically) / false (no divider placement)">
+										<value>true</value>
+										<default>true</default>	
+										<use_soft_divider description="Switch to use soft divider in current aircraft project to separate classes Switch: true (use soft divider) / false (use hard divider)">
+											<value>false</value>
+											<default>false</default>
+											<hard_divider_thickness description="Thickness of a hard divider">
+												<value>2</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>3</upper_boundary>
+												<default>2</default>
+											</hard_divider_thickness>
+										</use_soft_divider>
+										<divider_width description="Thickness of clas devider.">
+											<set_divider_width_automatically description="Switch to estiamte class divider width automatically. Switch: true: (estiamte automatically) / false (use specific values)">
+												<value>true</value>
+												<default>true</default>
+												<specific_class_divider_width>
+													<value>50</value>
+													<unit>inch</unit>
+													<lower_boundary>20</lower_boundary>
+													<upper_boundary>80</upper_boundary>
+													<default>50</default>
+												</specific_class_divider_width>
+											</set_divider_width_automatically>									
+										</divider_width>
+									</set_divider_automatically>
+								</divider_definition>
+								<galley_definition description="Description of the aircraft galleys.">	
+									<use_specific_number_of_full_size_trolleys description="Switch to select a specific number of full-size trolleys. Switch: true (use specific number) / false (estimate via on_board_service_load)">
+										<value>false</value>
+										<default>false</default>
+										<specific_number_of_full_size_trolleys description="Set a specific number of full-size trolleys to use.">
+											<value>7</value>
+											<unit>-</unit>
+											<lower_boundary>0</lower_boundary>
+											<upper_boundary>100</upper_boundary>
+											<default>7</default>
+										</specific_number_of_full_size_trolleys>
+									</use_specific_number_of_full_size_trolleys>
+									<use_specific_number_of_half_size_trolleys description="Switch to select a specific number of half-size trolleys. Switch: true (use specific number) / false (estimate via on_board_service_load)">
+										<value>false</value>
+										<default>false</default>
+										<specific_number_of_half_size_trolleys description="Set a specific number of half-size trolleys to use.">
+											<value>6</value>
+											<unit>-</unit>
+											<lower_boundary>0</lower_boundary>
+											<upper_boundary>100</upper_boundary>
+											<default>6</default>
+										</specific_number_of_half_size_trolleys>
+									</use_specific_number_of_half_size_trolleys>
+									<use_specific_number_of_standard_units description="Switch to select a specific number of standard units. Switch: true (use specific number) / false (estimate via on_board_service_load)">
+										<value>false</value>
+										<default>false</default>
+										<specific_number_of_standard_units description="Set a specific number of standard units to use.">
+											<value>12</value>
+											<unit>-</unit>
+											<lower_boundary>0</lower_boundary>
+											<upper_boundary>100</upper_boundary>
+											<default>12</default>
+										</specific_number_of_standard_units>
+									</use_specific_number_of_standard_units>
+								</galley_definition>
+								<in_flight_entertainment description="Description of the aircraft in flight entertainment.">
+									<use_in_flight_entertainment description="Switch to select in flight entertainment systems for passenger classes. Switch: true (use) / false (dont use)">
+										<value>true</value>
+										<default>true</default>
+									</use_in_flight_entertainment>
+								</in_flight_entertainment>
+								<payload_tube ID="0" decription="Definition of seat arrangement of current passenger tube.">
+									<name decription="Name of the payload tube.">
+										<value>center_tube</value>
+									</name>
+									<passenger_classes description="Description of the aircraft passenger classes.">
+										<class description="Description of the passenger class." ID="0">
+											<name description="Name of passenger class.">
+												<value>president</value>
+											</name>							
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>1_1</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>80</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>80</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>80</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>80</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>80</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>80</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>20</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>20</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>8</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>8</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>3</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>3</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="1">
+											<name description="Name of passenger class.">
+												<value>first</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>1_1</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>15</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>15</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>16</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>16</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>2</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>2</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="2">
+											<name description="Name of passenger class.">
+												<value>business</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>2_2</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>62</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>62</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>62</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>62</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>62</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>62</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>10</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>10</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>32</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>32</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>1</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>1</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="3">
+											<name description="Name of passenger class.">
+												<value>premium economy</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>3_3</value>
+												<default>3_3</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>5</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>5</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>sidewall_lavatory</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>65</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>65</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>false</value>
+													<default>false</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>2.5</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>0</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>				
+										<class description="Description of the passenger class." ID="4">
+											<name description="Name of passenger class.">
+												<value>economy</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>3_3</value>
+												<default>3_3</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>A320-200-economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>2.5</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>2.5</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>sidewall_lavatory</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>65</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>65</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>false</value>
+													<default>false</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>0</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>0</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+									</passenger_classes>
+								</payload_tube>
+								<payload_tube ID="1" decription="Definition of seat arrangement of current passenger tube.">
+									<name decription="Name of the payload tube.">
+										<value>first_left_tube</value>
+									</name>
+									<passenger_classes description="Description of the aircraft passenger classes.">
+										<class description="Description of the passenger class." ID="0">
+											<name description="Name of passenger class.">
+												<value>president</value>
+											</name>							
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>1_1</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>80</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>80</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>80</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>80</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>80</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>80</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>20</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>20</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>8</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>8</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>3</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>3</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="1">
+											<name description="Name of passenger class.">
+												<value>first</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>1_1</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>15</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>15</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>16</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>16</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>2</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>2</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="2">
+											<name description="Name of passenger class.">
+												<value>business</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>2_2</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+													<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+														<name description="Name of selected seat type.">
+															<value>None</value>
+														</name>
+														<seat_pitch description="Seat pitch of current seat row.">
+															<value>62</value>
+															<unit>inch</unit>
+															<lower_boundary>27</lower_boundary>
+															<upper_boundary>100</upper_boundary>
+															<default>62</default>
+														</seat_pitch>
+													</seat_on_left_side>
+													<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+														<name description="Name of selected seat type.">
+															<value>None</value>
+														</name>
+														<seat_pitch description="Seat pitch of current seat row.">
+															<value>62</value>
+															<unit>inch</unit>
+															<lower_boundary>27</lower_boundary>
+															<upper_boundary>100</upper_boundary>
+															<default>62</default>
+														</seat_pitch>
+													</seat_on_right_side>
+													<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+														<name description="Name of selected seat type.">
+															<value>None</value>
+														</name>
+														<seat_pitch description="Seat pitch of current seat row.">
+															<value>62</value>
+															<unit>inch</unit>
+															<lower_boundary>27</lower_boundary>
+															<upper_boundary>100</upper_boundary>
+															<default>62</default>
+														</seat_pitch>
+													</seat_in_the_center>
+												</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>10</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>10</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>32</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>32</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>1</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>1</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="3">
+											<name description="Name of passenger class.">
+												<value>premium economy</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>2_3</value>
+												<default>3_3</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>5</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>5</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>sidewall_lavatory</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>65</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>65</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>false</value>
+													<default>false</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>0</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>0</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>				
+										<class description="Description of the passenger class." ID="4">
+											<name description="Name of passenger class.">
+												<value>economy</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>2_3</value>
+												<default>3_3</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>2.5</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>2.5</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>sidewall_lavatory</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>65</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>65</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>false</value>
+													<default>false</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>0</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>0</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+									</passenger_classes>
+								</payload_tube>
+								<payload_tube ID="2" decription="Definition of seat arrangement of current passenger tube.">
+									<name decription="Name of the payload tube.">
+										<value>first_right_tube</value>
+									</name>
+									<passenger_classes description="Description of the aircraft passenger classes.">
+										<class description="Description of the passenger class." ID="0">
+											<name description="Name of passenger class.">
+												<value>president</value>
+											</name>							
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>1_1</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>80</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>80</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>80</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>80</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>80</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>80</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>20</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>20</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>8</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>8</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>3</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>3</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="1">
+											<name description="Name of passenger class.">
+												<value>first</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>1_1</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>15</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>15</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>16</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>16</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>2</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>2</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="2">
+											<name description="Name of passenger class.">
+												<value>business</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>2_2</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>62</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>62</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>62</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>62</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>62</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>62</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>10</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>10</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>32</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>32</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>1</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>1</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="3">
+											<name description="Name of passenger class.">
+												<value>premium economy</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>3_2</value>
+												<default>3_3</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>5</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>5</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>sidewall_lavatory</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>65</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>65</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>false</value>
+													<default>false</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>0</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>0</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>				
+										<class description="Description of the passenger class." ID="4">
+											<name description="Name of passenger class.">
+												<value>economy</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>3_2</value>
+												<default>3_3</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>2.5</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>2.5</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>sidewall_lavatory</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>65</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>65</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>false</value>
+													<default>false</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>0</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>0</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+									</passenger_classes>
+								</payload_tube>
+								<payload_tube ID="3" decription="Definition of seat arrangement of current passenger tube.">
+									<name decription="Name of the payload tube.">
+										<value>second_left_tube</value>
+									</name>
+									<passenger_classes description="Description of the aircraft passenger classes.">
+										<class description="Description of the passenger class." ID="0">
+											<name description="Name of passenger class.">
+												<value>president</value>
+											</name>							
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>1_1</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>80</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>80</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>80</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>80</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>80</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>80</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>20</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>20</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>8</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>8</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>3</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>3</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="1">
+											<name description="Name of passenger class.">
+												<value>first</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>1_1</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>15</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>15</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>16</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>16</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>2</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>2</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="2">
+											<name description="Name of passenger class.">
+												<value>business</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>2_2</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>62</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>62</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>62</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>62</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>62</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>62</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>10</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>10</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>32</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>32</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>1</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>1</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="3">
+											<name description="Name of passenger class.">
+												<value>premium economy</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>2_2</value>
+												<default>3_3</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>5</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>5</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>sidewall_lavatory</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>65</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>65</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>false</value>
+													<default>false</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>0</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>0</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>				
+										<class description="Description of the passenger class." ID="4">
+											<name description="Name of passenger class.">
+												<value>economy</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>2_2</value>
+												<default>3_3</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>2.5</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>2.5</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>sidewall_lavatory</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>65</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>65</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>false</value>
+													<default>false</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>0</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>0</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+									</passenger_classes>
+								</payload_tube>
+								<payload_tube ID="4" decription="Definition of seat arrangement of current passenger tube.">
+									<name decription="Name of the payload tube.">
+										<value>second_right_tube</value>
+									</name>
+									<passenger_classes description="Description of the aircraft passenger classes.">
+										<class description="Description of the passenger class." ID="0">
+											<name description="Name of passenger class.">
+												<value>president</value>
+											</name>							
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>1_1</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+													<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+														<name description="Name of selected seat type.">
+															<value>None</value>
+														</name>
+														<seat_pitch description="Seat pitch of current seat row.">
+															<value>80</value>
+															<unit>inch</unit>
+															<lower_boundary>27</lower_boundary>
+															<upper_boundary>100</upper_boundary>
+															<default>80</default>
+														</seat_pitch>
+													</seat_on_left_side>
+													<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+														<name description="Name of selected seat type.">
+															<value>None</value>
+														</name>
+														<seat_pitch description="Seat pitch of current seat row.">
+															<value>80</value>
+															<unit>inch</unit>
+															<lower_boundary>27</lower_boundary>
+															<upper_boundary>100</upper_boundary>
+															<default>80</default>
+														</seat_pitch>
+													</seat_on_right_side>
+													<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+														<name description="Name of selected seat type.">
+															<value>None</value>
+														</name>
+														<seat_pitch description="Seat pitch of current seat row.">
+															<value>80</value>
+															<unit>inch</unit>
+															<lower_boundary>27</lower_boundary>
+															<upper_boundary>100</upper_boundary>
+															<default>80</default>
+														</seat_pitch>
+													</seat_in_the_center>
+												</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>20</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>20</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>8</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>8</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>3</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>3</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="1">
+											<name description="Name of passenger class.">
+												<value>first</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>1_1</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>74</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>74</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>15</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>15</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>16</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>16</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>2</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>2</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="2">
+											<name description="Name of passenger class.">
+												<value>business</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>None</value>
+												<default>2_2</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>62</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>62</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>62</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>62</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>None</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>62</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>62</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>10</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>10</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>32</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>32</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>true</value>
+													<default>true</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>1</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>1</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+										<class description="Description of the passenger class." ID="3">
+											<name description="Name of passenger class.">
+												<value>premium economy</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>2_2</value>
+												<default>3_3</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>A320-200-premium_economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>38</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>38</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>5</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>5</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>sidewall_lavatory</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>65</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>65</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>false</value>
+													<default>false</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>0</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>0</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>				
+										<class description="Description of the passenger class." ID="4">
+											<name description="Name of passenger class.">
+												<value>economy</value>
+											</name>
+											<abreast description="Seat abreast of current passenger class. int_int (single aisle payload tube) / int_int_int (wide body payload tube)">
+												<value>2_2</value>
+												<default>3_3</default>
+											</abreast>
+											<seats description="Definiton of passenger class seats.">
+												<seat_on_left_side description="description of the seats for the left side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_on_left_side>
+												<seat_on_right_side description="Description of the seats for the right side of the aircraft.">
+													<name description="Name of selected seat type.">
+														<value>A320-200-economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_on_right_side>
+												<seat_in_the_center description="Description of the seats in the center of a wide-body aircraft">
+													<name description="Name of selected seat type.">
+														<value>A320-200-economy</value>
+													</name>
+													<seat_pitch description="Seat pitch of current seat row.">
+														<value>30</value>
+														<unit>inch</unit>
+														<lower_boundary>27</lower_boundary>
+														<upper_boundary>100</upper_boundary>
+														<default>30</default>
+													</seat_pitch>
+												</seat_in_the_center>
+											</seats>
+											<seat_space description="Distance between outer armrest and cabin wall.">
+												<value>2.5</value>
+												<unit>inch</unit>
+												<lower_boundary>1</lower_boundary>
+												<upper_boundary>20</upper_boundary>
+												<default>2.5</default>
+											</seat_space>
+											<lavatories description="Description of the lavatory of current passenger class">
+												<name description="Name of lavatory type.">
+													<value>None</value>
+												</name>
+												<pax_per_lavatory description="Number of passenger per lavatorie.">
+													<value>65</value>
+													<unit>-</unit>
+													<lower_boundary>1</lower_boundary>
+													<upper_boundary>75</upper_boundary>
+													<default>65</default>
+												</pax_per_lavatory>
+												<use_specific_number_of_class_lavatories description="Switch to select a specific number of class lavatoires. Switch: true (use specific number) / false (estimate via pax_per_lavatory)">
+													<value>false</value>
+													<default>false</default>
+													<specific_number_of_class_lavatories description="Set a specific number of class lavatories to use.">
+														<value>1</value>
+														<unit>-</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>10</upper_boundary>
+														<default>1</default>
+													</specific_number_of_class_lavatories>
+												</use_specific_number_of_class_lavatories>
+											</lavatories>
+											<wardrobe description="Description of wardrobe of current passenger class">
+												<use_wardrobe_for_passenger_class description="Switch to select if a wardorbe should be used for current passenger class. Switch: true (use) / false (dont use)">
+													<value>false</value>
+													<default>false</default>
+													<space_per_passenger description="Space per passenger required for wardrobe.">
+														<value>0</value>
+														<unit>inch</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>3</upper_boundary>
+														<default>0</default>
+													</space_per_passenger>
+												</use_wardrobe_for_passenger_class>
+											</wardrobe>
+										</class>
+									</passenger_classes>
+								</payload_tube>
+							</passenger_accommodation>
+						</payload_tube_definition>
+					</specific>
+				</blended_wing_body_design_tu_berlin>
+			</fidelity>
+		</configuration>
+	</program_settings>
+</module_configuration_file>

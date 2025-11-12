@@ -1,0 +1,855 @@
+*******************************************************************************
+16.10.2025 09:20:39 - Start systems_design
+16.10.2025 09:20:39 - [MODULE RUNTIMEINFO] - systems_design
+16.10.2025 09:20:39 -    [CONSOLE  ] - [ON]
+16.10.2025 09:20:39 -    [LOG      ] - [ON]
+16.10.2025 09:20:39 -    [PLOT     ] - [OFF]
+16.10.2025 09:20:39 -       [COPY  ] - [ON]
+16.10.2025 09:20:39 -       [DELETE] - [ON]
+16.10.2025 09:20:39 -    [REPORT   ] - [OFF]
+16.10.2025 09:20:39 -    [TEX      ] - [OFF]
+16.10.2025 09:20:39 -    [INFOFILES] - [OFF]
+16.10.2025 09:20:39 -    [GNUPLOT]
+16.10.2025 09:20:39 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:20:39 -       [FILENAME] - 
+16.10.2025 09:20:39 -    [INKSCAPE]
+16.10.2025 09:20:39 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:20:39 -       [FILENAME] - 
+16.10.2025 09:20:39 -    [LOGFILE]
+16.10.2025 09:20:39 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:20:39 -       [FILENAME] - systems_design.log
+16.10.2025 09:20:39 -    [IO/ACXML]
+16.10.2025 09:20:39 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:20:39 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:20:39 -    [MODCONFIG]
+16.10.2025 09:20:39 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:20:39 -       [FILENAME] - systems_design_conf.xml
+16.10.2025 09:20:39 - Checking directory... [REPORT]
+16.10.2025 09:20:39 - Checking directory... [TEX]
+16.10.2025 09:20:39 - Checking directory... [LOGFILES]
+16.10.2025 09:20:39 - Reading the Mission: C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/mission_data/design_mission.xml
+16.10.2025 09:20:39 - Create: fuselage_0 ...
+16.10.2025 09:20:39 - Create: Nacelle 0 ...
+16.10.2025 09:20:39 - Create: Nacelle 1 ...
+16.10.2025 09:20:39 - Create: main_wing ...
+16.10.2025 09:20:39 - Create: Empennage vertical_stabiliser ...
+16.10.2025 09:20:39 - Create: Empennage horizontal_stabiliser ...
+16.10.2025 09:20:39 - WARNING: Acxml does not contain node for maximum landing mass. 0.85 * MTOM used instead to size ATA32 in this iteration.
+16.10.2025 09:20:39 - WARNING: Acxml does not contain node for number of flight crew. Assuming 2.
+16.10.2025 09:20:39 -   Create: FCS  ->  ATA-27
+16.10.2025 09:20:39 -   Create: FireProtection  ->  ATA-26
+16.10.2025 09:20:39 -   Create: FuelSystem  ->  ATA-28
+16.10.2025 09:20:39 -   Create: Furnishings  ->  ATA-25
+16.10.2025 09:20:39 -   Create: IceRainProtection  ->  ATA-30
+16.10.2025 09:20:39 -   Create: LandingGear  ->  ATA-32
+16.10.2025 09:20:39 -   Create: LightingSystem  ->  ATA-33
+16.10.2025 09:20:39 -   Create: RemainingConsumers  ->  ATA-XX
+16.10.2025 09:20:39 -   Create: ECS  ->  ATA-21
+16.10.2025 09:20:39 -   Create: APU  ->  ATA-49
+16.10.2025 09:20:39 -   Create: Engine  ->  ATA-70
+16.10.2025 09:20:39 -   Create: BleedAirSystem  ->  ATA-36
+16.10.2025 09:20:39 -   Create: ElectricSystem  ->  ATA-24
+16.10.2025 09:20:39 -   Create: HydraulicSystem  ->  ATA-29
+16.10.2025 09:20:39 - Energy consumption of the flight control is calculated via rudder deflections in the mission.
+16.10.2025 09:20:39 -   Create: BleedAirInterface  ->  ATA-00
+16.10.2025 09:20:39 -   Create: KeroseneInterface  ->  ATA-00
+16.10.2025 09:20:39 -   Create: ShaftPowerInterface  ->  ATA-00
+16.10.2025 09:20:39 - Read sink connections
+16.10.2025 09:20:39 - Read conductor connections
+16.10.2025 09:20:39 - Read source connections
+16.10.2025 09:20:39 - Read ECS connections
+16.10.2025 09:20:39 - Run systemsDesign standard strategy
+16.10.2025 09:20:39 - Run - Sizing Mode
+16.10.2025 09:20:39 - Start calculation ...
+16.10.2025 09:20:40 - Calculate system masses ...
+16.10.2025 09:20:40 - Calculate the masses for the groups: operator items, propulsion, systems, furnishing, and not allocated systems ...
+16.10.2025 09:20:40 - ... design mission calculation finished!
+16.10.2025 09:20:40 - Update systems
+16.10.2025 09:20:40 - WARNING: updateACxml not yet defined for an interface system of the type Kerosene and will be skipped.
+16.10.2025 09:20:40 - Write off-takes to mission file ...
+16.10.2025 09:20:40 - Write reports ...
+16.10.2025 09:20:40 - Finish systems_design
+*******************************************************************************
+16.10.2025 09:21:00 - Start systems_design
+16.10.2025 09:21:00 - [MODULE RUNTIMEINFO] - systems_design
+16.10.2025 09:21:00 -    [CONSOLE  ] - [ON]
+16.10.2025 09:21:00 -    [LOG      ] - [ON]
+16.10.2025 09:21:00 -    [PLOT     ] - [OFF]
+16.10.2025 09:21:00 -       [COPY  ] - [ON]
+16.10.2025 09:21:00 -       [DELETE] - [ON]
+16.10.2025 09:21:00 -    [REPORT   ] - [OFF]
+16.10.2025 09:21:00 -    [TEX      ] - [OFF]
+16.10.2025 09:21:00 -    [INFOFILES] - [OFF]
+16.10.2025 09:21:00 -    [GNUPLOT]
+16.10.2025 09:21:00 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:21:00 -       [FILENAME] - 
+16.10.2025 09:21:00 -    [INKSCAPE]
+16.10.2025 09:21:00 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:21:00 -       [FILENAME] - 
+16.10.2025 09:21:00 -    [LOGFILE]
+16.10.2025 09:21:00 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:00 -       [FILENAME] - systems_design.log
+16.10.2025 09:21:00 -    [IO/ACXML]
+16.10.2025 09:21:00 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:21:00 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:21:00 -    [MODCONFIG]
+16.10.2025 09:21:00 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:00 -       [FILENAME] - systems_design_conf.xml
+16.10.2025 09:21:00 - Checking directory... [REPORT]
+16.10.2025 09:21:00 - Checking directory... [TEX]
+16.10.2025 09:21:00 - Checking directory... [LOGFILES]
+16.10.2025 09:21:00 - Reading the Mission: C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/mission_data/design_mission.xml
+16.10.2025 09:21:00 - Create: fuselage_0 ...
+16.10.2025 09:21:00 - Create: Nacelle 0 ...
+16.10.2025 09:21:00 - Create: Nacelle 1 ...
+16.10.2025 09:21:00 - Create: main_wing ...
+16.10.2025 09:21:00 - Create: Empennage vertical_stabiliser ...
+16.10.2025 09:21:00 - Create: Empennage horizontal_stabiliser ...
+16.10.2025 09:21:00 - WARNING: Acxml does not contain node for number of flight crew. Assuming 2.
+16.10.2025 09:21:00 -   Create: FCS  ->  ATA-27
+16.10.2025 09:21:00 -   Create: FireProtection  ->  ATA-26
+16.10.2025 09:21:00 -   Create: FuelSystem  ->  ATA-28
+16.10.2025 09:21:00 -   Create: Furnishings  ->  ATA-25
+16.10.2025 09:21:00 -   Create: IceRainProtection  ->  ATA-30
+16.10.2025 09:21:00 -   Create: LandingGear  ->  ATA-32
+16.10.2025 09:21:00 -   Create: LightingSystem  ->  ATA-33
+16.10.2025 09:21:00 -   Create: RemainingConsumers  ->  ATA-XX
+16.10.2025 09:21:00 -   Create: ECS  ->  ATA-21
+16.10.2025 09:21:00 -   Create: APU  ->  ATA-49
+16.10.2025 09:21:00 -   Create: Engine  ->  ATA-70
+16.10.2025 09:21:00 -   Create: BleedAirSystem  ->  ATA-36
+16.10.2025 09:21:00 -   Create: ElectricSystem  ->  ATA-24
+16.10.2025 09:21:00 -   Create: HydraulicSystem  ->  ATA-29
+16.10.2025 09:21:00 - Energy consumption of the flight control is calculated via rudder deflections in the mission.
+16.10.2025 09:21:00 -   Create: BleedAirInterface  ->  ATA-00
+16.10.2025 09:21:00 -   Create: KeroseneInterface  ->  ATA-00
+16.10.2025 09:21:00 -   Create: ShaftPowerInterface  ->  ATA-00
+16.10.2025 09:21:00 - Read sink connections
+16.10.2025 09:21:00 - Read conductor connections
+16.10.2025 09:21:00 - Read source connections
+16.10.2025 09:21:00 - Read ECS connections
+16.10.2025 09:21:00 - Run systemsDesign standard strategy
+16.10.2025 09:21:00 - Run - Sizing Mode
+16.10.2025 09:21:00 - Start calculation ...
+16.10.2025 09:21:01 - Calculate system masses ...
+16.10.2025 09:21:01 - Calculate the masses for the groups: operator items, propulsion, systems, furnishing, and not allocated systems ...
+16.10.2025 09:21:01 - ... design mission calculation finished!
+16.10.2025 09:21:01 - Update systems
+16.10.2025 09:21:01 - WARNING: updateACxml not yet defined for an interface system of the type Kerosene and will be skipped.
+16.10.2025 09:21:01 - Write off-takes to mission file ...
+16.10.2025 09:21:01 - Write reports ...
+16.10.2025 09:21:01 - Finish systems_design
+*******************************************************************************
+16.10.2025 09:21:39 - Start systems_design
+16.10.2025 09:21:39 - [MODULE RUNTIMEINFO] - systems_design
+16.10.2025 09:21:39 -    [CONSOLE  ] - [ON]
+16.10.2025 09:21:39 -    [LOG      ] - [ON]
+16.10.2025 09:21:39 -    [PLOT     ] - [OFF]
+16.10.2025 09:21:39 -       [COPY  ] - [ON]
+16.10.2025 09:21:39 -       [DELETE] - [ON]
+16.10.2025 09:21:39 -    [REPORT   ] - [OFF]
+16.10.2025 09:21:39 -    [TEX      ] - [OFF]
+16.10.2025 09:21:39 -    [INFOFILES] - [OFF]
+16.10.2025 09:21:39 -    [GNUPLOT]
+16.10.2025 09:21:39 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:21:39 -       [FILENAME] - 
+16.10.2025 09:21:39 -    [INKSCAPE]
+16.10.2025 09:21:39 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:21:39 -       [FILENAME] - 
+16.10.2025 09:21:39 -    [LOGFILE]
+16.10.2025 09:21:39 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:39 -       [FILENAME] - systems_design.log
+16.10.2025 09:21:39 -    [IO/ACXML]
+16.10.2025 09:21:39 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:21:39 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:21:39 -    [MODCONFIG]
+16.10.2025 09:21:39 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:39 -       [FILENAME] - systems_design_conf.xml
+16.10.2025 09:21:39 - Checking directory... [REPORT]
+16.10.2025 09:21:39 - Checking directory... [TEX]
+16.10.2025 09:21:39 - Checking directory... [LOGFILES]
+16.10.2025 09:21:39 - Reading the Mission: C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/mission_data/design_mission.xml
+16.10.2025 09:21:39 - Create: fuselage_0 ...
+16.10.2025 09:21:39 - Create: Nacelle 0 ...
+16.10.2025 09:21:39 - Create: Nacelle 1 ...
+16.10.2025 09:21:39 - Create: main_wing ...
+16.10.2025 09:21:39 - Create: Empennage vertical_stabiliser ...
+16.10.2025 09:21:39 - Create: Empennage horizontal_stabiliser ...
+16.10.2025 09:21:39 - WARNING: Acxml does not contain node for number of flight crew. Assuming 2.
+16.10.2025 09:21:39 -   Create: FCS  ->  ATA-27
+16.10.2025 09:21:39 -   Create: FireProtection  ->  ATA-26
+16.10.2025 09:21:39 -   Create: FuelSystem  ->  ATA-28
+16.10.2025 09:21:39 -   Create: Furnishings  ->  ATA-25
+16.10.2025 09:21:39 -   Create: IceRainProtection  ->  ATA-30
+16.10.2025 09:21:39 -   Create: LandingGear  ->  ATA-32
+16.10.2025 09:21:39 -   Create: LightingSystem  ->  ATA-33
+16.10.2025 09:21:39 -   Create: RemainingConsumers  ->  ATA-XX
+16.10.2025 09:21:39 -   Create: ECS  ->  ATA-21
+16.10.2025 09:21:39 -   Create: APU  ->  ATA-49
+16.10.2025 09:21:39 -   Create: Engine  ->  ATA-70
+16.10.2025 09:21:39 -   Create: BleedAirSystem  ->  ATA-36
+16.10.2025 09:21:39 -   Create: ElectricSystem  ->  ATA-24
+16.10.2025 09:21:39 -   Create: HydraulicSystem  ->  ATA-29
+16.10.2025 09:21:39 - Energy consumption of the flight control is calculated via rudder deflections in the mission.
+16.10.2025 09:21:39 -   Create: BleedAirInterface  ->  ATA-00
+16.10.2025 09:21:39 -   Create: KeroseneInterface  ->  ATA-00
+16.10.2025 09:21:39 -   Create: ShaftPowerInterface  ->  ATA-00
+16.10.2025 09:21:39 - Read sink connections
+16.10.2025 09:21:39 - Read conductor connections
+16.10.2025 09:21:39 - Read source connections
+16.10.2025 09:21:39 - Read ECS connections
+16.10.2025 09:21:39 - Run systemsDesign standard strategy
+16.10.2025 09:21:39 - Run - Sizing Mode
+16.10.2025 09:21:39 - Start calculation ...
+16.10.2025 09:21:40 - Calculate system masses ...
+16.10.2025 09:21:40 - Calculate the masses for the groups: operator items, propulsion, systems, furnishing, and not allocated systems ...
+16.10.2025 09:21:40 - ... design mission calculation finished!
+16.10.2025 09:21:40 - Update systems
+16.10.2025 09:21:40 - WARNING: updateACxml not yet defined for an interface system of the type Kerosene and will be skipped.
+16.10.2025 09:21:40 - Write off-takes to mission file ...
+16.10.2025 09:21:40 - Write reports ...
+16.10.2025 09:21:40 - Finish systems_design
+*******************************************************************************
+16.10.2025 09:22:11 - Start systems_design
+16.10.2025 09:22:11 - [MODULE RUNTIMEINFO] - systems_design
+16.10.2025 09:22:11 -    [CONSOLE  ] - [ON]
+16.10.2025 09:22:11 -    [LOG      ] - [ON]
+16.10.2025 09:22:11 -    [PLOT     ] - [OFF]
+16.10.2025 09:22:11 -       [COPY  ] - [ON]
+16.10.2025 09:22:11 -       [DELETE] - [ON]
+16.10.2025 09:22:11 -    [REPORT   ] - [OFF]
+16.10.2025 09:22:11 -    [TEX      ] - [OFF]
+16.10.2025 09:22:11 -    [INFOFILES] - [OFF]
+16.10.2025 09:22:11 -    [GNUPLOT]
+16.10.2025 09:22:11 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:22:11 -       [FILENAME] - 
+16.10.2025 09:22:11 -    [INKSCAPE]
+16.10.2025 09:22:11 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:22:11 -       [FILENAME] - 
+16.10.2025 09:22:11 -    [LOGFILE]
+16.10.2025 09:22:11 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:22:11 -       [FILENAME] - systems_design.log
+16.10.2025 09:22:11 -    [IO/ACXML]
+16.10.2025 09:22:11 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:22:11 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:22:11 -    [MODCONFIG]
+16.10.2025 09:22:11 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:22:11 -       [FILENAME] - systems_design_conf.xml
+16.10.2025 09:22:11 - Checking directory... [REPORT]
+16.10.2025 09:22:11 - Checking directory... [TEX]
+16.10.2025 09:22:11 - Checking directory... [LOGFILES]
+16.10.2025 09:22:11 - Reading the Mission: C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/mission_data/design_mission.xml
+16.10.2025 09:22:11 - Create: fuselage_0 ...
+16.10.2025 09:22:11 - Create: Nacelle 0 ...
+16.10.2025 09:22:11 - Create: Nacelle 1 ...
+16.10.2025 09:22:11 - Create: main_wing ...
+16.10.2025 09:22:11 - Create: Empennage vertical_stabiliser ...
+16.10.2025 09:22:11 - Create: Empennage horizontal_stabiliser ...
+16.10.2025 09:22:11 - WARNING: Acxml does not contain node for number of flight crew. Assuming 2.
+16.10.2025 09:22:11 -   Create: FCS  ->  ATA-27
+16.10.2025 09:22:11 -   Create: FireProtection  ->  ATA-26
+16.10.2025 09:22:11 -   Create: FuelSystem  ->  ATA-28
+16.10.2025 09:22:11 -   Create: Furnishings  ->  ATA-25
+16.10.2025 09:22:11 -   Create: IceRainProtection  ->  ATA-30
+16.10.2025 09:22:11 -   Create: LandingGear  ->  ATA-32
+16.10.2025 09:22:11 -   Create: LightingSystem  ->  ATA-33
+16.10.2025 09:22:11 -   Create: RemainingConsumers  ->  ATA-XX
+16.10.2025 09:22:11 -   Create: ECS  ->  ATA-21
+16.10.2025 09:22:11 -   Create: APU  ->  ATA-49
+16.10.2025 09:22:11 -   Create: Engine  ->  ATA-70
+16.10.2025 09:22:11 -   Create: BleedAirSystem  ->  ATA-36
+16.10.2025 09:22:11 -   Create: ElectricSystem  ->  ATA-24
+16.10.2025 09:22:11 -   Create: HydraulicSystem  ->  ATA-29
+16.10.2025 09:22:11 - Energy consumption of the flight control is calculated via rudder deflections in the mission.
+16.10.2025 09:22:11 -   Create: BleedAirInterface  ->  ATA-00
+16.10.2025 09:22:11 -   Create: KeroseneInterface  ->  ATA-00
+16.10.2025 09:22:11 -   Create: ShaftPowerInterface  ->  ATA-00
+16.10.2025 09:22:11 - Read sink connections
+16.10.2025 09:22:11 - Read conductor connections
+16.10.2025 09:22:11 - Read source connections
+16.10.2025 09:22:11 - Read ECS connections
+16.10.2025 09:22:11 - Run systemsDesign standard strategy
+16.10.2025 09:22:11 - Run - Sizing Mode
+16.10.2025 09:22:11 - Start calculation ...
+16.10.2025 09:22:12 - Calculate system masses ...
+16.10.2025 09:22:12 - Calculate the masses for the groups: operator items, propulsion, systems, furnishing, and not allocated systems ...
+16.10.2025 09:22:12 - ... design mission calculation finished!
+16.10.2025 09:22:12 - Update systems
+16.10.2025 09:22:12 - WARNING: updateACxml not yet defined for an interface system of the type Kerosene and will be skipped.
+16.10.2025 09:22:12 - Write off-takes to mission file ...
+16.10.2025 09:22:12 - Write reports ...
+16.10.2025 09:22:12 - Finish systems_design
+*******************************************************************************
+16.10.2025 09:23:11 - Start systems_design
+16.10.2025 09:23:11 - [MODULE RUNTIMEINFO] - systems_design
+16.10.2025 09:23:11 -    [CONSOLE  ] - [ON]
+16.10.2025 09:23:11 -    [LOG      ] - [ON]
+16.10.2025 09:23:11 -    [PLOT     ] - [OFF]
+16.10.2025 09:23:11 -       [COPY  ] - [ON]
+16.10.2025 09:23:11 -       [DELETE] - [ON]
+16.10.2025 09:23:11 -    [REPORT   ] - [OFF]
+16.10.2025 09:23:11 -    [TEX      ] - [OFF]
+16.10.2025 09:23:11 -    [INFOFILES] - [OFF]
+16.10.2025 09:23:11 -    [GNUPLOT]
+16.10.2025 09:23:11 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:23:11 -       [FILENAME] - 
+16.10.2025 09:23:11 -    [INKSCAPE]
+16.10.2025 09:23:11 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:23:11 -       [FILENAME] - 
+16.10.2025 09:23:11 -    [LOGFILE]
+16.10.2025 09:23:11 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:23:11 -       [FILENAME] - systems_design.log
+16.10.2025 09:23:11 -    [IO/ACXML]
+16.10.2025 09:23:11 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:23:11 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:23:11 -    [MODCONFIG]
+16.10.2025 09:23:11 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:23:11 -       [FILENAME] - systems_design_conf.xml
+16.10.2025 09:23:11 - Checking directory... [REPORT]
+16.10.2025 09:23:11 - Checking directory... [TEX]
+16.10.2025 09:23:11 - Checking directory... [LOGFILES]
+16.10.2025 09:23:11 - Reading the Mission: C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/mission_data/design_mission.xml
+16.10.2025 09:23:11 - Create: fuselage_0 ...
+16.10.2025 09:23:11 - Create: Nacelle 0 ...
+16.10.2025 09:23:11 - Create: Nacelle 1 ...
+16.10.2025 09:23:11 - Create: main_wing ...
+16.10.2025 09:23:11 - Create: Empennage vertical_stabiliser ...
+16.10.2025 09:23:11 - Create: Empennage horizontal_stabiliser ...
+16.10.2025 09:23:11 - WARNING: Acxml does not contain node for number of flight crew. Assuming 2.
+16.10.2025 09:23:11 -   Create: FCS  ->  ATA-27
+16.10.2025 09:23:11 -   Create: FireProtection  ->  ATA-26
+16.10.2025 09:23:11 -   Create: FuelSystem  ->  ATA-28
+16.10.2025 09:23:11 -   Create: Furnishings  ->  ATA-25
+16.10.2025 09:23:11 -   Create: IceRainProtection  ->  ATA-30
+16.10.2025 09:23:11 -   Create: LandingGear  ->  ATA-32
+16.10.2025 09:23:11 -   Create: LightingSystem  ->  ATA-33
+16.10.2025 09:23:11 -   Create: RemainingConsumers  ->  ATA-XX
+16.10.2025 09:23:11 -   Create: ECS  ->  ATA-21
+16.10.2025 09:23:11 -   Create: APU  ->  ATA-49
+16.10.2025 09:23:11 -   Create: Engine  ->  ATA-70
+16.10.2025 09:23:11 -   Create: BleedAirSystem  ->  ATA-36
+16.10.2025 09:23:11 -   Create: ElectricSystem  ->  ATA-24
+16.10.2025 09:23:11 -   Create: HydraulicSystem  ->  ATA-29
+16.10.2025 09:23:11 - Energy consumption of the flight control is calculated via rudder deflections in the mission.
+16.10.2025 09:23:11 -   Create: BleedAirInterface  ->  ATA-00
+16.10.2025 09:23:11 -   Create: KeroseneInterface  ->  ATA-00
+16.10.2025 09:23:11 -   Create: ShaftPowerInterface  ->  ATA-00
+16.10.2025 09:23:11 - Read sink connections
+16.10.2025 09:23:11 - Read conductor connections
+16.10.2025 09:23:11 - Read source connections
+16.10.2025 09:23:11 - Read ECS connections
+16.10.2025 09:23:11 - Run systemsDesign standard strategy
+16.10.2025 09:23:11 - Run - Sizing Mode
+16.10.2025 09:23:11 - Start calculation ...
+16.10.2025 09:23:14 - Calculate system masses ...
+16.10.2025 09:23:14 - Calculate the masses for the groups: operator items, propulsion, systems, furnishing, and not allocated systems ...
+16.10.2025 09:23:14 - ... design mission calculation finished!
+16.10.2025 09:23:14 - Update systems
+16.10.2025 09:23:14 - WARNING: updateACxml not yet defined for an interface system of the type Kerosene and will be skipped.
+16.10.2025 09:23:14 - Write off-takes to mission file ...
+16.10.2025 09:23:14 - Write reports ...
+16.10.2025 09:23:14 - Finish systems_design
+*******************************************************************************
+16.10.2025 09:24:21 - Start systems_design
+16.10.2025 09:24:21 - [MODULE RUNTIMEINFO] - systems_design
+16.10.2025 09:24:21 -    [CONSOLE  ] - [ON]
+16.10.2025 09:24:21 -    [LOG      ] - [ON]
+16.10.2025 09:24:21 -    [PLOT     ] - [OFF]
+16.10.2025 09:24:21 -       [COPY  ] - [ON]
+16.10.2025 09:24:21 -       [DELETE] - [ON]
+16.10.2025 09:24:21 -    [REPORT   ] - [OFF]
+16.10.2025 09:24:21 -    [TEX      ] - [OFF]
+16.10.2025 09:24:21 -    [INFOFILES] - [OFF]
+16.10.2025 09:24:21 -    [GNUPLOT]
+16.10.2025 09:24:21 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:24:21 -       [FILENAME] - 
+16.10.2025 09:24:21 -    [INKSCAPE]
+16.10.2025 09:24:21 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:24:21 -       [FILENAME] - 
+16.10.2025 09:24:21 -    [LOGFILE]
+16.10.2025 09:24:21 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:24:21 -       [FILENAME] - systems_design.log
+16.10.2025 09:24:21 -    [IO/ACXML]
+16.10.2025 09:24:21 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:24:21 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:24:21 -    [MODCONFIG]
+16.10.2025 09:24:21 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:24:21 -       [FILENAME] - systems_design_conf.xml
+16.10.2025 09:24:21 - Checking directory... [REPORT]
+16.10.2025 09:24:21 - Checking directory... [TEX]
+16.10.2025 09:24:21 - Checking directory... [LOGFILES]
+16.10.2025 09:24:21 - Reading the Mission: C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/mission_data/design_mission.xml
+16.10.2025 09:24:21 - Create: fuselage_0 ...
+16.10.2025 09:24:21 - Create: Nacelle 0 ...
+16.10.2025 09:24:21 - Create: Nacelle 1 ...
+16.10.2025 09:24:21 - Create: main_wing ...
+16.10.2025 09:24:21 - Create: Empennage vertical_stabiliser ...
+16.10.2025 09:24:21 - Create: Empennage horizontal_stabiliser ...
+16.10.2025 09:24:21 - WARNING: Acxml does not contain node for number of flight crew. Assuming 2.
+16.10.2025 09:24:21 -   Create: FCS  ->  ATA-27
+16.10.2025 09:24:21 -   Create: FireProtection  ->  ATA-26
+16.10.2025 09:24:21 -   Create: FuelSystem  ->  ATA-28
+16.10.2025 09:24:21 -   Create: Furnishings  ->  ATA-25
+16.10.2025 09:24:21 -   Create: IceRainProtection  ->  ATA-30
+16.10.2025 09:24:21 -   Create: LandingGear  ->  ATA-32
+16.10.2025 09:24:21 -   Create: LightingSystem  ->  ATA-33
+16.10.2025 09:24:21 -   Create: RemainingConsumers  ->  ATA-XX
+16.10.2025 09:24:21 -   Create: ECS  ->  ATA-21
+16.10.2025 09:24:21 -   Create: APU  ->  ATA-49
+16.10.2025 09:24:21 -   Create: Engine  ->  ATA-70
+16.10.2025 09:24:21 -   Create: BleedAirSystem  ->  ATA-36
+16.10.2025 09:24:21 -   Create: ElectricSystem  ->  ATA-24
+16.10.2025 09:24:21 -   Create: HydraulicSystem  ->  ATA-29
+16.10.2025 09:24:21 - Energy consumption of the flight control is calculated via rudder deflections in the mission.
+16.10.2025 09:24:21 -   Create: BleedAirInterface  ->  ATA-00
+16.10.2025 09:24:21 -   Create: KeroseneInterface  ->  ATA-00
+16.10.2025 09:24:21 -   Create: ShaftPowerInterface  ->  ATA-00
+16.10.2025 09:24:21 - Read sink connections
+16.10.2025 09:24:21 - Read conductor connections
+16.10.2025 09:24:21 - Read source connections
+16.10.2025 09:24:21 - Read ECS connections
+16.10.2025 09:24:21 - Run systemsDesign standard strategy
+16.10.2025 09:24:21 - Run - Sizing Mode
+16.10.2025 09:24:21 - Start calculation ...
+16.10.2025 09:24:23 - Calculate system masses ...
+16.10.2025 09:24:23 - Calculate the masses for the groups: operator items, propulsion, systems, furnishing, and not allocated systems ...
+16.10.2025 09:24:23 - ... design mission calculation finished!
+16.10.2025 09:24:23 - Update systems
+16.10.2025 09:24:23 - WARNING: updateACxml not yet defined for an interface system of the type Kerosene and will be skipped.
+16.10.2025 09:24:23 - Write off-takes to mission file ...
+16.10.2025 09:24:23 - Write reports ...
+16.10.2025 09:24:23 - Finish systems_design
+*******************************************************************************
+16.10.2025 09:25:32 - Start systems_design
+16.10.2025 09:25:32 - [MODULE RUNTIMEINFO] - systems_design
+16.10.2025 09:25:32 -    [CONSOLE  ] - [ON]
+16.10.2025 09:25:32 -    [LOG      ] - [ON]
+16.10.2025 09:25:32 -    [PLOT     ] - [OFF]
+16.10.2025 09:25:32 -       [COPY  ] - [ON]
+16.10.2025 09:25:32 -       [DELETE] - [ON]
+16.10.2025 09:25:32 -    [REPORT   ] - [OFF]
+16.10.2025 09:25:32 -    [TEX      ] - [OFF]
+16.10.2025 09:25:32 -    [INFOFILES] - [OFF]
+16.10.2025 09:25:32 -    [GNUPLOT]
+16.10.2025 09:25:32 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:25:32 -       [FILENAME] - 
+16.10.2025 09:25:32 -    [INKSCAPE]
+16.10.2025 09:25:32 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:25:32 -       [FILENAME] - 
+16.10.2025 09:25:32 -    [LOGFILE]
+16.10.2025 09:25:32 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:25:32 -       [FILENAME] - systems_design.log
+16.10.2025 09:25:32 -    [IO/ACXML]
+16.10.2025 09:25:32 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:25:32 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:25:32 -    [MODCONFIG]
+16.10.2025 09:25:32 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:25:32 -       [FILENAME] - systems_design_conf.xml
+16.10.2025 09:25:32 - Checking directory... [REPORT]
+16.10.2025 09:25:32 - Checking directory... [TEX]
+16.10.2025 09:25:32 - Checking directory... [LOGFILES]
+16.10.2025 09:25:32 - Reading the Mission: C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/mission_data/design_mission.xml
+16.10.2025 09:25:32 - Create: fuselage_0 ...
+16.10.2025 09:25:32 - Create: Nacelle 0 ...
+16.10.2025 09:25:32 - Create: Nacelle 1 ...
+16.10.2025 09:25:32 - Create: main_wing ...
+16.10.2025 09:25:33 - Create: Empennage vertical_stabiliser ...
+16.10.2025 09:25:33 - Create: Empennage horizontal_stabiliser ...
+16.10.2025 09:25:33 - WARNING: Acxml does not contain node for number of flight crew. Assuming 2.
+16.10.2025 09:25:33 -   Create: FCS  ->  ATA-27
+16.10.2025 09:25:33 -   Create: FireProtection  ->  ATA-26
+16.10.2025 09:25:33 -   Create: FuelSystem  ->  ATA-28
+16.10.2025 09:25:33 -   Create: Furnishings  ->  ATA-25
+16.10.2025 09:25:33 -   Create: IceRainProtection  ->  ATA-30
+16.10.2025 09:25:33 -   Create: LandingGear  ->  ATA-32
+16.10.2025 09:25:33 -   Create: LightingSystem  ->  ATA-33
+16.10.2025 09:25:33 -   Create: RemainingConsumers  ->  ATA-XX
+16.10.2025 09:25:33 -   Create: ECS  ->  ATA-21
+16.10.2025 09:25:33 -   Create: APU  ->  ATA-49
+16.10.2025 09:25:33 -   Create: Engine  ->  ATA-70
+16.10.2025 09:25:33 -   Create: BleedAirSystem  ->  ATA-36
+16.10.2025 09:25:33 -   Create: ElectricSystem  ->  ATA-24
+16.10.2025 09:25:33 -   Create: HydraulicSystem  ->  ATA-29
+16.10.2025 09:25:33 - Energy consumption of the flight control is calculated via rudder deflections in the mission.
+16.10.2025 09:25:33 -   Create: BleedAirInterface  ->  ATA-00
+16.10.2025 09:25:33 -   Create: KeroseneInterface  ->  ATA-00
+16.10.2025 09:25:33 -   Create: ShaftPowerInterface  ->  ATA-00
+16.10.2025 09:25:33 - Read sink connections
+16.10.2025 09:25:33 - Read conductor connections
+16.10.2025 09:25:33 - Read source connections
+16.10.2025 09:25:33 - Read ECS connections
+16.10.2025 09:25:33 - Run systemsDesign standard strategy
+16.10.2025 09:25:33 - Run - Sizing Mode
+16.10.2025 09:25:33 - Start calculation ...
+16.10.2025 09:25:35 - Calculate system masses ...
+16.10.2025 09:25:35 - Calculate the masses for the groups: operator items, propulsion, systems, furnishing, and not allocated systems ...
+16.10.2025 09:25:35 - ... design mission calculation finished!
+16.10.2025 09:25:35 - Update systems
+16.10.2025 09:25:35 - WARNING: updateACxml not yet defined for an interface system of the type Kerosene and will be skipped.
+16.10.2025 09:25:35 - Write off-takes to mission file ...
+16.10.2025 09:25:35 - Write reports ...
+16.10.2025 09:25:35 - Finish systems_design
+*******************************************************************************
+16.10.2025 09:26:53 - Start systems_design
+16.10.2025 09:26:53 - [MODULE RUNTIMEINFO] - systems_design
+16.10.2025 09:26:53 -    [CONSOLE  ] - [ON]
+16.10.2025 09:26:53 -    [LOG      ] - [ON]
+16.10.2025 09:26:53 -    [PLOT     ] - [ON]
+16.10.2025 09:26:53 -       [COPY  ] - [ON]
+16.10.2025 09:26:53 -       [DELETE] - [ON]
+16.10.2025 09:26:53 -    [REPORT   ] - [ON]
+16.10.2025 09:26:53 -    [TEX      ] - [ON]
+16.10.2025 09:26:53 -    [INFOFILES] - [OFF]
+16.10.2025 09:26:53 -    [GNUPLOT]
+16.10.2025 09:26:53 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:26:53 -       [FILENAME] - 
+16.10.2025 09:26:53 -    [INKSCAPE]
+16.10.2025 09:26:53 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:26:53 -       [FILENAME] - 
+16.10.2025 09:26:53 -    [LOGFILE]
+16.10.2025 09:26:53 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:26:53 -       [FILENAME] - systems_design.log
+16.10.2025 09:26:53 -    [IO/ACXML]
+16.10.2025 09:26:53 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:26:53 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:26:53 -    [MODCONFIG]
+16.10.2025 09:26:53 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:26:53 -       [FILENAME] - systems_design_conf.xml
+16.10.2025 09:26:53 - Checking directory... [REPORT]
+16.10.2025 09:26:53 - Checking directory... [TEX]
+16.10.2025 09:26:53 - Checking directory... [HTML]
+16.10.2025 09:26:53 - Checking directory... [PLOT]
+16.10.2025 09:26:53 - Checking directory... [CSVFILES]
+16.10.2025 09:26:53 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:26:53 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:26:53 - Checking directory... [PLOTFILES]
+16.10.2025 09:26:53 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:26:53 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:26:53 - Checking directory... [LOGFILES]
+16.10.2025 09:26:53 - Reading the Mission: C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/mission_data/design_mission.xml
+16.10.2025 09:26:53 - Create: fuselage_0 ...
+16.10.2025 09:26:53 - Create: Nacelle 0 ...
+16.10.2025 09:26:53 - Create: Nacelle 1 ...
+16.10.2025 09:26:53 - Create: main_wing ...
+16.10.2025 09:26:53 - Create: Empennage vertical_stabiliser ...
+16.10.2025 09:26:53 - Create: Empennage horizontal_stabiliser ...
+16.10.2025 09:26:53 - WARNING: Acxml does not contain node for number of flight crew. Assuming 2.
+16.10.2025 09:26:53 -   Create: FCS  ->  ATA-27
+16.10.2025 09:26:53 -   Create: FireProtection  ->  ATA-26
+16.10.2025 09:26:53 -   Create: FuelSystem  ->  ATA-28
+16.10.2025 09:26:53 -   Create: Furnishings  ->  ATA-25
+16.10.2025 09:26:53 -   Create: IceRainProtection  ->  ATA-30
+16.10.2025 09:26:53 -   Create: LandingGear  ->  ATA-32
+16.10.2025 09:26:53 -   Create: LightingSystem  ->  ATA-33
+16.10.2025 09:26:53 -   Create: RemainingConsumers  ->  ATA-XX
+16.10.2025 09:26:53 -   Create: ECS  ->  ATA-21
+16.10.2025 09:26:53 -   Create: APU  ->  ATA-49
+16.10.2025 09:26:53 -   Create: Engine  ->  ATA-70
+16.10.2025 09:26:53 -   Create: BleedAirSystem  ->  ATA-36
+16.10.2025 09:26:53 -   Create: ElectricSystem  ->  ATA-24
+16.10.2025 09:26:53 -   Create: HydraulicSystem  ->  ATA-29
+16.10.2025 09:26:53 - Energy consumption of the flight control is calculated via rudder deflections in the mission.
+16.10.2025 09:26:53 -   Create: BleedAirInterface  ->  ATA-00
+16.10.2025 09:26:53 -   Create: KeroseneInterface  ->  ATA-00
+16.10.2025 09:26:53 -   Create: ShaftPowerInterface  ->  ATA-00
+16.10.2025 09:26:53 - Read sink connections
+16.10.2025 09:26:53 - Read conductor connections
+16.10.2025 09:26:53 - Read source connections
+16.10.2025 09:26:53 - Read ECS connections
+16.10.2025 09:26:53 - Run systemsDesign standard strategy
+16.10.2025 09:26:53 - Run - Sizing Mode
+16.10.2025 09:26:53 - Start calculation ...
+16.10.2025 09:26:55 - Calculate system masses ...
+16.10.2025 09:26:55 - Calculate the masses for the groups: operator items, propulsion, systems, furnishing, and not allocated systems ...
+16.10.2025 09:26:55 - ... design mission calculation finished!
+16.10.2025 09:26:55 - Update systems
+16.10.2025 09:26:55 - WARNING: updateACxml not yet defined for an interface system of the type Kerosene and will be skipped.
+16.10.2025 09:26:55 - Write off-takes to mission file ...
+16.10.2025 09:26:55 - Generate plots ...
+16.10.2025 09:27:00 - Write reports ...
+16.10.2025 09:27:00 - CSS code written to style.css successfully.
+16.10.2025 09:27:00 - Finish systems_design
+*******************************************************************************
+16.10.2025 09:27:36 - Start systems_design
+16.10.2025 09:27:36 - [MODULE RUNTIMEINFO] - systems_design
+16.10.2025 09:27:36 -    [CONSOLE  ] - [ON]
+16.10.2025 09:27:36 -    [LOG      ] - [ON]
+16.10.2025 09:27:36 -    [PLOT     ] - [OFF]
+16.10.2025 09:27:36 -       [COPY  ] - [ON]
+16.10.2025 09:27:36 -       [DELETE] - [ON]
+16.10.2025 09:27:36 -    [REPORT   ] - [OFF]
+16.10.2025 09:27:36 -    [TEX      ] - [OFF]
+16.10.2025 09:27:36 -    [INFOFILES] - [OFF]
+16.10.2025 09:27:36 -    [GNUPLOT]
+16.10.2025 09:27:36 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:27:36 -       [FILENAME] - 
+16.10.2025 09:27:36 -    [INKSCAPE]
+16.10.2025 09:27:36 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:27:36 -       [FILENAME] - 
+16.10.2025 09:27:36 -    [LOGFILE]
+16.10.2025 09:27:36 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:27:36 -       [FILENAME] - systems_design.log
+16.10.2025 09:27:36 -    [IO/ACXML]
+16.10.2025 09:27:36 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:27:36 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:27:36 -    [MODCONFIG]
+16.10.2025 09:27:36 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:27:36 -       [FILENAME] - systems_design_conf.xml
+16.10.2025 09:27:36 - Checking directory... [REPORT]
+16.10.2025 09:27:36 - Checking directory... [TEX]
+16.10.2025 09:27:36 - Checking directory... [LOGFILES]
+16.10.2025 09:27:36 - Reading the Mission: C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/mission_data/study_mission.xml
+16.10.2025 09:27:36 - Create: fuselage_0 ...
+16.10.2025 09:27:36 - Create: Nacelle 0 ...
+16.10.2025 09:27:36 - Create: Nacelle 1 ...
+16.10.2025 09:27:36 - Create: main_wing ...
+16.10.2025 09:27:36 - Create: Empennage vertical_stabiliser ...
+16.10.2025 09:27:36 - Create: Empennage horizontal_stabiliser ...
+16.10.2025 09:27:36 - WARNING: Acxml does not contain node for number of flight crew. Assuming 2.
+16.10.2025 09:27:36 -   Create: FCS  ->  ATA-27
+16.10.2025 09:27:36 -   Create: FireProtection  ->  ATA-26
+16.10.2025 09:27:36 -   Create: FuelSystem  ->  ATA-28
+16.10.2025 09:27:36 -   Create: Furnishings  ->  ATA-25
+16.10.2025 09:27:36 -   Create: IceRainProtection  ->  ATA-30
+16.10.2025 09:27:36 -   Create: LandingGear  ->  ATA-32
+16.10.2025 09:27:36 -   Create: LightingSystem  ->  ATA-33
+16.10.2025 09:27:36 -   Create: RemainingConsumers  ->  ATA-XX
+16.10.2025 09:27:36 -   Create: ECS  ->  ATA-21
+16.10.2025 09:27:36 -   Create: APU  ->  ATA-49
+16.10.2025 09:27:36 -   Create: Engine  ->  ATA-70
+16.10.2025 09:27:36 -   Create: BleedAirSystem  ->  ATA-36
+16.10.2025 09:27:36 -   Create: ElectricSystem  ->  ATA-24
+16.10.2025 09:27:36 -   Create: HydraulicSystem  ->  ATA-29
+16.10.2025 09:27:36 - Energy consumption of the flight control is calculated via rudder deflections in the mission.
+16.10.2025 09:27:36 -   Create: BleedAirInterface  ->  ATA-00
+16.10.2025 09:27:36 -   Create: KeroseneInterface  ->  ATA-00
+16.10.2025 09:27:36 -   Create: ShaftPowerInterface  ->  ATA-00
+16.10.2025 09:27:36 - Read sink connections
+16.10.2025 09:27:36 - Read conductor connections
+16.10.2025 09:27:36 - Read source connections
+16.10.2025 09:27:36 - Read ECS connections
+16.10.2025 09:27:36 - Run systemsDesign standard strategy
+16.10.2025 09:27:36 - Run - Study Mode
+16.10.2025 09:27:36 - Start calculation ...
+16.10.2025 09:27:38 - No system masses are determined for the analysis calculation.!
+16.10.2025 09:27:38 - Write off-takes to mission file ...
+16.10.2025 09:27:38 - Write reports ...
+16.10.2025 09:27:38 - Finish systems_design
+*******************************************************************************
+16.10.2025 09:28:02 - Start systems_design
+16.10.2025 09:28:02 - [MODULE RUNTIMEINFO] - systems_design
+16.10.2025 09:28:02 -    [CONSOLE  ] - [ON]
+16.10.2025 09:28:02 -    [LOG      ] - [ON]
+16.10.2025 09:28:02 -    [PLOT     ] - [OFF]
+16.10.2025 09:28:02 -       [COPY  ] - [ON]
+16.10.2025 09:28:02 -       [DELETE] - [ON]
+16.10.2025 09:28:02 -    [REPORT   ] - [OFF]
+16.10.2025 09:28:02 -    [TEX      ] - [OFF]
+16.10.2025 09:28:02 -    [INFOFILES] - [OFF]
+16.10.2025 09:28:02 -    [GNUPLOT]
+16.10.2025 09:28:02 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:28:02 -       [FILENAME] - 
+16.10.2025 09:28:02 -    [INKSCAPE]
+16.10.2025 09:28:02 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:28:02 -       [FILENAME] - 
+16.10.2025 09:28:02 -    [LOGFILE]
+16.10.2025 09:28:02 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:28:02 -       [FILENAME] - systems_design.log
+16.10.2025 09:28:02 -    [IO/ACXML]
+16.10.2025 09:28:02 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:28:02 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:28:02 -    [MODCONFIG]
+16.10.2025 09:28:02 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:28:02 -       [FILENAME] - systems_design_conf.xml
+16.10.2025 09:28:02 - Checking directory... [REPORT]
+16.10.2025 09:28:02 - Checking directory... [TEX]
+16.10.2025 09:28:02 - Checking directory... [LOGFILES]
+16.10.2025 09:28:02 - Reading the Mission: C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/mission_data/study_mission.xml
+16.10.2025 09:28:02 - Create: fuselage_0 ...
+16.10.2025 09:28:02 - Create: Nacelle 0 ...
+16.10.2025 09:28:02 - Create: Nacelle 1 ...
+16.10.2025 09:28:02 - Create: main_wing ...
+16.10.2025 09:28:02 - Create: Empennage vertical_stabiliser ...
+16.10.2025 09:28:02 - Create: Empennage horizontal_stabiliser ...
+16.10.2025 09:28:02 - WARNING: Acxml does not contain node for number of flight crew. Assuming 2.
+16.10.2025 09:28:02 -   Create: FCS  ->  ATA-27
+16.10.2025 09:28:02 -   Create: FireProtection  ->  ATA-26
+16.10.2025 09:28:02 -   Create: FuelSystem  ->  ATA-28
+16.10.2025 09:28:02 -   Create: Furnishings  ->  ATA-25
+16.10.2025 09:28:02 -   Create: IceRainProtection  ->  ATA-30
+16.10.2025 09:28:02 -   Create: LandingGear  ->  ATA-32
+16.10.2025 09:28:02 -   Create: LightingSystem  ->  ATA-33
+16.10.2025 09:28:02 -   Create: RemainingConsumers  ->  ATA-XX
+16.10.2025 09:28:02 -   Create: ECS  ->  ATA-21
+16.10.2025 09:28:02 -   Create: APU  ->  ATA-49
+16.10.2025 09:28:02 -   Create: Engine  ->  ATA-70
+16.10.2025 09:28:02 -   Create: BleedAirSystem  ->  ATA-36
+16.10.2025 09:28:02 -   Create: ElectricSystem  ->  ATA-24
+16.10.2025 09:28:02 -   Create: HydraulicSystem  ->  ATA-29
+16.10.2025 09:28:02 - Energy consumption of the flight control is calculated via rudder deflections in the mission.
+16.10.2025 09:28:02 -   Create: BleedAirInterface  ->  ATA-00
+16.10.2025 09:28:02 -   Create: KeroseneInterface  ->  ATA-00
+16.10.2025 09:28:02 -   Create: ShaftPowerInterface  ->  ATA-00
+16.10.2025 09:28:02 - Read sink connections
+16.10.2025 09:28:02 - Read conductor connections
+16.10.2025 09:28:02 - Read source connections
+16.10.2025 09:28:02 - Read ECS connections
+16.10.2025 09:28:02 - Run systemsDesign standard strategy
+16.10.2025 09:28:02 - Run - Study Mode
+16.10.2025 09:28:02 - Start calculation ...
+16.10.2025 09:28:04 - No system masses are determined for the analysis calculation.!
+16.10.2025 09:28:04 - Write off-takes to mission file ...
+16.10.2025 09:28:04 - Write reports ...
+16.10.2025 09:28:04 - Finish systems_design
+*******************************************************************************
+16.10.2025 09:28:25 - Start systems_design
+16.10.2025 09:28:25 - [MODULE RUNTIMEINFO] - systems_design
+16.10.2025 09:28:25 -    [CONSOLE  ] - [ON]
+16.10.2025 09:28:25 -    [LOG      ] - [ON]
+16.10.2025 09:28:25 -    [PLOT     ] - [ON]
+16.10.2025 09:28:25 -       [COPY  ] - [ON]
+16.10.2025 09:28:25 -       [DELETE] - [ON]
+16.10.2025 09:28:25 -    [REPORT   ] - [ON]
+16.10.2025 09:28:25 -    [TEX      ] - [ON]
+16.10.2025 09:28:25 -    [INFOFILES] - [OFF]
+16.10.2025 09:28:25 -    [GNUPLOT]
+16.10.2025 09:28:25 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:28:25 -       [FILENAME] - 
+16.10.2025 09:28:25 -    [INKSCAPE]
+16.10.2025 09:28:25 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:28:25 -       [FILENAME] - 
+16.10.2025 09:28:25 -    [LOGFILE]
+16.10.2025 09:28:25 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:28:25 -       [FILENAME] - systems_design.log
+16.10.2025 09:28:25 -    [IO/ACXML]
+16.10.2025 09:28:25 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:28:25 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:28:25 -    [MODCONFIG]
+16.10.2025 09:28:25 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:28:25 -       [FILENAME] - systems_design_conf.xml
+16.10.2025 09:28:25 - Checking directory... [REPORT]
+16.10.2025 09:28:25 - Checking directory... [TEX]
+16.10.2025 09:28:25 - Checking directory... [HTML]
+16.10.2025 09:28:25 - Checking directory... [PLOT]
+16.10.2025 09:28:25 - Checking directory... [CSVFILES]
+16.10.2025 09:28:25 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:28:25 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:28:25 - Checking directory... [PLOTFILES]
+16.10.2025 09:28:25 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:28:25 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:28:25 - Checking directory... [LOGFILES]
+16.10.2025 09:28:25 - Reading the Mission: C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/mission_data/study_mission.xml
+16.10.2025 09:28:25 - Create: fuselage_0 ...
+16.10.2025 09:28:25 - Create: Nacelle 0 ...
+16.10.2025 09:28:25 - Create: Nacelle 1 ...
+16.10.2025 09:28:25 - Create: main_wing ...
+16.10.2025 09:28:25 - Create: Empennage vertical_stabiliser ...
+16.10.2025 09:28:25 - Create: Empennage horizontal_stabiliser ...
+16.10.2025 09:28:25 - WARNING: Acxml does not contain node for number of flight crew. Assuming 2.
+16.10.2025 09:28:25 -   Create: FCS  ->  ATA-27
+16.10.2025 09:28:25 -   Create: FireProtection  ->  ATA-26
+16.10.2025 09:28:25 -   Create: FuelSystem  ->  ATA-28
+16.10.2025 09:28:25 -   Create: Furnishings  ->  ATA-25
+16.10.2025 09:28:25 -   Create: IceRainProtection  ->  ATA-30
+16.10.2025 09:28:25 -   Create: LandingGear  ->  ATA-32
+16.10.2025 09:28:25 -   Create: LightingSystem  ->  ATA-33
+16.10.2025 09:28:25 -   Create: RemainingConsumers  ->  ATA-XX
+16.10.2025 09:28:25 -   Create: ECS  ->  ATA-21
+16.10.2025 09:28:25 -   Create: APU  ->  ATA-49
+16.10.2025 09:28:25 -   Create: Engine  ->  ATA-70
+16.10.2025 09:28:25 -   Create: BleedAirSystem  ->  ATA-36
+16.10.2025 09:28:25 -   Create: ElectricSystem  ->  ATA-24
+16.10.2025 09:28:25 -   Create: HydraulicSystem  ->  ATA-29
+16.10.2025 09:28:25 - Energy consumption of the flight control is calculated via rudder deflections in the mission.
+16.10.2025 09:28:25 -   Create: BleedAirInterface  ->  ATA-00
+16.10.2025 09:28:25 -   Create: KeroseneInterface  ->  ATA-00
+16.10.2025 09:28:25 -   Create: ShaftPowerInterface  ->  ATA-00
+16.10.2025 09:28:25 - Read sink connections
+16.10.2025 09:28:25 - Read conductor connections
+16.10.2025 09:28:25 - Read source connections
+16.10.2025 09:28:25 - Read ECS connections
+16.10.2025 09:28:25 - Run systemsDesign standard strategy
+16.10.2025 09:28:25 - Run - Study Mode
+16.10.2025 09:28:25 - Start calculation ...
+16.10.2025 09:28:27 - No system masses are determined for the analysis calculation.!
+16.10.2025 09:28:27 - Write off-takes to mission file ...
+16.10.2025 09:28:28 - Generate plots ...
+16.10.2025 09:28:32 - Write reports ...
+16.10.2025 09:28:32 - CSS code written to style.css successfully.
+16.10.2025 09:28:32 - Finish systems_design
+*******************************************************************************
+16.10.2025 09:29:03 - Start systems_design
+16.10.2025 09:29:03 - [MODULE RUNTIMEINFO] - systems_design
+16.10.2025 09:29:03 -    [CONSOLE  ] - [ON]
+16.10.2025 09:29:03 -    [LOG      ] - [ON]
+16.10.2025 09:29:03 -    [PLOT     ] - [ON]
+16.10.2025 09:29:03 -       [COPY  ] - [ON]
+16.10.2025 09:29:03 -       [DELETE] - [ON]
+16.10.2025 09:29:03 -    [REPORT   ] - [ON]
+16.10.2025 09:29:03 -    [TEX      ] - [ON]
+16.10.2025 09:29:03 -    [INFOFILES] - [OFF]
+16.10.2025 09:29:03 -    [GNUPLOT]
+16.10.2025 09:29:03 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:29:03 -       [FILENAME] - 
+16.10.2025 09:29:03 -    [INKSCAPE]
+16.10.2025 09:29:03 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:29:03 -       [FILENAME] - 
+16.10.2025 09:29:03 -    [LOGFILE]
+16.10.2025 09:29:03 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:29:03 -       [FILENAME] - systems_design.log
+16.10.2025 09:29:03 -    [IO/ACXML]
+16.10.2025 09:29:03 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:29:03 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:29:03 -    [MODCONFIG]
+16.10.2025 09:29:03 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:29:03 -       [FILENAME] - systems_design_conf.xml
+16.10.2025 09:29:03 - Checking directory... [REPORT]
+16.10.2025 09:29:03 - Checking directory... [TEX]
+16.10.2025 09:29:03 - Checking directory... [HTML]
+16.10.2025 09:29:03 - Checking directory... [PLOT]
+16.10.2025 09:29:03 - Checking directory... [CSVFILES]
+16.10.2025 09:29:03 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:29:03 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:29:03 - Checking directory... [PLOTFILES]
+16.10.2025 09:29:03 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:29:03 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:29:03 - Checking directory... [LOGFILES]
+16.10.2025 09:29:03 - Reading the Mission: C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/mission_data/requirements_mission.xml
+16.10.2025 09:29:03 - Create: fuselage_0 ...
+16.10.2025 09:29:03 - Create: Nacelle 0 ...
+16.10.2025 09:29:03 - Create: Nacelle 1 ...
+16.10.2025 09:29:03 - Create: main_wing ...
+16.10.2025 09:29:03 - Create: Empennage vertical_stabiliser ...
+16.10.2025 09:29:03 - Create: Empennage horizontal_stabiliser ...
+16.10.2025 09:29:03 - WARNING: Acxml does not contain node for number of flight crew. Assuming 2.
+16.10.2025 09:29:03 -   Create: FCS  ->  ATA-27
+16.10.2025 09:29:03 -   Create: FireProtection  ->  ATA-26
+16.10.2025 09:29:03 -   Create: FuelSystem  ->  ATA-28
+16.10.2025 09:29:03 -   Create: Furnishings  ->  ATA-25
+16.10.2025 09:29:03 -   Create: IceRainProtection  ->  ATA-30
+16.10.2025 09:29:03 -   Create: LandingGear  ->  ATA-32
+16.10.2025 09:29:03 -   Create: LightingSystem  ->  ATA-33
+16.10.2025 09:29:03 -   Create: RemainingConsumers  ->  ATA-XX
+16.10.2025 09:29:03 -   Create: ECS  ->  ATA-21
+16.10.2025 09:29:03 -   Create: APU  ->  ATA-49
+16.10.2025 09:29:03 -   Create: Engine  ->  ATA-70
+16.10.2025 09:29:03 -   Create: BleedAirSystem  ->  ATA-36
+16.10.2025 09:29:03 -   Create: ElectricSystem  ->  ATA-24
+16.10.2025 09:29:03 -   Create: HydraulicSystem  ->  ATA-29
+16.10.2025 09:29:03 - Energy consumption of the flight control is calculated via rudder deflections in the mission.
+16.10.2025 09:29:03 -   Create: BleedAirInterface  ->  ATA-00
+16.10.2025 09:29:03 -   Create: KeroseneInterface  ->  ATA-00
+16.10.2025 09:29:03 -   Create: ShaftPowerInterface  ->  ATA-00
+16.10.2025 09:29:03 - Read sink connections
+16.10.2025 09:29:03 - Read conductor connections
+16.10.2025 09:29:03 - Read source connections
+16.10.2025 09:29:03 - Read ECS connections
+16.10.2025 09:29:03 - Run systemsDesign standard strategy
+16.10.2025 09:29:03 - Run - Requirement Mission Mode
+16.10.2025 09:29:03 - Start calculation ...
+16.10.2025 09:29:05 - No system masses are determined for the analysis calculation.!
+16.10.2025 09:29:05 - Write off-takes to mission file ...
+16.10.2025 09:29:05 - Generate plots ...
+16.10.2025 09:29:10 - Write reports ...
+16.10.2025 09:29:10 - CSS code written to style.css successfully.
+16.10.2025 09:29:10 - Finish systems_design

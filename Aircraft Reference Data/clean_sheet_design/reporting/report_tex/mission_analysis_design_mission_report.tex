@@ -1,0 +1,78 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{Mission Analysis (Design Mission)}
+
+ \begin{table}
+     \centering
+     \scriptsize
+     \begin{tabularx}{250pt}{Xllr}
+         \toprule
+         \textcolor{ilrdark}{Parameter} & \textcolor{ilrdark}{Comment} & \textcolor{ilrdark}{Unit} & \textcolor{ilrdark}{Value} \\
+         \midrule[0.5pt]
+         \multicolumn{4}{l}{\textbf{Mission specifications}}\\
+         \midrule[0.5pt]
+             Range                 & & $\nauticalmiles$        & 2450 \\ 
+             Payload (PL)          & & $\kilogram$                & 19300 \\ 
+             Cruise Mach number &             & $-$                & 0.78 \\ 
+             Fuel reserves method &      &  \multicolumn{2}{c}{\textit{JAR-OPS 1.255 Subpart D + AMC-OPS 1.255}} \\
+         \midrule[0.5pt]
+         \multicolumn{4}{l}{\textbf{Mission simulation results}}\\
+         \midrule[0.5pt]
+             Take-off mass & \tiny{$TOM = OME + PL + MF - TXF_{out}$} & $\kilogram$ & 76654.00 \\ 
+             Mission (loaded) fuel  &\tiny{$MF = TF + RF + EF + TXF_{out}$}  & $\kilogram$   & 14576.00 \\ 
+             Trip fuel      & \tiny{$TF$}        & $\kilogram$   & 11660.00 \\ 
+             Reserve fuel   & \tiny{$RF$}        & $\kilogram$   & 2708.00 \\ 
+             Extra fuel     & \tiny{$EF$}        & $\kilogram$   & 0.00 \\ 
+             Taxi-out fuel  & \tiny{$TXF_{out}$} & $\kilogram$   & 207.00 \\ 
+             Taxi-in fuel   & \tiny{$TXF_{in}$}  & $\kilogram$   & 115.00 \\ 
+             Block time             && $\hour$              & 5:50 \\ 
+             Flight time              && $\hour$                  & 5:36 \\ 
+        \bottomrule
+    \end{tabularx}
+ \end{table}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{Design Mission Simulation Results (1)}
+
+\hfill
+
+ \begin{figure}
+     \tiny
+     \def\svgwidth{7cm}
+     \import{..\plots}{mission_analysis_design_mission_Alt-CL.pdf_tex}
+     \caption{\scriptsize{Mission profiles: Altitude, lift coeff., thrust, fuel}}
+ \end{figure}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{Design Mission Simulation Results (2)}
+
+\hfill
+
+ \begin{figure}[htb]
+ \begin{center}
+ \subfigure{
+     \tiny
+     \def\svgwidth{7cm}
+     \import{..\plots}{mission_analysis_design_mission_speed.pdf_tex}
+  }
+ \hfill
+ \subfigure{
+     \tiny
+     \def\svgwidth{7cm}
+     \import{..\plots}{mission_analysis_design_mission_offtake.pdf_tex}
+  }
+ \end{center}
+ \caption{\scriptsize{Mission profiles: Speeds and offtakes}}
+ \end{figure}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

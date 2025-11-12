@@ -1,0 +1,559 @@
+<module_configuration_file Name="Landing Gear Design Runtime Configuration"> 
+        <control_settings description="General control settings for this tool">
+			<aircraft_exchange_file_name description="Specify the name of the exchange file">
+				<value>UNICADO-SMR-01.xml</value>
+			</aircraft_exchange_file_name>
+			<aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+	            <value>../projects/UNICADO/UNICADO-SMR-01/</value>
+			</aircraft_exchange_file_directory>
+			<own_tool_level description="Specify the tool level of this tool">
+				<value>3</value>
+			</own_tool_level>
+            <console_output description="Selector to specify the console output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+                <value>mode_1</value>
+            </console_output>
+            <log_file_output description="Selector to specify the log file output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+                <value>mode_1</value>
+            </log_file_output>
+            <plot_output description="Specify the way plotting shall be handled">
+                <enable description="Switch to enable plotting. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                </enable>
+                <copy_plotting_files description="Switch if plotting files shall be copied. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                </copy_plotting_files>
+                <delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                </delete_plotting_files_from_tool_folder>
+            </plot_output>
+            <report_output description="Switch to generate an HTML report. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </report_output>
+            <tex_report description="Switch to generate a Tex report. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </tex_report>
+			<xml_output description="Switch to export module specific data to XML ('true': On, 'false': Off)">
+				<value>true</value>
+			</xml_output>
+            <write_info_files description="Switch to generate info files. Switch: true (On) / false (Off)">
+                <value>false</value>
+            </write_info_files>
+            <log_file description="Specify the name of the log file">
+                <value>landing_gear_design.log</value>
+            </log_file>
+            <inkscape_path description="Path to the inkscape application (DEFAULT: Use inkscape from the UNICADO repo structure)">
+                <value>C:/Programs/UNICADOworkflow/inkscape/</value>
+            </inkscape_path>
+            <gnuplot_path description="Path to the gnuplot application (DEFAULT: Use gnuplot from the UNICADO repo structure)">
+                <value>C:/Programs/UNICADOworkflow/gnuplot/</value>
+            </gnuplot_path>
+        </control_settings>
+		<program_settings description="Program settings">
+			<program_mode description="Select the landing gear program mode. Selector: mode_0: (Initial sizing) / mode_1: (Use existing landing gear)">
+				<value>mode_0</value>
+				<default>mode_0</default>
+				<setting_use_existing_geometry description="Specific settings for use existing geometry mode.">
+					<path_to_existing_geometry_file description="Name of the xml file containing an existing fuselage geometry.">
+						<value>./geometry_data/existing_component_geometries/existing_landing_gear_geometry.xml</value>
+						<default>./geometry_data/existing_component_geometries/existing_landing_gear_geometry.xml</default>
+					</path_to_existing_geometry_file>
+					<use_as_starting_point description="Switch to select if the existing geometry should be used as an starting point for calculation or use the geometry without further calculation. Switch: false (no further calculation) / true (use as starting point)">
+						<value>false</value>
+						<default>false</default>
+					</use_as_starting_point>
+				</setting_use_existing_geometry>
+			</program_mode>
+			<configuration ID="wing_mounted">
+                <fidelity_name description="Select fidelity name (options: empirical, numerical,...)">
+                    <value>empirical</value>
+                </fidelity_name>
+                <method_name description="Select method name (options: landing_gear_design_tu_berlin)">
+                    <value>landing_gear_design_tu_berlin</value>
+                    <default>landing_gear_design_tu_berlin</default>
+                </method_name>
+                <fidelity ID="empirical">
+					<landing_gear_design_tu_berlin description="Empirical method for landing gear design and load estimation.">
+						<general description="General parameter setting for landing gear design">
+							<ground_strike_limitations>
+								<tail_strike_limit description="Minimum angle for tail strike limitation during take-off and landing">
+									<value>10.5</value>
+									<unit>deg</unit>
+									<lower_boundary>10.5</lower_boundary>
+									<upper_boundary>15</upper_boundary>
+									<default>10.5</default>
+								</tail_strike_limit>
+								<turnover_limit description="Maximum turnover angle (according to N. Currey: for CS-25 = 60 degree, for CS-23 = 63 degree).">
+									<value>60</value>
+									<unit>deg</unit>
+									<lower_boundary>60</lower_boundary>
+									<upper_boundary>63</upper_boundary>
+									<default>60</default>
+								</turnover_limit>
+								<wing_strike_limit description="wing strike limit for rotation around x-axis according to CS25.149">
+									<value>8</value>
+									<unit>degree</unit>
+									<lower_boundary>5</lower_boundary>
+									<upper_boundary>15</upper_boundary>
+									<default>8</default>
+								</wing_strike_limit>
+							</ground_strike_limitations>
+							<nacelle_clearance description="Nacelle clearance according to CS25.149.">
+								<value>0.45</value>
+								<unit>m</unit>
+								<lower_boundary>0.45</lower_boundary>
+								<upper_boundary>0.90</upper_boundary>
+								<default>0.45</default>
+							</nacelle_clearance>
+							<strut_suspension description="Switch to use landing gear strut suspension systems. ('true': use, 'false': don't use">
+								<value>true</value>
+								<default>true</default>
+								<strut_suspension_travel>
+									<value>0.60</value>
+									<unit>m</unit>
+									<lower_boundary>0.35</lower_boundary>
+									<upper_boundary>0.95</upper_boundary>
+									<default>0.60</default>
+								</strut_suspension_travel>
+							</strut_suspension>
+							<landing_gear_bay_keel_beam_width description="Width of the landing gear bay keel beam.">
+								<value>0.50</value>
+								<unit>m</unit>
+								<lower_boundary>0.5</lower_boundary>
+								<upper_boundary>1.5</upper_boundary>
+								<default>0.7</default>
+							</landing_gear_bay_keel_beam_width>
+							<landing_gear_mass_correction_factor description="Mass correction factor for the landing gear arrangement.">
+								<value>1.0</value>
+								<unit>1.0</unit>
+								<lower_boundary>0.5</lower_boundary>
+								<upper_boundary>1.5</upper_boundary>
+								<default>1.0</default>
+							</landing_gear_mass_correction_factor>
+						</general>
+						<specific>
+							<acn_method description="Parameter settings to estimate the aircrat classification number">
+								<use_target_pcn description="Switch to use the maximum allowed pcn from design specification of the aircraft exchange file as target acn. ('true': use, 'false': dont use)">
+									<value>true</value>
+									<default>true</default>
+								</use_target_pcn>
+								<coverages description="Number of coverages to analyse. (10000 is default by ICAO)">
+									<value>10000</value>
+									<unit>1</unit>
+									<lower_boundary>1</lower_boundary>
+									<upper_boundary>15000</upper_boundary>
+									<default>10000</default>
+								</coverages>
+								<use_specific_california_bearing_ratio_for_flexible_pavement>
+									<value>false</value>
+									<default>false</default>
+									<specific_california_bearing_ratio_for_flexible_pavement description="Value for pavement stress: 3 = ultra low, 6 = low, 10 = medium, 15 = high">
+										<value>15</value>
+										<unit>1</unit>
+										<lower_boundary>3</lower_boundary>
+										<upper_boundary>15</upper_boundary>
+										<default>15</default>
+									</specific_california_bearing_ratio_for_flexible_pavement>
+								</use_specific_california_bearing_ratio_for_flexible_pavement>
+								<use_specific_alpha_value description="Switch to use a specific alpha value. ('true': use, 'false': dont use)">
+									<value>false</value>
+									<default>false</default>
+									<specific_alpha_value description="Switch to use alpha defines from boeing proposal for new alpha factor from curve method. ('true': use, 'false': dont use)">
+										<value>0.8</value>
+										<unit>1</unit>
+										<lower_boundary>0.689</lower_boundary>
+										<upper_boundary>0.995</upper_boundary>
+										<default>0.8</default>		
+									</specific_alpha_value>
+								</use_specific_alpha_value>
+								<select_new_alpha_from_curve description="Switch to use alpha from curve method from ICAO (higher accuracy). ('true': use, 'false': dont use)">
+									<value>true</value>
+									<default>true</default>
+									<use_boeing_proposals description="Switch to use alpha defines from boeing proposal for new alpha factor from curve method. ('true': use, 'false': dont use)">
+										<value>false</value>
+										<default>false</default>
+									</use_boeing_proposals>
+								</select_new_alpha_from_curve>
+							</acn_method>
+							<nose_gear_parameter description="Parameter settings for the nose landing gear design.">
+								<minimum_number_of_nose_gear_tires_per_strut description="Set the number of minimum allowed tires per one nose landing gear strut.">
+									<value>2</value>
+									<unit>1</unit>
+									<lower_boundary>1</lower_boundary>
+									<upper_boundary>4</upper_boundary>
+									<default>2</default>
+								</minimum_number_of_nose_gear_tires_per_strut>
+								<use_specific_number_of_nose_gear_struts description="Switch to select using of a secific number of nose landing gear struts. ('true': use, 'false': dont use">
+									<value>false</value>
+									<default>false</default>
+									<specific_number_of_nose_gear_struts description="Number of nose gear struts.">
+										<value>2</value>
+										<unit>1</unit>
+										<lower_boundary>1</lower_boundary>
+										<upper_boundary>2</upper_boundary>
+										<default>1</default>
+									</specific_number_of_nose_gear_struts>
+								</use_specific_number_of_nose_gear_struts>
+								<use_specific_number_of_nose_gear_tires_per_strut description="Switch to select using of a secific number of landing gear tires. ('true': use, 'false': dont use">
+									<value>false</value>
+									<default>false</default>
+									<specific_number_of_nose_gear_tires_per_strut description="Number of nose wheel tires per nose weel landing gear strut.">
+										<value>2</value>
+										<unit>2</unit>
+										<lower_boundary>1</lower_boundary>
+										<upper_boundary>4</upper_boundary>
+										<default>2</default>
+									</specific_number_of_nose_gear_tires_per_strut>
+								</use_specific_number_of_nose_gear_tires_per_strut>
+								<use_specific_nose_gear_starting_x_position description="Switch to select using a specific starting position in x-direction for the nose gear strut(s). ('true': use, 'false': dont use">
+									<value>false</value>
+									<default>false</default>
+									<specific_nose_gear_starting_x_position description="Set specific starting position in x-direction for the nose gear strut(s).">
+										<value>5.2</value>
+										<unit>m</unit>
+										<lower_boundary>4.5</lower_boundary>
+										<upper_boundary>5.5</upper_boundary>
+										<default>5.2</default>
+									</specific_nose_gear_starting_x_position>
+								</use_specific_nose_gear_starting_x_position>
+								<use_specific_minimum_percentage_of_nose_gear_load description="Switch to select using a specific minimum percentage of nose gear load. ('true': use, 'false': dont use">
+									<value>false</value>
+									<default>false</default>
+									<specific_minimum_percentage_of_nose_gear_load description="Set specific minimum percentage of nose gear load.">
+										<value>2.5</value>
+										<unit>percent</unit>
+										<lower_boundary>2.5</lower_boundary>
+										<upper_boundary>7.5</upper_boundary>
+										<default>6.0</default>
+									</specific_minimum_percentage_of_nose_gear_load>
+								</use_specific_minimum_percentage_of_nose_gear_load>
+								<use_specific_maximum_percentage_of_nose_gear_load description="Switch to select using a specific maximum percentage of nose gear load. ('true': use, 'false': dont use">
+									<value>false</value>
+									<default>false</default>
+									<specific_maximum_percentage_of_nose_gear_load description="Set specific maximum percentage of nose gear load.">
+										<value>25.0</value>
+										<unit>percent</unit>
+										<lower_boundary>15.0</lower_boundary>
+										<upper_boundary>25.0</upper_boundary>
+										<default>20.0</default>
+									</specific_maximum_percentage_of_nose_gear_load>
+								</use_specific_maximum_percentage_of_nose_gear_load>
+							</nose_gear_parameter>
+							<main_gear_parameter description="Parameter settings for the main landing gear design.">
+								<minimum_number_of_main_gear_tires_per_strut description="Set the number of minimum allowed tires per one main landing gear strut.">
+									<value>2</value>
+									<unit>1</unit>
+									<lower_boundary>1</lower_boundary>
+									<upper_boundary>6</upper_boundary>
+									<default>2</default>
+								</minimum_number_of_main_gear_tires_per_strut>
+								<dynamic_change_of_number_of_main_gear_struts description="Switch to allow dynamic change of number of main gear struts if necessary. ('true': allow, 'false': dinied">
+									<value>true</value>
+									<default>true</default>
+									<maximum_number_of_main_gear_struts description="Maximum allowed number of main landing gear struts.">
+										<value>4</value>
+										<unit>1</unit>
+										<lower_boundary>2</lower_boundary>
+										<upper_boundary>4</upper_boundary>
+										<default>4</default>
+									</maximum_number_of_main_gear_struts>
+								</dynamic_change_of_number_of_main_gear_struts>
+								<use_specific_number_of_main_gear_struts description="Switch to select using of a secific number of main landing gear struts. ('true': use, 'false': dont use">
+									<value>false</value>
+									<default>false</default>
+									<specific_number_of_main_gear_struts description="Number of main gear struts.">
+										<value>2</value>
+										<unit>1</unit>
+										<lower_boundary>2</lower_boundary>
+										<upper_boundary>4</upper_boundary>
+										<default>2</default>
+									</specific_number_of_main_gear_struts>
+								</use_specific_number_of_main_gear_struts>
+								<use_specific_number_of_main_gear_tires_per_strut description="Switch to select using of a secific number of landing gear tires. ('true': use, 'false': dont use">
+									<value>false</value>
+									<default>false</default>
+									<specific_number_of_main_gear_tires_per_strut description="Number of main gear tires per main landing gear strut.">
+										<value>2</value>
+										<unit>1</unit>
+										<lower_boundary>1</lower_boundary>
+										<upper_boundary>6</upper_boundary>
+										<default>2</default>
+									</specific_number_of_main_gear_tires_per_strut>
+								</use_specific_number_of_main_gear_tires_per_strut>
+								<dynamic_change_of_number_of_main_gear_tires_per_strut description="Switch to allow dynamic change od number of main gear tires if necessary. ('true': allow, 'false': dinied">
+									<value>true</value>
+									<default>true</default>
+									<maximum_number_of_main_gear_tires_per_strut description="Maximum allowed number of main gear tires per main landing gear strut.">
+										<value>6</value>
+										<unit>1</unit>
+										<lower_boundary>2</lower_boundary>
+										<upper_boundary>6</upper_boundary>
+										<default>6</default>
+									</maximum_number_of_main_gear_tires_per_strut>
+								</dynamic_change_of_number_of_main_gear_tires_per_strut>
+								<minimum_required_wheel_track description="Required minimum wheeltrack for multi-tired wheel axles.">
+									<value>0.927</value>
+									<unit>m</unit>
+									<lower_boundary>0.5</lower_boundary>
+									<upper_boundary>2.0</upper_boundary>
+									<default>0.927</default>
+								</minimum_required_wheel_track>
+								<minimum_required_wheel_base description="Required minimum wheelbase between the axles for multi-bogie concepts.">
+									<value>1.005</value>
+									<unit>m</unit>
+									<lower_boundary>0.5</lower_boundary>
+									<upper_boundary>2.0</upper_boundary>
+									<default>1.005</default>
+								</minimum_required_wheel_base>
+							</main_gear_parameter>
+						</specific>
+					</landing_gear_design_tu_berlin>
+				</fidelity>
+			</configuration>
+			<configuration ID="body_mounted">
+                <fidelity_name description="Select fidelity name (options: empirical, numerical,...)">
+                    <value>empirical</value>
+                </fidelity_name>
+                <method_name description="Select method name (options: landing_gear_design_tu_berlin)">
+                    <value>landing_gear_design_tu_berlin</value>
+                    <default>landing_gear_design_tu_berlin</default>
+                </method_name>
+                <fidelity ID="empirical">
+					<landing_gear_design_tu_berlin description="Empirical method for landing gear design and load estimation.">
+						<general description="General parameter setting for landing gear design">
+							<ground_strike_limitations>
+								<tail_strike_limit description="Minimum angle for tail strike limitation during take-off and landing">
+									<value>10.5</value>
+									<unit>deg</unit>
+									<lower_boundary>10.5</lower_boundary>
+									<upper_boundary>15</upper_boundary>
+									<default>10.5</default>
+								</tail_strike_limit>
+								<turnover_limit description="Maximum turnover angle (according to N. Currey: for CS-25 = 60 degree, for CS-23 = 63 degree).">
+									<value>60</value>
+									<unit>deg</unit>
+									<lower_boundary>60</lower_boundary>
+									<upper_boundary>63</upper_boundary>
+									<default>60</default>
+								</turnover_limit>
+								<wing_strike_limit description="wing strike limit for rotation around x-axis according to CS25.149">
+									<value>8</value>
+									<unit>degree</unit>
+									<lower_boundary>5</lower_boundary>
+									<upper_boundary>15</upper_boundary>
+									<default>8</default>
+								</wing_strike_limit>
+							</ground_strike_limitations>
+							<nacelle_clearance description="Nacelle clearance according to CS25.149.">
+								<value>0.45</value>
+								<unit>m</unit>
+								<lower_boundary>0.45</lower_boundary>
+								<upper_boundary>0.90</upper_boundary>
+								<default>0.45</default>
+							</nacelle_clearance>
+							<strut_suspension description="Switch to use landing gear strut suspension systems. ('true': use, 'false': don't use">
+								<value>true</value>
+								<default>true</default>
+								<strut_suspension_travel>
+									<value>0.60</value>
+									<unit>m</unit>
+									<lower_boundary>0.35</lower_boundary>
+									<upper_boundary>0.95</upper_boundary>
+									<default>0.60</default>
+								</strut_suspension_travel>
+							</strut_suspension>
+							<landing_gear_bay_keel_beam_width description="Width of the landing gear bay keel beam.">
+								<value>0.50</value>
+								<unit>m</unit>
+								<lower_boundary>0.5</lower_boundary>
+								<upper_boundary>1.5</upper_boundary>
+								<default>0.7</default>
+							</landing_gear_bay_keel_beam_width>
+							<landing_gear_mass_correction_factor description="Mass correction factor for the landing gear arrangement.">
+								<value>1.0</value>
+								<unit>1.0</unit>
+								<lower_boundary>0.5</lower_boundary>
+								<upper_boundary>1.5</upper_boundary>
+								<default>1.0</default>
+							</landing_gear_mass_correction_factor>
+						</general>
+						<specific>
+							<acn_method description="Parameter settings to estimate the aircrat classification number">
+								<use_target_pcn description="Switch to use the maximum allowed pcn from design specification of the aircraft exchange file as target acn. ('true': use, 'false': dont use)">
+									<value>true</value>
+									<default>true</default>
+								</use_target_pcn>
+								<coverages description="Number of coverages to analyse. (10000 is default by ICAO)">
+									<value>10000</value>
+									<unit>1</unit>
+									<lower_boundary>1</lower_boundary>
+									<upper_boundary>15000</upper_boundary>
+									<default>10000</default>
+								</coverages>
+								<use_specific_california_bearing_ratio_for_flexible_pavement>
+									<value>false</value>
+									<default>false</default>
+									<specific_california_bearing_ratio_for_flexible_pavement description="Value for pavement stress: 3 = ultra low, 6 = low, 10 = medium, 15 = high">
+										<value>15</value>
+										<unit>1</unit>
+										<lower_boundary>3</lower_boundary>
+										<upper_boundary>15</upper_boundary>
+										<default>15</default>
+									</specific_california_bearing_ratio_for_flexible_pavement>
+								</use_specific_california_bearing_ratio_for_flexible_pavement>
+								<use_specific_alpha_value description="Switch to use a specific alpha value. ('true': use, 'false': dont use)">
+									<value>false</value>
+									<default>false</default>
+									<specific_alpha_value description="Switch to use alpha defines from boeing proposal for new alpha factor from curve method. ('true': use, 'false': dont use)">
+										<value>0.8</value>
+										<unit>1</unit>
+										<lower_boundary>0.689</lower_boundary>
+										<upper_boundary>0.995</upper_boundary>
+										<default>0.8</default>		
+									</specific_alpha_value>
+								</use_specific_alpha_value>
+								<select_new_alpha_from_curve description="Switch to use alpha from curve method from ICAO (higher accuracy). ('true': use, 'false': dont use)">
+									<value>true</value>
+									<default>true</default>
+									<use_boeing_proposals description="Switch to use alpha defines from boeing proposal for new alpha factor from curve method. ('true': use, 'false': dont use)">
+										<value>false</value>
+										<default>false</default>
+									</use_boeing_proposals>
+								</select_new_alpha_from_curve>
+							</acn_method>
+							<nose_gear_parameter description="Parameter settings for the nose landing gear design.">
+								<minimum_number_of_nose_gear_tires_per_strut description="Set the number of minimum allowed tires per one nose landing gear strut.">
+									<value>2</value>
+									<unit>1</unit>
+									<lower_boundary>1</lower_boundary>
+									<upper_boundary>4</upper_boundary>
+									<default>2</default>
+								</minimum_number_of_nose_gear_tires_per_strut>
+								<use_specific_number_of_nose_gear_struts description="Switch to select using of a secific number of nose landing gear struts. ('true': use, 'false': dont use">
+									<value>false</value>
+									<default>false</default>
+									<specific_number_of_nose_gear_struts description="Number of nose gear struts.">
+										<value>2</value>
+										<unit>1</unit>
+										<lower_boundary>1</lower_boundary>
+										<upper_boundary>2</upper_boundary>
+										<default>1</default>
+									</specific_number_of_nose_gear_struts>
+								</use_specific_number_of_nose_gear_struts>
+								<use_specific_number_of_nose_gear_tires_per_strut description="Switch to select using of a secific number of landing gear tires. ('true': use, 'false': dont use">
+									<value>false</value>
+									<default>false</default>
+									<specific_number_of_nose_gear_tires_per_strut description="Number of nose wheel tires per nose weel landing gear strut.">
+										<value>2</value>
+										<unit>2</unit>
+										<lower_boundary>1</lower_boundary>
+										<upper_boundary>4</upper_boundary>
+										<default>2</default>
+									</specific_number_of_nose_gear_tires_per_strut>
+								</use_specific_number_of_nose_gear_tires_per_strut>
+								<use_specific_nose_gear_starting_x_position description="Switch to select using a specific starting position in x-direction for the nose gear strut(s). ('true': use, 'false': dont use">
+									<value>false</value>
+									<default>false</default>
+									<specific_nose_gear_starting_x_position description="Set specific starting position in x-direction for the nose gear strut(s).">
+										<value>5.2</value>
+										<unit>m</unit>
+										<lower_boundary>4.5</lower_boundary>
+										<upper_boundary>5.5</upper_boundary>
+										<default>5.2</default>
+									</specific_nose_gear_starting_x_position>
+								</use_specific_nose_gear_starting_x_position>
+								<use_specific_minimum_percentage_of_nose_gear_load description="Switch to select using a specific minimum percentage of nose gear load. ('true': use, 'false': dont use">
+									<value>false</value>
+									<default>false</default>
+									<specific_minimum_percentage_of_nose_gear_load description="Set specific minimum percentage of nose gear load.">
+										<value>2.5</value>
+										<unit>percent</unit>
+										<lower_boundary>2.5</lower_boundary>
+										<upper_boundary>7.5</upper_boundary>
+										<default>6.0</default>
+									</specific_minimum_percentage_of_nose_gear_load>
+								</use_specific_minimum_percentage_of_nose_gear_load>
+								<use_specific_maximum_percentage_of_nose_gear_load description="Switch to select using a specific maximum percentage of nose gear load. ('true': use, 'false': dont use">
+									<value>false</value>
+									<default>false</default>
+									<specific_maximum_percentage_of_nose_gear_load description="Set specific maximum percentage of nose gear load.">
+										<value>25.0</value>
+										<unit>percent</unit>
+										<lower_boundary>15.0</lower_boundary>
+										<upper_boundary>25.0</upper_boundary>
+										<default>20.0</default>
+									</specific_maximum_percentage_of_nose_gear_load>
+								</use_specific_maximum_percentage_of_nose_gear_load>
+							</nose_gear_parameter>
+							<main_gear_parameter description="Parameter settings for the main landing gear design.">
+								<minimum_number_of_main_gear_tires_per_strut description="Set the number of minimum allowed tires per one main landing gear strut.">
+									<value>2</value>
+									<unit>1</unit>
+									<lower_boundary>1</lower_boundary>
+									<upper_boundary>6</upper_boundary>
+									<default>2</default>
+								</minimum_number_of_main_gear_tires_per_strut>
+								<dynamic_change_of_number_of_main_gear_struts description="Switch to allow dynamic change of number of main gear struts if necessary. ('true': allow, 'false': dinied">
+									<value>true</value>
+									<default>true</default>
+									<maximum_number_of_main_gear_struts description="Maximum allowed number of main landing gear struts.">
+										<value>4</value>
+										<unit>1</unit>
+										<lower_boundary>2</lower_boundary>
+										<upper_boundary>4</upper_boundary>
+										<default>4</default>
+									</maximum_number_of_main_gear_struts>
+								</dynamic_change_of_number_of_main_gear_struts>
+								<use_specific_number_of_main_gear_struts description="Switch to select using of a secific number of main landing gear struts. ('true': use, 'false': dont use">
+									<value>false</value>
+									<default>false</default>
+									<specific_number_of_main_gear_struts description="Number of main gear struts.">
+										<value>2</value>
+										<unit>1</unit>
+										<lower_boundary>2</lower_boundary>
+										<upper_boundary>4</upper_boundary>
+										<default>2</default>
+									</specific_number_of_main_gear_struts>
+								</use_specific_number_of_main_gear_struts>
+								<use_specific_number_of_main_gear_tires_per_strut description="Switch to select using of a secific number of landing gear tires. ('true': use, 'false': dont use">
+									<value>false</value>
+									<default>false</default>
+									<specific_number_of_main_gear_tires_per_strut description="Number of main gear tires per main landing gear strut.">
+										<value>2</value>
+										<unit>1</unit>
+										<lower_boundary>1</lower_boundary>
+										<upper_boundary>6</upper_boundary>
+										<default>2</default>
+									</specific_number_of_main_gear_tires_per_strut>
+								</use_specific_number_of_main_gear_tires_per_strut>
+								<dynamic_change_of_number_of_main_gear_tires_per_strut description="Switch to allow dynamic change od number of main gear tires if necessary. ('true': allow, 'false': dinied">
+									<value>true</value>
+									<default>true</default>
+									<maximum_number_of_main_gear_tires_per_strut description="Maximum allowed number of main gear tires per main landing gear strut.">
+										<value>6</value>
+										<unit>1</unit>
+										<lower_boundary>2</lower_boundary>
+										<upper_boundary>6</upper_boundary>
+										<default>6</default>
+									</maximum_number_of_main_gear_tires_per_strut>
+								</dynamic_change_of_number_of_main_gear_tires_per_strut>
+								<minimum_required_wheel_track description="Required minimum wheeltrack for multi-tired wheel axles.">
+									<value>0.927</value>
+									<unit>m</unit>
+									<lower_boundary>0.5</lower_boundary>
+									<upper_boundary>2.0</upper_boundary>
+									<default>0.927</default>
+								</minimum_required_wheel_track>
+								<minimum_required_wheel_base description="Required minimum wheelbase between the axles for multi-bogie concepts.">
+									<value>1.005</value>
+									<unit>m</unit>
+									<lower_boundary>0.5</lower_boundary>
+									<upper_boundary>2.0</upper_boundary>
+									<default>1.005</default>
+								</minimum_required_wheel_base>
+							</main_gear_parameter>
+						</specific>
+					</landing_gear_design_tu_berlin>
+				</fidelity>
+			</configuration>
+		</program_settings>
+	</module_configuration_file>

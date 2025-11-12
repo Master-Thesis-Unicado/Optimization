@@ -1,31 +1,4 @@
-"""
-Mission Analysis with Iterative Range Optimization
-
-This script implements an iterative mission simulation that adjusts cruise distance
-to achieve a user-specified target mission range. The optimization maintains optimal
-climb and descent profiles while iteratively converging on the desired total range.
-
-Workflow:
-1. User specifies target mission range and initial cruise distance estimate
-2. Execute climb phase optimization (fixed, computed once)
-3. Iterative loop:
-   a. Execute cruise phase with current cruise distance
-   b. Execute descent phase optimization
-   c. Calculate total mission distance
-   d. Check convergence against target range
-   e. Adjust cruise distance using damped feedback
-   f. Repeat until convergence or maximum iterations
-4. Generate visualization plots for final converged solution
-
-Key Features:
-- Modular design with mission_range_optimizer.py for optimization logic
-- Suppresses intermediate plotting (only final results displayed)
-- Provides detailed convergence monitoring and iteration history
-- Complete visualization integration with standardized styling
-
-Output includes interactive plots and comprehensive mission summary at convergence.
-"""
-
+# =========  1 - MODULE INITIALIZATION =================
 # ========= IMPORTS AND BASIC SETUP ===========================================
 from __future__ import annotations
 import numpy as np
@@ -45,7 +18,6 @@ from mission_config import (
     TARGET_DESCENT_ALT_M, TARGET_DESCENT_MACH,
     N_MACH_SAMPLES_DESCENT, N_ALTITUDE_STEPS_DESCENT, N_LEVER_SAMPLES_DESCENT,
     MIN_DESCENT_MACH, MAX_DESCENT_MACH,
-    # Range optimization parameters
     TARGET_MISSION_RANGE_KM, INITIAL_CRUISE_DISTANCE_KM,
     RANGE_OPTIMIZATION_TOLERANCE_KM, MAX_RANGE_OPTIMIZATION_ITERATIONS,
     RANGE_OPTIMIZATION_DAMPING_FACTOR
@@ -55,7 +27,7 @@ from mission_config import (
 import climb
 from climb import (
     compute_sep_grid_maxlever,
-    dbg, compute_full_engine_envelope,
+    dbg,
     ClimbingCore
 )
 
@@ -69,21 +41,7 @@ from cruise import run_cruise_simulation
 
 # ========= DESCENT MODULE =============================================
 import descent
-from descent import run_descent_dp_optimization, compute_full_descent_envelope
-
-# ========= PLOTTING MODULES (FINAL VISUALIZATION ONLY) ================
-from cruise_plotting import plot_cruise_performance_detailed
-from climb_plotting import (
-    plot_strategies_interactive, plot_J_3d_plotly, 
-    create_strategy_comparison_plots, plot_climb_performance_detailed
-)
-from descent_plotting import (
-    plot_descent_trajectory_interactive,
-    plot_descent_3d_trajectory,
-    plot_complete_mission_3d_interactive,
-    plot_descent_J_3d_plotly
-)
-from mission_summary import plot_mission_summary_dashboard, plot_combined_performance_analysis
+from descent import run_descent_dp_optimization
 
 # ========= RANGE OPTIMIZATION MODULES =================================
 from mission_range_plotting import (
@@ -98,8 +56,7 @@ from mission_range_optimizer import (
 )
 
 
-# ========= MAIN EXECUTION FUNCTION ========================================
-
+# =========  2 - MAIN EXECUTION FUNCTION ========================================
 def main():
     """
     Main execution function for mission range optimization.
@@ -144,24 +101,20 @@ def main():
     print("\n[READ] Aerodynamics (Excel Sheet4) …")
     aero = PyAerodynamicsWrapper()
     
-    # Create atmospheric properties instance
     atmospheric_props = AtmosphericProperties()
     
-    # Dense grids for contours
     M_min, M_max = float(aero.mach_grid[0]), float(aero.mach_grid[-1])
     M_dense = np.linspace(M_min, M_max, N_MACH_SAMPLES_CLIMB)
     H_plot = np.arange(START_ALTITUDE_CLIMB_M,
                        Y_AXIS_TOP_M + 0.5*ALT_STEP_M,
                        ALT_STEP_M)
     
-    # Set effective minimum Mach
     climb.M_MIN_EFFECTIVE = max(climb.M_MIN_DEFAULT, float(aero.mach_grid[0]))
     print(f"[INFO] Effective M_MIN set to {climb.M_MIN_EFFECTIVE:.3f} (sheet min Mach={aero.mach_grid[0]:.3f}).")
     
     print("[ENGINE] Loading engine stub …")
     eng = EngineWrapper("lls/stubs/engines/PW1127G-JM")
     
-    # Pre-compute grids for performance
     print("[OPTIMIZATION] Pre-computing engine and drag grids for performance...")
     lever_grid = np.linspace(0.0, 1.0, 21)
     eng.precompute_grid(M_dense, H_plot, lever_grid)
@@ -176,7 +129,6 @@ def main():
     print("CLIMB PHASE OPTIMIZATION (FIXED - COMPUTED ONCE)")
     print("="*80)
     
-    # Create altitude schedule for DP
     uniform_step_size = TARGET_ALT_CLIMB_M / N_ALTITUDE_STEPS_CLIMB
     H_sched = np.arange(START_ALTITUDE_CLIMB_M,
                         TARGET_ALT_CLIMB_M + uniform_step_size,
@@ -184,11 +136,9 @@ def main():
     
     print("[DP] Solving 3D fixed-mass DP for climb phase…")
     
-    # Calculate starting Mach
     a = atmospheric_props.a_from_altitude(START_ALTITUDE_CLIMB_M)
     start_mach = START_VELOCITY_CLIMB_MS / a
     
-    # Solve 3D DP for climb
     dp_sched, dp_info = ClimbingCore.DynamicProgrammingOptimizer.solve_3d_fixed_mass(
         aero, eng, M_grid, H_sched,
         lever_samples=N_LEVER_SAMPLES_CLIMB,
@@ -198,7 +148,6 @@ def main():
         start_lever=START_LEVER_CLIMB
     )
     
-    # Calculate climb statistics
     climb_fuel = float(np.nan_to_num(dp_sched.cumFuel_kg, nan=0.0)[-1])
     climb_time_hours = float(np.sum(dp_sched.dt_s)) / 3600.0 if len(dp_sched.dt_s) > 0 else 0.0
     
@@ -226,15 +175,15 @@ def main():
     print("="*80)
     print(f"Target: {TARGET_MISSION_RANGE_KM:.0f} km ± {RANGE_OPTIMIZATION_TOLERANCE_KM:.0f} km\n")
     
-    # Initialize with initial cruise distance estimate
     current_cruise_distance_km = INITIAL_CRUISE_DISTANCE_KM
     converged = False
     iteration = 0
     
-    # Store results for final visualization
     final_cruise_results = None
     final_descent_results = None
     final_descent_info = None
+    
+    base_cruise_results = None
     
     while not converged and iteration < MAX_RANGE_OPTIMIZATION_ITERATIONS:
         iteration += 1
@@ -244,9 +193,7 @@ def main():
         
         # ========= CRUISE PHASE SIMULATION ====================================
         try:
-            # For first iteration or when cruise distance increased
             if iteration == 1:
-                # Initial cruise simulation
                 cruise_results = run_cruise_simulation(
                     climb_result=dp_sched,
                     initial_mass_kg=INITIAL_MASS_KG,
@@ -254,24 +201,22 @@ def main():
                     aero=aero,
                     engine=eng,
                     time_step_s=CRUISE_TIME_STEP_S,
-                    create_plots=False  # Suppress plots during iteration
+                    create_plots=False
                 )
+                base_cruise_results = cruise_results
+                base_cruise_distance = current_cruise_distance_km
+                print(f"[CRUISE] Base cruise established: {base_cruise_distance:.1f} km")
             else:
-                # Determine if cruise distance increased or decreased
-                previous_cruise_distance = optimizer.iteration_history[-1].cruise_distance_km
-                previous_cruise_final_mass = optimizer.iteration_history[-1].cruise_final_mass_kg
-                
-                print(f"[CRUISE] Previous iteration: {previous_cruise_distance:.1f} km, ending mass: {previous_cruise_final_mass:.1f} kg")
+                print(f"[CRUISE] Base cruise distance: {base_cruise_distance:.1f} km")
                 print(f"[CRUISE] Current iteration target: {current_cruise_distance_km:.1f} km")
                 
-                if current_cruise_distance_km > previous_cruise_distance:
-                    # Extension: Resume from last cruise point
-                    additional_distance_km = current_cruise_distance_km - previous_cruise_distance
-                    print(f"[CRUISE] → EXTENDING cruise by {additional_distance_km:.1f} km from previous endpoint")
-                    print(f"[CRUISE]   Starting extension from mass: {cruise_results.weight_kg[-1]:.1f} kg")
+                if current_cruise_distance_km > base_cruise_distance:
+                    additional_distance_km = current_cruise_distance_km - base_cruise_distance
+                    print(f"[CRUISE] → EXTENDING from base by {additional_distance_km:.1f} km")
+                    print(f"[CRUISE]   Base cruise ends at mass: {base_cruise_results.weight_kg[-1]:.1f} kg")
                     
                     cruise_results = adjust_cruise_segment_extension(
-                        cruise_result=cruise_results,
+                        cruise_result=base_cruise_results,
                         additional_distance_km=additional_distance_km,
                         aero=aero,
                         engine=eng,
@@ -279,24 +224,24 @@ def main():
                     )
                     
                     print(f"[CRUISE]   After extension, cruise ends at mass: {cruise_results.weight_kg[-1]:.1f} kg")
-                else:
-                    # Truncation: Return to earlier cruise point
-                    print(f"[CRUISE] → TRUNCATING cruise from {previous_cruise_distance:.1f} km to {current_cruise_distance_km:.1f} km")
-                    print(f"[CRUISE]   Before truncation: {len(cruise_results.weight_kg)} points, final mass: {cruise_results.weight_kg[-1]:.1f} kg")
+                elif current_cruise_distance_km < base_cruise_distance:
+                    print(f"[CRUISE] → TRUNCATING base from {base_cruise_distance:.1f} km to {current_cruise_distance_km:.1f} km")
                     
                     cruise_results = adjust_cruise_segment_truncation(
-                        cruise_result=cruise_results,
+                        cruise_result=base_cruise_results,
                         new_cruise_distance_km=current_cruise_distance_km
                     )
                     
                     print(f"[CRUISE]   After truncation: {len(cruise_results.weight_kg)} points, final mass: {cruise_results.weight_kg[-1]:.1f} kg")
+                else:
+                    print(f"[CRUISE] → REUSING base cruise (same distance)")
+                    cruise_results = base_cruise_results
         
         except Exception as e:
             print(f"[ERROR] Cruise simulation failed: {str(e)}")
             break
         
         # ========= MASS CONTINUITY VERIFICATION ===============================
-        # Extract actual masses from phase results
         climb_final_mass_kg = float(dp_sched.mass_kg[-1]) if len(dp_sched.mass_kg) > 0 else (INITIAL_MASS_KG - climb_fuel)
         cruise_initial_mass_kg = float(cruise_results.weight_kg[0])
         cruise_final_mass_kg = float(cruise_results.weight_kg[-1])
@@ -307,7 +252,6 @@ def main():
         print(f"  Climb ending mass:    {climb_final_mass_kg:.1f} kg (burned {climb_fuel:.1f} kg)")
         print(f"  Cruise starting mass: {cruise_initial_mass_kg:.1f} kg")
         
-        # Verify climb→cruise continuity
         climb_cruise_error = abs(climb_final_mass_kg - cruise_initial_mass_kg)
         if climb_cruise_error > 0.1:
             print(f"  [WARNING] Climb→Cruise mass mismatch: {climb_cruise_error:.2f} kg difference!")
@@ -334,14 +278,12 @@ def main():
                 lever_samples=N_LEVER_SAMPLES_DESCENT
             )
             
-            # Extract and verify descent mass
             descent_initial_mass_kg = float(descent_results.weight_kg[0]) if len(descent_results.weight_kg) > 0 else cruise_final_mass_kg
             descent_final_mass_kg = float(descent_results.final_weight_kg)
             descent_fuel_kg = float(descent_results.total_fuel_consumed_kg)
             
-            # Verify mass continuity
             mass_continuity_error = abs(descent_initial_mass_kg - cruise_final_mass_kg)
-            if mass_continuity_error > 0.1:  # More than 0.1 kg difference
+            if mass_continuity_error > 0.1:
                 print(f"[WARNING] Mass continuity issue detected!")
                 print(f"  Cruise final mass: {cruise_final_mass_kg:.1f} kg")
                 print(f"  Descent initial mass: {descent_initial_mass_kg:.1f} kg")
@@ -365,7 +307,6 @@ def main():
         # ========= CHECK CONVERGENCE ==========================================
         converged, error_km = optimizer.check_convergence(total_distance_km)
         
-        # Record iteration with mass tracking
         optimizer.record_iteration(
             iteration=iteration,
             cruise_distance_km=current_cruise_distance_km,
@@ -377,7 +318,6 @@ def main():
             descent_final_mass_kg=descent_final_mass_kg
         )
         
-        # Print iteration status with mass tracking
         optimizer.print_iteration_status(
             iteration=iteration,
             cruise_distance_km=current_cruise_distance_km,
@@ -388,7 +328,6 @@ def main():
             descent_final_mass_kg=descent_final_mass_kg
         )
         
-        # Store final results if converged
         if converged:
             final_cruise_results = cruise_results
             final_descent_results = descent_results
@@ -409,7 +348,6 @@ def main():
             current_cruise_distance_km = next_cruise_distance_km
     
     # ========= OPTIMIZATION SUMMARY ===========================================
-    # Check if any iterations were completed
     if len(optimizer.iteration_history) == 0:
         print(f"\n{'='*80}")
         print("OPTIMIZATION FAILED - NO ITERATIONS COMPLETED")
@@ -417,7 +355,7 @@ def main():
         print("[ERROR] The optimization loop exited before completing any iterations.")
         print("Please check the error messages above for details.")
         print(f"{'='*80}\n")
-        return  # Exit early - cannot continue without iteration data
+        return
     
     if not converged:
         print(f"\n{'='*80}")
@@ -426,12 +364,10 @@ def main():
         print(f"Final error: {optimizer.iteration_history[-1].distance_error_km:+.1f} km")
         print(f"Consider adjusting damping factor or increasing max iterations.")
         
-        # Use last iteration results for visualization
         final_cruise_results = cruise_results
         final_descent_results = descent_results
         final_descent_info = descent_info
     
-    # Print optimization summary
     summary = optimizer.get_optimization_summary()
     print(f"\n{'='*80}")
     print("OPTIMIZATION SUMMARY")
@@ -444,7 +380,6 @@ def main():
     print(f"Converged: {'Yes' if summary['converged'] else 'No'}")
     print(f"{'='*80}\n")
     
-    # Print mass evolution summary to verify mass continuity
     optimizer.print_mass_evolution_summary()
     
     # ========= FINAL MISSION SUMMARY ==========================================
@@ -452,14 +387,12 @@ def main():
     print("COMPLETE MISSION SUMMARY (FINAL CONVERGED SOLUTION)")
     print("="*80)
     
-    # Calculate final statistics
     cruise_summary = final_cruise_results.get_summary_dict()
     descent_summary = final_descent_results.get_summary_dict()
     
     total_mission_fuel = climb_fuel + cruise_summary['cruise_fuel_kg'] + descent_summary['descent_fuel_kg']
     total_mission_time_hours = climb_time_hours + cruise_summary['cruise_time_hours'] + (descent_summary['descent_time_minutes'] / 60.0)
     
-    # Calculate final distances
     _, final_distance_breakdown = calculate_total_mission_distance_km(
         climb_result=dp_sched,
         cruise_result=final_cruise_results,
@@ -502,135 +435,19 @@ def main():
     
     print("="*80)
     
-    # ========= GENERATE VISUALIZATION PLOTS (FINAL RESULTS ONLY) =============
-    print("\n" + "="*80)
-    print("GENERATING VISUALIZATION PLOTS FOR FINAL CONVERGED SOLUTION")
-    print("="*80)
-    
-    # Simulate strategies for comparison (same as main.py)
-    print("[STRAT] Simulating strategies for comparison…")
-    strategies: list[climb.StrategyRun] = []
-    for name, fn, af in ClimbingCore.StrategyManager.build_strategy_set():
-        sr = ClimbingCore.StrategyManager.simulate_strategy_path(
-            label=name,
-            aero=aero, eng=eng,
-            mass0_kg=INITIAL_MASS_KG,
-            h0_m=START_ALTITUDE_CLIMB_M,
-            V0_ms=START_VELOCITY_CLIMB_MS,
-            target_alt_m=TARGET_ALT_CLIMB_M,
-            dt=STRATEGY_DT_CLIMB_S,
-            strategy_fn=fn, altitude_fraction=af
-        )
-        sr = ClimbingCore.StrategyManager.resample_strategy_run(sr, N_ALTITUDE_STEPS_CLIMB)
-        strategies.append(sr)
-    
-    # Add DP as a strategy
-    alt = np.asarray(dp_sched.alt_m, float)
-    mach = np.asarray(dp_sched.mach, float)
-    dt = np.asarray(dp_sched.dt_s, float)
-    time = np.cumsum(np.nan_to_num(dt, nan=0.0, posinf=0.0, neginf=0.0))
-    
-    dp_run = climb.StrategyRun(
-        label="3D DP (Global Optimization)",
-        alt_m=alt,
-        mach=mach,
-        time_s=time,
-        lever=np.asarray(dp_sched.lever, float),
-        T_total_N=np.asarray(dp_sched.T_total_N, float),
-        D_N=np.asarray(dp_sched.D_N, float),
-        Ps_mps=np.asarray(dp_sched.Ps_mps, float),
-        mdot_kgps=np.asarray(dp_sched.mdot_kgps, float),
-        dt_s=dt,
-        dFuel_kg=np.asarray(dp_sched.dFuel_kg, float),
-        cumFuel_kg=np.asarray(dp_sched.cumFuel_kg, float),
-        thrust_limited=np.asarray(dp_sched.thrust_limited, bool),
-        fuel_total_kg=float(np.nan_to_num(dp_sched.cumFuel_kg, nan=0.0)[-1])
-    )
-    dp_run.time_s = dp_run.time_s - dp_run.time_s[0]
-    dp_run = ClimbingCore.StrategyManager.resample_strategy_run(dp_run, N_ALTITUDE_STEPS_CLIMB)
-    strategies.append(dp_run)
-    
-    # Align strategies
-    dp_start_mach = dp_run.mach[0] if len(dp_run.mach) > 0 else 0.2
-    for strategy in strategies:
-        if (strategy.label not in ["3D DP (Global Optimization)"] and
-            "Constant speed" not in strategy.label and
-            "Constant Mach" not in strategy.label):
-            mach_array = np.array(strategy.mach, dtype=float)
-            mach_offset = mach_array[0] - dp_start_mach
-            strategy.mach = mach_array - mach_offset
-    
-    # Create climb comparison plots
-    print("[PLOT] Creating strategy comparison plots...")
-    create_strategy_comparison_plots(strategies, aero)
-    
-    print("[PLOT] Creating climb performance analysis...")
-    plot_climb_performance_detailed(dp_sched, dp_info)
-    
-    # Interactive climb plot
-    print("[PLOT] Opening interactive climb window…")
-    _ = plot_strategies_interactive(
-        M_grid, H_plot, Ps_base, strategies,
-        title_suffix=f"Target Alt={TARGET_ALT_CLIMB_M:.0f} m, Ref mass={INITIAL_MASS_KG:.0f} kg"
-    )
-    
-    # 3D climb visualization
-    min_path = {
-        'mach': np.asarray(dp_sched.mach, float),
-        'alt': np.asarray(dp_sched.alt_m, float),
-        'lever': np.asarray(dp_sched.lever, float),
-    }
-    
-    print("[ENVELOPE] Computing full engine envelope for 3D visualization...")
-    J_envelope, lever_grid_envelope = compute_full_engine_envelope(aero, eng, M_grid, H_sched, lever_samples=50)
-    
-    print("[PLOT] Opening 3D visualization for climb…")
-    plot_J_3d_plotly(M_grid, H_sched, lever_grid_envelope, J_envelope, min_path=min_path,
-                     title="3D DP (Global Optimization)<br>Full Engine Envelope with Optimal Path")
-    
-    # Cruise performance plot
-    print(f"[CRUISE] Creating detailed cruise performance analysis...")
-    plot_cruise_performance_detailed(final_cruise_results)
-    
-    # Descent visualization
-    print("\n[DESCENT] Creating interactive descent visualization plots...")
-    
-    # Compute descent envelope
-    descent_initial_weight = final_cruise_results.weight_kg[-1]
-    H_descent = np.linspace(final_cruise_results.altitude_m[-1],
-                           TARGET_DESCENT_ALT_M,
-                           N_ALTITUDE_STEPS_DESCENT)
-    M_min_descent = max(MIN_DESCENT_MACH, TARGET_DESCENT_MACH - 0.1)
-    M_max_descent = min(MAX_DESCENT_MACH, final_cruise_results.mach_number[-1] + 0.05)
-    M_grid_descent = np.linspace(M_min_descent, M_max_descent, N_MACH_SAMPLES_DESCENT)
-    
-    print("[ENVELOPE-DESCENT] Computing full descent envelope...")
-    J_descent_envelope, lever_grid_descent = compute_full_descent_envelope(
-        aero, eng, M_grid_descent, H_descent,
-        initial_weight_kg=descent_initial_weight,
-        lever_samples=50,
-        target_mach=TARGET_DESCENT_MACH
-    )
-    
-    # ========= RANGE OPTIMIZATION VISUALIZATION (FIRST) ========================
-    # Display range optimization plots FIRST, then phase details
+    # ========= RANGE OPTIMIZATION VISUALIZATION ===============================
     print("\n" + "="*80)
     print("GENERATING RANGE OPTIMIZATION VISUALIZATIONS")
     print("="*80)
     
-    # Print optimization report
     optimization_summary = optimizer.get_optimization_summary()
     print_optimization_report(optimization_summary)
     
-    # Prepare iteration phase data for breakdown plots
-    # Extract phase distances from final breakdown
     climb_distance_km = final_distance_breakdown['climb_km']
     descent_distance_km = final_distance_breakdown['descent_km']
     
     iteration_phase_data = []
     for record in optimizer.iteration_history:
-        # Climb and descent distances remain constant across iterations
-        # Only cruise distance changes during optimization
         iteration_phase_data.append({
             'iteration': record.iteration,
             'climb_km': climb_distance_km,
@@ -639,7 +456,6 @@ def main():
             'total_km': record.total_distance_km
         })
     
-    # Create comprehensive optimization dashboard (saves all plots, no duplicates)
     print("\n[DASHBOARD] Creating comprehensive optimization dashboard...")
     print("[DASHBOARD] Note: Dashboard will generate all plots (optimization + phases)")
     print("[DASHBOARD] to avoid duplicates and ensure proper order.\n")
@@ -648,8 +464,7 @@ def main():
         iteration_history=optimizer.iteration_history,
         iteration_data=iteration_phase_data,
         optimization_summary=optimization_summary,
-        save_dir=None,  # Will use default timestamped directory
-        # Include phase results for complete documentation
+        save_dir=None,
         climb_result=dp_sched,
         cruise_result=final_cruise_results,
         descent_result=final_descent_results,
@@ -660,7 +475,7 @@ def main():
         initial_mass_kg=INITIAL_MASS_KG
     )
     
-    # Display range optimization plots FIRST in browser
+    # ========= DISPLAY OPTIMIZATION PLOTS =====================================
     print("\n" + "="*80)
     print("DISPLAYING RANGE OPTIMIZATION PLOTS")
     print("="*80)
@@ -683,7 +498,6 @@ def main():
     
     print("\n[DASHBOARD] All optimization plots displayed and saved!")
     
-    # Show matplotlib plots (if any remain)
     plt.show(block=True)
     
     print("\n" + "="*80)
@@ -693,4 +507,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

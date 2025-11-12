@@ -48,6 +48,7 @@ class EngineWrapper:
         # Initialize computational caching system
         self._thrust_cache = {}
         self._tsfc_cache = {}
+        self._last_call_key = None  # Track last engine call for TSFC consistency
         self._cache_hits = 0
         self._cache_misses = 0
 
@@ -63,6 +64,8 @@ class EngineWrapper:
         cache_key = (round(lever, 3), round(M, 3), round(h_m, 1))
         if cache_key in self._thrust_cache:
             self._cache_hits += 1
+            # CRITICAL FIX: Also cache the most recent call parameters so tsfc_current() works correctly
+            self._last_call_key = cache_key
             return self._thrust_cache[cache_key]
         
         Mq = float(np.clip(M, 0.0, 0.94))  # avoid M >= 0.94
@@ -74,17 +77,33 @@ class EngineWrapper:
             else:
                 result = float(Tv)
             
+            # Get TSFC immediately after thrust calculation while engine state is fresh
+            tsfc = self._eng.get_tsfc()
+            if tsfc is not None and np.isfinite(tsfc):
+                self._tsfc_cache[cache_key] = float(tsfc)
+            else:
+                self._tsfc_cache[cache_key] = None
+            
             # Store result in computational cache
             self._thrust_cache[cache_key] = result
+            self._last_call_key = cache_key
             self._cache_misses += 1
             return result
         except Exception:
             self._thrust_cache[cache_key] = None
+            self._tsfc_cache[cache_key] = None
+            self._last_call_key = cache_key
             self._cache_misses += 1
             return None
 
     def tsfc_current(self) -> float | None:
         """Return TSFC as provided by engine (assumed kg/(N*s) by downstream logic)."""
+        # CRITICAL FIX: Return cached TSFC corresponding to the last thrust_with_lever call
+        # This ensures TSFC matches the thrust even when thrust came from cache
+        if hasattr(self, '_last_call_key') and self._last_call_key in self._tsfc_cache:
+            return self._tsfc_cache[self._last_call_key]
+        
+        # Fallback to direct engine query (for backwards compatibility)
         try:
             tsfc = self._eng.get_tsfc()
             if tsfc is None or not np.isfinite(tsfc):

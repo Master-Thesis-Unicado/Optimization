@@ -1,0 +1,111 @@
+<html lang="en">
+<head>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<title>Mission Analysis of SMR-01</title>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="logo"></div>
+<div class="content">
+<h1>Report - Mission Analysis of SMR-01<br/>
+<span><font size="2">All outputs of the program 'mission_analysis' were created with version 0.5.0</span></h1>
+<!-- Begin CeRAS Report -->
+<!-- ################################################################################################### -->
+<div class="container">
+<div class="box">
+<h2>Mission specifications</h2>
+<table class="content-table">
+<thead>
+<tr>
+<th >Parameter</th>
+<th >Comment</th>
+<th >Unit</th>
+<th >Value</th>
+</tr>
+</thead>
+<tr>
+<td>Range</td><td></td><td>NM</td><td>2450</td></tr>
+<tr>
+<td>Payload (PL)</td><td>Passengers + Cargo</td><td>kg</td><td>19300</td></tr>
+<tr>
+<td>Passengers</td><td></td><td>-</td><td>180</td></tr>
+<tr>
+<td>Cargo mass</td><td></td><td>kg</td><td>2200</td></tr>
+<tr>
+<td>Cruise Mach number</td><td></td><td>-</td><td>0.78</td></tr>
+<tr>
+<td>Cruise climb steps</td><td></td><td>ft</td><td>2000</td></tr>
+<tr>
+<td>Climb Mach number</td><td>above crossover altitude</td><td>-</td><td>0.76</td></tr>
+<tr>
+<td>Climb CAS above FL100</td><td></td><td>KCAS</td><td>154</td></tr>
+<tr>
+<td>Climb CAS below FL100</td><td></td><td>KCAS</td><td>129</td></tr>
+<tr>
+<td>Descent CAS above FL100</td><td></td><td>KCAS</td><td>154</td></tr>
+<tr>
+<td>Descent CAS below FL100</td><td></td><td>KCAS</td><td>129</td></tr>
+<tr>
+<td>Taxi-out time</td><td></td><td>min</td><td>9</td></tr>
+<tr>
+<td>Taxi-in time</td><td></td><td>min</td><td>5</td></tr>
+<tr>
+<td>Alternate distance</td><td></td><td>NM</td><td>200</td></tr>
+<tr>
+<td>Fuel reserves method</td><td>JAR-OPS 1.255 Subpart D + AMC-OPS 1.255</td><td></td><td></td></tr>
+</table>
+<h2>Mission simulation results</h2>
+<table class="content-table">
+<thead>
+<tr>
+<th >Parameter</th>
+<th >Comment</th>
+<th >Unit</th>
+<th >Value</th>
+</tr>
+</thead>
+<tr>
+<td>Take-off mass</td><td>TOM = OME + PL + MF - TXF<sub>out</sub></td><td>kg</td><td>76654</td></tr>
+<tr>
+<td>Operating mass empty</td><td>OME</td><td>kg</td><td>42986</td></tr>
+<tr>
+<td>Mission (loaded) fuel</td><td>MF = TF + RF + EF + TXF<sub>out</sub></td><td>kg</td><td>14576</td></tr>
+<tr>
+<td>Trip fuel</td><td>TF</td><td>kg</td><td>11660</td></tr>
+<tr>
+<td>Reserve fuel</td><td>RF</td><td>kg</td><td>2708</td></tr>
+<tr>
+<td>Extra fuel</td><td>EF</td><td>kg</td><td>0</td></tr>
+<tr>
+<td>Taxi-out fuel</td><td>TXF<sub>out</sub></td><td>kg</td><td>207</td></tr>
+<tr>
+<td>Taxi-in fuel</td><td>TXF<sub>in</sub></td><td>kg</td><td>115</td></tr>
+<tr>
+<td>Landing mass</td><td>MTOM - TF</td><td>kg</td><td>64970</td></tr>
+<tr>
+<td>Block time</td><td></td><td>h</td><td>5:50</td></tr>
+<tr>
+<td>Flight time</td><td></td><td>h</td><td>5:36</td></tr>
+</table>
+</div>
+<div class="box">
+<hr>
+<img src="../plots/mission_analysis_design_mission_Alt-CL.svg" alt="Broken Path">
+<hr>
+<img src="../plots/mission_analysis_design_mission_speed.svg" alt="Broken Path">
+<hr>
+<img src="../plots/mission_analysis_design_mission_offtake.svg" alt="Broken Path">
+<hr>
+<img src="../plots/mission_analysis_design_mission_SAR_mach_0.74.svg" alt="Broken Path">
+<br>
+<img src="../plots/mission_analysis_design_mission_SAR_mach_0.76.svg" alt="Broken Path">
+<br>
+<img src="../plots/mission_analysis_design_mission_SAR_mach_0.78.svg" alt="Broken Path">
+<br>
+<img src="../plots/mission_analysis_design_mission_SAR_mach_0.8.svg" alt="Broken Path">
+<br>
+<img src="../plots/mission_analysis_design_mission_SAR_mach_0.82.svg" alt="Broken Path">
+</div>
+</div></div></div></body>
+</html>
