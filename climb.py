@@ -573,7 +573,7 @@ class ClimbingCore:
             True 3D Dynamic Programming solver for minimum fuel climb optimization.
             
             This implementation considers all three variables (altitude, Mach, lever) simultaneously
-            and allows transitions to 25 neighboring points in the 3D space at each step (5x5 grid).
+            and allows transitions to 49 neighboring points in the 3D space at each step (7x7 grid).
             
             Args:
                 aero: Aerodynamics tables
@@ -676,10 +676,11 @@ class ClimbingCore:
                     current_mach = M_grid[i]
                     current_lever = lever_grid[j]
                     
-                    # Consider all 25 possible next moves (5x5 grid in Mach-Lever space)
+                    # Consider all 49 possible next moves (7x7 grid in Mach-Lever space)
+                    # Expanded from 5x5 to 7x7 for maximum transition flexibility and smoother paths
                     # BUT ONLY to the next altitude level (k+1) to prevent altitude jumps
-                    for di in [-2, -1, 0, 1, 2]:  # Mach change (broader range)
-                        for dj in [-2, -1, 0, 1, 2]:  # Lever change (broader range)
+                    for di in [-3, -2, -1, 0, 1, 2, 3]:  # Mach change (expanded range)
+                        for dj in [-3, -2, -1, 0, 1, 2, 3]:  # Lever change (expanded range)
                             next_mach_idx = i + di
                             next_lever_idx = j + dj
                             
