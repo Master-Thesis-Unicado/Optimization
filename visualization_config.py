@@ -140,7 +140,7 @@ class Layout:
     STANDARD_WIDTH = 1200
     STANDARD_HEIGHT = 1000
     DASHBOARD_WIDTH = 1200
-    DASHBOARD_HEIGHT = 1400
+    DASHBOARD_HEIGHT = 1600  # Increased to accommodate fuel management table
     WIDE_WIDTH = 1400
     TALL_HEIGHT = 1200
     

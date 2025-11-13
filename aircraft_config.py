@@ -55,7 +55,7 @@ class SystemConfiguration:
     DEFAULT_PASSENGERS = 108       # Scaled passenger capacity (0.6× of 180 = 108 seats)
     
     # Fuel weight (scaled for smaller aircraft)
-    MAX_FUEL_KG      = 5000   # Scaled fuel capacity (0.5× of 5000 kg) 
+    MAX_FUEL_KG      = 9000   # Scaled fuel capacity (0.5× of 5000 kg) 
     
     # Calculated weights
     @property

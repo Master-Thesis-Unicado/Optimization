@@ -27,7 +27,7 @@ START_LEVER_CLIMB = 0.85        # Initial throttle lever position
 N_MACH_SAMPLES_CLIMB = 31       # Number of Mach samples for DP optimization
 N_ALTITUDE_STEPS_CLIMB = 20     # Number of altitude steps for DP optimization
 N_LEVER_SAMPLES_CLIMB = 20      # Number of lever samples for DP optimization
-TARGET_MACH_CRUISE = 0.7        # Target Mach number at end of climb (cruise Mach)
+TARGET_MACH_CRUISE = 0.78        # Target Mach number at end of climb (cruise Mach)
 TARGET_MACH_TOLERANCE_CLIMB = 0.015  # Tolerance for target Mach achievement in climb
 STRATEGY_DT_CLIMB_S = 0.2       # Time step for climb strategy simulation [s]
 

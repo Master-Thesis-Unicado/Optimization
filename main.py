@@ -362,6 +362,11 @@ def main():
         print(f"  Weight after cruise: {final_mission_weight:.0f} kg")
         print(f"  Note: Complete mission totals will be shown after descent phase")
         
+        # Early feasibility check (partial mission)
+        if total_fuel > MAX_FUEL_KG:
+            print(f"\n  ⚠️  WARNING: Climb+Cruise fuel ({total_fuel:.1f} kg) already exceeds capacity ({MAX_FUEL_KG:.1f} kg)")
+            print(f"  Mission will be infeasible after descent phase")
+        
         print("="*80)
         
         # Create detailed cruise performance analysis
@@ -449,6 +454,30 @@ def main():
             print(f"  Descent fuel: {descent_summary['descent_fuel_kg']:.1f} kg ({descent_summary['descent_fuel_kg']/total_mission_fuel*100:.1f}% of total)")
             
             print("="*80)
+            
+            # CRITICAL: Validate fuel feasibility
+            fuel_deficit = total_mission_fuel - MAX_FUEL_KG
+            if fuel_deficit > 0:
+                print("\n" + "="*80)
+                print("⚠️  MISSION INFEASIBILITY WARNING")
+                print("="*80)
+                print(f"  Maximum fuel capacity: {MAX_FUEL_KG:.1f} kg")
+                print(f"  Required fuel consumption: {total_mission_fuel:.1f} kg")
+                print(f"  Fuel deficit: {fuel_deficit:.1f} kg ({fuel_deficit/MAX_FUEL_KG*100:.1f}% over capacity)")
+                print(f"\n  ❌ MISSION IS INFEASIBLE - Aircraft cannot carry sufficient fuel!")
+                print(f"  Possible solutions:")
+                print(f"    1. Increase MAX_FUEL_KG in aircraft_config.py to at least {total_mission_fuel*1.05:.1f} kg")
+                print(f"    2. Reduce cruise distance (currently {CRUISE_DISTANCE_KM:.0f} km) in mission_config.py")
+                print(f"    3. Reduce payload or operating empty weight")
+                print(f"    4. Use fuel optimizer (main_optimized.py) to find minimum required fuel")
+                print("="*80 + "\n")
+            else:
+                fuel_margin = MAX_FUEL_KG - total_mission_fuel
+                print(f"\n✅ FUEL FEASIBILITY CHECK: PASSED")
+                print(f"  Maximum fuel capacity: {MAX_FUEL_KG:.1f} kg")
+                print(f"  Required fuel consumption: {total_mission_fuel:.1f} kg")
+                print(f"  Fuel margin: {fuel_margin:.1f} kg ({fuel_margin/MAX_FUEL_KG*100:.1f}% reserve)")
+                print("="*80)
             
             # Compute full descent envelope for 3D visualization (similar to climb)
             print("\n[ENVELOPE-DESCENT] Computing full descent envelope for 3D visualization...")

@@ -192,9 +192,9 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     total_fuel = climb_fuel + cruise_fuel + descent_fuel
     total_distance_km = climb_distance_km + cruise_distance_km + descent_distance_km
     
-    # Create figure with subplots including aerodynamic data
+    # Create figure with subplots including aerodynamic data and fuel management
     fig = make_subplots(
-        rows=4, cols=3,
+        rows=5, cols=3,
         subplot_titles=(
             '<b>Mission Profile</b>',
             '<b>Phase Breakdown</b>',
@@ -204,16 +204,18 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
             '<b>Lift Coefficient (CL)</b>',
             '<b>Lift-to-Drag Ratio (L/D)</b>',
             '<b>Mission Statistics</b>',
-            '<b>Key Parameters</b>'
+            '<b>Key Parameters</b>',
+            '<b>Fuel Management</b>'
         ),
         specs=[
             [{"colspan": 3, "type": "scatter"}, None, None],
             [{"type": "bar"}, {"type": "scatter"}, {"type": "scatter"}],
             [{"type": "scatter"}, {"type": "scatter"}, {"type": "scatter"}],
-            [{"colspan": 2, "type": "table"}, None, {"type": "table"}]
+            [{"colspan": 2, "type": "table"}, None, {"type": "table"}],
+            [{"colspan": 3, "type": "table"}, None, None]
         ],
-        row_heights=[0.25, 0.25, 0.25, 0.25],
-        vertical_spacing=0.08,
+        row_heights=[0.20, 0.20, 0.20, 0.20, 0.20],
+        vertical_spacing=0.06,
         horizontal_spacing=0.10
     )
     
@@ -542,6 +544,31 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     # Weight tracking is more accurate as it follows the actual trajectory
     total_fuel_consistent = weight_loss_calculated
     
+    # CRITICAL: Validate fuel feasibility - check if mission requires more fuel than available
+    from aircraft_config import MAX_FUEL_KG
+    fuel_deficit = total_fuel_consistent - MAX_FUEL_KG
+    
+    if fuel_deficit > 0:
+        print(f"\n{'='*80}")
+        print(f"⚠️  MISSION INFEASIBILITY WARNING")
+        print(f"{'='*80}")
+        print(f"  Maximum fuel capacity: {MAX_FUEL_KG:.1f} kg")
+        print(f"  Required fuel consumption: {total_fuel_consistent:.1f} kg")
+        print(f"  Fuel deficit: {fuel_deficit:.1f} kg ({fuel_deficit/MAX_FUEL_KG*100:.1f}% over capacity)")
+        print(f"\n  ❌ MISSION IS INFEASIBLE - Aircraft cannot carry sufficient fuel!")
+        print(f"  Possible solutions:")
+        print(f"    1. Increase MAX_FUEL_KG in aircraft_config.py to at least {total_fuel_consistent*1.05:.1f} kg")
+        print(f"    2. Reduce cruise distance in mission_config.py")
+        print(f"    3. Reduce payload or operating empty weight")
+        print(f"    4. Use fuel optimizer (main_optimized.py) to find minimum required fuel")
+        print(f"{'='*80}\n")
+    else:
+        fuel_margin = MAX_FUEL_KG - total_fuel_consistent
+        print(f"\n✅ Fuel Feasibility Check: PASSED")
+        print(f"  Maximum fuel capacity: {MAX_FUEL_KG:.1f} kg")
+        print(f"  Required fuel consumption: {total_fuel_consistent:.1f} kg")
+        print(f"  Fuel margin: {fuel_margin:.1f} kg ({fuel_margin/MAX_FUEL_KG*100:.1f}% reserve)")
+    
     fig.add_trace(
         go.Table(
             header=dict(
@@ -638,12 +665,82 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     fig.update_xaxes(**get_axis_config("Altitude (m)"), row=3, col=3)
     fig.update_yaxes(**get_axis_config("L/D"), row=3, col=3)
     
-    # Main title with comprehensive summary
+    # ========= ROW 5: FUEL MANAGEMENT TABLE =========
+    # Calculate comprehensive fuel management metrics
+    fuel_remaining = MAX_FUEL_KG - total_fuel_consistent
+    fuel_used_percent = (total_fuel_consistent / MAX_FUEL_KG) * 100
+    fuel_margin_percent = (fuel_remaining / MAX_FUEL_KG) * 100
+    
+    # Fuel consumption rates
+    avg_fuel_rate_kg_hr = (total_fuel_consistent / total_time_s) * 3600 if total_time_s > 0 else 0
+    avg_fuel_rate_kg_km = total_fuel_consistent / total_distance_km if total_distance_km > 0 else 0
+    
+    # Determine feasibility status
+    if fuel_deficit > 0:
+        feasibility_status = f'<span style="color:red;font-weight:bold">❌ INFEASIBLE</span>'
+        status_color = 'mistyrose'
+    elif fuel_margin_percent < 5:
+        feasibility_status = f'<span style="color:orange;font-weight:bold">⚠️ CRITICAL</span>'
+        status_color = 'lightyellow'
+    elif fuel_margin_percent < 10:
+        feasibility_status = f'<span style="color:orange;">⚠️ LOW</span>'
+        status_color = 'lightyellow'
+    else:
+        feasibility_status = f'<span style="color:green;font-weight:bold">✅ FEASIBLE</span>'
+        status_color = 'lightgreen'
+    
+    # Build fuel management table
+    fig.add_trace(
+        go.Table(
+            header=dict(
+                values=['<b>Fuel Parameter</b>', '<b>Value</b>', '<b>Percentage</b>'],
+                fill_color=Colors.CRUISE,
+                align='center',
+                font=dict(color='white', size=Typography.AXIS_LABEL_SIZE, family=Typography.FONT_FAMILY)
+            ),
+            cells=dict(
+                values=[
+                    # Parameter names
+                    ['<b>Initial Fuel Capacity</b>', 
+                     '<b>Fuel Consumed</b>', 
+                     '<b>Fuel Remaining</b>',
+                     '<b>Average Fuel Rate (Time)</b>',
+                     '<b>Average Fuel Rate (Distance)</b>'],
+                    # Values with units embedded
+                    [f'{MAX_FUEL_KG:.1f} kg',
+                     f'{total_fuel_consistent:.1f} kg',
+                     f'{fuel_remaining:.1f} kg' if fuel_remaining >= 0 else f'<span style="color:red">{fuel_remaining:.1f} kg</span>',
+                     f'{avg_fuel_rate_kg_hr:.1f} kg/h',
+                     f'{avg_fuel_rate_kg_km:.2f} kg/km'],
+                    # Percentages
+                    ['100.0%',
+                     f'{fuel_used_percent:.1f}%',
+                     f'{fuel_margin_percent:.1f}%' if fuel_remaining >= 0 else f'<span style="color:red">{fuel_margin_percent:.1f}%</span>',
+                     '-',
+                     '-']
+                ],
+                fill_color=[
+                    ['white', 'lightgray', 'white', 'lightgray', 'white']
+                ],
+                align=['left', 'right', 'center'],
+                font=dict(size=Typography.HOVER_SIZE, family=Typography.FONT_FAMILY),
+                height=30
+            )
+        ),
+        row=5, col=1
+    )
+    
+    # Main title with comprehensive summary - add warning if infeasible
+    feasibility_warning = ""
+    if fuel_deficit > 0:
+        feasibility_warning = f"<br><span style='color:red;font-weight:bold'>⚠️ MISSION INFEASIBLE: Fuel deficit {fuel_deficit:.1f} kg ({fuel_deficit/MAX_FUEL_KG*100:.1f}% over capacity)</span>"
+    
     subtitle = (
         f"Total Distance: {total_distance_km:.0f} km | "
         f"Total Time: {total_time_s/3600:.2f} hours ({total_time_s/60:.1f} min) | "
         f"Total Fuel: {total_fuel_consistent:.1f} kg ({fuel_fraction:.1f}% of initial mass) | "
         f"Fuel Efficiency: {fuel_efficiency_kg_km:.2f} kg/km"
+        f"{feasibility_warning}"
     )
     
     layout_config = get_standard_layout(
@@ -681,7 +778,7 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     
     # Also save as PNG
     try:
-        fig.write_image(output_path_png, width=1800, height=1400, scale=2)
+        fig.write_image(output_path_png, width=1800, height=1600, scale=2)
         print(f"[EXPORT] Mission summary dashboard saved to: {output_path_html} (interactive) and {output_path_png} (PNG)")
     except Exception as e:
         print(f"[EXPORT] Mission summary dashboard saved to: {output_path_html} (HTML only)")
