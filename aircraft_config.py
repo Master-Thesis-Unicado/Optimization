@@ -46,16 +46,16 @@ class SystemConfiguration:
     # ========= WEIGHT BREAKDOWN COMPONENTS (SCALED AIRCRAFT - 0.5× ENGINE) =========
     # Operating Empty Weight (W_OE) components
     # Scaled from A320 baseline using power law scaling for 0.5× engine size
-    W_AIRFRAME_KG    = 10153.0   # Weight of airframe structure (0.65× scaling)
-    W_PROPULSION_KG  = 5500.0    # Weight of propulsion system (0.5× scaling - tied to engine)
-    W_SYSTEMS_KG     = 5250.0    # Weight of systems (0.75× scaling - less size-dependent)
+    W_AIRFRAME_KG    = 25000.0   # Weight of airframe structure (0.65× scaling)
+    W_PROPULSION_KG  = 10000.0    # Weight of propulsion system (0.5× scaling - tied to engine)
+    W_SYSTEMS_KG     = 10000.0    # Weight of systems (0.75× scaling - less size-dependent)
     
     # Payload weight estimation (scaled configuration)
     PAYLOAD_PER_PERSON_KG = 100.0  # 100 kg per person (passenger + luggage)
     DEFAULT_PASSENGERS = 108       # Scaled passenger capacity (0.6× of 180 = 108 seats)
     
     # Fuel weight (scaled for smaller aircraft)
-    MAX_FUEL_KG      = 9000   # Scaled fuel capacity (0.5× of 5000 kg) 
+    MAX_FUEL_KG      = 14000   # Scaled fuel capacity (0.5× of 5000 kg) 
     
     # Calculated weights
     @property

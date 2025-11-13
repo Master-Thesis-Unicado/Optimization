@@ -32,11 +32,11 @@ TARGET_MACH_TOLERANCE_CLIMB = 0.015  # Tolerance for target Mach achievement in 
 STRATEGY_DT_CLIMB_S = 0.2       # Time step for climb strategy simulation [s]
 
 # Cruise phase parameters (from main.py and cruise.py)
-CRUISE_DISTANCE_KM = 2326.0     # Cruise distance [km]
+CRUISE_DISTANCE_KM = 4290.0     # Cruise distance [km]
 CRUISE_TIME_STEP_S = 60.0       # Time step for cruise simulation [s]
 
 # Range optimization parameters (for mission_range_optimizer.py)
-TARGET_MISSION_RANGE_KM = 2450.0        # Target total mission range [km]
+TARGET_MISSION_RANGE_KM = 4500.0        # Target total mission range [km]
 INITIAL_CRUISE_DISTANCE_KM = 1000.0     # Initial cruise distance estimate [km]
 RANGE_OPTIMIZATION_TOLERANCE_KM = 10.0  # Convergence tolerance [km] (±10 km)
 MAX_RANGE_OPTIMIZATION_ITERATIONS = 10  # Maximum optimization iterations
