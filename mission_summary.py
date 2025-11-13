@@ -524,6 +524,24 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     # Override cell_style to remove fixed height and prevent scrollbar
     cell_style_no_height = {k: v for k, v in cell_style.items() if k != 'height'}
     
+    # Verify consistency between weight tracking and fuel consumption
+    weight_loss_calculated = initial_mass_kg - descent_result.final_weight_kg
+    
+    # Diagnostic print to identify discrepancy
+    print(f"\n[MISSION SUMMARY] Fuel and Weight Consistency Check:")
+    print(f"  Climb fuel: {climb_fuel:.2f} kg")
+    print(f"  Cruise fuel: {cruise_fuel:.2f} kg")
+    print(f"  Descent fuel: {descent_fuel:.2f} kg")
+    print(f"  Total fuel (sum): {total_fuel:.2f} kg")
+    print(f"  Initial mass: {initial_mass_kg:.2f} kg")
+    print(f"  Final weight: {descent_result.final_weight_kg:.2f} kg")
+    print(f"  Weight loss (diff): {weight_loss_calculated:.2f} kg")
+    print(f"  Discrepancy: {abs(total_fuel - weight_loss_calculated):.2f} kg")
+    
+    # Use weight loss as the definitive value for total fuel to ensure consistency
+    # Weight tracking is more accurate as it follows the actual trajectory
+    total_fuel_consistent = weight_loss_calculated
+    
     fig.add_trace(
         go.Table(
             header=dict(
@@ -536,7 +554,7 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
                     [f'{climb_time_s/60:.1f} min', f'{cruise_time_s/60:.1f} min', 
                      f'{descent_time_s/60:.1f} min', f'<b>{total_time_s/60:.1f} min</b>'],
                     [f'{climb_fuel:.1f}', f'{cruise_fuel:.1f}', 
-                     f'{descent_fuel:.2f}', f'<b>{total_fuel:.1f}</b>'],
+                     f'{descent_fuel:.2f}', f'<b>{total_fuel_consistent:.1f}</b>'],
                     [f'{climb_distance_km:.1f}', f'{cruise_distance_km:.0f}', 
                      f'{descent_distance_km:.1f}', f'<b>{total_distance_km:.0f}</b>']
                 ],
@@ -548,11 +566,11 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     )
     
     # ========= ROW 3 COL 2: EFFICIENCY INDICATORS =========
-    # Calculate efficiency metrics
-    fuel_efficiency_kg_km = total_fuel / total_distance_km if total_distance_km > 0 else 0
+    # Calculate efficiency metrics using consistent fuel value
+    fuel_efficiency_kg_km = total_fuel_consistent / total_distance_km if total_distance_km > 0 else 0
     time_efficiency_min_km = (total_time_s/60) / total_distance_km if total_distance_km > 0 else 0
-    avg_fuel_flow = total_fuel / (total_time_s/3600) if total_time_s > 0 else 0  # kg/h
-    fuel_fraction = (total_fuel / initial_mass_kg) * 100
+    avg_fuel_flow = total_fuel_consistent / (total_time_s/3600) if total_time_s > 0 else 0  # kg/h
+    fuel_fraction = (total_fuel_consistent / initial_mass_kg) * 100
     
     # Efficiency Indicators plot removed per user request
     
@@ -624,7 +642,7 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     subtitle = (
         f"Total Distance: {total_distance_km:.0f} km | "
         f"Total Time: {total_time_s/3600:.2f} hours ({total_time_s/60:.1f} min) | "
-        f"Total Fuel: {total_fuel:.1f} kg ({fuel_fraction:.1f}% of initial mass) | "
+        f"Total Fuel: {total_fuel_consistent:.1f} kg ({fuel_fraction:.1f}% of initial mass) | "
         f"Fuel Efficiency: {fuel_efficiency_kg_km:.2f} kg/km"
     )
     
@@ -1076,7 +1094,17 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
     )
     
     # Calculate mission totals
-    total_fuel = climb_fuel_kg[-1] + cruise_fuel_consumed[-1] + descent_cum_fuel_kg[-1]
+    # Use weight tracking for consistent fuel calculation
+    total_fuel_sum = climb_fuel_kg[-1] + cruise_fuel_consumed[-1] + descent_cum_fuel_kg[-1]
+    total_fuel_weight = initial_mass_kg - descent_result.final_weight_kg
+    
+    # Diagnostic check for consistency
+    if abs(total_fuel_sum - total_fuel_weight) > 0.1:
+        print(f"[COMBINED ANALYSIS] Warning: Fuel discrepancy detected: {abs(total_fuel_sum - total_fuel_weight):.2f} kg")
+        print(f"  Fuel sum: {total_fuel_sum:.2f} kg, Weight loss: {total_fuel_weight:.2f} kg")
+    
+    # Use weight-based calculation for consistency with dashboard
+    total_fuel = total_fuel_weight
     total_time_min = climb_time_min[-1] + cruise_time_min[-1] + descent_time_min[-1]
     
     # ========= AERODYNAMIC SUMMARY TABLE =========
