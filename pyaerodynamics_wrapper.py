@@ -105,7 +105,7 @@ class PyAerodynamicsWrapper:
         self._M = np.linspace(0.2, 0.9, 15)
         
         # Altitude grid (typical range for mission analysis)
-        self._H = np.linspace(0, 15000, 16)
+        self._H = np.linspace(0, 12000, 16)
     
     @property
     def mach_grid(self) -> np.ndarray:

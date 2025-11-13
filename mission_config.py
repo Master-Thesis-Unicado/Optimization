@@ -16,7 +16,7 @@ from __future__ import annotations
 # Climb phase parameters (from climb.py and main.py)
 TARGET_ALT_CLIMB_M = 10000.0    # Target climb altitude [m]
 ALT_STEP_M = 200.0              # Altitude step size for plotting [m]
-Y_AXIS_TOP_M = 12000.0          # Maximum altitude for plots [m]
+Y_AXIS_TOP_M = 14000.0          # Maximum altitude for plots [m]
 
 # Starting conditions (from main.py) - Climb phase initialization
 START_ALTITUDE_CLIMB_M = 10.0   # Takeoff altitude [m]
@@ -32,7 +32,7 @@ TARGET_MACH_TOLERANCE_CLIMB = 0.015  # Tolerance for target Mach achievement in 
 STRATEGY_DT_CLIMB_S = 0.2       # Time step for climb strategy simulation [s]
 
 # Cruise phase parameters (from main.py and cruise.py)
-CRUISE_DISTANCE_KM = 1500.0     # Cruise distance [km]
+CRUISE_DISTANCE_KM = 1870.0     # Cruise distance [km]
 CRUISE_TIME_STEP_S = 60.0       # Time step for cruise simulation [s]
 
 # Range optimization parameters (for mission_range_optimizer.py)

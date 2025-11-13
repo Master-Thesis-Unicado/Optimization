@@ -44,7 +44,7 @@ class EngineWrapper:
         engine.precompute_grid(M_grid, H_grid, lever_grid)  # Pre-compute for optimization
     """
     def __init__(self, stub_path: str):
-        self._eng = engine.Engine(str(Path(stub_path)), 0.5)
+        self._eng = engine.Engine(str(Path(stub_path)),0.9945)
         # Initialize computational caching system
         self._thrust_cache = {}
         self._tsfc_cache = {}
