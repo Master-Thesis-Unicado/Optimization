@@ -1189,7 +1189,7 @@ class ClimbingCore:
         
         # Lever penalty guidance constants
         LEVER_PENALTY_WEIGHT = 3.0  # Base weight for lever penalty (kg per lever unit above threshold)
-        LEVER_PENALTY_THRESHOLD = 0.85  # Lever threshold above which penalties apply (85% = realistic climb limit)
+        LEVER_PENALTY_THRESHOLD = 0.75  # Lever threshold above which penalties apply (85% = realistic climb limit)
         LEVER_PENALTY_EXPONENT = 3.0  # Exponent for penalty curve (higher = more aggressive)
         LEVER_PENALTY_CRITICAL_THRESHOLD = 0.90  # Critical threshold for very high penalties (90%+)
         LEVER_PENALTY_CRITICAL_MULTIPLIER = 5.0  # Extra penalty multiplier for critical range
