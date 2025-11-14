@@ -7,9 +7,19 @@ from typing import List
 import os
 from datetime import datetime
 from pathlib import Path
+import warnings
 import plotly.graph_objects as go
 import plotly.subplots as sp
 import plotly.io as pio
+
+# Suppress choreographer JSONError warnings (non-critical browser communication errors)
+warnings.filterwarnings('ignore', category=UserWarning, module='choreographer')
+try:
+    import logging
+    logging.getLogger('choreographer').setLevel(logging.ERROR)
+except:
+    pass
+
 pio.renderers.default = "browser"
 
 # import needed types, helpers, and constants from logic

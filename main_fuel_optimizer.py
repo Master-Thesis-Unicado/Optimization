@@ -80,8 +80,8 @@ from mission_summary import (
 )
 
 # ========= FUEL OPTIMIZATION MODULES ==================================
-from fuel_optimizer import optimize_fuel_capacity, SAFETY_BUFFER_PERCENT
-from fuel_plotting import visualize_convergence_analysis
+from mission_fuel_optimizer import optimize_fuel_capacity, SAFETY_BUFFER_PERCENT
+from mission_fuel_plotting import visualize_convergence_analysis
 
 
 # ========= CONSTANTS AND SETTINGS =========================================

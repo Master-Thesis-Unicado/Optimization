@@ -13,9 +13,18 @@ import matplotlib.pyplot as plt
 import os
 from datetime import datetime
 from pathlib import Path
+import warnings
 import plotly.graph_objects as go
 import plotly.subplots as sp
 from typing import TYPE_CHECKING
+
+# Suppress choreographer JSONError warnings (non-critical browser communication errors)
+warnings.filterwarnings('ignore', category=UserWarning, module='choreographer')
+try:
+    import logging
+    logging.getLogger('choreographer').setLevel(logging.ERROR)
+except:
+    pass
 
 if TYPE_CHECKING:
     from cruise import CruiseResults

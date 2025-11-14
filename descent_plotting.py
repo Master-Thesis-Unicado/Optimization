@@ -11,9 +11,18 @@ from typing import List, Optional, Dict, Any
 import os
 from datetime import datetime
 from pathlib import Path
+import warnings
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import plotly.io as pio
+
+# Suppress choreographer JSONError warnings (non-critical browser communication errors)
+warnings.filterwarnings('ignore', category=UserWarning, module='choreographer')
+try:
+    import logging
+    logging.getLogger('choreographer').setLevel(logging.ERROR)
+except:
+    pass
 
 # Set Plotly to open in browser
 pio.renderers.default = "browser"

@@ -14,10 +14,19 @@ Features:
 
 from __future__ import annotations
 import numpy as np
+import warnings
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import plotly.io as pio
 import os
+
+# Suppress choreographer JSONError warnings (non-critical browser communication errors)
+warnings.filterwarnings('ignore', category=UserWarning, module='choreographer')
+try:
+    import logging
+    logging.getLogger('choreographer').setLevel(logging.ERROR)
+except:
+    pass
 
 # Set Plotly to open in browser
 pio.renderers.default = "browser"
@@ -26,7 +35,7 @@ from dataclasses import dataclass
 from typing import List, Optional
 
 # Import optimization module
-from fuel_optimizer import ConvergenceHistory, MissionIterationResults, SAFETY_BUFFER_PERCENT
+from mission_fuel_optimizer import ConvergenceHistory, MissionIterationResults, SAFETY_BUFFER_PERCENT
 
 # Import visualization config
 from visualization_config import (
