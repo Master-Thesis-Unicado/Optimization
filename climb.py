@@ -19,6 +19,9 @@ from aircraft_config import (
     isa_properties, a_from_altitude, _atmospheric_properties
 )
 
+# Import mission configuration parameters
+from mission_config import N_ALTITUDE_STEPS_CLIMB
+
 # Import wrappers for aerodynamics and engine
 from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 from pyengine_wrapper import EngineWrapper
@@ -1175,17 +1178,17 @@ class ClimbingCore:
         
         # Feature flags
         MACH_TRAJECTORY_GUIDANCE = True  # Enable reachability-constrained Mach guidance
-        LEVER_PENALTY_GUIDANCE = True  # Enable penalties for high lever positions
+        LEVER_PENALTY_GUIDANCE = False  # Enable penalties for high lever positions
         
         # Mach targeting constants
         TARGET_MACH_TOLERANCE = 0.015  # Tolerance for target Mach constraint in DP
         
-        # Mach trajectory guidance constants
+        # Mach trajectory guidance constants45
         MACH_PENALTY_BASE_WEIGHT = 0.3  # Base penalty weight (kg per Mach² deviation)
-        MAX_REASONABLE_MACH_RATE = 0.02  # Max reasonable Mach change per optimization step
-        TOTAL_CLIMB_STEPS_ESTIMATE = 50  # Matches N_PLOT_STEPS - actual DP grid steps
-        URGENCY_MULTIPLIER = 2.0  # How much urgency scales with altitude progress - reduced from 8.0
-        GUIDANCE_PENALTY_WEIGHT = 0.5  # Strong guidance penalty when inside reachable corridor (increased from 0.1)
+        MAX_REASONABLE_MACH_RATE = 0.05  # Max reasonable Mach change per optimization step
+        TOTAL_CLIMB_STEPS_ESTIMATE = N_ALTITUDE_STEPS_CLIMB  # Matches DP optimization grid resolution
+        URGENCY_MULTIPLIER = 2.0  # How much urgency scales with altitude progress  
+        GUIDANCE_PENALTY_WEIGHT = 0.3  # Strong guidance penalty when inside reachable corridor (increased from 0.1)
         
         # Lever penalty guidance constants
         LEVER_PENALTY_WEIGHT = 3.0  # Base weight for lever penalty (kg per lever unit above threshold)

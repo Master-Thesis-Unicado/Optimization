@@ -26,6 +26,9 @@ from pyengine_wrapper import EngineWrapper
 import cruise
 from cruise import CruiseResults
 
+# Import mission configuration parameters
+from mission_config import N_ALTITUDE_STEPS_DESCENT
+
 # =========  2 - DATA STRUCTURES =============================================
 @dataclass
 class DescentInitialState:
@@ -229,7 +232,7 @@ class DescentCore:
         # Mach trajectory guidance constants (adjusted to match climb penalties for consistency)
         MACH_PENALTY_BASE_WEIGHT = 0.5  # Base penalty weight (kg per Mach² deviation) - slightly higher than climb (0.3) for target achievement
         MAX_REASONABLE_MACH_RATE = 0.018  # Max reasonable Mach change per optimization step - slightly lower than climb (0.02) for smoother deceleration
-        TOTAL_DESCENT_STEPS_ESTIMATE = 75  # Updated to match new N_ALTITUDE_STEPS (increased from 50)
+        TOTAL_DESCENT_STEPS_ESTIMATE = N_ALTITUDE_STEPS_DESCENT  # Matches DP optimization grid resolution
         URGENCY_MULTIPLIER = 2.5  # How much urgency scales with descent progress - slightly higher than climb (2.0) for approach criticality
         GUIDANCE_PENALTY_WEIGHT = 0.8  # Guidance penalty when inside reachable corridor - moderately higher than climb (0.5) to ensure target Mach
         
