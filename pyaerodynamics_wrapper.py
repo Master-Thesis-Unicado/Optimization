@@ -167,22 +167,18 @@ class PyAerodynamicsWrapper:
             'weight_force': weight_force
         }
     
-    def get_drag(self, M: float, h_m: float, weight_kg: float = None) -> float:
+    def get_drag(self, M: float, h_m: float, weight_kg: float) -> float:
         """
         Get drag force in Newtons for given Mach, altitude, and weight.
         
         Args:
             M: Mach number
             h_m: Altitude in meters
-            weight_kg: Aircraft weight in kg (if None, uses default weight)
+            weight_kg: Aircraft weight in kg
             
         Returns:
             Drag force in Newtons
         """
-        # Use default weight if not provided
-        if weight_kg is None:
-            weight_kg = 60000.0  # Default weight
-        
         # Check cache first
         cache_key = (round(M, 3), round(h_m, 1), round(weight_kg, 1))
         if cache_key in self._drag_cache:
@@ -228,22 +224,18 @@ class PyAerodynamicsWrapper:
             print(f"[PYAERO] Error calculating drag: {e}")
             return 0.0
     
-    def get_cl(self, M: float, h_m: float, weight_kg: float = None) -> float:
+    def get_cl(self, M: float, h_m: float, weight_kg: float) -> float:
         """
         Get lift coefficient for given Mach, altitude, and weight.
         
         Args:
             M: Mach number
             h_m: Altitude in meters
-            weight_kg: Aircraft weight in kg (if None, uses default weight)
+            weight_kg: Aircraft weight in kg
             
         Returns:
             Lift coefficient
         """
-        # Use default weight if not provided
-        if weight_kg is None:
-            weight_kg = 60000.0  # Default weight
-        
         try:
             # Create flight state
             flight_state = FlightState(
@@ -261,22 +253,18 @@ class PyAerodynamicsWrapper:
             print(f"[PYAERO] Error calculating CL: {e}")
             return 0.0
     
-    def get_lift_drag_ratio(self, M: float, h_m: float, weight_kg: float = None) -> float:
+    def get_lift_drag_ratio(self, M: float, h_m: float, weight_kg: float) -> float:
         """
         Get lift-to-drag ratio for given Mach, altitude, and weight.
         
         Args:
             M: Mach number
             h_m: Altitude in meters
-            weight_kg: Aircraft weight in kg (if None, uses default weight)
+            weight_kg: Aircraft weight in kg
             
         Returns:
             Lift-to-drag ratio
         """
-        # Use default weight if not provided
-        if weight_kg is None:
-            weight_kg = 60000.0  # Default weight
-        
         try:
             # Create flight state
             flight_state = FlightState(
@@ -294,22 +282,18 @@ class PyAerodynamicsWrapper:
             print(f"[PYAERO] Error calculating L/D: {e}")
             return 0.0
     
-    def get_drag_coefficient(self, M: float, h_m: float, weight_kg: float = None) -> float:
+    def get_drag_coefficient(self, M: float, h_m: float, weight_kg: float) -> float:
         """
         Get drag coefficient for given Mach, altitude, and weight.
         
         Args:
             M: Mach number
             h_m: Altitude in meters
-            weight_kg: Aircraft weight in kg (if None, uses default weight)
+            weight_kg: Aircraft weight in kg
             
         Returns:
             Drag coefficient
         """
-        # Use default weight if not provided
-        if weight_kg is None:
-            weight_kg = 60000.0  # Default weight
-        
         try:
             # Create flight state
             flight_state = FlightState(
@@ -327,22 +311,18 @@ class PyAerodynamicsWrapper:
             print(f"[PYAERO] Error calculating CD: {e}")
             return 0.0
     
-    def get_comprehensive_aerodynamics(self, M: float, h_m: float, weight_kg: float = None) -> Dict[str, Any]:
+    def get_comprehensive_aerodynamics(self, M: float, h_m: float, weight_kg: float) -> Dict[str, Any]:
         """
         Get comprehensive aerodynamic data for given flight conditions.
         
         Args:
             M: Mach number
             h_m: Altitude in meters
-            weight_kg: Aircraft weight in kg (if None, uses default weight)
+            weight_kg: Aircraft weight in kg
             
         Returns:
             Dictionary containing all aerodynamic data
         """
-        # Use default weight if not provided
-        if weight_kg is None:
-            weight_kg = 60000.0  # Default weight
-        
         try:
             # Create flight state
             flight_state = FlightState(
@@ -389,18 +369,15 @@ class PyAerodynamicsWrapper:
             print(f"[PYAERO] Error calculating comprehensive aerodynamics: {e}")
             return {}
     
-    def precompute_drag_grid(self, M_grid: np.ndarray, H_grid: np.ndarray, weight_kg: float = None):
+    def precompute_drag_grid(self, M_grid: np.ndarray, H_grid: np.ndarray, weight_kg: float):
         """
         Pre-compute drag values for a grid of Mach and altitude values.
         
         Args:
             M_grid: Array of Mach numbers
             H_grid: Array of altitudes in meters
-            weight_kg: Aircraft weight in kg (if None, uses default weight)
+            weight_kg: Aircraft weight in kg
         """
-        if weight_kg is None:
-            weight_kg = 60000.0  # Default weight
-        
         print(f"[PYAERO] Pre-computing drag grid: {len(M_grid)}×{len(H_grid)} points")
         
         total_points = len(M_grid) * len(H_grid)

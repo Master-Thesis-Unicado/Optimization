@@ -107,8 +107,8 @@ def main():
     # Pre-compute engine values
     eng.precompute_grid(M_dense, H_plot, lever_grid)
     
-    # Pre-compute drag values
-    aero.precompute_drag_grid(M_dense, H_plot)
+    # Pre-compute drag values at initial mass (reference weight for caching)
+    aero.precompute_drag_grid(M_dense, H_plot, INITIAL_MASS_KG)
 
     print("[PS] Computing background Ps grid (max lever, ref mass) …")
     M_grid, H_plot, Ps_base = compute_sep_grid_maxlever(aero, eng, INITIAL_MASS_KG,

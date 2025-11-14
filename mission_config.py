@@ -25,9 +25,9 @@ START_LEVER_CLIMB = 0.85        # Initial throttle lever position
 
 # Climb optimization parameters (from main.py) - Consistent phase-specific naming
 # ULTRA-HIGH RESOLUTION SETTINGS for maximum fuel efficiency optimization
-N_MACH_SAMPLES_CLIMB = 101      # Number of Mach samples for DP optimization (ultra-fine: 101 samples)
-N_ALTITUDE_STEPS_CLIMB = 100     # Number of altitude steps for DP optimization (ultra-fine: 50 steps)
-N_LEVER_SAMPLES_CLIMB = 50      # Number of lever samples for DP optimization (ultra-fine: 50 samples)
+N_MACH_SAMPLES_CLIMB =31      # Number of Mach samples for DP optimization (ultra-fine: 101 samples)
+N_ALTITUDE_STEPS_CLIMB = 20     # Number of altitude steps for DP optimization (ultra-fine: 50 steps)
+N_LEVER_SAMPLES_CLIMB = 20      # Number of lever samples for DP optimization (ultra-fine: 50 samples)
 TARGET_MACH_CRUISE = 0.78        # Target Mach number at end of climb (cruise Mach)
 TARGET_MACH_TOLERANCE_CLIMB = 0.015  # Tolerance for target Mach achievement in climb
 STRATEGY_DT_CLIMB_S = 0.2       # Time step for climb strategy simulation [s]
@@ -59,9 +59,9 @@ TARGET_DESCENT_MACH = 0.25      # Approach Mach number
 
 # Descent optimization parameters (from main.py) - Consistent naming with climb convention
 # ULTRA-HIGH RESOLUTION SETTINGS for maximum fuel efficiency optimization
-N_MACH_SAMPLES_DESCENT = 101    # Number of Mach samples for DP optimization (ultra-fine: 101 samples)
-N_ALTITUDE_STEPS_DESCENT = 100   # Number of altitude steps for DP optimization (ultra-fine: 50 steps)
-N_LEVER_SAMPLES_DESCENT = 50    # Number of lever samples for DP optimization (ultra-fine: 50 samples)
+N_MACH_SAMPLES_DESCENT = 31    # 101 Number of Mach samples for DP optimization (ultra-fine: 101 samples)
+N_ALTITUDE_STEPS_DESCENT = 20   # 100 Number of altitude steps for DP optimization (ultra-fine: 50 steps)
+N_LEVER_SAMPLES_DESCENT = 20    # 50 Number of lever samples for DP optimization (ultra-fine: 50 samples)
 
 # Descent constraints (from descent.py)
 MIN_DESCENT_MACH = 0.2          # Minimum descent Mach

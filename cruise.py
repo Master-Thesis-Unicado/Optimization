@@ -126,49 +126,6 @@ def calculate_true_airspeed(mach: float, altitude_m: float) -> float:
     _, _, _, a = calculate_atmospheric_properties(altitude_m)
     return mach * a
 
-def calculate_weight_adjusted_drag(base_drag_N: float, current_weight_kg: float, 
-                                 reference_weight_kg: float, mach: float, 
-                                 altitude_m: float) -> float:
-    """
-    Calculate drag adjusted for current weight (induced drag variation).
-    
-    For constant Mach/altitude cruise, drag varies with weight due to:
-    CL = Weight / (0.5 × ρ × V² × S)
-    CDi = CL² / (π × AR × e)  (induced drag)
-    CD_total = CD0 + CDi
-    
-    Args:
-        base_drag_N: Base drag from aero tables at reference weight
-        current_weight_kg: Current aircraft weight
-        reference_weight_kg: Reference weight for base drag
-        mach: Mach number
-        altitude_m: Altitude in meters
-        
-    Returns:
-        Weight-adjusted drag in Newtons
-    """
-    # Calculate weight ratio
-    weight_ratio = current_weight_kg / reference_weight_kg
-    
-    # Get atmospheric properties
-    _, _, rho, a = calculate_atmospheric_properties(altitude_m)
-    true_airspeed = mach * a
-    
-    # Estimate induced drag scaling with weight²
-    # This is a simplified model: CDi ∝ CL² ∝ Weight²
-    # Assume induced drag is ~40% of total drag for typical cruise conditions
-    induced_drag_fraction = 0.4
-    parasitic_drag_fraction = 1.0 - induced_drag_fraction
-    
-    # Scale drag components
-    parasitic_drag = base_drag_N * parasitic_drag_fraction  # Constant
-    induced_drag_base = base_drag_N * induced_drag_fraction
-    induced_drag_current = induced_drag_base * (weight_ratio ** 2)
-    
-    total_drag = parasitic_drag + induced_drag_current
-    
-    return float(total_drag)
-
 def calculate_required_thrust_cruise(drag_N: float, weight_kg: float, 
                                    altitude_m: float) -> float:
     """

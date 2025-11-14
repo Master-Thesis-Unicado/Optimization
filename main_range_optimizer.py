@@ -118,7 +118,7 @@ def main():
     print("[OPTIMIZATION] Pre-computing engine and drag grids for performance...")
     lever_grid = np.linspace(0.0, 1.0, 21)
     eng.precompute_grid(M_dense, H_plot, lever_grid)
-    aero.precompute_drag_grid(M_dense, H_plot)
+    aero.precompute_drag_grid(M_dense, H_plot, INITIAL_MASS_KG)
     
     print("[PS] Computing background Ps grid (max lever, ref mass) …")
     M_grid, H_plot, Ps_base = compute_sep_grid_maxlever(aero, eng, INITIAL_MASS_KG,
