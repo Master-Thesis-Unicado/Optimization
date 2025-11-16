@@ -3,30 +3,25 @@
 """
 Fuel Capacity Optimization Module
 
-This module implements convergent iterative optimization to determine the minimum 
-required fuel capacity for mission completion. The optimization process employs
-damped fixed-point iteration enhanced with Aitken's Δ² acceleration to iteratively 
-refine the initial fuel load until convergence is achieved.
+This module implements bisection-based optimization to determine the minimum 
+required fuel capacity for mission completion. The bisection method guarantees
+monotonic convergence and avoids oscillation issues present in fixed-point iteration.
 
 Scientific Approach:
-- Fixed-point iteration with successive underrelaxation
-- Aitken's Δ² acceleration method for adaptive convergence enhancement
+- Bisection method for robust, guaranteed convergence
 - Dynamic mass evolution tracking throughout mission phases
-- Comprehensive performance metrics calculation
 - Safety buffer application to converged results
 
 Module Structure:
 1. Data Structures (iteration results, convergence history)
 2. Mission Iteration Executor
-3. Convergence Controller (optimization loop)
+3. Bisection Controller (optimization loop)
 4. Configuration Manager (fuel parameter updates)
 
 Key Features:
-- Damped fixed-point iteration with initial damping factor (0.4)
-- Aitken Δ² adaptive acceleration for convergence enhancement
-- Fuel consumption tracking and convergence analysis
-- Intermediate results storage without plot generation
-- Automatic convergence detection with relative tolerance (0.5%)
+- Bisection method with guaranteed monotonic convergence
+- Fuel deficit tracking (consumed vs available)
+- Absolute tolerance convergence criterion (10 kg)
 - Safety buffer application (5%) after convergence
 - Comprehensive error handling and recovery mechanisms
 
@@ -64,32 +59,40 @@ from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 from pyengine_wrapper import EngineWrapper
 
 
+# =========  1.5 - SYSTEM UTILITIES (for structural parity with climb.py) =================
+class SystemUtilities:
+    """Lightweight utilities container to mirror structural patterns in climb.py."""
+
+    @staticmethod
+    def dbg(message: str) -> None:
+        """Minimal debug logger (stdout)."""
+        print(message)
+
+
+# Create global utilities instance (parity with other modules)
+_system_utilities = SystemUtilities()
+
+
 # =========  2 - CONVERGENCE PARAMETERS =================
 class ConvergenceParameters:
-    """Centralized convergence control parameters for fuel optimization."""
+    """Centralized convergence control parameters for fuel optimization using bisection method."""
     
-    CONVERGENCE_TOLERANCE_RELATIVE = 0.005  # 0.5% relative tolerance
-    CONVERGENCE_TOLERANCE_PERCENT = CONVERGENCE_TOLERANCE_RELATIVE * 100.0  # 0.5% in percentage units
+    CONVERGENCE_TOLERANCE_KG = 10.0  # Absolute tolerance in kg
     SAFETY_BUFFER_PERCENT = 0.05  # 5% safety buffer
-    MAX_ITERATIONS = 5  # Safety limit to prevent infinite loops
-    DAMPING_FACTOR = 0.4  # Initial relaxation parameter for fixed-point iteration
-    USE_AITKEN_ACCELERATION = True  # Enable Aitken's Δ² acceleration method
-    AITKEN_MIN_DAMPING = 0.1  # Minimum damping factor to prevent excessive updates
-    AITKEN_MAX_DAMPING = 0.9  # Maximum damping factor to maintain stability
+    MAX_ITERATIONS = 20  # Maximum bisection iterations
+    INITIAL_FUEL_LOW_KG = 1000.0  # Lower bound initial guess (minimum feasible fuel)
+    INITIAL_FUEL_HIGH_KG = MAX_FUEL_KG  # Upper bound initial guess (maximum fuel capacity)
 
 
 # Create global convergence parameters instance
 _convergence_params = ConvergenceParameters()
 
 # Backward compatibility constants
-CONVERGENCE_TOLERANCE_RELATIVE = _convergence_params.CONVERGENCE_TOLERANCE_RELATIVE
-CONVERGENCE_TOLERANCE_PERCENT = _convergence_params.CONVERGENCE_TOLERANCE_PERCENT
+CONVERGENCE_TOLERANCE_KG = _convergence_params.CONVERGENCE_TOLERANCE_KG
 SAFETY_BUFFER_PERCENT = _convergence_params.SAFETY_BUFFER_PERCENT
 MAX_ITERATIONS = _convergence_params.MAX_ITERATIONS
-DAMPING_FACTOR = _convergence_params.DAMPING_FACTOR
-USE_AITKEN_ACCELERATION = _convergence_params.USE_AITKEN_ACCELERATION
-AITKEN_MIN_DAMPING = _convergence_params.AITKEN_MIN_DAMPING
-AITKEN_MAX_DAMPING = _convergence_params.AITKEN_MAX_DAMPING
+INITIAL_FUEL_LOW_KG = _convergence_params.INITIAL_FUEL_LOW_KG
+INITIAL_FUEL_HIGH_KG = _convergence_params.INITIAL_FUEL_HIGH_KG
 
 
 # =========  3 - DATA STRUCTURES =================
@@ -99,187 +102,106 @@ class MissionIterationResults:
     Results from a single mission iteration.
     
     This structure encapsulates complete mission simulation results including
-    fuel consumption, performance metrics, and phase-wise detailed results.
+    fuel consumption and phase-wise detailed results.
     
     Attributes:
         iteration: Iteration number
         initial_fuel_kg: Initial fuel load for this iteration [kg]
         initial_mass_kg: Initial total aircraft mass [kg]
         fuel_consumed_kg: Total fuel consumed across all phases [kg]
-        convergence_delta_percent: Relative change from previous iteration [%]
+        fuel_deficit_kg: Difference between consumed and available fuel [kg]
         climb_result: Climb phase optimization results
         cruise_result: Cruise phase simulation results
         descent_result: Descent phase optimization results
         total_time_s: Total mission duration [s]
-        total_distance_km: Total mission ground distance [km]
-        final_weight_kg: Final aircraft weight after mission [kg]
         climb_fuel_kg: Fuel consumed in climb phase [kg]
         cruise_fuel_kg: Fuel consumed in cruise phase [kg]
         descent_fuel_kg: Fuel consumed in descent phase [kg]
         climb_time_s: Climb phase duration [s]
         cruise_time_s: Cruise phase duration [s]
         descent_time_s: Descent phase duration [s]
-        avg_lift_climb_N: Average lift force during climb [N]
-        avg_drag_climb_N: Average drag force during climb [N]
-        avg_lift_cruise_N: Average lift force during cruise [N]
-        avg_drag_cruise_N: Average drag force during cruise [N]
-        avg_lift_descent_N: Average lift force during descent [N]
-        avg_drag_descent_N: Average drag force during descent [N]
-        avg_ld_climb: Average lift-to-drag ratio during climb
-        avg_ld_cruise: Average lift-to-drag ratio during cruise
-        avg_ld_descent: Average lift-to-drag ratio during descent
-        avg_lever_climb: Average thrust lever position during climb
-        avg_lever_cruise: Average thrust lever position during cruise
-        avg_lever_descent: Average thrust lever position during descent
-        avg_specific_energy_climb_J_kg: Average specific energy during climb [J/kg]
-        avg_specific_energy_cruise_J_kg: Average specific energy during cruise [J/kg]
-        avg_specific_energy_descent_J_kg: Average specific energy during descent [J/kg]
+        final_weight_kg: Final aircraft weight after mission [kg]
     """
-    # Required fields (no defaults)
     iteration: int
     initial_fuel_kg: float
     initial_mass_kg: float
     fuel_consumed_kg: float
-    convergence_delta_percent: float
-    
-    # Phase-wise results (no defaults)
+    fuel_deficit_kg: float
     climb_result: MinFuelSchedule
     cruise_result: CruiseResults
     descent_result: DescentResults
-    
-    # Mission totals (no defaults)
     total_time_s: float
-    total_distance_km: float
-    
-    # Key performance parameters (no defaults)
-    final_weight_kg: float
     climb_fuel_kg: float
     cruise_fuel_kg: float
     descent_fuel_kg: float
     climb_time_s: float
     cruise_time_s: float
     descent_time_s: float
-    
-    # Optional fields with defaults (must come after fields without defaults)
-    # Aerodynamic performance tracking
-    avg_lift_climb_N: float = 0.0
-    avg_drag_climb_N: float = 0.0
-    avg_lift_cruise_N: float = 0.0
-    avg_drag_cruise_N: float = 0.0
-    avg_lift_descent_N: float = 0.0
-    avg_drag_descent_N: float = 0.0
-    
-    # L/D ratios
-    avg_ld_climb: float = 0.0
-    avg_ld_cruise: float = 0.0
-    avg_ld_descent: float = 0.0
-    
-    # Thrust lever positions
-    avg_lever_climb: float = 0.0
-    avg_lever_cruise: float = 0.0
-    avg_lever_descent: float = 0.0
-    
-    # Specific energy (J/kg)
-    avg_specific_energy_climb_J_kg: float = 0.0
-    avg_specific_energy_cruise_J_kg: float = 0.0
-    avg_specific_energy_descent_J_kg: float = 0.0
+    final_weight_kg: float
 
 
 @dataclass
 class ConvergenceHistory:
     """
-    Tracking structure for convergence analysis.
+    Tracking structure for bisection convergence analysis.
     
     This structure maintains complete optimization history for analysis,
     diagnostics, and visualization purposes.
     
     Attributes:
         iterations: List of all mission iteration results
+        fuel_bounds_history: List of (lower_bound, upper_bound) tuples
     """
     iterations: List[MissionIterationResults]
+    fuel_bounds_history: List[Tuple[float, float]]
     
     def __init__(self):
         """Initialize empty convergence history."""
         self.iterations = []
+        self.fuel_bounds_history = []
     
-    def add_iteration(self, result: MissionIterationResults):
+    def add_iteration(self, result: MissionIterationResults, bounds: Tuple[float, float]):
         """
         Add iteration result to history.
         
         Args:
             result: Mission iteration results to add
+            bounds: Current (lower, upper) fuel bounds
         """
         self.iterations.append(result)
-    
-    def get_last_two_iterations(self) -> Tuple[MissionIterationResults, MissionIterationResults]:
-        """
-        Get the last two iterations for convergence analysis.
-        
-        Returns:
-            Tuple of (previous_iteration, current_iteration)
-            
-        Raises:
-            ValueError: If fewer than 2 iterations available
-        """
-        if len(self.iterations) < 2:
-            raise ValueError("Need at least 2 iterations for convergence analysis")
-        return self.iterations[-2], self.iterations[-1]
-    
-    def is_converged(self) -> bool:
-        """
-        Check if convergence has been achieved.
-        
-        Convergence criterion:
-            |Δf_rel| < ε_tolerance
-        
-        where:
-            Δf_rel = (F_consumed,k - F_consumed,k-1) / F_consumed,k-1
-            ε_tolerance = CONVERGENCE_TOLERANCE_PERCENT
-        
-        Returns:
-            bool: True if converged, False otherwise
-        """
-        if len(self.iterations) < 2:
-            return False
-        
-        prev, curr = self.get_last_two_iterations()
-        delta = curr.convergence_delta_percent
-        
-        return abs(delta) < CONVERGENCE_TOLERANCE_PERCENT
+        self.fuel_bounds_history.append(bounds)
 
 
 # =========  4 - FUEL OPTIMIZATION CORE SYSTEM =================
 class FuelOptimizationCore:
     """
-    Comprehensive fuel capacity optimization framework for minimum fuel determination.
+    Fuel capacity optimization framework using bisection method.
     
-    This class implements a complete computational framework for aircraft fuel capacity
-    optimization through three integrated subsystems: mission iteration execution,
-    convergence control with Aitken acceleration, and configuration management. The
-    system determines minimum required fuel capacity through iterative convergence.
+    This class implements a robust bisection-based approach to determine the minimum
+    required fuel capacity for mission completion. The bisection method guarantees
+    monotonic convergence and avoids oscillation issues.
     
     System Components:
     - IterationExecutor: Executes complete mission simulations (climb + cruise + descent)
-      with dynamic mass tracking and performance metrics calculation
-    - ConvergenceController: Manages optimization loop with Aitken's Δ² acceleration,
-      adaptive damping, and convergence detection for stable, rapid convergence
+    - BisectionController: Manages bisection optimization loop with guaranteed convergence
     - ConfigurationManager: Updates aircraft configuration files with optimized fuel
-      capacity values for subsequent mission analysis
     
-    Computational Features:
-    - Fixed-point iteration with successive underrelaxation for stability
-    - Aitken's Δ² acceleration for quadratic convergence enhancement
-    - Dynamic mass evolution with fuel burn tracking
-    - Comprehensive performance metrics (L/D, specific energy, lever positions)
-    - Physical anomaly detection and diagnostic reporting
-    - Safety buffer application to converged results
+    Bisection Algorithm:
+        Initialize: F_low (too little), F_high (too much)
+        Loop:
+            F_mid = (F_low + F_high) / 2
+            F_consumed = run_mission(F_mid)
+            
+            if F_consumed > F_mid:
+                F_low = F_mid  (need more fuel)
+            else:
+                F_high = F_mid  (have excess fuel)
+                
+        Until: |F_high - F_low| < tolerance
     
     Implementation:
-        # Execute single mission iteration
-        result = FuelOptimizationCore.IterationExecutor.run_single_mission_iteration(...)
-        
         # Run complete optimization
-        optimal, history = FuelOptimizationCore.ConvergenceController.optimize_fuel_capacity(...)
+        optimal, history = FuelOptimizationCore.BisectionController.optimize_fuel_capacity(...)
         
         # Update configuration
         FuelOptimizationCore.ConfigurationManager.apply_optimized_fuel_to_configuration(...)
@@ -287,11 +209,11 @@ class FuelOptimizationCore:
     
     # ========= MISSION ITERATION EXECUTOR =========
     class IterationExecutor:
-        """Manages execution of complete mission iterations with performance tracking."""
+        """Manages execution of complete mission iterations."""
         
         @staticmethod
         def run_single_mission_iteration(
-            initial_mass_kg: float,
+            initial_fuel_kg: float,
             aero: PyAerodynamicsWrapper,
             eng: EngineWrapper,
             M_grid: np.ndarray,
@@ -302,12 +224,8 @@ class FuelOptimizationCore:
             """
             Execute a complete mission iteration (climb + cruise + descent).
             
-            This function runs a full mission simulation with the specified initial mass,
-            tracking fuel consumption, performance metrics, and trajectory data across
-            all three flight phases.
-            
             Args:
-                initial_mass_kg: Initial aircraft mass for this iteration
+                initial_fuel_kg: Initial fuel capacity for this iteration [kg]
                 aero: Aerodynamics wrapper instance
                 eng: Engine wrapper instance
                 M_grid: Mach grid for optimization
@@ -316,18 +234,16 @@ class FuelOptimizationCore:
                 print_progress: Whether to print progress messages
                     
             Returns:
-                MissionIterationResults containing all phase results and metrics
-                
-            Notes:
-                - Mass decreases dynamically as fuel is consumed
-                - Performance metrics calculated using instantaneous aircraft state
-                - Distance integration accounts for climb and descent angles
+                MissionIterationResults containing all phase results
             """
             atmospheric_props = AtmosphericProperties()
             iteration_start_time = time.time()
             
+            # Calculate initial mass
+            initial_mass_kg = W_OE_KG + W_PL_KG + initial_fuel_kg
+            
             if print_progress:
-                print(f"\n[MISSION ITERATION] Running full mission with initial mass: {initial_mass_kg:.1f} kg")
+                print(f"\n[MISSION ITERATION] Initial fuel: {initial_fuel_kg:.1f} kg, Total mass: {initial_mass_kg:.1f} kg")
             
             # ========= CLIMB PHASE =========================================
             if print_progress:
@@ -338,7 +254,7 @@ class FuelOptimizationCore:
             start_mach = START_VELOCITY_CLIMB_MS / a
             
             # Create uniform altitude steps
-            uniform_step_size = TARGET_ALT_CLIMB_M / len(H_plot)
+            uniform_step_size = TARGET_ALT_CLIMB_M / N_ALTITUDE_STEPS_CLIMB
             H_sched = np.arange(START_ALTITUDE_CLIMB_M, 
                                 TARGET_ALT_CLIMB_M + uniform_step_size, 
                                 uniform_step_size)
@@ -360,7 +276,7 @@ class FuelOptimizationCore:
             
             if print_progress:
                 print(f"[CLIMB] Completed: {climb_time_s/60:.1f} min, {climb_fuel:.1f} kg fuel")
-                print(f"[CLIMB] Mass: {initial_mass_kg:.1f} kg → {climb_mass_end:.1f} kg "
+                print(f"[CLIMB] Mass: {initial_mass_kg:.1f} kg -> {climb_mass_end:.1f} kg "
                       f"(burned {climb_fuel:.1f} kg, {climb_fuel/initial_mass_kg*100:.2f}%)")
             
             # ========= CRUISE PHASE =========================================
@@ -384,7 +300,7 @@ class FuelOptimizationCore:
             
             if print_progress:
                 print(f"[CRUISE] Completed: {cruise_time_s/3600:.2f} hours, {cruise_fuel:.1f} kg fuel")
-                print(f"[CRUISE] Mass: {climb_mass_end:.1f} kg → {cruise_mass_end:.1f} kg "
+                print(f"[CRUISE] Mass: {climb_mass_end:.1f} kg -> {cruise_mass_end:.1f} kg "
                       f"(burned {cruise_fuel:.1f} kg, {cruise_fuel/climb_mass_end*100:.2f}%)")
             
             # ========= DESCENT PHASE =========================================
@@ -418,319 +334,43 @@ class FuelOptimizationCore:
             
             if print_progress:
                 print(f"[DESCENT] Completed: {descent_time_s/60:.1f} min, {descent_fuel:.2f} kg fuel")
-                print(f"[DESCENT] Mass: {cruise_mass_end:.1f} kg → {descent_mass_end:.1f} kg "
+                print(f"[DESCENT] Mass: {cruise_mass_end:.1f} kg -> {descent_mass_end:.1f} kg "
                       f"(burned {descent_fuel:.1f} kg, {descent_fuel/cruise_mass_end*100:.2f}%)")
             
             # ========= COMPUTE SUMMARY =========================================
             total_fuel = climb_fuel + cruise_fuel + descent_fuel
             total_time_s = climb_time_s + cruise_time_s + descent_time_s
-            
-            # Calculate mission distance and performance metrics
-            total_distance_km = FuelOptimizationCore.PerformanceCalculator.calculate_mission_distance(
-                dp_sched, cruise_results, descent_result, atmospheric_props
-            )
-            
-            performance_metrics = FuelOptimizationCore.PerformanceCalculator.calculate_performance_metrics(
-                dp_sched, cruise_results, descent_result, 
-                initial_mass_kg, aero, atmospheric_props
-            )
-            
-            # Warn if fuel consumed exceeds initial fuel significantly
-            initial_fuel_kg = initial_mass_kg - W_OE_KG - W_PL_KG
-            fuel_overage_percent = (total_fuel / initial_fuel_kg - 1) * 100.0 if initial_fuel_kg > 0 else 0.0
-            
-            if total_fuel > initial_fuel_kg and fuel_overage_percent > 100.0:
-                if print_progress:
-                    print(f"[WARNING] Large fuel deficit: consumed {total_fuel:.1f} kg, "
-                          f"initial {initial_fuel_kg:.1f} kg")
-                    print(f"[WARNING] Overage: {total_fuel - initial_fuel_kg:.1f} kg "
-                          f"({fuel_overage_percent:.1f}%)")
-                    print(f"[INFO] This is expected in early iterations - optimization will correct this")
+            fuel_deficit_kg = total_fuel - initial_fuel_kg
             
             iteration_time = time.time() - iteration_start_time
             
             if print_progress:
                 print(f"[ITERATION] Completed in {iteration_time:.1f}s")
-                print(f"[MISSION TOTALS] Fuel: {total_fuel:.1f} kg, Time: {total_time_s/3600:.2f} hours")
+                print(f"[MISSION TOTALS] Fuel consumed: {total_fuel:.1f} kg, Available: {initial_fuel_kg:.1f} kg")
+                print(f"[DEFICIT] {fuel_deficit_kg:+.1f} kg ({'INSUFFICIENT' if fuel_deficit_kg > 0 else 'EXCESS'} fuel)")
             
             return MissionIterationResults(
                 iteration=-1,  # Will be set by caller
                 initial_fuel_kg=initial_fuel_kg,
                 initial_mass_kg=initial_mass_kg,
                 fuel_consumed_kg=total_fuel,
-                convergence_delta_percent=0.0,  # Will be computed by caller
+                fuel_deficit_kg=fuel_deficit_kg,
                 climb_result=dp_sched,
                 cruise_result=cruise_results,
                 descent_result=descent_result,
                 total_time_s=total_time_s,
-                total_distance_km=total_distance_km,
-                final_weight_kg=descent_result.final_weight_kg,
                 climb_fuel_kg=climb_fuel,
                 cruise_fuel_kg=cruise_fuel,
                 descent_fuel_kg=descent_fuel,
                 climb_time_s=climb_time_s,
                 cruise_time_s=cruise_time_s,
                 descent_time_s=descent_time_s,
-                **performance_metrics
+                final_weight_kg=descent_result.final_weight_kg
             )
     
-    # ========= PERFORMANCE CALCULATOR =========
-    class PerformanceCalculator:
-        """Calculates performance metrics and mission statistics."""
-        
-        @staticmethod
-        def calculate_mission_distance(
-            climb_result: MinFuelSchedule,
-            cruise_result: CruiseResults,
-            descent_result: DescentResults,
-            atmospheric_props: AtmosphericProperties
-        ) -> float:
-            """
-            Calculate total mission distance using actual trajectory data.
-            
-            Distance integration accounts for climb and descent angles using
-            horizontal distance components derived from velocity and time.
-            
-            Args:
-                climb_result: Climb phase results
-                cruise_result: Cruise phase results
-                descent_result: Descent phase results
-                atmospheric_props: Atmospheric properties calculator
-                
-            Returns:
-                float: Total mission ground distance [km]
-            """
-            # Climb distance calculation
-            climb_distance_km = 0.0
-            if hasattr(climb_result, 'mach') and hasattr(climb_result, 'alt_m') and hasattr(climb_result, 'dt_s'):
-                if len(climb_result.mach) > 0 and len(climb_result.alt_m) > 0 and len(climb_result.dt_s) > 0:
-                    climb_distance_m = 0.0
-                    for i in range(len(climb_result.dt_s)):
-                        if i < len(climb_result.mach) and i < len(climb_result.alt_m):
-                            a = atmospheric_props.a_from_altitude(climb_result.alt_m[i])
-                            velocity_mps = climb_result.mach[i] * a
-                            
-                            # Horizontal distance accounting for climb angle
-                            if i > 0 and i < len(climb_result.alt_m):
-                                dh = climb_result.alt_m[i] - climb_result.alt_m[i-1]
-                                ds_total = velocity_mps * climb_result.dt_s[i]
-                                # Horizontal component: sqrt(ds² - dh²)
-                                if ds_total**2 > dh**2:
-                                    horizontal_distance = np.sqrt(ds_total**2 - dh**2)
-                                else:
-                                    horizontal_distance = 0.0
-                                climb_distance_m += horizontal_distance
-                            else:
-                                climb_distance_m += velocity_mps * climb_result.dt_s[i]
-                    climb_distance_km = climb_distance_m / 1000.0
-            
-            # Cruise distance from results
-            cruise_distance_km = 0.0
-            if hasattr(cruise_result, 'distance_km') and len(cruise_result.distance_km) > 0:
-                cruise_distance_km = float(cruise_result.distance_km[-1])
-            else:
-                cruise_distance_km = CRUISE_DISTANCE_KM
-            
-            # Descent distance calculation
-            descent_distance_km = 0.0
-            if hasattr(descent_result, 'mach') and hasattr(descent_result, 'alt_m') and hasattr(descent_result, 'dt_s'):
-                if len(descent_result.mach) > 0 and len(descent_result.alt_m) > 0 and len(descent_result.dt_s) > 0:
-                    descent_distance_m = 0.0
-                    for i in range(len(descent_result.dt_s)):
-                        if i < len(descent_result.mach) and i < len(descent_result.alt_m):
-                            a = atmospheric_props.a_from_altitude(descent_result.alt_m[i])
-                            velocity_mps = descent_result.mach[i] * a
-                            
-                            # Horizontal distance accounting for descent angle
-                            if i > 0 and i < len(descent_result.alt_m):
-                                dh = descent_result.alt_m[i] - descent_result.alt_m[i-1]
-                                ds_total = velocity_mps * descent_result.dt_s[i]
-                                if ds_total**2 > dh**2:
-                                    horizontal_distance = np.sqrt(ds_total**2 - dh**2)
-                                else:
-                                    horizontal_distance = 0.0
-                                descent_distance_m += horizontal_distance
-                            else:
-                                descent_distance_m += velocity_mps * descent_result.dt_s[i]
-                    descent_distance_km = descent_distance_m / 1000.0
-            
-            return climb_distance_km + cruise_distance_km + descent_distance_km
-        
-        @staticmethod
-        def calculate_performance_metrics(
-            climb_result: MinFuelSchedule,
-            cruise_result: CruiseResults,
-            descent_result: DescentResults,
-            initial_mass_kg: float,
-            aero: PyAerodynamicsWrapper,
-            atmospheric_props: AtmosphericProperties
-        ) -> Dict[str, float]:
-            """
-            Calculate comprehensive performance metrics for all mission phases.
-            
-            Computes aerodynamic efficiency (L/D ratios), engine utilization (lever positions),
-            and energy management (specific energy) metrics across climb, cruise, and descent.
-            
-            Args:
-                climb_result: Climb phase results
-                cruise_result: Cruise phase results
-                descent_result: Descent phase results
-                initial_mass_kg: Initial aircraft mass [kg]
-                aero: Aerodynamics wrapper
-                atmospheric_props: Atmospheric properties calculator
-                
-            Returns:
-                dict: Performance metrics for all phases
-            """
-            metrics = {}
-            
-            # ===== CLIMB PHASE METRICS =====
-            avg_lift_climb_N = 0.0
-            avg_drag_climb_N = 0.0
-            avg_ld_climb = 0.0
-            avg_lever_climb = 0.0
-            avg_specific_energy_climb = 0.0
-            
-            if hasattr(climb_result, 'alt_m') and len(climb_result.alt_m) > 0:
-                # Use actual cumulative fuel data for accurate weight trajectory
-                if hasattr(climb_result, 'cumFuel_kg') and len(climb_result.cumFuel_kg) > 0:
-                    cumulative_fuel = np.nan_to_num(climb_result.cumFuel_kg, nan=0.0)
-                    weights = (initial_mass_kg - cumulative_fuel) * 9.81
-                else:
-                    climb_mass_end = initial_mass_kg - float(np.nan_to_num(climb_result.cumFuel_kg, nan=0.0)[-1])
-                    weights = np.linspace(initial_mass_kg, climb_mass_end, len(climb_result.alt_m)) * 9.81
-                
-                avg_lift_climb_N = float(np.mean(weights))
-                
-                # Calculate detailed metrics
-                drag_vals, ld_vals, lever_vals, se_vals = [], [], [], []
-                
-                for i in range(len(climb_result.alt_m)):
-                    if hasattr(climb_result, 'mach') and hasattr(climb_result, 'alt_m'):
-                        try:
-                            _, _, rho = atmospheric_props.isa_properties(climb_result.alt_m[i])
-                            a = atmospheric_props.a_from_altitude(climb_result.alt_m[i])
-                            
-                            weight_kg = weights[i] / 9.81
-                            CD = aero.get_drag_coefficient(climb_result.mach[i], climb_result.alt_m[i], weight_kg)
-                            drag = CD * 0.5 * rho * (climb_result.mach[i] * a)**2 * aero.params['S_REF_M2']
-                            drag_vals.append(drag)
-                            
-                            if drag > 0:
-                                ld_vals.append(weights[i] / drag)
-                            
-                            if hasattr(climb_result, 'lever'):
-                                lever_vals.append(climb_result.lever[i])
-                            
-                            velocity = climb_result.mach[i] * a
-                            pe = 9.81 * climb_result.alt_m[i]
-                            ke = 0.5 * velocity**2
-                            se_vals.append(pe + ke)
-                        except:
-                            pass
-                
-                if len(drag_vals) > 0:
-                    avg_drag_climb_N = float(np.mean(drag_vals))
-                if len(ld_vals) > 0:
-                    avg_ld_climb = float(np.mean(ld_vals))
-                if len(lever_vals) > 0:
-                    avg_lever_climb = float(np.mean(lever_vals))
-                if len(se_vals) > 0:
-                    avg_specific_energy_climb = float(np.mean(se_vals))
-            
-            # ===== CRUISE PHASE METRICS =====
-            avg_lift_cruise_N = 0.0
-            avg_drag_cruise_N = 0.0
-            avg_ld_cruise = 0.0
-            avg_lever_cruise = 0.0
-            avg_specific_energy_cruise = 0.0
-            
-            if hasattr(cruise_result, 'weight_kg') and len(cruise_result.weight_kg) > 0:
-                avg_lift_cruise_N = float(np.mean(cruise_result.weight_kg) * 9.81)
-            
-            if hasattr(cruise_result, 'drag_N') and len(cruise_result.drag_N) > 0:
-                avg_drag_cruise_N = float(np.mean(cruise_result.drag_N))
-                if avg_drag_cruise_N > 0:
-                    avg_ld_cruise = avg_lift_cruise_N / avg_drag_cruise_N
-            
-            if hasattr(cruise_result, 'lever_position') and len(cruise_result.lever_position) > 0:
-                avg_lever_cruise = float(np.mean(cruise_result.lever_position))
-            
-            if hasattr(cruise_result, 'altitude_m') and hasattr(cruise_result, 'mach_number'):
-                if len(cruise_result.altitude_m) > 0 and len(cruise_result.mach_number) > 0:
-                    velocities = cruise_result.mach_number * np.array([atmospheric_props.a_from_altitude(h) 
-                                                                       for h in cruise_result.altitude_m])
-                    pe = 9.81 * np.array(cruise_result.altitude_m)
-                    ke = 0.5 * velocities**2
-                    avg_specific_energy_cruise = float(np.mean(pe + ke))
-            
-            # ===== DESCENT PHASE METRICS =====
-            avg_lift_descent_N = 0.0
-            avg_drag_descent_N = 0.0
-            avg_ld_descent = 0.0
-            avg_lever_descent = 0.0
-            avg_specific_energy_descent = 0.0
-            
-            if hasattr(descent_result, 'weight_kg') and len(descent_result.weight_kg) > 0:
-                avg_lift_descent_N = float(np.mean(descent_result.weight_kg) * 9.81)
-                
-                if hasattr(descent_result, 'mach') and hasattr(descent_result, 'alt_m'):
-                    drag_vals, ld_vals, lever_vals, se_vals = [], [], [], []
-                    
-                    for i in range(len(descent_result.alt_m)):
-                        try:
-                            weight = descent_result.weight_kg[i] * 9.81
-                            _, _, rho = atmospheric_props.isa_properties(descent_result.alt_m[i])
-                            a = atmospheric_props.a_from_altitude(descent_result.alt_m[i])
-                            
-                            weight_kg = descent_result.weight_kg[i]
-                            CD = aero.get_drag_coefficient(descent_result.mach[i], descent_result.alt_m[i], weight_kg)
-                            drag = CD * 0.5 * rho * (descent_result.mach[i] * a)**2 * aero.params['S_REF_M2']
-                            drag_vals.append(drag)
-                            
-                            if drag > 0:
-                                ld_vals.append(weight / drag)
-                            
-                            if hasattr(descent_result, 'lever'):
-                                lever_vals.append(descent_result.lever[i])
-                            
-                            velocity = descent_result.mach[i] * a
-                            pe = 9.81 * descent_result.alt_m[i]
-                            ke = 0.5 * velocity**2
-                            se_vals.append(pe + ke)
-                        except:
-                            pass
-                    
-                    if len(drag_vals) > 0:
-                        avg_drag_descent_N = float(np.mean(drag_vals))
-                    if len(ld_vals) > 0:
-                        avg_ld_descent = float(np.mean(ld_vals))
-                    if len(lever_vals) > 0:
-                        avg_lever_descent = float(np.mean(lever_vals))
-                    if len(se_vals) > 0:
-                        avg_specific_energy_descent = float(np.mean(se_vals))
-            
-            return {
-                'avg_lift_climb_N': avg_lift_climb_N,
-                'avg_drag_climb_N': avg_drag_climb_N,
-                'avg_lift_cruise_N': avg_lift_cruise_N,
-                'avg_drag_cruise_N': avg_drag_cruise_N,
-                'avg_lift_descent_N': avg_lift_descent_N,
-                'avg_drag_descent_N': avg_drag_descent_N,
-                'avg_ld_climb': avg_ld_climb,
-                'avg_ld_cruise': avg_ld_cruise,
-                'avg_ld_descent': avg_ld_descent,
-                'avg_lever_climb': avg_lever_climb,
-                'avg_lever_cruise': avg_lever_cruise,
-                'avg_lever_descent': avg_lever_descent,
-                'avg_specific_energy_climb_J_kg': avg_specific_energy_climb,
-                'avg_specific_energy_cruise_J_kg': avg_specific_energy_cruise,
-                'avg_specific_energy_descent_J_kg': avg_specific_energy_descent
-            }
-    
-    # ========= CONVERGENCE CONTROLLER =========
-    class ConvergenceController:
-        """Manages optimization loop with Aitken acceleration and convergence control."""
+    # ========= BISECTION CONTROLLER =========
+    class BisectionController:
+        """Manages bisection optimization loop with guaranteed monotonic convergence."""
         
         @staticmethod
         def optimize_fuel_capacity(
@@ -741,28 +381,15 @@ class FuelOptimizationCore:
             lever_samples: int = 50
         ) -> Tuple[MissionIterationResults, ConvergenceHistory]:
             """
-            Main optimization loop to determine minimum required fuel capacity.
+            Main bisection optimization loop to determine minimum required fuel capacity.
             
-            Implements fixed-point iteration with Aitken's Δ² acceleration method
-            for adaptive convergence enhancement.
-            
-            Process:
-            1. Start with MAX_FUEL_KG as initial guess
-            2. Run full mission and record fuel consumed
-            3. Update fuel using Aitken acceleration (iter ≥ 3) or fixed damping (iter < 3)
-            4. Repeat until convergence (fuel difference < 0.5%)
-            5. Apply 5% safety buffer to final result
-            
-            Aitken Acceleration (Aitken, 1926):
-            Adaptive relaxation method that computes optimal damping factor based on 
-            convergence history. For linearly convergent sequences, achieves quadratic 
-            convergence acceleration.
-            
-            Mathematical formulation:
-                Δf_k = f_consumed_k - f_consumed_{k-1}
-                Δf_{k-1} = f_consumed_{k-1} - f_consumed_{k-2}
-                ω_k = ω_{k-1} × (1 - Δf_k / (Δf_k - Δf_{k-1}))
-                f_next = ω_k × f_consumed + (1-ω_k) × f_current
+            Bisection Method:
+            - Initialize F_low (insufficient fuel) and F_high (excess fuel)
+            - Iteratively compute F_mid = (F_low + F_high) / 2
+            - Run mission with F_mid and measure F_consumed
+            - If F_consumed > F_mid: increase lower bound (F_low = F_mid)
+            - If F_consumed < F_mid: decrease upper bound (F_high = F_mid)
+            - Continue until |F_high - F_low| < tolerance
             
             Args:
                 aero: Aerodynamics wrapper instance
@@ -773,40 +400,42 @@ class FuelOptimizationCore:
                 
             Returns:
                 Tuple of (final optimized result, convergence history)
-                
-            References:
-                - Aitken, A.C. (1926). "On Bernoulli's numerical solution of algebraic equations"
-                - Burden & Faires, "Numerical Analysis" (Fixed-point iteration chapter)
             """
             print("\n" + "="*80)
-            print("FUEL CAPACITY OPTIMIZATION WITH AITKEN ACCELERATION")
+            print("FUEL CAPACITY OPTIMIZATION USING BISECTION METHOD")
             print("="*80)
             print(f"Objective: Determine minimum required fuel for mission completion")
-            print(f"Convergence criterion: {CONVERGENCE_TOLERANCE_PERCENT:.2f}% relative")
+            print(f"Convergence tolerance: {CONVERGENCE_TOLERANCE_KG:.1f} kg")
             print(f"Safety buffer: {SAFETY_BUFFER_PERCENT*100:.0f}%")
-            print(f"Method: {'Aitken Δ² Acceleration' if USE_AITKEN_ACCELERATION else 'Fixed Damping'}")
-            print(f"Initial damping factor: {DAMPING_FACTOR:.2f}")
+            print(f"Method: Bisection with guaranteed monotonic convergence")
             print("="*80)
             
-            # Initialize with maximum fuel capacity
-            initial_fuel_current_kg = MAX_FUEL_KG
+            # Initialize bisection bounds
+            fuel_low = INITIAL_FUEL_LOW_KG
+            fuel_high = INITIAL_FUEL_HIGH_KG
             history = ConvergenceHistory()
-            current_damping = DAMPING_FACTOR
             iteration_count = 0
+            
+            # Store best result (closest to zero deficit)
+            best_result = None
+            best_deficit_abs = float('inf')
+            
+            print(f"\n[BISECTION] Initial bounds: [{fuel_low:.1f}, {fuel_high:.1f}] kg")
             
             while iteration_count < MAX_ITERATIONS:
                 iteration_count += 1
                 
-                # Calculate current total mass
-                current_total_mass = W_OE_KG + W_PL_KG + initial_fuel_current_kg
+                # Bisection: try midpoint
+                fuel_mid = (fuel_low + fuel_high) / 2.0
+                convergence_range = fuel_high - fuel_low
                 
-                print(f"\n[ITERATION {iteration_count}] Initial fuel: {initial_fuel_current_kg:.1f} kg")
-                print(f"[ITERATION {iteration_count}] Total mass: {current_total_mass:.1f} kg")
+                print(f"\n[ITERATION {iteration_count}] Bounds: [{fuel_low:.1f}, {fuel_high:.1f}] kg, Range: {convergence_range:.1f} kg")
+                print(f"[ITERATION {iteration_count}] Testing fuel: {fuel_mid:.1f} kg")
                 
-                # Run single mission iteration
+                # Run mission with current fuel estimate
                 try:
                     iteration_result = FuelOptimizationCore.IterationExecutor.run_single_mission_iteration(
-                        initial_mass_kg=current_total_mass,
+                        initial_fuel_kg=fuel_mid,
                         aero=aero,
                         eng=eng,
                         M_grid=M_grid,
@@ -816,174 +445,72 @@ class FuelOptimizationCore:
                     )
                 except RuntimeError as e:
                     print(f"\n[ERROR] Mission failed at iteration {iteration_count}: {str(e)}")
-                    print(f"[ERROR] Initial fuel: {initial_fuel_current_kg:.1f} kg")
+                    print(f"[ERROR] Fuel: {fuel_mid:.1f} kg")
                     
                     if iteration_count == 1:
                         raise RuntimeError(
-                            f"Mission infeasible even with MAX_FUEL_KG ({MAX_FUEL_KG:.1f} kg). "
-                            f"Check TARGET_ALT_CLIMB_M, CRUISE_DISTANCE_KM, or other mission parameters."
-                        )
-                    elif len(history.iterations) > 0:
-                        last_successful = history.iterations[-1]
-                        print(f"\n[INFO] Fixed-point iteration reached numerical boundary")
-                        print(f"[INFO] Last successful fuel: {last_successful.initial_fuel_kg:.1f} kg")
-                        print(f"[INFO] Fuel consumed: {last_successful.fuel_consumed_kg:.1f} kg")
-                        raise RuntimeError(
-                            f"Fixed-point iteration failed. Last successful fuel: "
-                            f"{last_successful.initial_fuel_kg:.1f} kg."
+                            f"Mission infeasible even with high fuel estimate ({fuel_high:.1f} kg). "
+                            f"Check mission parameters or increase INITIAL_FUEL_HIGH_KG."
                         )
                     else:
-                        raise
+                        # Mission failed - probably insufficient fuel
+                        print(f"[BISECTION] Mission failure indicates insufficient fuel")
+                        fuel_low = fuel_mid
+                        continue
                 
                 # Store iteration results
                 iteration_result.iteration = iteration_count
-                if iteration_count > 1:
-                    prev_result = history.iterations[-1]
-                    delta_kg = iteration_result.fuel_consumed_kg - prev_result.fuel_consumed_kg
-                    delta_percent = (delta_kg / prev_result.fuel_consumed_kg) * 100.0 if prev_result.fuel_consumed_kg > 0 else 0.0
-                    iteration_result.convergence_delta_percent = delta_percent
-                    
-                    # Physical anomaly detection
-                    mass_reduction_percent = ((prev_result.initial_mass_kg - current_total_mass) / 
-                                            prev_result.initial_mass_kg * 100.0)
-                    
-                    if mass_reduction_percent > 0.5 and delta_percent > 5.0:
-                        print(f"\n{'='*80}")
-                        print(f"[ANOMALY WARNING] Physical inconsistency detected:")
-                        print(f"{'='*80}")
-                        print(f"  Aircraft mass reduced by {mass_reduction_percent:.2f}%")
-                        print(f"  But fuel consumption increased by {delta_percent:.2f}%")
-                        print(f"  Possible causes: DP grid discretization artifacts")
-                        print(f"{'='*80}\n")
+                history.add_iteration(iteration_result, (fuel_low, fuel_high))
+                
+                # Track best result
+                deficit_abs = abs(iteration_result.fuel_deficit_kg)
+                if deficit_abs < best_deficit_abs:
+                    best_deficit_abs = deficit_abs
+                    best_result = iteration_result
+                
+                # Bisection logic
+                if iteration_result.fuel_deficit_kg > 0:
+                    # Consumed more than available - need MORE fuel
+                    print(f"[BISECTION] Insufficient fuel (deficit: {iteration_result.fuel_deficit_kg:+.1f} kg)")
+                    print(f"[BISECTION] Increasing lower bound: {fuel_low:.1f} -> {fuel_mid:.1f} kg")
+                    fuel_low = fuel_mid
                 else:
-                    iteration_result.convergence_delta_percent = float('inf')
-                
-                # Add to history
-                history.add_iteration(iteration_result)
-                
-                # Print iteration summary
-                print(f"[ITERATION {iteration_count} SUMMARY] Mission fuel breakdown:")
-                print(f"  Climb: {iteration_result.climb_fuel_kg:.1f} kg, "
-                      f"Cruise: {iteration_result.cruise_fuel_kg:.1f} kg, "
-                      f"Descent: {iteration_result.descent_fuel_kg:.1f} kg")
-                print(f"  TOTAL (ALL THREE PHASES): {iteration_result.fuel_consumed_kg:.1f} kg")
-                
-                if iteration_count > 1:
-                    print(f"[CONVERGENCE] Delta: {iteration_result.convergence_delta_percent:.3f}% "
-                          f"(target: < {CONVERGENCE_TOLERANCE_PERCENT:.3f}%)")
+                    # Consumed less than available - have EXCESS fuel
+                    print(f"[BISECTION] Excess fuel (surplus: {-iteration_result.fuel_deficit_kg:+.1f} kg)")
+                    print(f"[BISECTION] Decreasing upper bound: {fuel_high:.1f} -> {fuel_mid:.1f} kg")
+                    fuel_high = fuel_mid
                 
                 # Check convergence
-                if history.is_converged():
+                if convergence_range < CONVERGENCE_TOLERANCE_KG:
                     print(f"\n[CONVERGENCE ACHIEVED] After {iteration_count} iterations")
-                    print(f"[FINAL] COMPLETE MISSION FUEL CONSUMPTION:")
-                    print(f"  Climb fuel:   {iteration_result.climb_fuel_kg:.1f} kg")
-                    print(f"  Cruise fuel:  {iteration_result.cruise_fuel_kg:.1f} kg") 
-                    print(f"  Descent fuel: {iteration_result.descent_fuel_kg:.1f} kg")
-                    print(f"  TOTAL: {iteration_result.fuel_consumed_kg:.1f} kg")
-                    
-                    optimized_fuel = iteration_result.fuel_consumed_kg * (1.0 + SAFETY_BUFFER_PERCENT)
-                    print(f"[SAFETY] Applied {SAFETY_BUFFER_PERCENT*100:.0f}% buffer: {optimized_fuel:.1f} kg")
+                    print(f"[CONVERGENCE] Final range: {convergence_range:.1f} kg < {CONVERGENCE_TOLERANCE_KG:.1f} kg tolerance")
                     break
-                
-                # ========= AITKEN ACCELERATION =========
-                if USE_AITKEN_ACCELERATION and len(history.iterations) >= 3:
-                    # Full Aitken acceleration
-                    f_consumed_k = history.iterations[-1].fuel_consumed_kg
-                    f_consumed_k_minus_1 = history.iterations[-2].fuel_consumed_kg
-                    f_consumed_k_minus_2 = history.iterations[-3].fuel_consumed_kg
-                    
-                    delta_f_k = f_consumed_k - f_consumed_k_minus_1
-                    delta_f_k_minus_1 = f_consumed_k_minus_1 - f_consumed_k_minus_2
-                    denominator = delta_f_k - delta_f_k_minus_1
-                    
-                    if abs(denominator) > 1e-6:
-                        aitken_factor = 1.0 - (delta_f_k / denominator)
-                        new_damping = current_damping * aitken_factor
-                        new_damping = np.clip(new_damping, AITKEN_MIN_DAMPING, AITKEN_MAX_DAMPING)
-                        
-                        print(f"[AITKEN] Computed adaptive damping: {new_damping:.4f} "
-                              f"(previous: {current_damping:.4f})")
-                        print(f"[AITKEN] Δf_k = {delta_f_k:.2f} kg, Δf_k-1 = {delta_f_k_minus_1:.2f} kg")
-                        
-                        current_damping = new_damping
-                    else:
-                        print(f"[AITKEN] Denominator too small, using previous damping: {current_damping:.4f}")
-                
-                elif USE_AITKEN_ACCELERATION and len(history.iterations) == 2:
-                    # Simplified adaptive damping for iteration 2
-                    f_consumed_curr = history.iterations[-1].fuel_consumed_kg
-                    f_consumed_prev = history.iterations[-2].fuel_consumed_kg
-                    delta_f = f_consumed_curr - f_consumed_prev
-                    delta_percent = abs(delta_f / f_consumed_prev) * 100.0 if f_consumed_prev > 0 else 0.0
-                    
-                    if delta_percent < 1.0:
-                        new_damping = min(0.7, current_damping * 1.5)
-                    elif delta_percent < 5.0:
-                        new_damping = min(0.6, current_damping * 1.2)
-                    elif delta_percent < 15.0:
-                        new_damping = current_damping
-                    else:
-                        new_damping = max(0.2, current_damping * 0.7)
-                    
-                    new_damping = np.clip(new_damping, AITKEN_MIN_DAMPING, AITKEN_MAX_DAMPING)
-                    
-                    print(f"[ADAPTIVE-DAMP] Iteration 2: delta = {delta_percent:.2f}%")
-                    print(f"[ADAPTIVE-DAMP] Adjusted damping: {current_damping:.4f} → {new_damping:.4f}")
-                    
-                    current_damping = new_damping
-                else:
-                    if USE_AITKEN_ACCELERATION:
-                        print(f"[AITKEN] Insufficient history (iteration {len(history.iterations)}), "
-                              f"using fixed damping: {current_damping:.4f}")
-                
-                # Apply relaxation update
-                fuel_update = (current_damping * iteration_result.fuel_consumed_kg +
-                              (1.0 - current_damping) * initial_fuel_current_kg)
-                
-                print(f"[UPDATE] Fuel for next iteration: {fuel_update:.1f} kg (damping: {current_damping:.4f})")
-                print(f"[UPDATE] Change: {fuel_update - initial_fuel_current_kg:+.1f} kg "
-                      f"({(fuel_update - initial_fuel_current_kg)/initial_fuel_current_kg*100:+.2f}%)")
-                
-                initial_fuel_current_kg = fuel_update
             
             # Check convergence status
-            if iteration_count >= MAX_ITERATIONS and not history.is_converged():
-                last_delta = history.iterations[-1].convergence_delta_percent if len(history.iterations) > 0 else float('inf')
+            if iteration_count >= MAX_ITERATIONS:
                 print(f"\n{'='*80}")
                 print(f"[WARNING] Reached MAX_ITERATIONS ({MAX_ITERATIONS}) without full convergence")
                 print(f"{'='*80}")
-                print(f"Last convergence delta: {last_delta:.3f}% (tolerance: {CONVERGENCE_TOLERANCE_PERCENT:.3f}%)")
-                print(f"Proceeding with best available result from iteration {iteration_count}")
+                print(f"Final range: {fuel_high - fuel_low:.1f} kg (tolerance: {CONVERGENCE_TOLERANCE_KG:.1f} kg)")
+                print(f"Using best result from iteration {best_result.iteration}")
                 print(f"{'='*80}\n")
             
-            # Return final result
-            if len(history.iterations) == 0:
+            # Use best result (closest to equilibrium)
+            if best_result is None:
                 raise RuntimeError("No successful iterations completed! Check mission configuration.")
             
-            # Select iteration with minimum fuel consumption
-            min_fuel_iteration = min(history.iterations, key=lambda x: x.fuel_consumed_kg)
-            final_result = min_fuel_iteration
-            
-            if final_result.iteration != history.iterations[-1].iteration:
-                print(f"\n{'='*80}")
-                print(f"[OPTIMIZATION] Best result from iteration {final_result.iteration} "
-                      f"(not last iteration {history.iterations[-1].iteration})")
-                print(f"{'='*80}")
-                print(f"Fuel savings by selecting best: "
-                      f"{history.iterations[-1].fuel_consumed_kg - final_result.fuel_consumed_kg:.1f} kg")
-                print(f"{'='*80}\n")
+            final_result = best_result
             
             print("\n" + "="*80)
-            converged_status = "CONVERGED" if history.is_converged() else "PARTIALLY CONVERGED (Best Available)"
-            print(f"OPTIMIZATION COMPLETE - {converged_status}")
+            print("OPTIMIZATION COMPLETE - BISECTION CONVERGED")
             print("="*80)
             print(f"Total iterations: {iteration_count}")
-            if not history.is_converged():
-                print(f"Final convergence delta: {final_result.convergence_delta_percent:.3f}% "
-                      f"(target: {CONVERGENCE_TOLERANCE_PERCENT:.3f}%)")
-            print(f"Optimized fuel capacity: {final_result.fuel_consumed_kg * (1.0 + SAFETY_BUFFER_PERCENT):.1f} kg")
-            print(f"Mission fuel consumption: {final_result.fuel_consumed_kg:.1f} kg")
-            print(f"Safety buffer: {SAFETY_BUFFER_PERCENT*100:.0f}%")
+            print(f"Final fuel range: [{fuel_low:.1f}, {fuel_high:.1f}] kg")
+            print(f"Selected fuel: {final_result.initial_fuel_kg:.1f} kg")
+            print(f"Fuel consumed: {final_result.fuel_consumed_kg:.1f} kg")
+            print(f"Deficit: {final_result.fuel_deficit_kg:+.1f} kg")
+            optimized_fuel = final_result.fuel_consumed_kg * (1.0 + SAFETY_BUFFER_PERCENT)
+            print(f"With {SAFETY_BUFFER_PERCENT*100:.0f}% safety buffer: {optimized_fuel:.1f} kg")
             print("="*80 + "\n")
             
             return final_result, history
@@ -1055,7 +582,7 @@ _fuel_optimization_core = FuelOptimizationCore()
 # =========  5 - BACKWARD COMPATIBILITY WRAPPERS =================
 # Mission iteration function
 def run_single_mission_iteration(
-    initial_mass_kg: float,
+    initial_fuel_kg: float,
     aero: PyAerodynamicsWrapper,
     eng: EngineWrapper,
     M_grid: np.ndarray,
@@ -1065,7 +592,7 @@ def run_single_mission_iteration(
 ) -> MissionIterationResults:
     """Backward compatibility wrapper for FuelOptimizationCore.IterationExecutor.run_single_mission_iteration"""
     return FuelOptimizationCore.IterationExecutor.run_single_mission_iteration(
-        initial_mass_kg, aero, eng, M_grid, H_plot, lever_samples, print_progress
+        initial_fuel_kg, aero, eng, M_grid, H_plot, lever_samples, print_progress
     )
 
 # Optimization function
@@ -1076,8 +603,8 @@ def optimize_fuel_capacity(
     H_plot: np.ndarray,
     lever_samples: int = 50
 ) -> Tuple[MissionIterationResults, ConvergenceHistory]:
-    """Backward compatibility wrapper for FuelOptimizationCore.ConvergenceController.optimize_fuel_capacity"""
-    return FuelOptimizationCore.ConvergenceController.optimize_fuel_capacity(
+    """Backward compatibility wrapper for FuelOptimizationCore.BisectionController.optimize_fuel_capacity"""
+    return FuelOptimizationCore.BisectionController.optimize_fuel_capacity(
         aero, eng, M_grid, H_plot, lever_samples
     )
 
@@ -1085,3 +612,41 @@ def optimize_fuel_capacity(
 def apply_optimized_fuel_to_configuration(optimized_fuel_kg: float) -> None:
     """Backward compatibility wrapper for FuelOptimizationCore.ConfigurationManager.apply_optimized_fuel_to_configuration"""
     return FuelOptimizationCore.ConfigurationManager.apply_optimized_fuel_to_configuration(optimized_fuel_kg)
+
+
+# =========  6 - MODULE FACADE (STRUCTURAL PARITY WITH climb.py) =================
+class FuelOptimization:
+    """Thin facade mirroring the structural pattern used in climb.py for discoverability."""
+
+    @staticmethod
+    def iterate_once(
+        initial_fuel_kg: float,
+        aero: PyAerodynamicsWrapper,
+        eng: EngineWrapper,
+        M_grid: np.ndarray,
+        H_plot: np.ndarray,
+        lever_samples: int,
+        print_progress: bool = True
+    ) -> MissionIterationResults:
+        """Facade for a single mission iteration (no behavior change)."""
+        return FuelOptimizationCore.IterationExecutor.run_single_mission_iteration(
+            initial_fuel_kg, aero, eng, M_grid, H_plot, lever_samples, print_progress
+        )
+
+    @staticmethod
+    def optimize(
+        aero: PyAerodynamicsWrapper,
+        eng: EngineWrapper,
+        M_grid: np.ndarray,
+        H_plot: np.ndarray,
+        lever_samples: int = 50
+    ) -> Tuple[MissionIterationResults, ConvergenceHistory]:
+        """Facade for bisection optimization (no behavior change)."""
+        return FuelOptimizationCore.BisectionController.optimize_fuel_capacity(
+            aero, eng, M_grid, H_plot, lever_samples
+        )
+
+    @staticmethod
+    def apply_optimized_fuel(optimized_fuel_kg: float) -> None:
+        """Facade for configuration update (no behavior change)."""
+        return FuelOptimizationCore.ConfigurationManager.apply_optimized_fuel_to_configuration(optimized_fuel_kg)

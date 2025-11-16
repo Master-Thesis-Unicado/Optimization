@@ -1,6 +1,6 @@
 # Fuel Capacity Optimization System Documentation
 
-> **Scope**: Complete documentation of the convergent fuel capacity optimization system, including fixed-point iteration with Aitken's Δ² acceleration, dynamic mass evolution tracking, performance metrics calculation, and integration with 3D Dynamic Programming for climb and descent trajectory generation. The system determines minimum required fuel capacity through iterative convergence while maintaining mission feasibility and safety margins.
+> **Scope**: Complete documentation of the bisection-based fuel capacity optimization system for determining minimum required fuel capacity through robust, monotonically convergent iterative refinement. The system integrates with 3D Dynamic Programming for climb and descent trajectory generation, employing absolute tolerance convergence criteria and safety margin application.
 
 ---
 
@@ -9,15 +9,12 @@
 1. [System Overview and Objectives](#1-system-overview-and-objectives)
 2. [Mathematical Foundation](#2-mathematical-foundation)
 3. [System Architecture and Data Structures](#3-system-architecture-and-data-structures)
-4. [Convergence Algorithm Implementation](#4-convergence-algorithm-implementation)
-5. [Aitken Acceleration Theory and Application](#5-aitken-acceleration-theory-and-application)
-6. [Mission Physics Integration](#6-mission-physics-integration)
-7. [Performance Metrics Calculation](#7-performance-metrics-calculation)
-8. [Code Execution Flow and Logic](#8-code-execution-flow-and-logic)
-9. [Integration and Interface](#9-integration-and-interface)
-10. [Validation and Quality Assurance](#10-validation-and-quality-assurance)
-11. [Convergence Challenges and Analysis](#11-convergence-challenges-and-analysis)
-12. [Advanced Topics and Extensions](#12-advanced-topics-and-extensions)
+4. [Bisection Algorithm Implementation](#4-bisection-algorithm-implementation)
+5. [Mission Physics Integration](#5-mission-physics-integration)
+6. [Code Execution Flow and Logic](#6-code-execution-flow-and-logic)
+7. [Integration and Interface](#7-integration-and-interface)
+8. [Validation and Quality Assurance](#8-validation-and-quality-assurance)
+9. [Convergence Analysis and Characteristics](#9-convergence-analysis-and-characteristics)
 
 ---
 
@@ -25,38 +22,38 @@
 
 ### 1.1 Purpose and Scope
 
-The fuel capacity optimization system implements a sophisticated convergent iterative algorithm to determine the minimum required fuel capacity for mission completion. This approach replaces static, user-defined Maximum Take-Off Fuel (MTOF) values with dynamically optimized minimum fuel loads, eliminating superfluous fuel mass and improving aircraft performance through systematic optimization enhanced with Aitken's Δ² acceleration method.
+The fuel capacity optimization system implements a robust bisection-based iterative algorithm to determine the minimum required fuel capacity for mission completion. This approach replaces static, user-defined Maximum Take-Off Fuel (MTOF) values with dynamically optimized minimum fuel loads, eliminating superfluous fuel mass and improving aircraft performance through systematic optimization with guaranteed monotonic convergence.
 
 ### 1.2 System Objectives
 
 **Primary Objectives:**
 - **Fuel Minimization**: Determine minimum required fuel capacity for mission completion
-- **Convergent Optimization**: Implement iterative refinement with Aitken acceleration until fuel load converges
+- **Robust Convergence**: Implement bisection method with guaranteed monotonic convergence
 - **Safety Integration**: Apply systematic safety buffers to optimized results
-- **Performance Tracking**: Monitor comprehensive performance metrics throughout optimization
 - **Mission Integration**: Coordinate climb, cruise, and descent phase optimization with dynamic mass evolution
+- **Deficit Tracking**: Monitor fuel deficit (consumed vs. available) throughout optimization
 
 **Key Components:**
-- Convergent iterative optimization loop with adaptive damping
-- Aitken's Δ² acceleration for quadratic convergence enhancement
+- Bisection optimization loop with guaranteed convergence
 - Dynamic fuel load adjustment mechanism with physical consistency checks
 - Multi-phase mission simulation integration (climb + cruise + descent)
-- Comprehensive performance parameter evolution tracking
+- Fuel deficit tracking and bounds management
 - Safety buffer application system with configurable margins
-- Error handling and recovery mechanisms for robust operation
+- Comprehensive error handling and recovery mechanisms
 
 ### 1.3 System Flow Overview
 
 The optimization system follows a systematic progression:
 
-1. **Initialization**: Start with maximum fuel capacity as initial guess
-2. **Mission Simulation**: Execute complete mission (climb + cruise + descent) with current fuel load
-3. **Convergence Analysis**: Compare fuel consumed vs. initial fuel load using relative tolerance
-4. **Aitken Acceleration**: Compute adaptive damping factor from convergence history (iter ≥ 3)
-5. **Iteration Update**: Update fuel load using damped relaxation with adaptive parameter
-6. **Convergence Detection**: Monitor relative fuel change until within specified tolerance
+1. **Initialization**: Start with fuel bounds [F_low, F_high] bracketing the solution
+2. **Bisection Iteration**: Test midpoint F_mid = (F_low + F_high) / 2
+3. **Mission Simulation**: Execute complete mission (climb + cruise + descent) with F_mid
+4. **Deficit Analysis**: Compare fuel consumed vs. initial fuel load
+5. **Bounds Update**: Adjust bounds based on deficit sign
+6. **Convergence Detection**: Monitor bounds range until within absolute tolerance
 7. **Safety Application**: Apply safety buffer (5%) to converged result
 8. **Visualization**: Generate comprehensive convergence analysis plots
+
 
 ---
 
@@ -74,6 +71,7 @@ The optimization system follows a systematic progression:
 ```math
 \begin{align}
 \text{Mission completion: } & \text{All phases feasible with fuel } F_{total} \\
+\text{Mass consistency: } & F_{consumed} \leq F_{available} \\
 \text{Aircraft performance: } & \text{Within flight envelope limits} \\
 \text{Safety margin: } & F_{capacity} = F_{total} \times (1 + \beta_{safety})
 \end{align}
@@ -84,85 +82,66 @@ Where:
 - `F_climb`, `F_cruise`, `F_descent`: Phase-wise fuel consumption [kg]
 - `β_safety`: Safety buffer percentage (typically 5%)
 
-### 2.2 Fixed-Point Iteration Theory
+### 2.2 Bisection Method Theory
 
-**Basic Fixed-Point Formulation:**
+**Problem Formulation:**
 
-The fuel optimization problem can be formulated as a fixed-point problem:
+The fuel optimization can be formulated as finding the root of:
 
 ```math
-F = g(F)
+f(F) = F_{consumed}(F) - F = 0
 ```
 
 Where:
-- `F`: Initial fuel load [kg]
-- `g(F)`: Mission simulation function returning fuel consumed [kg]
-- Fixed point: F* such that F* = g(F*)
+- `F`: Initial fuel capacity [kg]
+- `F_consumed(F)`: Fuel consumed when mission starts with capacity F [kg]
+- Solution: F* such that F_consumed(F*) = F*
 
-**Iterative Scheme:**
-```math
-F_{k+1} = g(F_k)
-```
+**Physical Interpretation:**
+- If F_consumed > F: Insufficient fuel → mission fails or barely completes
+- If F_consumed < F: Excess fuel → carrying unnecessary weight
+- At equilibrium F* = F_consumed: Exactly enough fuel for mission
 
-**Damped Update for Stability:**
-```math
-F_{k+1} = \omega \cdot g(F_k) + (1 - \omega) \cdot F_k
-```
+**Bisection Algorithm:**
 
-Where:
-- `ω`: Damping factor (relaxation parameter), 0 < ω ≤ 1
-- `F_k`: Initial fuel for iteration k [kg]
-- `g(F_k)`: Fuel consumed in iteration k [kg]
-
-**Convergence Criterion:**
-```math
-\left|\frac{F_{k+1} - F_k}{F_k}\right| < \epsilon_{tol}
-```
-
-Where ε_tol = 0.005 (0.5% relative tolerance)
-
-### 2.3 Aitken's Δ² Acceleration Method
-
-**Theoretical Foundation:**
-
-Aitken's Δ² process (Aitken, 1926) accelerates linearly convergent fixed-point iterations to achieve quadratic convergence through adaptive relaxation parameter computation.
-
-**Mathematical Formulation:**
-
-For a sequence {F_k} generated by fixed-point iteration:
+Given an interval [F_low, F_high] bracketing the solution:
 
 ```math
 \begin{align}
-\Delta F_k &= g(F_k) - g(F_{k-1}) \\
-\Delta F_{k-1} &= g(F_{k-1}) - g(F_{k-2}) \\
-\Delta^2 F_k &= \Delta F_k - \Delta F_{k-1}
+F_{mid} &= \frac{F_{low} + F_{high}}{2} \\
+\\
+\text{If } F_{consumed}(F_{mid}) > F_{mid}: & \quad F_{low} = F_{mid} \quad \text{(need more fuel)} \\
+\text{If } F_{consumed}(F_{mid}) < F_{mid}: & \quad F_{high} = F_{mid} \quad \text{(have excess fuel)} \\
 \end{align}
 ```
 
-**Aitken Acceleration Factor:**
+**Convergence Criterion:**
 ```math
-\alpha_k = 1 - \frac{\Delta F_k}{\Delta^2 F_k}
+|F_{high} - F_{low}| < \epsilon_{tol}
 ```
 
-**Adaptive Damping Update:**
+Where ε_tol = 10.0 kg (absolute tolerance)
+
+
+### 2.3 Fuel Deficit Tracking
+
+**Fuel Deficit Definition:**
 ```math
-\omega_k = \omega_{k-1} \times \alpha_k
+\text{Deficit}_k = F_{consumed,k} - F_{available,k}
 ```
 
-**Bounded Damping:**
+**Interpretation:**
+- Deficit > 0: Insufficient fuel (F_consumed exceeds F_available)
+- Deficit < 0: Excess fuel (F_available exceeds F_consumed)
+- Deficit ≈ 0: Equilibrium (optimal fuel capacity)
+
+**Bisection Update Rule:**
 ```math
-\omega_k \in [\omega_{min}, \omega_{max}] = [0.1, 0.9]
+\begin{cases}
+F_{low} = F_{mid} & \text{if Deficit} > 0 \\
+F_{high} = F_{mid} & \text{if Deficit} < 0
+\end{cases}
 ```
-
-**Accelerated Update:**
-```math
-F_{k+1} = \omega_k \cdot g(F_k) + (1 - \omega_k) \cdot F_k
-```
-
-**Convergence Rate:**
-
-- **Without Aitken** (fixed ω): Linear convergence, O(ω^n)
-- **With Aitken** (adaptive ω): Quadratic convergence near fixed point
 
 ### 2.4 Safety Buffer Application
 
@@ -172,14 +151,15 @@ F_{capacity} = F_{converged} \times (1 + \beta)
 ```
 
 Where:
-- `F_{converged}`: Converged fuel consumption [kg]
+- `F_converged`: Converged fuel consumption [kg]
 - `β = 0.05`: Safety buffer (5%)
-- `F_{capacity}`: Final optimized fuel capacity [kg]
+- `F_capacity`: Final optimized fuel capacity [kg]
 
 **Purpose**:
 - Accounts for operational variabilities
 - Provides contingency fuel reserve
 - Ensures mission completion under off-nominal conditions
+- Compensates for atmospheric variations and operational uncertainties
 
 ---
 
@@ -190,15 +170,24 @@ Where:
 **Convergence Control Parameters:**
 ```python
 class ConvergenceParameters:
-CONVERGENCE_TOLERANCE_RELATIVE = 0.005  # 0.5% relative tolerance
-CONVERGENCE_TOLERANCE_PERCENT = 0.5     # 0.5% in percentage units
-SAFETY_BUFFER_PERCENT = 0.05            # 5% safety buffer
-    MAX_ITERATIONS = 5                      # Safety limit
-DAMPING_FACTOR = 0.4                    # Initial relaxation parameter
-    USE_AITKEN_ACCELERATION = True          # Enable Aitken's Δ² method
-AITKEN_MIN_DAMPING = 0.1                # Minimum damping factor
-AITKEN_MAX_DAMPING = 0.9                # Maximum damping factor
+    """Centralized convergence control parameters for fuel optimization using bisection method."""
+    
+    CONVERGENCE_TOLERANCE_KG = 10.0  # Absolute tolerance in kg
+    SAFETY_BUFFER_PERCENT = 0.05  # 5% safety buffer
+    MAX_ITERATIONS = 20  # Maximum bisection iterations
+    INITIAL_FUEL_LOW_KG = 1000.0  # Lower bound initial guess (minimum feasible fuel)
+    INITIAL_FUEL_HIGH_KG = MAX_FUEL_KG  # Upper bound initial guess (maximum fuel capacity)
 ```
+
+**Parameter Rationale:**
+
+| Parameter | Value | 
+|-----------|-------| 
+| CONVERGENCE_TOLERANCE_KG | 10.0 kg | 
+| SAFETY_BUFFER_PERCENT | 5% |  
+| MAX_ITERATIONS | 20 |  
+| INITIAL_FUEL_LOW_KG | 1,000 kg | 
+| INITIAL_FUEL_HIGH_KG | MAX_FUEL_KG | 
 
 **Mission Configuration Parameters:**
 ```python
@@ -216,177 +205,438 @@ TARGET_DESCENT_MACH = 0.25                # Target approach Mach
 @dataclass
 class MissionIterationResults:
     """
-    Complete results from a single mission iteration.
+    Results from a single mission iteration.
     
-    Required fields:
+    This structure encapsulates complete mission simulation results including
+    fuel consumption and phase-wise detailed results.
+    
+    Attributes:
         iteration: Iteration number
-        initial_fuel_kg: Initial fuel load [kg]
-        initial_mass_kg: Initial total mass [kg]
-        fuel_consumed_kg: Total fuel consumed [kg]
-        convergence_delta_percent: Relative change from previous iteration [%]
-        climb_result: Climb phase results (MinFuelSchedule)
-        cruise_result: Cruise phase results (CruiseResults)
-        descent_result: Descent phase results (DescentResults)
+        initial_fuel_kg: Initial fuel load for this iteration [kg]
+        initial_mass_kg: Initial total aircraft mass [kg]
+        fuel_consumed_kg: Total fuel consumed across all phases [kg]
+        fuel_deficit_kg: Difference between consumed and available fuel [kg]
+                        Positive = insufficient, Negative = excess
+        climb_result: Climb phase optimization results (MinFuelSchedule)
+        cruise_result: Cruise phase simulation results (CruiseResults)
+        descent_result: Descent phase optimization results (DescentResults)
         total_time_s: Total mission duration [s]
-        total_distance_km: Total ground distance [km]
-        final_weight_kg: Final aircraft weight [kg]
-        climb_fuel_kg, cruise_fuel_kg, descent_fuel_kg: Phase fuel [kg]
-        climb_time_s, cruise_time_s, descent_time_s: Phase time [s]
-    
-    Optional performance metrics (with defaults):
-        avg_lift_{phase}_N: Average lift force per phase [N]
-        avg_drag_{phase}_N: Average drag force per phase [N]
-        avg_ld_{phase}: Average L/D ratio per phase
-        avg_lever_{phase}: Average thrust lever per phase
-        avg_specific_energy_{phase}_J_kg: Average specific energy per phase [J/kg]
+        climb_fuel_kg: Fuel consumed in climb phase [kg]
+        cruise_fuel_kg: Fuel consumed in cruise phase [kg]
+        descent_fuel_kg: Fuel consumed in descent phase [kg]
+        climb_time_s: Climb phase duration [s]
+        cruise_time_s: Cruise phase duration [s]
+        descent_time_s: Descent phase duration [s]
+        final_weight_kg: Final aircraft weight after mission [kg]
     """
 ```
+ 
 
 **Convergence History:**
 ```python
 @dataclass
 class ConvergenceHistory:
     """
-    Tracking structure for convergence analysis.
+    Tracking structure for bisection convergence analysis.
+    
+    This structure maintains complete optimization history for analysis,
+    diagnostics, and visualization purposes.
     
     Attributes:
-    iterations: List[MissionIterationResults]
+        iterations: List of all mission iteration results
+        fuel_bounds_history: List of (lower_bound, upper_bound) tuples tracking bisection bounds
     
     Methods:
-        add_iteration(result): Add iteration to history
-        get_last_two_iterations(): Retrieve last two iterations
-        is_converged(): Check convergence criterion
+        __init__(): Initialize empty convergence history
+        add_iteration(result, bounds): Add iteration result and bounds to history
     """
+    iterations: List[MissionIterationResults]
+    fuel_bounds_history: List[Tuple[float, float]]
+    
+    def __init__(self):
+        """Initialize empty convergence history."""
+        self.iterations = []
+        self.fuel_bounds_history = []
+    
+    def add_iteration(self, result: MissionIterationResults, bounds: Tuple[float, float]):
+        """
+        Add iteration result to history.
+        
+        Args:
+            result: Mission iteration results to add
+            bounds: Current (lower, upper) fuel bounds [kg]
+        """
+        self.iterations.append(result)
+        self.fuel_bounds_history.append(bounds)
 ```
 
 ---
 
-## 4) Convergence Algorithm Implementation
+## 4) Bisection Algorithm Implementation
 
-### 4.1 Optimization Loop Structure
+### 4.1 Bisection Optimization Loop Structure
 
-**Function**: `FuelOptimizationCore.ConvergenceController.optimize_fuel_capacity()`
+**Function**: `FuelOptimizationCore.BisectionController.optimize_fuel_capacity()`
 
-**Purpose**: Execute iterative optimization to determine minimum fuel capacity.
+**Purpose**: Execute bisection optimization to determine minimum fuel capacity with guaranteed monotonic convergence.
 
 **Algorithm Flow:**
 
 ```python
 def optimize_fuel_capacity(aero, eng, M_grid, H_plot, lever_samples=50):
     """
-    Main optimization loop with Aitken acceleration.
+    Main bisection optimization loop to determine minimum required fuel capacity.
+    
+    Bisection Method:
+    - Initialize F_low (insufficient fuel) and F_high (excess fuel)
+    - Iteratively compute F_mid = (F_low + F_high) / 2
+    - Run mission with F_mid and measure F_consumed
+    - If F_consumed > F_mid: increase lower bound (F_low = F_mid)
+    - If F_consumed < F_mid: decrease upper bound (F_high = F_mid)
+    - Continue until |F_high - F_low| < tolerance
     
     Process:
-        1. Initialize: F_0 = MAX_FUEL_KG
+        1. Initialize: F_low = 1,000 kg, F_high = MAX_FUEL_KG
         2. For k = 1, 2, ..., MAX_ITERATIONS:
-           a. Run mission with F_k
-           b. Record fuel consumed: g(F_k)
-           c. Compute convergence delta
-           d. Check convergence criterion
-           e. If converged: Apply safety buffer and terminate
-           f. Apply Aitken acceleration (if k ≥ 3)
-           g. Update: F_{k+1} = ω_k × g(F_k) + (1-ω_k) × F_k
+           a. Compute F_mid = (F_low + F_high) / 2
+           b. Run mission with F_mid
+           c. Calculate fuel deficit: Deficit = F_consumed - F_mid
+           d. Update bounds based on deficit sign
+           e. Check convergence: |F_high - F_low| < tolerance
+           f. If converged: Apply safety buffer and terminate
         3. Return optimized result with history
     """
     
     # Initialization
-    initial_fuel_current_kg = MAX_FUEL_KG
+    print("\n" + "="*80)
+    print("FUEL CAPACITY OPTIMIZATION USING BISECTION METHOD")
+    print("="*80)
+    print(f"Objective: Determine minimum required fuel for mission completion")
+    print(f"Convergence tolerance: {CONVERGENCE_TOLERANCE_KG:.1f} kg")
+    print(f"Safety buffer: {SAFETY_BUFFER_PERCENT*100:.0f}%")
+    print(f"Method: Bisection with guaranteed monotonic convergence")
+    print("="*80)
+    
+    # Initialize bisection bounds
+    fuel_low = INITIAL_FUEL_LOW_KG
+    fuel_high = INITIAL_FUEL_HIGH_KG
     history = ConvergenceHistory()
-    current_damping = DAMPING_FACTOR
     iteration_count = 0
     
-    # Iterative loop
+    # Store best result (closest to zero deficit)
+    best_result = None
+    best_deficit_abs = float('inf')
+    
+    print(f"\n[BISECTION] Initial bounds: [{fuel_low:.1f}, {fuel_high:.1f}] kg")
+    
+    # Main bisection loop
     while iteration_count < MAX_ITERATIONS:
         iteration_count += 1
         
-        # Calculate total mass
-        current_total_mass = W_OE + W_PL + initial_fuel_current_kg
+        # Bisection: try midpoint
+        fuel_mid = (fuel_low + fuel_high) / 2.0
+        convergence_range = fuel_high - fuel_low
         
-        # Execute mission simulation
-            iteration_result = run_single_mission_iteration(
-                initial_mass_kg=current_total_mass,
-                aero=aero, eng=eng, M_grid=M_grid, H_plot=H_plot,
-                lever_samples=lever_samples, print_progress=True
+        print(f"\n[ITERATION {iteration_count}] Bounds: [{fuel_low:.1f}, {fuel_high:.1f}] kg, Range: {convergence_range:.1f} kg")
+        print(f"[ITERATION {iteration_count}] Testing fuel: {fuel_mid:.1f} kg")
+        
+        # Run mission with current fuel estimate
+        try:
+            iteration_result = FuelOptimizationCore.IterationExecutor.run_single_mission_iteration(
+                initial_fuel_kg=fuel_mid,
+                aero=aero,
+                eng=eng,
+                M_grid=M_grid,
+                H_plot=H_plot,
+                lever_samples=lever_samples,
+                print_progress=True
             )
+        except RuntimeError as e:
+            # Mission failure typically indicates insufficient fuel
+            print(f"\n[ERROR] Mission failed at iteration {iteration_count}: {str(e)}")
+            print(f"[BISECTION] Mission failure indicates insufficient fuel")
+            fuel_low = fuel_mid
+            continue
         
-        # Process results and check convergence
+        # Store iteration results
         iteration_result.iteration = iteration_count
-        if iteration_count > 1:
-            delta = compute_convergence_delta(iteration_result, history.iterations[-1])
-            iteration_result.convergence_delta_percent = delta
+        history.add_iteration(iteration_result, (fuel_low, fuel_high))
         
-        history.add_iteration(iteration_result)
+        # Track best result (closest to equilibrium)
+        deficit_abs = abs(iteration_result.fuel_deficit_kg)
+        if deficit_abs < best_deficit_abs:
+            best_deficit_abs = deficit_abs
+            best_result = iteration_result
         
-        # Convergence check
-        if history.is_converged():
-            optimized_fuel = iteration_result.fuel_consumed_kg * (1 + SAFETY_BUFFER)
+        # Bisection logic: update bounds based on deficit
+        if iteration_result.fuel_deficit_kg > 0:
+            # Consumed more than available - need MORE fuel
+            print(f"[BISECTION] Insufficient fuel (deficit: {iteration_result.fuel_deficit_kg:+.1f} kg)")
+            print(f"[BISECTION] Increasing lower bound: {fuel_low:.1f} -> {fuel_mid:.1f} kg")
+            fuel_low = fuel_mid
+        else:
+            # Consumed less than available - have EXCESS fuel
+            print(f"[BISECTION] Excess fuel (surplus: {-iteration_result.fuel_deficit_kg:+.1f} kg)")
+            print(f"[BISECTION] Decreasing upper bound: {fuel_high:.1f} -> {fuel_mid:.1f} kg")
+            fuel_high = fuel_mid
+        
+        # Check convergence: range within tolerance
+        if convergence_range < CONVERGENCE_TOLERANCE_KG:
+            print(f"\n[CONVERGENCE ACHIEVED] After {iteration_count} iterations")
+            print(f"[CONVERGENCE] Final range: {convergence_range:.1f} kg < {CONVERGENCE_TOLERANCE_KG:.1f} kg tolerance")
             break
         
-        # Aitken acceleration
-        if USE_AITKEN and len(history.iterations) >= 3:
-            current_damping = apply_aitken_acceleration(history, current_damping)
-        
-        # Update fuel for next iteration
-        fuel_update = current_damping * iteration_result.fuel_consumed_kg + \
-                     (1 - current_damping) * initial_fuel_current_kg
-        initial_fuel_current_kg = fuel_update
+    # Check convergence status
+    if iteration_count >= MAX_ITERATIONS:
+        print(f"\n{'='*80}")
+        print(f"[WARNING] Reached MAX_ITERATIONS ({MAX_ITERATIONS}) without full convergence")
+        print(f"{'='*80}")
+        print(f"Final range: {fuel_high - fuel_low:.1f} kg (tolerance: {CONVERGENCE_TOLERANCE_KG:.1f} kg)")
+        print(f"Using best result from iteration {best_result.iteration}")
+        print(f"{'='*80}\n")
     
-    return history.iterations[-1], history
+    # Use best result (closest to equilibrium)
+    if best_result is None:
+        raise RuntimeError("No successful iterations completed! Check mission configuration.")
+    
+    final_result = best_result
+    
+    # Final summary
+    print("\n" + "="*80)
+    print("OPTIMIZATION COMPLETE - BISECTION CONVERGED")
+    print("="*80)
+    print(f"Total iterations: {iteration_count}")
+    print(f"Final fuel range: [{fuel_low:.1f}, {fuel_high:.1f}] kg")
+    print(f"Selected fuel: {final_result.initial_fuel_kg:.1f} kg")
+    print(f"Fuel consumed: {final_result.fuel_consumed_kg:.1f} kg")
+    print(f"Deficit: {final_result.fuel_deficit_kg:+.1f} kg")
+    optimized_fuel = final_result.fuel_consumed_kg * (1.0 + SAFETY_BUFFER_PERCENT)
+    print(f"With {SAFETY_BUFFER_PERCENT*100:.0f}% safety buffer: {optimized_fuel:.1f} kg")
+    print("="*80 + "\n")
+    
+    return final_result, history
 ```
 
 ### 4.2 Convergence Detection
 
-**Function**: `ConvergenceHistory.is_converged()`
+**Convergence Criterion:**
 
-**Purpose**: Determine if optimization has converged based on relative fuel change.
+Bisection converges when the search range becomes smaller than the absolute tolerance:
 
-**Implementation:**
 ```python
-def is_converged(self) -> bool:
+def is_converged(fuel_low: float, fuel_high: float) -> bool:
     """
-    Check convergence criterion.
+    Check convergence criterion for bisection.
     
     Mathematical condition:
-        |Δf_rel| < ε_tolerance
+        |F_high - F_low| < ε_tolerance
     
     where:
-        Δf_rel = (F_consumed,k - F_consumed,k-1) / F_consumed,k-1
-        ε_tolerance = 0.5%
+        ε_tolerance = 10.0 kg (absolute tolerance)
+    
+    Returns:
+        True if converged, False otherwise
     """
-    if len(self.iterations) < 2:
-        return False
-    
-    prev, curr = self.get_last_two_iterations()
-    delta = curr.convergence_delta_percent
-    
-    return abs(delta) < CONVERGENCE_TOLERANCE_PERCENT
+    convergence_range = fuel_high - fuel_low
+    return convergence_range < CONVERGENCE_TOLERANCE_KG
 ```
 
-**Convergence Interpretation:**
 
-| Delta | Status | Action |
-|-------|--------|--------|
-| < 0.5% | Converged | Terminate, apply safety buffer |
-| 0.5% - 2% | Near convergence | Continue, monitor closely |
-| 2% - 10% | Converging | Continue iteration |
-| > 10% | Slow convergence | Check damping factor |
+
+**Convergence Progress:**
+
+Example bisection sequence:
+
+| Iteration | F_low [kg] | F_high [kg] | F_mid [kg] | Range [kg] | Status |
+|-----------|------------|-------------|------------|------------|---------|
+| 1 | 1,000 | 10,500 | 5,750 | 9,500 | Early |
+| 2 | 1,000 | 5,750 | 3,375 | 4,750 | Converging |
+| 3 | 3,375 | 5,750 | 4,563 | 2,375 | Converging |
+| 4 | 4,563 | 5,750 | 5,156 | 1,188 | Converging |
+| 5 | 4,563 | 5,156 | 4,859 | 594 | Converging |
+| 6 | 4,563 | 4,859 | 4,711 | 297 | Converging |
+| 7 | 4,563 | 4,711 | 4,637 | 148 | Converging |
+| 8 | 4,563 | 4,637 | 4,600 | 74 | Near |
+| 9 | 4,563 | 4,600 | 4,582 | 37 | Near |
+| 10 | 4,563 | 4,582 | 4,572 | 18 | Near |
+| 11 | 4,563 | 4,572 | 4,568 | 9 | ✅ Converged |
 
 ### 4.3 Mission Iteration Execution
 
 **Function**: `FuelOptimizationCore.IterationExecutor.run_single_mission_iteration()`
 
-**Purpose**: Execute complete mission simulation with specified initial mass.
+**Purpose**: Execute complete mission simulation with specified initial fuel capacity.
 
 **Execution Sequence:**
 
+```python
+def run_single_mission_iteration(
+    initial_fuel_kg: float,
+    aero: PyAerodynamicsWrapper,
+    eng: EngineWrapper,
+    M_grid: np.ndarray,
+    H_plot: np.ndarray,
+    lever_samples: int,
+    print_progress: bool = True
+) -> MissionIterationResults:
+    """
+    Execute a complete mission iteration (climb + cruise + descent).
+    
+    Args:
+        initial_fuel_kg: Initial fuel capacity for this iteration [kg]
+        aero: Aerodynamics wrapper instance
+        eng: Engine wrapper instance
+        M_grid: Mach grid for optimization
+        H_plot: Altitude grid for plotting
+        lever_samples: Number of lever samples for DP optimization
+        print_progress: Whether to print progress messages
+            
+    Returns:
+        MissionIterationResults containing all phase results
+    """
+    atmospheric_props = AtmosphericProperties()
+    iteration_start_time = time.time()
+    
+    # Calculate initial mass
+    initial_mass_kg = W_OE_KG + W_PL_KG + initial_fuel_kg
+    
+    if print_progress:
+        print(f"\n[MISSION ITERATION] Initial fuel: {initial_fuel_kg:.1f} kg, Total mass: {initial_mass_kg:.1f} kg")
+    
+    # ========= CLIMB PHASE =========================================
+    if print_progress:
+        print("[CLIMB] Computing optimal climb trajectory...")
+    
+    # Calculate starting Mach from takeoff velocity at start altitude
+    a = atmospheric_props.a_from_altitude(START_ALTITUDE_CLIMB_M)
+    start_mach = START_VELOCITY_CLIMB_MS / a
+    
+    # Create uniform altitude steps
+    uniform_step_size = TARGET_ALT_CLIMB_M / N_ALTITUDE_STEPS_CLIMB
+    H_sched = np.arange(START_ALTITUDE_CLIMB_M, 
+                        TARGET_ALT_CLIMB_M + uniform_step_size, 
+                        uniform_step_size)
+    
+    # Solve 3D DP for climb
+    dp_sched, dp_info = ClimbingCore.DynamicProgrammingOptimizer.solve_3d_fixed_mass(
+        aero, eng, M_grid, H_sched, 
+        lever_samples=lever_samples,
+        target_mach=TARGET_MACH_CRUISE,
+        target_mach_tolerance=TARGET_MACH_TOLERANCE_CLIMB,
+        start_mach=start_mach,
+        start_lever=START_LEVER_CLIMB,
+        mass_kg=initial_mass_kg
+    )
+    
+    climb_fuel = float(np.nan_to_num(dp_sched.cumFuel_kg, nan=0.0)[-1])
+    climb_time_s = float(np.sum(np.nan_to_num(dp_sched.dt_s, nan=0.0)))
+    climb_mass_end = initial_mass_kg - climb_fuel
+    
+    if print_progress:
+        print(f"[CLIMB] Completed: {climb_time_s/60:.1f} min, {climb_fuel:.1f} kg fuel")
+        print(f"[CLIMB] Mass: {initial_mass_kg:.1f} kg -> {climb_mass_end:.1f} kg "
+              f"(burned {climb_fuel:.1f} kg, {climb_fuel/initial_mass_kg*100:.2f}%)")
+    
+    # ========= CRUISE PHASE =========================================
+    if print_progress:
+        print(f"[CRUISE] Starting cruise from altitude {dp_sched.alt_m[-1]:.0f}m, "
+              f"Mach {dp_sched.mach[-1]:.3f}")
+    
+    cruise_results = run_cruise_simulation(
+        climb_result=dp_sched,
+        initial_mass_kg=climb_mass_end,
+        target_distance_km=CRUISE_DISTANCE_KM,
+        aero=aero,
+        engine=eng,
+        time_step_s=CRUISE_TIME_STEP_S,
+        create_plots=False
+    )
+    
+    cruise_fuel = cruise_results.total_fuel_consumed_kg
+    cruise_time_s = cruise_results.total_time_s
+    cruise_mass_end = climb_mass_end - cruise_fuel
+    
+    if print_progress:
+        print(f"[CRUISE] Completed: {cruise_time_s/3600:.2f} hours, {cruise_fuel:.1f} kg fuel")
+        print(f"[CRUISE] Mass: {climb_mass_end:.1f} kg -> {cruise_mass_end:.1f} kg "
+              f"(burned {cruise_fuel:.1f} kg, {cruise_fuel/climb_mass_end*100:.2f}%)")
+    
+    # ========= DESCENT PHASE =========================================
+    if print_progress:
+        print("[DESCENT] Computing optimal descent trajectory...")
+    
+    H_descent = np.linspace(cruise_results.altitude_m[-1], 
+                           TARGET_DESCENT_ALT_M, 
+                           N_ALTITUDE_STEPS_DESCENT)
+    
+    M_min_descent = max(0.2, TARGET_DESCENT_MACH - 0.1)
+    M_max_descent = min(0.85, cruise_results.mach_number[-1] + 0.05)
+    M_grid_descent = np.linspace(M_min_descent, M_max_descent, N_MACH_SAMPLES_DESCENT)
+    
+    descent_result, descent_info = run_descent_dp_optimization(
+        cruise_results=cruise_results,
+        climb_fuel_kg=climb_fuel,
+        climb_time_s=climb_time_s,
+        aero=aero,
+        engine=eng,
+        target_altitude_m=TARGET_DESCENT_ALT_M,
+        target_mach=TARGET_DESCENT_MACH,
+        n_altitude_steps=N_ALTITUDE_STEPS_DESCENT,
+        n_mach_samples=N_MACH_SAMPLES_DESCENT,
+        lever_samples=N_LEVER_SAMPLES_DESCENT
+    )
+    
+    descent_fuel = descent_result.total_fuel_consumed_kg
+    descent_time_s = descent_result.total_time_s
+    descent_mass_end = cruise_mass_end - descent_fuel
+    
+    if print_progress:
+        print(f"[DESCENT] Completed: {descent_time_s/60:.1f} min, {descent_fuel:.2f} kg fuel")
+        print(f"[DESCENT] Mass: {cruise_mass_end:.1f} kg -> {descent_mass_end:.1f} kg "
+              f"(burned {descent_fuel:.1f} kg, {descent_fuel/cruise_mass_end*100:.2f}%)")
+    
+    # ========= COMPUTE SUMMARY =========================================
+    total_fuel = climb_fuel + cruise_fuel + descent_fuel
+    total_time_s = climb_time_s + cruise_time_s + descent_time_s
+    fuel_deficit_kg = total_fuel - initial_fuel_kg
+    
+    iteration_time = time.time() - iteration_start_time
+    
+    if print_progress:
+        print(f"[ITERATION] Completed in {iteration_time:.1f}s")
+        print(f"[MISSION TOTALS] Fuel consumed: {total_fuel:.1f} kg, Available: {initial_fuel_kg:.1f} kg")
+        print(f"[DEFICIT] {fuel_deficit_kg:+.1f} kg ({'INSUFFICIENT' if fuel_deficit_kg > 0 else 'EXCESS'} fuel)")
+    
+    return MissionIterationResults(
+        iteration=-1,  # Will be set by caller
+        initial_fuel_kg=initial_fuel_kg,
+        initial_mass_kg=initial_mass_kg,
+        fuel_consumed_kg=total_fuel,
+        fuel_deficit_kg=fuel_deficit_kg,
+        climb_result=dp_sched,
+        cruise_result=cruise_results,
+        descent_result=descent_result,
+        total_time_s=total_time_s,
+        climb_fuel_kg=climb_fuel,
+        cruise_fuel_kg=cruise_fuel,
+        descent_fuel_kg=descent_fuel,
+        climb_time_s=climb_time_s,
+        cruise_time_s=cruise_time_s,
+        descent_time_s=descent_time_s,
+        final_weight_kg=descent_result.final_weight_kg
+    )
+```
+
+**Phase-wise Execution Details:**
+
 1. **Climb Phase**:
-   - Solve 3D DP optimization with current mass
+   - Solve 3D DP optimization with current initial mass
    - Calculate fuel consumed and time elapsed
    - Update mass: m_cruise = m_initial - F_climb
 
 2. **Cruise Phase**:
    - Initialize from climb endpoint state
-   - Simulate steady-level cruise
+   - Simulate steady-level cruise at constant altitude/Mach
    - Calculate fuel consumed and time elapsed
    - Update mass: m_descent = m_cruise - F_cruise
 
@@ -397,150 +647,20 @@ def is_converged(self) -> bool:
 
 4. **Summary**:
    - Aggregate fuel: F_total = F_climb + F_cruise + F_descent
-   - Calculate performance metrics
-   - Return MissionIterationResults
+   - Calculate fuel deficit: Deficit = F_total - F_initial
+   - Return MissionIterationResults with all phase data
 
 ---
 
-## 5) Aitken Acceleration Theory and Application
+## 5) Mission Physics Integration
 
-### 5.1 Scientific Background
-
-**Historical Context:**
-
-Aitken's Δ² process was developed by Alexander Craig Aitken in 1926 for accelerating convergence of numerical sequences. The method has found widespread application in:
-- Computational Fluid Dynamics (CFD) for pressure-velocity coupling
-- Fluid-Structure Interaction (FSI) problems
-- Multiphysics coupling applications
-- Aerospace trajectory optimization
-
-**Theoretical Basis:**
-
-For a linearly convergent sequence {x_n} converging to limit x*:
-```math
-x_n - x^* = C \lambda^n + O(\lambda^{2n})
-```
-
-Where λ < 1 is the convergence rate. Aitken acceleration estimates x* more accurately:
-
-```math
-\hat{x}_n = x_n - \frac{(\Delta x_n)^2}{\Delta^2 x_n}
-```
-
-Where:
-- `Δx_n = x_{n+1} - x_n`
-- `Δ²x_n = Δx_{n+1} - Δx_n`
-
-### 5.2 Aitken Implementation in Fuel Optimization
-
-**Adaptive Damping Computation:**
-
-```python
-def apply_aitken_acceleration(history, current_damping):
-    """
-    Apply Aitken's Δ² acceleration to compute adaptive damping.
-    
-    Requires at least 3 iterations for acceleration.
-    
-    Mathematical method:
-        Δf_k = f_consumed_k - f_consumed_{k-1}
-        Δf_{k-1} = f_consumed_{k-1} - f_consumed_{k-2}
-        Δ²f_k = Δf_k - Δf_{k-1}
-        
-        Aitken factor = 1 - Δf_k / Δ²f_k
-        ω_k = clip(ω_{k-1} × Aitken factor, ω_min, ω_max)
-    
-    Args:
-        history: Convergence history with ≥3 iterations
-        current_damping: Current damping factor ω_{k-1}
-        
-    Returns:
-        Adaptive damping factor ω_k for next iteration
-    """
-    if len(history.iterations) >= 3:
-        # Extract last three fuel values
-        f_k = history.iterations[-1].fuel_consumed_kg
-        f_k_1 = history.iterations[-2].fuel_consumed_kg
-        f_k_2 = history.iterations[-3].fuel_consumed_kg
-        
-        # Compute differences
-        delta_f_k = f_k - f_k_1
-        delta_f_k_1 = f_k_1 - f_k_2
-        denominator = delta_f_k - delta_f_k_1  # Δ²f_k
-        
-        if abs(denominator) > 1e-6:
-            # Aitken factor
-            aitken_factor = 1.0 - (delta_f_k / denominator)
-            
-            # Update damping
-            new_damping = current_damping * aitken_factor
-            
-            # Bound to ensure stability
-            new_damping = np.clip(new_damping, AITKEN_MIN_DAMPING, AITKEN_MAX_DAMPING)
-            
-            return new_damping
-        else:
-            return current_damping
-    else:
-        return current_damping
-```
-
-### 5.3 Convergence Characteristics
-
-**Comparison: Fixed vs. Adaptive Damping**
-
-| Method | Convergence Rate | Stability | Typical Iterations | Advantages |
-|--------|------------------|-----------|-------------------|------------|
-| **Fixed ω=0.4** | Linear, O(0.4^n) | High | 15-25 | Simple, guaranteed stable |
-| **Aitken Adaptive** | Quadratic near F* | Adaptive | 8-15 | Fast, self-tuning |
-
-**Theoretical Convergence Rate:**
-
-**Fixed damping:**
-```math
-e_k = (1-\omega)^k e_0 + O(\omega^k)
-```
-
-**Aitken acceleration:**
-```math
-e_k = O(e_{k-1}^2) \quad \text{(quadratic near fixed point)}
-```
-
-### 5.4 Adaptive Damping for Early Iterations
-
-**For iteration 2** (only 2 data points available):
-
-```python
-def adaptive_damping_iteration_2(f_curr, f_prev, current_damping):
-    """Simplified adaptive damping for iteration 2."""
-    delta_percent = abs((f_curr - f_prev) / f_prev) * 100
-    
-    if delta_percent < 1.0:
-        # Very close - be aggressive
-        new_damping = min(0.7, current_damping * 1.5)
-    elif delta_percent < 5.0:
-        # Moderate - slightly increase
-        new_damping = min(0.6, current_damping * 1.2)
-    elif delta_percent < 15.0:
-        # Slow - maintain
-        new_damping = current_damping
-        else:
-        # Large changes - be conservative
-        new_damping = max(0.2, current_damping * 0.7)
-    
-    return np.clip(new_damping, AITKEN_MIN, AITKEN_MAX)
-```
-
----
-
-## 6) Mission Physics Integration
-
-### 6.1 Dynamic Mass Evolution
+### 5.1 Dynamic Mass Evolution
 
 **Aircraft Mass Throughout Mission:**
 
 ```math
 \begin{align}
+m_{initial} &= W_{OE} + W_{PL} + F_{initial} \\
 m_{climb,end} &= m_{initial} - F_{climb} \\
 m_{cruise,end} &= m_{climb,end} - F_{cruise} \\
 m_{final} &= m_{cruise,end} - F_{descent}
@@ -557,7 +677,9 @@ Where:
 - `W_PL`: Payload weight [kg]
 - `F_initial`: Initial fuel load [kg]
 
-### 6.2 Weight-Dependent Aerodynamics
+ 
+
+### 5.2 Weight-Dependent Aerodynamics
 
 **Lift Coefficient:**
 ```math
@@ -571,7 +693,7 @@ C_{D,i} = \frac{C_L^2}{\pi AR e}
 
 **Total Drag:**
 ```math
-D = D_{parasitic} + D_{induced} \propto W^2
+D = D_{parasitic} + D_{induced} = \frac{1}{2}\rho V^2 S (C_{D,0} + C_{D,i}) \propto W^2
 ```
 
 **Physical Implication:**
@@ -581,131 +703,173 @@ Heavier aircraft requires:
 - More thrust to overcome drag → Higher fuel flow
 - Longer time to climb → More fuel consumed
 
-This creates a feedback loop where initial fuel mass affects fuel consumption.
+This creates a feedback loop where initial fuel mass directly affects fuel consumption, making the optimization problem nonlinear.
 
-### 6.3 Phase-Specific Physics Models
+**Fuel-Mass Coupling:**
+```math
+F_{consumed} = f(m_{initial}) = f(W_{OE} + W_{PL} + F_{initial})
+```
+
+Therefore:
+```math
+F_{consumed} = f(F_{initial})
+```
+
+This coupling necessitates iterative solution (bisection) to find F* where F_consumed(F*) = F*.
+
+### 5.3 Phase-Specific Physics Models
 
 **Climb Phase Physics:**
 ```math
 \begin{align}
-\frac{dh}{dt} &= P_s = \frac{(T_{total} - D) V}{W} \\
-J(h, M, \lambda) &= \frac{\dot{m}_{fuel}}{P_s} \quad [\text{kg/m}]
+\frac{dh}{dt} &= P_s = \frac{(T_{total} - D) V}{W} \quad [\text{m/s}] \\
+J(h, M, \lambda) &= \frac{\dot{m}_{fuel}}{P_s} \quad [\text{kg/m, cost density}]
 \end{align}
 ```
+
+Where:
+- `P_s`: Specific excess power [m/s]
+- `T_total`: Total thrust [N]
+- `D`: Drag [N]
+- `V`: True airspeed [m/s]
+- `W`: Aircraft weight [N]
+- `J`: Fuel cost density [kg/m]
 
 **Cruise Phase Physics:**
 ```math
 \begin{align}
-T_{total} &= D \quad \text{(equilibrium)} \\
+T_{total} &= D \quad \text{(force equilibrium)} \\
 \dot{m}_{fuel} &= \text{TSFC} \times T_{total} \quad [\text{kg/s}]
 \end{align}
 ```
 
 **Descent Phase Physics:**
 ```math
-P_s = \frac{(T_{total} - D) V}{W} < 0 \quad \text{(energy dissipation)}
+\begin{align}
+P_s &= \frac{(T_{total} - D) V}{W} < 0 \quad \text{(energy dissipation)} \\
+J &= \frac{\dot{m}_{fuel}}{|P_s|} \quad [\text{kg/m, cost density for descent}]
+\end{align}
+```
+
+### 5.4 Mass Conservation Validation
+
+**Mass Balance Equation:**
+```math
+m_{initial} = m_{final} + F_{consumed}
+```
+
+**Verification Check:**
+```python
+def validate_mass_conservation(iteration_result: MissionIterationResults) -> bool:
+    """
+    Validate mass conservation throughout mission.
+    
+    Checks:
+        m_initial = m_final + F_total
+    
+    Returns:
+        True if mass is conserved within tolerance
+    """
+    m_initial = iteration_result.initial_mass_kg
+    m_final = iteration_result.final_weight_kg
+    F_consumed = iteration_result.fuel_consumed_kg
+    
+    mass_balance = m_initial - (m_final + F_consumed)
+    tolerance = 0.1  # kg
+    
+    is_valid = abs(mass_balance) < tolerance
+    
+    if not is_valid:
+        print(f"[WARNING] Mass conservation violated: {mass_balance:.2f} kg discrepancy")
+    
+    return is_valid
 ```
 
 ---
 
-## 7) Performance Metrics Calculation
+## 6) Code Execution Flow and Logic
 
-### 7.1 Aerodynamic Efficiency Metrics
+### 6.1 System Entry Point
 
-**Function**: `FuelOptimizationCore.PerformanceCalculator.calculate_performance_metrics()`
-
-**Lift-to-Drag Ratio:**
-```math
-\frac{L}{D} = \frac{W}{D}
-```
-
-**Calculation per Phase:**
-```python
-def calculate_ld_ratio(weight_kg, drag_N):
-    """Calculate instantaneous L/D ratio."""
-    lift_N = weight_kg * 9.81
-    if drag_N > 0:
-        return lift_N / drag_N
-    else:
-        return 0.0
-```
-
-**Average L/D for Phase:**
-```math
-\overline{L/D} = \frac{1}{n}\sum_{i=1}^{n} \frac{L_i}{D_i}
-```
-
-### 7.2 Energy Management Metrics
-
-**Specific Energy:**
-```math
-E_{specific} = gh + \frac{V^2}{2} \quad [\text{J/kg}]
-```
-
-**Energy Height:**
-```math
-H_e = h + \frac{V^2}{2g} \quad [\text{m}]
-```
-
-**Implementation:**
-```python
-def calculate_specific_energy(altitude_m, velocity_mps):
-    """Calculate specific energy."""
-    pe = 9.81 * altitude_m  # Potential energy [J/kg]
-    ke = 0.5 * velocity_mps**2  # Kinetic energy [J/kg]
-    return pe + ke
-```
-
-### 7.3 Engine Performance Metrics
-
-**Thrust Lever Utilization:**
-```math
-\eta_{lever} = \overline{\lambda} \quad \text{(average lever position)}
-```
-
-**Thrust-Specific Metrics:**
-- Average lever position per phase
-- Maximum lever usage identification
-- Engine utilization percentage
-
----
-
-## 8) Code Execution Flow and Logic
-
-### 8.1 System Entry Point
-
-**Main Entry**: `main_optimized.py`
+**Main Entry**: `main_fuel_optimizer.py`
 
 **Initialization Sequence:**
 ```python
 def main():
+    """
+    Main execution function for mission analysis with fuel capacity optimization.
+    
+    Executes complete fuel optimization process:
+    1. Run bisection optimization loop to determine minimum fuel
+    2. Generate convergence analysis visualizations
+    3. Use optimized fuel for final mission results
+    4. Generate comprehensive mission visualizations
+    """
+    
+    # ========= INITIALIZATION =========================================
+    print("\n" + "="*80)
+    print("MISSION ANALYSIS WITH FUEL CAPACITY OPTIMIZATION")
+    print("="*80)
+    
     # 1. Load aerodynamics and engine data
+    print("[READ] Loading aerodynamic and engine data...")
     aero = PyAerodynamicsWrapper()
     eng = EngineWrapper(ENGINE_STUB_PATH)
     
-    # 2. Pre-compute performance grids
-    eng.precompute_grid(M_grid, H_grid, lever_grid)
+    # 2. Create grids for optimization
+    M_min, M_max = float(aero.mach_grid[0]), float(aero.mach_grid[-1])
+    M_dense = np.linspace(M_min, M_max, N_MACH_SAMPLES_CLIMB)
+    H_plot = np.arange(START_ALTITUDE_CLIMB_M, 
+                        Y_AXIS_TOP_M + 0.5*ALT_STEP_M, 
+                        ALT_STEP_M)
     
-    # 3. Run fuel optimization
-    optimal_result, history = optimize_fuel_capacity(aero, eng, M_grid, H_plot)
+    # 3. Pre-compute grids for performance
+    print("[OPTIMIZATION] Pre-computing engine grids...")
+    lever_grid = np.linspace(0.0, 1.0, 21)
+    eng.precompute_grid(M_dense, H_plot, lever_grid)
     
-    # 4. Visualize convergence
-    visualize_convergence_analysis(history)
+    # ========= FUEL OPTIMIZATION =========================================
+    # 4. Run bisection optimization
+    print("\n[OPTIMIZATION] Starting fuel capacity optimization loop...")
+    optimal_result, convergence_history = optimize_fuel_capacity(
+        aero=aero,
+        eng=eng,
+        M_grid=M_dense,
+        H_plot=H_plot,
+        lever_samples=N_LEVER_SAMPLES_CLIMB
+    )
     
-    # 5. Generate final mission plots
-    plot_mission_visualizations(optimal_result)
+    # 5. Visualize convergence
+    visualize_convergence_analysis(convergence_history, save_plots=True)
+    
+    # ========= FINAL MISSION ANALYSIS =========================================
+    # 6. Calculate optimized fuel capacity with safety buffer
+    optimized_fuel = optimal_result.fuel_consumed_kg * (1.0 + SAFETY_BUFFER_PERCENT)
+    optimized_mass = W_OE_KG + W_PL_KG + optimized_fuel
+    
+    print("\n" + "="*80)
+    print("RUNNING FINAL MISSION WITH OPTIMIZED FUEL")
+    print("="*80)
+    print(f"[CONFIG] Optimized fuel capacity: {optimized_fuel:.1f} kg")
+    print(f"[CONFIG] Optimized total mass: {optimized_mass:.1f} kg")
+    print(f"[CONFIG] Savings vs original MAX_FUEL_KG ({MAX_FUEL_KG:.1f} kg): {MAX_FUEL_KG - optimized_fuel:.1f} kg ({(MAX_FUEL_KG - optimized_fuel) / MAX_FUEL_KG * 100:.1f}%)")
+    print("="*80 + "\n")
+    
+    # 7. Generate final mission plots
+    plot_mission_visualizations(optimal_result, optimized_mass)
 ```
 
-### 8.2 Iteration Loop Flow
+### 6.2 Bisection Loop Flow
 
 **Visual Flow Diagram:**
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
 │                    INITIALIZATION                              │
-│  F_0 = MAX_FUEL_KG                                            │
+│  F_low = INITIAL_FUEL_LOW_KG (1,000 kg)                       │
+│  F_high = INITIAL_FUEL_HIGH_KG (MAX_FUEL_KG)                  │
 │  history = ConvergenceHistory()                                │
-│  ω_0 = DAMPING_FACTOR (0.4)                                   │
+│  best_result = None                                            │
 └──────────────────────┬─────────────────────────────────────────┘
                        │
                        ▼
@@ -715,80 +879,96 @@ def main():
                        │
                        ▼
         ┌──────────────────────────────────┐
+        │   BISECTION MIDPOINT            │
+        │  F_mid = (F_low + F_high) / 2  │
+        │  Range = F_high - F_low        │
+        └──────────┬───────────────────────┘
+                       │
+                       ▼
+        ┌──────────────────────────────────┐
         │   MISSION SIMULATION            │
-        │  m_k = W_OE + W_PL + F_k       │
+        │  m_k = W_OE + W_PL + F_mid     │
         │  ├── Climb (3D DP)             │
         │  ├── Cruise (steady-state)      │
         │  └── Descent (3D DP)           │
-        │  Result: F_consumed,k          │
+        │  Result: F_consumed            │
+        │  Deficit = F_consumed - F_mid  │
         └──────────┬───────────────────────┘
                    │
                    ▼
         ┌──────────────────────────────────┐
+        │   DEFICIT ANALYSIS              │
+        │  Is Deficit > 0?               │
+        │  (consumed > available)        │
+        └──────────┬───────────────────────┘
+                   │
+         ┌─────────┴──────────┐
+         │ Deficit > 0        │ Deficit < 0
+         │ (INSUFFICIENT)     │ (EXCESS)
+         ▼                    ▼
+    ┌─────────────┐      ┌─────────────┐
+    │ INCREASE    │      │ DECREASE    │
+    │ LOWER BOUND │      │ UPPER BOUND │
+    │ F_low=F_mid │      │ F_high=F_mid│
+    └──────┬──────┘      └──────┬──────┘
+           │                    │
+           └────────┬───────────┘
+                   │
+                   ▼
+        ┌──────────────────────────────────┐
         │   CONVERGENCE CHECK             │
-        │  δ_k = |F_consumed,k - F_consumed,k-1| / F_consumed,k-1  │
-        │  Converged if δ_k < 0.5%       │
+        │  Range < TOLERANCE (10 kg)?     │
         └──────────┬───────────────────────┘
                    │
          ┌─────────┴──────────┐
          │ YES                │ NO
          │                    │
          ▼                    ▼
-    ┌─────────┐      ┌───────────────────┐
-    │CONVERGED│      │ AITKEN ACCEL      │
-    │Apply    │      │ Compute ω_k       │
-    │Safety   │      │ from history      │
-    │Buffer   │      └─────────┬─────────┘
-    └─────────┘                │
-         │                     ▼
-         │            ┌────────────────────┐
-         │            │ UPDATE FUEL        │
-         │            │ F_{k+1} = ω_k×F_consumed,k  │
-         │            │         + (1-ω_k)×F_k       │
-         │            └─────────┬──────────┘
-         │                      │
-         │                      ▼
-         │            ┌────────────────────┐
-         │            │ k < MAX_ITER?     │
-         │            └──────┬──────┬──────┘
-         │                   │YES   │NO
-         └───────────────────┘      │
-                                    ▼
-                            ┌───────────────┐
-                            │ MAX REACHED   │
-                            │ Use best      │
-                            │ iteration     │
-                            └───────────────┘
+    ┌────────────┐      ┌───────────────────────┐
+    │ CONVERGED  │      │ k < MAX_ITER ?        │
+    │ Apply 5%   │      │                       │
+    │ safety buf │      └──────────┬────────────┘
+    └──────┬─────┘                 │
+           │                       │ YES → continue bisection
+           │                       │
+           │                       └── NO
+           │                            ▼
+           │                   ┌────────────────────┐
+           │                   │ MAX ITER REACHED   │
+           │                   │ Use best iteration │
+           │                   └────────────────────┘
+           ▼
+    ┌────────────────────┐
+    │ FINAL RESULT       │
+    │ with safety (5%)   │
+    └────────────────────┘
 ```
 
-### 8.3 Function Call Hierarchy
+### 6.3 Function Call Hierarchy
 
 ```
-main_optimized.py
+main_fuel_optimizer.py
 └── main()
     ├── PyAerodynamicsWrapper()
     ├── EngineWrapper()
     ├── eng.precompute_grid()
     │
 ├── optimize_fuel_capacity()
-│   └── WHILE not converged:
-│       ├── run_single_mission_iteration()
-│       │   ├── ClimbingCore.DynamicProgrammingOptimizer.solve_3d_fixed_mass()
-│       │   ├── run_cruise_simulation()
-│       │   ├── run_descent_dp_optimization()
-│       │   └── calculate_performance_metrics()
-    │       │       ├── calculate_mission_distance()
-│       │       ├── calculate_aerodynamic_metrics()
-│       │       ├── calculate_engine_metrics()
-│       │       └── calculate_energy_metrics()
-│       ├── history.add_iteration()
-│       ├── history.is_converged()
-    │       ├── apply_aitken_acceleration() [if iter ≥ 3]
-    │       └── compute_fuel_update()
+    │   │
+    │   └── FuelOptimizationCore.BisectionController.optimize_fuel_capacity()
+    │       └── WHILE not converged:
+    │           ├── Calculate F_mid = (F_low + F_high) / 2
+    │           ├── FuelOptimizationCore.IterationExecutor.run_single_mission_iteration()
+    │           │   ├── ClimbingCore.DynamicProgrammingOptimizer.solve_3d_fixed_mass()
+    │           │   ├── run_cruise_simulation()
+    │           │   ├── run_descent_dp_optimization()
+    │           │   └── Calculate fuel_deficit_kg
+    │           ├── history.add_iteration(result, bounds)
+    │           ├── Update bounds based on deficit sign
+    │           └── Check convergence: |F_high - F_low| < tolerance
     │
     ├── visualize_convergence_analysis()
     │   ├── plot_convergence_trajectory()
-    │   ├── plot_kpp_evolution()
     │   └── plot_optimization_comparison()
     │
     └── plot_mission_visualizations()
@@ -798,15 +978,57 @@ main_optimized.py
         └── plot_mission_summary_dashboard()
 ```
 
+### 6.4 Detailed Iteration Flow
+
+**Step-by-Step Execution:**
+
+```python
+# PHASE 1: BISECTION SETUP
+iteration_count = 1
+fuel_low = 1,000.0  # kg (insufficient)
+fuel_high = 10,500.0  # kg (excess)
+fuel_mid = (fuel_low + fuel_high) / 2 = 5,750.0  # kg
+
+# PHASE 2: MISSION SIMULATION
+initial_mass = W_OE + W_PL + fuel_mid = 8,000 + 500 + 5,750 = 14,250 kg
+
+# Climb phase
+climb_fuel = 800 kg  # Example
+climb_mass_end = 14,250 - 800 = 13,450 kg
+
+# Cruise phase
+cruise_fuel = 4,000 kg  # Example
+cruise_mass_end = 13,450 - 4,000 = 9,450 kg
+
+# Descent phase
+descent_fuel = 50 kg  # Example
+descent_mass_end = 9,450 - 50 = 9,400 kg
+
+# PHASE 3: DEFICIT CALCULATION
+fuel_consumed = 800 + 4,000 + 50 = 4,850 kg
+fuel_deficit = 4,850 - 5,750 = -900 kg  # EXCESS fuel
+
+# PHASE 4: BOUNDS UPDATE
+# Deficit < 0 → EXCESS fuel → Decrease upper bound
+fuel_high = fuel_mid = 5,750 kg
+# New bounds: [1,000, 5,750] kg
+
+# PHASE 5: CONVERGENCE CHECK
+convergence_range = 5,750 - 1,000 = 4,750 kg
+is_converged = 4,750 < 10  # False → Continue
+
+# Repeat from PHASE 1 with new bounds...
+```
+
 ---
 
-## 9) Integration and Interface
+## 7) Integration and Interface
 
-### 9.1 Main System Interface
+### 7.1 Main System Interface
 
 **Primary Entry Point:**
 ```python
-from fuel_optimizer import (
+from mission_fuel_optimizer import (
     FuelOptimizationCore,
     optimize_fuel_capacity,
     MissionIterationResults,
@@ -825,22 +1047,23 @@ optimal_result, history = optimize_fuel_capacity(
 # Access results
 optimized_fuel = optimal_result.fuel_consumed_kg * 1.05  # With safety buffer
 print(f"Optimized fuel: {optimized_fuel:.1f} kg")
+print(f"Fuel deficit: {optimal_result.fuel_deficit_kg:+.1f} kg")
 ```
 
-### 9.2 Convergence Controller Interface
+### 7.2 Bisection Controller Interface
 
 **Direct Access to Controller:**
 ```python
 # Use nested class directly
-controller = FuelOptimizationCore.ConvergenceController
+controller = FuelOptimizationCore.BisectionController
 result, history = controller.optimize_fuel_capacity(aero, eng, M_grid, H_plot)
 ```
 
-### 9.3 Configuration Management Interface
+### 7.3 Configuration Management Interface
 
 **Update Configuration:**
 ```python
-from fuel_optimizer import FuelOptimizationCore
+from mission_fuel_optimizer import FuelOptimizationCore
 
 # Apply optimized fuel to configuration file
 FuelOptimizationCore.ConfigurationManager.apply_optimized_fuel_to_configuration(
@@ -848,54 +1071,195 @@ FuelOptimizationCore.ConfigurationManager.apply_optimized_fuel_to_configuration(
 )
 ```
 
+**Configuration Update Function:**
+```python
+@staticmethod
+def apply_optimized_fuel_to_configuration(optimized_fuel_kg: float) -> None:
+    """
+    Update the aircraft configuration with the optimized fuel capacity.
+    
+    This function modifies MAX_FUEL_KG in aircraft_config.py to reflect
+    the optimized fuel capacity determined by the optimization process.
+    
+    Args:
+        optimized_fuel_kg: The optimized fuel capacity in kg
+        
+    Notes:
+        - Updates class attribute in SystemConfiguration
+        - Preserves file structure and comments
+        - Validates successful update before completing
+    """
+    import re
+    
+    print(f"\n[CONFIG UPDATE] Optimized fuel capacity: {optimized_fuel_kg:.1f} kg")
+    print(f"[CONFIG UPDATE] Original MAX_FUEL_KG: {MAX_FUEL_KG:.1f} kg")
+    print(f"[CONFIG UPDATE] Fuel savings: {MAX_FUEL_KG - optimized_fuel_kg:.1f} kg "
+          f"({(MAX_FUEL_KG - optimized_fuel_kg) / MAX_FUEL_KG * 100:.1f}%)")
+    
+    # Read aircraft_config.py
+    config_file = "aircraft_config.py"
+    try:
+        with open(config_file, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Find and replace MAX_FUEL_KG value
+        pattern = r'(\s*MAX_FUEL_KG\s*=\s*)[\d]+\.?[\d]*(\s*#.*)'
+        replacement = f'\\g<1>{optimized_fuel_kg:.1f}\\2'
+        
+        new_content = re.sub(pattern, replacement, content)
+        
+        if new_content == content:
+            raise RuntimeError("Failed to update MAX_FUEL_KG - pattern did not match")
+        
+        # Write back to file
+        with open(config_file, 'w', encoding='utf-8') as f:
+            f.write(new_content)
+        
+        print(f"[CONFIG UPDATE] Successfully updated {config_file}")
+        print(f"[CONFIG UPDATE] MAX_FUEL_KG is now set to {optimized_fuel_kg:.1f} kg")
+        
+    except Exception as e:
+        print(f"[CONFIG UPDATE ERROR] Failed to update {config_file}: {e}")
+        raise
+```
+
+### 7.4 Backward Compatibility Wrappers
+
+**Legacy Function Support:**
+```python
+# Mission iteration function
+def run_single_mission_iteration(
+    initial_fuel_kg: float,
+    aero: PyAerodynamicsWrapper,
+    eng: EngineWrapper,
+    M_grid: np.ndarray,
+    H_plot: np.ndarray,
+    lever_samples: int,
+    print_progress: bool = True
+) -> MissionIterationResults:
+    """Backward compatibility wrapper for FuelOptimizationCore.IterationExecutor.run_single_mission_iteration"""
+    return FuelOptimizationCore.IterationExecutor.run_single_mission_iteration(
+        initial_fuel_kg, aero, eng, M_grid, H_plot, lever_samples, print_progress
+    )
+
+# Optimization function
+def optimize_fuel_capacity(
+    aero: PyAerodynamicsWrapper,
+    eng: EngineWrapper,
+    M_grid: np.ndarray,
+    H_plot: np.ndarray,
+    lever_samples: int = 50
+) -> Tuple[MissionIterationResults, ConvergenceHistory]:
+    """Backward compatibility wrapper for FuelOptimizationCore.BisectionController.optimize_fuel_capacity"""
+    return FuelOptimizationCore.BisectionController.optimize_fuel_capacity(
+        aero, eng, M_grid, H_plot, lever_samples
+    )
+
+# Configuration update function
+def apply_optimized_fuel_to_configuration(optimized_fuel_kg: float) -> None:
+    """Backward compatibility wrapper for FuelOptimizationCore.ConfigurationManager.apply_optimized_fuel_to_configuration"""
+    return FuelOptimizationCore.ConfigurationManager.apply_optimized_fuel_to_configuration(optimized_fuel_kg)
+```
+
 ---
 
-## 10) Validation and Quality Assurance
+## 8) Validation and Quality Assurance
 
-### 10.1 Convergence Validation
+### 8.1 Convergence Validation
 
 **Convergence Quality Metrics:**
 
-1. **Final Convergence Delta**: Should be < 0.5%
-2. **Iterations Required**: Typically 8-15 with Aitken
-3. **Oscillation Count**: Number of sign changes in delta
-4. **Lipschitz Constant**: L = |f(x_k) - f(x_{k-1})| / |x_k - x_{k-1}|
+1. **Final Convergence Range**: Should be < 10 kg
+2. **Monotonic Bounds**: Bounds should consistently narrow
 
 **Validation Criteria:**
 ```python
-def validate_convergence(history):
-    """Validate optimization convergence quality."""
+def validate_convergence(history: ConvergenceHistory) -> Dict[str, bool]:
+    """
+    Validate optimization convergence quality.
+    
+    Returns:
+        Dictionary of validation checks and results
+    """
+    validation_results = {}
     
     # Check 1: Convergence achieved
-    assert history.is_converged(), "Optimization did not converge"
+    final_bounds = history.fuel_bounds_history[-1]
+    final_range = final_bounds[1] - final_bounds[0]
+    validation_results['converged'] = final_range < CONVERGENCE_TOLERANCE_KG
     
     # Check 2: Reasonable iterations
-    assert len(history.iterations) <= 20, "Too many iterations"
+    num_iterations = len(history.iterations)
+    validation_results['iteration_count_ok'] = num_iterations <= MAX_ITERATIONS
     
-    # Check 3: Monotonic (mostly) decrease
-    deltas = [abs(it.convergence_delta_percent) for it in history.iterations[1:]]
-    trend = np.polyfit(range(len(deltas)), deltas, 1)[0]
-    assert trend < 0, "Convergence not improving"
+    # Check 3: Monotonic bounds reduction
+    ranges = [bounds[1] - bounds[0] for bounds in history.fuel_bounds_history]
+    is_monotonic = all(ranges[i] >= ranges[i+1] for i in range(len(ranges)-1))
+    validation_results['monotonic_convergence'] = is_monotonic
+    
+    # Check 4: Best result quality
+    best_deficit = min(abs(it.fuel_deficit_kg) for it in history.iterations)
+    validation_results['deficit_acceptable'] = best_deficit < 50.0  # kg
+    
+    # Print validation summary
+    print("\n" + "="*80)
+    print("CONVERGENCE VALIDATION")
+    print("="*80)
+    for check, result in validation_results.items():
+        status = "✅ PASS" if result else "❌ FAIL"
+        print(f"{check}: {status}")
+    print("="*80 + "\n")
+    
+    return validation_results
 ```
 
-### 10.2 Physical Consistency Validation
+### 8.2 Physical Consistency Validation
 
 **Mass Conservation:**
 ```math
 m_{initial} - m_{final} = F_{consumed}
 ```
 
-**Energy Conservation:**
-```math
-E_{initial} - E_{final} \approx E_{fuel,chemical}
+**Implementation:**
+```python
+def validate_mass_conservation(iteration_result: MissionIterationResults) -> bool:
+    """
+    Validate mass conservation throughout mission.
+    
+    Checks:
+        m_initial = m_final + F_total
+    
+    Returns:
+        True if mass is conserved within tolerance
+    """
+    m_initial = iteration_result.initial_mass_kg
+    m_final = iteration_result.final_weight_kg
+    F_consumed = iteration_result.fuel_consumed_kg
+    
+    mass_balance = m_initial - (m_final + F_consumed)
+    tolerance = 0.1  # kg
+    
+    is_valid = abs(mass_balance) < tolerance
+    
+    if not is_valid:
+        print(f"[WARNING] Mass conservation violated: {mass_balance:.2f} kg discrepancy")
+        print(f"  Initial mass: {m_initial:.1f} kg")
+        print(f"  Final mass: {m_final:.1f} kg")
+        print(f"  Fuel consumed: {F_consumed:.1f} kg")
+        print(f"  Expected final: {m_initial - F_consumed:.1f} kg")
+    
+    return is_valid
 ```
+
+ 
 
 **Performance Envelope:**
 - All phases remain within flight envelope
 - No stall conditions encountered
-- MMO not exceeded
+- MMO (Maximum Operating Mach) not exceeded
+- Engine limits respected
 
-### 10.3 Performance Monitoring
+### 8.3 Performance Monitoring
 
 **Key Metrics to Monitor:**
 
@@ -905,60 +1269,148 @@ E_{initial} - E_{final} \approx E_{fuel,chemical}
    - Descent: 1-5% of total
 
 2. **Convergence Behavior**:
-   - Delta should decrease monotonically
-   - No persistent oscillations
-   - Smooth approach to fixed point
+   - Bounds should reduce monotonically
+   - No iteration failures after first iteration
+   - Deficit should approach zero
 
-3. **Physical Realism**:
-   - L/D ratios in expected ranges (12-18 typical)
-   - Lever positions reasonable (<90% average)
-   - Fuel flow rates consistent with engine data
+
+
+**Monitoring Function:**
+```python
+def monitor_optimization_quality(history: ConvergenceHistory) -> Dict[str, Any]:
+    """
+    Monitor and report optimization quality metrics.
+    
+    Returns:
+        Dictionary of quality metrics
+    """
+    metrics = {}
+    
+    # Convergence metrics
+    final_bounds = history.fuel_bounds_history[-1]
+    metrics['final_range_kg'] = final_bounds[1] - final_bounds[0]
+    metrics['num_iterations'] = len(history.iterations)
+    
+    # Best result analysis
+    best_idx = np.argmin([abs(it.fuel_deficit_kg) for it in history.iterations])
+    best_result = history.iterations[best_idx]
+    metrics['best_deficit_kg'] = best_result.fuel_deficit_kg
+    metrics['best_fuel_kg'] = best_result.initial_fuel_kg
+    
+    # Fuel breakdown
+    metrics['climb_fraction'] = best_result.climb_fuel_kg / best_result.fuel_consumed_kg
+    metrics['cruise_fraction'] = best_result.cruise_fuel_kg / best_result.fuel_consumed_kg
+    metrics['descent_fraction'] = best_result.descent_fuel_kg / best_result.fuel_consumed_kg
+    
+    # Print monitoring report
+    print("\n" + "="*80)
+    print("OPTIMIZATION QUALITY METRICS")
+    print("="*80)
+    print(f"Convergence:")
+    print(f"  Final range: {metrics['final_range_kg']:.1f} kg")
+    print(f"  Iterations: {metrics['num_iterations']}")
+    print(f"Best Result:")
+    print(f"  Fuel: {metrics['best_fuel_kg']:.1f} kg")
+    print(f"  Deficit: {metrics['best_deficit_kg']:+.1f} kg")
+    print(f"Fuel Breakdown:")
+    print(f"  Climb: {metrics['climb_fraction']*100:.1f}%")
+    print(f"  Cruise: {metrics['cruise_fraction']*100:.1f}%")
+    print(f"  Descent: {metrics['descent_fraction']*100:.1f}%")
+    print("="*80 + "\n")
+    
+    return metrics
+```
 
 ---
 
-## 11) Convergence Challenges and Analysis
+## 9) Convergence Analysis and Characteristics
 
-### 11.1 Observed Convergence Behavior
+### 9.1 Bisection Convergence Characteristics
 
-**Testing Configuration:**
-- Damping factor: 0.4 (initial)
-- Aitken acceleration: Enabled
-- Convergence tolerance: 0.5%
-- MAX_ITERATIONS: 5
+**Theoretical Properties:**
 
-**Example Convergence Sequence:**
+1. **Guaranteed Convergence**: Always converges if solution exists in initial bracket
+2. **Monotonic Reduction**: Search range halves each iteration
+3. **Predictable Iterations**: Known from log₂(initial_range / tolerance)
+4. **No Parameter Tuning**: No damping factors or acceleration parameters needed
 
-| Iteration | Initial Fuel (kg) | Consumed (kg) | Delta (%) | Damping |
-|-----------|-------------------|---------------|-----------|---------|
-| 1         | 5000.0           | 2438.0        | --        | 0.400   |
-| 2         | 2438.0           | 2824.8        | +15.9%    | 0.400   |
-| 3         | 2748.5           | 2944.1        | +4.2%     | 0.325   |
-| 4         | 2928.4           | 2986.3        | +1.4%     | 0.380   |
-| 5         | 2978.7           | 2995.0        | +0.3%     | 0.420   |
+**Convergence Rate Comparison:**
 
-**Convergence Analysis:**
-- ✅ Monotonic delta decrease
-- ✅ Converged in 5 iterations
-- ✅ Final error: 0.3% (well within 0.5% tolerance)
-- ✅ Aitken acceleration effective
+| Method | Rate | Formula | Typical Iterations |
+|--------|------|---------|-------------------|
+| Bisection | Linear in range | Range_n = Range_0 / 2^n | 10-12 |
+| Fixed-Point (no Aitken) | Linear in error | e_n = (1-ω)^n e_0 | 15-25 |
+| Fixed-Point (with Aitken) | Quasi-quadratic | e_n = O(e_{n-1}²) near root | 8-15 (if stable) |
+| Newton-Raphson | Quadratic | e_n = O(e_{n-1}²) | 4-6 (if gradient available) |
 
-### 11.2 Lipschitz Constant Analysis
+**Bisection Advantages:**
+- ✅ No divergence possible
+- ✅ No oscillations
+- ✅ Robust to discretization effects from DP grids
+- ✅ Simple implementation
+- ✅ No parameter tuning required
 
-**Definition:**
-```math
-L_k = \frac{|g(F_k) - g(F_{k-1})|}{|F_k - F_{k-1}|}
+### 9.2 Typical Convergence Sequence
+
+**Example: Standard Mission**
+
+Initial conditions:
+- F_low = 1,000 kg
+- F_high = 10,500 kg
+- Tolerance = 10 kg
+
+| Iter | F_low | F_high | F_mid | F_consumed | Deficit | Range | Action |
+|------|-------|--------|-------|------------|---------|-------|---------|
+| 1 | 1,000 | 10,500 | 5,750 | 4,850 | -900 | 9,500 | ↓ Upper |
+| 2 | 1,000 | 5,750 | 3,375 | 3,890 | +515 | 4,750 | ↑ Lower |
+| 3 | 3,375 | 5,750 | 4,563 | 4,420 | -143 | 2,375 | ↓ Upper |
+| 4 | 3,375 | 4,563 | 3,969 | 4,025 | +56 | 1,188 | ↑ Lower |
+| 5 | 3,969 | 4,563 | 4,266 | 4,248 | -18 | 594 | ↓ Upper |
+| 6 | 3,969 | 4,266 | 4,118 | 4,135 | +17 | 297 | ↑ Lower |
+| 7 | 4,118 | 4,266 | 4,192 | 4,191 | -1 | 148 | ↓ Upper |
+| 8 | 4,118 | 4,192 | 4,155 | 4,163 | +8 | 74 | ↑ Lower |
+| 9 | 4,155 | 4,192 | 4,173 | 4,177 | +4 | 37 | ↑ Lower |
+| 10 | 4,173 | 4,192 | 4,183 | 4,184 | +1 | 19 | ↑ Lower |
+| 11 | 4,183 | 4,192 | 4,187 | 4,188 | +1 | 9 | ✅ Converged |
+
+
+
+### 9.3 Handling Edge Cases
+
+**Case 1: Mission Failure (Insufficient Fuel)**
+
+```python
+try:
+    iteration_result = run_single_mission_iteration(initial_fuel_kg=fuel_mid, ...)
+except RuntimeError as e:
+    # Mission failed - insufficient fuel
+    print(f"[ERROR] Mission failed: {str(e)}")
+    print(f"[BISECTION] Mission failure indicates insufficient fuel")
+    fuel_low = fuel_mid  # Increase lower bound
+    continue
 ```
 
-**Interpretation:**
-- L < 1: Contractive mapping → guaranteed convergence
-- L = 1: Neutral → slow convergence
-- L > 1: Non-contractive → potential divergence
+**Case 2: Non-Convergence (Max Iterations Reached)**
 
-**Observed Values:**
-- Typical: L ≈ 0.6-0.8 (good convergence)
-- Problematic: L > 1.0 (oscillations possible)
+```python
+if iteration_count >= MAX_ITERATIONS:
+    print(f"[WARNING] Reached MAX_ITERATIONS without full convergence")
+    print(f"Final range: {fuel_high - fuel_low:.1f} kg (tolerance: {CONVERGENCE_TOLERANCE_KG:.1f} kg)")
+    print(f"Using best result from iteration {best_result.iteration}")
+```
 
-### 11.3 Discretization Effects
+**Case 3: Initial Bracket Invalid**
+
+```python
+# First iteration with F_high fails
+if iteration_count == 1:
+    raise RuntimeError(
+        f"Mission infeasible even with high fuel estimate ({fuel_high:.1f} kg). "
+        f"Check mission parameters or increase INITIAL_FUEL_HIGH_KG."
+    )
+```
+
+### 9.4 Discretization Effects
 
 **DP Grid Sensitivity:**
 
@@ -970,186 +1422,18 @@ Dynamic programming uses discrete grids:
 **Impact on Convergence:**
 
 Small mass changes can cause optimizer to select different discrete states, leading to:
-- Trajectory jumps
-- Non-smooth fuel response
-- Local oscillations
+- Small trajectory variations
+- Non-smooth fuel response (±10-50 kg jumps)
+- Local fuel consumption variations
+
+**Why Bisection Handles This Well:**
+- Brackets always tighten monotonically regardless of small variations
+- Final result guaranteed within tolerance band
+- No oscillation or divergence from discretization noise
 
 **Mitigation Strategies:**
-1. Finer DP grids (higher resolution)
-2. Bounded updates (limit max change per iteration)
-3. Oscillation detection and damping reduction
-4. Multi-point averaging
+1. Set tolerance (10 kg) larger than typical discretization noise (±5 kg)
+2. Use "best result" selection (smallest |deficit|) rather than last iteration
+3. Apply safety buffer (5%) to account for variations
 
 ---
-
-## 12) Advanced Topics and Extensions
-
-### 12.1 Alternative Acceleration Methods
-
-**Anderson Acceleration:**
-
-Generalization of Aitken using multiple previous iterates:
-
-```math
-F_{k+1} = F_k + \beta \sum_{i=0}^{m} \alpha_i \Delta F_{k-i}
-```
-
-**Quasi-Newton Methods:**
-
-Use approximate Jacobian for superlinear convergence:
-```math
-F_{k+1} = F_k - J_k^{-1} r_k
-```
-
-Where:
-- `J_k`: Approximate Jacobian
-- `r_k = F_k - g(F_k)`: Residual
-
-### 12.2 Hybrid Methods
-
-**Bisection-Relaxation Hybrid:**
-
-Combine guaranteed convergence of bisection with speed of relaxation:
-
-```python
-def hybrid_bisection_relaxation(f_lower, f_upper, tolerance):
-    """
-    Hybrid method: Use relaxation normally, switch to bisection if oscillation detected.
-    """
-    while not converged:
-        # Try relaxation step
-        f_next = relaxation_update(f_current)
-        
-        # Check for oscillation
-        if detected_oscillation():
-            # Switch to bisection
-            f_next = (f_lower + f_upper) / 2.0
-        
-        # Update bounds
-        if g(f_next) > f_next:
-            f_lower = f_next
-        else:
-            f_upper = f_next
-    
-    return f_next
-```
-
-### 12.3 Multi-Start Optimization
-
-**Purpose**: Avoid local minima in non-convex problems
-
-**Implementation:**
-```python
-def multi_start_optimization(initial_guesses, aero, eng):
-    """Run optimization from multiple initial guesses."""
-    results = []
-    
-    for F_0 in initial_guesses:
-        result, history = optimize_fuel_capacity(F_0, aero, eng)
-        results.append((result, history))
-    
-    # Select best result
-    best_result = min(results, key=lambda x: x[0].fuel_consumed_kg)
-    return best_result
-```
-
----
-
-## 13) References and Further Reading
-
-### 13.1 Primary Sources
-
-**Aitken Acceleration:**
-1. Aitken, A.C. (1926). "On Bernoulli's numerical solution of algebraic equations", Proceedings of the Royal Society of Edinburgh
-2. Burden, R.L. & Faires, J.D. "Numerical Analysis", Chapter on Fixed-point Iteration
-
-**Convergence Theory:**
-3. Kelley, C.T. (1995). "Iterative Methods for Linear and Nonlinear Equations", SIAM
-4. Ortega, J.M. & Rheinboldt, W.C. (2000). "Iterative Solution of Nonlinear Equations in Several Variables"
-
-### 13.2 Related Methods
-
-**Anderson Acceleration:**
-5. Anderson, D.G. (1965). "Iterative procedures for nonlinear integral equations", Journal of the ACM
-6. Walker, H.F. & Ni, P. (2011). "Anderson acceleration for fixed-point iterations", SIAM Journal on Numerical Analysis
-
-**Fluid-Structure Interaction:**
-7. Küttler, U. & Wall, W.A. (2008). "Fixed-point fluid-structure interaction solvers with dynamic relaxation", Computational Mechanics
-
-### 13.3 Aerospace Applications
-
-8. Betts, J.T. (2010). "Practical Methods for Optimal Control and Estimation Using Nonlinear Programming"
-9. Bryson, A.E. & Ho, Y.-C. (1975). "Applied Optimal Control: Optimization, Estimation, and Control"
-
----
-
-## 14) Summary and Conclusion
-
-### 14.1 Key Capabilities
-
-The fuel capacity optimization system provides:
-
-✅ **Minimum Fuel Determination**: Systematic optimization to find minimum required fuel  
-✅ **Iterative Convergence**: Fixed-point iteration with Aitken acceleration  
-✅ **Dynamic Mass Tracking**: Accurate mass evolution throughout mission  
-✅ **Performance Monitoring**: Comprehensive metrics for all phases  
-✅ **Safety Integration**: Automatic safety buffer application  
-✅ **Robust Operation**: Error handling and recovery mechanisms  
-
-### 14.2 System Strengths
-
-**Mathematical Rigor:**
-- Implementation of Aitken acceleration (1926) for enhanced convergence
-- Fixed-point iteration with successive underrelaxation
-- Bounded adaptive damping (ω ∈ [0.1, 0.9])
-- Relative convergence criterion (0.5%)
-
-**Physical Accuracy:**
-- Dynamic mass evolution with fuel burn
-- Weight-dependent aerodynamic calculations
-- Coupled climb-cruise-descent optimization
-- Energy and momentum conservation
-
-**Software Quality:**
-- Modular design with clear separation of concerns
-- Comprehensive error handling and validation
-- Performance metric tracking across all mission phases
-- Convergence history management for analysis
-
-### 14.3 Recommended Workflow
-
-1. **Configure Mission** in `mission_config.py`
-2. **Execute Optimizer**: `python main_optimized.py`
-3. **Review Convergence**: Check iteration history and delta values
-4. **Analyze Results**: Examine optimized fuel and performance metrics
-5. **Validate Physics**: Verify mass conservation and performance envelope
-6. **Document Results**: Use convergence plots for reporting
-
-### 14.4 Best Practices
-
-**Parameter Selection:**
-- Initial damping: 0.4 (balanced stability and speed)
-- Enable Aitken acceleration for faster convergence
-- Convergence tolerance: 0.5% (tight but achievable)
-- Safety buffer: 5% (standard margin)
-- Max iterations: 5-20 depending on problem complexity
-
-**Validation:**
-- Always check `history.is_converged()`
-- Monitor convergence delta trend
-- Verify mass conservation
-- Check performance metrics physical realism
-- Review iteration history for oscillations
-
-**Troubleshooting:**
-- Oscillations → Reduce initial damping factor
-- Slow convergence → Increase Aitken bounds
-- Non-convergence → Increase max iterations or check mission feasibility
-- Physical anomalies → Verify DP grid resolution
-
----
-
-**Document Version**: 2.0  
-**Last Updated**: November 2025  
-**Status**: Production-ready  
-**Maintained by**: Mission Analysis System

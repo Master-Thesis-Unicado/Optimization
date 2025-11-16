@@ -37,6 +37,9 @@ from typing import List, Optional
 # Import optimization module
 from mission_fuel_optimizer import ConvergenceHistory, MissionIterationResults, SAFETY_BUFFER_PERCENT
 
+# Import aircraft config for reference values
+from aircraft_config import MAX_FUEL_KG
+
 # Import visualization config
 from visualization_config import (
     Colors, Typography, Layout, LineStyles,
@@ -48,6 +51,7 @@ from visualization_config import (
 def plot_convergence_trajectory(history: ConvergenceHistory, save_plots: bool = True):
     """
     Plot the convergence trajectory showing fuel consumption evolution using Plotly.
+    Uses bisection bounds and fuel deficit tracking.
     
     Args:
         history: Convergence history containing all iterations
@@ -62,95 +66,115 @@ def plot_convergence_trajectory(history: ConvergenceHistory, save_plots: bool = 
     iterations = [r.iteration for r in history.iterations]
     initial_fuels = [r.initial_fuel_kg for r in history.iterations]
     consumed_fuels = [r.fuel_consumed_kg for r in history.iterations]
-    deltas = [abs(r.convergence_delta_percent) for r in history.iterations[1:]]
-    delta_iterations = [r.iteration for r in history.iterations[1:]]
+    fuel_deficits = [r.fuel_deficit_kg for r in history.iterations]
+    
+    # Extract bisection bounds
+    fuel_lows = [bounds[0] for bounds in history.fuel_bounds_history]
+    fuel_highs = [bounds[1] for bounds in history.fuel_bounds_history]
+    bound_ranges = [high - low for low, high in history.fuel_bounds_history]
     
     # Calculate summary metrics
     first_iter = history.iterations[0]
     last_iter = history.iterations[-1]
-    # Use A320 typical maximum fuel capacity as baseline for comparison
-    original_max_fuel = 23860.0  # A320 maximum fuel capacity in kg
     optimized_fuel = last_iter.fuel_consumed_kg * (1.0 + SAFETY_BUFFER_PERCENT)
-    fuel_savings = original_max_fuel - optimized_fuel
-    percent_savings = (fuel_savings / original_max_fuel) * 100
     convergence_iterations = len(history.iterations)
-    final_convergence = abs(last_iter.convergence_delta_percent) if convergence_iterations > 1 else 0
+    final_deficit = abs(last_iter.fuel_deficit_kg)
+    final_range = bound_ranges[-1] if bound_ranges else 0
     
     # Normalize to first iteration for percentage change
     first_fuel = consumed_fuels[0]
     fuel_percent_change = [(f - first_fuel) / first_fuel * 100 for f in consumed_fuels]
     
+    # Calculate fuel savings
+    fuel_reduction = MAX_FUEL_KG - optimized_fuel
+    fuel_reduction_pct = (fuel_reduction / MAX_FUEL_KG) * 100
+    
     # Create summary table data
     summary_data = [
         ['Iterations', f'{convergence_iterations}'],
-        ['Final Delta', f'{final_convergence:.4f}%'],
+        ['Final Deficit', f'{final_deficit:.2f} kg'],
+        ['Final Range', f'{final_range:.2f} kg'],
         ['', ''],
-        ['A320 Max Capacity', f'{original_max_fuel:.1f} kg'],
+        ['Initial Capacity', f'{MAX_FUEL_KG:.1f} kg'],
         ['Optimized Capacity', f'{optimized_fuel:.1f} kg'],
-        ['Fuel Saved', f'{fuel_savings:.1f} kg ({percent_savings:.1f}%)'],
+        ['Fuel Savings', f'{fuel_reduction:.1f} kg ({fuel_reduction_pct:.1f}%)'],
         ['', ''],
         ['Final Time', f'{last_iter.total_time_s/60:.0f} min'],
-        ['Total Distance', f'{last_iter.total_distance_km:.0f} km'],
         ['Final Weight', f'{last_iter.final_weight_kg:.0f} kg']
     ]
     
     # Create subplots
     fig = make_subplots(
         rows=2, cols=2,
-        subplot_titles=('<b>Fuel Capacity Evolution</b>', '<b>Convergence Trajectory</b>',
-                       '<b>Performance Evolution</b>', '<b>Optimization Summary</b>'),
+        subplot_titles=('<b>Bisection Bounds Evolution</b>', '<b>Fuel Deficit Convergence</b>',
+                       '<b>Fuel Change Evolution</b>', '<b>Optimization Summary</b>'),
         specs=[[{"type": "scatter"}, {"type": "scatter"}],
                [{"type": "scatter"}, {"type": "table"}]],
         vertical_spacing=0.12,
         horizontal_spacing=0.10
     )
     
-    # Plot 1: Fuel evolution
+    # Plot 1: Bisection bounds evolution
+    fig.add_trace(go.Scatter(
+        x=iterations, y=fuel_highs,
+        mode='lines+markers',
+        name='Upper Bound',
+        line=dict(color='red', width=3),
+        marker=dict(size=10, symbol='triangle-up'),
+        hovertemplate='<b>Iter %{x}</b><br>Upper: %{y:.1f} kg<extra></extra>'
+    ), row=1, col=1)
+    
     fig.add_trace(go.Scatter(
         x=iterations, y=initial_fuels,
         mode='lines+markers',
-        name='Initial Fuel Estimate',
-        line=dict(color=Colors.CLIMB, width=3),
+        name='Tested Fuel',
+        line=dict(color=Colors.CRUISE, width=3),
         marker=dict(size=10, symbol='circle'),
-        hovertemplate='<b>Iter %{x}</b><br>Initial: %{y:.1f} kg<extra></extra>'
+        hovertemplate='<b>Iter %{x}</b><br>Tested: %{y:.1f} kg<extra></extra>'
+    ), row=1, col=1)
+    
+    fig.add_trace(go.Scatter(
+        x=iterations, y=fuel_lows,
+        mode='lines+markers',
+        name='Lower Bound',
+        line=dict(color='blue', width=3),
+        marker=dict(size=10, symbol='triangle-down'),
+        hovertemplate='<b>Iter %{x}</b><br>Lower: %{y:.1f} kg<extra></extra>'
     ), row=1, col=1)
     
     fig.add_trace(go.Scatter(
         x=iterations, y=consumed_fuels,
         mode='lines+markers',
-        name='Consumed Fuel',
-        line=dict(color=Colors.CRUISE, width=3),
-        marker=dict(size=10, symbol='square'),
+        name='Consumed',
+        line=dict(color='green', width=2, dash='dot'),
+        marker=dict(size=8),
         hovertemplate='<b>Iter %{x}</b><br>Consumed: %{y:.1f} kg<extra></extra>'
     ), row=1, col=1)
     
+    # Plot 2: Fuel deficit (abs value, log scale)
+    abs_deficits = [abs(d) for d in fuel_deficits]
     fig.add_trace(go.Scatter(
-        x=iterations, y=[consumed_fuels[-1]] * len(iterations),
-        mode='lines',
-        name='Converged Value',
-        line=dict(color='red', width=2, dash='dash'),
-        hovertemplate='Converged: %{y:.1f} kg<extra></extra>'
-    ), row=1, col=1)
-    
-    # Plot 2: Convergence delta (log scale)
-    fig.add_trace(go.Scatter(
-        x=delta_iterations, y=deltas,
+        x=iterations, y=abs_deficits,
         mode='lines+markers',
-        name='Convergence Delta',
+        name='Fuel Deficit',
         line=dict(color=Colors.DESCENT, width=3),
         marker=dict(size=10),
-        hovertemplate='<b>Iter %{x}</b><br>Delta: %{y:.4f}%<extra></extra>',
+        hovertemplate='<b>Iter %{x}</b><br>|Deficit|: %{y:.2f} kg<extra></extra>',
         showlegend=False
     ), row=1, col=2)
     
-    fig.add_trace(go.Scatter(
-        x=delta_iterations, y=[0.1] * len(delta_iterations),
-        mode='lines',
-        name='0.1% Tolerance',
-        line=dict(color='green', width=2, dash='dash'),
-        hovertemplate='Tolerance: 0.1%<extra></extra>',
-        showlegend=False
-    ), row=1, col=2)
+    # Note: Convergence stopping rule is based on bounds width, not deficit.
+    # We intentionally do NOT draw a 10 kg dashed line here to avoid implying
+    # that |deficit| < 10 kg is the termination criterion.
+    fig.add_annotation(
+        xref='x2', yref='y2',
+        x=iterations[-1] if len(iterations) > 0 else 1, 
+        y=max(abs_deficits) if len(abs_deficits) > 0 else 1,
+        text="<b>Note</b>: Stopping uses bounds range < 10 kg;<br>|deficit| is diagnostic only.",
+        showarrow=False, align='right',
+        xanchor='right', yanchor='top',
+        font=dict(size=10, color='gray')
+    )
     
     # Plot 3: Performance evolution
     fig.add_trace(go.Scatter(
@@ -189,7 +213,7 @@ def plot_convergence_trajectory(history: ConvergenceHistory, save_plots: bool = 
     fig.update_yaxes(title_text="Fuel (kg)", row=1, col=1)
     
     fig.update_xaxes(title_text="Iteration", row=1, col=2)
-    fig.update_yaxes(title_text="Delta (%)", type="log", row=1, col=2)
+    fig.update_yaxes(title_text="|Deficit| (kg)", type="log", row=1, col=2)
     
     fig.update_xaxes(title_text="Iteration", row=2, col=1)
     fig.update_yaxes(title_text="Change from Iter 1 (%)", row=2, col=1)
@@ -197,14 +221,16 @@ def plot_convergence_trajectory(history: ConvergenceHistory, save_plots: bool = 
     # Update layout
     fig.update_layout(
         title=dict(
-            text="<b>Fuel Capacity Optimization Convergence Analysis</b>",
+            text="<b>Bisection Fuel Optimization Convergence Analysis</b>",
             x=0.5, xanchor='center',
             font=dict(size=18)
         ),
         height=900, width=1400,
         template='plotly_white',
         showlegend=True,
-        legend=dict(orientation='v', yanchor='top', y=0.98, xanchor='right', x=0.48)
+        # Move legend outside to the right to avoid overlapping with plots
+        legend=dict(orientation='v', yanchor='top', y=1.0, xanchor='left', x=1.02),
+        margin=dict(r=200)
     )
     
     if save_plots:
@@ -216,406 +242,97 @@ def plot_convergence_trajectory(history: ConvergenceHistory, save_plots: bool = 
     fig.show()
 
 
-def plot_kpp_evolution(history: ConvergenceHistory, save_plots: bool = True):
-    """
-    Plot evolution of Key Performance Parameters across iterations.
-    
-    Args:
-        history: Convergence history containing all iterations
-        save_plots: Whether to save plots to disk
-    """
-    
-    if len(history.iterations) < 2:
-        print("[WARNING] Need at least 2 iterations to plot KPP evolution")
-        return
-    
-    # Extract KPPs
-    iterations = [r.iteration for r in history.iterations]
-    
-    climb_fuels = [r.climb_fuel_kg for r in history.iterations]
-    cruise_fuels = [r.cruise_fuel_kg for r in history.iterations]
-    descent_fuels = [r.descent_fuel_kg for r in history.iterations]
-    
-    climb_times = [r.climb_time_s / 60 for r in history.iterations]
-    cruise_times = [r.cruise_time_s / 60 for r in history.iterations]
-    descent_times = [r.descent_time_s / 60 for r in history.iterations]
-    
-    initial_masses = [r.initial_mass_kg for r in history.iterations]
-    final_weights = [r.final_weight_kg for r in history.iterations]
-    
-    # Extract aerodynamic data
-    avg_lift_climb = [r.avg_lift_climb_N / 1000 for r in history.iterations]  # Convert to kN
-    avg_drag_climb = [r.avg_drag_climb_N / 1000 for r in history.iterations]
-    avg_lift_cruise = [r.avg_lift_cruise_N / 1000 for r in history.iterations]
-    avg_drag_cruise = [r.avg_drag_cruise_N / 1000 for r in history.iterations]
-    avg_lift_descent = [r.avg_lift_descent_N / 1000 for r in history.iterations]
-    avg_drag_descent = [r.avg_drag_descent_N / 1000 for r in history.iterations]
-    
-    # Calculate efficiencies
-    fuel_efficiencies = []
-    for r in history.iterations:
-        if r.total_distance_km > 0:
-            fuel_efficiencies.append(r.fuel_consumed_kg / r.total_distance_km)
-        else:
-            fuel_efficiencies.append(0.0)
-    
-    # Create interactive Plotly figure with lift and drag
-    fig = make_subplots(
-        rows=4, cols=2,
-        subplot_titles=(
-            '<b>Phase Fuel Consumption</b>',
-            '<b>Phase Duration</b>',
-            '<b>Average Lift Evolution</b>',
-            '<b>Average Drag Evolution</b>',
-            '<b>Weight Evolution</b>',
-            '<b>Fuel Efficiency</b>',
-            '<b>Total Fuel vs Initial Mass</b>',
-            '<b>Mission Overview</b>'
-        ),
-        specs=[
-            [{"type": "scatter"}, {"type": "scatter"}],
-            [{"type": "scatter"}, {"type": "scatter"}],
-            [{"type": "scatter"}, {"type": "scatter"}],
-            [{"type": "scatter"}, {"type": "table"}]
-        ],
-        vertical_spacing=0.08,
-        horizontal_spacing=0.10
-    )
-    
-    # Plot 1: Phase fuel consumption
-    fig.add_trace(
-        go.Scatter(x=iterations, y=climb_fuels, mode='lines+markers', name='Climb',
-                   line=dict(color=Colors.CLIMB, width=3),
-                   marker=dict(size=8)),
-        row=1, col=1
-    )
-    fig.add_trace(
-        go.Scatter(x=iterations, y=cruise_fuels, mode='lines+markers', name='Cruise',
-                   line=dict(color=Colors.CRUISE, width=3),
-                   marker=dict(size=8)),
-        row=1, col=1
-    )
-    fig.add_trace(
-        go.Scatter(x=iterations, y=descent_fuels, mode='lines+markers', name='Descent',
-                   line=dict(color=Colors.DESCENT, width=3),
-                   marker=dict(size=8)),
-        row=1, col=1
-    )
-    
-    # Plot 2: Phase duration
-    fig.add_trace(
-        go.Scatter(x=iterations, y=climb_times, mode='lines+markers', name='Climb Time',
-                   line=dict(color=Colors.CLIMB, width=3),
-                   marker=dict(size=8), showlegend=False),
-        row=1, col=2
-    )
-    fig.add_trace(
-        go.Scatter(x=iterations, y=cruise_times, mode='lines+markers', name='Cruise Time',
-                   line=dict(color=Colors.CRUISE, width=3),
-                   marker=dict(size=8), showlegend=False),
-        row=1, col=2
-    )
-    fig.add_trace(
-        go.Scatter(x=iterations, y=descent_times, mode='lines+markers', name='Descent Time',
-                   line=dict(color=Colors.DESCENT, width=3),
-                   marker=dict(size=8), showlegend=False),
-        row=1, col=2
-    )
-    
-    # Plot 3: Average Lift Evolution
-    fig.add_trace(
-        go.Scatter(x=iterations, y=avg_lift_climb, mode='lines+markers', name='Climb Lift',
-                   line=dict(color=Colors.CLIMB, width=3),
-                   marker=dict(size=8)),
-        row=2, col=1
-    )
-    fig.add_trace(
-        go.Scatter(x=iterations, y=avg_lift_cruise, mode='lines+markers', name='Cruise Lift',
-                   line=dict(color=Colors.CRUISE, width=3),
-                   marker=dict(size=8)),
-        row=2, col=1
-    )
-    fig.add_trace(
-        go.Scatter(x=iterations, y=avg_lift_descent, mode='lines+markers', name='Descent Lift',
-                   line=dict(color=Colors.DESCENT, width=3),
-                   marker=dict(size=8)),
-        row=2, col=1
-    )
-    
-    # Plot 4: Average Drag Evolution
-    fig.add_trace(
-        go.Scatter(x=iterations, y=avg_drag_climb, mode='lines+markers', name='Climb Drag',
-                   line=dict(color=Colors.CLIMB, width=3),
-                   marker=dict(size=8), showlegend=False),
-        row=2, col=2
-    )
-    fig.add_trace(
-        go.Scatter(x=iterations, y=avg_drag_cruise, mode='lines+markers', name='Cruise Drag',
-                   line=dict(color=Colors.CRUISE, width=3),
-                   marker=dict(size=8), showlegend=False),
-        row=2, col=2
-    )
-    fig.add_trace(
-        go.Scatter(x=iterations, y=avg_drag_descent, mode='lines+markers', name='Descent Drag',
-                   line=dict(color=Colors.DESCENT, width=3),
-                   marker=dict(size=8), showlegend=False),
-        row=2, col=2
-    )
-    
-    # Plot 5: Weight evolution
-    fig.add_trace(
-        go.Scatter(x=iterations, y=initial_masses, mode='lines+markers', name='Initial Mass',
-                   line=dict(color='blue', width=3), marker=dict(size=8)),
-        row=3, col=1
-    )
-    fig.add_trace(
-        go.Scatter(x=iterations, y=final_weights, mode='lines+markers', name='Final Weight',
-                   line=dict(color='green', width=3), marker=dict(size=8)),
-        row=3, col=1
-    )
-    
-    # Plot 6: Fuel efficiency
-    fig.add_trace(
-        go.Scatter(x=iterations, y=fuel_efficiencies, mode='lines+markers',
-                   line=dict(color='purple', width=3), marker=dict(size=8),
-                   name='Fuel per Distance'),
-        row=3, col=2
-    )
-    
-    # Plot 7: Fuel vs mass correlation
-    consumed_fuels = [r.fuel_consumed_kg for r in history.iterations]
-    fig.add_trace(
-        go.Scatter(x=initial_masses, y=consumed_fuels, mode='lines+markers',
-                   line=dict(color='orange', width=3), marker=dict(size=8),
-                   name='Fuel vs Mass'),
-        row=4, col=1
-    )
-    
-    # Plot 8: Enhanced Summary table
-    last_result = history.iterations[-1]
-    first_result = history.iterations[0]
-    
-    optimized_capacity = last_result.fuel_consumed_kg * (1 + SAFETY_BUFFER_PERCENT)
-    fuel_savings = first_result.initial_fuel_kg - optimized_capacity
-    percent_savings = (fuel_savings / first_result.initial_fuel_kg) * 100
-    
-    # Calculate phase percentages
-    total_fuel = last_result.fuel_consumed_kg
-    climb_pct = (last_result.climb_fuel_kg / total_fuel) * 100
-    cruise_pct = (last_result.cruise_fuel_kg / total_fuel) * 100
-    descent_pct = (last_result.descent_fuel_kg / total_fuel) * 100
-    
-    # Calculate averages
-    avg_speed_kmh = last_result.total_distance_km / (last_result.total_time_s / 3600)
-    fuel_efficiency = last_result.fuel_consumed_kg / last_result.total_distance_km
-    
-    summary_data = [
-        ['━━━ CONVERGENCE ━━━', ''],
-        ['Iterations', f'{len(history.iterations)}'],
-        ['Final Delta', f'{abs(last_result.convergence_delta_percent):.4f}%'],
-        ['', ''],
-        ['━━━ FUEL OPTIMIZATION ━━━', ''],
-        ['Original Capacity', f'{first_result.initial_fuel_kg:.1f} kg'],
-        ['Optimized Capacity', f'{optimized_capacity:.1f} kg'],
-        ['Fuel Savings', f'{fuel_savings:.1f} kg ({percent_savings:.1f}%)'],
-        ['', ''],
-        ['━━━ PHASE BREAKDOWN ━━━', ''],
-        ['Climb', f'{last_result.climb_fuel_kg:.1f} kg ({climb_pct:.1f}%)'],
-        ['Cruise', f'{last_result.cruise_fuel_kg:.1f} kg ({cruise_pct:.1f}%)'],
-        ['Descent', f'{last_result.descent_fuel_kg:.2f} kg ({descent_pct:.1f}%)'],
-        ['Total Consumed', f'{last_result.fuel_consumed_kg:.1f} kg'],
-        ['', ''],
-        ['━━━ MISSION PERFORMANCE ━━━', ''],
-        ['Total Time', f'{last_result.total_time_s/3600:.2f} h ({last_result.total_time_s/60:.0f} min)'],
-        ['Distance', f'{last_result.total_distance_km:.0f} km'],
-        ['Avg Speed', f'{avg_speed_kmh:.0f} km/h'],
-        ['Fuel Efficiency', f'{fuel_efficiency:.3f} kg/km'],
-        ['', ''],
-        ['━━━ WEIGHT ANALYSIS ━━━', ''],
-        ['Initial Mass', f'{last_result.initial_mass_kg:.0f} kg'],
-        ['Final Weight', f'{last_result.final_weight_kg:.0f} kg'],
-        ['Mass Reduction', f'{last_result.initial_mass_kg - last_result.final_weight_kg:.0f} kg']
-    ]
-    
-    fig.add_trace(
-        go.Table(
-            header=dict(values=['<b>Parameter</b>', '<b>Value</b>'],
-                       fill_color='paleturquoise',
-                       align='center',
-                       font=dict(size=12, color='black', family='Arial')),
-            cells=dict(values=[[row[0] for row in summary_data], [row[1] for row in summary_data]],
-                      fill_color='white',
-                      align=['left', 'right'],
-                      font=dict(size=10, family='Arial'),
-                      height=25)  # Compact row height to fit more data
-        ),
-        row=4, col=2
-    )
-    
-    # Update axes
-    fig.update_xaxes(title_text="Iteration", row=1, col=1)
-    fig.update_yaxes(title_text="Fuel (kg)", row=1, col=1)
-    
-    fig.update_xaxes(title_text="Iteration", row=1, col=2)
-    fig.update_yaxes(title_text="Time (min)", row=1, col=2)
-    
-    fig.update_xaxes(title_text="Iteration", row=2, col=1)
-    fig.update_yaxes(title_text="Lift (kN)", row=2, col=1)
-    
-    fig.update_xaxes(title_text="Iteration", row=2, col=2)
-    fig.update_yaxes(title_text="Drag (kN)", row=2, col=2)
-    
-    fig.update_xaxes(title_text="Iteration", row=3, col=1)
-    fig.update_yaxes(title_text="Weight (kg)", row=3, col=1)
-    
-    fig.update_xaxes(title_text="Iteration", row=3, col=2)
-    fig.update_yaxes(title_text="kg/km", row=3, col=2)
-    
-    fig.update_xaxes(title_text="Initial Mass (kg)", row=4, col=1)
-    fig.update_yaxes(title_text="Consumed Fuel (kg)", row=4, col=1)
-    
-    # Update layout
-    fig.update_layout(
-        title=dict(
-            text="<b>Key Performance Parameter (KPP) Evolution with Aerodynamics</b>",
-            x=0.5, xanchor='center',
-            font=dict(size=18)
-        ),
-        height=1400, width=1600,  # Increased height for 4 rows
-        template='plotly_white',
-        showlegend=True,
-        legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1)
-    )
-    
-    if save_plots:
-        run_dir = get_or_create_run_directory(phase="Optimized")
-        html_path = os.path.join(run_dir, 'kpp_evolution.html')
-        png_path = os.path.join(run_dir, 'kpp_evolution.png')
-        fig.write_html(html_path)
-        try:
-            fig.write_image(png_path, width=1600, height=1000, scale=2)
-            print(f"[EXPORT] KPP evolution saved to: {html_path} and {png_path}")
-        except Exception as e:
-            print(f"[EXPORT] KPP evolution saved to: {html_path} (HTML only)")
-            print(f"[WARNING] Could not save PNG: {e}")
-    
-    fig.show()
-
-
 def plot_optimization_comparison(history: ConvergenceHistory, save_plots: bool = True):
     """
-    Create a comprehensive comparison of first vs final iteration performance using Plotly.
+    Create a comprehensive comparison showing optimization results using Plotly.
+    
+    Shows the optimized mission performance and capacity savings compared to original MAX_FUEL_KG.
     
     Args:
         history: Convergence history containing all iterations
         save_plots: Whether to save plots to disk
     """
     
-    if len(history.iterations) < 2:
-        print("[WARNING] Need at least 2 iterations for comparison")
+    if len(history.iterations) < 1:
+        print("[WARNING] Need at least 1 iteration for comparison")
         return
     
-    first = history.iterations[0]
+    # Use the final converged result
     final = history.iterations[-1]
     
-    # Calculate data
-    phases = ['Climb', 'Cruise', 'Descent', 'Total']
-    first_fuels = [first.climb_fuel_kg, first.cruise_fuel_kg, first.descent_fuel_kg, first.fuel_consumed_kg]
-    final_fuels = [final.climb_fuel_kg, final.cruise_fuel_kg, final.descent_fuel_kg, final.fuel_consumed_kg]
-    
-    first_times = [first.climb_time_s / 3600, first.cruise_time_s / 3600, first.descent_time_s / 3600, first.total_time_s / 3600]
-    final_times = [final.climb_time_s / 3600, final.cruise_time_s / 3600, final.descent_time_s / 3600, final.total_time_s / 3600]
-    
-    improvements = [(f - fin) / f * 100 if f > 0 else 0.0 for f, fin in zip(first_fuels, final_fuels)]
-    
-    # Calculate summary metrics
+    # Calculate optimized capacity with safety buffer
     optimized_capacity = final.fuel_consumed_kg * (1 + SAFETY_BUFFER_PERCENT)
-    # Use A320 typical maximum fuel capacity as baseline for comparison
-    original_max_capacity = 23860.0  # A320 maximum fuel capacity in kg
-    capacity_savings = original_max_capacity - optimized_capacity
-    capacity_savings_pct = (capacity_savings / original_max_capacity) * 100
-    fuel_reduction = first.fuel_consumed_kg - final.fuel_consumed_kg
-    fuel_reduction_pct = (fuel_reduction / first.fuel_consumed_kg) * 100
-    mass_reduction = first.initial_mass_kg - final.initial_mass_kg
-    mass_reduction_pct = (mass_reduction / first.initial_mass_kg) * 100
-    time_diff = final.total_time_s - first.total_time_s
-    first_efficiency = first.fuel_consumed_kg / first.total_distance_km
-    final_efficiency = final.fuel_consumed_kg / final.total_distance_km
-    efficiency_improvement = ((first_efficiency - final_efficiency) / first_efficiency) * 100
+    capacity_reduction = MAX_FUEL_KG - optimized_capacity
+    capacity_reduction_pct = (capacity_reduction / MAX_FUEL_KG) * 100
+    
+    # Phase-wise data for optimized mission
+    phases = ['Climb', 'Cruise', 'Descent', 'Total']
+    optimized_fuels = [final.climb_fuel_kg, final.cruise_fuel_kg, final.descent_fuel_kg, final.fuel_consumed_kg]
+    optimized_times = [final.climb_time_s / 3600, final.cruise_time_s / 3600, final.descent_time_s / 3600, final.total_time_s / 3600]
+    
+    # Fuel breakdown percentages
+    fuel_percentages = [(f / final.fuel_consumed_kg * 100) if final.fuel_consumed_kg > 0 else 0.0 for f in optimized_fuels[:-1]]
+    fuel_percentages.append(100.0)  # Total is always 100%
     
     # Create summary table
     summary_data = [
         ['Iterations', f'{len(history.iterations)}'],
-        ['Final Delta', f'{abs(final.convergence_delta_percent):.4f}%'],
+        ['Final Deficit', f'{abs(final.fuel_deficit_kg):.2f} kg'],
+        ['Convergence Status', 'Equilibrium Achieved' if abs(final.fuel_deficit_kg) < 50 else 'Near Equilibrium'],
         ['', ''],
-        ['A320 Max Capacity', f'{original_max_capacity:.1f} kg'],
+        ['Original Capacity', f'{MAX_FUEL_KG:.1f} kg'],
         ['Optimized Capacity', f'{optimized_capacity:.1f} kg'],
-        ['Capacity Savings', f'{capacity_savings:.1f} kg ({capacity_savings_pct:.1f}%)'],
+        ['Capacity Savings', f'{capacity_reduction:.1f} kg ({capacity_reduction_pct:.1f}%)'],
         ['', ''],
-        ['Fuel Reduction', f'{fuel_reduction:.1f} kg ({fuel_reduction_pct:.2f}%)'],
-        ['Mass Reduction', f'{mass_reduction:.1f} kg ({mass_reduction_pct:.1f}%)'],
-        ['Time Change', f'{time_diff/60:.1f} min'],
-        ['', ''],
-        ['Efficiency Improvement', f'{efficiency_improvement:.2f}%']
+        ['Mission Duration', f'{final.total_time_s/3600:.2f} hours'],
+        ['Final Weight', f'{final.final_weight_kg:.0f} kg']
     ]
     
     # Create subplots
     fig = make_subplots(
         rows=2, cols=2,
-        subplot_titles=('<b>Fuel Consumption Comparison</b>', '<b>Fuel Savings by Phase</b>',
-                       '<b>Mission Duration Comparison</b>', '<b>Optimization Impact</b>'),
+        subplot_titles=('<b>Capacity Comparison</b>', '<b>Fuel Breakdown by Phase</b>',
+                       '<b>Mission Duration by Phase</b>', '<b>Optimization Summary</b>'),
         specs=[[{"type": "bar"}, {"type": "bar"}],
                [{"type": "bar"}, {"type": "table"}]],
         vertical_spacing=0.15,
         horizontal_spacing=0.12
     )
     
-    # Plot 1: Fuel comparison
-    fig.add_trace(go.Bar(
-        x=phases, y=first_fuels,
-        name='Iteration 1',
-        marker_color='lightblue',
-        hovertemplate='<b>Iter 1 - %{x}</b><br>Fuel: %{y:.1f} kg<extra></extra>'
-    ), row=1, col=1)
+    # Plot 1: Capacity comparison (Original vs Optimized)
+    capacity_labels = ['Original\nCapacity', 'Optimized\nCapacity', 'Savings']
+    capacity_values = [MAX_FUEL_KG, optimized_capacity, capacity_reduction]
+    capacity_colors = ['lightcoral', 'lightgreen', 'gold']
     
     fig.add_trace(go.Bar(
-        x=phases, y=final_fuels,
-        name='Final Iteration',
-        marker_color='darkblue',
-        hovertemplate=f'<b>Iter {final.iteration} - %{{x}}</b><br>Fuel: %{{y:.1f}} kg<extra></extra>'
+        x=capacity_labels, 
+        y=capacity_values,
+        marker_color=capacity_colors,
+        text=[f'{v:.1f} kg' for v in capacity_values],
+        textposition='outside',
+        hovertemplate='<b>%{x}</b><br>Fuel: %{y:.1f} kg<extra></extra>',
+        showlegend=False
     ), row=1, col=1)
     
-    # Plot 2: Improvement percentages
+    # Plot 2: Fuel breakdown by phase (optimized mission)
     fig.add_trace(go.Bar(
-        x=phases, y=improvements,
-        name='Fuel Savings',
-        marker_color='green',
-        hovertemplate='<b>%{x}</b><br>Savings: %{y:.2f}%<extra></extra>',
+        x=phases, 
+        y=optimized_fuels,
+        marker_color=[Colors.CLIMB, Colors.CRUISE, Colors.DESCENT, 'navy'],
+        text=[f'{f:.1f} kg<br>({p:.1f}%)' for f, p in zip(optimized_fuels, fuel_percentages)],
+        textposition='outside',
+        hovertemplate='<b>%{x}</b><br>Fuel: %{y:.1f} kg<extra></extra>',
         showlegend=False
     ), row=1, col=2)
     
-    fig.add_trace(go.Scatter(
-        x=phases, y=[0]*len(phases),
-        mode='lines',
-        line=dict(color='black', width=1),
-        showlegend=False,
-        hoverinfo='skip'
-    ), row=1, col=2)
-    
-    # Plot 3: Time comparison
+    # Plot 3: Mission duration by phase (optimized mission)
     fig.add_trace(go.Bar(
-        x=phases, y=first_times,
-        name='Iteration 1',
-        marker_color='lightcoral',
-        hovertemplate='<b>Iter 1 - %{x}</b><br>Time: %{y:.2f} h<extra></extra>',
-        showlegend=False
-    ), row=2, col=1)
-    
-    fig.add_trace(go.Bar(
-        x=phases, y=final_times,
-        name='Final Iteration',
-        marker_color='darkred',
-        hovertemplate=f'<b>Iter {final.iteration} - %{{x}}</b><br>Time: %{{y:.2f}} h<extra></extra>',
+        x=phases, 
+        y=optimized_times,
+        marker_color=[Colors.CLIMB, Colors.CRUISE, Colors.DESCENT, 'navy'],
+        text=[f'{t:.2f} h' for t in optimized_times],
+        textposition='outside',
+        hovertemplate='<b>%{x}</b><br>Time: %{y:.2f} h<extra></extra>',
         showlegend=False
     ), row=2, col=1)
     
@@ -633,34 +350,33 @@ def plot_optimization_comparison(history: ConvergenceHistory, save_plots: bool =
     ), row=2, col=2)
     
     # Update axes
-    fig.update_xaxes(title_text="Phase", row=1, col=1)
-    fig.update_yaxes(title_text="Fuel (kg)", row=1, col=1)
+    fig.update_xaxes(title_text="", row=1, col=1)
+    fig.update_yaxes(title_text="Fuel Capacity (kg)", row=1, col=1)
     
     fig.update_xaxes(title_text="Phase", row=1, col=2)
-    fig.update_yaxes(title_text="Improvement (%)", row=1, col=2)
+    fig.update_yaxes(title_text="Fuel Consumed (kg)", row=1, col=2)
     
     fig.update_xaxes(title_text="Phase", row=2, col=1)
-    fig.update_yaxes(title_text="Time (hours)", row=2, col=1)
+    fig.update_yaxes(title_text="Duration (hours)", row=2, col=1)
     
     # Update layout
     fig.update_layout(
         title=dict(
-            text="<b>Optimization Performance Comparison</b><br><sup>Iteration 1 vs Final Iteration</sup>",
+            text="<b>Optimization Results Summary</b><br><sup>Optimized Mission Performance</sup>",
             x=0.5, xanchor='center',
             font=dict(size=18)
         ),
         height=900, width=1400,
         template='plotly_white',
-        showlegend=True,
-        legend=dict(orientation='v', yanchor='top', y=0.98, xanchor='right', x=0.48),
+        showlegend=False,
         barmode='group'
     )
     
     if save_plots:
         run_dir = get_or_create_run_directory(phase="Optimized")
-        html_path = os.path.join(run_dir, 'optimization_comparison.html')
+        html_path = os.path.join(run_dir, 'optimization_results_summary.html')
         fig.write_html(html_path)
-        print(f"[EXPORT] Optimization comparison saved to: {html_path}")
+        print(f"[EXPORT] Optimization results summary saved to: {html_path}")
     
     fig.show()
 
@@ -1047,7 +763,7 @@ def plot_specific_energy_evolution(history: ConvergenceHistory, save_plots: bool
 
 def visualize_convergence_analysis(history: ConvergenceHistory, save_plots: bool = True):
     """
-    Master function to create all convergence analysis visualizations.
+    Master function to create convergence analysis visualizations.
     
     Args:
         history: Convergence history containing all iterations
@@ -1056,15 +772,13 @@ def visualize_convergence_analysis(history: ConvergenceHistory, save_plots: bool
     
     print("\n[PLOTTING] Creating convergence analysis visualizations...")
     
-    # Create consolidated plots (fewer windows, more content per window)
+    # Create consolidated plots (simplified for bisection method)
     plot_convergence_trajectory(history, save_plots)
-    plot_kpp_evolution(history, save_plots)
     plot_optimization_comparison(history, save_plots)
     
-    # Consolidated advanced plots (multiple plots per window)
-    plot_aerodynamic_performance_analysis(history, save_plots)  # Combines L/D + Thrust Lever
-    plot_3d_trajectory_comparison(history, save_plots)          # Keep 3D trajectory separate
-    plot_specific_energy_evolution(history, save_plots)        # Keep energy analysis separate
+    # Advanced plots removed: aerodynamic metrics, specific energy, KPP evolution, etc.
+    # These require performance calculator which was removed in bisection refactoring
+    # Note: plot_3d_trajectory_comparison also disabled (requires deleted fields)
     
     print("[PLOTTING] Convergence analysis complete!")
 
