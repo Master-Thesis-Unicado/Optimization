@@ -55,7 +55,7 @@ class SystemConfiguration:
     DEFAULT_PASSENGERS = 108       # Scaled passenger capacity (0.6× of 180 = 108 seats)
     
     # Fuel weight (scaled for smaller aircraft)
-    MAX_FUEL_KG      = 16500   # 14500 / Unicado Design Report Data 
+    MAX_FUEL_KG      = 14500   # 14500 / Unicado Design Report Data 
     
     # Calculated weights
     @property

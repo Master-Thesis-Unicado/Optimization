@@ -1184,10 +1184,10 @@ class ClimbingCore:
         TARGET_MACH_TOLERANCE = 0.015  # Tolerance for target Mach constraint in DP
         
         # Mach trajectory guidance constants45
-        MACH_PENALTY_BASE_WEIGHT = 0.3  # Base penalty weight (kg per Mach² deviation)
-        MAX_REASONABLE_MACH_RATE = 0.05  # Max reasonable Mach change per optimization step
+        MACH_PENALTY_BASE_WEIGHT = 0.15  # Base penalty weight (kg per Mach² deviation)
+        MAX_REASONABLE_MACH_RATE = 0.1  # Max reasonable Mach change per optimization step
         TOTAL_CLIMB_STEPS_ESTIMATE = N_ALTITUDE_STEPS_CLIMB  # Matches DP optimization grid resolution
-        URGENCY_MULTIPLIER = 2.0  # How much urgency scales with altitude progress  
+        URGENCY_MULTIPLIER = 1.8  # How much urgency scales with altitude progress  
         GUIDANCE_PENALTY_WEIGHT = 0.3  # Strong guidance penalty when inside reachable corridor (increased from 0.1)
         
         # Lever penalty guidance constants
