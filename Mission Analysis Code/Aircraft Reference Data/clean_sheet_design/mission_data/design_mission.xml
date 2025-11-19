@@ -1,0 +1,1301 @@
+<mission>
+    <range description="Mission range">
+        <value>4537400</value>
+        <unit>m</unit>
+        <lower_boundary>0</lower_boundary>
+        <upper_boundary>100000000</upper_boundary>
+    </range>
+    <payload description="Payload mass">
+        <value>19300</value>
+        <unit>kg</unit>
+        <lower_boundary>0</lower_boundary>
+        <upper_boundary>100000</upper_boundary>
+    </payload>
+    <number_of_pax description="Number of passenger (Mass per PAX = 95 kg)">
+        <value>180</value>
+        <unit>1</unit>
+        <lower_boundary>0</lower_boundary>
+        <upper_boundary>1000</upper_boundary>
+    </number_of_pax>
+    <cargo_mass description="Cargo mass">
+        <value>2200</value>
+        <unit>kg</unit>
+        <lower_boundary>0</lower_boundary>
+        <upper_boundary>100000</upper_boundary>
+    </cargo_mass>
+    <desired_cruise_speed description="Planned cruise Mach number for fuel calculation">
+        <value>0.78</value>
+        <unit>1</unit>
+        <lower_boundary>0</lower_boundary>
+        <upper_boundary>1</upper_boundary>
+    </desired_cruise_speed>
+    <alternate_distance description="Distance from destination to alternate aerodrome">
+        <value>370400.2</value>
+        <unit>m</unit>
+        <lower_boundary>0</lower_boundary>
+        <upper_boundary>10000000</upper_boundary>
+    </alternate_distance>
+    <taxi_time_origin description="Taxi time at departure airport">
+        <value>540</value>
+        <unit>s</unit>
+        <lower_boundary>0</lower_boundary>
+        <upper_boundary>10000</upper_boundary>
+    </taxi_time_origin>
+    <taxi_time_destination description="Taxi time at destination">
+        <value>300</value>
+        <unit>s</unit>
+        <lower_boundary>0</lower_boundary>
+        <upper_boundary>10000</upper_boundary>
+    </taxi_time_destination>
+    <engine_warmup_time description="Running time of the engines before take-off">
+        <value>0</value>
+        <unit>s</unit>
+        <lower_boundary>0</lower_boundary>
+        <upper_boundary>10000</upper_boundary>
+    </engine_warmup_time>
+    <terminal_operation_time description="Time at the terminal for stopovers">
+        <value>1500</value>
+        <unit>s</unit>
+        <lower_boundary>0</lower_boundary>
+        <upper_boundary>10000</upper_boundary>
+    </terminal_operation_time>
+    <taxiing_procedure description="Taxiing procedure for start and landing.">
+        <value>propulsion_taxiing</value>
+    </taxiing_procedure>
+    <departure description="Departure procedure; mode Takeoff: %N1 (double), aerodynamic configuration (string). -- mode Climb: %N1 (double), aerodynamic configuration (string), End Point Altitude [m] (double). -- mode Accelerate: %N1 (double), aerodynamic configuration (string), Rate of climb [m/s] (double), End point CAS [m/s] (double) -- Alternatively, use the names from the ANP database">
+        <departure_step ID="0" description="Single departure step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>takeoff</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>takeoff</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>takeoff</value>
+            </rating>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>2.197380386</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>90599.3514</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </departure_step>
+        <departure_step ID="1" description="Single departure step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>takeoff_landing_gear_retracted</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>climb</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>climb</value>
+            </rating>
+            <altitude description="Altitude at the end of this step">
+                <value>457.2</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </altitude>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.508074723</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>90597.90444</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+                <takeoff_schedule_step ID="0">
+                    <power description="peak power">
+                        <value>89034.33711</value>
+                        <unit>W</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </power>
+                    <time description="duration of the peak">
+                        <value>10</value>
+                        <unit>s</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </time>
+                </takeoff_schedule_step>
+            </shaft_power_takeoff_schedule>
+        </departure_step>
+        <departure_step ID="2" description="Single departure step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>takeoff_landing_gear_retracted</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>climb</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>climb</value>
+            </rating>
+            <altitude description="Altitude at the end of this step">
+                <value>914.4</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </altitude>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.462412571</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>90592.6507</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </departure_step>
+        <departure_step ID="3" description="Single departure step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>climb</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>accelerate</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>climb</value>
+            </rating>
+            <calibrated_airspeed description="Calibrated airspeed at the end of this step">
+                <value>108.0333332</value>
+                <unit>m/s</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>250</upper_boundary>
+            </calibrated_airspeed>
+            <rate_of_climb_limit description="Maximum rate of climb limit during this step (no limit set = full thrust climb)">
+                <value>5.08</value>
+                <unit>m/s</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>25.4</upper_boundary>
+            </rate_of_climb_limit>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.441975435</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>92721.12602</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </departure_step>
+        <departure_step ID="4" description="Single departure step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>clean</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>accelerate</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>climb</value>
+            </rating>
+            <calibrated_airspeed description="Calibrated airspeed at the end of this step">
+                <value>128.6112</value>
+                <unit>m/s</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>250</upper_boundary>
+            </calibrated_airspeed>
+            <rate_of_climb_limit description="Maximum rate of climb limit during this step (no limit set = full thrust climb)">
+                <value>6.096</value>
+                <unit>m/s</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>25.4</upper_boundary>
+            </rate_of_climb_limit>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.447155611</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>97332.55357</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+                <takeoff_schedule_step ID="0">
+                    <power description="peak power">
+                        <value>13963.6913</value>
+                        <unit>W</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </power>
+                    <time description="duration of the peak">
+                        <value>22</value>
+                        <unit>s</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </time>
+                </takeoff_schedule_step>
+            </shaft_power_takeoff_schedule>
+        </departure_step>
+        <departure_step ID="5" description="Single departure step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>clean</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>climb</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>climb</value>
+            </rating>
+            <altitude description="Altitude at the end of this step">
+                <value>3048</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </altitude>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.340739538</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>97182.83785</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </departure_step>
+    </departure>
+    <cruise description="Cruise procedure: mode change_speed_to_CAS:  %N1 (double), aerodynamic configuration (string), Rate of climb [m/s] (double), End point CAS [m/s] (double) -- mode change_speed_to_Mach: %N1 (double), aerodynamic configuration (string), Rate of climb [m/s] (double), End point CAS [m/s] (double) -- mode climb_to_cruise:  %N1 (double), aerodynamic configuration (string), End Point Altitude [m] (double), Mach [-] (double). -- mode cruise: aerodynamic configuration (string), Range [%] (double, relative distance at the end of the cruise segment without climb and descent) -- mode change_flight_level: %N1 (double), aerodynamic configuration (string), End Point Altitude [m] (double). -- mode descriptionent_to_approach: aerodynamic configuration (string), End Point Altitude [m] (double).">
+        <cruise_step ID="0" description="Single cruise step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>clean</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>change_speed_to_CAS</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>climb</value>
+            </rating>
+            <rate_of_climb_limit description="Maximum rate of climb during this step (empty value = climb with full thrust)">
+                <value>1.524</value>
+                <unit>m/s</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>25.4</upper_boundary>
+            </rate_of_climb_limit>
+            <calibrated_airspeed description="Calibrated airspeed at the end of this step">
+                <value>154.3334</value>
+                <unit>m/s</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>250</upper_boundary>
+            </calibrated_airspeed>
+            <auto_select_optimum_flight_level description="Parameters to handle automatized flight_level changes">
+                <enabled description="Switch for automatic selection of the optimum flight level of the cruise step">
+                    <value>false</value>
+                </enabled>
+                <auto_climb_step_height description="Height difference for an automatic altitude change step.">
+                    <value>0</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>5000</upper_boundary>
+                </auto_climb_step_height>
+            </auto_select_optimum_flight_level>
+            <flight_management_system description="Flight management system settings">
+                <enabled description="Switch to indicate if a flight management system is equipped">
+                    <value>false</value>
+                </enabled>
+                <cost_index description="Cost index [kg/min], scaled 0 to 999 according to Sperry/Honeywell">
+                    <value>0</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>999</upper_boundary>
+                </cost_index>
+            </flight_management_system>
+            <round_to_regular_flight_level description="Switch to round the flight level to multiples of 10">
+                <value>true</value>
+            </round_to_regular_flight_level>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.253612197</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>104571.8412</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </cruise_step>
+        <cruise_step ID="1" description="Single cruise step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>clean</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>climb_to_cruise</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>climb</value>
+            </rating>
+            <mach_number description="Mach number at the end of this step">
+                <value>0.76</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1</upper_boundary>
+            </mach_number>
+            <altitude description="Altitude at the end of this step">
+                <value>10058.4</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </altitude>
+            <auto_select_optimum_flight_level description="Parameters to handle automatized flight_level changes">
+                <enabled description="Switch for automatic selection of the optimum flight level of the cruise step">
+                    <value>false</value>
+                </enabled>
+                <auto_climb_step_height description="Height difference for an automatic altitude change step.">
+                    <value>0</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>5000</upper_boundary>
+                </auto_climb_step_height>
+            </auto_select_optimum_flight_level>
+            <flight_management_system description="Flight management system settings">
+                <enabled description="Switch to indicate if a flight management system is equipped">
+                    <value>false</value>
+                </enabled>
+                <cost_index description="Cost index [kg/min], scaled 0 to 999 according to Sperry/Honeywell">
+                    <value>0</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>999</upper_boundary>
+                </cost_index>
+            </flight_management_system>
+            <round_to_regular_flight_level description="Switch to round the flight level to multiples of 10">
+                <value>true</value>
+            </round_to_regular_flight_level>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>1.024591634</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>113188.3468</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </cruise_step>
+        <cruise_step ID="2" description="Single cruise step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>clean</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>change_speed_to_Mach</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>climb</value>
+            </rating>
+            <mach_number description="Mach number at the end of this step">
+                <value>0.78</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1</upper_boundary>
+            </mach_number>
+            <auto_select_optimum_flight_level description="Parameters to handle automatized flight_level changes">
+                <enabled description="Switch for automatic selection of the optimum flight level of the cruise step">
+                    <value>false</value>
+                </enabled>
+                <auto_climb_step_height description="Height difference for an automatic altitude change step.">
+                    <value>0</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>5000</upper_boundary>
+                </auto_climb_step_height>
+            </auto_select_optimum_flight_level>
+            <flight_management_system description="Flight management system settings">
+                <enabled description="Switch to indicate if a flight management system is equipped">
+                    <value>false</value>
+                </enabled>
+                <cost_index description="Cost index [kg/min], scaled 0 to 999 according to Sperry/Honeywell">
+                    <value>0</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>999</upper_boundary>
+                </cost_index>
+            </flight_management_system>
+            <round_to_regular_flight_level description="Switch to round the flight level to multiples of 10">
+                <value>true</value>
+            </round_to_regular_flight_level>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>1.024591634</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>112680.999</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </cruise_step>
+        <cruise_step ID="3" description="Single cruise step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>clean</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>cruise</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>cruise</value>
+            </rating>
+            <relative_segment_length description="The end of this cruise step relative to the whole cruise flight phase">
+                <value>0.4997727931</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1</upper_boundary>
+            </relative_segment_length>
+            <auto_select_optimum_flight_level description="Parameters to handle automatized flight_level changes">
+                <enabled description="Switch for automatic selection of the optimum flight level of the cruise step">
+                    <value>false</value>
+                </enabled>
+                <auto_climb_step_height description="Height difference for an automatic altitude change step.">
+                    <value>0</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>5000</upper_boundary>
+                </auto_climb_step_height>
+            </auto_select_optimum_flight_level>
+            <flight_management_system description="Flight management system settings">
+                <enabled description="Switch to indicate if a flight management system is equipped">
+                    <value>false</value>
+                </enabled>
+                <cost_index description="Cost index [kg/min], scaled 0 to 999 according to Sperry/Honeywell">
+                    <value>0</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>999</upper_boundary>
+                </cost_index>
+            </flight_management_system>
+            <round_to_regular_flight_level description="Switch to round the flight level to multiples of 10">
+                <value>true</value>
+            </round_to_regular_flight_level>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>1.024591634</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>113509.9595</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </cruise_step>
+        <cruise_step ID="4" description="Single cruise step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>clean</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>change_flight_level_constant_ROC</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>climb</value>
+            </rating>
+            <rate_of_climb_limit description="Maximum rate of climb during this step (empty value = climb with full thrust)">
+                <value>1.524</value>
+                <unit>m/s</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>25.4</upper_boundary>
+            </rate_of_climb_limit>
+            <altitude description="Altitude at the end of this step">
+                <value>10668</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </altitude>
+            <auto_select_optimum_flight_level description="Parameters to handle automatized flight_level changes">
+                <enabled description="Switch for automatic selection of the optimum flight level of the cruise step">
+                    <value>false</value>
+                </enabled>
+                <auto_climb_step_height description="Height difference for an automatic altitude change step.">
+                    <value>0</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>5000</upper_boundary>
+                </auto_climb_step_height>
+            </auto_select_optimum_flight_level>
+            <flight_management_system description="Flight management system settings">
+                <enabled description="Switch to indicate if a flight management system is equipped">
+                    <value>false</value>
+                </enabled>
+                <cost_index description="Cost index [kg/min], scaled 0 to 999 according to Sperry/Honeywell">
+                    <value>0</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>999</upper_boundary>
+                </cost_index>
+            </flight_management_system>
+            <round_to_regular_flight_level description="Switch to round the flight level to multiples of 10">
+                <value>true</value>
+            </round_to_regular_flight_level>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>1.024591634</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>113388.058</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </cruise_step>
+        <cruise_step ID="5" description="Single cruise step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>clean</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>cruise</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>cruise</value>
+            </rating>
+            <relative_segment_length description="The end of this cruise step relative to the whole cruise flight phase">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1</upper_boundary>
+            </relative_segment_length>
+            <auto_select_optimum_flight_level description="Parameters to handle automatized flight_level changes">
+                <enabled description="Switch for automatic selection of the optimum flight level of the cruise step">
+                    <value>false</value>
+                </enabled>
+                <auto_climb_step_height description="Height difference for an automatic altitude change step.">
+                    <value>0</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>5000</upper_boundary>
+                </auto_climb_step_height>
+            </auto_select_optimum_flight_level>
+            <flight_management_system description="Flight management system settings">
+                <enabled description="Switch to indicate if a flight management system is equipped">
+                    <value>false</value>
+                </enabled>
+                <cost_index description="Cost index [kg/min], scaled 0 to 999 according to Sperry/Honeywell">
+                    <value>0</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>999</upper_boundary>
+                </cost_index>
+            </flight_management_system>
+            <round_to_regular_flight_level description="Switch to round the flight level to multiples of 10">
+                <value>true</value>
+            </round_to_regular_flight_level>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>1.024591634</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>113249.2395</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </cruise_step>
+        <cruise_step ID="6" description="Single cruise step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>clean</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>descend_to_approach</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>idle</value>
+            </rating>
+            <calibrated_airspeed description="Calibrated airspeed at the end of this step">
+                <value>154.3334</value>
+                <unit>m/s</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>250</upper_boundary>
+            </calibrated_airspeed>
+            <altitude description="Altitude at the end of this step">
+                <value>3048</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </altitude>
+            <auto_select_optimum_flight_level description="Parameters to handle automatized flight_level changes">
+                <enabled description="Switch for automatic selection of the optimum flight level of the cruise step">
+                    <value>false</value>
+                </enabled>
+                <auto_climb_step_height description="Height difference for an automatic altitude change step.">
+                    <value>0</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>5000</upper_boundary>
+                </auto_climb_step_height>
+            </auto_select_optimum_flight_level>
+            <flight_management_system description="Flight management system settings">
+                <enabled description="Switch to indicate if a flight management system is equipped">
+                    <value>false</value>
+                </enabled>
+                <cost_index description="Cost index [kg/min], scaled 0 to 999 according to Sperry/Honeywell">
+                    <value>0</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>999</upper_boundary>
+                </cost_index>
+            </flight_management_system>
+            <round_to_regular_flight_level description="Switch to round the flight level to multiples of 10">
+                <value>true</value>
+            </round_to_regular_flight_level>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>1.024591634</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>114016.1063</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </cruise_step>
+    </cruise>
+    <approach description="Approach procedure: mode descent: aerodynamic configuration (string), End Point Altitude [m] (double), glidepath [deg] (double). -- mode change_speed: aerodynamic configuration (string), Ground distance [m] (double), End point CAS [m/s] (double), glidepath [deg] (double). -- mode landing: aerodynamic configuration (string), End Point Altitude [m] (double), glidepath [deg] (double).">
+        <approach_step ID="0" description="Single approach step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>clean</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>change_speed</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>idle</value>
+            </rating>
+            <calibrated_airspeed description="Calibrated airspeed at the end of this step">
+                <value>128.6112</value>
+                <unit>m/s</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>250</upper_boundary>
+            </calibrated_airspeed>
+            <ground_distance description="Distance to the ground">
+                <value>1524</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </ground_distance>
+            <glide_path description="Angle between glide path and runway">
+                <value>0</value>
+                <unit>rad</unit>
+                <lower_boundary>-0.35</lower_boundary>
+                <upper_boundary>0.35</upper_boundary>
+            </glide_path>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.236476285</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>101447.4382</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </approach_step>
+        <approach_step ID="1" description="Single approach step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>clean</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>descend</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>cruise</value>
+            </rating>
+            <altitude description="Altitude at the end of this step">
+                <value>914.4</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </altitude>
+            <glide_path description="Angle between glide path and runway">
+                <value>-0.0523598775</value>
+                <unit>rad</unit>
+                <lower_boundary>-0.35</lower_boundary>
+                <upper_boundary>0.35</upper_boundary>
+            </glide_path>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.339638021</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>98447.87244</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </approach_step>
+        <approach_step ID="2" description="Single approach step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>approach</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>change_speed</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>idle</value>
+            </rating>
+            <calibrated_airspeed description="Calibrated airspeed at the end of this step">
+                <value>87.45555548</value>
+                <unit>m/s</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>250</upper_boundary>
+            </calibrated_airspeed>
+            <ground_distance description="Distance to the ground">
+                <value>3048</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </ground_distance>
+            <glide_path description="Angle between glide path and runway">
+                <value>0</value>
+                <unit>rad</unit>
+                <lower_boundary>-0.35</lower_boundary>
+                <upper_boundary>0.35</upper_boundary>
+            </glide_path>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.441098129</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>93933.50492</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+                <takeoff_schedule_step ID="0">
+                    <power description="peak power">
+                        <value>11644.6203</value>
+                        <unit>W</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </power>
+                    <time description="duration of the peak">
+                        <value>22</value>
+                        <unit>s</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </time>
+                </takeoff_schedule_step>
+            </shaft_power_takeoff_schedule>
+        </approach_step>
+        <approach_step ID="3" description="Single approach step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>approach_landing_gear_out</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>level_glide_slope_interception</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>cruise</value>
+            </rating>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.436881793</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>90180.09488</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </approach_step>
+        <approach_step ID="4" description="Single approach step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>approach_landing_gear_out</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>change_speed</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>idle</value>
+            </rating>
+            <calibrated_airspeed description="Calibrated airspeed at the end of this step">
+                <value>70.22222222</value>
+                <unit>m/s</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>250</upper_boundary>
+            </calibrated_airspeed>
+            <ground_distance description="Distance to the ground">
+                <value>1828.8</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </ground_distance>
+            <glide_path description="Angle between glide path and runway">
+                <value>-0.0523598775</value>
+                <unit>rad</unit>
+                <lower_boundary>-0.35</lower_boundary>
+                <upper_boundary>0.35</upper_boundary>
+            </glide_path>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.435376438</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>88840.0176</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+                <takeoff_schedule_step ID="0">
+                    <power description="peak power">
+                        <value>66775.75283</value>
+                        <unit>W</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </power>
+                    <time description="duration of the peak">
+                        <value>10</value>
+                        <unit>s</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </time>
+                </takeoff_schedule_step>
+            </shaft_power_takeoff_schedule>
+        </approach_step>
+        <approach_step ID="5" description="Single approach step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>approach_landing_gear_out</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>descend</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>cruise</value>
+            </rating>
+            <altitude description="Altitude at the end of this step">
+                <value>457.2</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </altitude>
+            <glide_path description="Angle between glide path and runway">
+                <value>-0.0523598775</value>
+                <unit>rad</unit>
+                <lower_boundary>-0.35</lower_boundary>
+                <upper_boundary>0.35</upper_boundary>
+            </glide_path>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.456857549</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>87640.89627</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </approach_step>
+        <approach_step ID="6" description="Single approach step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>landing</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>change_speed</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>idle</value>
+            </rating>
+            <calibrated_airspeed description="Calibrated airspeed at the end of this step">
+                <value>67.65</value>
+                <unit>m/s</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>250</upper_boundary>
+            </calibrated_airspeed>
+            <ground_distance description="Distance to the ground">
+                <value>1524</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </ground_distance>
+            <glide_path description="Angle between glide path and runway">
+                <value>-0.0523598775</value>
+                <unit>rad</unit>
+                <lower_boundary>-0.35</lower_boundary>
+                <upper_boundary>0.35</upper_boundary>
+            </glide_path>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.479497973</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>87473.80287</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </approach_step>
+        <approach_step ID="7" description="Single approach step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>landing</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>descend</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>cruise</value>
+            </rating>
+            <altitude description="Altitude at the end of this step">
+                <value>304.8</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </altitude>
+            <glide_path description="Angle between glide path and runway">
+                <value>-0.0523598775</value>
+                <unit>rad</unit>
+                <lower_boundary>-0.35</lower_boundary>
+                <upper_boundary>0.35</upper_boundary>
+            </glide_path>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.486922972</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>87309.67005</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </approach_step>
+        <approach_step ID="8" description="Single approach step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>landing</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>descend</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>cruise</value>
+            </rating>
+            <altitude description="Altitude at the end of this step">
+                <value>15.24</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </altitude>
+            <glide_path description="Angle between glide path and runway">
+                <value>-0.0523598775</value>
+                <unit>rad</unit>
+                <lower_boundary>-0.35</lower_boundary>
+                <upper_boundary>0.35</upper_boundary>
+            </glide_path>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.508991679</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>87311.02234</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </approach_step>
+        <approach_step ID="9" description="Single approach step">
+            <configuration description="Configuration of the aircraft during this step">
+                <value>landing</value>
+            </configuration>
+            <derate description="Derate during this step">
+                <value>1</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1.5</upper_boundary>
+            </derate>
+            <mode description="Mode during this step">
+                <value>landing</value>
+            </mode>
+            <rating description="Sets thrust rating within climb/acceleration segments to Takeoff, Climb, Maximum continuous, Cruise">
+                <value>takeoff</value>
+            </rating>
+            <altitude description="Altitude at the end of this step">
+                <value>0</value>
+                <unit>m</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>20000</upper_boundary>
+            </altitude>
+            <glide_path description="Angle between glide path and runway">
+                <value>-0.0523598775</value>
+                <unit>rad</unit>
+                <lower_boundary>-0.35</lower_boundary>
+                <upper_boundary>0.35</upper_boundary>
+            </glide_path>
+            <bleed_air_takeoff_schedule>
+                <background_bleed_level description="base load bleed air offtakes">
+                    <value>3.520594589</value>
+                    <unit>kg/s</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_bleed_level>
+            </bleed_air_takeoff_schedule>
+            <shaft_power_takeoff_schedule>
+                <background_power_level description="base load of shaft power">
+                    <value>84092.17682</value>
+                    <unit>W</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </background_power_level>
+            </shaft_power_takeoff_schedule>
+        </approach_step>
+    </approach>
+</mission>

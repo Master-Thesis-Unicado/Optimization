@@ -1,0 +1,170 @@
+<module_results_file Name="Cost aircraft operations specific outputs">
+    <general_information description="General information on module execution">
+        <workflow_version description="Version number of the current workflow">
+            <value>not available</value>
+        </workflow_version>
+        <execution_date description="Execution date and time of the code">
+            <value>2025-10-16_09-29-43</value>
+        </execution_date>
+        <project_name description="Name of the current aircraft project">
+            <value>UNICADO-SMR-01</value>
+        </project_name>
+        <method_name description="Name of current module calculation method">
+            <value>operating_cost_estimation_tu_berlin</value>
+        </method_name>
+        <routing_layer description="Routing layer information">
+            <layer_1 description="Routing layer_1">
+                <value>tube_and_wing</value>
+            </layer_1>
+            <layer_2 description="Routing layer_2">
+                <value>empirical</value>
+            </layer_2>
+            <layer_3 description="Routing layer_3">
+                <value>operating_cost_estimation_tu_berlin</value>
+            </layer_3>
+            <user_layer description="Routing user_layer">
+                <value>kerosene</value>
+            </user_layer>
+        </routing_layer>
+    </general_information>
+    <calculation_results description="Results of calculation method">
+        <operating_cost_estimation_tu_berlin description="Empirical method to estimate the direct operating costs (DOC) and indirect operating costs (IOC) of an aircraft.">
+            <design_mission description="Cost estimation results of the design mission">
+                <direct_operating_costs description="Direct operating costs">
+                    <route_independent_cost_shares description="Route independent cost shares">
+                        <capital_costs description="Capital costs per year">
+                            <value>5515766.27968029</value>
+                            <unit>USD</unit>
+                        </capital_costs>
+                        <crew_costs_per_year description="Crew costs per year">
+                            <value>5655936.0</value>
+                            <unit>USD</unit>
+                        </crew_costs_per_year>
+                        <crew_costs_per_depreciation_period description="Crew costs per depreciation period at design point">
+                            <value>93949658.18219689</value>
+                            <unit>USD</unit>
+                        </crew_costs_per_depreciation_period>
+                        <route_independent_costs_per_year description="Route independent costs per year at design point (sum of capital and crew costs)">
+                            <value>11171702.27968029</value>
+                            <unit>USD</unit>
+                        </route_independent_costs_per_year>
+                        <route_independent_costs_per_depreciation_period description="Route independent costs per depreciation period at design point (sum of capital and crew costs)">
+                            <value>99465424.46187718</value>
+                            <unit>USD</unit>
+                        </route_independent_costs_per_depreciation_period>
+                    </route_independent_cost_shares>
+                    <route_dependent_cost_shares description="Route dependent cost shares">
+                        <fuel_costs description="Fuel costs per year at design point">
+                            <value>8451671.3718528</value>
+                            <unit>USD</unit>
+                        </fuel_costs>
+                        <handling_costs description="Handling costs per year at design point">
+                            <value>1621817.6</value>
+                            <unit>USD</unit>
+                        </handling_costs>
+                        <landing_costs description="Landing costs per year at design point">
+                            <value>644587.9564467199</value>
+                            <unit>USD</unit>
+                        </landing_costs>
+                        <air_traffic_control_costs description="Air traffic control (ATC) costs per year at design point">
+                            <value>4723678.233600194</value>
+                            <unit>USD</unit>
+                        </air_traffic_control_costs>
+                        <maintenance_costs description="Maintenance costs per year at design point">
+                            <value>4163827.126406336</value>
+                            <unit>USD</unit>
+                        </maintenance_costs>
+                        <route_dependent_costs_per_year description="Route dependent costs per year at design point">
+                            <value>19605582.28830605</value>
+                            <unit>USD</unit>
+                        </route_dependent_costs_per_year>
+                        <route_dependent_costs_per_depreciation_period description="Route dependent costs per depreciation period at design point">
+                            <value>235266987.4596726</value>
+                            <unit>USD</unit>
+                        </route_dependent_costs_per_depreciation_period>
+                    </route_dependent_cost_shares>
+                    <direct_operating_costs_per_year description="Direct operating costs per year at design point (sum of route dependent and route independent costs)">
+                        <value>30777284.56798634</value>
+                        <unit>USD</unit>
+                    </direct_operating_costs_per_year>
+                    <direct_operating_costs_per_depreciation_period description="Direct operating costs per depreciation period at design point (sum of route dependent and route independent costs)">
+                        <value>334732411.9215498</value>
+                        <unit>USD</unit>
+                    </direct_operating_costs_per_depreciation_period>
+                </direct_operating_costs>
+                <indirect_operating_costs description="Indirect operating costs">
+                    <value>0</value>
+                    <unit>USD</unit>
+                </indirect_operating_costs>
+            </design_mission>
+            <study_mission description="Cost estimation results of the study mission">
+                <direct_operating_costs description="Direct operating costs">
+                    <route_independent_cost_shares description="Route independent cost shares">
+                        <capital_costs description="Capital costs per year">
+                            <value>5515766.27968029</value>
+                            <unit>USD</unit>
+                        </capital_costs>
+                        <crew_costs_per_year description="Crew costs per year">
+                            <value>2785120.0</value>
+                            <unit>USD</unit>
+                        </crew_costs_per_year>
+                        <crew_costs_per_depreciation_period description="Crew costs per depreciation period at design point">
+                            <value>46263089.256384835</value>
+                            <unit>USD</unit>
+                        </crew_costs_per_depreciation_period>
+                        <route_independent_costs_per_year description="Route independent costs per year at design point (sum of capital and crew costs)">
+                            <value>8300886.27968029</value>
+                            <unit>USD</unit>
+                        </route_independent_costs_per_year>
+                        <route_independent_costs_per_depreciation_period description="Route independent costs per depreciation period at design point (sum of capital and crew costs)">
+                            <value>51778855.536065124</value>
+                            <unit>USD</unit>
+                        </route_independent_costs_per_depreciation_period>
+                    </route_independent_cost_shares>
+                    <route_dependent_cost_shares description="Route dependent cost shares">
+                        <fuel_costs description="Fuel costs per year at design point">
+                            <value>7143715.391904</value>
+                            <unit>USD</unit>
+                        </fuel_costs>
+                        <handling_costs description="Handling costs per year at design point">
+                            <value>2396596.8000000003</value>
+                            <unit>USD</unit>
+                        </handling_costs>
+                        <landing_costs description="Landing costs per year at design point">
+                            <value>1270029.73596928</value>
+                            <unit>USD</unit>
+                        </landing_costs>
+                        <air_traffic_control_costs description="Air traffic control (ATC) costs per year at design point">
+                            <value>3040425.657572183</value>
+                            <unit>USD</unit>
+                        </air_traffic_control_costs>
+                        <maintenance_costs description="Maintenance costs per year at design point">
+                            <value>3997926.337843311</value>
+                            <unit>USD</unit>
+                        </maintenance_costs>
+                        <route_dependent_costs_per_year description="Route dependent costs per year at design point">
+                            <value>17848693.923288774</value>
+                            <unit>USD</unit>
+                        </route_dependent_costs_per_year>
+                        <route_dependent_costs_per_depreciation_period description="Route dependent costs per depreciation period at design point">
+                            <value>214184327.07946527</value>
+                            <unit>USD</unit>
+                        </route_dependent_costs_per_depreciation_period>
+                    </route_dependent_cost_shares>
+                    <direct_operating_costs_per_year description="Direct operating costs per year at design point (sum of route dependent and route independent costs)">
+                        <value>26149580.202969063</value>
+                        <unit>USD</unit>
+                    </direct_operating_costs_per_year>
+                    <direct_operating_costs_per_depreciation_period description="Direct operating costs per depreciation period at design point (sum of route dependent and route independent costs)">
+                        <value>265963182.6155304</value>
+                        <unit>USD</unit>
+                    </direct_operating_costs_per_depreciation_period>
+                </direct_operating_costs>
+                <indirect_operating_costs description="Indirect operating costs">
+                    <value>0</value>
+                    <unit>USD</unit>
+                </indirect_operating_costs>
+            </study_mission>
+        </operating_cost_estimation_tu_berlin>
+    </calculation_results>
+</module_results_file>

@@ -1,0 +1,100 @@
+<module_configuration_file name="climate_model_conf.xml">
+    <control_settings description="General control settings for this tool">
+		<aircraft_exchange_file_name description="Specify the name of the exchange file">
+			<value>UNICADO-SMR-180-TF.xml</value>
+		</aircraft_exchange_file_name>
+		<aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+			<value>../projects/UNICADO/UNICADO-SMR-01/</value>
+		</aircraft_exchange_file_directory>
+		<own_tool_level description="Specify the tool level of this tool">
+			<value>1</value>
+		</own_tool_level>
+		<console_output description="Selector to specify the console output ('mode_0': Off, 'mode_1': only out/err/warn, 'mode_2': 1 + info, 'mode_3': 2 + debug)">
+			<value>mode_1</value>
+		</console_output>
+		<log_file_output description="Selector to specify the log file output ('mode_0': Off, 'mode_1': only out/err/warn, 'mode_2': 1 + info, 'mode_3': 2 + debug)">
+			<value>mode_1</value>
+		</log_file_output>
+		<plot_output description="Specify the way plotting shall be handled">
+			<enable description="Switch to enable plotting ('true': On, 'false': Off)">
+				<value>true</value>
+			</enable>
+			<copy_plotting_files description="Switch if plotting files shall be copied ('true': On, 'false': Off)">
+				<value>true</value>
+			</copy_plotting_files>
+			<delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder ('true': On, 'false': Off)">
+				<value>true</value>
+			</delete_plotting_files_from_tool_folder>
+		</plot_output>
+		<report_output description="Switch to generate an HTML report ('true': On, 'false': Off)">
+			<value>true</value>
+		</report_output>
+		<tex_report description="Switch to generate a Tex report ('true': On, 'false': Off)">
+			<value>false</value>
+		</tex_report>
+		<write_info_files description="Switch to generate info files ('true': On, 'false': Off)">
+			<value>false</value>
+		</write_info_files>
+		<log_file description="Specify the name of the log file">
+			<value>climate_model.log</value>
+		</log_file>
+		<inkscape_path description="Path to the inkscape application ('DEFAULT': Use inkscape from the UNICADO repo structure)">
+			<value>../../inkscape/</value>
+		</inkscape_path>
+		<gnuplot_path description="Path to the gnuplot application ('DEFAULT': Use gnuplot from the UNICADO repo structure)">
+			<value>../../gnuplot/</value>
+		</gnuplot_path>
+    </control_settings>
+	<program_settings>
+		<method description="method: dallara">
+			<value>dallara</value>
+		</method>
+        <dallara description="Settings for the climate impact calculation according to E.Schwartz-Dallara(2011)">
+            <liquid_hydrogen description="liquid_hydrogen specific inputs">
+                <fuel_factor_AIC description="Set a factor to scale radiative forcing of aircraft induced cloudiness (AIC) relative to kerosene depending on fuel type. liquidHydrogen=0.3...0.8">
+                    <value>0.6</value>
+                    <unit>1</unit>
+                    <lower_boundary>0.3</lower_boundary>
+                    <upper_boundary>1</upper_boundary>
+                </fuel_factor_AIC>
+            </liquid_hydrogen>
+            <forcing_factors>
+                <data_set_selector description="Selects data set for forcing factor calculation. Selector: mode_0 (Data set by E.Schwartz-Dallara (2011)) / mode_1 (Data set by K.Dahlmann (2011) extracted from Scholz et al. (2022))">
+                    <value>mode_0</value>
+                </data_set_selector>
+                <variations description="Forcing factors (S_i_height) are within a certain likelihood range (Reference Dallara_2011_Metric for comparing...). Here you can vary the forcing factors.">
+                    <aircraft_induced_cloudiness description="Variation of AIC forcing factor">
+                        <value>1</value>
+                        <unit>1</unit>
+                        <lower_boundary>0.67</lower_boundary>
+                        <upper_boundary>1.33</upper_boundary>
+                    </aircraft_induced_cloudiness>
+                    <short_lived_ozone description="Variation of short-lived ozone forcing factor">
+                        <value>1</value>
+                        <unit>1</unit>
+                        <lower_boundary>0.67</lower_boundary>
+                        <upper_boundary>1.33</upper_boundary>
+                    </short_lived_ozone>
+                    <methane_and_long_lived_ozone description="Variation of methane and long-live ozone forcing factor">
+                        <value>1</value>
+                        <unit>1</unit>
+                        <lower_boundary>0.67</lower_boundary>
+                        <upper_boundary>1.33</upper_boundary>
+                    </methane_and_long_lived_ozone>
+                </variations>
+            </forcing_factors>
+            <max_integration_period description="Time over which radiative forcing is to be integrated">
+                <value>200</value>
+                <unit>a</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1000</upper_boundary>
+            </max_integration_period>
+            <devaluation_rate description="Rate of devaluation of temperature response. Zero means, that postoperation impacts are equally important compared with impacts during operating years, higher values mean that temperature change each postoperation year is less important than the temperature change experienced the previous year">
+                <value>0.03</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>10^10</upper_boundary>
+            </devaluation_rate>
+        </dallara>
+	</program_settings>
+</module_configuration_file>

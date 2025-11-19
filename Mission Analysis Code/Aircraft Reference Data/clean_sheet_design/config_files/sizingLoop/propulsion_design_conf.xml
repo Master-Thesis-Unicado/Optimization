@@ -1,0 +1,145 @@
+<module_configuration_file name="propulsion_design_conf.xml">
+    <control_settings description="General control settings for this tool">
+        <aircraft_exchange_file_name description="Specify the name of the exchange file">
+			<value>UNICADO-SMR-01.xml</value>
+		</aircraft_exchange_file_name>
+        <aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+            <value>../projects/UNICADO/UNICADO-SMR-01/</value>
+		</aircraft_exchange_file_directory>
+        <own_tool_level description="Specify the tool level of this tool">
+			<value>3</value>
+		</own_tool_level>
+        <console_output description="Selector to specify the console output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+			<value>mode_1</value>
+		</console_output>
+        <log_file_output description="Selector to specify the log file output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+			<value>mode_1</value>
+		</log_file_output>
+        <plot_output description="Specify the way plotting shall be handled">
+			<enable description="Switch to enable plotting. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</enable>
+			<copy_plotting_files description="Switch if plotting files shall be copied. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</copy_plotting_files>
+			<delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</delete_plotting_files_from_tool_folder>
+		</plot_output>
+        <report_output description="Switch to generate an HTML report. Switch: true (On) / false (Off)">
+			<value>true</value>
+		</report_output>
+        <tex_report description="Switch to generate a Tex report. Switch: true (On) / false (Off)">
+			<value>true</value>
+		</tex_report>
+        <write_info_files description="Switch to generate info files. Switch: true (On) / false (Off)">
+			<value>false</value>
+		</write_info_files>
+        <log_file description="Specify the name of the log file">
+			<value>propulsion_design.log</value>
+		</log_file>
+        <inkscape_path description="Path to the inkscape application ('DEFAULT': Use inkscape from the UNICADO repo structure)">
+			<value>C:/Programs/UNICADOworkflow/inkscape/</value>
+		</inkscape_path>
+        <gnuplot_path description="Path to the gnuplot application ('DEFAULT': Use gnuplot from the UNICADO repo structure)">
+			<value>C:/Programs/UNICADOworkflow/gnuplot/</value>
+		</gnuplot_path>
+    </control_settings>
+	<program_settings description="Settings specific to engineSizing.">
+        <method description="Choose the implementation method of each design domain.">
+            <engine_designer description="Choose the engine designer. Selector: Empirical / Rubber / GasTurb">
+				<value>Rubber</value>
+			</engine_designer>
+            <nacelle_designer description="Select the nacelle designer. Selector: Default">
+				<value>Default</value>
+			</nacelle_designer>
+            <pylon_designer description="Select the pylon designer. Selector: Default">
+				<value>Default</value>
+			</pylon_designer>
+			<propulsion_integrator description="Select the propulsion integrator. Selector: Default">
+				<value>Default</value>
+			</propulsion_integrator>
+            <mass_analyzer description="Select the mass analyzer. Selector: Default">
+				<value>Default</value>
+			</mass_analyzer>
+        </method>
+        <path_engine_database description="The path to the database with existing engine decks.">
+            <value>../databases/engines/</value>
+        </path_engine_database>
+        <technology_factors description="Improve or decrease the performance of every engine by this factor.">
+            <engine_mass>
+				<value>1.0</value>
+				<unit>1</unit>
+				<upper_boundary>+Inf</upper_boundary>
+				<lower_boundary>0.0</lower_boundary>
+			</engine_mass>
+			<nacelle_mass>
+				<value>1.0</value>
+				<unit>1</unit>
+				<upper_boundary>+Inf</upper_boundary>
+				<lower_boundary>0.0</lower_boundary>
+			</nacelle_mass>
+			<pylon_mass>
+				<value>1.0</value>
+				<unit>1</unit>
+				<upper_boundary>+Inf</upper_boundary>
+				<lower_boundary>0.0</lower_boundary>
+			</pylon_mass>
+			<engine_efficiency description="Increase or decrease the efficiency by manipulating the fuel flow (Efficiency increase (value higher than 1) -&gt; decreased fuelflow).">
+				<value>1.0</value>
+				<unit>1</unit>
+				<upper_boundary>+Inf</upper_boundary>
+				<lower_boundary>0.0</lower_boundary>
+			</engine_efficiency>
+        </technology_factors>
+        <repositioning description="Shifting the engine center position in aircraft coordinates. The y-position will be applied symmetrically to the xz-plane.">
+            <shift_x>
+                <value>0.0</value>
+                <unit>m</unit>
+                <upper_boundary>5.0</upper_boundary>
+                <lower_boundary>-5.0</lower_boundary>
+            </shift_x>
+            <shift_y>
+                <value>0.0</value>
+                <unit>m</unit>
+                <upper_boundary>5.0</upper_boundary>
+                <lower_boundary>-5.0</lower_boundary>
+            </shift_y>			
+            <shift_z>
+                <value>0.0</value>
+                <unit>m</unit>
+                <upper_boundary>5.0</upper_boundary>
+                <lower_boundary>-5.0</lower_boundary>
+            </shift_z>
+        </repositioning>
+        <propulsion ID="Default" description="Define defaults for the clean sheet design. You can add other engines with different ID to override these setting for the propulsion with this ID.">
+			<engine description="Detailed information of engine design">
+				<Empirical description="Settings for empirical engine designer">
+					<BPR>
+						<value />
+					</BPR>
+				</Empirical>
+				<Rubber description="Settings for rubber engine designer. Selector: PW1127G-JM / V2527-A5">
+                    <engine_model><value>PW1127G-JM</value></engine_model>
+                </Rubber>
+				<GasTurb description="Settings for GasTurb interface engine designer">
+				</GasTurb>
+				</engine>
+			<nacelle description="Detailed information of nacelle geometry">
+				<profile description="Section shape of the nacelle.">
+					<value>nacelle.dat</value>
+				</profile>			
+				<duct_type description="Short or long ducted nacelle">
+					<value>short</value>
+				</duct_type>
+			</nacelle>
+			<pylon description="Detailed information of pylon geometry">
+				<profile description="Section shape of the pylon.">
+					<value>pylon.dat</value>
+				</profile>			
+			</pylon>
+			<integration description="Detailed information of propulsion integration">
+			</integration>
+		</propulsion>
+	</program_settings>
+</module_configuration_file>

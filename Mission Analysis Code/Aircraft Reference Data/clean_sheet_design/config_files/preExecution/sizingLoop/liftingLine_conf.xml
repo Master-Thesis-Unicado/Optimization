@@ -1,0 +1,37 @@
+﻿<ConfigFile Name="liftingLine_conf.xml">
+    <LiftingLine Desc="Settings for LiftingLine">
+        <ProgramShortName Desc="Short name of program LiftingLine is used in">calcPolar</ProgramShortName>
+        <LiftingLineVersion Desc="Current version of LiftingLine">3.1</LiftingLineVersion>
+        <LiftingLinePath Desc="Path to LIFTING_LINE (incl. file type); default: LiftingLine/LIFTING_LINE_[WINDOWS/LINUX]_64BIT.EXE">default</LiftingLinePath>
+        <LiftingLineConsoleOutput>0</LiftingLineConsoleOutput>
+        <TecplotOutput>1</TecplotOutput>
+        <ErrorHandling Desc="Handling num. LL errors, 0: exit(1), 1: Use existing polars, exit(777), 2: no exit" Default="0">0</ErrorHandling>
+        <Paneling Desc="Configuration of paneling">
+            <ChordwisePanels Desc="Panels in chordwise direction" Unit="-" Default="11">11</ChordwisePanels>
+            <SpanwiseAddPanels Desc="Panels in spanwise direction (in addition to wing segments)" Unit="-" HTPFactor="0.5" Default="10">10</SpanwiseAddPanels>
+            <MinSpanPanelsPerSegment Desc="Min. number of spanwise panels per segment" Unit="-" MinValueTip="5" Default="3">3</MinSpanPanelsPerSegment>
+        </Paneling>
+        <TwistDistrType Desc="T_DISTR S. 35, 0: linear twist, 1: linear geo strak" Default="1">1</TwistDistrType>
+        <UntwistFslgSegment Desc="Switch to untwist fuselage segment" Unit="-" Default="1">1</UntwistFslgSegment>
+        <ReferenceArea Desc="Reference area for force coefficients; 0: Aref is calculated from geometry" Unit="m^2" Default="0">0</ReferenceArea>
+        <ReferenceSpan Desc="Reference span for force coefficients; 0: bref is calculated from geometry" Unit="m" Default="0">0</ReferenceSpan>
+        <SpanForScale Desc="Scaling of wing span; 1: no scaling" Unit="-" Default="1">1.0</SpanForScale>
+        <maxRuntime Desc="Max runtime in minutes" Unit="min" Default="10">10</maxRuntime>
+        <PolarConfig Desc="Description of the polars to be calculated">
+            <Beta Desc="Sideslip" Unit="deg" Default="0">0</Beta>
+            <NumbAoAs Desc="Number of angles of attack" Default="10">10</NumbAoAs>
+            <AoA ID="1" Desc="Angle of attack" Unit="deg" Default="0">-6</AoA>
+            <AoA ID="2" Desc="Angle of attack" Unit="deg" Default="0">-4</AoA>
+            <AoA ID="3" Desc="Angle of attack" Unit="deg" Default="0">-2</AoA>
+            <AoA ID="4" Desc="Angle of attack" Unit="deg" Default="0">0</AoA>
+            <AoA ID="5" Desc="Angle of attack" Unit="deg" Default="0">2</AoA>
+            <AoA ID="6" Desc="Angle of attack" Unit="deg" Default="0">4</AoA>
+            <AoA ID="7" Desc="Angle of attack" Unit="deg" Default="0">6</AoA>
+            <AoA ID="8" Desc="Angle of attack" Unit="deg" Default="0">8</AoA>
+            <AoA ID="9" Desc="Angle of attack" Unit="deg" Default="0">10</AoA>
+            <AoA ID="10" Desc="Angle of attack" Unit="deg" Default="0">12</AoA>
+            <NumbLiftCoefficients Desc="Number of lift coefficients" Default="0">0</NumbLiftCoefficients>
+            <LiftCoefficient ID="1" Desc="Lift coefficient" Unit="-" Default="0">0</LiftCoefficient>
+        </PolarConfig>
+    </LiftingLine>
+</ConfigFile>

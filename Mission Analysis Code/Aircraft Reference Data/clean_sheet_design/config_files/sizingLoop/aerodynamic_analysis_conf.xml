@@ -1,0 +1,936 @@
+<module_configuration_file name="aerodynamic_analysis_conf.xml">
+    <control_settings description="General control settings for this tool">
+        <aircraft_exchange_file_name description="Specify the name of the exchange file">
+            <value>UNICADO-SMR-01.xml</value>
+        </aircraft_exchange_file_name>
+        <aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+            <value>../projects/UNICADO/UNICADO-SMR-01/</value>
+        </aircraft_exchange_file_directory>
+        <own_tool_level description="Specify the tool level of this tool">
+            <value>3</value>
+        </own_tool_level>
+        <console_output description="Selector to specify the console output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+            <value>mode_1</value>
+        </console_output>
+        <log_file_output description="Selector to specify the log file output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+            <value>mode_1</value>
+        </log_file_output>
+        <plot_output description="Specify the way plotting shall be handled">
+            <enable description="Switch to enable plotting. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </enable>
+            <copy_plotting_files description="Switch if plotting files shall be copied. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </copy_plotting_files>
+            <delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </delete_plotting_files_from_tool_folder>
+        </plot_output>
+        <report_output description="Switch to generate an HTML report. Switch: true (On) / false (Off)">
+            <value>true</value>
+        </report_output>
+        <tex_report description="Switch to generate a Tex report. Switch: true (On) / false (Off)">
+            <value>true</value>
+        </tex_report>
+        <write_info_files description="Switch to generate info files. Switch: true (On) / false (Off)">
+            <value>false</value>
+        </write_info_files>
+        <log_file description="Specify the name of the log file">
+            <value>aerodynamic_analysis.log</value>
+        </log_file>
+        <inkscape_path description="Path to the inkscape application (DEFAULT: Use inkscape from the UNICADO repo structure)">
+            <value>C:/Programs/UNICADOworkflow/inkscape/</value>
+        </inkscape_path>
+        <gnuplot_path description="Path to the gnuplot application (DEFAULT: Use gnuplot from the UNICADO repo structure)">
+            <value>C:/Programs/UNICADOworkflow/gnuplot/</value>
+        </gnuplot_path>
+    </control_settings>
+    <program_settings description="Program specific settings">
+        <execution_mode description="Selector for execution mode; Selector: mode_0 (Normal execution) / mode_1 (Only update reference values)">
+            <value>mode_0</value>
+            <default>mode_0</default>
+        </execution_mode>
+        <CLModeAirfoilSelection description="Selector aircraft CL for airfoils; Selector: mode_0 (CL at ICA) / mode_1 (CL at TOC) / mode_2 (CL avg cr)">
+            <value>mode_0</value>
+            <default>mode_0</default>
+        </CLModeAirfoilSelection>
+        <Trim>
+            <DoTrim description="Switch for calculating trimmed aircraft polars with linear interpolation; Switch: True(Calculate trimmed polar) / False(Calculate only untrimmed polar with current stabilizer angle)">
+                <value>true</value>
+                <default>true</default>
+            </DoTrim>
+            <design_trim_MTOM_fraction description="Center of gravity in cruise flight lies between MTOM and OME. This value gives the fraction of MTOM.">
+                <value>0.45</value>
+                <default>0.45</default>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1</upper_boundary>
+            </design_trim_MTOM_fraction>
+            <TrimWithAdditionalCoGPositions description="Switch to do trim method only for design CG or additionally for forward and aft position; Switch: True(Trim for design, forward, and aft CG) / False (Trim only for design CG)">
+                <value>false</value>
+                <default>false</default>
+            </TrimWithAdditionalCoGPositions>
+            <TrimHighLift description="Switch for additionally trim the high lift polars; Switch: True(Trim also for highlift polars activated) / False (Only trim for clean polars)">
+                <value>false</value>
+                <default>false</default>
+            </TrimHighLift>
+            <StabAngleGrid description="Selector stab angle gird relative to design angle; Selector: mode_0 (coarse[-6;6] in 6 deg steps) / mode_1 (fine [-6;6] in 2 deg steps) / mode_2 (custom setting defined in element customStabAngleGrid)">
+                <value>mode_0</value>
+                <default>mode_0</default>
+            </StabAngleGrid>
+            <customStabAngleGrid description="custom stabilizer angles if StabAngleGrid is set to mode_2; define stabilizer angles separated with semicolon">
+                <value>-1;0;1</value>
+                <default>-1;0;1</default>
+            </customStabAngleGrid>
+        </Trim>
+        <LiftingLine description="liftingLine">
+            <FolderPath description="Path to LIFTING_LINE">
+                <value>LiftingLine/</value>
+            </FolderPath>
+            <DeleteLiftingLineFiles description="Switch for deletion of LL folder from project folder after program execution; Switch: True (LILI files are deleted after execution) / False (LILI files are kept)">
+                <value>true</value>
+                <default>true</default>
+            </DeleteLiftingLineFiles>
+        </LiftingLine>
+        <aeroStrategySelection description="selection of strategy to use">
+            <tawStrategies>
+                <default>tawDefaultStrategy</default>
+                <value>tawDefaultStrategy</value>
+            </tawStrategies>
+            <bwbStrategies>
+                <default>bwbDefaultStrategy</default>
+                <value>bwbDefaultStrategy</value>
+            </bwbStrategies>
+            <sbwStrategies>
+                <default>sbwDefaultStrategy</default>
+                <value>sbwDefaultStrategy</value>
+            </sbwStrategies>
+            <tandemStrategies>
+                <default>tandemDefaultStrategy</default>
+                <value>tandemDefaultStrategy</value>
+            </tandemStrategies>
+        </aeroStrategySelection>
+        <FlightConditions description="Flight State">
+			<AdaptMachNumbersToCruiseReq description="Relevant parameters in regards to automatic flight condition generation">
+				<setAutomaticFlightConditions description="Switch to allow for automatic flight conditions. Switch: true (adapt flight conditions to initial cruise Mach number) / false (use flight conditions given here in config file)">
+					<value>true</value>
+					<default>true</default>
+				</setAutomaticFlightConditions>
+				<extrapolation_margin description="Margin for extrapolation">
+					<value>1</value>
+					<default>1</default>
+					<unit>1</unit>
+					<lower_boundary>0</lower_boundary>
+					<upper_boundary>1.1</upper_boundary>
+				</extrapolation_margin>
+				<allow_grid_change description="Switch to allow grid change. Switch: true (On) / false (Off)">
+					<value>true</value>
+					<default>true</default>
+				</allow_grid_change>	
+			</AdaptMachNumbersToCruiseReq>
+            <FlightCondition ID="0" description="Description of the flight condition">
+                <extrapolation_margin description="Margin for extrapolation">
+                    <value>1</value>
+                    <default>1</default>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1.1</upper_boundary>
+                </extrapolation_margin>
+                <allow_grid_change description="Switch to allow grid change. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>true</default>
+                </allow_grid_change>
+                <include_polar_in_report description="Switch to include the plotted polar in HTML report. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>false</default>
+                </include_polar_in_report>
+                <Mach description="Mach number">
+                    <default>0.2</default>
+                    <value>0.2</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1</upper_boundary>
+                </Mach>
+                <Altitude description="flight level">
+                    <value>0</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>42069</upper_boundary>
+                </Altitude>
+            </FlightCondition>
+            <FlightCondition ID="1" description="Description of the flight condition">
+                <extrapolation_margin description="Margin for extrapolation">
+                    <value>1</value>
+                    <default>1</default>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1.1</upper_boundary>
+                </extrapolation_margin>
+                <allow_grid_change description="Switch to allow grid change. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>true</default>
+                </allow_grid_change>
+                <include_polar_in_report description="Switch to include the plotted polar in HTML report. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>false</default>
+                </include_polar_in_report>
+                <Mach description="Mach number">
+                    <default>0.5</default>
+                    <value>0.5</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1</upper_boundary>
+                </Mach>
+                <Altitude description="flight level">
+                    <default>3048</default>
+                    <value>3048</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>42069</upper_boundary>
+                </Altitude>
+            </FlightCondition>
+            <FlightCondition ID="2" description="Description of the flight condition">
+                <extrapolation_margin description="Margin for extrapolation">
+                    <value>1</value>
+                    <default>1</default>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1.1</upper_boundary>
+                </extrapolation_margin>
+                <allow_grid_change description="Switch to allow grid change. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>true</default>
+                </allow_grid_change>
+                <include_polar_in_report description="Switch to include the plotted polar in HTML report. Switch: true (On) / false (Off)">
+                    <value>false</value>
+                    <default>false</default>
+                </include_polar_in_report>
+                <Mach description="Mach number">
+                    <default>0.6</default>
+                    <value>0.6</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1</upper_boundary>
+                </Mach>
+                <Altitude description="flight level">
+                    <default>6096</default>
+                    <value>6096</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>42069</upper_boundary>
+                </Altitude>
+            </FlightCondition>
+            <FlightCondition ID="3" description="Description of the flight condition">
+                <extrapolation_margin description="Margin for extrapolation">
+                    <value>1</value>
+                    <default>1</default>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1.1</upper_boundary>
+                </extrapolation_margin>
+                <allow_grid_change description="Switch to allow grid change. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>true</default>
+                </allow_grid_change>
+                <include_polar_in_report description="Switch to include the plotted polar in HTML report. Switch: true (On) / false (Off)">
+                    <value>false</value>
+                    <default>false</default>
+                </include_polar_in_report>
+                <Mach description="Mach number">
+                    <default>0.7</default>
+                    <value>0.7</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1</upper_boundary>
+                </Mach>
+                <Altitude description="flight level">
+                    <default>10668</default>
+                    <value>10668</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>42069</upper_boundary>
+                </Altitude>
+            </FlightCondition>
+            <FlightCondition ID="4" description="Description of the flight condition">
+                <extrapolation_margin description="Margin for extrapolation">
+                    <value>1</value>
+                    <default>1</default>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1.1</upper_boundary>
+                </extrapolation_margin>
+                <allow_grid_change description="Switch to allow grid change. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>true</default>
+                </allow_grid_change>
+                <include_polar_in_report description="Switch to include the plotted polar in HTML report. Switch: true (On) / false (Off)">
+                    <value>false</value>
+                    <default>false</default>
+                </include_polar_in_report>
+                <Mach description="Mach number">
+                    <default>0.73</default>
+                    <value>0.73</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1</upper_boundary>
+                </Mach>
+                <Altitude description="flight level">
+                    <default>10668</default>
+                    <value>10668</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>42069</upper_boundary>
+                </Altitude>
+            </FlightCondition>
+            <FlightCondition ID="5" description="Description of the flight condition">
+                <extrapolation_margin description="Margin for extrapolation">
+                    <value>1</value>
+                    <default>1</default>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1.1</upper_boundary>
+                </extrapolation_margin>
+                <allow_grid_change description="Switch to allow grid change. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>true</default>
+                </allow_grid_change>
+                <include_polar_in_report description="Switch to include the plotted polar in HTML report. Switch: true (On) / false (Off)">
+                    <value>false</value>
+                    <default>false</default>
+                </include_polar_in_report>
+                <Mach description="Mach number">
+                    <default>0.76</default>
+                    <value>0.76</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1</upper_boundary>
+                </Mach>
+                <Altitude description="flight level">
+                    <default>10668</default>
+                    <value>10668</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>42069</upper_boundary>
+                </Altitude>
+            </FlightCondition>
+            <FlightCondition ID="6" description="Description of the flight condition">
+                <extrapolation_margin description="Margin for extrapolation">
+                    <value>1</value>
+                    <default>1</default>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1.1</upper_boundary>
+                </extrapolation_margin>
+                <allow_grid_change description="Switch to allow grid change. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>true</default>
+                </allow_grid_change>
+                <include_polar_in_report description="Switch to include the plotted polar in HTML report. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>false</default>
+                </include_polar_in_report>
+                <Mach description="Mach number">
+                    <default>0.77</default>
+                    <value>0.77</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1</upper_boundary>
+                </Mach>
+                <Altitude description="flight level">
+                    <default>10668</default>
+                    <value>10668</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>42069</upper_boundary>
+                </Altitude>
+            </FlightCondition>
+            <FlightCondition ID="7" description="Description of the flight condition">
+                <extrapolation_margin description="Margin for extrapolation">
+                    <value>1</value>
+                    <default>1</default>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1.1</upper_boundary>
+                </extrapolation_margin>
+                <allow_grid_change description="Switch to allow grid change. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>true</default>
+                </allow_grid_change>
+                <include_polar_in_report description="Switch to include the plotted polar in HTML report. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>false</default>
+                </include_polar_in_report>
+                <Mach description="Mach number">
+                    <default>0.78</default>
+                    <value>0.78</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1</upper_boundary>
+                </Mach>
+                <Altitude description="flight level">
+                    <default>10668</default>
+                    <value>10668</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>42069</upper_boundary>
+                </Altitude>
+            </FlightCondition>
+            <FlightCondition ID="8" description="Description of the flight condition">
+                <extrapolation_margin description="Margin for extrapolation">
+                    <value>1</value>
+                    <default>1</default>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1.1</upper_boundary>
+                </extrapolation_margin>
+                <allow_grid_change description="Switch to allow grid change. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>true</default>
+                </allow_grid_change>
+                <include_polar_in_report description="Switch to include the plotted polar in HTML report. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>false</default>
+                </include_polar_in_report>
+                <Mach description="Mach number">
+                    <default>0.79</default>
+                    <value>0.79</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1</upper_boundary>
+                </Mach>
+                <Altitude description="flight level">
+                    <default>10668</default>
+                    <value>10668</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>42069</upper_boundary>
+                </Altitude>
+            </FlightCondition>
+            <FlightCondition ID="9" description="Description of the flight condition">
+                <extrapolation_margin description="Margin for extrapolation">
+                    <value>1</value>
+                    <default>1</default>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1.1</upper_boundary>
+                </extrapolation_margin>
+                <allow_grid_change description="Switch to allow grid change. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>true</default>
+                </allow_grid_change>
+                <include_polar_in_report description="Switch to include the plotted polar in HTML report. Switch: true (On) / false (Off)">
+                    <value>false</value>
+                    <default>false</default>
+                </include_polar_in_report>
+                <Mach description="Mach number">
+                    <default>0.80</default>
+                    <value>0.80</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1</upper_boundary>
+                </Mach>
+                <Altitude description="flight level">
+                    <default>10668</default>
+                    <value>10668</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>42069</upper_boundary>
+                </Altitude>
+            </FlightCondition>
+            <FlightCondition ID="10" description="Description of the flight condition">
+                <extrapolation_margin description="Margin for extrapolation">
+                    <value>1</value>
+                    <default>1</default>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1.1</upper_boundary>
+                </extrapolation_margin>
+                <allow_grid_change description="Switch to allow grid change. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>true</default>
+                </allow_grid_change>
+                <include_polar_in_report description="Switch to include the plotted polar in HTML report. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                    <default>false</default>
+                </include_polar_in_report>
+                <Mach description="Mach number">
+                    <default>0.83</default>
+                    <value>0.83</value>
+                    <unit>1</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>1</upper_boundary>
+                </Mach>
+                <Altitude description="flight level">
+                    <default>10668</default>
+                    <value>10668</value>
+                    <unit>m</unit>
+                    <lower_boundary>0</lower_boundary>
+                    <upper_boundary>42069</upper_boundary>
+                </Altitude>
+            </FlightCondition>
+        </FlightConditions>
+        <LiftingLineForTAW>
+            <stepWidthCL description="CL steps for the polars">
+                <value>0.01</value>
+                <default>0.01</default>
+                <unit>1</unit>
+                <lower_boundary>0.0001</lower_boundary>
+                <upper_boundary>0.1</upper_boundary>
+            </stepWidthCL>
+            <PitchingMoment description="Parameters for CM correction and calibration">
+                <CM_corr_fuselage description="Selector for semi-emp. CMy-correction regarding fuselage influence (concerns CLalpha (TB), CM0 (TB), dCMdCL or CMalpha); Selector: mode_0 (no correction) / mode_1 (Raymer) / mode_2 (Torenbeek)">
+                    <value>mode_1</value>
+                    <default>mode_1</default>
+                </CM_corr_fuselage>
+                <CM_corr_nacelle description="Selector for semi-emp. CMy correction for nacelle influence (concerns dCMdCL or CMalpha); Selector: mode_0 (no correction) / mode_1 (Raymer) / mode_2 (Torenbeek)">
+                    <value>mode_1</value>
+                    <default>mode_1</default>
+                </CM_corr_nacelle>
+                <delta_CM0 description="Optional CM0-Summand (only for calibration!)">
+                    <value>0</value>
+                    <default>0</default>
+                    <unit>1</unit>
+                    <upper_boundary>999</upper_boundary>
+                    <lower_boundary>-999</lower_boundary>
+                </delta_CM0>
+                <delta_dCMdCL description="Optional dCMdCL summand (only for calibration!)">
+                    <value>0</value>
+                    <default>0</default>
+                    <unit>1</unit>
+                    <upper_boundary>999</upper_boundary>
+                    <lower_boundary>-999</lower_boundary>
+                </delta_dCMdCL>
+            </PitchingMoment>
+            <InducedDragCorrection>
+                <indDragCtCorrForCalibration description="indDragCtCorrForCalibration">
+                    <value>0</value>
+                    <default>0</default>
+                    <unit>1</unit>
+                    <upper_boundary>999</upper_boundary>
+                    <lower_boundary>-999</lower_boundary>
+                </indDragCtCorrForCalibration>
+                <factorIndDragCleanPolar description="factorIndDragCleanPolar">
+                    <value>1.0</value>
+                    <default>1.0</default>
+                    <unit>1</unit>
+                    <upper_boundary>999</upper_boundary>
+                    <lower_boundary>-999</lower_boundary>
+                </factorIndDragCleanPolar>
+            </InducedDragCorrection>
+        </LiftingLineForTAW>
+        <ViscDragRaymer>
+            <Calculate_body_mounted_LG_fairing_drag description="Switch to account for a landing gear fairing drag">
+                <value>false</value>
+                <default>false</default>
+            </Calculate_body_mounted_LG_fairing_drag>
+            <FormFactorBellyFairing description="Ratio between landing gear fairing length and width">
+                <value>7</value>
+                <default>7</default>
+                <unit>1</unit>
+                <lower_boundary>1</lower_boundary>
+                <upper_boundary>999</upper_boundary> 
+            </FormFactorBellyFairing>
+            <WheelFactorBellyFairing description="Ratio between landing gear fairing width and wheel diameter">
+                <value>1.2</value>
+                <default>1.2</default>
+                <unit>1</unit>
+                <lower_boundary>1</lower_boundary>
+                <upper_boundary>999</upper_boundary> 
+            </WheelFactorBellyFairing>
+            <ManualTransition description="Switch for manual transition location, false: No manual transition, true: Manual transition relative to chord">
+                <value>false</value>
+                <default>false</default>
+            </ManualTransition>
+            <TransitionLocationWing description="Transition lines relative to local chord of components">
+                <value>0</value>
+                <default>0</default>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1</upper_boundary>
+            </TransitionLocationWing>
+            <TransitionLocationBackWing description="Transition lines relative to local chord of components">
+                <value>0</value>
+                <default>0</default>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1</upper_boundary>
+            </TransitionLocationBackWing>
+            <TransitionLocationStabilizer description="Transition lines relative to local chord of components">
+                <value>0</value>
+                <default>0</default>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1</upper_boundary>
+            </TransitionLocationStabilizer>
+            <TransitionLocationFin description="Transition lines relative to local chord of components">
+                <value>0</value>
+                <default>0</default>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1</upper_boundary>
+            </TransitionLocationFin>
+            <UseCalibration description="Switch for calibration">
+                <value>true</value>
+                <default>false</default>
+            </UseCalibration>
+            <CalibrationHighMa description="Calibration values for Mach Numbers greater 0.5 according to CD_visc_cal=CD_visc+CDSum+CLFact*CL**CLExp">
+                <CDSum description="CDSum">
+                    <value>0.0</value>
+                    <default>0.0</default>
+                    <unit>1</unit>
+                    <lower_boundary>-999</lower_boundary>
+                    <upper_boundary>999</upper_boundary>
+                </CDSum>
+                <CLFact description="CLFact">
+                    <value>0.01</value>
+                    <default>0.01</default>
+                    <unit>1</unit>
+                    <lower_boundary>-999</lower_boundary>
+                    <upper_boundary>999</upper_boundary>
+                </CLFact>
+                <CLExp description="CLExp">
+                    <value>4</value>
+                    <default>4</default>
+                    <unit>1</unit>
+                    <lower_boundary>-999</lower_boundary>
+                    <upper_boundary>999</upper_boundary>
+                </CLExp>
+            </CalibrationHighMa>
+            <CalibrationLowMa description="Calibration values for Mach Numbers equal and lower 0.5 according to CD_visc_cal=CD_visc+CDSum+CLFact*CL**CLExp">
+                <CDSum description="CDSum">
+                    <value>0.0</value>
+                    <default>0.0</default>
+                    <unit>1</unit>
+                    <lower_boundary>-999</lower_boundary>
+                    <upper_boundary>999</upper_boundary>
+                </CDSum>
+                <CLFact description="CLFact">
+                    <value>0.002</value>
+                    <default>0.002</default>
+                    <unit>1</unit>
+                    <lower_boundary>-999</lower_boundary>
+                    <upper_boundary>999</upper_boundary>
+                </CLFact>
+                <CLExp description="CLExp">
+                    <value>2</value>
+                    <default>2</default>
+                    <unit>1</unit>
+                    <lower_boundary>-999</lower_boundary>
+                    <upper_boundary>999</upper_boundary>
+                </CLExp>
+            </CalibrationLowMa>
+            <DoDragCountCorrection description="Switch for flat correction of viscous drag">
+                <value>true</value>
+                <default>true</default>
+            </DoDragCountCorrection>
+            <DeltaViscousDragWing description="corrections of viscous wing drag in drag counts">
+                <value>-10</value>
+                <default>-12</default>
+                <unit>1</unit>
+                <lower_boundary>-999</lower_boundary>
+                <upper_boundary>999</upper_boundary>    
+            </DeltaViscousDragWing>
+            <DeltaViscousDragBackWing description="corrections of viscous back wing drag in drag counts">
+                <value>-12</value>
+                <default>-12</default>
+                <unit>1</unit>
+                <lower_boundary>-999</lower_boundary>
+                <upper_boundary>999</upper_boundary>
+            </DeltaViscousDragBackWing>
+            <DeltaViscousDragFuselage description="corrections of viscous fuselage drag in drag counts">
+                <value>0</value>
+                <default>0</default>
+                <unit>1</unit>
+                <lower_boundary>-999</lower_boundary>
+                <upper_boundary>999</upper_boundary>    
+            </DeltaViscousDragFuselage>
+            <DeltaViscousDragHTP description="corrections of viscous horizontal tailplane drag in drag counts">
+                <value>0</value>
+                <default>0</default>
+                <unit>1</unit>
+                <lower_boundary>-999</lower_boundary>
+                <upper_boundary>999</upper_boundary>    
+            </DeltaViscousDragHTP>
+            <DeltaViscousDragVTP description="corrections of viscous vertical tailplane drag in drag counts">
+                <value>0</value>
+                <default>0</default>
+                <unit>1</unit>
+                <lower_boundary>-999</lower_boundary>
+                <upper_boundary>999</upper_boundary>    
+            </DeltaViscousDragVTP>
+            <DeltaViscousDragNacelles description="corrections of viscous nacelle drag in drag counts">
+                <value>0</value>
+                <default>0</default>
+                <unit>1</unit>
+                <lower_boundary>-999</lower_boundary>
+                <upper_boundary>999</upper_boundary>    
+            </DeltaViscousDragNacelles>
+            <DeltaViscousDragLGFairing description="corrections of viscous landing gear fairing drag in drag counts">
+                <value>0</value>
+                <default>0</default>
+                <unit>1</unit>
+                <lower_boundary>-999</lower_boundary>
+                <upper_boundary>999</upper_boundary>    
+            </DeltaViscousDragLGFairing>
+            <DeltaViscousDragMisc description="corrections of viscous miscellaneous drag in drag counts">
+                <value>0</value>
+                <default>0</default>
+                <unit>1</unit>
+                <lower_boundary>-999</lower_boundary>
+                <upper_boundary>999</upper_boundary>    
+            </DeltaViscousDragMisc>
+        </ViscDragRaymer>
+        <WaveDragMason>
+            <NumberWingStrips description="Number of wing strips used for the drag calculation">
+                <value>11</value>
+                <default>11</default>
+                <unit>1</unit>
+                <lower_boundary>1</lower_boundary>
+                <upper_boundary>100</upper_boundary>
+            </NumberWingStrips>
+            <Ka description="Technology factor of the wing profiles for the mason method">
+                <value>0.935</value>
+                <default>0.94</default>
+                <unit>1</unit>
+                <lower_boundary>0.87</lower_boundary>
+                <upper_boundary>0.95</upper_boundary>
+            </Ka>
+            <MaximumSegmentSweep description="Maximum allowed sweep, befor wave drag calculate returns zero">
+                <value>50</value>
+                <default>50</default>
+                <unit>deg</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>90</upper_boundary>
+            </MaximumSegmentSweep>
+            <UseCostomReferenceAngleForSweep description="Switch to enable custom position for the sweep line">
+                <value>true</value>
+                <default>true</default>
+            </UseCostomReferenceAngleForSweep>
+            <CustomSweepAngle description="Custom chord position where to calculate the sweep line if enabled">
+                <value>0.25</value>
+                <default>0.25</default>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1</upper_boundary>
+            </CustomSweepAngle>
+            <UseCalibration description="Switch to enable calibration method">
+                <value>true</value>
+                <default>false</default>
+            </UseCalibration>
+            <CLFact description="CLFact">
+                <value>1</value>
+                <default>1</default>
+                <unit>1</unit>
+                <lower_boundary>-999</lower_boundary>
+                <upper_boundary>999</upper_boundary>                
+            </CLFact>
+            <CLExp description="CLExp">
+                <value>8</value>
+                <default>8</default>
+                <unit>1</unit>
+                <lower_boundary>-999</lower_boundary>
+                <upper_boundary>999</upper_boundary>                
+            </CLExp>
+            <DoDragCountCorrection description="Switch for flat correction of wave wing drag in drag counts">
+                <value>true</value>
+                <default>false</default>
+            </DoDragCountCorrection>
+            <DeltaWaveDragWing description="corrections in drag counts for the wing">
+                <value>-5</value>
+                <default>0</default>
+                <unit>1</unit>
+                <lower_boundary>-999</lower_boundary>
+                <upper_boundary>999</upper_boundary>    
+            </DeltaWaveDragWing>
+            <DeltaWaveDragStabilizer description="corrections in drag counts for the stabilizer">
+                <value>0</value>
+                <default>0</default>
+                <unit>1</unit>
+                <lower_boundary>-999</lower_boundary>
+                <upper_boundary>999</upper_boundary>    
+            </DeltaWaveDragStabilizer>
+        </WaveDragMason>
+        <SemiEmpiricalHighLiftAdaptions description="SemiEmpiricalHighLiftAdaptions">
+            <deltaTotalDrag description="Correction of the total high lift drag in drag counts">
+                <value>0.0</value>
+                <default>0.0</default>
+                <unit>1</unit>
+                <lower_boundary>-1000</lower_boundary>
+                <upper_boundary>1000</upper_boundary>    
+            </deltaTotalDrag>
+            <factorDrag description="Relative factor for percentage change of total drag">
+                <value>1.0</value>
+                <default>1.0</default>
+                <unit>1</unit>
+                <lower_boundary>-1000</lower_boundary>
+                <upper_boundary>1000</upper_boundary>    
+            </factorDrag>
+            <do_individual_hl_calibration description="Switch to individually calibrate the high lift polars">
+                <value>true</value>
+                <default>true</default>
+            </do_individual_hl_calibration>
+            <apply_manual_CLmax_hl_values description="Switch if manual values for max CL from hl_polars_correction_values/hl_polar/CL_max should be used. Switch: true (on: Manual preset CL is used; if value=0, CLmax calculated from method is used) / false (off: CLmax calculated from method is used)">
+                <value>false</value>
+                <default>false</default>
+            </apply_manual_CLmax_hl_values>
+            <hl_polars_correction_values description="High-lift polar calibration factors for lift and drag.">
+                <hl_polar ID="0" description="A high lift polar">
+                    <configuration description="A configuration">
+                        <value>takeoff</value>
+                    </configuration>
+                    <CL_max description="Preset absolute value for CL_max of high lift configuration">
+                        <value>0</value>
+                        <default>0</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </CL_max>
+                    <delta_CD description="Correction of the high lift configuration drag in drag counts">
+                        <value>0</value>
+                        <default>0</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </delta_CD>
+                    <factor_CD description="Relative factor for percentage change of the high lift configuration drag">
+                        <value>1</value>
+                        <default>1</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </factor_CD>
+                </hl_polar>
+                <hl_polar ID="1" description="A high lift polar">
+                    <configuration description="A configuration">
+                        <value>takeoff_landing_gear_retracted</value>
+                    </configuration>
+                    <CL_max description="Preset absolute value for CL_max of high lift configuration">
+                        <value>0</value>
+                        <default>0</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </CL_max>
+                    <delta_CD description="Correction of the high lift configuration drag in drag counts">
+                        <value>0</value>
+                        <default>0</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </delta_CD>
+                    <factor_CD description="Relative factor for percentage change of the high lift configuration drag">
+                        <value>1</value>
+                        <default>1</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </factor_CD>
+                </hl_polar>
+                <hl_polar ID="2" description="A high lift polar">
+                    <configuration description="A configuration">
+                        <value>climb</value>
+                    </configuration>
+                    <CL_max description="Preset absolute value for CL_max of high lift configuration">
+                        <value>0</value>
+                        <default>0</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </CL_max>
+                    <delta_CD description="Correction of the high lift configuration drag in drag counts">
+                        <value>0</value>
+                        <default>0</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </delta_CD>
+                    <factor_CD description="Relative factor for percentage change of the high lift configuration drag">
+                        <value>1</value>
+                        <default>1</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </factor_CD>
+                </hl_polar>
+                <hl_polar ID="3" description="A high lift polar">
+                    <configuration description="A configuration">
+                        <value>approach</value>
+                    </configuration>
+                    <CL_max description="Preset absolute value for CL_max of high lift configuration">
+                        <value>0</value>
+                        <default>0</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </CL_max>
+                    <delta_CD description="Correction of the high lift configuration drag in drag counts">
+                        <value>0</value>
+                        <default>0</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </delta_CD>
+                    <factor_CD description="Relative factor for percentage change of the high lift configuration drag">
+                        <value>1</value>
+                        <default>1</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </factor_CD>
+                </hl_polar>
+                <hl_polar ID="4" description="A high lift polar">
+                    <configuration description="A configuration">
+                        <value>approach_landing_gear_out</value>
+                    </configuration>
+                    <CL_max description="Preset absolute value for CL_max of high lift configuration">
+                        <value>0</value>
+                        <default>0</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </CL_max>
+                    <delta_CD description="Correction of the high lift configuration drag in drag counts">
+                        <value>20</value>
+                        <default>20</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </delta_CD>
+                    <factor_CD description="Relative factor for percentage change of the high lift configuration drag">
+                        <value>1</value>
+                        <default>1</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </factor_CD>
+                </hl_polar>
+                <hl_polar ID="5" description="A high lift polar">
+                    <configuration description="A configuration">
+                        <value>landing</value>
+                    </configuration>
+                    <CL_max description="Preset absolute value for CL_max of high lift configuration">
+                        <value>0</value>
+                        <default>0</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </CL_max>
+                    <delta_CD description="Correction of the high lift configuration drag in drag counts">
+                        <value>40</value>
+                        <default>40</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </delta_CD>
+                    <factor_CD description="Relative factor for percentage change of the high lift configuration drag">
+                        <value>1</value>
+                        <default>1</default>
+                        <unit>1</unit>
+                        <lower_boundary>-999</lower_boundary>
+                        <upper_boundary>999</upper_boundary>
+                    </factor_CD>
+                </hl_polar>    
+            </hl_polars_correction_values>
+        </SemiEmpiricalHighLiftAdaptions>
+    </program_settings>
+</module_configuration_file>

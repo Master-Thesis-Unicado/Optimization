@@ -1,0 +1,3464 @@
+<module_configuration_file name="wing_design_conf.xml">
+	<control_settings description="General control settings for this tool">
+		<aircraft_exchange_file_name description="Specify the name of the exchange file">
+            <value>UNICADO-SMR-01.xml</value>
+        </aircraft_exchange_file_name>
+		<aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+            <value>../projects/UNICADO/UNICADO-SMR-01/</value>
+		</aircraft_exchange_file_directory>
+		<own_tool_level description="Specify the tool level of this tool">
+			<value>1</value>
+		</own_tool_level>
+		<console_output description="Selector to specify the console output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+			<value>mode_1</value>
+		</console_output>
+		<log_file_output description="Selector to specify the log file output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+			<value>mode_1</value>
+		</log_file_output>
+		<plot_output description="Specify the way plotting shall be handled">
+			<enable description="Switch to enable plotting. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</enable>
+			<copy_plotting_files description="Switch if plotting files shall be copied. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</copy_plotting_files>
+			<delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</delete_plotting_files_from_tool_folder>
+		</plot_output>
+		<report_output description="Switch to generate an HTML report. Switch: true (On) / false (Off)">
+			<value>true</value>
+		</report_output>
+		<tex_report description="Switch to generate a Tex report. Switch: true (On) / false (Off)">
+			<value>true</value>
+		</tex_report>
+		<write_info_files description="Switch to generate info files. Switch: true (On) / false (Off)">
+			<value>false</value>
+		</write_info_files>
+		<log_file description="Specify the name of the log file">
+			<value>wing_design.log</value>
+		</log_file>
+		<inkscape_path description="Path to the inkscape application (DEFAULT: Use inkscape from the UNICADO repo structure)">
+			<value>C:/Programs/UNICADOworkflow/inkscape/</value>
+		</inkscape_path>
+		<gnuplot_path description="Path to the gnuplot application (DEFAULT: Use gnuplot from the UNICADO repo structure)">
+			<value>C:/Programs/UNICADOworkflow/gnuplot/</value>
+		</gnuplot_path>
+	</control_settings>
+  <program_settings>
+		<modes description="mode selection">
+			<design_mode description="selector mode_0: design, mode_1: redesign">
+				<value>mode_0</value>
+			</design_mode>
+		</modes>
+		<use_existing_geometry description="settings for redesign">
+			<path_to_existing_geometry_file description="path to existing geometry file relative to the project path">
+				<value>geometry_data/existing_wing_geometry.xml</value>
+			</path_to_existing_geometry_file>
+			<surface_scaling description="Surface scaling method">
+				<method description="selector mode_0: via_constant_aspect_ratio_and_sweep, mode_1: via_constant_taper_ratio_and_sweep, mode_2: via_TE_sliding, mode_3: off">
+					<value>mode_0</value>
+				</method>
+			</surface_scaling>
+		</use_existing_geometry>
+		<tube_and_wing description="settings for tube and wing (TAW)">
+			<wing_configuration description="selector mode_0: cantilever_backward">
+				<value>mode_0</value>
+			</wing_configuration>
+			<cantilever_backward description="cantilever design information">
+				<calculation_methods description="calculation methods for specific parameter">
+					<wing_area description="wing area calculation method">
+						<method description="selector mode_0: user_defined, mode_1: by_loading_and_mtom">
+							<value>mode_1</value>
+						</method>
+						<parameters>
+							<mode_0 description="user_defined">
+								<wing_area description="wing area">
+									<value>126.34</value>
+									<unit>m^2</unit>
+									<lower_boundary>50.0</lower_boundary>
+									<upper_boundary>5000.0</upper_boundary>
+								</wing_area>
+							</mode_0>
+						</parameters>
+					</wing_area>
+					<sweep description="sweep calculation method">
+						<method description="selector mode_0: user_defined, mode_1: drag_divergence">
+							<value>mode_0</value>
+						</method>
+						<parameters description="sweep method parameters">
+							<mode_0 description="user_defined">
+								<sweep_angle description="sweep angle at quarter chord">
+									<value>25</value>
+									<unit>deg</unit>
+									<lower_boundary>0</lower_boundary>
+									<upper_boundary>60</upper_boundary>
+								</sweep_angle>
+							</mode_0>
+							<mode_1 description="drag_divergence">
+								<korn_technology_factor description="technology factor">
+									<value>0.96</value>
+									<unit>1</unit>
+									<lower_boundary>0.85</lower_boundary>
+									<upper_boundary>0.96</upper_boundary>
+								</korn_technology_factor>
+								<delta_drag_divergence_to_mach_design description="offset between mach design and drag divergence">
+									<value>0.02</value>
+									<unit>1</unit>
+									<lower_boundary>0.0</lower_boundary>
+									<upper_boundary>0.03</upper_boundary>
+								</delta_drag_divergence_to_mach_design>
+							</mode_1>
+						</parameters>
+					</sweep>
+					<taper_ratio description="taper ratio calculation method">
+						<method description="selector mode_0: user_defined, mode_1: howe">
+							<value>mode_0</value>
+						</method>
+						<parameters>
+							<mode_0 description="user_defined">
+								<taper_ratio description="taper ratio of overall wing">
+									<value>0.17</value>
+									<unit>1</unit>
+									<lower_boundary>0.0</lower_boundary>
+									<upper_boundary>1.0</upper_boundary>
+								</taper_ratio>
+							</mode_0>
+						</parameters>
+					</taper_ratio>
+					<dihedral description="dihedral calculation method">
+						<method description="selector mode_0: user_defined, mode_1: by_wing_position_and_quarter_chord_sweep">
+							<value>mode_1</value>
+						</method>
+						<parameters description="parameters for methods">
+							<mode_0 description="user_defined">
+								<dihedral_angle description="dihedral angle">
+									<value>4</value>
+									<unit>deg</unit>
+									<lower_boundary>-20</lower_boundary>
+									<upper_boundary>20</upper_boundary>
+								</dihedral_angle>
+							</mode_0>
+							<mode_1 description="by_wing_position_and_quarter_chord_sweep">
+								<raymer_range_value description="linear interpolation from lowest to highest dihedral value according to raymer limits">
+									<value>0.25</value>
+									<unit>1</unit>
+									<lower_boundary>0.0</lower_boundary>
+									<upper_boundary>1.0</upper_boundary>
+								</raymer_range_value>
+							</mode_1>
+						</parameters>
+					</dihedral>
+					<aspect_ratio description="aspect ratio calculation method">
+						<method description="selector mode_0: user_defined, mode_1: by_pitch_up_limit_function">
+							<value>mode_0</value>
+						</method>
+						<parameters description="Mode parameters">
+							<mode_0 description="user_defined">
+								<aspect_ratio description="user aspect ratio">
+									<value>9.5</value>
+									<unit>1</unit>
+									<lower_boundary>6</lower_boundary>
+									<upper_boundary>20</upper_boundary>
+								</aspect_ratio>
+							</mode_0>
+						</parameters>
+					</aspect_ratio>
+					<relative_kink_position description="relative kink position method">
+						<method description="selector mode_0: user_defined, mode_1: based_on_landing_gear_track">
+							<value>mode_0</value>
+						</method>
+						<parameters>
+							<mode_0 description="user_defined">
+								<relative_kink_position description="relative to half span - only used if low wing and wing mounted landing gear">
+									<value>0.3</value>
+									<unit>1</unit>
+									<lower_boundary>0.25</lower_boundary>
+									<upper_boundary>0.38</upper_boundary>
+								</relative_kink_position>
+								<maximum_inner_trailing_edge_sweep description="maximum inner trailing edge sweep - sets maximum possible inner trailing edge sweep">
+									<value>3.0</value>
+									<unit>deg</unit>
+									<lower_boundary>-30.0</lower_boundary>
+									<upper_boundary>30.0</upper_boundary>
+								</maximum_inner_trailing_edge_sweep>
+							</mode_0>
+							<mode_1>
+								<initial_relative_kink_position description="relative to half span - only used if low wing and wing mounted landing gear - initial value -&gt; will change over iteration">
+									<value>0.3</value>
+									<unit>1</unit>
+									<lower_boundary>0.25</lower_boundary>
+									<upper_boundary>0.38</upper_boundary>
+								</initial_relative_kink_position>
+								<maximum_inner_trailing_edge_sweep description="maximum inner trailing edge sweep - sets maximum possible inner trailing edge sweep">
+									<value>10.0</value>
+									<unit>deg</unit>
+									<lower_boundary>0.0</lower_boundary>
+									<upper_boundary>20.0</upper_boundary>
+								</maximum_inner_trailing_edge_sweep>
+							</mode_1>
+						</parameters>
+					</relative_kink_position>
+					<wing_profile_and_thickness_distribution description="wing profile calculation methods">
+						<method description="selector mode_0: user_defined, mode_1: torenbeek_jenkinson">
+							<value>mode_1</value>
+						</method>
+						<parameters description="wing profile parameters">
+							<mode_0 description="user_defined - thickness to chord ratio's must be from root to tip - linear interpolation">
+								<wing_profile_and_thickness description="wing profile and thickness at half span" ID="0">
+									<wing_profile description="wing profile">
+										<value>F15_15</value>
+									</wing_profile>
+									<thickness_to_chord description="Thickness to chord ratio">
+										<ratio description="thickness to chord ratio value">
+											<value>0.16</value>
+											<unit>1</unit>
+											<lower_boundary>0.05</lower_boundary>
+											<upper_boundary>0.40</upper_boundary>
+										</ratio>
+										<at_half_span description="thickness to chord ratio value at half span">
+											<value>0.0</value>
+											<unit>1</unit>
+											<lower_boundary>0.0</lower_boundary>
+											<upper_boundary>1.0</upper_boundary>
+										</at_half_span>
+									</thickness_to_chord>
+								</wing_profile_and_thickness>
+								<wing_profile_and_thickness description="wing profile and thickness at half span" ID="1">
+									<wing_profile description="wing profile">
+										<value>F15_12</value>
+									</wing_profile>
+									<thickness_to_chord description="Thickness to chord ratio">
+										<ratio description="thickness to chord ratio value">
+											<value>0.13</value>
+											<unit>1</unit>
+											<lower_boundary>0.05</lower_boundary>
+											<upper_boundary>0.40</upper_boundary>
+										</ratio>
+										<at_half_span description="thickness to chord ratio value at half span">
+											<value>0.3</value>
+											<unit>1</unit>
+											<lower_boundary>0.0</lower_boundary>
+											<upper_boundary>1.0</upper_boundary>
+										</at_half_span>
+									</thickness_to_chord>
+								</wing_profile_and_thickness>
+								<wing_profile_and_thickness description="wing profile and thickness at half span" ID="2">
+									<wing_profile description="wing profile">
+										<value>F15_11</value>
+									</wing_profile>
+									<thickness_to_chord description="Thickness to chord ratio">
+										<ratio description="thickness to chord ratio value">
+											<value>0.12</value>
+											<unit>1</unit>
+											<lower_boundary>0.05</lower_boundary>
+											<upper_boundary>0.40</upper_boundary>
+										</ratio>
+										<at_half_span description="thickness to chord ratio value at half span">
+											<value>0.45</value>
+											<unit>1</unit>
+											<lower_boundary>0.0</lower_boundary>
+											<upper_boundary>1.0</upper_boundary>
+										</at_half_span>
+									</thickness_to_chord>
+								</wing_profile_and_thickness>
+								<wing_profile_and_thickness description="wing profile and thickness at half span" ID="3">
+									<wing_profile description="wing profile">
+										<value>F15_11</value>
+									</wing_profile>
+									<thickness_to_chord description="Thickness to chord ratio">
+										<ratio description="thickness to chord ratio value">
+											<value>0.11</value>
+											<unit>1</unit>
+											<lower_boundary>0.05</lower_boundary>
+											<upper_boundary>0.40</upper_boundary>
+										</ratio>
+										<at_half_span description="thickness to chord ratio value at half span">
+											<value>1.0</value>
+											<unit>1</unit>
+											<lower_boundary>0.0</lower_boundary>
+											<upper_boundary>1.0</upper_boundary>
+										</at_half_span>
+									</thickness_to_chord>
+								</wing_profile_and_thickness>
+							</mode_0>
+							<mode_1 description="torenbeek_jenkinson">
+								<wing_profile description="wing profile">
+									<value>F15_15</value>
+								</wing_profile>
+								<max_thickness_to_chord_ratio description="maximum thickness to chord ratio - will be applied at root inner wing">
+									<value>0.15</value>
+									<unit>1</unit>
+									<lower_boundary>0.10</lower_boundary>
+									<upper_boundary>0.40</upper_boundary>
+								</max_thickness_to_chord_ratio>
+								<airfoil_critical_factor description="factor to describe technology factor of airfoil - conventional 1.0, high speed 1960-1970 technology (peaky) airfoils 1.05, supercritical airfoils 1.12 - 1.15">
+									<value>1.12</value>
+									<unit>1</unit>
+									<lower_boundary>1.0</lower_boundary>
+									<upper_boundary>1.15</upper_boundary>
+								</airfoil_critical_factor>
+							</mode_1>
+						</parameters>
+					</wing_profile_and_thickness_distribution>
+					<folding_wing_tip description="parameters regarding folding wing tips">
+						<spanwise_position description="Non-dimensional spanwise position of the folding wing tip">
+							<method description="selector mode_0: user_defined, mode_1: by_airport_limit">
+								<value>mode_0</value>
+							</method>
+							<parameters description="Mode parameters">
+								<mode_0 description="user_defined">
+									<spanwise_position description="user_spanwise_position">
+										<value>0.8</value>
+										<unit>1</unit>
+										<lower_boundary>0</lower_boundary>
+										<upper_boundary>1</upper_boundary>
+									</spanwise_position>
+								</mode_0>
+							</parameters>							
+						</spanwise_position>
+						<mass_penalty description="Added mass penalty for folding wing tip">
+							<method description="selector mode_0: user_defined, mode_1: calculation based on gur">
+								<value>mode_1</value>
+							</method>
+							<parameters description="Mode parameters">
+								<mode_0 description="user_defined">
+									<mass_penalty description="user mass penalty">
+										<value>400</value>
+										<unit>kg</unit>
+										<lower_boundary>0</lower_boundary>
+										<upper_boundary>inf</upper_boundary>
+									</mass_penalty>
+								</mode_0>
+							</parameters>
+						</mass_penalty>
+					</folding_wing_tip>
+					<material description="Material used for the wing. Selector AL: Aluminium, CFRP: Carbon-fiber reinforced plastic">
+						<value>AL</value>
+					</material>
+					<mass description="mass calculation methods">
+						<method description="selector mode_0: flops, mode_1: chiozzotto_wer">
+							<value>mode_0</value>
+						</method>
+						<parameters>
+							<mode_0 description="flops">
+								<faert description="aeroelastic tailoring factor from 0.0 (no tailoring) to 1.0 (maximum tailoring)">
+									<value>0.0</value>
+									<unit>1</unit>
+									<lower_boundary>0.0</lower_boundary>
+									<upper_boundary>1.0</upper_boundary>
+								</faert>
+								<technology_factor description="additional technology factor applied to overall mass">
+									<value>1.0</value>
+									<unit>1</unit>
+									<lower_boundary>0.5</lower_boundary>
+									<upper_boundary>1.5</upper_boundary>
+								</technology_factor>
+							</mode_0>
+							<mode_1 description="chiozzotto_wer">
+								<technology_factor description="technology factor for wing mass: factor below 1 -&gt; higher technology level (less weight), factor above 1 lower technology level (higher weight)">
+									<value>1.0</value>
+									<unit>1</unit>
+									<lower_boundary>0.7</lower_boundary>
+									<upper_boundary>1.3</upper_boundary>
+								</technology_factor>
+							</mode_1>
+						</parameters>
+					</mass>
+					<control_devices description="control devices calculation method">
+						<method description="selector mode_0: user_defined, mode_1: empirical">
+							<value>mode_1</value>
+						</method>
+						<parameters description="control device method parameters">
+							<mode_0 description="user_defined parameters">
+								<control_device ID="0" description="control device">
+									<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+											<value>aileron</value>
+									</type>
+									<deflection description="maximum positive and negative deflection of control device">
+											<full_negative_deflection description="full negative deflection">
+													<value>-25.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_negative_deflection>
+											<full_positive_deflection description="full positive deflection">
+													<value>25.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_positive_deflection>
+									</deflection>
+									<position description="chord relative position of control device">
+											<inner_position description="relative inner position">
+													<spanwise description="relative spanwise position">
+															<value>0.7</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.8</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>1.0</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</inner_position>
+											<outer_position description="relative outer position">
+													<spanwise description="relative spanwise position">
+															<value>0.95</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.8</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>1.0</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</outer_position>
+									</position>
+								</control_device>
+								<control_device ID="1" description="control device">
+									<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+											<value>slat</value>
+									</type>
+									<deflection description="maximum positive and negative deflection of control device">
+										<full_negative_deflection description="full negative deflection">
+												<value>-25.0</value>
+												<unit>deg</unit>
+												<lower_boundary>-25</lower_boundary>
+												<upper_boundary>25</upper_boundary>
+										</full_negative_deflection>
+										<full_positive_deflection description="full positive deflection">
+												<value>0.0</value>
+												<unit>deg</unit>
+												<lower_boundary>-25</lower_boundary>
+												<upper_boundary>25</upper_boundary>
+										</full_positive_deflection>
+									</deflection>
+									<position description="chord relative position of control device">
+											<inner_position description="relative inner position">
+													<spanwise description="relative spanwise position">
+															<value>0.2</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.0</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.2</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</inner_position>
+											<outer_position description="relative outer position">
+													<spanwise description="relative spanwise position">
+															<value>0.9</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.0</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.2</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</outer_position>
+									</position>
+								</control_device>
+								<control_device ID="2" description="control device">
+									<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+											<value>flap_fowler</value>
+									</type>
+									<deflection description="maximum positive and negative deflection of control device">
+										<full_negative_deflection description="full negative deflection">
+												<value>0.0</value>
+												<unit>deg</unit>
+												<lower_boundary>-25</lower_boundary>
+												<upper_boundary>25</upper_boundary>
+										</full_negative_deflection>
+										<full_positive_deflection description="full positive deflection">
+												<value>25.0</value>
+												<unit>deg</unit>
+												<lower_boundary>-25</lower_boundary>
+												<upper_boundary>25</upper_boundary>
+										</full_positive_deflection>
+									</deflection>
+									<position description="chord relative position of control device">
+											<inner_position description="relative inner position">
+													<spanwise description="relative spanwise position">
+															<value>0.0</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.8</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>1.0</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</inner_position>
+											<outer_position description="relative outer position">
+													<spanwise description="relative spanwise position">
+															<value>0.7</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.8</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>1.0</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</outer_position>
+									</position>
+								</control_device>
+								<control_device ID="3" description="control device">
+									<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+											<value>spoiler</value>
+									</type>
+									<deflection description="maximum positive and negative deflection of control device">
+										<full_negative_deflection description="full negative deflection">
+												<value>0.0</value>
+												<unit>deg</unit>
+												<lower_boundary>-25</lower_boundary>
+												<upper_boundary>25</upper_boundary>
+										</full_negative_deflection>
+										<full_positive_deflection description="full positive deflection">
+												<value>10.0</value>
+												<unit>deg</unit>
+												<lower_boundary>-25</lower_boundary>
+												<upper_boundary>25</upper_boundary>
+										</full_positive_deflection>
+									</deflection>
+									<position description="chord relative position of control device">
+											<inner_position description="relative inner position">
+													<spanwise description="relative spanwise position">
+															<value>0.2</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.6</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.8</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</inner_position>
+											<outer_position description="relative outer position">
+													<spanwise description="relative spanwise position">
+															<value>0.65</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.65</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.8</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</outer_position>
+									</position>
+								</control_device>
+							</mode_0>
+							<mode_1 description="empirical parameters">
+								<high_lift_device_type_leading_edge description="slat, special, krueger, droop_nose, morphing_droop_nose">
+									<value>slat</value>
+								</high_lift_device_type_leading_edge>
+								<high_lift_device_type_trailing_edge description="flap_fowler, double_fowler, triple_fowler, special, flap, ADHF, slotted_flap, morphing_trailing_edge">
+									<value>flap_fowler</value>
+								</high_lift_device_type_trailing_edge>
+							</mode_1>
+						</parameters>
+					</control_devices>
+					<spars description="spars calculation method">
+						<method description="selector mode_0: user_defined">
+							<value>mode_0</value>
+						</method>
+						<parameters description="spars method parameters">
+							<mode_0 description="user_defined parameters">
+								<spar ID="0" description="component spar">
+									<name description="name of spar">
+										<value>front_spar</value>
+									</name>
+									<position description="chord relative position of spar">
+										<inner_position description="relative inner position">
+												<spanwise description="relative spanwise position">
+														<value>0.0</value>
+														<unit>1</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>1.0</upper_boundary>
+												</spanwise>
+												<chord description="control device chord position">
+														<from description="relative chord position">
+																<value>0.2</value>
+																<unit>1</unit>
+																<lower_boundary>0.0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</from>
+														<to description="relative chord position">
+																<value>0.2</value>
+																<unit>1</unit>
+																<lower_boundary>0.0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</to>
+												</chord>
+										</inner_position>
+										<outer_position description="relative outer position">
+												<spanwise description="relative spanwise position">
+														<value>1.</value>
+														<unit>1</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>1.0</upper_boundary>
+												</spanwise>
+												<chord description="control device chord position">
+														<from description="relative chord position">
+																<value>0.2</value>
+																<unit>1</unit>
+																<lower_boundary>0.0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</from>
+														<to description="relative chord position">
+																<value>0.2</value>
+																<unit>1</unit>
+																<lower_boundary>0.0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</to>
+												</chord>
+										</outer_position>
+									</position>
+								</spar>
+								<spar ID="1" description="component spar">
+									<name description="name of spar">
+										<value>rear_spar</value>
+									</name>
+									<position description="chord relative position of spar">
+										<inner_position description="relative inner position">
+												<spanwise description="relative spanwise position">
+														<value>0.0</value>
+														<unit>1</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>1.0</upper_boundary>
+												</spanwise>
+												<chord description="control device chord position">
+														<from description="relative chord position">
+																<value>0.6</value>
+																<unit>1</unit>
+																<lower_boundary>0.0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</from>
+														<to description="relative chord position">
+																<value>0.6</value>
+																<unit>1</unit>
+																<lower_boundary>0.0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</to>
+												</chord>
+										</inner_position>
+										<outer_position description="relative outer position">
+												<spanwise description="relative spanwise position">
+														<value>1</value>
+														<unit>1</unit>
+														<lower_boundary>0</lower_boundary>
+														<upper_boundary>1.0</upper_boundary>
+												</spanwise>
+												<chord description="control device chord position">
+														<from description="relative chord position">
+																<value>0.6</value>
+																<unit>1</unit>
+																<lower_boundary>0.0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</from>
+														<to description="relative chord position">
+																<value>0.6</value>
+																<unit>1</unit>
+																<lower_boundary>0.0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</to>
+												</chord>
+										</outer_position>
+									</position>
+								</spar>
+							</mode_0>
+						</parameters>
+					</spars>
+				</calculation_methods>
+			</cantilever_backward>
+		</tube_and_wing>
+		<strut_braced_wing description="settings for strut braced wing">
+			<wing_mounting description="selector mode_0: high_mounting">
+				<value>high_mounting</value>
+			</wing_mounting>
+			<high_mounting description="strut design information">
+				<calculation_methods description="calculation methods for specific parameters">
+					<material description="Material used for the wing. Selector AL: Aluminium, CFRP: Carbon-fiber reinforced plastic">
+						<value>AL</value>
+					</material>	
+					<mass description="mass calculation methods">
+						<method description="selector mode_0: chiozzotto_wer">
+							<value>mode_0</value>
+						</method>
+						<parameters>							
+							<mode_0 description="chiozzotto_wer">
+								<technology_factor description="technology factor for wing mass: factor below 1 -&gt; higher technology level (less weight), factor above 1 lower technology level (higher weight)">
+									<value>1.0</value>
+									<unit>1</unit>
+									<lower_boundary>0.7</lower_boundary>
+									<upper_boundary>1.3</upper_boundary>
+								</technology_factor>
+							</mode_0>
+						</parameters>
+					</mass>
+					<wing description="calculation methods specific for the wing">
+						<wing_area description="wing area calculation method">
+							<method description="selector mode_0: user_defined, mode_1: by_loading_and_mtom">
+								<value>mode_1</value>
+							</method>
+							<parameters>
+								<mode_0 description="user_defined">
+									<wing_area description="wing area">
+										<value>133</value>
+										<unit>m^2</unit>
+										<lower_boundary>50.0</lower_boundary>
+										<upper_boundary>5000.0</upper_boundary>
+									</wing_area>
+								</mode_0>
+							</parameters>
+						</wing_area>
+						<aspect_ratio description="aspect ratio calculation method">
+							<method description="selector mode_0: user_defined">
+								<value>mode_0</value>
+							</method>
+							<parameters description="Mode parameters">
+								<mode_0 description="user_defined">
+									<aspect_ratio description="user aspect ratio">
+										<value>10</value>
+										<unit>1</unit>
+										<lower_boundary>6</lower_boundary>
+										<upper_boundary>20</upper_boundary>
+									</aspect_ratio>
+								</mode_0>
+							</parameters>
+						</aspect_ratio>
+						<quarter_chord_sweep description="wing quarter chord sweep calculation method">
+							<method description="selector mode_0: user_defined, mode_1: drag_divergence">
+								<value>mode_1</value>
+							</method>
+							<parameters>
+								<mode_0 description="user_defined">
+									<sweep_angle description="sweep angle at quarter chord">
+										<value>25</value>
+										<unit>deg</unit>
+										<lower_boundary>0</lower_boundary>
+										<upper_boundary>60</upper_boundary>
+									</sweep_angle>
+								</mode_0>
+								<mode_1 description="drag_divergence">
+									<korn_technology_factor description="technology factor">
+										<value>0.96</value>
+										<unit>1</unit>
+										<lower_boundary>0.85</lower_boundary>
+										<upper_boundary>0.96</upper_boundary>
+									</korn_technology_factor>
+									<delta_drag_divergence_to_mach_design description="offset between mach design and drag divergence">
+										<value>0.02</value>
+										<unit>1</unit>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>0.03</upper_boundary>
+									</delta_drag_divergence_to_mach_design>
+								</mode_1>
+							</parameters>
+						</quarter_chord_sweep>
+						<taper_ratio description="wing taper ratio calculation method">
+							<method description="selector mode_0: user_defined, mode_1: howe">
+								<value>mode_0</value>
+							</method>
+							<parameters>
+								<mode_0 description="user_defined">
+									<wing_taper_ratio description="wing taper ratio">
+										<value>0.33</value>
+										<unit>1</unit>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</wing_taper_ratio>
+								</mode_0>
+							</parameters>
+						</taper_ratio>
+						<dihedral description="dihedral calculation method">
+							<method description="selector mode_0: user_defined, mode_1: by_wing_position_and_quarter_chord_sweep">
+								<value>mode_1</value>
+							</method>
+							<parameters description="parameters for methods">
+								<mode_0 description="user_defined">
+									<dihedral_angle description="dihedral angle">
+										<value>-5</value>
+										<unit>deg</unit>
+										<lower_boundary>-20</lower_boundary>
+										<upper_boundary>20</upper_boundary>
+									</dihedral_angle>
+								</mode_0>
+								<mode_1 description="by_wing_position_and_quarter_chord_sweep">
+									<raymer_range_value description="linear interpolation from lowest to highest dihedral value according to raymer limits">
+										<value>0.25</value>
+										<unit>1</unit>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</raymer_range_value>
+								</mode_1>
+							</parameters>
+						</dihedral>
+						<wing_profile_and_thickness_distribution description="wing profile calculation methods">
+							<method description="selector mode_0: user_defined, mode_1: torenbeek_jenkinson">
+								<value>mode_0</value>
+							</method>
+							<parameters description="wing profile parameters">
+								<mode_0 description="user_defined - thickness to chord ratio's must be from root to tip - linear interpolation">
+									<wing_profile_and_thickness description="wing profile and thickness at half span" ID="0">
+										<wing_profile description="wing profile">
+											<value>F15_15</value>
+										</wing_profile>
+										<thickness_to_chord description="Thickness to chord ratio">
+											<ratio description="thickness to chord ratio value">
+												<value>0.16</value>
+												<unit>1</unit>
+												<lower_boundary>0.05</lower_boundary>
+												<upper_boundary>0.40</upper_boundary>
+											</ratio>
+											<at_half_span description="thickness to chord ratio value at half span">
+												<value>0.0</value>
+												<unit>1</unit>
+												<lower_boundary>0.0</lower_boundary>
+												<upper_boundary>1.0</upper_boundary>
+											</at_half_span>
+										</thickness_to_chord>
+									</wing_profile_and_thickness>
+									<wing_profile_and_thickness description="wing profile and thickness at half span" ID="1">
+										<wing_profile description="wing profile">
+											<value>F15_11</value>
+										</wing_profile>
+										<thickness_to_chord description="Thickness to chord ratio">
+											<ratio description="thickness to chord ratio value">
+												<value>0.11</value>
+												<unit>1</unit>
+												<lower_boundary>0.05</lower_boundary>
+												<upper_boundary>0.40</upper_boundary>
+											</ratio>
+											<at_half_span description="thickness to chord ratio value at half span">
+												<value>1.0</value>
+												<unit>1</unit>
+												<lower_boundary>0.0</lower_boundary>
+												<upper_boundary>1.0</upper_boundary>
+											</at_half_span>
+										</thickness_to_chord>
+									</wing_profile_and_thickness>
+								</mode_0>
+								<mode_1 description="torenbeek_jenkinson">
+									<wing_profile description="wing profile">
+										<value>F15_15</value>
+									</wing_profile>
+									<max_thickness_to_chord_ratio description="maximum thickness to chord ratio - will be applied at root inner wing">
+										<value>0.15</value>
+										<unit>1</unit>
+										<lower_boundary>0.10</lower_boundary>
+										<upper_boundary>0.40</upper_boundary>
+									</max_thickness_to_chord_ratio>
+									<airfoil_critical_factor description="factor to describe technology factor of airfoil - conventional 1.0, high speed 1960-1970 technology (peaky) airfoils 1.05, supercritical airfoils 1.12 - 1.15">
+										<value>1.12</value>
+										<unit>1</unit>
+										<lower_boundary>1.0</lower_boundary>
+										<upper_boundary>1.15</upper_boundary>
+									</airfoil_critical_factor>
+								</mode_1>
+							</parameters>
+						</wing_profile_and_thickness_distribution>
+						<control_devices description="control devices calculation method">
+							<method description="selector mode_0: user_defined, mode_1: empirical">
+								<value>mode_1</value>
+							</method>
+							<parameters description="control device method parameters">
+								<mode_0 description="user_defined parameters">
+									<control_device ID="0" description="control device">
+										<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+												<value>aileron</value>
+										</type>
+										<deflection description="maximum positive and negative deflection of control device">
+												<full_negative_deflection description="full negative deflection">
+														<value>-25.0</value>
+														<unit>deg</unit>
+														<lower_boundary>-25</lower_boundary>
+														<upper_boundary>25</upper_boundary>
+												</full_negative_deflection>
+												<full_positive_deflection description="full positive deflection">
+														<value>25.0</value>
+														<unit>deg</unit>
+														<lower_boundary>-25</lower_boundary>
+														<upper_boundary>25</upper_boundary>
+												</full_positive_deflection>
+										</deflection>
+										<position description="chord relative position of control device">
+												<inner_position description="relative inner position">
+														<spanwise description="relative spanwise position">
+																<value>0.7</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>1.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</inner_position>
+												<outer_position description="relative outer position">
+														<spanwise description="relative spanwise position">
+																<value>0.95</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>1.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</outer_position>
+										</position>
+									</control_device>
+									<control_device ID="1" description="control device">
+										<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+												<value>slat</value>
+										</type>
+										<deflection description="maximum positive and negative deflection of control device">
+											<full_negative_deflection description="full negative deflection">
+													<value>-25.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_negative_deflection>
+											<full_positive_deflection description="full positive deflection">
+													<value>0.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_positive_deflection>
+										</deflection>
+										<position description="chord relative position of control device">
+												<inner_position description="relative inner position">
+														<spanwise description="relative spanwise position">
+																<value>0.2</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>0.2</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</inner_position>
+												<outer_position description="relative outer position">
+														<spanwise description="relative spanwise position">
+																<value>0.9</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>0.2</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</outer_position>
+										</position>
+									</control_device>
+									<control_device ID="2" description="control device">
+										<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+												<value>flap_fowler</value>
+										</type>
+										<deflection description="maximum positive and negative deflection of control device">
+											<full_negative_deflection description="full negative deflection">
+													<value>0.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_negative_deflection>
+											<full_positive_deflection description="full positive deflection">
+													<value>25.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_positive_deflection>
+										</deflection>
+										<position description="chord relative position of control device">
+												<inner_position description="relative inner position">
+														<spanwise description="relative spanwise position">
+																<value>0.0</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>1.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</inner_position>
+												<outer_position description="relative outer position">
+														<spanwise description="relative spanwise position">
+																<value>0.7</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>1.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</outer_position>
+										</position>
+									</control_device>
+									<control_device ID="3" description="control device">
+										<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+												<value>spoiler</value>
+										</type>
+										<deflection description="maximum positive and negative deflection of control device">
+											<full_negative_deflection description="full negative deflection">
+													<value>0.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_negative_deflection>
+											<full_positive_deflection description="full positive deflection">
+													<value>10.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_positive_deflection>
+										</deflection>
+										<position description="chord relative position of control device">
+												<inner_position description="relative inner position">
+														<spanwise description="relative spanwise position">
+																<value>0.2</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.6</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</inner_position>
+												<outer_position description="relative outer position">
+														<spanwise description="relative spanwise position">
+																<value>0.65</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.65</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</outer_position>
+										</position>
+									</control_device>
+								</mode_0>
+								<mode_1 description="empirical parameters">
+									<high_lift_device_type_leading_edge description="slat, special, krueger, droop_nose, morphing_droop_nose">
+										<value>slat</value>
+									</high_lift_device_type_leading_edge>
+									<high_lift_device_type_trailing_edge description="flap_fowler, double_fowler, triple_fowler, special, flap, ADHF, slotted_flap, morphing_trailing_edge">
+										<value>flap_fowler</value>
+									</high_lift_device_type_trailing_edge>
+								</mode_1>
+							</parameters>
+						</control_devices>
+						<spars description="spars calculation method">
+							<method description="selector mode_0: user_defined">
+								<value>mode_0</value>
+							</method>
+							<parameters description="spars method parameters">
+								<mode_0 description="user_defined parameters">
+									<spar ID="0" description="component spar">
+										<name description="name of spar">
+											<value>front_spar</value>
+										</name>
+										<position description="chord relative position of spar">
+											<inner_position description="relative inner position">
+													<spanwise description="relative spanwise position">
+															<value>0.0</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.15</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.15</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</inner_position>
+											<outer_position description="relative outer position">
+													<spanwise description="relative spanwise position">
+															<value>1.</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.15</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.15</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</outer_position>
+										</position>
+									</spar>
+									<spar ID="1" description="component spar">
+										<name description="name of spar">
+											<value>rear_spar</value>
+										</name>
+										<position description="chord relative position of spar">
+											<inner_position description="relative inner position">
+													<spanwise description="relative spanwise position">
+															<value>0.0</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.6</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.6</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</inner_position>
+											<outer_position description="relative outer position">
+													<spanwise description="relative spanwise position">
+															<value>1</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.6</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.6</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</outer_position>
+										</position>
+									</spar>
+								</mode_0>
+							</parameters>
+						</spars>
+					</wing>
+					<strut description="calculation methods specific for the strut">
+						<wing_eta_strut description="wing eta strut calculation method">
+							<method description="selector mode_0: user_defined">
+								<value>mode_0</value>
+							</method>
+							<parameters>
+								<mode_0 description="user_defined">
+									<wing_eta_strut description="wing eta strut">
+										<value>0.56</value>
+										<unit>1</unit>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</wing_eta_strut>
+								</mode_0>
+							</parameters>
+						</wing_eta_strut>
+						<chordwise_attachment description="strut non-dimensional chordwise attachment point calculation method">
+							<method description="selector mode_0: user_defined, mode_1: at_front_spar">
+								<value>mode_1</value>
+							</method>
+							<parameters description="Mode parameters">
+								<mode_0 description="user_defined">
+									<chordwise_attachment description="non-dimensional, chordwise_attachment_point between LE of strut and wing">
+										<value>0.3</value>
+										<unit>1</unit>
+										<lower_boundary>0</lower_boundary>
+										<upper_boundary>1</upper_boundary>
+									</chordwise_attachment>
+								</mode_0>
+							</parameters>
+						</chordwise_attachment>
+						<sweep description="strut sweep calculation method">
+							<method description="selector mode_0: user_defined, mode_1: equal_to_wing_quarter_chod_sweep">
+								<value>mode_1</value>
+							</method>
+							<parameters>
+								<mode_0 description="user_defined">
+									<sweep_angle description="sweep angle at quarter chord">
+										<value>20</value>
+										<unit>deg</unit>
+										<lower_boundary>-60</lower_boundary>
+										<upper_boundary>60</upper_boundary>
+									</sweep_angle>
+								</mode_0>
+							</parameters>
+						</sweep>
+						<chord_length_ratio description="strut chord_length calculation method">
+							<method description="selector mode_0: user_defined">
+								<value>mode_0</value>
+							</method>
+							<parameters>
+								<mode_0 description="user_defined">
+									<chord_length_ratio description="chord length ratio between strut and root-chord of wing">
+										<value>0.18</value>
+										<unit>1</unit>
+										<lower_boundary>0</lower_boundary>
+										<upper_boundary>1</upper_boundary>
+									</chord_length_ratio>
+								</mode_0>
+							</parameters>
+						</chord_length_ratio>
+						<radius_strut_wing_connection description="radius strut-wing-connection calculation method">
+							<method description="selector mode_0: user_defined">
+								<value>mode_0</value>
+							</method>
+							<parameters>
+								<mode_0 description="user_defined">
+									<radius_strut_wing_connection description="radius_strut_wing_connection">
+										<value>0.5</value>
+										<unit>1</unit>
+										<lower_boundary>0.1</lower_boundary>
+										<upper_boundary>2.0</upper_boundary>
+									</radius_strut_wing_connection>
+								</mode_0>
+							</parameters>
+						</radius_strut_wing_connection>
+						<segments_strut_wing_connection description="segments strut-wing-connection calculation method">
+							<value>4</value>
+							<unit>1</unit>
+							<lower_boundary>1</lower_boundary>
+							<upper_boundary>10</upper_boundary>
+						</segments_strut_wing_connection>
+						<spars description="spars calculation method">
+							<method description="selector mode_0: user_defined">
+								<value>mode_0</value>
+							</method>
+							<parameters description="spars method parameters">
+								<mode_0 description="user_defined parameters">
+									<spar ID="0" description="component spar">
+										<name description="name of spar">
+											<value>front_spar</value>
+										</name>
+										<position description="chord relative position of spar">
+											<inner_position description="relative inner position">
+													<spanwise description="relative spanwise position">
+															<value>0.0</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.15</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.15</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</inner_position>
+											<outer_position description="relative outer position">
+													<spanwise description="relative spanwise position">
+															<value>1.</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.15</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.15</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</outer_position>
+										</position>
+									</spar>
+									<spar ID="1" description="component spar">
+										<name description="name of spar">
+											<value>rear_spar</value>
+										</name>
+										<position description="chord relative position of spar">
+											<inner_position description="relative inner position">
+													<spanwise description="relative spanwise position">
+															<value>0.0</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.45</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.45</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</inner_position>
+											<outer_position description="relative outer position">
+													<spanwise description="relative spanwise position">
+															<value>1</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.45</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.45</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</outer_position>
+										</position>
+									</spar>
+								</mode_0>
+							</parameters>
+						</spars>
+					</strut>					
+				</calculation_methods>
+			</high_mounting>
+		</strut_braced_wing>
+		<tandem_wing description="settings for tandem wing">
+			<wing_configuration description="selector mode_0: cantilever">
+				<value>cantilever</value>
+			</wing_configuration>
+			<cantilever description="cantilever design information">
+				<calculation_methods description="calculation methods for specific parameter">			
+					<total_wing_area description="total wing area calculation method">
+						<method description="selector mode_0: user_defined, mode_1: by_loading_and_mtom">
+							<value>mode_1</value>
+						</method>
+						<parameters>
+							<mode_0 description="user_defined">
+								<total_wing_area description="total wing area">
+									<value>126.34</value>
+									<unit>m^2</unit>
+									<lower_boundary>50.0</lower_boundary>
+									<upper_boundary>5000.0</upper_boundary>
+								</total_wing_area>
+							</mode_0>
+						</parameters>
+					</total_wing_area>					
+					<wing_area_ratio description="wing area ratio(WAR = Back Wing Area / Front Wing Area)">
+						<method description="selector mode_0: user_defined">
+							<value>mode_0</value>
+						</method>
+						<parameters>
+							<mode_0 description="user_defined">
+								<wing_area_ratio description="wing area ratio">
+									<value>1</value>
+									<unit>1</unit>
+									<lower_boundary>0.83</lower_boundary>
+									<upper_boundary>1.2</upper_boundary>
+								</wing_area_ratio>
+							</mode_0>
+						</parameters>
+					</wing_area_ratio>
+					<relative_LE_stagger description="horizontal distance between leading edges of root chords of forward and rear wings along x-coordinate relative to fuselage length (St,rel=St/l,fuselage)">
+						<method description="selector mode_0: user_defined">
+							<value>mode_0</value>
+						</method>
+						<parameters>
+							<mode_0 description="user_defined">
+								<relative_LE_stagger description="relative leading edge stagger">
+									<value>0.5</value>
+									<unit>1</unit>
+									<lower_boundary>0</lower_boundary>
+									<upper_boundary>1</upper_boundary>
+								</relative_LE_stagger>
+							</mode_0>
+						</parameters>
+					</relative_LE_stagger>					
+					<material description="Material used for the wing. Selector AL: Aluminium, CFRP: Carbon-fiber reinforced plastic">
+						<value>AL</value>
+					</material>		
+					<mass_method description="switch for mass calculation method, look below for parameters">
+						<method description="selector mode_0: chiozzotto_wer">
+							<value>mode_0</value>
+						</method>
+						<parameters>
+							<mode_0 description="chiozzotto_wer">
+								<technology_factor description="technology factor for wing mass: factor below 1 - higher technology level (less weight), factor above 1 lower technology level (higher weight)">
+									<value>1.0</value>
+									<unit>1</unit>
+									<lower_boundary>0.7</lower_boundary>
+									<upper_boundary>1.3</upper_boundary>
+								</technology_factor>
+							</mode_0>
+						</parameters>
+					</mass_method>					
+					<sweep_method description="switch for sweep calculation method, look below for parameters">
+						<method description="selector mode_0: user_defined, mode_1: drag_divergence">
+							<value>mode_1</value>
+						</method>
+					</sweep_method>
+					<taper_ratio_method description="switch for taper ratio calculation method, look below for parameters">
+						<method description="selector mode_0: user_defined, mode_1: howe">
+							<value>mode_1</value>
+						</method>
+					</taper_ratio_method>
+					<dihedral_method description="switch for dihedral calculation method, look below for parameters">
+						<method description="selector mode_0: user_defined, mode_1: by shiktanz_dihedral_excess method">
+							<value>mode_1</value>
+						</method>
+						<parameters>
+							<mode_1 description="by shiktanz_dihedral_excess method">
+								<desired_total_dihedral_excess description="desired total dihedral excess">
+									<value>3</value>
+									<unit>deg</unit>
+									<lower_boundary>-10</lower_boundary>
+									<upper_boundary>10</upper_boundary>
+								</desired_total_dihedral_excess>
+							</mode_1>
+						</parameters>
+					</dihedral_method>
+					<aspect_ratio_method description="switch for aspect ratio calculation method, look below for parameters">
+						<method description="selector mode_0: user_defined, mode_1: by_pitch_up_limit_function">
+							<value>mode_1</value>
+						</method>
+					</aspect_ratio_method>
+					<front_wing>
+						<mounting description="vertical mounting of the front wing. Selector: low/mid/high">
+							<value>low</value>
+						</mounting>
+						<position description="calculation of the position of the front tandem wing">
+							<method description="selector mode_0: user_definied, mode_1: by stability and controllability">
+								<value>mode_1</value>
+							</method>
+							<parameters>
+								<mode_0 description="user_defined">
+									<relative_longitudinal_position description="longitudinal position of the front tandem wing relative to fuselage length">
+										<value>0.3</value>
+										<unit>1</unit>
+										<lower_boundary>0</lower_boundary>
+										<upper_boundary>1</upper_boundary>
+									</relative_longitudinal_position>
+								</mode_0>
+								<mode_1 description="by stability and controllability">
+									<desired_stability_margin description="desired lateral stability margin when positioning the wing">
+										<value>0.05</value>
+										<unit>1</unit>
+										<lower_boundary>-1</lower_boundary>
+										<upper_boundary>1</upper_boundary>
+									</desired_stability_margin>
+								</mode_1>
+							</parameters>							
+                    	</position>
+						<sweep description="parameters for sweep calculation methods">
+							<parameters description="sweep method parameters">
+								<mode_0 description="user_defined">
+									<sweep_angle description="sweep angle at quarter chord">
+										<value>27</value>
+										<unit>deg</unit>
+										<lower_boundary>-60</lower_boundary>
+										<upper_boundary>60</upper_boundary>
+									</sweep_angle>
+								</mode_0>
+								<mode_1 description="drag_divergence">
+									<korn_technology_factor description="technology factor">
+										<value>0.96</value>
+										<unit>1</unit>
+										<lower_boundary>0.85</lower_boundary>
+										<upper_boundary>0.96</upper_boundary>
+									</korn_technology_factor>
+									<delta_drag_divergence_to_mach_design description="offset between mach design and drag divergence">
+										<value>0.02</value>
+										<unit>1</unit>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>0.03</upper_boundary>
+									</delta_drag_divergence_to_mach_design>
+								</mode_1>
+							</parameters>
+						</sweep>
+						<taper_ratio description="parameters for taper ratio calculation methods">
+							<parameters>
+								<mode_0 description="user_defined">
+									<taper_ratio description="taper ratio of overall wing">
+										<value>0.17</value>
+										<unit>1</unit>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</taper_ratio>
+								</mode_0>
+							</parameters>
+						</taper_ratio>
+						<dihedral description="parameters for dihedral calculation methods">
+							<parameters description="parameters for methods">
+								<mode_0 description="user_defined">
+									<dihedral_angle description="dihedral angle">
+										<value>0</value>
+										<unit>deg</unit>
+										<lower_boundary>-20</lower_boundary>
+										<upper_boundary>20</upper_boundary>
+									</dihedral_angle>
+								</mode_0>
+							</parameters>
+						</dihedral>
+						<aspect_ratio description="parameters for aspect ratio calculation method">
+							<parameters description="Mode parameters">
+								<mode_0 description="user_defined">
+									<aspect_ratio description="user aspect ratio">
+										<value>20</value>
+										<unit>1</unit>
+										<lower_boundary>6</lower_boundary>
+										<upper_boundary>20</upper_boundary>
+									</aspect_ratio>
+								</mode_0>
+							</parameters>
+						</aspect_ratio>
+						<relative_kink_position description="relative kink position method">
+							<method description="selector mode_0: user_defined, mode_1: based_on_landing_gear_track">
+								<value>mode_0</value>
+							</method>
+							<parameters>
+								<mode_0 description="user_defined">
+									<relative_kink_position description="relative to half span - only used if low wing and wing mounted landing gear">
+										<value>0.3</value>
+										<unit>1</unit>
+										<lower_boundary>0.25</lower_boundary>
+										<upper_boundary>0.38</upper_boundary>
+									</relative_kink_position>
+									<maximum_inner_trailing_edge_sweep description="maximum inner trailing edge sweep - sets maximum possible inner trailing edge sweep">
+										<value>3.0</value>
+										<unit>deg</unit>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>20.0</upper_boundary>
+									</maximum_inner_trailing_edge_sweep>
+								</mode_0>
+								<mode_1>
+									<initial_relative_kink_position description="relative to half span - only used if low wing and wing mounted landing gear - initial value -&gt; will change over iteration">
+										<value>0.3</value>
+										<unit>1</unit>
+										<lower_boundary>0.25</lower_boundary>
+										<upper_boundary>0.38</upper_boundary>
+									</initial_relative_kink_position>
+									<maximum_inner_trailing_edge_sweep description="maximum inner trailing edge sweep - sets maximum possible inner trailing edge sweep">
+										<value>10.0</value>
+										<unit>deg</unit>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>20.0</upper_boundary>
+									</maximum_inner_trailing_edge_sweep>
+								</mode_1>
+							</parameters>
+						</relative_kink_position>
+						<wing_profile_and_thickness_distribution description="wing profile calculation methods">
+							<method description="selector mode_0: user_defined, mode_1: torenbeek_jenkinson">
+								<value>mode_1</value>
+							</method>
+							<parameters description="wing profile parameters">
+								<mode_0 description="user_defined - thickness to chord ratio's must be from root to tip - linear interpolation">
+									<wing_profile_and_thickness description="wing profile and thickness at half span" ID="0">
+										<wing_profile description="wing profile">
+											<value>F15_15</value>
+										</wing_profile>
+										<thickness_to_chord description="Thickness to chord ratio">
+											<ratio description="thickness to chord ratio value">
+												<value>0.16</value>
+												<unit>1</unit>
+												<lower_boundary>0.05</lower_boundary>
+												<upper_boundary>0.40</upper_boundary>
+											</ratio>
+											<at_half_span description="thickness to chord ratio value at half span">
+												<value>0.0</value>
+												<unit>1</unit>
+												<lower_boundary>0.0</lower_boundary>
+												<upper_boundary>1.0</upper_boundary>
+											</at_half_span>
+										</thickness_to_chord>
+									</wing_profile_and_thickness>
+									<wing_profile_and_thickness description="wing profile and thickness at half span" ID="1">
+										<wing_profile description="wing profile">
+											<value>F15_12</value>
+										</wing_profile>
+										<thickness_to_chord description="Thickness to chord ratio">
+											<ratio description="thickness to chord ratio value">
+												<value>0.13</value>
+												<unit>1</unit>
+												<lower_boundary>0.05</lower_boundary>
+												<upper_boundary>0.40</upper_boundary>
+											</ratio>
+											<at_half_span description="thickness to chord ratio value at half span">
+												<value>0.3</value>
+												<unit>1</unit>
+												<lower_boundary>0.0</lower_boundary>
+												<upper_boundary>1.0</upper_boundary>
+											</at_half_span>
+										</thickness_to_chord>
+									</wing_profile_and_thickness>
+									<wing_profile_and_thickness description="wing profile and thickness at half span" ID="2">
+										<wing_profile description="wing profile">
+											<value>F15_11</value>
+										</wing_profile>
+										<thickness_to_chord description="Thickness to chord ratio">
+											<ratio description="thickness to chord ratio value">
+												<value>0.12</value>
+												<unit>1</unit>
+												<lower_boundary>0.05</lower_boundary>
+												<upper_boundary>0.40</upper_boundary>
+											</ratio>
+											<at_half_span description="thickness to chord ratio value at half span">
+												<value>0.45</value>
+												<unit>1</unit>
+												<lower_boundary>0.0</lower_boundary>
+												<upper_boundary>1.0</upper_boundary>
+											</at_half_span>
+										</thickness_to_chord>
+									</wing_profile_and_thickness>
+									<wing_profile_and_thickness description="wing profile and thickness at half span" ID="3">
+										<wing_profile description="wing profile">
+											<value>F15_11</value>
+										</wing_profile>
+										<thickness_to_chord description="Thickness to chord ratio">
+											<ratio description="thickness to chord ratio value">
+												<value>0.11</value>
+												<unit>1</unit>
+												<lower_boundary>0.05</lower_boundary>
+												<upper_boundary>0.40</upper_boundary>
+											</ratio>
+											<at_half_span description="thickness to chord ratio value at half span">
+												<value>1.0</value>
+												<unit>1</unit>
+												<lower_boundary>0.0</lower_boundary>
+												<upper_boundary>1.0</upper_boundary>
+											</at_half_span>
+										</thickness_to_chord>
+									</wing_profile_and_thickness>
+								</mode_0>
+								<mode_1 description="torenbeek_jenkinson">
+									<wing_profile description="wing profile">
+										<value>F15_15</value>
+									</wing_profile>
+									<max_thickness_to_chord_ratio description="maximum thickness to chord ratio - will be applied at root inner wing">
+										<value>0.15</value>
+										<unit>1</unit>
+										<lower_boundary>0.10</lower_boundary>
+										<upper_boundary>0.40</upper_boundary>
+									</max_thickness_to_chord_ratio>
+									<airfoil_critical_factor description="factor to describe technology factor of airfoil - conventional 1.0, high speed 1960-1970 technology (peaky) airfoils 1.05, supercritical airfoils 1.12 - 1.15">
+										<value>1.12</value>
+										<unit>1</unit>
+										<lower_boundary>1.0</lower_boundary>
+										<upper_boundary>1.15</upper_boundary>
+									</airfoil_critical_factor>
+								</mode_1>
+							</parameters>
+						</wing_profile_and_thickness_distribution>
+						<control_devices description="control devices calculation method">
+							<method description="selector mode_0: user_defined, mode_1: empirical">
+								<value>mode_1</value>
+							</method>
+							<parameters description="control device method parameters">
+								<mode_0 description="user_defined parameters">
+									<control_device ID="0" description="control device">
+										<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+												<value>aileron</value>
+										</type>
+										<deflection description="maximum positive and negative deflection of control device">
+												<full_negative_deflection description="full negative deflection">
+														<value>-25.0</value>
+														<unit>deg</unit>
+														<lower_boundary>-25</lower_boundary>
+														<upper_boundary>25</upper_boundary>
+												</full_negative_deflection>
+												<full_positive_deflection description="full positive deflection">
+														<value>25.0</value>
+														<unit>deg</unit>
+														<lower_boundary>-25</lower_boundary>
+														<upper_boundary>25</upper_boundary>
+												</full_positive_deflection>
+										</deflection>
+										<position description="chord relative position of control device">
+												<inner_position description="relative inner position">
+														<spanwise description="relative spanwise position">
+																<value>0.7</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>1.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</inner_position>
+												<outer_position description="relative outer position">
+														<spanwise description="relative spanwise position">
+																<value>0.95</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>1.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</outer_position>
+										</position>
+									</control_device>
+									<control_device ID="1" description="control device">
+										<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+												<value>slat</value>
+										</type>
+										<deflection description="maximum positive and negative deflection of control device">
+											<full_negative_deflection description="full negative deflection">
+													<value>-25.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_negative_deflection>
+											<full_positive_deflection description="full positive deflection">
+													<value>0.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_positive_deflection>
+										</deflection>
+										<position description="chord relative position of control device">
+												<inner_position description="relative inner position">
+														<spanwise description="relative spanwise position">
+																<value>0.2</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>0.2</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</inner_position>
+												<outer_position description="relative outer position">
+														<spanwise description="relative spanwise position">
+																<value>0.9</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>0.2</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</outer_position>
+										</position>
+									</control_device>
+									<control_device ID="2" description="control device">
+										<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+												<value>flap_fowler</value>
+										</type>
+										<deflection description="maximum positive and negative deflection of control device">
+											<full_negative_deflection description="full negative deflection">
+													<value>0.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_negative_deflection>
+											<full_positive_deflection description="full positive deflection">
+													<value>25.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_positive_deflection>
+										</deflection>
+										<position description="chord relative position of control device">
+												<inner_position description="relative inner position">
+														<spanwise description="relative spanwise position">
+																<value>0.17</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>1.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</inner_position>
+												<outer_position description="relative outer position">
+														<spanwise description="relative spanwise position">
+																<value>0.7</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>1.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</outer_position>
+										</position>
+									</control_device>
+									<control_device ID="3" description="control device">
+										<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+												<value>spoiler</value>
+										</type>
+										<deflection description="maximum positive and negative deflection of control device">
+											<full_negative_deflection description="full negative deflection">
+													<value>0.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_negative_deflection>
+											<full_positive_deflection description="full positive deflection">
+													<value>10.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_positive_deflection>
+										</deflection>
+										<position description="chord relative position of control device">
+												<inner_position description="relative inner position">
+														<spanwise description="relative spanwise position">
+																<value>0.2</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.6</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</inner_position>
+												<outer_position description="relative outer position">
+														<spanwise description="relative spanwise position">
+																<value>0.65</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.65</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</outer_position>
+										</position>
+									</control_device>
+								</mode_0>
+								<mode_1 description="empirical parameters">
+									<high_lift_device_type_leading_edge description="slat, special, krueger, droop_nose, morphing_droop_nose">
+										<value>slat</value>
+									</high_lift_device_type_leading_edge>
+									<high_lift_device_type_trailing_edge description="flap_fowler, double_fowler, triple_fowler, special, flap, ADHF, slotted_flap, morphing_trailing_edge">
+										<value>flap_fowler</value>
+									</high_lift_device_type_trailing_edge>
+								</mode_1>
+							</parameters>
+						</control_devices>
+						<spars description="spars calculation method">
+							<method description="selector mode_0: user_defined">
+								<value>mode_0</value>
+							</method>
+							<parameters description="spars method parameters">
+								<mode_0 description="user_defined parameters">
+									<spar ID="0" description="component spar">
+										<name description="name of spar">
+											<value>front_spar</value>
+										</name>
+										<position description="chord relative position of spar">
+											<inner_position description="relative inner position">
+													<spanwise description="relative spanwise position">
+															<value>0.0</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.2</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.2</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</inner_position>
+											<outer_position description="relative outer position">
+													<spanwise description="relative spanwise position">
+															<value>1.</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.2</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.2</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</outer_position>
+										</position>
+									</spar>
+									<spar ID="1" description="component spar">
+										<name description="name of spar">
+											<value>rear_spar</value>
+										</name>
+										<position description="chord relative position of spar">
+											<inner_position description="relative inner position">
+													<spanwise description="relative spanwise position">
+															<value>0.0</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.6</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.6</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</inner_position>
+											<outer_position description="relative outer position">
+													<spanwise description="relative spanwise position">
+															<value>1</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.6</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.6</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</outer_position>
+										</position>
+									</spar>
+								</mode_0>
+							</parameters>
+						</spars>
+					</front_wing>
+					<back_wing>
+						<mounting description="vertical mounting of the rear wing. Selector: low/mid/high">
+							<value>high</value>
+						</mounting>
+						<sweep description="parameters for sweep calculation methods">
+							<parameters description="sweep method parameters">
+								<mode_0 description="user_defined">
+									<sweep_angle description="sweep angle at quarter chord">
+										<value>27</value>
+										<unit>deg</unit>
+										<lower_boundary>-60</lower_boundary>
+										<upper_boundary>60</upper_boundary>
+									</sweep_angle>
+								</mode_0>
+								<mode_1 description="drag_divergence">
+									<korn_technology_factor description="technology factor">
+										<value>0.96</value>
+										<unit>1</unit>
+										<lower_boundary>0.85</lower_boundary>
+										<upper_boundary>0.96</upper_boundary>
+									</korn_technology_factor>
+									<delta_drag_divergence_to_mach_design description="offset between mach design and drag divergence">
+										<value>0.02</value>
+										<unit>1</unit>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>0.03</upper_boundary>
+									</delta_drag_divergence_to_mach_design>
+								</mode_1>
+							</parameters>
+						</sweep>
+						<taper_ratio description="parameters for taper ratio calculation methods">
+							<parameters>
+								<mode_0 description="user_defined">
+									<taper_ratio description="taper ratio of overall wing">
+										<value>0.17</value>
+										<unit>1</unit>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</taper_ratio>
+								</mode_0>
+							</parameters>
+						</taper_ratio>
+						<dihedral description="parameters for dihedral calculation methods">
+							<parameters description="parameters for methods">
+								<mode_0 description="user_defined">
+									<dihedral_angle description="dihedral angle">
+										<value>4</value>
+										<unit>deg</unit>
+										<lower_boundary>-20</lower_boundary>
+										<upper_boundary>20</upper_boundary>
+									</dihedral_angle>
+								</mode_0>
+							</parameters>
+						</dihedral>
+						<aspect_ratio description="parameters for aspect ratio calculation methods">
+							<parameters description="Mode parameters">
+								<mode_0 description="user_defined">
+									<aspect_ratio description="user aspect ratio">
+										<value>20</value>
+										<unit>1</unit>
+										<lower_boundary>6</lower_boundary>
+										<upper_boundary>20</upper_boundary>
+									</aspect_ratio>
+								</mode_0>
+							</parameters>
+						</aspect_ratio>
+						<relative_kink_position description="relative kink position method">
+							<method description="selector mode_0: user_defined, mode_1: based_on_landing_gear_track">
+								<value>mode_0</value>
+							</method>
+							<parameters>
+								<mode_0 description="user_defined">
+									<relative_kink_position description="relative to half span - only used if low wing and wing mounted landing gear">
+										<value>0.3</value>
+										<unit>1</unit>
+										<lower_boundary>0.25</lower_boundary>
+										<upper_boundary>0.38</upper_boundary>
+									</relative_kink_position>
+									<maximum_inner_trailing_edge_sweep description="maximum inner trailing edge sweep - sets maximum possible inner trailing edge sweep">
+										<value>3.0</value>
+										<unit>deg</unit>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>20.0</upper_boundary>
+									</maximum_inner_trailing_edge_sweep>
+								</mode_0>
+								<mode_1>
+									<initial_relative_kink_position description="relative to half span - only used if low wing and wing mounted landing gear - initial value -&gt; will change over iteration">
+										<value>0.3</value>
+										<unit>1</unit>
+										<lower_boundary>0.25</lower_boundary>
+										<upper_boundary>0.38</upper_boundary>
+									</initial_relative_kink_position>
+									<maximum_inner_trailing_edge_sweep description="maximum inner trailing edge sweep - sets maximum possible inner trailing edge sweep">
+										<value>10.0</value>
+										<unit>deg</unit>
+										<lower_boundary>0.0</lower_boundary>
+										<upper_boundary>20.0</upper_boundary>
+									</maximum_inner_trailing_edge_sweep>
+								</mode_1>
+							</parameters>
+						</relative_kink_position>
+						<wing_profile_and_thickness_distribution description="wing profile calculation methods">
+							<method description="selector mode_0: user_defined, mode_1: torenbeek_jenkinson">
+								<value>mode_1</value>
+							</method>
+							<parameters description="wing profile parameters">
+								<mode_0 description="user_defined - thickness to chord ratio's must be from root to tip - linear interpolation">
+									<wing_profile_and_thickness description="wing profile and thickness at half span" ID="0">
+										<wing_profile description="wing profile">
+											<value>F15_15</value>
+										</wing_profile>
+										<thickness_to_chord description="Thickness to chord ratio">
+											<ratio description="thickness to chord ratio value">
+												<value>0.16</value>
+												<unit>1</unit>
+												<lower_boundary>0.05</lower_boundary>
+												<upper_boundary>0.40</upper_boundary>
+											</ratio>
+											<at_half_span description="thickness to chord ratio value at half span">
+												<value>0.0</value>
+												<unit>1</unit>
+												<lower_boundary>0.0</lower_boundary>
+												<upper_boundary>1.0</upper_boundary>
+											</at_half_span>
+										</thickness_to_chord>
+									</wing_profile_and_thickness>
+									<wing_profile_and_thickness description="wing profile and thickness at half span" ID="1">
+										<wing_profile description="wing profile">
+											<value>F15_12</value>
+										</wing_profile>
+										<thickness_to_chord description="Thickness to chord ratio">
+											<ratio description="thickness to chord ratio value">
+												<value>0.13</value>
+												<unit>1</unit>
+												<lower_boundary>0.05</lower_boundary>
+												<upper_boundary>0.40</upper_boundary>
+											</ratio>
+											<at_half_span description="thickness to chord ratio value at half span">
+												<value>0.3</value>
+												<unit>1</unit>
+												<lower_boundary>0.0</lower_boundary>
+												<upper_boundary>1.0</upper_boundary>
+											</at_half_span>
+										</thickness_to_chord>
+									</wing_profile_and_thickness>
+									<wing_profile_and_thickness description="wing profile and thickness at half span" ID="2">
+										<wing_profile description="wing profile">
+											<value>F15_11</value>
+										</wing_profile>
+										<thickness_to_chord description="Thickness to chord ratio">
+											<ratio description="thickness to chord ratio value">
+												<value>0.12</value>
+												<unit>1</unit>
+												<lower_boundary>0.05</lower_boundary>
+												<upper_boundary>0.40</upper_boundary>
+											</ratio>
+											<at_half_span description="thickness to chord ratio value at half span">
+												<value>0.45</value>
+												<unit>1</unit>
+												<lower_boundary>0.0</lower_boundary>
+												<upper_boundary>1.0</upper_boundary>
+											</at_half_span>
+										</thickness_to_chord>
+									</wing_profile_and_thickness>
+									<wing_profile_and_thickness description="wing profile and thickness at half span" ID="3">
+										<wing_profile description="wing profile">
+											<value>F15_11</value>
+										</wing_profile>
+										<thickness_to_chord description="Thickness to chord ratio">
+											<ratio description="thickness to chord ratio value">
+												<value>0.11</value>
+												<unit>1</unit>
+												<lower_boundary>0.05</lower_boundary>
+												<upper_boundary>0.40</upper_boundary>
+											</ratio>
+											<at_half_span description="thickness to chord ratio value at half span">
+												<value>1.0</value>
+												<unit>1</unit>
+												<lower_boundary>0.0</lower_boundary>
+												<upper_boundary>1.0</upper_boundary>
+											</at_half_span>
+										</thickness_to_chord>
+									</wing_profile_and_thickness>
+								</mode_0>
+								<mode_1 description="torenbeek_jenkinson">
+									<wing_profile description="wing profile">
+										<value>F15_15</value>
+									</wing_profile>
+									<max_thickness_to_chord_ratio description="maximum thickness to chord ratio - will be applied at root inner wing">
+										<value>0.15</value>
+										<unit>1</unit>
+										<lower_boundary>0.10</lower_boundary>
+										<upper_boundary>0.40</upper_boundary>
+									</max_thickness_to_chord_ratio>
+									<airfoil_critical_factor description="factor to describe technology factor of airfoil - conventional 1.0, high speed 1960-1970 technology (peaky) airfoils 1.05, supercritical airfoils 1.12 - 1.15">
+										<value>1.12</value>
+										<unit>1</unit>
+										<lower_boundary>1.0</lower_boundary>
+										<upper_boundary>1.15</upper_boundary>
+									</airfoil_critical_factor>
+								</mode_1>
+							</parameters>
+						</wing_profile_and_thickness_distribution>
+						<control_devices description="control devices calculation method">
+							<method description="selector mode_0: user_defined, mode_1: empirical">
+								<value>mode_1</value>
+							</method>
+							<parameters description="control device method parameters">
+								<mode_0 description="user_defined parameters">
+									<control_device ID="0" description="control device">
+										<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+												<value>aileron</value>
+										</type>
+										<deflection description="maximum positive and negative deflection of control device">
+												<full_negative_deflection description="full negative deflection">
+														<value>-25.0</value>
+														<unit>deg</unit>
+														<lower_boundary>-25</lower_boundary>
+														<upper_boundary>25</upper_boundary>
+												</full_negative_deflection>
+												<full_positive_deflection description="full positive deflection">
+														<value>25.0</value>
+														<unit>deg</unit>
+														<lower_boundary>-25</lower_boundary>
+														<upper_boundary>25</upper_boundary>
+												</full_positive_deflection>
+										</deflection>
+										<position description="chord relative position of control device">
+												<inner_position description="relative inner position">
+														<spanwise description="relative spanwise position">
+																<value>0.7</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>1.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</inner_position>
+												<outer_position description="relative outer position">
+														<spanwise description="relative spanwise position">
+																<value>0.95</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>1.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</outer_position>
+										</position>
+									</control_device>
+									<control_device ID="1" description="control device">
+										<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+												<value>slat</value>
+										</type>
+										<deflection description="maximum positive and negative deflection of control device">
+											<full_negative_deflection description="full negative deflection">
+													<value>-25.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_negative_deflection>
+											<full_positive_deflection description="full positive deflection">
+													<value>0.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_positive_deflection>
+										</deflection>
+										<position description="chord relative position of control device">
+												<inner_position description="relative inner position">
+														<spanwise description="relative spanwise position">
+																<value>0.2</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>0.2</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</inner_position>
+												<outer_position description="relative outer position">
+														<spanwise description="relative spanwise position">
+																<value>0.9</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>0.2</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</outer_position>
+										</position>
+									</control_device>
+									<control_device ID="2" description="control device">
+										<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+												<value>flap_fowler</value>
+										</type>
+										<deflection description="maximum positive and negative deflection of control device">
+											<full_negative_deflection description="full negative deflection">
+													<value>0.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_negative_deflection>
+											<full_positive_deflection description="full positive deflection">
+													<value>25.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_positive_deflection>
+										</deflection>
+										<position description="chord relative position of control device">
+												<inner_position description="relative inner position">
+														<spanwise description="relative spanwise position">
+																<value>0.17</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>1.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</inner_position>
+												<outer_position description="relative outer position">
+														<spanwise description="relative spanwise position">
+																<value>0.7</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>1.0</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</outer_position>
+										</position>
+									</control_device>
+									<control_device ID="3" description="control device">
+										<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+												<value>spoiler</value>
+										</type>
+										<deflection description="maximum positive and negative deflection of control device">
+											<full_negative_deflection description="full negative deflection">
+													<value>0.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_negative_deflection>
+											<full_positive_deflection description="full positive deflection">
+													<value>10.0</value>
+													<unit>deg</unit>
+													<lower_boundary>-25</lower_boundary>
+													<upper_boundary>25</upper_boundary>
+											</full_positive_deflection>
+										</deflection>
+										<position description="chord relative position of control device">
+												<inner_position description="relative inner position">
+														<spanwise description="relative spanwise position">
+																<value>0.2</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.6</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</inner_position>
+												<outer_position description="relative outer position">
+														<spanwise description="relative spanwise position">
+																<value>0.65</value>
+																<unit>1</unit>
+																<lower_boundary>0</lower_boundary>
+																<upper_boundary>1.0</upper_boundary>
+														</spanwise>
+														<chord description="control device chord position">
+																<from description="relative chord position">
+																		<value>0.65</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</from>
+																<to description="relative chord position">
+																		<value>0.8</value>
+																		<unit>1</unit>
+																		<lower_boundary>0.0</lower_boundary>
+																		<upper_boundary>1.0</upper_boundary>
+																</to>
+														</chord>
+												</outer_position>
+										</position>
+									</control_device>
+								</mode_0>
+								<mode_1 description="empirical parameters">
+									<high_lift_device_type_leading_edge description="slat, special, krueger, droop_nose, morphing_droop_nose">
+										<value>slat</value>
+									</high_lift_device_type_leading_edge>
+									<high_lift_device_type_trailing_edge description="flap_fowler, double_fowler, triple_fowler, special, flap, ADHF, slotted_flap, morphing_trailing_edge">
+										<value>flap_fowler</value>
+									</high_lift_device_type_trailing_edge>
+								</mode_1>
+							</parameters>
+						</control_devices>
+						<spars description="spars calculation method">
+							<method description="selector mode_0: user_defined">
+								<value>mode_0</value>
+							</method>
+							<parameters description="spars method parameters">
+								<mode_0 description="user_defined parameters">
+									<spar ID="0" description="component spar">
+										<name description="name of spar">
+											<value>front_spar</value>
+										</name>
+										<position description="chord relative position of spar">
+											<inner_position description="relative inner position">
+													<spanwise description="relative spanwise position">
+															<value>0.0</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.2</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.2</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</inner_position>
+											<outer_position description="relative outer position">
+													<spanwise description="relative spanwise position">
+															<value>1.</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.2</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.2</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</outer_position>
+										</position>
+									</spar>
+									<spar ID="1" description="component spar">
+										<name description="name of spar">
+											<value>rear_spar</value>
+										</name>
+										<position description="chord relative position of spar">
+											<inner_position description="relative inner position">
+													<spanwise description="relative spanwise position">
+															<value>0.0</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.6</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.6</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</inner_position>
+											<outer_position description="relative outer position">
+													<spanwise description="relative spanwise position">
+															<value>1</value>
+															<unit>1</unit>
+															<lower_boundary>0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</spanwise>
+													<chord description="control device chord position">
+															<from description="relative chord position">
+																	<value>0.6</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</from>
+															<to description="relative chord position">
+																	<value>0.6</value>
+																	<unit>1</unit>
+																	<lower_boundary>0.0</lower_boundary>
+																	<upper_boundary>1.0</upper_boundary>
+															</to>
+													</chord>
+											</outer_position>
+										</position>
+									</spar>
+								</mode_0>
+							</parameters>
+						</spars>
+					</back_wing>
+				</calculation_methods>
+			</cantilever>
+		</tandem_wing>
+		<blended_wing_body description="settings for blended wing body (BWB)">
+            <fidelity_selection description="Selection of fidelity level. Selector: low_fidelity">
+				<value>low</value>
+			</fidelity_selection>
+			<low_fidelity>
+				<method_name description="Select method name. Selector: default_rwth)">
+					<value>default_rwth</value>
+					<default>default_rwth</default>
+				</method_name>
+                <default_rwth description="Low fidelity method to design a lifting body shape around a cabin definition for a blended_wing_body configuration.">
+                    <ProgramExecutionMode Desc="1: InitialWingSizing; 2: WingModifier" Default="1">1</ProgramExecutionMode>
+					<set_static_margin description="Switch to activates/deactivate automatic adjustment of static margin, Switch: true (On) / false (Off)">
+						<value>false</value>
+					</set_static_margin>
+					<required_static_margin description="desired static margin">
+							<value>-0.03</value>
+							<unit>1</unit>
+							<lower_boundary>-100</lower_boundary>
+							<upper_boundary>100</upper_boundary>
+					</required_static_margin>
+					<adjust_fuselage description="During stabilization the fuselage aft area gets extended so that the trailing edge curvature remains monotonous">
+						<value>true</value>
+					</adjust_fuselage>
+					<design_point>
+						<altitude description="Design altitude in meter">
+							<value>10972.8</value>
+							<unit>m</unit>
+							<lower_boundary>0</lower_boundary>
+							<upper_boundary>40000</upper_boundary>
+						</altitude>
+						<mach_number>
+							<value>0.82</value>
+							<unit>1</unit>
+							<lower_boundary>0</lower_boundary>
+							<upper_boundary>1</upper_boundary>
+						</mach_number>
+					</design_point>
+					<force_vlm description="Force usage of VLM instead of GPR for stability adjustment, Switch: true (On) / false (Off)">
+						<value>false</value>
+					</force_vlm>
+					<suppress_plots description="Suppresses plot generation during static margin adjustment, Switch: true (On) / false (Off)">
+						<value>false</value>
+					</suppress_plots>
+					<required_lift_distribution options="elliptical or bellshaped">
+						<value>elliptical</value>
+					</required_lift_distribution>
+					<cabin_options description="Parameters used for cabin design if not already done in the fuselage_design module">
+						<chicken_coop_cabin description="Assigns a PAX a certain amount of space. No detailed cabin design">
+							<value>false</value>
+						</chicken_coop_cabin>
+						<pax description="Only active if chickenCoopCabin == true">
+							<value>300</value>
+							<unit>1</unit>
+							<lower_boundary>1</lower_boundary>
+							<upper_boundary>1000</upper_boundary>
+						</pax>
+						<mass_per_pax description="Mass per Passenger including cabin luggage">
+							<value>95</value>
+							<unit>kg</unit>
+							<lower_boundary>30</lower_boundary>
+							<upper_boundary>200</upper_boundary>
+						</mass_per_pax>
+						<space_per_pax description="Cabin area allocated per PAX" default="0.405">
+							<value>0.2835</value>
+							<unit>m^2</unit>
+							<lower_boundary>1</lower_boundary>
+							<upper_boundary>1000</upper_boundary>
+						</space_per_pax>
+						<cabin_height_inner description="Total height of the center tube">
+							<value>4.3</value>
+							<unit>m</unit>
+							<lower_boundary>1</lower_boundary>
+							<upper_boundary>50</upper_boundary>
+						</cabin_height_inner>
+						<cabin_height_outer description="Total height of the outer tube">
+							<value>3.7866</value>
+							<unit>m</unit>
+							<lower_boundary>1</lower_boundary>
+							<upper_boundary>50</upper_boundary>
+						</cabin_height_outer>
+						<fuselage_sweep description="Cabin sweep angle">
+							<value>65</value>
+							<unit>deg</unit>
+							<lower_boundary>1</lower_boundary>
+							<upper_boundary>50</upper_boundary>
+						</fuselage_sweep>
+					</cabin_options>
+					<control_devices description="Designation of the Control Devices">
+						<control_device ID="0" description="control device">
+							<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+									<value>aileron</value>
+							</type>
+							<deflection description="maximum positive and negative deflection of control device">
+								<full_negative_deflection description="full negative deflection">
+									<value>-25.0</value>
+									<unit>deg</unit>
+									<lower_boundary>-25</lower_boundary>
+									<upper_boundary>25</upper_boundary>
+								</full_negative_deflection>
+								<full_positive_deflection description="full positive deflection">
+											<value>25.0</value>
+											<unit>deg</unit>
+											<lower_boundary>-25</lower_boundary>
+											<upper_boundary>25</upper_boundary>
+									</full_positive_deflection>
+							</deflection>
+							<position description="chord relative position of control device">
+								<inner_position description="relative inner position">
+									<spanwise description="relative spanwise position">
+										<value>0.79</value>
+										<unit>1</unit>
+										<lower_boundary>0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</spanwise>
+									<chord description="control device chord position">
+										<from description="relative chord position">
+											<value>0.8</value>
+											<unit>1</unit>
+											<lower_boundary>0.0</lower_boundary>
+											<upper_boundary>1.0</upper_boundary>
+										</from>
+										<to description="relative chord position">
+											<value>1.0</value>
+											<unit>1</unit>
+											<lower_boundary>0.0</lower_boundary>
+											<upper_boundary>1.0</upper_boundary>
+										</to>
+									</chord>
+								</inner_position>
+								<outer_position description="relative outer position">
+									<spanwise description="relative spanwise position">
+										<value>0.95</value>
+										<unit>1</unit>
+										<lower_boundary>0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</spanwise>
+									<chord description="control device chord position">
+										<from description="relative chord position">
+											<value>0.8</value>
+											<unit>1</unit>
+											<lower_boundary>0.0</lower_boundary>
+											<upper_boundary>1.0</upper_boundary>
+										</from>
+										<to description="relative chord position">
+											<value>1.0</value>
+											<unit>1</unit>
+											<lower_boundary>0.0</lower_boundary>
+											<upper_boundary>1.0</upper_boundary>
+										</to>
+									</chord>
+									</outer_position>
+							</position>
+						</control_device>
+						<control_device ID="1" description="control device">
+							<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+								<value>slat</value>
+							</type>
+							<deflection description="maximum positive and negative deflection of control device">
+								<full_negative_deflection description="full negative deflection">
+									<value>-25.0</value>
+									<unit>deg</unit>
+									<lower_boundary>-25</lower_boundary>
+									<upper_boundary>25</upper_boundary>
+								</full_negative_deflection>
+								<full_positive_deflection description="full positive deflection">
+									<value>0.0</value>
+									<unit>deg</unit>
+									<lower_boundary>-25</lower_boundary>
+									<upper_boundary>25</upper_boundary>
+								</full_positive_deflection>
+							</deflection>
+							<position description="chord relative position of control device">
+								<inner_position description="relative inner position">
+									<spanwise description="relative spanwise position">
+										<value>0.45</value>
+										<unit>1</unit>
+										<lower_boundary>0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</spanwise>
+									<chord description="control device chord position">
+										<from description="relative chord position">
+												<value>0.0</value>
+												<unit>1</unit>
+												<lower_boundary>0.0</lower_boundary>
+												<upper_boundary>1.0</upper_boundary>
+										</from>
+										<to description="relative chord position">
+												<value>0.15</value>
+												<unit>1</unit>
+												<lower_boundary>0.0</lower_boundary>
+												<upper_boundary>1.0</upper_boundary>
+										</to>
+									</chord>
+								</inner_position>
+								<outer_position description="relative outer position">
+									<spanwise description="relative spanwise position">
+										<value>0.97</value>
+										<unit>1</unit>
+										<lower_boundary>0</lower_boundary>
+										<upper_boundary>1.0</upper_boundary>
+									</spanwise>
+									<chord description="control device chord position">
+										<from description="relative chord position">
+												<value>0.0</value>
+												<unit>1</unit>
+												<lower_boundary>0.0</lower_boundary>
+												<upper_boundary>1.0</upper_boundary>
+										</from>
+										<to description="relative chord position">
+												<value>0.15</value>
+												<unit>1</unit>
+												<lower_boundary>0.0</lower_boundary>
+												<upper_boundary>1.0</upper_boundary>
+										</to>
+									</chord>
+								</outer_position>
+							</position>
+						</control_device>
+						<control_device ID="2" description="control device">
+							<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+									<value>elevon</value>
+							</type>
+							<deflection description="maximum positive and negative deflection of control device">
+								<full_negative_deflection description="full negative deflection">
+										<value>0.0</value>
+										<unit>deg</unit>
+										<lower_boundary>-25</lower_boundary>
+										<upper_boundary>25</upper_boundary>
+								</full_negative_deflection>
+								<full_positive_deflection description="full positive deflection">
+										<value>25.0</value>
+										<unit>deg</unit>
+										<lower_boundary>-25</lower_boundary>
+										<upper_boundary>25</upper_boundary>
+								</full_positive_deflection>
+							</deflection>
+							<position description="chord relative position of control device">
+									<inner_position description="relative inner position">
+											<spanwise description="relative spanwise position">
+													<value>0.0</value>
+													<unit>1</unit>
+													<lower_boundary>0</lower_boundary>
+													<upper_boundary>1.0</upper_boundary>
+											</spanwise>
+											<chord description="control device chord position">
+													<from description="relative chord position">
+															<value>0.95</value>
+															<unit>1</unit>
+															<lower_boundary>0.0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</from>
+													<to description="relative chord position">
+															<value>1.0</value>
+															<unit>1</unit>
+															<lower_boundary>0.0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</to>
+											</chord>
+									</inner_position>
+									<outer_position description="relative outer position">
+											<spanwise description="relative spanwise position">
+													<value>0.18</value>
+													<unit>1</unit>
+													<lower_boundary>0</lower_boundary>
+													<upper_boundary>1.0</upper_boundary>
+											</spanwise>
+											<chord description="control device chord position">
+													<from description="relative chord position">
+															<value>0.94</value>
+															<unit>1</unit>
+															<lower_boundary>0.0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</from>
+													<to description="relative chord position">
+															<value>1.0</value>
+															<unit>1</unit>
+															<lower_boundary>0.0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</to>
+											</chord>
+									</outer_position>
+							</position>
+						</control_device>
+						<control_device ID="3" description="control device">
+							<type description="control device type - aileron, rudder, elevator, elevon, droop_aileron, spoiler, spoiler_ground, spoiler_air, flap, slotted_flap, ADHF, flap_fowler, double_fowler, triple_fowler, morphing_trailing_edge, slat, krueger, droop_nose, morphing_droop_nose, special">
+									<value>spoiler</value>
+							</type>
+							<deflection description="maximum positive and negative deflection of control device">
+								<full_negative_deflection description="full negative deflection">
+										<value>0.0</value>
+										<unit>deg</unit>
+										<lower_boundary>-25</lower_boundary>
+										<upper_boundary>25</upper_boundary>
+								</full_negative_deflection>
+								<full_positive_deflection description="full positive deflection">
+										<value>10.0</value>
+										<unit>deg</unit>
+										<lower_boundary>-25</lower_boundary>
+										<upper_boundary>25</upper_boundary>
+								</full_positive_deflection>
+							</deflection>
+							<position description="chord relative position of control device">
+									<inner_position description="relative inner position">
+											<spanwise description="relative spanwise position">
+													<value>0.41</value>
+													<unit>1</unit>
+													<lower_boundary>0</lower_boundary>
+													<upper_boundary>1.0</upper_boundary>
+											</spanwise>
+											<chord description="control device chord position">
+													<from description="relative chord position">
+															<value>0.835</value>
+															<unit>1</unit>
+															<lower_boundary>0.0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</from>
+													<to description="relative chord position">
+															<value>0.95</value>
+															<unit>1</unit>
+															<lower_boundary>0.0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</to>
+											</chord>
+									</inner_position>
+									<outer_position description="relative outer position">
+											<spanwise description="relative spanwise position">
+													<value>0.54</value>
+													<unit>1</unit>
+													<lower_boundary>0</lower_boundary>
+													<upper_boundary>1.0</upper_boundary>
+											</spanwise>
+											<chord description="control device chord position">
+													<from description="relative chord position">
+															<value>0.8</value>
+															<unit>1</unit>
+															<lower_boundary>0.0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</from>
+													<to description="relative chord position">
+															<value>0.95</value>
+															<unit>1</unit>
+															<lower_boundary>0.0</lower_boundary>
+															<upper_boundary>1.0</upper_boundary>
+													</to>
+											</chord>
+									</outer_position>
+							</position>
+						</control_device>
+					</control_devices>
+                    <spars description="spars calculation method">
+                        <method description="selector mode_0: user_defined">
+                            <value>mode_0</value>
+                        </method>
+                        <parameters description="spars method parameters">
+                            <mode_0 description="user_defined parameters">
+                                <spar ID="0" description="component spar">
+                                    <name description="name of spar">
+                                        <value>front_spar</value>
+                                    </name>
+                                    <position description="chord relative position of spar">
+                                        <inner_position description="relative inner position">
+                                                <spanwise description="relative spanwise position">
+                                                        <value>0.16</value>
+                                                        <unit>1</unit>
+                                                        <lower_boundary>0</lower_boundary>
+                                                        <upper_boundary>1.0</upper_boundary>
+                                                </spanwise>
+                                                <chord description="control device chord position">
+                                                        <from description="relative chord position">
+                                                                <value>0.2</value>
+                                                                <unit>1</unit>
+                                                                <lower_boundary>0.0</lower_boundary>
+                                                                <upper_boundary>1.0</upper_boundary>
+                                                        </from>
+                                                        <to description="relative chord position">
+                                                                <value>0.2</value>
+                                                                <unit>1</unit>
+                                                                <lower_boundary>0.0</lower_boundary>
+                                                                <upper_boundary>1.0</upper_boundary>
+                                                        </to>
+                                                </chord>
+                                        </inner_position>
+                                        <outer_position description="relative outer position">
+                                                <spanwise description="relative spanwise position">
+                                                        <value>1.</value>
+                                                        <unit>1</unit>
+                                                        <lower_boundary>0</lower_boundary>
+                                                        <upper_boundary>1.0</upper_boundary>
+                                                </spanwise>
+                                                <chord description="control device chord position">
+                                                        <from description="relative chord position">
+                                                                <value>0.2</value>
+                                                                <unit>1</unit>
+                                                                <lower_boundary>0.0</lower_boundary>
+                                                                <upper_boundary>1.0</upper_boundary>
+                                                        </from>
+                                                        <to description="relative chord position">
+                                                                <value>0.2</value>
+                                                                <unit>1</unit>
+                                                                <lower_boundary>0.0</lower_boundary>
+                                                                <upper_boundary>1.0</upper_boundary>
+                                                        </to>
+                                                </chord>
+                                        </outer_position>
+                                    </position>
+                                </spar>
+                                <spar ID="1" description="component spar">
+                                    <name description="name of spar">
+                                        <value>rear_spar</value>
+                                    </name>
+                                    <position description="chord relative position of spar">
+                                        <inner_position description="relative inner position">
+                                                <spanwise description="relative spanwise position">
+                                                        <value>0.7</value>
+                                                        <unit>1</unit>
+                                                        <lower_boundary>0</lower_boundary>
+                                                        <upper_boundary>1.0</upper_boundary>
+                                                </spanwise>
+                                                <chord description="control device chord position">
+                                                        <from description="relative chord position">
+                                                                <value>0.6</value>
+                                                                <unit>1</unit>
+                                                                <lower_boundary>0.0</lower_boundary>
+                                                                <upper_boundary>1.0</upper_boundary>
+                                                        </from>
+                                                        <to description="relative chord position">
+                                                                <value>0.6</value>
+                                                                <unit>1</unit>
+                                                                <lower_boundary>0.0</lower_boundary>
+                                                                <upper_boundary>1.0</upper_boundary>
+                                                        </to>
+                                                </chord>
+                                        </inner_position>
+                                        <outer_position description="relative outer position">
+                                                <spanwise description="relative spanwise position">
+                                                        <value>1</value>
+                                                        <unit>1</unit>
+                                                        <lower_boundary>0</lower_boundary>
+                                                        <upper_boundary>1.0</upper_boundary>
+                                                </spanwise>
+                                                <chord description="control device chord position">
+                                                        <from description="relative chord position">
+                                                                <value>0.6</value>
+                                                                <unit>1</unit>
+                                                                <lower_boundary>0.0</lower_boundary>
+                                                                <upper_boundary>1.0</upper_boundary>
+                                                        </from>
+                                                        <to description="relative chord position">
+                                                                <value>0.6</value>
+                                                                <unit>1</unit>
+                                                                <lower_boundary>0.0</lower_boundary>
+                                                                <upper_boundary>1.0</upper_boundary>
+                                                        </to>
+                                                </chord>
+                                        </outer_position>
+                                    </position>
+                                </spar>
+                            </mode_0>
+                        </parameters>
+                    </spars>
+					<airfoils description="settings for the airfoils used for the Blended Wing Body">
+						<fuselage_airfoil_type description="auto (self-generated airfoils) or predefined (using the ones stated below)">
+							<value>auto</value>
+						</fuselage_airfoil_type>
+						<centerline_airfoil_name description="name of the airfoils used at the centerline">
+							<value>SAX-40-Fuselage</value>
+						</centerline_airfoil_name>
+						<cabin_blend_airfoil_name description="name of the airfoils used at the section between cabin segment and blend segment">
+							<value>SAX-40-Fuselage</value>
+						</cabin_blend_airfoil_name>
+						<blend_kink_airfoil_name description="name of the airfoils used at the section between blend segment and kink segment">
+							<value>F15_12</value>
+						</blend_kink_airfoil_name>
+						<kink_outer_wing_airfoil_name description="name of the airfoils used at the section bewtween kink segment and outer wing segment">
+							<value>F15_12</value>
+						</kink_outer_wing_airfoil_name>
+						<tip_airfoil_name description="name of the airfoils used at wing tip">
+							<value>NACA0009</value>
+						</tip_airfoil_name>
+						<centerline_airfoil_parameter description="Settings for automatic airfoil generation, for the centerline airfoil">
+							<leadingEdgeRadius desc="Radius of the airfoil leading edge (must be negative)" default="-0.00391" options="pointy,blunt or numeric type">
+								<value>-0.00391</value>
+							</leadingEdgeRadius>
+							<camberCrestX description="starting value for the non-dimensional, spanwise position of the maximum camber of the profile" default="0.0771">
+								<value>0.15</value>
+							</camberCrestX>
+							<camberCrestZ description="starting value for the non-dimensional maximum camber of the profile" default="0.0107">
+								<value>0.0107</value>
+							</camberCrestZ>
+							<reflexCrestX description="starting value for the non-dimensional, spanwise position of the reflex of the profile" default="0.5">
+								<value>0.8</value>
+							</reflexCrestX>
+							<reflexCrestZ description="starting value for the non-dimensional reflex of the profile" defualt="-0.008">
+								<value>-0.005</value>
+							</reflexCrestZ>
+						</centerline_airfoil_parameter>
+						<cabinBlendAirfoilparameter description="Settings for automatic airfoil generation, for the outer cabin airfoil">
+							<leadingEdgeRadius description="Radius of the airfoil leading edge (must be negative)" default="-0.00391" options="pointy,blunt or numeric type">
+								<value>-0.00391</value>
+							</leadingEdgeRadius>
+							<camberCrestX description="starting value for the non-dimensional, spanwise position of the maximum camber of the profile" default="0.0771">
+								<value>0.15</value>
+							</camberCrestX>
+							<camberCrestZ description="starting value for the non-dimensional maximum camber of the profile" default="0.0107">
+								<value>0.0107</value>
+							</camberCrestZ>
+							<reflexCrestX description="starting value for the non-dimensional, spanwise position of the reflex of the profile" default="0.5">
+								<value>0.8</value>
+							</reflexCrestX>
+							<reflexCrestZ description="starting value for the non-dimensional reflex of the profile" default="-0.008">
+								<value>-0.005</value>
+							</reflexCrestZ>
+						</cabinBlendAirfoilparameter>
+					</airfoils>
+					<wing_options description="Miscanellous wing options">
+						<manualOuterWingSweep description="Switch to manually set the sweep of the outer wing segments, Switch: true (On) / false (Off)">
+							<value>true</value>
+						</manualOuterWingSweep>
+						<outerWingSweep description="Outer wing sweep if set manually">
+							<value>35</value>
+							<unit>deg</unit>
+							<lower_boundary>-80</lower_boundary>
+							<upper_boundary>80</upper_boundary>
+						</outerWingSweep>
+						<taperRatio description="Taper ratio of the outer wing segment">
+							<value>0.4</value>
+							<unit>1</unit>
+							<lower_boundary>0.01</lower_boundary>
+							<upper_boundary>100</upper_boundary>
+						</taperRatio>
+						<integral_tank_segments description="Comma separated list of major segments to be considerable for integral tank integration" default="3,4">
+							<value>3,4</value>
+						</integral_tank_segments>
+					</wing_options>
+					<planform_options>
+						<rel_span_inner description="(fuselage span + blend span)/span">
+							<value>0.34</value>
+							<unit>1</unit>
+							<lower_boundary>0.1</lower_boundary>
+							<upper_boundary>0.9</upper_boundary>
+						</rel_span_inner>
+						<rel_span_kink description="Kink span/(Kink span + outer wing span)">
+							<value>0.25</value>
+							<unit>1</unit>
+							<lower_boundary>0</lower_boundary>
+							<upper_boundary>0.9</upper_boundary>
+						</rel_span_kink>
+						<rel_span_cabin description="cabin span/(cabin span + blend span) only active when chickenCoopCabin == true">
+							<value>0.617</value>
+							<unit>1</unit>
+							<lower_boundary>0.1</lower_boundary>
+							<upper_boundary>0.9</upper_boundary>
+						</rel_span_cabin>
+						<blend_offset_sweep description="(Initial) offset sweep angle for the blend segment. Might be varied automatically if setStaticmargin == true">
+							<value>4</value>
+							<unit>deg</unit>
+							<lower_boundary>-80</lower_boundary>
+							<upper_boundary>80</upper_boundary>
+						</blend_offset_sweep>
+						<fuselage_chord_def_type description="switch for defining the chord(chord fraction, respectively) in front of and behind the cabin" options="relative or absolute">
+							<value>front_absolute_aft_relative</value>
+						</fuselage_chord_def_type>
+						<absoluteOptions description="Parameter for fuselageChordDefType==absolute">
+							<offsetCenterFront description="Distance between cabin leading edge and planform leading edge at the centerline section in meters">
+								<value>3</value>
+								<unit>m</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>100</upper_boundary>
+							</offsetCenterFront>
+							<offsetCenterAft description="Distance between cabin trailing edge and planform trailing edge at the centerline section in meters">
+								<value>9</value>
+								<unit>m</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>100</upper_boundary>
+							</offsetCenterAft>
+							<offsetOutsideFront description="Distance between cabin leading edge and planform leading edge at the outer cabin section in meters">
+								<value>3</value>
+								<unit>m</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>100</upper_boundary>
+							</offsetOutsideFront>
+							<offsetOutsideAft description="Distance between cabin trailing edge and planform trailing edge at the outer cabin section in meters">
+								<value>9</value>
+								<unit>m</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>100</upper_boundary>
+							</offsetOutsideAft>
+						</absoluteOptions>
+						<relativeOptions description="Parameter for fuselageChordDefType==relative">
+							<relOffsetCenterFront description="Distance between cabin leading edge and planform leading edge at the centerline section in fraction of chordline length" default="0.1">
+								<value>0.1</value>
+								<unit>m</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>100</upper_boundary>
+							</relOffsetCenterFront>
+							<relOffsetCenterAft description="Distance between cabin trailing edge and planform trailing edge at the centerline section in fraction of chordline length." default="0.3">
+								<value>0.3</value>
+								<unit>m</unit>
+								<lower_boundary>-1</lower_boundary>
+								<upper_boundary>100</upper_boundary>
+							</relOffsetCenterAft>
+							<relOffsetOutsideFront description="Distance between cabin leading edge and planform leading edge at the outer cabin section in fraction of chordline length" default="0.2">
+								<value>0.15</value>
+								<unit>m</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>100</upper_boundary>
+							</relOffsetOutsideFront>
+							<relOffsetOutsideAft description="Distance between cabin trailing edge and planform trailing edge at the outer cabin section in fraction of chordline length" default="0.25">
+								<value>0.40</value>
+								<unit>m</unit>
+								<lower_boundary>0</lower_boundary>
+								<upper_boundary>100</upper_boundary>
+							</relOffsetOutsideAft>
+						</relativeOptions>
+					</planform_options>
+                </default_rwth>
+            </low_fidelity>
+        </blended_wing_body>
+		<additional_directory_paths description="additional directory paths for airfoils etc. ">
+			<common_airfoil_data_path description="path to common airfoil data">
+				<value>../databases/airfoils/F15/</value>
+			</common_airfoil_data_path>
+		</additional_directory_paths>
+  </program_settings>
+</module_configuration_file>

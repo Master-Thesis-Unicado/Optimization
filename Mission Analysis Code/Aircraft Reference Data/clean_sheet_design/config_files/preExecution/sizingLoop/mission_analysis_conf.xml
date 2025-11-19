@@ -1,0 +1,263 @@
+<module_configuration_file name="mission_analysis_conf.xml">
+    <control_settings description="General control settings for this tool">
+        <aircraft_exchange_file_name description="Specify the name of the exchange file">
+			<value>UNICADO-SMR-01.xml</value>
+		</aircraft_exchange_file_name>
+        <aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+            <value>../projects/UNICADO/UNICADO-SMR-01/</value>
+		</aircraft_exchange_file_directory>
+        <own_tool_level description="Specify the tool level of this tool">
+			<value>3</value>
+		</own_tool_level>
+        <console_output description="Selector to specify the console output. Selector: mode_0 (Off) / mode_1 (only out/err/warn), mode_2 (1 + info) / mode_3 (2 + debug)">
+			<value>mode_1</value>
+		</console_output>
+        <log_file_output description="Selector to specify the log file output. Selector: mode_0 (Off) / mode_1 (only out/err/warn), mode_2 (1 + info) / mode_3 (2 + debug)">
+			<value>mode_1</value>
+		</log_file_output>
+        <plot_output description="Specify the way plotting shall be handled">
+			<enable description="Switch to enable plotting. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</enable>
+			<copy_plotting_files description="Switch if plotting files shall be copied. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</copy_plotting_files>
+			<delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</delete_plotting_files_from_tool_folder>
+		</plot_output>
+        <report_output description="Switch to generate an HTML report. Switch: true (On) / false (Off)">
+			<value>true</value>
+		</report_output>
+        <tex_report description="Switch to generate a Tex report. Switch: true (On) / false (Off)">
+			<value>true</value>
+		</tex_report>
+        <write_info_files description="Switch to generate info files. Switch: true (On) / false (Off)">
+			<value>false</value>
+		</write_info_files>
+        <log_file description="Specify the name of the log file">
+			<value>mission_analysis.log</value>
+		</log_file>
+        <inkscape_path description="Path to inkscape (only needed if your executable is not part of system paths - otherwise unused)">
+			<value>C:/Programs/UNICADOworkflow/inkscape/</value>
+		</inkscape_path>
+        <gnuplot_path description="Path to gnuplot (only needed if your executable is not part of system paths - otherwise unused)">
+			<value>C:/Programs/UNICADOworkflow/gnuplot/</value>
+		</gnuplot_path>
+    </control_settings>
+    <program_settings description="Program settings">
+        <program_specific description="Program specific control settings">
+            <specific_air_range_plot description="Switch to generate plots for the specific air range. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</specific_air_range_plot>
+            <exit_if_fuel_limit_reached description="Switch to abort program if estimated fuel reaches maximum fuel mass.">
+				<enable description="Switch: true (On) / false (Off)">
+					<value>false</value>
+				</enable>
+				<allowed_relative_overshoot description="Relative overshoot that shall be allowed">
+					<value>0.0</value>
+					<unit>1</unit>
+					<lower_boundary>0.0</lower_boundary>
+					<upper_boundary>1.0</upper_boundary>
+				</allowed_relative_overshoot>
+			</exit_if_fuel_limit_reached>
+            <exit_if_maximum_takeoff_mass_limit_reached description="Switch to abort program in study mode if takeoff mass (TOM) is greater than/equal to maximum takoff mass (MTOM).">
+				<enable description="Switch: true (On) / false (Off)">
+					<value>false</value>
+				</enable>
+				<allowed_relative_overshoot description="Relative overshoot that shall be allowed">
+					<value>0.0</value>
+					<unit>1</unit>
+					<lower_boundary>0.0</lower_boundary>
+					<upper_boundary>1.0</upper_boundary>
+				</allowed_relative_overshoot>
+			</exit_if_maximum_takeoff_mass_limit_reached>
+        </program_specific>
+        <general description="General parameters">
+            <fuel_planning description="Fuel planning according to the Joint Aviation Requirements (JAR) or the Federal Aviation Regulations (FAR)">
+                <fuel_estimation description="Setup of the fuel estimation">
+					<fuel_estimation_switch description="(Trip fuel only) Switch if the fuel estimation method within the aircraft XML shall be used (to be found in the mission requirements' fuel_estimation_selector). Switch: true (On) / false (Off)">
+						<value>false</value>
+					</fuel_estimation_switch>
+					<joint_aviation_requirements_parameters description="Parameter for fuel planning according to the Joint Aviation Requirements (JAR)">
+						<contingency_fuel description="Relative share of contingency fuel in total trip fuel. Standard: 0.05., with en-route allowance: 0.03 (check 'Getting to Grips With Aircraft Performance' p.173)">
+							<value>0.03</value>
+							<unit>1</unit>
+							<lower_boundary>0.0</lower_boundary>
+							<upper_boundary>1.0</upper_boundary>
+						</contingency_fuel>
+						<use_additional_fuel description="Switch if additional fuel shall be added e.g. for flag or supplemental operations. Switch: true (On) / false (Off)">
+							<value>false</value>
+						</use_additional_fuel>
+						<extra_fuel description="Extra fuel that shall be carried at the discretion of the captain">
+							<value>0</value>
+							<unit>kg</unit>
+							<lower_boundary>0</lower_boundary>	
+							<upper_boundary>10000</upper_boundary>					
+						</extra_fuel>
+					</joint_aviation_requirements_parameters>
+					<federal_aviation_regulations_parameter description="Parameter for fuel planning according to the Federal Aviation Regulations (FAR)">
+						<use_additional_fuel description="Switch if additional fuel shall be added e.g. for flag or supplemental operations. Switch: true (On) / false (Off)">
+							<value>false</value>
+						</use_additional_fuel>
+					</federal_aviation_regulations_parameter>
+				</fuel_estimation>
+                <fuel_flow_factor_taxiing description="Factor to adapt the (idle) fuel flow during taxiing">
+					<value>1.</value>
+					<unit>1</unit>
+					<lower_boundary>0.0</lower_boundary>
+					<upper_boundary>2</upper_boundary>
+				</fuel_flow_factor_taxiing>
+                <holding description="Behavior during holding">
+					<holding_mach_number description="Mach number flown during holding">
+						<value>0.4</value>
+						<unit>1</unit>
+						<lower_boundary>0.0</lower_boundary>
+						<upper_boundary>1.0</upper_boundary>
+					</holding_mach_number>
+					<holding_altitude description="Altitude during holding (30.48 m = 100 ft = 1 FL)">
+						<value>1500</value>
+						<unit>ft</unit>
+						<lower_boundary>500</lower_boundary>	
+						<upper_boundary>350000</upper_boundary>
+					</holding_altitude>
+					<use_economical_speed description="Switch if the economic Mach number shall overwrite the holding Mach number within the value node. Switch: true (On) / false (Off)">
+						<value>true</value>
+					</use_economical_speed>
+				</holding>
+            </fuel_planning>
+            <increase_engine_rating_during_climb description="Switch to set engine rating to maximum continuous during climb if climb rating is not sufficient. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</increase_engine_rating_during_climb>
+			<allow_minimum_roc_violation description="Switch to allow minimum ROC violation during climb. Will terminate climb step otherwise. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</allow_minimum_roc_violation>
+            <maximum_air_brake_factor description="Maximum multiplier to increase drag using air_brakes (D_needed = D * air_brake_factor, with air_brake_factor smaller than maximum_air_brake_factor)">
+                <value>2.5</value>
+                <unit>1</unit>
+                <lower_boundary>1</lower_boundary>	
+                <upper_boundary>100</upper_boundary>
+            </maximum_air_brake_factor>
+            <polar_switch_mission_point description="Definition where and how a polar switch shall take place">
+				<polar_switch_selector description="Selector to define the mission point where alternative polars takes place ('mode_0': Off, 'mode_1': Absolute range, 'mode_2': Relative range, 'mode_3'': Absolute remaining flight time, 'mode_4': Relative remaining flight time)">
+					<value>mode_0</value>
+				</polar_switch_selector>				
+				<absolute_range_flown description="Absolute flown range">
+					<value>500</value>
+					<unit>nm</unit>
+					<lower_boundary>0</lower_boundary>	
+					<upper_boundary>10000</upper_boundary>
+				</absolute_range_flown>
+				<relative_range_flown description="Range flown relative to total range">
+					<value>0.85</value>
+					<unit>1</unit>
+					<lower_boundary>0.0</lower_boundary>
+					<upper_boundary>1.0</upper_boundary>
+				</relative_range_flown>
+				<absolute_time_passed description="Absolute passed flight time">
+					<value>250</value>
+					<unit>min</unit>
+					<lower_boundary>0</lower_boundary>	
+					<upper_boundary>1200</upper_boundary>
+				</absolute_time_passed>
+				<relative_time_passed description="Passed flight time relative to the total flight time">
+					<value>0.85</value>
+					<unit>1</unit>
+					<lower_boundary>0.0</lower_boundary>
+					<upper_boundary>1.0</upper_boundary>
+				</relative_time_passed>
+			</polar_switch_mission_point>
+            <glide_slope_interception_distance description="Buffer distance to hit the glide slope exactly">
+				<value>1000.</value>
+				<unit>m</unit>
+				<lower_boundary>0.0</lower_boundary>
+				<upper_boundary>1000000</upper_boundary>
+			</glide_slope_interception_distance>
+            <use_breguet_estimation_in_cruise description="Switch to activate fuel estimation using Breguet range equation in mid fidelity methods. Switch: true (On) / false (Off)">
+				<value>false</value>
+			</use_breguet_estimation_in_cruise>
+            <iterate_top_of_descent_mass description="Switch for iteration of mass at top of descent. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</iterate_top_of_descent_mass>
+            <landing description="Settings for landing calculation">
+                <rotation_time description="Time to rotate at touch down from main gear to nose gear">
+					<value>3</value>
+					<unit>s</unit>
+					<lower_boundary>0</lower_boundary>
+					<upper_boundary>6000</upper_boundary>
+				</rotation_time>
+                <thrust_reverser description="Settings for thrust reverser">
+                    <enable description="Switch to use thrust reverser for deceleration. Switch: true (On) / false (Off)">
+						<value>true</value>
+					</enable>
+                    <deactivation_speed description="Calibrated airspeed when the thrust reverser is set from Maximum to Idle">
+						<value>80</value>
+						<unit>KCAS</unit>
+						<lower_boundary>0</lower_boundary>	
+						<upper_boundary>650</upper_boundary>
+					</deactivation_speed>
+                    <efficiency description="Efficiency of the reverse thrust">
+						<value>0.5</value>
+						<unit>1</unit>
+						<lower_boundary>0.0</lower_boundary>
+						<upper_boundary>1.0</upper_boundary>
+					</efficiency>
+                </thrust_reverser>
+                <runway_exit_speed description="Speed to slow down until runway can be exited (normal exit A320: max 15 kts = 7.72 m/s; high speed exit A320: max 25 kts = 12.86 m/s)">
+					<value>15</value>
+					<unit>kts</unit>
+					<lower_boundary>0</lower_boundary>
+					<upper_boundary>650</upper_boundary>
+				</runway_exit_speed>
+            </landing>
+        </general>
+        <mode description="Program mode">
+			<mission_methods>
+				<fidelity_level description="Selector to set a standard 3D or 4D trajectory. Selector: low (Breguet-based estimation for fuel consumption only) / mid (3D high resolution mission profile) / high (4D high resolution mission profile)">
+					<value>mid</value>
+				</fidelity_level>
+                <mission_type description="Selector to set the mission type. Selector: design_mission / study_mission / requirements_mission)">
+                    <value>design_mission</value>
+                </mission_type>
+				<interpolate_polars description="Switch to interpolate polars in respect to the center of gravity position. Switch: true (On) / false (off)">
+					<value>false</value>
+				</interpolate_polars>	
+			</mission_methods>
+			<rate_of_climb_switch description="Switch THAT ONLY AFFECTS THE REQUIREMENTS MISSION. Calculate an optimum for the rate of climb. Switch: true (calculate optimum) / false (skip)">
+				<value>false</value>
+			</rate_of_climb_switch>
+        </mode>
+        <precision description="Specify the calculation accuracy">           
+            <acceleration_increment description="Step size regarding acceleration or deceleration">
+				<value>0.5</value>
+				<unit>m/s</unit>
+				<lower_boundary>0.0</lower_boundary>
+				<upper_boundary>340</upper_boundary>
+			</acceleration_increment>
+            <mach_acceleration_increment description="Step size regarding acceleration or deceleration as a Mach number">
+				<value>0.005</value>
+				<unit>1</unit>
+				<lower_boundary>0.0</lower_boundary>
+				<upper_boundary>1.0</upper_boundary>
+			</mach_acceleration_increment>
+            <altitude_increment description="Step distance for climb or descent">
+				<value>5.</value>
+				<unit>m</unit>
+				<lower_boundary>0.0</lower_boundary>
+				<upper_boundary>1000</upper_boundary>	
+			</altitude_increment>
+            <way_increment description="Step distance in x-direction">
+				<value>1000.</value>
+				<unit>m</unit>
+				<lower_boundary>0.0</lower_boundary>
+				<upper_boundary>1000000</upper_boundary>			
+			</way_increment>
+            <specific_air_range_check_increment description="Relative step distance in x-direction for automatic Flight level change check">
+				<value>0.01</value>
+				<unit>1</unit>
+				<lower_boundary>0.0</lower_boundary>
+				<upper_boundary>1.0</upper_boundary>
+			</specific_air_range_check_increment>
+        </precision>
+    </program_settings>
+</module_configuration_file>
