@@ -2,7 +2,7 @@
 # ========= IMPORTS AND BASIC SETUP ===========================================
 from __future__ import annotations
 import numpy as np
-from typing import Dict, Any, Optional, Tuple, List
+from typing import Dict, Any, Tuple, List
 from dataclasses import dataclass
 
 # Import atmospheric properties for distance calculations

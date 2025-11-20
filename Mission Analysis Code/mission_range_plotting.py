@@ -10,7 +10,7 @@ import plotly.io as pio
 
 # Import visualization configuration
 from visualization_config import (
-    Colors, Typography, Layout,
+    Colors,
     get_or_create_run_directory,
     get_standard_layout,
     get_standard_legend,
