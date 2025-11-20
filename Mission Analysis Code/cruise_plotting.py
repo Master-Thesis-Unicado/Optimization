@@ -11,8 +11,6 @@ from __future__ import annotations
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-from datetime import datetime
-from pathlib import Path
 import warnings
 import plotly.graph_objects as go
 import plotly.subplots as sp
@@ -32,7 +30,7 @@ if TYPE_CHECKING:
 # Import visualization configuration for consistent styling
 from visualization_config import (
     Colors, Typography, Layout, LineStyles,
-    get_standard_layout, get_standard_legend, get_axis_config,
+    get_standard_layout, get_axis_config,
     ExportConfig, get_or_create_run_directory
 )
 

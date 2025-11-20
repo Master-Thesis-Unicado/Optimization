@@ -463,12 +463,12 @@ def main():
             fuel_deficit = total_mission_fuel - MAX_FUEL_KG
             if fuel_deficit > 0:
                 print("\n" + "="*80)
-                print("⚠️  MISSION INFEASIBILITY WARNING")
+                print(" MISSION INFEASIBILITY WARNING")
                 print("="*80)
                 print(f"  Maximum fuel capacity: {MAX_FUEL_KG:.1f} kg")
                 print(f"  Required fuel consumption: {total_mission_fuel:.1f} kg")
                 print(f"  Fuel deficit: {fuel_deficit:.1f} kg ({fuel_deficit/MAX_FUEL_KG*100:.1f}% over capacity)")
-                print(f"\n  ❌ MISSION IS INFEASIBLE - Aircraft cannot carry sufficient fuel!")
+                print(f"\n   MISSION IS INFEASIBLE - Aircraft cannot carry sufficient fuel!")
                 print(f"  Possible solutions:")
                 print(f"    1. Increase MAX_FUEL_KG in aircraft_config.py to at least {total_mission_fuel*1.05:.1f} kg")
                 print(f"    2. Reduce cruise distance (currently {CRUISE_DISTANCE_KM:.0f} km) in mission_config.py")
@@ -477,7 +477,7 @@ def main():
                 print("="*80 + "\n")
             else:
                 fuel_margin = MAX_FUEL_KG - total_mission_fuel
-                print(f"\n✅ FUEL FEASIBILITY CHECK: PASSED")
+                print(f"\nFUEL FEASIBILITY CHECK: PASSED")
                 print(f"  Maximum fuel capacity: {MAX_FUEL_KG:.1f} kg")
                 print(f"  Required fuel consumption: {total_mission_fuel:.1f} kg")
                 print(f"  Fuel margin: {fuel_margin:.1f} kg ({fuel_margin/MAX_FUEL_KG*100:.1f}% reserve)")
