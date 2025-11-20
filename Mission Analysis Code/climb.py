@@ -2,20 +2,15 @@
 # ========= IMPORTS AND BASIC SETUP ===========================================
 from __future__ import annotations
 import numpy as np
-import pandas as pd
-from pathlib import Path
 from dataclasses import dataclass
-from typing import Optional, NamedTuple, Callable, List, Dict, Any
-import time
-from atmosphere import Atmosphere
+from typing import Optional, Callable, List, Dict, Any
 
 # Import aircraft configuration from centralized module
 from aircraft_config import (
-    SystemConfiguration, AtmosphericProperties,
-    ENGINE_STUB_PATH,
+    SystemConfiguration,
     N_ENGINES, INITIAL_MASS_KG, S_REF_M2,
-    ENGINE_ALT_CLIP, M_MIN_DEFAULT, M_MIN_EFFECTIVE, M_MMO,
-    G_C, DEBUG, AUTO_APPLY_PARAMS_FROM_EXCEL,
+    M_MIN_DEFAULT, M_MIN_EFFECTIVE, M_MMO,
+    G_C, DEBUG,
     isa_properties, a_from_altitude, _atmospheric_properties
 )
 
@@ -1418,10 +1413,6 @@ class ClimbingCore:
             return "Within Envelope"
     
     
-    
-# Create global climbing core instance
-_climbing_core = ClimbingCore()
-
 # =========  6 - SYSTEM UTILITIES =====================
 class SystemUtilities:
     """Centralized utility functions for the entire system."""
@@ -1445,50 +1436,10 @@ class SystemUtilities:
                     g[key] = val
                 SystemUtilities.dbg(f"[PARAM] {key}: {old} -> {g[key]}")
     
-    @staticmethod
-    def nanfill2d(A: np.ndarray) -> np.ndarray:
-        """In-place-like forward/backward fill of NaNs first across rows, then across columns."""
-        # Forward fill across rows
-        for i in range(A.shape[0]):
-            for j in range(1, A.shape[1]):
-                if np.isnan(A[i, j]) and not np.isnan(A[i, j-1]):
-                    A[i, j] = A[i, j-1]
-        
-        # Backward fill across rows
-        for i in range(A.shape[0]):
-            for j in range(A.shape[1]-2, -1, -1):
-                if np.isnan(A[i, j]) and not np.isnan(A[i, j+1]):
-                    A[i, j] = A[i, j+1]
-        
-        # Forward fill across columns
-        for j in range(A.shape[1]):
-            for i in range(1, A.shape[0]):
-                if np.isnan(A[i, j]) and not np.isnan(A[i-1, j]):
-                    A[i, j] = A[i-1, j]
-        
-        # Backward fill across columns
-        for j in range(A.shape[1]):
-            for i in range(A.shape[0]-2, -1, -1):
-                if np.isnan(A[i, j]) and not np.isnan(A[i+1, j]):
-                    A[i, j] = A[i+1, j]
-        
-        return A
-
-# Create global system utilities instance
-_system_utilities = SystemUtilities()
-
 # Backward compatibility functions
 def dbg(msg: str):
     """Debug logging function."""
     SystemUtilities.dbg(msg)
-
-def _apply_params_to_globals(params: Dict[str, Any]) -> None:
-    """Apply recognized scalar parameters from Excel to module-level defaults."""
-    SystemUtilities.apply_params_to_globals(params)
-
-def _nanfill2d(A: np.ndarray) -> np.ndarray:
-    """In-place-like forward/backward fill of NaNs first across rows, then across columns."""
-    return SystemUtilities.nanfill2d(A)
 
 # =========  7 - GRID AND PLOTTING ========================
 class GridAndPlotting:
@@ -1578,9 +1529,6 @@ class GridAndPlotting:
 
         return None, None, thrust_limited
 
-# Create global grid and plotting instance
-_grid_and_plotting = GridAndPlotting()
-
 # Backward compatibility functions
 def compute_sep_grid_maxlever(aero: PyAerodynamicsWrapper, engine: EngineWrapper, ref_mass_kg: float,
                               M_grid: np.ndarray | None = None,
@@ -1608,18 +1556,12 @@ class PlottingConfig:
     # User interface visualization limits
     M_XMAX_UI = 1.25  # Maximum Mach number for SEP x-axis visualization
 
-# Create global plotting config instance
-_plotting_config = PlottingConfig()
-
 # =========  4.6 - STRATEGY CONFIGURATION ========================
 class StrategyConfig:
     """Configuration constants for strategy simulation and energy management."""
     
     # Strategy energy split magnitude
     E_DOT_CMD = 14  # [m/s] (split between climb & speed by each strategy)
-
-# Create global strategy config instance
-_strategy_config = StrategyConfig()
 
 # =========  4.7 - GRID CONFIGURATION ========================
 class GridConfig:
@@ -1633,9 +1575,6 @@ class GridConfig:
     ALT_STEP_M = 200.0
     MACH_COLS = 81
     N_PLOT_STEPS = 50  # uniform # of points per trajectory
-
-# Create global grid config instance
-_grid_config = GridConfig()
 
 # Backward compatibility constants 
 PS_LEVELS = PlottingConfig.PS_LEVELS
@@ -1684,7 +1623,6 @@ def compute_3d_cost(aero: PyAerodynamicsWrapper, eng: EngineWrapper,
 
 # Backward compatibility for Strategy System classes
 StrategyProfiles = ClimbingCore.StrategyManager.StrategyProfiles
-StrategyRun = ClimbingCore.EnergyCalculator.StrategyRun
 
 # Backward compatibility wrappers
 def compute_full_engine_envelope(aero: PyAerodynamicsWrapper, eng: EngineWrapper, M_grid: np.ndarray, H_sched: np.ndarray, lever_samples: int = 50):
