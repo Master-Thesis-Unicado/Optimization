@@ -72,20 +72,3 @@ N_LEVER_SAMPLES_DESCENT = 15     #  Number of lever samples for DP optimization 
 # Descent constraints (from descent.py)
 MIN_DESCENT_MACH = 0.2          # Minimum descent Mach
 MAX_DESCENT_MACH = 0.85         # Maximum descent Mach
-
-# Mission constraints (from various files)
-DELTA_ISA_K = 0.0               # Temperature offset from ISA [K]
-MAX_MISSION_TIME_HOURS = 12.0   # Maximum total mission time [hours]
-CONTINGENCY_FUEL_PERCENT = 0.06 # Contingency fuel percentage
-RESERVE_FUEL_PERCENT = 0.05     # Reserve fuel percentage
-
-# Simulation settings (from various files)
-DEBUG = True                    # Enable debug output
-VERBOSE = True                  # Enable verbose logging
-CREATE_PLOTS = True             # Generate visualization plots
-SAVE_RESULTS = True             # Save results to files
-
-# Output settings (from various files)
-OUTPUT_DIRECTORY = "Images"     # Directory for output files
-PLOT_FORMAT = "png"             # Plot file format
-HTML_OUTPUT = True              # Generate HTML visualizations
