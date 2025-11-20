@@ -27,14 +27,12 @@ import matplotlib.pyplot as plt
 
 # ========= AIRCRAFT AND MISSION CONFIGURATION ================================
 from aircraft_config import (
-    INITIAL_MASS_KG, ENGINE_STUB_PATH, MAX_FUEL_KG, W_OE_KG, W_PL_KG,
-    AtmosphericProperties, G_C
+    ENGINE_STUB_PATH, MAX_FUEL_KG, W_OE_KG, W_PL_KG
 )
 from mission_config import (
     TARGET_ALT_CLIMB_M, ALT_STEP_M, Y_AXIS_TOP_M,
     N_MACH_SAMPLES_CLIMB, N_ALTITUDE_STEPS_CLIMB, N_LEVER_SAMPLES_CLIMB,
-    START_ALTITUDE_CLIMB_M, START_VELOCITY_CLIMB_MS, START_LEVER_CLIMB,
-    TARGET_MACH_CRUISE, TARGET_MACH_TOLERANCE_CLIMB, STRATEGY_DT_CLIMB_S,
+    START_ALTITUDE_CLIMB_M,
     CRUISE_DISTANCE_KM, CRUISE_TIME_STEP_S,
     THRUST_CONVERGENCE_TOL_CRUISE, MAX_ITERATIONS_CRUISE,
     TARGET_DESCENT_ALT_M, TARGET_DESCENT_MACH,
@@ -43,11 +41,9 @@ from mission_config import (
 )
 
 # ========= CLIMB MODULE ===========================================
-import climb
 from climb import (
     compute_sep_grid_maxlever,
-    dbg, compute_full_engine_envelope,
-    ClimbingCore
+    compute_full_engine_envelope
 )
 
 # ========= AERODYNAMICS AND ENGINE WRAPPERS ===========================
@@ -55,22 +51,19 @@ from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 from pyengine_wrapper import EngineWrapper
 
 # ========= CRUISE MODULE ==============================================
-import cruise
-from cruise import run_cruise_simulation
+# Cruise simulation is handled by the optimization loop
 
 # ========= DESCENT MODULE =============================================
-import descent
-from descent import run_descent_dp_optimization, compute_full_descent_envelope
+from descent import compute_full_descent_envelope
 
 # ========= PLOTTING MODULES (FINAL VISUALIZATION ONLY) ================
 from cruise_plotting import plot_cruise_performance_detailed
 from climb_plotting import (
-    plot_strategies_interactive, plot_J_3d_plotly, 
-    create_strategy_comparison_plots, plot_climb_performance_detailed
+    plot_J_3d_plotly, 
+    plot_climb_performance_detailed
 )
 from descent_plotting import (
     plot_descent_trajectory_interactive, 
-    plot_descent_3d_trajectory,
     plot_complete_mission_3d_interactive,
     plot_descent_J_3d_plotly
 )
@@ -82,11 +75,6 @@ from mission_summary import (
 # ========= FUEL OPTIMIZATION MODULES ==================================
 from mission_fuel_optimizer import optimize_fuel_capacity, SAFETY_BUFFER_PERCENT
 from mission_fuel_plotting import visualize_convergence_analysis
-
-
-# ========= CONSTANTS AND SETTINGS =========================================
-# Create atmospheric properties instance
-atmospheric_props = AtmosphericProperties()
 
 
 # ========= MAIN EXECUTION FUNCTION ========================================
