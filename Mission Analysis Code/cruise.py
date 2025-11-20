@@ -2,11 +2,10 @@ from __future__ import annotations
 import numpy as np
 from dataclasses import dataclass
 from typing import Optional, Tuple, Dict, Any
-import time
 
 # Import necessary components from existing modules
 from atmosphere import Atmosphere
-from aircraft_config import N_ENGINES, isa_properties, G_C
+from aircraft_config import N_ENGINES, G_C
 import climb
 from climb import ClimbingCore
 from pyaerodynamics_wrapper import PyAerodynamicsWrapper
@@ -31,7 +30,6 @@ from mission_config import (
 
 # Default cruise parameters (user adjustable)
 DEFAULT_TIME_STEP_S = 60.0    # 1 minute time steps
-DEFAULT_DISTANCE_KM = 1000.0  # Default cruise distance
 GRAVITY_MS2 = G_C             # Standard gravity
 
 # Import phase-specific parameters from centralized configuration
