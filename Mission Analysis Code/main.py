@@ -21,6 +21,7 @@ Output includes interactive plots and complete mission summary.
 from __future__ import annotations
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 
 from aircraft_config import (
     INITIAL_MASS_KG, ENGINE_STUB_PATH,
@@ -65,6 +66,9 @@ atmospheric_props = AtmosphericProperties()
 
 
 def main():
+    # Record simulation start time
+    simulation_start_time = time.time()
+    
     print("\n" + "="*80)
     print("AIRCRAFT CONFIGURATION")
     print("="*80)
@@ -156,13 +160,13 @@ def main():
     alt = np.asarray(dp_sched.alt_m, float)
     mach = np.asarray(dp_sched.mach, float)
     dt = np.asarray(dp_sched.dt_s, float)
-    time = np.cumsum(np.nan_to_num(dt, nan=0.0, posinf=0.0, neginf=0.0))
+    time_array = np.cumsum(np.nan_to_num(dt, nan=0.0, posinf=0.0, neginf=0.0))
     
     dp_run = climb.StrategyRun(
         label="3D DP (Global Optimization)",
         alt_m=alt,
         mach=mach,
-        time_s=time,
+        time_s=time_array,
         lever=np.asarray(dp_sched.lever, float),
         T_total_N=np.asarray(dp_sched.T_total_N, float),
         D_N=np.asarray(dp_sched.D_N, float),
@@ -522,14 +526,20 @@ def main():
                 descent_info=descent_info
             )
             
+            # Calculate simulation execution time
+            simulation_end_time = time.time()
+            simulation_duration_min = (simulation_end_time - simulation_start_time) / 60.0
+            
             # Create comprehensive mission summary dashboard (NEW!)
             print(f"\n[SUMMARY] Opening comprehensive mission summary dashboard in browser...")
             print(f"  Professional dashboard with all key mission metrics and performance indicators")
+            print(f"  Simulation execution time: {simulation_duration_min:.2f} minutes")
             plot_mission_summary_dashboard(
                 climb_result=dp_sched,
                 cruise_result=cruise_results,
                 descent_result=descent_result,
-                initial_mass_kg=INITIAL_MASS_KG
+                initial_mass_kg=INITIAL_MASS_KG,
+                simulation_duration_min=simulation_duration_min
             )
             
             # Create combined performance analysis

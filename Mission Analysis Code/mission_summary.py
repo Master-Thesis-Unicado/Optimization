@@ -19,7 +19,26 @@ import plotly.io as pio
 pio.renderers.default = "browser"
 
 # Import necessary components
-from aircraft_config import G_C, a_from_altitude
+from aircraft_config import (
+    G_C, a_from_altitude, N_ENGINES, S_REF_M2,
+    W_AIRFRAME_KG, W_PROPULSION_KG, W_SYSTEMS_KG,
+    PAYLOAD_PER_PERSON_KG, DEFAULT_PASSENGERS, MAX_FUEL_KG,
+    W_OE_KG, W_PL_KG
+)
+from mission_config import (
+    TARGET_ALT_CLIMB_M, ALT_STEP_M, Y_AXIS_TOP_M,
+    START_ALTITUDE_CLIMB_M, START_VELOCITY_CLIMB_MS, START_LEVER_CLIMB,
+    N_MACH_SAMPLES_CLIMB, N_ALTITUDE_STEPS_CLIMB, N_LEVER_SAMPLES_CLIMB,
+    TARGET_MACH_CRUISE, TARGET_MACH_TOLERANCE_CLIMB, STRATEGY_DT_CLIMB_S,
+    CRUISE_DISTANCE_KM, CRUISE_TIME_STEP_S,
+    TARGET_MISSION_RANGE_KM, INITIAL_CRUISE_DISTANCE_KM,
+    RANGE_OPTIMIZATION_TOLERANCE_KM, MAX_RANGE_OPTIMIZATION_ITERATIONS,
+    RANGE_OPTIMIZATION_DAMPING_FACTOR,
+    ENABLE_CRUISE_CLIMB, CRUISE_CLIMB_TRIGGER_DISTANCE_FRACTION,
+    CRUISE_CLIMB_ALTITUDE_INCREMENT_M, CRUISE_CLIMB_MACH_TOLERANCE,
+    TARGET_DESCENT_ALT_M, TARGET_DESCENT_MACH,
+    N_MACH_SAMPLES_DESCENT, N_ALTITUDE_STEPS_DESCENT, N_LEVER_SAMPLES_DESCENT
+)
 from climb import MinFuelSchedule
 from cruise import CruiseResults
 from descent import DescentResults
@@ -130,7 +149,8 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
                                    cruise_result: CruiseResults,
                                    descent_result: DescentResults,
                                    initial_mass_kg: float,
-                                   save_html: Optional[str] = None):
+                                   save_html: Optional[str] = None,
+                                   simulation_duration_min: Optional[float] = None):
     """
     Create comprehensive mission summary dashboard with scientific visualization.
     
@@ -143,6 +163,7 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
         descent_result: Results from descent phase
         initial_mass_kg: Initial aircraft mass
         save_html: Optional path to save HTML file
+        simulation_duration_min: Optional simulation execution time in minutes
     """
     # Calculate aerodynamic data throughout mission
     print("[AERO] Calculating aerodynamic data throughout mission...")
@@ -194,7 +215,7 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     
     # Create figure with subplots including aerodynamic data and fuel management
     fig = make_subplots(
-        rows=5, cols=3,
+        rows=9, cols=3,
         subplot_titles=(
             '<b>Mission Profile</b>',
             '<b>Phase Breakdown</b>',
@@ -205,17 +226,27 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
             '<b>Lift-to-Drag Ratio (L/D)</b>',
             '<b>Mission Statistics</b>',
             '<b>Key Parameters</b>',
-            '<b>Fuel Management</b>'
+            '<b>Fuel Management</b>',
+            '<b>Climb Configuration</b>',
+            '<b>Cruise Configuration</b>',
+            '<b>Descent Configuration</b>',
+            '<b>Range Optimization</b>',
+            '<b>Cruise Climb</b>',
+            '<b>Aircraft Configuration</b>'
         ),
         specs=[
             [{"colspan": 3, "type": "scatter"}, None, None],
             [{"type": "bar"}, {"type": "scatter"}, {"type": "scatter"}],
             [{"type": "scatter"}, {"type": "scatter"}, {"type": "scatter"}],
             [{"colspan": 2, "type": "table"}, None, {"type": "table"}],
-            [{"colspan": 3, "type": "table"}, None, None]
+            [{"colspan": 3, "type": "table"}, None, None],
+            [{"type": "table"}, {"type": "table"}, {"type": "table"}],
+            [{"type": "table"}, {"type": "table"}, {"type": "table"}],
+            [{"type": "table"}, {"type": "table"}, {"type": "table"}],
+            [None, None, None]
         ],
-        row_heights=[0.20, 0.20, 0.20, 0.20, 0.20],
-        vertical_spacing=0.06,
+        row_heights=[0.07, 0.07, 0.07, 0.09, 0.16, 0.24, 0.24, 0.00, 0.00],
+        vertical_spacing=0.02,
         horizontal_spacing=0.10
     )
     
@@ -606,6 +637,9 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     avg_descent_rate_mpm = np.mean(np.abs(descent_result.descent_rate_mps)) * 60.0 if len(descent_result.descent_rate_mps) > 0 else 0
     cruise_mach = cruise_result.mach_number[-1]
     cruise_altitude_ft = cruise_result.altitude_m[-1] * 3.28084
+    # Use provided simulation duration or default to mission time if not provided
+    if simulation_duration_min is None:
+        simulation_duration_min = total_time_s / 60.0
     
     fig.add_trace(
         go.Table(
@@ -619,18 +653,19 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
                 values=[
                     ['<b>Initial Weight</b>', '<b>Final Weight</b>', '<b>Weight Loss</b>',
                      '<b>Cruise Altitude</b>', '<b>Cruise Mach</b>', 
-                     '<b>Avg Climb Rate</b>', '<b>Avg Descent Rate</b>'],
+                     '<b>Avg Climb Rate</b>', '<b>Avg Descent Rate</b>', '<b>Simulation Duration</b>'],
                     [f'{initial_mass_kg:.0f} kg', 
                      f'{descent_result.final_weight_kg:.0f} kg',
                      f'{initial_mass_kg - descent_result.final_weight_kg:.0f} kg',
                      f'{cruise_altitude_ft:.0f} ft',
                      f'{cruise_mach:.3f}',
                      f'{avg_climb_rate_mpm:.0f} m/min',
-                     f'{avg_descent_rate_mpm:.0f} m/min']
+                     f'{avg_descent_rate_mpm:.0f} m/min',
+                     f'{simulation_duration_min:.1f} min']
                 ],
                 fill_color=[['white', 'lightgray'] * 4],
                 align=['left', 'right'],
-                font=dict(size=Typography.HOVER_SIZE, family=Typography.FONT_FAMILY)
+                font=dict(size=10, family=Typography.FONT_FAMILY)  # Smaller font to fit all rows
             )
         ),
         row=4, col=3
@@ -723,11 +758,174 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
                     ['white', 'lightgray', 'white', 'lightgray', 'white']
                 ],
                 align=['left', 'right', 'center'],
-                font=dict(size=Typography.HOVER_SIZE, family=Typography.FONT_FAMILY),
-                height=30
+                font=dict(size=10, family=Typography.FONT_FAMILY)
             )
         ),
         row=5, col=1
+    )
+    
+    # ========= ROW 6: MISSION CONFIGURATION TABLE =========
+    # Create phase-specific background colors for better visual distinction
+    # Climb: light blue tint (rgba(173, 216, 230, 0.3) = lightblue with transparency)
+    # Cruise: light green tint (rgba(144, 238, 144, 0.3) = lightgreen with transparency)
+    # Descent: light red/pink tint (rgba(255, 182, 193, 0.3) = lightpink with transparency)
+    
+    # Row indices: 0=Climb header, 1-10=Climb params, 11=Cruise header, 12-13=Cruise params,
+    # 14=Range Opt header, 15-19=Range Opt params, 20=Cruise Climb header, 21-24=Cruise Climb params,
+    # 25=Descent header, 26-30=Descent params (total 31 rows)
+    
+    # ========= ROW 6 COL 1: CLIMB CONFIGURATION TABLE =========
+    fig.add_trace(
+        go.Table(
+            header=dict(
+                values=['<b>Climb Parameter</b>', '<b>Value</b>'],
+                fill_color=Colors.CRUISE,
+                align='center',
+                font=dict(color='white', size=Typography.AXIS_LABEL_SIZE, family=Typography.FONT_FAMILY)
+            ),
+            cells=dict(
+                values=[
+                    ['<b>Target Altitude</b>', '<b>Start Altitude</b>', '<b>Start Velocity</b>', '<b>Start Lever</b>',
+                     '<b>Mach Samples</b>', '<b>Altitude Steps</b>', '<b>Lever Samples</b>',
+                     '<b>Target Mach</b>', '<b>Mach Tolerance</b>', '<b>Strategy Time Step</b>'],
+                    [f'{TARGET_ALT_CLIMB_M:.0f} m', f'{START_ALTITUDE_CLIMB_M:.1f} m', 
+                     f'{START_VELOCITY_CLIMB_MS:.1f} m/s', f'{START_LEVER_CLIMB:.2f}',
+                     f'{N_MACH_SAMPLES_CLIMB}', f'{N_ALTITUDE_STEPS_CLIMB}', f'{N_LEVER_SAMPLES_CLIMB}',
+                     f'{TARGET_MACH_CRUISE:.3f}', f'{TARGET_MACH_TOLERANCE_CLIMB:.3f}', f'{STRATEGY_DT_CLIMB_S:.1f} s']
+                ],
+                fill_color=[['white', 'white', 'lightgray', 'lightgray'] * 5],  # 10 rows: white/grey alternating rows
+                align=['left', 'right'],
+                font=dict(size=10, family=Typography.FONT_FAMILY)
+            )
+        ),
+        row=6, col=1
+    )
+    
+    # ========= ROW 6 COL 2: CRUISE CONFIGURATION TABLE =========
+    fig.add_trace(
+        go.Table(
+            header=dict(
+                values=['<b>Cruise Parameter</b>', '<b>Value</b>'],
+                fill_color=Colors.CRUISE,
+                align='center',
+                font=dict(color='white', size=Typography.AXIS_LABEL_SIZE, family=Typography.FONT_FAMILY)
+            ),
+            cells=dict(
+                values=[
+                    ['<b>Cruise Distance</b>', '<b>Cruise Time Step</b>'],
+                    [f'{CRUISE_DISTANCE_KM:.1f} km', f'{CRUISE_TIME_STEP_S:.1f} s']
+                ],
+                fill_color=[['white', 'white', 'lightgray', 'lightgray']],  # 2 rows: white/grey alternating rows
+                align=['left', 'right'],
+                font=dict(size=10, family=Typography.FONT_FAMILY)
+            )
+        ),
+        row=6, col=2
+    )
+    
+    # ========= ROW 6 COL 3: DESCENT CONFIGURATION TABLE =========
+    fig.add_trace(
+        go.Table(
+            header=dict(
+                values=['<b>Descent Parameter</b>', '<b>Value</b>'],
+                fill_color=Colors.CRUISE,
+                align='center',
+                font=dict(color='white', size=Typography.AXIS_LABEL_SIZE, family=Typography.FONT_FAMILY)
+            ),
+            cells=dict(
+                values=[
+                    ['<b>Target Altitude</b>', '<b>Target Mach</b>',
+                     '<b>Mach Samples</b>', '<b>Altitude Steps</b>', '<b>Lever Samples</b>'],
+                    [f'{TARGET_DESCENT_ALT_M:.1f} m', f'{TARGET_DESCENT_MACH:.3f}',
+                     f'{N_MACH_SAMPLES_DESCENT}', f'{N_ALTITUDE_STEPS_DESCENT}', f'{N_LEVER_SAMPLES_DESCENT}']
+                ],
+                fill_color=[['white', 'white', 'lightgray', 'lightgray'] * 2 + ['white', 'white']],  # 5 rows: white/grey alternating rows
+                align=['left', 'right'],
+                font=dict(size=10, family=Typography.FONT_FAMILY)
+            )
+        ),
+        row=6, col=3
+    )
+    
+    # ========= ROW 7: RANGE OPTIMIZATION TABLE =========
+    fig.add_trace(
+        go.Table(
+            header=dict(
+                values=['<b>Range Optimization Parameter</b>', '<b>Value</b>'],
+                fill_color=Colors.CRUISE,
+                align='center',
+                font=dict(color='white', size=Typography.AXIS_LABEL_SIZE, family=Typography.FONT_FAMILY)
+            ),
+            cells=dict(
+                values=[
+                    ['<b>Target Mission Range</b>', '<b>Initial Cruise Distance</b>',
+                     '<b>Range Tolerance</b>', '<b>Max Iterations</b>', '<b>Damping Factor</b>'],
+                    [f'{TARGET_MISSION_RANGE_KM:.1f} km', f'{INITIAL_CRUISE_DISTANCE_KM:.1f} km',
+                     f'{RANGE_OPTIMIZATION_TOLERANCE_KM:.1f} km', f'{MAX_RANGE_OPTIMIZATION_ITERATIONS}', f'{RANGE_OPTIMIZATION_DAMPING_FACTOR:.2f}']
+                ],
+                fill_color=[['white', 'white', 'lightgray', 'lightgray'] * 2 + ['white', 'white']],  # 5 rows: white/grey alternating rows
+                align=['left', 'right'],
+                font=dict(size=10, family=Typography.FONT_FAMILY)
+            )
+        ),
+        row=7, col=1
+    )
+    
+    # ========= ROW 7 COL 2: CRUISE CLIMB TABLE =========
+    fig.add_trace(
+        go.Table(
+            header=dict(
+                values=['<b>Cruise Climb Parameter</b>', '<b>Value</b>'],
+                fill_color=Colors.CRUISE,
+                align='center',
+                font=dict(color='white', size=Typography.AXIS_LABEL_SIZE, family=Typography.FONT_FAMILY)
+            ),
+            cells=dict(
+                values=[
+                    ['<b>Enable Cruise Climb</b>', '<b>Trigger Distance Fraction</b>',
+                     '<b>Altitude Increment</b>', '<b>Mach Tolerance</b>'],
+                    ['Yes' if ENABLE_CRUISE_CLIMB else 'No',
+                     f'{CRUISE_CLIMB_TRIGGER_DISTANCE_FRACTION:.2f}',
+                     f'{CRUISE_CLIMB_ALTITUDE_INCREMENT_M:.0f} m', f'{CRUISE_CLIMB_MACH_TOLERANCE:.3f}']
+                ],
+                fill_color=[['white', 'white', 'lightgray', 'lightgray'] * 2],  # 4 rows: white/grey alternating rows
+                align=['left', 'right'],
+                font=dict(size=10, family=Typography.FONT_FAMILY)
+            )
+        ),
+        row=7, col=2
+    )
+    
+    # ========= ROW 7 COL 3: AIRCRAFT CONFIGURATION TABLE =========
+    fig.add_trace(
+        go.Table(
+            header=dict(
+                values=['<b>Aircraft Parameter</b>', '<b>Value</b>'],
+                fill_color=Colors.CRUISE,
+                align='center',
+                font=dict(color='white', size=Typography.AXIS_LABEL_SIZE, family=Typography.FONT_FAMILY)
+            ),
+            cells=dict(
+                values=[
+                    # Parameter names
+                    ['<b>Number of Engines</b>', '<b>Reference Area</b>',
+                     '<b>Airframe Weight</b>', '<b>Propulsion Weight</b>', '<b>Systems Weight</b>',
+                     '<b>Operating Empty Weight</b>',
+                     '<b>Payload per Person</b>', '<b>Default Passengers</b>', '<b>Total Payload</b>',
+                     '<b>Maximum Fuel</b>'],
+                    # Values
+                    [f'{N_ENGINES}', f'{S_REF_M2:.2f} m²',
+                     f'{W_AIRFRAME_KG:.1f} kg', f'{W_PROPULSION_KG:.1f} kg', f'{W_SYSTEMS_KG:.1f} kg',
+                     f'{W_OE_KG:.1f} kg',
+                     f'{PAYLOAD_PER_PERSON_KG:.1f} kg', f'{DEFAULT_PASSENGERS}', f'{W_PL_KG:.1f} kg',
+                     f'{MAX_FUEL_KG:.1f} kg']
+                ],
+                fill_color=[['white', 'white', 'lightgray', 'lightgray'] * 4 + ['white', 'white']],  # 9 rows: white/grey alternating rows
+                align=['left', 'right'],
+                font=dict(size=10, family=Typography.FONT_FAMILY)
+            )
+        ),
+        row=7, col=3
     )
     
     # Main title with comprehensive summary - add warning if infeasible
@@ -743,10 +941,13 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
         f"{feasibility_warning}"
     )
     
+    # Increase height to accommodate additional configuration tables
+    dashboard_height = Layout.DASHBOARD_HEIGHT * 2.5  # 150% increase for new tables and better visibility
+    
     layout_config = get_standard_layout(
         "COMPLETE MISSION ANALYSIS SUMMARY",
         subtitle,
-        height=Layout.DASHBOARD_HEIGHT,
+        height=dashboard_height,
         width=Layout.DASHBOARD_WIDTH
     )
     
