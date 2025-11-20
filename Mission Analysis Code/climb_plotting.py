@@ -5,8 +5,6 @@ from matplotlib.widgets import Button
 from matplotlib import patheffects as pe
 from typing import List
 import os
-from datetime import datetime
-from pathlib import Path
 import warnings
 import plotly.graph_objects as go
 import plotly.subplots as sp
@@ -28,7 +26,7 @@ from aircraft_config import (
     M_MMO, S_REF_M2, G_C
 )
 from climb import (
-    PlottingConfig, Y_AXIS_TOP_M, TARGET_ALT_M, ClimbingCore
+    PlottingConfig, Y_AXIS_TOP_M, ClimbingCore
 )
 
 # Import visualization configuration for consistent styling
@@ -41,7 +39,7 @@ from visualization_config import (
 
 def plot_strategies_interactive(
     M_grid, H_plot, Ps_base,
-    strategies_runs: List[ClimbingCore.StrategyManager.StrategyRun],
+    strategies_runs: List[ClimbingCore.EnergyCalculator.StrategyRun],
     *,
     title_suffix=""
 ):
@@ -147,7 +145,7 @@ def plot_strategies_interactive(
     s = 0           # strategy index
     k = 0           # step index
 
-    def _coerce_run(run: ClimbingCore.StrategyManager.StrategyRun):
+    def _coerce_run(run: ClimbingCore.EnergyCalculator.StrategyRun):
         return (run.label, run.alt_m, run.mach, run.lever, run.time_s, run.T_total_N,
                 run.D_N, run.Ps_mps, run.mdot_kgps, run.dt_s, run.dFuel_kg, run.cumFuel_kg, run.thrust_limited)
 
