@@ -9,8 +9,6 @@ from __future__ import annotations
 import numpy as np
 from typing import List, Optional, Dict, Any
 import os
-from datetime import datetime
-from pathlib import Path
 import warnings
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -31,13 +29,12 @@ pio.renderers.default = "browser"
 from aircraft_config import isa_properties, a_from_altitude, G_C, M_MMO, S_REF_M2, INITIAL_MASS_KG
 from descent import DescentResults, DescentInitialState, calculate_min_descent_mach
 from cruise import CruiseResults
-import climb
 from climb import MinFuelSchedule
 
 # Import visualization configuration for consistent styling
 from visualization_config import (
     Colors, Typography, Layout, LineStyles,
-    get_standard_layout, get_standard_legend, get_axis_config,
+    get_standard_layout, get_axis_config,
     ExportConfig, get_or_create_run_directory
 )
 
