@@ -23,17 +23,6 @@ from atmosphere import Atmosphere
 class SystemConfiguration:
     """Centralized configuration management for the entire system."""
     
-    def __init__(self):
-        """Initialize the configuration and set calculated values."""
-        # Set INITIAL_MASS_KG to the calculated take-off weight
-        self.INITIAL_MASS_KG = self.W_TO_KG
-    
-    @classmethod
-    def get_initial_mass_kg(cls):
-        """Get the initial mass as a class method for backward compatibility."""
-        instance = cls()
-        return instance.W_TO_KG
-    
     # USER PATHS / SETTINGS
     AERO_XLSX  = r"D:\Icloud\iCloudDrive\Master Thesis\Mission Analysis Code\Aero\Ps Curves.xlsx"
     AERO_SHEET = "Sheet4"
@@ -73,28 +62,6 @@ class SystemConfiguration:
         """Take-Off Weight = Operating Empty + Fuel + Payload"""
         return self.W_OE_KG + self.MAX_FUEL_KG + self.W_PL_KG
     
-    def current_mass_kg(self, fuel_remaining_kg: float = None) -> float:
-        """
-        Calculate current aircraft mass based on fuel remaining.
-        
-        Args:
-            fuel_remaining_kg: Current fuel remaining in kg. If None, uses max fuel.
-            
-        Returns:
-            Current total aircraft mass in kg
-        """
-        if fuel_remaining_kg is None:
-            fuel_remaining_kg = self.MAX_FUEL_KG
-        
-        return self.W_OE_KG + fuel_remaining_kg + self.W_PL_KG
-    
-    def fuel_burned_kg(self, fuel_remaining_kg: float) -> float:
-        """Calculate how much fuel has been burned."""
-        return self.MAX_FUEL_KG - fuel_remaining_kg
-    
-    # Backward compatibility - use calculated take-off weight
-    INITIAL_MASS_KG  = None  # Will be set to W_TO_KG in __init__
-
     # Engine / units / limits
     ENGINE_ALT_CLIP  = None      # meters; None = no clip
     M_MIN_DEFAULT    = 0.0        # From engine envelope: minimum operational Mach
@@ -102,9 +69,8 @@ class SystemConfiguration:
     M_MMO            = 0.94       # From engine envelope: maximum operational Mach (may be overridden from Excel)
     CL_MAX           = None       # Will be set from Excel cell 
 
-    # DEBUG / PARAM APPLICATION
-    DEBUG = True # Console printing
-    AUTO_APPLY_PARAMS_FROM_EXCEL = True  # when True, scalars found in Excel override module-level defaults
+    # DEBUG
+    DEBUG = True  # Console printing
 
 # ========= ATMOSPHERE INTEGRATION ================
 class AtmosphericProperties:
@@ -145,7 +111,6 @@ M_MMO = _config.M_MMO
 CL_MAX = _config.CL_MAX
 G_C = AtmosphericProperties.G_C
 DEBUG = _config.DEBUG
-AUTO_APPLY_PARAMS_FROM_EXCEL = _config.AUTO_APPLY_PARAMS_FROM_EXCEL
 
 # Weight breakdown components
 W_AIRFRAME_KG = _config.W_AIRFRAME_KG
