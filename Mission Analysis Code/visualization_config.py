@@ -8,7 +8,6 @@ Author: Mission Analysis System
 """
 
 from typing import Dict, Any
-import os
 from datetime import datetime
 from pathlib import Path
 
@@ -290,77 +289,11 @@ def get_table_cell_style() -> Dict[str, Any]:
 
 
 # ============================================================================
-# PHASE-SPECIFIC CONFIGURATIONS
-# ============================================================================
-
-class PhaseColors:
-    """Pre-configured settings for each mission phase."""
-    
-    @staticmethod
-    def get_climb_trace_style(name: str = 'Climb') -> Dict[str, Any]:
-        """Get standard trace style for climb phase."""
-        return {
-            'name': name,
-            'line': {
-                'color': Colors.CLIMB,
-                'width': LineStyles.THICK
-            },
-            'mode': 'lines'
-        }
-    
-    @staticmethod
-    def get_cruise_trace_style(name: str = 'Cruise') -> Dict[str, Any]:
-        """Get standard trace style for cruise phase."""
-        return {
-            'name': name,
-            'line': {
-                'color': Colors.CRUISE,
-                'width': LineStyles.THICK
-            },
-            'mode': 'lines'
-        }
-    
-    @staticmethod
-    def get_descent_trace_style(name: str = 'Descent') -> Dict[str, Any]:
-        """Get standard trace style for descent phase."""
-        return {
-            'name': name,
-            'line': {
-                'color': Colors.DESCENT,
-                'width': LineStyles.THICK
-            },
-            'mode': 'lines'
-        }
-
-
-# ============================================================================
 # HOVER TEMPLATE FORMATTING
 # ============================================================================
 
 class HoverTemplates:
     """Standard hover template formats for consistency."""
-    
-    @staticmethod
-    def standard(phase: str, x_label: str, x_unit: str, y_label: str, y_unit: str) -> str:
-        """
-        Create standard hover template.
-        
-        Args:
-            phase: Phase name (Climb, Cruise, Descent)
-            x_label: Label for x-axis data
-            x_unit: Unit for x-axis
-            y_label: Label for y-axis data
-            y_unit: Unit for y-axis
-        
-        Returns:
-            Formatted hover template string
-        """
-        return (
-            f"<b>{phase}</b><br>"
-            f"{x_label}: %{{x:.2f}} {x_unit}<br>"
-            f"{y_label}: %{{y:.2f}} {y_unit}<br>"
-            "<extra></extra>"
-        )
     
     @staticmethod
     def fuel(phase: str, x_label: str, x_unit: str) -> str:

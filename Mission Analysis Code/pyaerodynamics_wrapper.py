@@ -13,11 +13,10 @@ to this file's location, ensuring robust operation regardless of the current
 working directory or import location.
 """
 
-import os
 import sys
 import numpy as np
 from pathlib import Path
-from typing import Dict, Any, Optional, Tuple
+from typing import Dict, Any
 from dataclasses import dataclass
 
 # Add the correct path to the pyaerodynamics module relative to this file
@@ -414,7 +413,3 @@ class PyAerodynamicsWrapper:
         self._cache_hits = 0
         self._cache_misses = 0
         print("[PYAERO] Cache cleared")
-
-# Backward compatibility alias
-AeroTables = PyAerodynamicsWrapper
-
