@@ -1,24 +1,3 @@
-"""
-Mission Analysis with Fuel Capacity Optimization
-
-This script implements a convergent optimization loop to determine the minimum 
-required fuel capacity for mission completion, replacing the static MTOF with 
-a dynamically optimized value.
-
-Features:
-- Iterative fuel optimization (climb + cruise + descent)
-- Convergence tracking with Aitken Δ² acceleration
-- No intermediate plots during convergence
-- Final plots generated only after convergence
-- Comprehensive performance metrics tracking
-
-The optimization process:
-1. Start with MAX_FUEL_KG as initial guess
-2. Run full mission simulation (climb → cruise → descent)
-3. Apply Aitken acceleration for adaptive damping
-4. Repeat until convergence (0.5% relative tolerance)
-5. Apply 5% safety buffer to final result
-"""
 
 # ========= IMPORTS AND BASIC SETUP ===========================================
 from __future__ import annotations
