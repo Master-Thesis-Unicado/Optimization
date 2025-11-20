@@ -2,28 +2,21 @@
 # ========= IMPORTS AND BASIC SETUP ===========================================
 from __future__ import annotations
 import numpy as np
-import pandas as pd
-from pathlib import Path
 from dataclasses import dataclass
-from typing import Optional, NamedTuple, Callable, List, Dict, Any, Tuple
-import time
-from atmosphere import Atmosphere
+from typing import Optional, Dict, Any, Tuple
 
 # Import aircraft configuration from centralized module
 from aircraft_config import (
-    SystemConfiguration, AtmosphericProperties,
     G_C, a_from_altitude, isa_properties,
-    M_MIN_EFFECTIVE, M_MMO, INITIAL_MASS_KG, N_ENGINES, S_REF_M2
+    M_MIN_EFFECTIVE, M_MMO, N_ENGINES, S_REF_M2
 )
 
 # Import necessary components from climb module
-import climb
-from climb import dbg, GridAndPlotting
+from climb import dbg
 from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 from pyengine_wrapper import EngineWrapper
 
 # Import cruise module for initial state extraction
-import cruise
 from cruise import CruiseResults
 
 # Import mission configuration parameters
@@ -1054,9 +1047,6 @@ class DescentCore:
         # Don't transpose - keep as (Mach, Altitude, Lever) for consistency with climb
         return J_envelope, lever_grid
 
-# Create global descent core instance
-_descent_core = DescentCore()
-
 # =========  5 - HELPER FUNCTIONS ========================
 def extract_descent_initial_state(cruise_results: CruiseResults,
                                   climb_fuel_kg: float,
@@ -1206,9 +1196,6 @@ class DescentConfiguration:
     STALL_SPEED_SAFETY_MARGIN = 1.3     # Safety margin above stall speed (1.3 = 30% above stall)
     ABSOLUTE_MIN_DESCENT_MACH = 0.15    # Absolute minimum Mach (safety fallback)
     MAX_DESCENT_MACH = M_MMO            # Maximum Mach for descent
-
-# Create global descent configuration
-_descent_config = DescentConfiguration()
 
 # Backward compatibility constants
 TARGET_DESCENT_ALT_M = DescentConfiguration.TARGET_DESCENT_ALT_M
