@@ -20,13 +20,13 @@ pio.renderers.default = "browser"
 
 # Import necessary components
 from aircraft_config import (
-    G_C, a_from_altitude, N_ENGINES, S_REF_M2,
+    a_from_altitude, N_ENGINES, S_REF_M2,
     W_AIRFRAME_KG, W_PROPULSION_KG, W_SYSTEMS_KG,
     PAYLOAD_PER_PERSON_KG, DEFAULT_PASSENGERS, MAX_FUEL_KG,
     W_OE_KG, W_PL_KG
 )
 from mission_config import (
-    TARGET_ALT_CLIMB_M, ALT_STEP_M, Y_AXIS_TOP_M,
+    TARGET_ALT_CLIMB_M,
     START_ALTITUDE_CLIMB_M, START_VELOCITY_CLIMB_MS, START_LEVER_CLIMB,
     N_MACH_SAMPLES_CLIMB, N_ALTITUDE_STEPS_CLIMB, N_LEVER_SAMPLES_CLIMB,
     TARGET_MACH_CRUISE, TARGET_MACH_TOLERANCE_CLIMB, STRATEGY_DT_CLIMB_S,
@@ -47,7 +47,7 @@ from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 # Import visualization configuration for consistent styling
 from visualization_config import (
     Colors, Typography, Layout, LineStyles,
-    get_standard_layout, get_standard_legend, get_axis_config,
+    get_standard_layout, get_axis_config,
     get_table_header_style, get_table_cell_style, HoverTemplates,
     get_or_create_run_directory
 )
