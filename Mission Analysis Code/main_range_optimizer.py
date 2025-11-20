@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 # ========= AIRCRAFT AND MISSION CONFIGURATION ================================
 from aircraft_config import (
     INITIAL_MASS_KG, ENGINE_STUB_PATH,
-    AtmosphericProperties, G_C, MAX_FUEL_KG, W_OE_KG, W_PL_KG
+    AtmosphericProperties, MAX_FUEL_KG, W_OE_KG, W_PL_KG
 )
 from mission_config import (
     TARGET_ALT_CLIMB_M, ALT_STEP_M, Y_AXIS_TOP_M,
     N_MACH_SAMPLES_CLIMB, N_ALTITUDE_STEPS_CLIMB, N_LEVER_SAMPLES_CLIMB,
     START_ALTITUDE_CLIMB_M, START_VELOCITY_CLIMB_MS, START_LEVER_CLIMB,
-    TARGET_MACH_CRUISE, TARGET_MACH_TOLERANCE_CLIMB, STRATEGY_DT_CLIMB_S,
+    TARGET_MACH_CRUISE, TARGET_MACH_TOLERANCE_CLIMB,
     CRUISE_TIME_STEP_S,
     TARGET_DESCENT_ALT_M, TARGET_DESCENT_MACH,
     N_MACH_SAMPLES_DESCENT, N_ALTITUDE_STEPS_DESCENT, N_LEVER_SAMPLES_DESCENT,
@@ -27,7 +27,6 @@ from mission_config import (
 import climb
 from climb import (
     compute_sep_grid_maxlever,
-    dbg,
     ClimbingCore
 )
 
@@ -36,11 +35,9 @@ from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 from pyengine_wrapper import EngineWrapper
 
 # ========= CRUISE MODULE ==============================================
-import cruise
 from cruise import run_cruise_simulation
 
 # ========= DESCENT MODULE =============================================
-import descent
 from descent import run_descent_dp_optimization
 
 # ========= RANGE OPTIMIZATION MODULES =================================
