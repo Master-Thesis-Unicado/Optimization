@@ -161,7 +161,7 @@ class ClimbingCore:
         @staticmethod
         def process_strategy_weights(strategy_fn: Callable, h: float, V: float, 
                                     strategy_altitude_fraction, label: str, 
-                                    h_hist: list, current_altitude_fraction: float) -> tuple[float, float, float, float]:
+                                    h_hist: list, current_altitude_fraction: float) -> tuple[float, float]:
             """
             Process strategy weights and convert to normalized energy allocation weights.
             
@@ -175,7 +175,7 @@ class ClimbingCore:
                 current_altitude_fraction: Current altitude fraction for debugging
                 
             Returns:
-                tuple: (w_c, w_s, cw, sw) - normalized weights and raw weights
+                tuple: (w_c, w_s) - normalized weights that sum to 1.0
             """
             cw, sw = strategy_fn(h, V, strategy_altitude_fraction)
             
@@ -192,30 +192,18 @@ class ClimbingCore:
             s = max(cw + sw, 1e-12)
             w_c, w_s = cw / s, sw / s
             
-            # Debug output for strategy behavior analysis (every 10% altitude progress)
-            # Calculate altitude progress percentage  
-            altitude_progress = current_altitude_fraction
-            
-            # Print at 0%, 10%, 20%, ..., 90%, 100% progress
-            progress_percent = int(altitude_progress * 10) * 10  # Round to nearest 10%
-            should_print = (
-                len(h_hist) <= 3 or  # Always print first 3 steps
-                (altitude_progress >= 0.1 and progress_percent != getattr(ClimbingCore.StrategyManager.process_strategy_weights, '_last_progress', -1))  # Every 10%
-            )
-            
-            if should_print:
-                # Track last progress to prevent duplicate output
-                ClimbingCore.StrategyManager.process_strategy_weights._last_progress = progress_percent
+            # Debug output (simplified - print first few steps only)
+            if len(h_hist) <= 3:
                 if isinstance(strategy_altitude_fraction, tuple):
                     af_used_str = f"({strategy_altitude_fraction[0]:.3f}, {strategy_altitude_fraction[1]:.3f})"
                 elif strategy_altitude_fraction is not None:
                     af_used_str = f"{strategy_altitude_fraction:.3f}"
                 else:
                     af_used_str = "None"
-                progress_pct = altitude_progress * 100
-                dbg(f"[STRAT] {label} at h={h:.0f}m ({progress_pct:.1f}% progress): cw={cw:.3f}, sw={sw:.3f} -> w_c={w_c:.3f}, w_s={w_s:.3f}, af_used={af_used_str}, af_current={current_altitude_fraction:.3f}")
+                progress_pct = current_altitude_fraction * 100
+                dbg(f"[STRAT] {label} at h={h:.0f}m ({progress_pct:.1f}% progress): w_c={w_c:.3f}, w_s={w_s:.3f}, af_used={af_used_str}")
             
-            return w_c, w_s, cw, sw
+            return w_c, w_s
         
         @staticmethod
         def build_strategy_set() -> List[tuple[str, Callable, Optional[float]]]:
@@ -279,7 +267,7 @@ class ClimbingCore:
                     strategy_altitude_fraction = None  # Don't use altitude fraction
                 
                 # Process strategy weights using centralized method
-                w_c, w_s, cw, sw = ClimbingCore.StrategyManager.process_strategy_weights(
+                w_c, w_s = ClimbingCore.StrategyManager.process_strategy_weights(
                     strategy_fn, h, V, strategy_altitude_fraction, label, h_hist, current_altitude_fraction
                 )
                 
