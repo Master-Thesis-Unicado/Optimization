@@ -1498,7 +1498,7 @@ class ClimbingCore:
 # Import plotting configuration (defined in climb_plotting.py)
 # Import placed here after ClimbingCore class definition to avoid circular import
 # (climb_plotting.py imports ClimbingCore from this module)
-from climb_plotting import PlottingConfig, GridConfig
+from climb_plotting import PlottingConfig, GridConfig, GridAndPlotting
 
 # =========  4 - SYSTEM UTILITIES =====================
 class SystemUtilities:
@@ -1528,106 +1528,81 @@ def dbg(msg: str):
     """Debug logging function."""
     SystemUtilities.dbg(msg)
 
-# =========  5 - GRID AND PLOTTING ========================
-class GridAndPlotting:
-    """Handles computational grid generation and data preparation for visualization."""
+# =========  5 - ENGINE UTILITIES ========================
+def find_lever_for_thrust(eng: EngineWrapper, required_thrust_total: float,
+                          mach: float, altitude_m: float,
+                          lever_grid=None, allow_refine=True):
+    """
+    Determine lever to meet required total thrust (distributed evenly per engine).
     
-    @staticmethod
-    def compute_sep_grid_maxlever(aero: PyAerodynamicsWrapper, engine: EngineWrapper, ref_mass_kg: float,
-                                  M_grid: np.ndarray | None = None,
-                                  H_grid: np.ndarray | None = None):
-        """Compute specific excess power Ps = ((T-D)V)/W at maximum lever for visualization backgrounds."""
-        if M_grid is None: M_grid = aero.mach_grid
-        if H_grid is None: H_grid = aero.alt_grid_m
-        Ps = np.full((len(H_grid), len(M_grid)), np.nan)
-        W = ref_mass_kg * G_C
-        for k, h in enumerate(H_grid):
-            a = a_from_altitude(float(h))
-            for i, M in enumerate(M_grid):
-                V = max(a*float(M), 0.1)
-                T_per = engine.thrust_with_lever(1.0, M, h)  # max lever
-                if T_per is None:
-                    continue
-                T_tot = T_per * SystemConfiguration.N_ENGINES
-                D = aero.get_drag(M, h, ref_mass_kg)
-                Ps[k, i] = ((T_tot - D) * V) / W
-        return M_grid, H_grid, Ps
+    This is a core simulation utility function used during climb trajectory simulation
+    to find the engine lever position needed to achieve a required thrust.
     
-    @staticmethod
-    def find_lever_for_thrust(eng: EngineWrapper, required_thrust_total: float,
-                              mach: float, altitude_m: float,
-                              lever_grid=None, allow_refine=True):
-        """
-        Determine lever to meet required total thrust (distributed evenly per engine).
-        Returns (lever, T_per_engine, thrust_limited_flag) or (None, None, False) if not resolvable.
-        """
-        thrust_limited = False
-        T_req = float(required_thrust_total) / float(SystemConfiguration.N_ENGINES)
+    Returns (lever, T_per_engine, thrust_limited_flag) or (None, None, False) if not resolvable.
+    """
+    thrust_limited = False
+    T_req = float(required_thrust_total) / float(SystemConfiguration.N_ENGINES)
 
-        if lever_grid is None:
-            lever_grid = np.linspace(0.0, 1.0, 21)
+    if lever_grid is None:
+        lever_grid = np.linspace(0.0, 1.0, 21)
 
-        def safe_thrust(lv):
-            Tv = eng.thrust_with_lever(float(lv), float(mach), float(altitude_m))
-            return Tv
+    def safe_thrust(lv):
+        Tv = eng.thrust_with_lever(float(lv), float(mach), float(altitude_m))
+        return Tv
 
-        thrusts = [safe_thrust(lv) for lv in lever_grid]
-        valid_idx = [i for i, Tv in enumerate(thrusts) if Tv is not None]
+    thrusts = [safe_thrust(lv) for lv in lever_grid]
+    valid_idx = [i for i, Tv in enumerate(thrusts) if Tv is not None]
 
-        if not valid_idx:
-            return None, None, thrust_limited
-
-        # enforce weak monotonicity
-        for i in range(1, len(lever_grid)):
-            if (thrusts[i] is not None) and (thrusts[i-1] is not None) and (thrusts[i] < thrusts[i-1]):
-                thrusts[i] = thrusts[i-1]
-
-        T0 = thrusts[0]; T1 = thrusts[-1]
-
-        if (T0 is not None) and (T0 >= T_req):
-            return float(lever_grid[0]), T0, thrust_limited
-
-        if (T1 is not None) and (T1 <= T_req):
-            thrust_limited = True
-            return float(lever_grid[-1]), T1, thrust_limited
-
-        # interpolate
-        for i in range(len(lever_grid)-1):
-            T_curr = thrusts[i]; T_next = thrusts[i+1]
-            if (T_curr is not None) and (T_next is not None):
-                if T_curr <= T_req <= T_next:
-                    if allow_refine:
-                        # refine with smaller grid
-                        fine_grid = np.linspace(lever_grid[i], lever_grid[i+1], 11)
-                        fine_thrusts = [safe_thrust(lv) for lv in fine_grid]
-                        for j in range(len(fine_grid)-1):
-                            if (fine_thrusts[j] is not None) and (fine_thrusts[j+1] is not None):
-                                if fine_thrusts[j] <= T_req <= fine_thrusts[j+1]:
-                                    t = (T_req - fine_thrusts[j]) / (fine_thrusts[j+1] - fine_thrusts[j])
-                                    lever = fine_grid[j] + t * (fine_grid[j+1] - fine_grid[j])
-                                    T_actual = safe_thrust(lever)
-                                    return float(lever), T_actual, thrust_limited
-                    else:
-                        # simple linear interpolation
-                        t = (T_req - T_curr) / (T_next - T_curr)
-                        lever = lever_grid[i] + t * (lever_grid[i+1] - lever_grid[i])
-                        T_actual = safe_thrust(lever)
-                        return float(lever), T_actual, thrust_limited
-
+    if not valid_idx:
         return None, None, thrust_limited
 
-# Backward compatibility functions
+    # enforce weak monotonicity
+    for i in range(1, len(lever_grid)):
+        if (thrusts[i] is not None) and (thrusts[i-1] is not None) and (thrusts[i] < thrusts[i-1]):
+            thrusts[i] = thrusts[i-1]
+
+    T0 = thrusts[0]; T1 = thrusts[-1]
+
+    if (T0 is not None) and (T0 >= T_req):
+        return float(lever_grid[0]), T0, thrust_limited
+
+    if (T1 is not None) and (T1 <= T_req):
+        thrust_limited = True
+        return float(lever_grid[-1]), T1, thrust_limited
+
+    # interpolate
+    for i in range(len(lever_grid)-1):
+        T_curr = thrusts[i]; T_next = thrusts[i+1]
+        if (T_curr is not None) and (T_next is not None):
+            if T_curr <= T_req <= T_next:
+                if allow_refine:
+                    # refine with smaller grid
+                    fine_grid = np.linspace(lever_grid[i], lever_grid[i+1], 11)
+                    fine_thrusts = [safe_thrust(lv) for lv in fine_grid]
+                    for j in range(len(fine_grid)-1):
+                        if (fine_thrusts[j] is not None) and (fine_thrusts[j+1] is not None):
+                            if fine_thrusts[j] <= T_req <= fine_thrusts[j+1]:
+                                t = (T_req - fine_thrusts[j]) / (fine_thrusts[j+1] - fine_thrusts[j])
+                                lever = fine_grid[j] + t * (fine_grid[j+1] - fine_grid[j])
+                                T_actual = safe_thrust(lever)
+                                return float(lever), T_actual, thrust_limited
+                else:
+                    # simple linear interpolation
+                    t = (T_req - T_curr) / (T_next - T_curr)
+                    lever = lever_grid[i] + t * (lever_grid[i+1] - lever_grid[i])
+                    T_actual = safe_thrust(lever)
+                    return float(lever), T_actual, thrust_limited
+
+    return None, None, thrust_limited
+
+# =========  6 - PLOTTING UTILITIES (BACKWARD COMPATIBILITY) ========================
+# Note: GridAndPlotting.compute_sep_grid_maxlever is defined in climb_plotting.py
+# This function provides backward compatibility for code that imports from climb.py
 def compute_sep_grid_maxlever(aero: PyAerodynamicsWrapper, engine: EngineWrapper, ref_mass_kg: float,
                               M_grid: np.ndarray | None = None,
                               H_grid: np.ndarray | None = None):
     """Compute specific excess power Ps = ((T-D)V)/W at maximum lever for visualization backgrounds."""
     return GridAndPlotting.compute_sep_grid_maxlever(aero, engine, ref_mass_kg, M_grid, H_grid)
-
-def find_lever_for_thrust(eng: EngineWrapper, required_thrust_total: float,
-                          mach: float, altitude_m: float,
-                          lever_grid=None, allow_refine=True):
-    """Determine lever to meet required total thrust (distributed evenly per engine)."""
-    return GridAndPlotting.find_lever_for_thrust(eng, required_thrust_total, mach, altitude_m, lever_grid, allow_refine)
 
 # =========  6 - PLOTTING CONFIGURATION ========================
 # Note: PlottingConfig and GridConfig are now defined in climb_plotting.py

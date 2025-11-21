@@ -76,6 +76,33 @@ class GridConfig:
 # Backward compatibility constants for external use
 Y_AXIS_TOP_M = GridConfig.Y_AXIS_TOP_M
 
+# ========= GRID AND PLOTTING UTILITIES ========================
+class GridAndPlotting:
+    """Handles computational grid generation and data preparation for visualization."""
+    
+    @staticmethod
+    def compute_sep_grid_maxlever(aero, engine, ref_mass_kg: float,
+                                  M_grid=None,
+                                  H_grid=None):
+        """Compute specific excess power Ps = ((T-D)V)/W at maximum lever for visualization backgrounds."""
+        from aircraft_config import SystemConfiguration, G_C, a_from_altitude
+        
+        if M_grid is None: M_grid = aero.mach_grid
+        if H_grid is None: H_grid = aero.alt_grid_m
+        Ps = np.full((len(H_grid), len(M_grid)), np.nan)
+        W = ref_mass_kg * G_C
+        for k, h in enumerate(H_grid):
+            a = a_from_altitude(float(h))
+            for i, M in enumerate(M_grid):
+                V = max(a*float(M), 0.1)
+                T_per = engine.thrust_with_lever(1.0, M, h)  # max lever
+                if T_per is None:
+                    continue
+                T_tot = T_per * SystemConfiguration.N_ENGINES
+                D = aero.get_drag(M, h, ref_mass_kg)
+                Ps[k, i] = ((T_tot - D) * V) / W
+        return M_grid, H_grid, Ps
+
 # Import visualization configuration for consistent styling
 from visualization_config import (
     Colors, Typography, Layout, LineStyles,
