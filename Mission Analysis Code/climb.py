@@ -226,7 +226,32 @@ class ClimbingCore:
                                   target_alt_m: float, dt: float,
                                   strategy_fn: Callable[[float,float,Optional[float]], tuple],
                                   altitude_fraction: Optional[float]) -> 'ClimbingCore.EnergyCalculator.StrategyRun':
-            """Integrate a strategy path with fixed mass; returns a StrategyRun with diagnostics."""
+            """
+            Integrate a strategy path with fixed mass; returns a StrategyRun with diagnostics.
+            
+            This function simulates a climb trajectory using a specified strategy function.
+            The strategy determines energy allocation between climb rate and speed throughout
+            the climb. Mass is held constant (no fuel burn effects on weight).
+            
+            Args:
+                label: Strategy identifier (e.g., "Linear AF=0.30", "Exp climb AF=0.50", "Constant speed")
+                aero: Aerodynamics wrapper for drag calculations
+                eng: Engine wrapper for thrust and TSFC
+                mass0_kg: Initial aircraft mass [kg] (held constant throughout simulation)
+                h0_m: Starting altitude [m]
+                V0_ms: Starting velocity [m/s]
+                target_alt_m: Target altitude [m]
+                dt: Time step [s]
+                strategy_fn: Strategy function returning (cw, sw) weights
+                altitude_fraction: Strategy parameter (AF value for Linear/Exp, None for Constant)
+                
+            Returns:
+                StrategyRun: Complete trajectory with all diagnostics including altitude, Mach, time,
+                            thrust, drag, fuel consumption, and engine lever positions
+                            
+            Raises:
+                RuntimeError: If strategy fails at first step and cannot create valid trajectory
+            """
             g0 = G_C
 
             # Adjust initial velocity for constant speed and constant Mach strategies
@@ -234,8 +259,7 @@ class ClimbingCore:
                 # For constant strategies, start at 0.5 Mach instead of using V0_ms
                 a = a_from_altitude(h0_m)
                 V0_ms = 0.5 * a  # Set initial velocity to achieve 0.5 Mach
-                initial_mach = V0_ms / a
-                dbg(f"[STRAT] {label}: Using initial velocity {V0_ms:.1f} m/s for {initial_mach:.3f} Mach at {h0_m:.0f}m (a={a:.1f} m/s)")
+                dbg(f"[STRAT] {label}: Using initial velocity {V0_ms:.1f} m/s for {V0_ms/a:.3f} Mach at {h0_m:.0f}m (a={a:.1f} m/s)")
 
             # histories
             h_hist, V_hist, t_hist = [float(h0_m)], [float(V0_ms)], [0.0]
@@ -245,8 +269,11 @@ class ClimbingCore:
             mass_kg = float(mass0_kg)  # FIXED for strategies
 
             while h_hist[-1] < target_alt_m:
-                h = float(h_hist[-1]); V = float(V_hist[-1]); t = float(t_hist[-1])
-                a = a_from_altitude(h); M = V / max(a, 1e-9)
+                h = float(h_hist[-1])
+                V = float(V_hist[-1])
+                t = float(t_hist[-1])
+                a = a_from_altitude(h)
+                M = V / max(a, 1e-9)
                 Mq = float(np.clip(M, M_MIN_DEFAULT, 0.94))
 
                 # Calculate current altitude fraction for strategy functions
@@ -295,7 +322,7 @@ class ClimbingCore:
                         )
                     break
 
-                # Align TSFC at chosen lever
+                # Align engine TSFC state by calling thrust_with_lever (side effect: updates internal TSFC)
                 _ = eng.thrust_with_lever(lv, Mq, h)
                 tsfc = eng.tsfc_current()
                 if (tsfc is None) or (not np.isfinite(tsfc)) or (tsfc < 0):
@@ -312,7 +339,7 @@ class ClimbingCore:
                 V_new = max(V + dv_dt * dt_use, 1.0)
                 t_new = t + dt_use
 
-                burned = (mdot_total * dt_use) if np.isfinite(mdot_total) else 0.0  # diagnostic only
+                burned = (mdot_total * dt_use) if np.isfinite(mdot_total) else 0.0  # Fuel burned in this time step [kg]
 
                 lever_hist.append(lv)
                 Ttot_hist.append(T_per * SystemConfiguration.N_ENGINES)
@@ -324,28 +351,51 @@ class ClimbingCore:
                 cumFuel_hist.append(cumFuel_hist[-1] + burned)
                 limited_hist.append(bool(thrust_limited))
 
-                h_hist.append(h_new); V_hist.append(V_new); t_hist.append(t_new)
+                h_hist.append(h_new)
+                V_hist.append(V_new)
+                t_hist.append(t_new)
                 if h_new >= target_alt_m:
                     break
 
+            # Convert histories to numpy arrays
             alt = np.asarray(h_hist, float)
-            V   = np.asarray(V_hist, float)
-            time= np.asarray(t_hist, float)
+            V = np.asarray(V_hist, float)
+            time = np.asarray(t_hist, float)
+            
             # Calculate Mach with safety check for division by zero
             def safe_mach_calc(hh):
                 a = a_from_altitude(float(hh))
                 return max(a, 1e-6)  # Prevent division by zero
             
             mach = V / np.vectorize(safe_mach_calc)(alt)
-            lever = np.asarray(lever_hist + [lever_hist[-1] if lever_hist else np.nan], float)
-            Ttot  = np.asarray(Ttot_hist + [Ttot_hist[-1] if Ttot_hist else np.nan], float)
-            Darr  = np.asarray(D_hist + [D_hist[-1] if D_hist else np.nan], float)
-            Psarr = np.asarray(Ps_hist + [Ps_hist[-1] if Ps_hist else np.nan], float)
-            mdot  = np.asarray(mdot_hist + [mdot_hist[-1] if mdot_hist else np.nan], float)
+            
+            # Pad arrays to match length of altitude history (all arrays should have same length)
+            base_length = len(h_hist)
+            
+            # Helper function to pad array to base_length
+            def pad_array(arr, pad_value):
+                if len(arr) < base_length:
+                    return np.asarray(arr + [pad_value] * (base_length - len(arr)), float)
+                return np.asarray(arr, float)
+            
+            lever = pad_array(lever_hist, lever_hist[-1] if lever_hist else np.nan)
+            Ttot = pad_array(Ttot_hist, Ttot_hist[-1] if Ttot_hist else np.nan)
+            Darr = pad_array(D_hist, D_hist[-1] if D_hist else np.nan)
+            Psarr = pad_array(Ps_hist, Ps_hist[-1] if Ps_hist else np.nan)
+            mdot = pad_array(mdot_hist, mdot_hist[-1] if mdot_hist else np.nan)
+            
+            # Boolean array padding
+            if len(limited_hist) < base_length:
+                limited = np.asarray(limited_hist + [limited_hist[-1] if limited_hist else False] * (base_length - len(limited_hist)), bool)
+            else:
+                limited = np.asarray(limited_hist, bool)
+            
+            # Prepend initial values for dt and dFuel (these represent changes between points)
             dtarr = np.asarray([0.0] + dt_hist, float)
             dFuel = np.asarray([0.0] + dFuel_hist, float)
-            cumF  = np.asarray(cumFuel_hist, float)
-            limited = np.asarray(limited_hist + [limited_hist[-1] if limited_hist else False], bool)
+            
+            # cumFuel_hist already has correct length (starts with [0.0] and grows with h_hist)
+            cumF = np.asarray(cumFuel_hist, float)
             fuel_total = float(cumF[-1])
 
             return ClimbingCore.EnergyCalculator.StrategyRun(
