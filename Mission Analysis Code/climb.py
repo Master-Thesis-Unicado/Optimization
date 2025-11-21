@@ -78,7 +78,7 @@ class ClimbingCore:
                 class Linear:
                     @staticmethod
                     def profile(altitude, velocity, altitude_fraction):
-                        """Linear climb strategy: cw increases linearly with altitude fraction."""
+                        """This represents the constant energy split throughout the climb"""
                         # altitude_fraction is the AF parameter (e.g., 0.10 for "Linear AF=0.10")
                         # This represents the constant energy split throughout the climb
                         af = float(np.clip(altitude_fraction, 0.0, 1.0))
@@ -90,15 +90,13 @@ class ClimbingCore:
                     @staticmethod
                     def increasing_climb(altitude, velocity, altitude_fraction):
                         """Exponential climb strategy: cw increases exponentially with altitude fraction."""
-                        # altitude_fraction is a tuple: (AF_parameter, current_altitude_fraction)
-                        if isinstance(altitude_fraction, tuple):
-                            af_param, current_af = altitude_fraction
-                            af_param = float(np.clip(af_param, 0.0, 1.0))
-                            current_af = float(np.clip(current_af, 0.0, 1.0))
-                        else:
-                            # Fallback for backward compatibility
-                            af_param = 0.5
-                            current_af = float(np.clip(altitude_fraction, 0.0, 1.0))
+                        # altitude_fraction must be a tuple: (AF_parameter, current_altitude_fraction)
+                        if not isinstance(altitude_fraction, tuple) or len(altitude_fraction) != 2:
+                            raise ValueError(f"altitude_fraction must be a tuple (AF_parameter, current_altitude_fraction), got {type(altitude_fraction)}")
+                        
+                        af_param, current_af = altitude_fraction
+                        af_param = float(np.clip(af_param, 0.0, 1.0))
+                        current_af = float(np.clip(current_af, 0.0, 1.0))
                         
                         min_climb = 0.1  # 10%
                         max_climb = 0.9  # 90%
@@ -119,13 +117,13 @@ class ClimbingCore:
                     @staticmethod
                     def increasing_speed(altitude, velocity, altitude_fraction):
                         """Exponential speed strategy: sw increases exponentially with altitude fraction."""
-                        if isinstance(altitude_fraction, tuple):
-                            af_param, current_af = altitude_fraction
-                            af_param = float(np.clip(af_param, 0.0, 1.0))
-                            current_af = float(np.clip(current_af, 0.0, 1.0))
-                        else:
-                            af_param = 0.5
-                            current_af = float(np.clip(altitude_fraction, 0.0, 1.0))
+                        # altitude_fraction must be a tuple: (AF_parameter, current_altitude_fraction)
+                        if not isinstance(altitude_fraction, tuple) or len(altitude_fraction) != 2:
+                            raise ValueError(f"altitude_fraction must be a tuple (AF_parameter, current_altitude_fraction), got {type(altitude_fraction)}")
+                        
+                        af_param, current_af = altitude_fraction
+                        af_param = float(np.clip(af_param, 0.0, 1.0))
+                        current_af = float(np.clip(current_af, 0.0, 1.0))
                         
 
                         min_speed = 0.1  # 10% speed at start
