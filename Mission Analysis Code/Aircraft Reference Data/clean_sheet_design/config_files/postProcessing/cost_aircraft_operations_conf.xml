@@ -1,0 +1,281 @@
+<module_configuration_file Name="Cost Estimation Runtime Configuration"> 
+        <control_settings description="General control settings for this tool">
+            <aircraft_exchange_file_name description="Specify the name of the exchange file">
+                <value>csmr-2020.xml</value>
+            </aircraft_exchange_file_name>
+            <aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+                <value>../projects/UNICADO/UNICADO-SMR-01/</value>
+            </aircraft_exchange_file_directory>
+            <own_tool_level description="Specify the tool level of this tool">
+                <value>2</value>
+            </own_tool_level>
+            <console_output description="Selector to specify the console output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+                <value>mode_1</value>
+            </console_output>
+            <log_file_output description="Selector to specify the log file output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+                <value>mode_1</value>
+            </log_file_output>
+            <plot_output description="Specify the way plotting shall be handled">
+                <enable description="Switch to enable plotting. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                </enable>
+                <copy_plotting_files description="Switch if plotting files shall be copied. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                </copy_plotting_files>
+                <delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                </delete_plotting_files_from_tool_folder>
+            </plot_output>
+            <report_output description="Switch to generate an HTML report. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </report_output>
+            <tex_report description="Switch to generate a Tex report. Switch: true (On) / false (Off)">
+                <value>false</value>
+            </tex_report>
+            <write_info_files description="Switch to generate info files. Switch: true (On) / false (Off)">
+                <value>false</value>
+            </write_info_files>
+            <log_file description="Specify the name of the log file">
+                <value>cost_aircraft_operations.log</value>
+            </log_file>
+            <inkscape_path description="Path to the inkscape application (DEFAULT: Use inkscape from the UNICADO repo structure)">
+                <value>../../inkscape/</value>
+            </inkscape_path>
+            <gnuplot_path description="Path to the gnuplot application (DEFAULT: Use gnuplot from the UNICADO repo structure)">
+                <value>../../gnuplot/</value>
+            </gnuplot_path>
+            <program_specific_control_settings description="Program specific control settings for this tool">
+                <xml_output description="Switch to export module specific data to XML ('true': On, 'false': Off)">
+                    <value>true</value>
+                </xml_output>
+            </program_specific_control_settings>
+        </control_settings>
+	    <program_settings description="program settings">
+            <configuration ID="tube_and_wing">
+                <fidelity_name description="Select fidelity name (options: empirical, numerical,...).">
+                    <value>empirical</value>
+                </fidelity_name>
+                <method_name description="Select method name (options: cost_estimation_tu_berlin).">
+                    <value>operating_cost_estimation_tu_berlin</value>
+                    <default>operating_cost_estimation_tu_berlin</default>
+                </method_name>
+                <fidelity ID="empirical">
+                    <operating_cost_estimation_tu_berlin description="Empirical method to estimate the direct operating costs (DOC) and indirect operating costs (IOC) of an aircraft.">
+                        <general_direct_operating_costs_parameter>
+                            <exchange_rate description="Exchange rate from EUR to US dollar.">
+                                <value>1.04</value>
+                                <unit>1</unit>
+                                <lower_boundary>0.5</lower_boundary>
+                                <upper_boundary>2.0</upper_boundary>
+                                <default>1.04</default>
+                            </exchange_rate>
+                            <capital description="Capital cost related parameters.">
+                                <depreciation_period description="Depreciation period (assumption for default value: depreciation to 15% residual value in 12 years).">
+                                    <value>12.0</value>
+                                    <unit>a</unit>
+                                    <lower_boundary>8.0</lower_boundary>
+                                    <upper_boundary>20.0</upper_boundary>
+                                    <default>12.0</default>
+                                </depreciation_period>
+                                <price_per_operating_empty_mass description="Price per kg operating empty mass.">
+                                    <value>1245.0</value>
+                                    <unit>EUR/kg</unit>
+                                    <lower_boundary>1000.0</lower_boundary>
+                                    <upper_boundary>2500.0</upper_boundary>
+                                    <default>1245.0</default>
+                                </price_per_operating_empty_mass>
+                                <rate_insurance description="Insurance rate.">
+                                    <value>0.005</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.001</lower_boundary>
+                                    <upper_boundary>0.01</upper_boundary>
+                                    <default>0.005</default>
+                                </rate_insurance>
+                                <rate_interest description="Interest rate.">
+                                    <value>0.05</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.03</lower_boundary>
+                                    <upper_boundary>0.10</upper_boundary>
+                                    <default>0.05</default>
+                                </rate_interest>
+                            </capital>
+                            <flight_cycles description="Flight cycle related parameters.">
+                                <block_time_supplement_per_flight description="Average block time supplement (turn around time) per flight (default: 1.83 h).">
+                                    <value>1.83</value>
+                                    <unit>h</unit>
+                                    <lower_boundary>0.33</lower_boundary>
+                                    <upper_boundary>2.0</upper_boundary>
+                                    <default>1.83</default>
+                                </block_time_supplement_per_flight>
+                                <daily_night_curfew_time description="Night curfew time per day.">
+                                    <value>7.0</value>
+                                    <unit>h</unit>
+                                    <lower_boundary>0.0</lower_boundary>
+                                    <upper_boundary>8.0</upper_boundary>
+                                    <default>7.0</default>
+                                </daily_night_curfew_time>
+                                <annual_lay_hours_overhaul description="Lay days per year for overhaul (5.6 days, D-Check every 5 years a 4 weeks).">
+                                    <value>134.4</value>
+                                    <unit>h</unit>
+                                    <lower_boundary>0.0</lower_boundary>
+                                    <upper_boundary>240.0</upper_boundary>
+                                    <default>134.4</default>
+                                </annual_lay_hours_overhaul>
+                                <annual_lay_hours_reserve description="Lay days per year for repairs, technical and operational reserve (2.6 days, statistical value).">
+                                    <value>62.4</value>
+                                    <unit>h</unit>
+                                    <lower_boundary>0.0</lower_boundary>
+                                    <upper_boundary>360.0</upper_boundary>
+                                    <default>62.4</default>
+                                </annual_lay_hours_reserve>
+                                <annual_lay_hours_maintenance description="Lay days per year for maintenance (3.2 days, C-Check every 15 month a 4 days).">
+                                    <value>76.8</value>
+                                    <unit>h</unit>
+                                    <lower_boundary>0.0</lower_boundary>
+                                    <upper_boundary>960.0</upper_boundary>
+                                    <default>76.8</default>
+                                </annual_lay_hours_maintenance>
+                            </flight_cycles>
+                            <handling description="Handling related parameters.">
+                                <fees_handling description="Handling fees per kg payload.">
+                                    <value>0.1</value>
+                                    <unit>EUR/kg</unit>
+                                    <lower_boundary>0.0</lower_boundary>
+                                    <upper_boundary>0.3</upper_boundary>
+                                    <default>0.1</default>
+                                </fees_handling>
+                            </handling>
+                            <landing description="Landing related parameters.">
+                                <fees_landing description="Landing fees per kg maximum take-off mass.">
+                                    <value>0.01</value>
+                                    <unit>EUR/kg</unit>
+                                    <lower_boundary>0.0</lower_boundary>
+                                    <upper_boundary>0.5</upper_boundary>
+                                    <default>0.01</default>
+                                </fees_landing>
+                            </landing>
+                            <air_traffic_control description="Air traffic control related parameters.">
+                                <air_traffic_control_price_factor_design description="Range dependent ATC price factor for design mission (range dependent: domestic europe 1.0, transatlantic 0.7, far east flights half of landings @ european airports 0.6).">
+                                    <value>1.0</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.6</lower_boundary>
+                                    <upper_boundary>1</upper_boundary>
+                                    <default>1.0</default>
+                                </air_traffic_control_price_factor_design>
+                                <air_traffic_control_price_factor_study description="Range dependent ATC price factor for mission study (range dependent: domestic europe 1.0, transatlantic 0.7, far east flights half of landings @ european airports 0.6).">
+                                    <value>1.0</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.6</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>1.0</default>
+                                </air_traffic_control_price_factor_study>
+                            </air_traffic_control>
+                            <maintenance description="Maintenance related parameters.">
+                                <airframe_repair_costs_per_flight description="Airframe repair costs per flight.">
+                                    <value>57.5</value>
+                                    <unit>EUR</unit>
+                                    <lower_boundary>0.0</lower_boundary>
+                                    <upper_boundary>800.0</upper_boundary>
+                                    <default>57.5</default>
+                                </airframe_repair_costs_per_flight>
+                                <cost_burden description="Cost burden maintenance.">
+                                    <value>10.5</value>
+                                    <unit>EUR</unit>
+                                    <lower_boundary>0.0</lower_boundary>
+                                    <upper_boundary>30.0</upper_boundary>
+                                    <default>10.5</default>
+                                </cost_burden>
+                                <rate_labor description="Labor rate.">
+                                    <value>50.0</value>
+                                    <unit>EUR/h</unit>
+                                    <lower_boundary>0.0</lower_boundary>
+                                    <upper_boundary>250.0</upper_boundary>
+                                    <default>50.0</default>
+                                </rate_labor>
+                            </maintenance>
+                            <related_direct_operating_costs description="Necessary parameters for the calculation of related DOC.">
+                                <revenue_per_freight_km_design description="Revenue per flight kilometer design mission.">
+                                    <value>0.2</value>
+                                    <unit>EUR/kg</unit>
+                                    <lower_boundary>0.0</lower_boundary>
+                                    <upper_boundary>0.4</upper_boundary>
+                                    <default>0.2</default>
+                                </revenue_per_freight_km_design>
+                                <revenue_per_freight_km_study description="Revenue per flight kilometer mission study.">
+                                    <value>0.2</value>
+                                    <unit>EUR/kg</unit>
+                                    <lower_boundary>0.0</lower_boundary>
+                                    <upper_boundary>0.4</upper_boundary>
+                                    <default>0.2</default>
+                                </revenue_per_freight_km_study>
+                            </related_direct_operating_costs>
+                            <miscellaneous description="Miscellaneous parameters.">
+                                <rate_inflation description="Rate of annual inflation (including price and salary increases).">
+                                    <value>0.03</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.0</lower_boundary>
+                                    <upper_boundary>0.15</upper_boundary>
+                                    <default>0.03</default>
+                                </rate_inflation>
+                            </miscellaneous>
+                        </general_direct_operating_costs_parameter>
+                        <fuel_type ID="kerosene">
+                            <factor_engine_maintenance description="Factor for engine maintenance.">
+                                <value>1.0</value>
+                                <unit>1</unit>
+                                <lower_boundary>1.0</lower_boundary>
+                                <upper_boundary>1.0</upper_boundary>
+                                <default>1.0</default>
+                            </factor_engine_maintenance>
+                            <fuel_price description="Average fuel price per kg kerosene.">
+                                <value>0.7</value>
+                                <unit>EUR/kg</unit>
+                                <lower_boundary>0.0</lower_boundary>
+                                <upper_boundary>1.2</upper_boundary>
+                                <default>0.7</default>
+                            </fuel_price>
+                            <ratio_operating_empty_mass description="Ratio of operating empty mass kerosene aircraft to hydrogen aircraft.">
+                                <value>1.0</value>
+                                <unit>1</unit>
+                                <lower_boundary>1.0</lower_boundary>
+                                <upper_boundary>1.0</upper_boundary>
+                                <default>1.0</default>
+                            </ratio_operating_empty_mass>
+                        </fuel_type>
+                        <fuel_type ID="liquid_hydrogen">
+                            <factor_engine_maintenance description="Factor for engine maintenance.">
+                                <value>0.7</value>
+                                <unit>1</unit>
+                                <lower_boundary>0</lower_boundary>
+                                <upper_boundary>inf</upper_boundary>
+                                <default>1</default>
+                            </factor_engine_maintenance>
+                            <fuel_price description="Average fuel price per kg liquid hydrogen.">
+                                <value>9.16</value>
+                                <unit>EUR/kg</unit>
+                                <lower_boundary>0</lower_boundary>
+                                <upper_boundary>inf</upper_boundary>
+                                <default>9.16</default>
+                            </fuel_price>
+                            <ratio_operating_empty_mass description="Ratio of operating empty mass kerosene aircraft to hydrogen aircraft.">
+                                <value>1.1</value>
+                                <unit>EUR</unit>
+                                <lower_boundary>0</lower_boundary>
+                                <upper_boundary>inf</upper_boundary>
+                                <default>1.1</default>
+                            </ratio_operating_empty_mass>
+                        </fuel_type>
+                        <fuel_type ID="gaseous_hydrogen">
+                            <fuel_price description="Average fuel price per kg gaseous hydrogen.">
+                                <value>12.85</value>
+                                <unit>EUR/kg</unit>
+                                <lower_boundary>0</lower_boundary>
+                                <upper_boundary>inf</upper_boundary>
+                                <default>12.85</default>
+                            </fuel_price>
+                        </fuel_type>
+                    </operating_cost_estimation_tu_berlin>
+                </fidelity>
+            </configuration>
+	    </program_settings>
+	</module_configuration_file>

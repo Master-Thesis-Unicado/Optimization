@@ -1,0 +1,363 @@
+*******************************************************************************
+16.10.2025 09:20:24 - Start propulsion_design
+16.10.2025 09:20:24 - [MODULE RUNTIMEINFO] - propulsion_design
+16.10.2025 09:20:24 -    [CONSOLE  ] - [ON]
+16.10.2025 09:20:24 -    [LOG      ] - [ON]
+16.10.2025 09:20:24 -    [PLOT     ] - [OFF]
+16.10.2025 09:20:24 -       [COPY  ] - [ON]
+16.10.2025 09:20:24 -       [DELETE] - [ON]
+16.10.2025 09:20:24 -    [REPORT   ] - [OFF]
+16.10.2025 09:20:24 -    [TEX      ] - [OFF]
+16.10.2025 09:20:24 -    [INFOFILES] - [OFF]
+16.10.2025 09:20:24 -    [GNUPLOT]
+16.10.2025 09:20:24 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:20:24 -       [FILENAME] - 
+16.10.2025 09:20:24 -    [INKSCAPE]
+16.10.2025 09:20:24 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:20:24 -       [FILENAME] - 
+16.10.2025 09:20:24 -    [LOGFILE]
+16.10.2025 09:20:24 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:20:24 -       [FILENAME] - propulsion_design.log
+16.10.2025 09:20:24 -    [IO/ACXML]
+16.10.2025 09:20:24 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:20:24 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:20:24 -    [MODCONFIG]
+16.10.2025 09:20:24 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:20:24 -       [FILENAME] - propulsion_design_conf.xml
+16.10.2025 09:20:24 - Checking directory... [REPORT]
+16.10.2025 09:20:24 - Checking directory... [TEX]
+16.10.2025 09:20:24 - Checking directory... [LOGFILES]
+16.10.2025 09:20:24 - Calculating the propulsors using the thurst-to-weight ratio: 0.32 with a MTOM: 56069.11 kg comes to a total thrust: 175.17 kN
+16.10.2025 09:20:24 - WARNING: No average offtake requirements found in the XML file. Using default values.
+16.10.2025 09:20:24 - Sizing the engine...
+16.10.2025 09:20:24 - Designed engine: PW1127G-JM with thrust =  87.58 kN, mass = 2014.8 kg, scale = 0.73
+16.10.2025 09:20:24 - Sizing the nacelle...
+16.10.2025 09:20:24 - Placing the engine...
+16.10.2025 09:20:24 - Sizing the pylon...
+16.10.2025 09:20:24 - Analyzing the engine mass...
+16.10.2025 09:20:24 - Sizing the engine...
+16.10.2025 09:20:24 - Designed engine: PW1127G-JM with thrust =  87.58 kN, mass = 2014.8 kg, scale = 0.73
+16.10.2025 09:20:24 - Sizing the nacelle...
+16.10.2025 09:20:24 - Placing the engine...
+16.10.2025 09:20:24 - Sizing the pylon...
+16.10.2025 09:20:24 - Analyzing the engine mass...
+16.10.2025 09:20:24 - WARNING: Skipping the report, plots will also not be available!
+16.10.2025 09:20:24 - Checking directory... [ENGINEDATA]
+16.10.2025 09:20:24 - Creating directory... [ENGINEDATA]
+16.10.2025 09:20:24 - Finish propulsion_design
+*******************************************************************************
+16.10.2025 09:20:45 - Start propulsion_design
+16.10.2025 09:20:45 - [MODULE RUNTIMEINFO] - propulsion_design
+16.10.2025 09:20:45 -    [CONSOLE  ] - [ON]
+16.10.2025 09:20:45 -    [LOG      ] - [ON]
+16.10.2025 09:20:45 -    [PLOT     ] - [OFF]
+16.10.2025 09:20:45 -       [COPY  ] - [ON]
+16.10.2025 09:20:45 -       [DELETE] - [ON]
+16.10.2025 09:20:45 -    [REPORT   ] - [OFF]
+16.10.2025 09:20:45 -    [TEX      ] - [OFF]
+16.10.2025 09:20:45 -    [INFOFILES] - [OFF]
+16.10.2025 09:20:45 -    [GNUPLOT]
+16.10.2025 09:20:45 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:20:45 -       [FILENAME] - 
+16.10.2025 09:20:45 -    [INKSCAPE]
+16.10.2025 09:20:45 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:20:45 -       [FILENAME] - 
+16.10.2025 09:20:45 -    [LOGFILE]
+16.10.2025 09:20:45 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:20:45 -       [FILENAME] - propulsion_design.log
+16.10.2025 09:20:45 -    [IO/ACXML]
+16.10.2025 09:20:45 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:20:45 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:20:45 -    [MODCONFIG]
+16.10.2025 09:20:45 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:20:45 -       [FILENAME] - propulsion_design_conf.xml
+16.10.2025 09:20:45 - Checking directory... [REPORT]
+16.10.2025 09:20:45 - Checking directory... [TEX]
+16.10.2025 09:20:45 - Checking directory... [LOGFILES]
+16.10.2025 09:20:45 - Calculating the propulsors using the thurst-to-weight ratio: 0.32 with a MTOM: 68179.24 kg comes to a total thrust: 213.00 kN
+16.10.2025 09:20:45 - Sizing the engine...
+16.10.2025 09:20:45 - Designed engine: PW1127G-JM with thrust = 106.50 kN, mass = 2498.3 kg, scale = 0.88
+16.10.2025 09:20:45 - Sizing the nacelle...
+16.10.2025 09:20:45 - Placing the engine...
+16.10.2025 09:20:45 - Sizing the pylon...
+16.10.2025 09:20:45 - Analyzing the engine mass...
+16.10.2025 09:20:45 - Sizing the engine...
+16.10.2025 09:20:45 - Designed engine: PW1127G-JM with thrust = 106.50 kN, mass = 2498.3 kg, scale = 0.88
+16.10.2025 09:20:45 - Sizing the nacelle...
+16.10.2025 09:20:45 - Placing the engine...
+16.10.2025 09:20:45 - Sizing the pylon...
+16.10.2025 09:20:45 - Analyzing the engine mass...
+16.10.2025 09:20:46 - WARNING: Skipping the report, plots will also not be available!
+16.10.2025 09:20:46 - Finish propulsion_design
+*******************************************************************************
+16.10.2025 09:21:24 - Start propulsion_design
+16.10.2025 09:21:24 - [MODULE RUNTIMEINFO] - propulsion_design
+16.10.2025 09:21:24 -    [CONSOLE  ] - [ON]
+16.10.2025 09:21:24 -    [LOG      ] - [ON]
+16.10.2025 09:21:24 -    [PLOT     ] - [OFF]
+16.10.2025 09:21:24 -       [COPY  ] - [ON]
+16.10.2025 09:21:24 -       [DELETE] - [ON]
+16.10.2025 09:21:24 -    [REPORT   ] - [OFF]
+16.10.2025 09:21:24 -    [TEX      ] - [OFF]
+16.10.2025 09:21:24 -    [INFOFILES] - [OFF]
+16.10.2025 09:21:24 -    [GNUPLOT]
+16.10.2025 09:21:24 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:21:24 -       [FILENAME] - 
+16.10.2025 09:21:24 -    [INKSCAPE]
+16.10.2025 09:21:24 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:21:24 -       [FILENAME] - 
+16.10.2025 09:21:24 -    [LOGFILE]
+16.10.2025 09:21:24 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:24 -       [FILENAME] - propulsion_design.log
+16.10.2025 09:21:24 -    [IO/ACXML]
+16.10.2025 09:21:24 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:21:24 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:21:24 -    [MODCONFIG]
+16.10.2025 09:21:24 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:24 -       [FILENAME] - propulsion_design_conf.xml
+16.10.2025 09:21:24 - Checking directory... [REPORT]
+16.10.2025 09:21:24 - Checking directory... [TEX]
+16.10.2025 09:21:24 - Checking directory... [LOGFILES]
+16.10.2025 09:21:24 - Calculating the propulsors using the thurst-to-weight ratio: 0.32 with a MTOM: 72989.61 kg comes to a total thrust: 228.03 kN
+16.10.2025 09:21:24 - Sizing the engine...
+16.10.2025 09:21:24 - Designed engine: PW1127G-JM with thrust = 114.01 kN, mass = 2692.9 kg, scale = 0.95
+16.10.2025 09:21:24 - Sizing the nacelle...
+16.10.2025 09:21:24 - Placing the engine...
+16.10.2025 09:21:24 - Sizing the pylon...
+16.10.2025 09:21:24 - Analyzing the engine mass...
+16.10.2025 09:21:24 - Sizing the engine...
+16.10.2025 09:21:24 - Designed engine: PW1127G-JM with thrust = 114.01 kN, mass = 2692.9 kg, scale = 0.95
+16.10.2025 09:21:24 - Sizing the nacelle...
+16.10.2025 09:21:24 - Placing the engine...
+16.10.2025 09:21:24 - Sizing the pylon...
+16.10.2025 09:21:24 - Analyzing the engine mass...
+16.10.2025 09:21:24 - WARNING: Skipping the report, plots will also not be available!
+16.10.2025 09:21:24 - Finish propulsion_design
+*******************************************************************************
+16.10.2025 09:21:56 - Start propulsion_design
+16.10.2025 09:21:56 - [MODULE RUNTIMEINFO] - propulsion_design
+16.10.2025 09:21:56 -    [CONSOLE  ] - [ON]
+16.10.2025 09:21:56 -    [LOG      ] - [ON]
+16.10.2025 09:21:56 -    [PLOT     ] - [OFF]
+16.10.2025 09:21:56 -       [COPY  ] - [ON]
+16.10.2025 09:21:56 -       [DELETE] - [ON]
+16.10.2025 09:21:56 -    [REPORT   ] - [OFF]
+16.10.2025 09:21:56 -    [TEX      ] - [OFF]
+16.10.2025 09:21:56 -    [INFOFILES] - [OFF]
+16.10.2025 09:21:56 -    [GNUPLOT]
+16.10.2025 09:21:56 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:21:56 -       [FILENAME] - 
+16.10.2025 09:21:56 -    [INKSCAPE]
+16.10.2025 09:21:56 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:21:56 -       [FILENAME] - 
+16.10.2025 09:21:56 -    [LOGFILE]
+16.10.2025 09:21:56 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:56 -       [FILENAME] - propulsion_design.log
+16.10.2025 09:21:56 -    [IO/ACXML]
+16.10.2025 09:21:56 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:21:56 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:21:56 -    [MODCONFIG]
+16.10.2025 09:21:56 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:56 -       [FILENAME] - propulsion_design_conf.xml
+16.10.2025 09:21:56 - Checking directory... [REPORT]
+16.10.2025 09:21:56 - Checking directory... [TEX]
+16.10.2025 09:21:56 - Checking directory... [LOGFILES]
+16.10.2025 09:21:56 - Calculating the propulsors using the thurst-to-weight ratio: 0.32 with a MTOM: 75114.32 kg comes to a total thrust: 234.67 kN
+16.10.2025 09:21:56 - Sizing the engine...
+16.10.2025 09:21:56 - Designed engine: PW1127G-JM with thrust = 117.33 kN, mass = 2779.3 kg, scale = 0.97
+16.10.2025 09:21:56 - Sizing the nacelle...
+16.10.2025 09:21:56 - Placing the engine...
+16.10.2025 09:21:56 - Sizing the pylon...
+16.10.2025 09:21:56 - Analyzing the engine mass...
+16.10.2025 09:21:56 - Sizing the engine...
+16.10.2025 09:21:56 - Designed engine: PW1127G-JM with thrust = 117.33 kN, mass = 2779.3 kg, scale = 0.97
+16.10.2025 09:21:56 - Sizing the nacelle...
+16.10.2025 09:21:56 - Placing the engine...
+16.10.2025 09:21:56 - Sizing the pylon...
+16.10.2025 09:21:56 - Analyzing the engine mass...
+16.10.2025 09:21:56 - WARNING: Skipping the report, plots will also not be available!
+16.10.2025 09:21:56 - Finish propulsion_design
+*******************************************************************************
+16.10.2025 09:22:38 - Start propulsion_design
+16.10.2025 09:22:38 - [MODULE RUNTIMEINFO] - propulsion_design
+16.10.2025 09:22:38 -    [CONSOLE  ] - [ON]
+16.10.2025 09:22:38 -    [LOG      ] - [ON]
+16.10.2025 09:22:38 -    [PLOT     ] - [OFF]
+16.10.2025 09:22:38 -       [COPY  ] - [ON]
+16.10.2025 09:22:38 -       [DELETE] - [ON]
+16.10.2025 09:22:38 -    [REPORT   ] - [OFF]
+16.10.2025 09:22:38 -    [TEX      ] - [OFF]
+16.10.2025 09:22:38 -    [INFOFILES] - [OFF]
+16.10.2025 09:22:38 -    [GNUPLOT]
+16.10.2025 09:22:38 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:22:38 -       [FILENAME] - 
+16.10.2025 09:22:38 -    [INKSCAPE]
+16.10.2025 09:22:38 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:22:38 -       [FILENAME] - 
+16.10.2025 09:22:38 -    [LOGFILE]
+16.10.2025 09:22:38 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:22:38 -       [FILENAME] - propulsion_design.log
+16.10.2025 09:22:38 -    [IO/ACXML]
+16.10.2025 09:22:38 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:22:38 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:22:38 -    [MODCONFIG]
+16.10.2025 09:22:38 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:22:38 -       [FILENAME] - propulsion_design_conf.xml
+16.10.2025 09:22:38 - Checking directory... [REPORT]
+16.10.2025 09:22:38 - Checking directory... [TEX]
+16.10.2025 09:22:38 - Checking directory... [LOGFILES]
+16.10.2025 09:22:38 - Calculating the propulsors using the thurst-to-weight ratio: 0.32 with a MTOM: 76045.56 kg comes to a total thrust: 237.58 kN
+16.10.2025 09:22:38 - Sizing the engine...
+16.10.2025 09:22:39 - Designed engine: PW1127G-JM with thrust = 118.79 kN, mass = 2817.2 kg, scale = 0.99
+16.10.2025 09:22:39 - Sizing the nacelle...
+16.10.2025 09:22:39 - Placing the engine...
+16.10.2025 09:22:39 - Sizing the pylon...
+16.10.2025 09:22:39 - Analyzing the engine mass...
+16.10.2025 09:22:39 - Sizing the engine...
+16.10.2025 09:22:39 - Designed engine: PW1127G-JM with thrust = 118.79 kN, mass = 2817.2 kg, scale = 0.99
+16.10.2025 09:22:39 - Sizing the nacelle...
+16.10.2025 09:22:39 - Placing the engine...
+16.10.2025 09:22:39 - Sizing the pylon...
+16.10.2025 09:22:39 - Analyzing the engine mass...
+16.10.2025 09:22:39 - WARNING: Skipping the report, plots will also not be available!
+16.10.2025 09:22:39 - Finish propulsion_design
+*******************************************************************************
+16.10.2025 09:23:49 - Start propulsion_design
+16.10.2025 09:23:49 - [MODULE RUNTIMEINFO] - propulsion_design
+16.10.2025 09:23:49 -    [CONSOLE  ] - [ON]
+16.10.2025 09:23:49 -    [LOG      ] - [ON]
+16.10.2025 09:23:49 -    [PLOT     ] - [OFF]
+16.10.2025 09:23:49 -       [COPY  ] - [ON]
+16.10.2025 09:23:49 -       [DELETE] - [ON]
+16.10.2025 09:23:49 -    [REPORT   ] - [OFF]
+16.10.2025 09:23:49 -    [TEX      ] - [OFF]
+16.10.2025 09:23:49 -    [INFOFILES] - [OFF]
+16.10.2025 09:23:49 -    [GNUPLOT]
+16.10.2025 09:23:49 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:23:49 -       [FILENAME] - 
+16.10.2025 09:23:49 -    [INKSCAPE]
+16.10.2025 09:23:49 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:23:49 -       [FILENAME] - 
+16.10.2025 09:23:49 -    [LOGFILE]
+16.10.2025 09:23:49 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:23:49 -       [FILENAME] - propulsion_design.log
+16.10.2025 09:23:49 -    [IO/ACXML]
+16.10.2025 09:23:49 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:23:49 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:23:49 -    [MODCONFIG]
+16.10.2025 09:23:49 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:23:49 -       [FILENAME] - propulsion_design_conf.xml
+16.10.2025 09:23:49 - Checking directory... [REPORT]
+16.10.2025 09:23:49 - Checking directory... [TEX]
+16.10.2025 09:23:49 - Checking directory... [LOGFILES]
+16.10.2025 09:23:49 - Calculating the propulsors using the thurst-to-weight ratio: 0.32 with a MTOM: 76452.75 kg comes to a total thrust: 238.85 kN
+16.10.2025 09:23:49 - Sizing the engine...
+16.10.2025 09:23:49 - Designed engine: PW1127G-JM with thrust = 119.42 kN, mass = 2833.8 kg, scale = 0.99
+16.10.2025 09:23:49 - Sizing the nacelle...
+16.10.2025 09:23:49 - Placing the engine...
+16.10.2025 09:23:49 - Sizing the pylon...
+16.10.2025 09:23:49 - Analyzing the engine mass...
+16.10.2025 09:23:49 - Sizing the engine...
+16.10.2025 09:23:49 - Designed engine: PW1127G-JM with thrust = 119.42 kN, mass = 2833.8 kg, scale = 0.99
+16.10.2025 09:23:49 - Sizing the nacelle...
+16.10.2025 09:23:49 - Placing the engine...
+16.10.2025 09:23:49 - Sizing the pylon...
+16.10.2025 09:23:49 - Analyzing the engine mass...
+16.10.2025 09:23:49 - WARNING: Skipping the report, plots will also not be available!
+16.10.2025 09:23:49 - Finish propulsion_design
+*******************************************************************************
+16.10.2025 09:25:00 - Start propulsion_design
+16.10.2025 09:25:00 - [MODULE RUNTIMEINFO] - propulsion_design
+16.10.2025 09:25:00 -    [CONSOLE  ] - [ON]
+16.10.2025 09:25:00 -    [LOG      ] - [ON]
+16.10.2025 09:25:00 -    [PLOT     ] - [OFF]
+16.10.2025 09:25:00 -       [COPY  ] - [ON]
+16.10.2025 09:25:00 -       [DELETE] - [ON]
+16.10.2025 09:25:00 -    [REPORT   ] - [OFF]
+16.10.2025 09:25:00 -    [TEX      ] - [OFF]
+16.10.2025 09:25:00 -    [INFOFILES] - [OFF]
+16.10.2025 09:25:00 -    [GNUPLOT]
+16.10.2025 09:25:00 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:25:00 -       [FILENAME] - 
+16.10.2025 09:25:00 -    [INKSCAPE]
+16.10.2025 09:25:00 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:25:00 -       [FILENAME] - 
+16.10.2025 09:25:00 -    [LOGFILE]
+16.10.2025 09:25:00 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:25:00 -       [FILENAME] - propulsion_design.log
+16.10.2025 09:25:00 -    [IO/ACXML]
+16.10.2025 09:25:00 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:25:00 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:25:00 -    [MODCONFIG]
+16.10.2025 09:25:00 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:25:00 -       [FILENAME] - propulsion_design_conf.xml
+16.10.2025 09:25:00 - Checking directory... [REPORT]
+16.10.2025 09:25:00 - Checking directory... [TEX]
+16.10.2025 09:25:00 - Checking directory... [LOGFILES]
+16.10.2025 09:25:00 - Calculating the propulsors using the thurst-to-weight ratio: 0.32 with a MTOM: 76630.27 kg comes to a total thrust: 239.40 kN
+16.10.2025 09:25:00 - Sizing the engine...
+16.10.2025 09:25:00 - Designed engine: PW1127G-JM with thrust = 119.70 kN, mass = 2841.0 kg, scale = 0.99
+16.10.2025 09:25:00 - Sizing the nacelle...
+16.10.2025 09:25:00 - Placing the engine...
+16.10.2025 09:25:00 - Sizing the pylon...
+16.10.2025 09:25:00 - Analyzing the engine mass...
+16.10.2025 09:25:00 - Sizing the engine...
+16.10.2025 09:25:01 - Designed engine: PW1127G-JM with thrust = 119.70 kN, mass = 2841.0 kg, scale = 0.99
+16.10.2025 09:25:01 - Sizing the nacelle...
+16.10.2025 09:25:01 - Placing the engine...
+16.10.2025 09:25:01 - Sizing the pylon...
+16.10.2025 09:25:01 - Analyzing the engine mass...
+16.10.2025 09:25:01 - WARNING: Skipping the report, plots will also not be available!
+16.10.2025 09:25:01 - Finish propulsion_design
+*******************************************************************************
+16.10.2025 09:26:16 - Start propulsion_design
+16.10.2025 09:26:17 - [MODULE RUNTIMEINFO] - propulsion_design
+16.10.2025 09:26:17 -    [CONSOLE  ] - [ON]
+16.10.2025 09:26:17 -    [LOG      ] - [ON]
+16.10.2025 09:26:17 -    [PLOT     ] - [ON]
+16.10.2025 09:26:17 -       [COPY  ] - [ON]
+16.10.2025 09:26:17 -       [DELETE] - [ON]
+16.10.2025 09:26:17 -    [REPORT   ] - [ON]
+16.10.2025 09:26:17 -    [TEX      ] - [ON]
+16.10.2025 09:26:17 -    [INFOFILES] - [OFF]
+16.10.2025 09:26:17 -    [GNUPLOT]
+16.10.2025 09:26:17 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:26:17 -       [FILENAME] - 
+16.10.2025 09:26:17 -    [INKSCAPE]
+16.10.2025 09:26:17 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:26:17 -       [FILENAME] - 
+16.10.2025 09:26:17 -    [LOGFILE]
+16.10.2025 09:26:17 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:26:17 -       [FILENAME] - propulsion_design.log
+16.10.2025 09:26:17 -    [IO/ACXML]
+16.10.2025 09:26:17 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:26:17 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:26:17 -    [MODCONFIG]
+16.10.2025 09:26:17 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:26:17 -       [FILENAME] - propulsion_design_conf.xml
+16.10.2025 09:26:17 - Checking directory... [REPORT]
+16.10.2025 09:26:17 - Checking directory... [TEX]
+16.10.2025 09:26:17 - Checking directory... [HTML]
+16.10.2025 09:26:17 - Checking directory... [PLOT]
+16.10.2025 09:26:17 - Checking directory... [CSVFILES]
+16.10.2025 09:26:17 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:26:17 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:26:17 - Checking directory... [PLOTFILES]
+16.10.2025 09:26:17 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:26:17 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:26:17 - Checking directory... [LOGFILES]
+16.10.2025 09:26:17 - Calculating the propulsors using the thurst-to-weight ratio: 0.32 with a MTOM: 76630.27 kg comes to a total thrust: 239.40 kN
+16.10.2025 09:26:17 - Sizing the engine...
+16.10.2025 09:26:17 - Designed engine: PW1127G-JM with thrust = 119.70 kN, mass = 2841.0 kg, scale = 0.99
+16.10.2025 09:26:17 - Sizing the nacelle...
+16.10.2025 09:26:17 - Placing the engine...
+16.10.2025 09:26:17 - Sizing the pylon...
+16.10.2025 09:26:17 - Analyzing the engine mass...
+16.10.2025 09:26:17 - Sizing the engine...
+16.10.2025 09:26:17 - Designed engine: PW1127G-JM with thrust = 119.70 kN, mass = 2841.0 kg, scale = 0.99
+16.10.2025 09:26:17 - Sizing the nacelle...
+16.10.2025 09:26:17 - Placing the engine...
+16.10.2025 09:26:17 - Sizing the pylon...
+16.10.2025 09:26:17 - Analyzing the engine mass...
+16.10.2025 09:26:18 - CSS code written to style.css successfully.
+16.10.2025 09:26:18 - Finish propulsion_design

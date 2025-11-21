@@ -1,0 +1,86 @@
+<module_configuration_file name="assessment_manager_conf.xml">
+    <control_settings description="General control settings for this tool">
+		<aircraft_exchange_file_name description="Specify the name of the exchange file">
+			<value>UNICADO-SMR-180-TF.xml</value>
+		</aircraft_exchange_file_name>
+		<aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+			<value>../projects/UNICADO/UNICADO-SMR-01/</value>
+		</aircraft_exchange_file_directory>
+		<own_tool_level description="Specify the tool level of this tool">
+			<value>1</value>
+		</own_tool_level>
+		<console_output description="Selector to specify the console output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+			<value>mode_1</value>
+		</console_output>
+		<log_file_output description="Selector to specify the log file output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+			<value>mode_1</value>
+		</log_file_output>
+		<plot_output description="Specify the way plotting shall be handled">
+			<enable description="Switch to enable plotting. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</enable>
+			<copy_plotting_files description="Switch if plotting files shall be copied. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</copy_plotting_files>
+			<delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</delete_plotting_files_from_tool_folder>
+		</plot_output>
+        <report_output description="Switch to generate an HTML report. Switch: true (On) / false (Off)">
+			<value>true</value>
+		</report_output>
+        <tex_report description="Switch to generate a Tex report. Switch: true (On) / false (Off)">
+			<value>false</value>
+		</tex_report>
+        <write_info_files description="Switch to generate info files. Switch: true (On) / false (Off)">
+			<value>false</value>
+		</write_info_files>
+		<log_file description="Specify the name of the log file">
+			<value>assessment_manager.log</value>
+		</log_file>
+		<inkscape_path description="Path to the inkscape application ('DEFAULT': Use inkscape from the UNICADO repo structure)">
+			<value>../inkscape/</value>
+		</inkscape_path>
+		<gnuplot_path description="Path to the gnuplot application ('DEFAULT': Use gnuplot from the UNICADO repo structure)">
+			<value>../gnuplot/</value>
+		</gnuplot_path>
+    </control_settings>
+	<program_settings>
+        <enable_emission_inventory description="Settings to enable emission inventory calculation per phase - specific parameter acc. to emission config xmls.">
+            <aircraft_development description="Switch to enable aircraft development inventory. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </aircraft_development>
+            <aircraft_production description="Switch to enable aircraft production inventory. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </aircraft_production>
+			<aircraft_operations description="Switch to enable aircraft operations inventory. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </aircraft_operations>
+            <aircraft_maintenance description="Switch to enable aircraft maintenance inventory. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </aircraft_maintenance>
+            <aircraft_end_of_life description="Switch to enable aircraft end of life inventory. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </aircraft_end_of_life>	
+            <aircraft_testing description="Switch to enable aircraft testing inventory. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </aircraft_testing>
+            <energy_carrier_production description="Switch to enable energy carrier production inventory. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </energy_carrier_production>
+		</enable_emission_inventory>
+        <enable_cost_inventory description="Settings to enable cost inventory calculation per phase - specific parameter acc. to emission config xml.">
+            <aircraft_operations description="Switch to enable aircraft operations inventory. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </aircraft_operations>
+        </enable_cost_inventory>
+        <enable_evaluation description="Settings to enable evaluation calculation - specific parameter acc. to evaluation config xml.">
+            <air_quality_index description="Switch to enable the air quality index evaluation. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </air_quality_index>
+            <climate_model description="Switch to enable the climate model evaluation. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </climate_model>
+        </enable_evaluation>
+	</program_settings>
+</module_configuration_file>

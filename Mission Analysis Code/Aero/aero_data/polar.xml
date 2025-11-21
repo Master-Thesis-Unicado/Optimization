@@ -1,0 +1,2629 @@
+<polar-exchange-file version="1.0">
+    <components>
+        <component ID="main_wing">
+            <area description="-">
+                <value>124.020829</value>
+            </area>
+            <chord description="-">
+                <value>4.315319</value>
+            </chord>
+            <reference_point description="-">
+                <value>12.423654;0.000000;-1.233072</value>
+            </reference_point>
+            <configurations>
+                <configuration ID="clean">
+                    <polars>
+                        <polar ID="1">
+                            <machnumber description="-">
+                                <value>0.600000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>6000.456848</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00594379;0.00455003;0.0103682;0.0193044</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00454971;0.00454971;0.00454971;0.00454971</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00313962;0.00313962;0.00313962;0.00313962</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00141008;0.00141008;0.00141008;0.00141008</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.251738;0.00373595;0.517024;0.823948</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.277382;-0.00574715;-0.581065;-0.926197</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="2">
+                            <machnumber description="-">
+                                <value>0.500000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>7326.910661</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00484751;0.00345374;0.00927194;0.0182081</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00345342;0.00345342;0.00345342;0.00345342</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00333049;0.00333049;0.00333049;0.00333049</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.000122935;0.000122935;0.000122935;0.000122935</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.232545;0.00345112;0.477607;0.761131</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.256234;-0.00530899;-0.536765;-0.855584</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="3">
+                            <machnumber description="-">
+                                <value>0.600000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12002.041992</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00649667;0.0051029;0.0109211;0.0198573</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00510258;0.00510258;0.00510258;0.00510258</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.0036925;0.0036925;0.0036925;0.0036925</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00141008;0.00141008;0.00141008;0.00141008</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.251738;0.00373595;0.517024;0.823948</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.277382;-0.00574715;-0.581065;-0.926197</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="4">
+                            <machnumber description="-">
+                                <value>0.667000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>6006.050330</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00809251;0.00669874;0.0125169;0.0214531</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00669842;0.00669842;0.00669842;0.00669842</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00310655;0.00310655;0.00310655;0.00310655</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00359187;0.00359187;0.00359187;0.00359187</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.270301;0.00401145;0.555151;0.884708</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.297837;-0.00617096;-0.623914;-0.994497</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="5">
+                            <machnumber description="-">
+                                <value>0.667000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>9006.157850</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0083273;0.00693353;0.0127517;0.0216879</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00693321;0.00693321;0.00693321;0.00693321</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00334133;0.00334133;0.00334133;0.00334133</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00359187;0.00359187;0.00359187;0.00359187</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.270301;0.00401145;0.555151;0.884708</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.297837;-0.00617096;-0.623914;-0.994497</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="6">
+                            <machnumber description="-">
+                                <value>0.667000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12005.212064</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00863735;0.00724358;0.0130618;0.0219979</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00724326;0.00724326;0.00724326;0.00724326</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00365138;0.00365138;0.00365138;0.00365138</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00359187;0.00359187;0.00359187;0.00359187</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.270301;0.00401145;0.555151;0.884708</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.297837;-0.00617096;-0.623914;-0.994497</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="7">
+                            <machnumber description="-">
+                                <value>0.733000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>5996.380449</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0120139;0.0106201;0.0164384;0.0253745</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0106198;0.0106198;0.0106198;0.0106198</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00309472;0.00309472;0.00309472;0.00309472</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00752511;0.00752511;0.00752511;0.00752511</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.296062;0.00439376;0.608059;0.969025</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.326222;-0.00675908;-0.683376;-1.08928</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="8">
+                            <machnumber description="-">
+                                <value>0.733000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>8997.450452</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0122471;0.0108533;0.0166715;0.0256077</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.010853;0.010853;0.010853;0.010853</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00332788;0.00332788;0.00332788;0.00332788</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00752511;0.00752511;0.00752511;0.00752511</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.296062;0.00439376;0.608059;0.969025</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.326222;-0.00675908;-0.683376;-1.08928</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="9">
+                            <machnumber description="-">
+                                <value>0.733000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>11999.158733</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0125548;0.011161;0.0169792;0.0259154</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0111607;0.0111607;0.0111607;0.0111607</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00363561;0.00363561;0.00363561;0.00363561</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00752511;0.00752511;0.00752511;0.00752511</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.296062;0.00439376;0.608059;0.969025</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.326222;-0.00675908;-0.683376;-1.08928</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="10">
+                            <machnumber description="-">
+                                <value>0.800000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>6002.310877</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0192326;0.0178388;0.023657;0.0325932</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0178385;0.0178385;0.0178385;0.0178385</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00311443;0.00311443;0.00311443;0.00311443</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.0147241;0.0147241;0.0147241;0.0147241</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.33565;0.00498127;0.689366;1.0986</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.369843;-0.00766286;-0.774753;-1.23493</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="11">
+                            <machnumber description="-">
+                                <value>0.800000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>9001.429063</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0194664;0.0180727;0.0238909;0.032827</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0180724;0.0180724;0.0180724;0.0180724</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00334826;0.00334826;0.00334826;0.00334826</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.0147241;0.0147241;0.0147241;0.0147241</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.33565;0.00498127;0.689366;1.0986</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.369843;-0.00766286;-0.774753;-1.23493</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="12">
+                            <machnumber description="-">
+                                <value>0.800000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12002.041992</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0197751;0.0183813;0.0241995;0.0331357</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.018381;0.018381;0.018381;0.018381</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00365689;0.00365689;0.00365689;0.00365689</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.0147241;0.0147241;0.0147241;0.0147241</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.33565;0.00498127;0.689366;1.0986</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.369843;-0.00766286;-0.774753;-1.23493</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="13">
+                            <machnumber description="-">
+                                <value>0.001000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>-1.135525</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0151166;0.0137228;0.019541;0.0284772</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0137225;0.0137225;0.0137225;0.0137225</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.0137225;0.0137225;0.0137225;0.0137225</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.20139;0.00298876;0.41362;0.659159</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.221906;-0.00459772;-0.464852;-0.740958</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="14">
+                            <machnumber description="-">
+                                <value>0.001000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>15001.977918</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.025728;0.0243342;0.0301524;0.0390886</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0243339;0.0243339;0.0243339;0.0243339</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.0243339;0.0243339;0.0243339;0.0243339</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.20139;0.00298876;0.41362;0.659159</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.221906;-0.00459772;-0.464852;-0.740958</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="15">
+                            <machnumber description="-">
+                                <value>0.950000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>1.381535</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0411722;0.0397784;0.0455966;0.0545328</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0397781;0.0397781;0.0397781;0.0397781</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00314388;0.00314388;0.00314388;0.00314388</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.0366342;0.0366342;0.0366342;0.0366342</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.644964;0.00957169;1.32464;2.111</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.710666;-0.0147245;-1.48872;-2.37296</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="16">
+                            <machnumber description="-">
+                                <value>0.950000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>15002.060970</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0426986;0.0413048;0.047123;0.0560592</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0413045;0.0413045;0.0413045;0.0413045</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00467029;0.00467029;0.00467029;0.00467029</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.0366342;0.0366342;0.0366342;0.0366342</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.644964;0.00957169;1.32464;2.111</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.710666;-0.0147245;-1.48872;-2.37296</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="17">
+                            <machnumber description="-">
+                                <value>0.200000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>2998.737578</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00503764;0.00364388;0.00946208;0.0183982</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00364356;0.00364356;0.00364356;0.00364356</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00364356;0.00364356;0.00364356;0.00364356</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.205543;0.00305039;0.422149;0.672751</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.226481;-0.00469253;-0.474437;-0.756237</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="18">
+                            <machnumber description="-">
+                                <value>0.200000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12002.041992</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00602179;0.00462803;0.0104462;0.0193824</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00462771;0.00462771;0.00462771;0.00462771</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00462771;0.00462771;0.00462771;0.00462771</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.205543;0.00305039;0.422149;0.672751</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.226481;-0.00469253;-0.474437;-0.756237</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="19">
+                            <machnumber description="-">
+                                <value>0.400000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>4500.356158</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00464186;0.00324809;0.0090663;0.0180025</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00324777;0.00324777;0.00324777;0.00324777</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00324777;0.00324777;0.00324777;0.00324777</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.219735;0.003261;0.451296;0.719201</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.242119;-0.00501652;-0.507195;-0.808451</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="20">
+                            <machnumber description="-">
+                                <value>0.500000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>13501.286634</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00553242;0.00413866;0.00995686;0.018893</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00413834;0.00413834;0.00413834;0.00413834</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00139409;3.19302e-07;0.00581852;0.0147547</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.0040154;0.0040154;0.0040154;0.0040154</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.000122935;0.000122935;0.000122935;0.000122935</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.232545;0.00345112;0.477607;0.761131</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.256234;-0.00530899;-0.536765;-0.855584</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                    </polars>
+                </configuration>
+            </configurations>
+        </component>
+        <component ID="vertical_stabiliser">
+            <area description="-">
+                <value>29.913451</value>
+            </area>
+            <chord description="-">
+                <value>4.413985</value>
+            </chord>
+            <reference_point description="-">
+                <value>29.518876;0.000000;0.924292</value>
+            </reference_point>
+            <configurations>
+                <configuration ID="clean">
+                    <polars>
+                        <polar ID="1">
+                            <machnumber description="-">
+                                <value>0.600000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>6000.456848</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00328088;0.0013196;0.0091498;0.0212856</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0013196;0.0013196;0.0013196;0.0013196</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.0013196;0.0013196;0.0013196;0.0013196</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="2">
+                            <machnumber description="-">
+                                <value>0.500000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>7326.910661</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00337909;0.00141781;0.00924801;0.0213838</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00141781;0.00141781;0.00141781;0.00141781</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00141781;0.00141781;0.00141781;0.00141781</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="3">
+                            <machnumber description="-">
+                                <value>0.600000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12002.041992</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00351264;0.00155136;0.00938156;0.0215174</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00155136;0.00155136;0.00155136;0.00155136</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00155136;0.00155136;0.00155136;0.00155136</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="4">
+                            <machnumber description="-">
+                                <value>0.667000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>6006.050330</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00326852;0.00130724;0.00913744;0.0212733</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00130724;0.00130724;0.00130724;0.00130724</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00128985;0.00128985;0.00128985;0.00128985</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>1.73915e-05;1.73915e-05;1.73915e-05;1.73915e-05</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="5">
+                            <machnumber description="-">
+                                <value>0.667000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>9006.157850</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00336578;0.0014045;0.0092347;0.0213705</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0014045;0.0014045;0.0014045;0.0014045</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00138711;0.00138711;0.00138711;0.00138711</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>1.73915e-05;1.73915e-05;1.73915e-05;1.73915e-05</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="6">
+                            <machnumber description="-">
+                                <value>0.667000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12005.212064</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00349417;0.00153289;0.00936308;0.0214989</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00153289;0.00153289;0.00153289;0.00153289</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00151549;0.00151549;0.00151549;0.00151549</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>1.73915e-05;1.73915e-05;1.73915e-05;1.73915e-05</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="7">
+                            <machnumber description="-">
+                                <value>0.733000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>5996.380449</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00331952;0.00135824;0.00918843;0.0213242</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00135824;0.00135824;0.00135824;0.00135824</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00126384;0.00126384;0.00126384;0.00126384</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>9.43938e-05;9.43938e-05;9.43938e-05;9.43938e-05</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="8">
+                            <machnumber description="-">
+                                <value>0.733000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>8997.450452</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00341453;0.00145324;0.00928344;0.0214193</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00145324;0.00145324;0.00145324;0.00145324</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00135885;0.00135885;0.00135885;0.00135885</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>9.43938e-05;9.43938e-05;9.43938e-05;9.43938e-05</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="9">
+                            <machnumber description="-">
+                                <value>0.733000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>11999.158733</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00353988;0.0015786;0.00940879;0.0215446</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0015786;0.0015786;0.0015786;0.0015786</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.0014842;0.0014842;0.0014842;0.0014842</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>9.43938e-05;9.43938e-05;9.43938e-05;9.43938e-05</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="10">
+                            <machnumber description="-">
+                                <value>0.800000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>6002.310877</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00354029;0.00157901;0.0094092;0.021545</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00157901;0.00157901;0.00157901;0.00157901</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00124101;0.00124101;0.00124101;0.00124101</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.000337996;0.000337996;0.000337996;0.000337996</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="11">
+                            <machnumber description="-">
+                                <value>0.800000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>9001.429063</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00363327;0.00167199;0.00950218;0.021638</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00167199;0.00167199;0.00167199;0.00167199</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00133399;0.00133399;0.00133399;0.00133399</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.000337996;0.000337996;0.000337996;0.000337996</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="12">
+                            <machnumber description="-">
+                                <value>0.800000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12002.041992</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00375596;0.00179468;0.00962487;0.0217607</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00179468;0.00179468;0.00179468;0.00179468</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00145668;0.00145668;0.00145668;0.00145668</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.000337996;0.000337996;0.000337996;0.000337996</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="13">
+                            <machnumber description="-">
+                                <value>0.001000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>-1.135525</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00789575;0.00593447;0.0137647;0.0259005</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00593447;0.00593447;0.00593447;0.00593447</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00593447;0.00593447;0.00593447;0.00593447</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="14">
+                            <machnumber description="-">
+                                <value>0.001000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>15001.977918</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0124547;0.0104935;0.0183237;0.0304595</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0104935;0.0104935;0.0104935;0.0104935</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.0104935;0.0104935;0.0104935;0.0104935</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="15">
+                            <machnumber description="-">
+                                <value>0.950000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>1.381535</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0043394;0.00237812;0.0102083;0.0223441</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00237812;0.00237812;0.00237812;0.00237812</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00105499;0.00105499;0.00105499;0.00105499</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00132314;0.00132314;0.00132314;0.00132314</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="16">
+                            <machnumber description="-">
+                                <value>0.950000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>15002.060970</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00485119;0.00288991;0.0107201;0.0228559</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00288991;0.00288991;0.00288991;0.00288991</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00156677;0.00156677;0.00156677;0.00156677</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00132314;0.00132314;0.00132314;0.00132314</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="17">
+                            <machnumber description="-">
+                                <value>0.200000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>2998.737578</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00354109;0.00157981;0.00941001;0.0215458</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00157981;0.00157981;0.00157981;0.00157981</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00157981;0.00157981;0.00157981;0.00157981</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="18">
+                            <machnumber description="-">
+                                <value>0.200000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12002.041992</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00396634;0.00200506;0.00983525;0.0219711</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00200506;0.00200506;0.00200506;0.00200506</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00200506;0.00200506;0.00200506;0.00200506</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="19">
+                            <machnumber description="-">
+                                <value>0.400000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>4500.356158</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00335613;0.00139485;0.00922505;0.0213609</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00139485;0.00139485;0.00139485;0.00139485</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00139485;0.00139485;0.00139485;0.00139485</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="20">
+                            <machnumber description="-">
+                                <value>0.500000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>13501.286634</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00366981;0.00170853;0.00953872;0.0216745</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00170853;0.00170853;0.00170853;0.00170853</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.00196128;0;0.0078302;0.019966</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00170853;0.00170853;0.00170853;0.00170853</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0;0;0;0</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                    </polars>
+                </configuration>
+            </configurations>
+        </component>
+        <component ID="horizontal_stabiliser">
+            <area description="-">
+                <value>26.198930</value>
+            </area>
+            <chord description="-">
+                <value>2.519384</value>
+            </chord>
+            <reference_point description="-">
+                <value>32.733098;0.000000;0.223701</value>
+            </reference_point>
+            <configurations>
+                <configuration ID="clean">
+                    <polars>
+                        <polar ID="1">
+                            <machnumber description="-">
+                                <value>0.600000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>6000.456848</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00475483;0.00284684;0.0104643;0.0222704</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00284684;0.00284684;0.00284684;0.00284684</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.0027663;0.0027663;0.0027663;0.0027663</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>8.05375e-05;8.05375e-05;8.05375e-05;8.05375e-05</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.216095;0;0.43216;0.688704</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.1923;0;-0.38734;-0.617594</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="2">
+                            <machnumber description="-">
+                                <value>0.500000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>7326.910661</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00487423;0.00296624;0.0105837;0.0223898</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00296624;0.00296624;0.00296624;0.00296624</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00296624;0.00296624;0.00296624;0.00296624</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.19962;0;0.399213;0.636197</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.177639;0;-0.357809;-0.570509</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="3">
+                            <machnumber description="-">
+                                <value>0.600000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12002.041992</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00524068;0.00333268;0.0109501;0.0227562</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00333268;0.00333268;0.00333268;0.00333268</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00325214;0.00325214;0.00325214;0.00325214</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>8.05375e-05;8.05375e-05;8.05375e-05;8.05375e-05</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.216095;0;0.43216;0.688704</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.1923;0;-0.38734;-0.617594</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="4">
+                            <machnumber description="-">
+                                <value>0.667000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>6006.050330</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00502016;0.00311217;0.0107296;0.0225357</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00311217;0.00311217;0.00311217;0.00311217</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.0027085;0.0027085;0.0027085;0.0027085</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.000403668;0.000403668;0.000403668;0.000403668</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.23203;0;0.464029;0.73949</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.20648;0;-0.415903;-0.663137</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="5">
+                            <machnumber description="-">
+                                <value>0.667000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>9006.157850</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00522439;0.0033164;0.0109339;0.0227399</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0033164;0.0033164;0.0033164;0.0033164</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00291273;0.00291273;0.00291273;0.00291273</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.000403668;0.000403668;0.000403668;0.000403668</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.23203;0;0.464029;0.73949</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.20648;0;-0.415903;-0.663137</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="6">
+                            <machnumber description="-">
+                                <value>0.667000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12005.212064</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00549398;0.00358599;0.0112034;0.0230095</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00358599;0.00358599;0.00358599;0.00358599</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00318232;0.00318232;0.00318232;0.00318232</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.000403668;0.000403668;0.000403668;0.000403668</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.23203;0;0.464029;0.73949</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.20648;0;-0.415903;-0.663137</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="7">
+                            <machnumber description="-">
+                                <value>0.733000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>5996.380449</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00613315;0.00422516;0.0118426;0.0236487</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00422516;0.00422516;0.00422516;0.00422516</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00265919;0.00265919;0.00265919;0.00265919</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00156597;0.00156597;0.00156597;0.00156597</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.254144;0;0.508253;0.809967</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.226159;0;-0.455541;-0.726337</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="8">
+                            <machnumber description="-">
+                                <value>0.733000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>8997.450452</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00633305;0.00442506;0.0120425;0.0238486</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00442506;0.00442506;0.00442506;0.00442506</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00285909;0.00285909;0.00285909;0.00285909</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00156597;0.00156597;0.00156597;0.00156597</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.254144;0;0.508253;0.809967</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.226159;0;-0.455541;-0.726337</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="9">
+                            <machnumber description="-">
+                                <value>0.733000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>11999.158733</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0065968;0.0046888;0.0123063;0.0241124</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0046888;0.0046888;0.0046888;0.0046888</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00312284;0.00312284;0.00312284;0.00312284</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00156597;0.00156597;0.00156597;0.00156597</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.254144;0;0.508253;0.809967</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.226159;0;-0.455541;-0.726337</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="10">
+                            <machnumber description="-">
+                                <value>0.800000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>6002.310877</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00762962;0.00572163;0.0133391;0.0251452</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00572163;0.00572163;0.00572163;0.00572163</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00261753;0.00261753;0.00261753;0.00261753</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00310409;0.00310409;0.00310409;0.00310409</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.288126;0;0.576214;0.918272</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.2564;0;-0.516453;-0.823459</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="11">
+                            <machnumber description="-">
+                                <value>0.800000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>9001.429063</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00782574;0.00591774;0.0135352;0.0253413</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00591774;0.00591774;0.00591774;0.00591774</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00281365;0.00281365;0.00281365;0.00281365</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00310409;0.00310409;0.00310409;0.00310409</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.288126;0;0.576214;0.918272</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.2564;0;-0.516453;-0.823459</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="12">
+                            <machnumber description="-">
+                                <value>0.800000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12002.041992</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00808451;0.00617652;0.013794;0.0256001</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00617652;0.00617652;0.00617652;0.00617652</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00307242;0.00307242;0.00307242;0.00307242</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.00310409;0.00310409;0.00310409;0.00310409</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.288126;0;0.576214;0.918272</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.2564;0;-0.516453;-0.823459</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="13">
+                            <machnumber description="-">
+                                <value>0.001000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>-1.135525</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0142751;0.0123671;0.0199846;0.0317907</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0123671;0.0123671;0.0123671;0.0123671</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.0123671;0.0123671;0.0123671;0.0123671</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.172876;0;0.345728;0.550963</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.15384;0;-0.309872;-0.494076</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="14">
+                            <machnumber description="-">
+                                <value>0.001000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>15001.977918</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0237758;0.0218679;0.0294853;0.0412914</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0218679;0.0218679;0.0218679;0.0218679</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.0218679;0.0218679;0.0218679;0.0218679</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.172876;0;0.345728;0.550963</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.15384;0;-0.309872;-0.494076</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="15">
+                            <machnumber description="-">
+                                <value>0.950000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>1.381535</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0143837;0.0124757;0.0200931;0.0318992</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0124757;0.0124757;0.0124757;0.0124757</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00224214;0.00224214;0.00224214;0.00224214</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.0102335;0.0102335;0.0102335;0.0102335</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.553646;0;1.10722;1.76449</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.492682;0;-0.992384;-1.58231</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="16">
+                            <machnumber description="-">
+                                <value>0.950000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>15002.060970</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0154714;0.0135634;0.0211808;0.0329869</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0135634;0.0135634;0.0135634;0.0135634</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00332982;0.00332982;0.00332982;0.00332982</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0.0102335;0.0102335;0.0102335;0.0102335</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.553646;0;1.10722;1.76449</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.492682;0;-0.992384;-1.58231</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="17">
+                            <machnumber description="-">
+                                <value>0.200000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>2998.737578</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00520213;0.00329414;0.0109116;0.0227177</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00329414;0.00329414;0.00329414;0.00329414</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00329414;0.00329414;0.00329414;0.00329414</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.176441;0;0.352857;0.562324</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.157012;0;-0.316261;-0.504264</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="18">
+                            <machnumber description="-">
+                                <value>0.200000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12002.041992</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00608883;0.00418084;0.0117983;0.0236044</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00418084;0.00418084;0.00418084;0.00418084</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00418084;0.00418084;0.00418084;0.00418084</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.176441;0;0.352857;0.562324</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.157012;0;-0.316261;-0.504264</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="19">
+                            <machnumber description="-">
+                                <value>0.400000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>4500.356158</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00482182;0.00291382;0.0105313;0.0223374</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00291382;0.00291382;0.00291382;0.00291382</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00291382;0.00291382;0.00291382;0.00291382</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.188623;0;0.37722;0.60115</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.167853;0;-0.338098;-0.539081</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="20">
+                            <machnumber description="-">
+                                <value>0.500000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>13501.286634</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00548244;0.00357445;0.0111919;0.022998</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00357445;0.00357445;0.00357445;0.00357445</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0.001908;0;0.00761746;0.0194236</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00357445;0.00357445;0.00357445;0.00357445</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>-0.19962;0;0.399213;0.636197</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>0.177639;0;-0.357809;-0.570509</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                    </polars>
+                </configuration>
+            </configurations>
+        </component>
+        <component ID="fuselage_0">
+            <area description="-">
+                <value>164.505526</value>
+            </area>
+            <length description="-">
+                <value>37.291183</value>
+            </length>
+            <configurations>
+                <configuration ID="clean">
+                    <polars>
+                        <polar ID="1">
+                            <machnumber description="-">
+                                <value>0.600000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>6000.456848</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00267393;0.00267393;0.00267393;0.00267393</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00267393;0.00267393;0.00267393;0.00267393</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00267393;0.00267393;0.00267393;0.00267393</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="2">
+                            <machnumber description="-">
+                                <value>0.500000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>7326.910661</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00287632;0.00287632;0.00287632;0.00287632</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00287632;0.00287632;0.00287632;0.00287632</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00287632;0.00287632;0.00287632;0.00287632</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="3">
+                            <machnumber description="-">
+                                <value>0.600000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12002.041992</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00314355;0.00314355;0.00314355;0.00314355</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00314355;0.00314355;0.00314355;0.00314355</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00314355;0.00314355;0.00314355;0.00314355</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="4">
+                            <machnumber description="-">
+                                <value>0.667000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>6006.050330</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00261117;0.00261117;0.00261117;0.00261117</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00261117;0.00261117;0.00261117;0.00261117</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00261117;0.00261117;0.00261117;0.00261117</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="5">
+                            <machnumber description="-">
+                                <value>0.667000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>9006.157850</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00280806;0.00280806;0.00280806;0.00280806</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00280806;0.00280806;0.00280806;0.00280806</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00280806;0.00280806;0.00280806;0.00280806</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="6">
+                            <machnumber description="-">
+                                <value>0.667000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12005.212064</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00306796;0.00306796;0.00306796;0.00306796</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00306796;0.00306796;0.00306796;0.00306796</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00306796;0.00306796;0.00306796;0.00306796</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="7">
+                            <machnumber description="-">
+                                <value>0.733000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>5996.380449</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00255578;0.00255578;0.00255578;0.00255578</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00255578;0.00255578;0.00255578;0.00255578</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00255578;0.00255578;0.00255578;0.00255578</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="8">
+                            <machnumber description="-">
+                                <value>0.733000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>8997.450452</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00274791;0.00274791;0.00274791;0.00274791</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00274791;0.00274791;0.00274791;0.00274791</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00274791;0.00274791;0.00274791;0.00274791</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="9">
+                            <machnumber description="-">
+                                <value>0.733000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>11999.158733</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00300139;0.00300139;0.00300139;0.00300139</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00300139;0.00300139;0.00300139;0.00300139</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00300139;0.00300139;0.00300139;0.00300139</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="10">
+                            <machnumber description="-">
+                                <value>0.800000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>6002.310877</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00250648;0.00250648;0.00250648;0.00250648</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00250648;0.00250648;0.00250648;0.00250648</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00250648;0.00250648;0.00250648;0.00250648</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="11">
+                            <machnumber description="-">
+                                <value>0.800000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>9001.429063</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00269427;0.00269427;0.00269427;0.00269427</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00269427;0.00269427;0.00269427;0.00269427</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00269427;0.00269427;0.00269427;0.00269427</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="12">
+                            <machnumber description="-">
+                                <value>0.800000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12002.041992</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00294207;0.00294207;0.00294207;0.00294207</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00294207;0.00294207;0.00294207;0.00294207</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00294207;0.00294207;0.00294207;0.00294207</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="13">
+                            <machnumber description="-">
+                                <value>0.001000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>-1.135525</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0120692;0.0120692;0.0120692;0.0120692</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0120692;0.0120692;0.0120692;0.0120692</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.0120692;0.0120692;0.0120692;0.0120692</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="14">
+                            <machnumber description="-">
+                                <value>0.001000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>15001.977918</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.021341;0.021341;0.021341;0.021341</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.021341;0.021341;0.021341;0.021341</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.021341;0.021341;0.021341;0.021341</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="15">
+                            <machnumber description="-">
+                                <value>0.950000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>1.381535</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00212335;0.00212335;0.00212335;0.00212335</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00212335;0.00212335;0.00212335;0.00212335</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00212335;0.00212335;0.00212335;0.00212335</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="16">
+                            <machnumber description="-">
+                                <value>0.950000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>15002.060970</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00315341;0.00315341;0.00315341;0.00315341</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00315341;0.00315341;0.00315341;0.00315341</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00315341;0.00315341;0.00315341;0.00315341</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="17">
+                            <machnumber description="-">
+                                <value>0.200000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>2998.737578</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.0032117;0.0032117;0.0032117;0.0032117</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.0032117;0.0032117;0.0032117;0.0032117</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.0032117;0.0032117;0.0032117;0.0032117</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="18">
+                            <machnumber description="-">
+                                <value>0.200000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>12002.041992</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00407622;0.00407622;0.00407622;0.00407622</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00407622;0.00407622;0.00407622;0.00407622</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00407622;0.00407622;0.00407622;0.00407622</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="19">
+                            <machnumber description="-">
+                                <value>0.400000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>4500.356158</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00283235;0.00283235;0.00283235;0.00283235</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00283235;0.00283235;0.00283235;0.00283235</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00283235;0.00283235;0.00283235;0.00283235</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                        <polar ID="20">
+                            <machnumber description="-">
+                                <value>0.500000</value>
+                            </machnumber>
+                            <altitude description="-">
+                                <value>13501.286634</value>
+                            </altitude>
+                            <Cd description="-">
+                                <value>0.00346609;0.00346609;0.00346609;0.00346609</value>
+                            </Cd>
+                            <Cd0 description="-">
+                                <value>0.00346609;0.00346609;0.00346609;0.00346609</value>
+                            </Cd0>
+                            <Cd_i description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_i>
+                            <Cd_f description="-">
+                                <value>0.00346609;0.00346609;0.00346609;0.00346609</value>
+                            </Cd_f>
+                            <Cd_w description="-">
+                                <value>0;0;0;0</value>
+                            </Cd_w>
+                            <Cl description="-">
+                                <value>0;0;0;0</value>
+                            </Cl>
+                            <Cm description="-">
+                                <value>-0.0237337;0;0.0474674;0.0759478</value>
+                            </Cm>
+                            <Alpha description="-">
+                                <value>-2.5;0;5;8</value>
+                            </Alpha>
+                        </polar>
+                    </polars>
+                </configuration>
+            </configurations>
+        </component>
+    </components>
+</polar-exchange-file>

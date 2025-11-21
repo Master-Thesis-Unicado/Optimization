@@ -1,0 +1,977 @@
+<module_results_file Name="Fuselage design specific outputs">
+    <general_information description="General information on module execution">
+        <workflow_version description="Version number of the current workflow">
+            <value>not available</value>
+        </workflow_version>
+        <execution_date description="Execution date and time of the code">
+            <value>2025-10-16_09-26-04</value>
+        </execution_date>
+        <project_name description="Name of the current aircraft project">
+            <value>UNICADO-SMR-01</value>
+        </project_name>
+        <method_name description="Name of current module calculation method">
+            <value>fuselage_design_tu_berlin</value>
+        </method_name>
+        <routing_layer description="Routing layer information">
+            <layer_1 description="Routing layer_1">
+                <value>tube_and_wing</value>
+            </layer_1>
+            <layer_2 description="Routing layer_2">
+                <value>empirical</value>
+            </layer_2>
+            <layer_3 description="Routing layer_3">
+                <value>fuselage_design_tu_berlin</value>
+            </layer_3>
+            <user_layer description="Routing user_layer">
+                <value>kerosene</value>
+            </user_layer>
+        </routing_layer>
+    </general_information>
+    <calculation_results description="Results of calculation method">
+        <fuselage_design_tu_berlin description="Empirical method for fuselage design in accordance CS 25.803ff." />
+        <fuselage description="Geometrical description of one entire fuselage.">
+            <position description="Position of the payload deck with regard to the payload tube reference point.">
+                <x description="Distance in x direction with regard to the payload tube reference point.">
+                    <value>-0.0</value>
+                </x>
+                <y description="Distance in y direction with regard to the payload tube reference point.">
+                    <value>-0.0</value>
+                </y>
+                <z description="Distance in z direction with regard to the payload tube reference point.">
+                    <value>-0.0</value>
+                </z>
+            </position>
+            <specific description="Fuselage design specific output parameter.">
+                <geometry description="Geometry description of the entire fuselage design.">
+                    <fuselage ID="0" description="Geometrical description of one entire fuselage.">
+                        <name description="Name of the payload deck.">
+                            <value>fuselage_0</value>
+                        </name>
+                        <position description="Position of the payload deck with regard to the payload tube reference point.">
+                            <x description="Distance in x direction with regard to the payload tube reference point.">
+                                <value>0.0</value>
+                            </x>
+                            <y description="Distance in y direction with regard to the payload tube reference point.">
+                                <value>0.0</value>
+                            </y>
+                            <z description="Distance in z direction with regard to the payload tube reference point.">
+                                <value>0.0</value>
+                            </z>
+                        </position>
+                        <direction description="Unit vector according to global coordinate system for direction applied at position.">
+                            <x description="Distance in x direction with regard to the payload tube reference point.">
+                                <value>1</value>
+                            </x>
+                            <y description="Distance in y direction with regard to the payload tube reference point.">
+                                <value>0</value>
+                            </y>
+                            <z description="Distance in z direction with regard to the payload tube reference point.">
+                                <value>0</value>
+                            </z>
+                        </direction>
+                        <number_of_required_cabin_crew description="Number of minimum required flight attendants.">
+                            <value>4</value>
+                        </number_of_required_cabin_crew>
+                        <number_of_required_flight_crew description="Number of minimum required flight crew members.">
+                            <value>2</value>
+                        </number_of_required_flight_crew>
+                        <fuselage_accommodation description="Description of the accommodation of current fuselage.">
+                            <position description="Position of the payload deck with regard to the payload tube reference point.">
+                                <x description="Distance in x direction with regard to the payload tube reference point.">
+                                    <value>3.75</value>
+                                </x>
+                                <y description="Distance in y direction with regard to the payload tube reference point.">
+                                    <value>0.0</value>
+                                </y>
+                                <z description="Distance in z direction with regard to the payload tube reference point.">
+                                    <value>0.0</value>
+                                </z>
+                            </position>
+                            <payload_tube ID="0" description="Geometrical description of one payload tube of the fuselage.">
+                                <name description="Name of the payload deck.">
+                                    <value>center_payload_tube</value>
+                                </name>
+                                <payload_tube_reference_points description="Payload tube center reference points in x, y and z-direction referred to fuselage nose point.">
+                                    <front_reference_points description="Reference points in the front of payload tube.">
+                                        <x description="Distance in x direction with regard to the payload tube reference point.">
+                                            <value>0.0</value>
+                                        </x>
+                                        <y description="Distance in y direction with regard to the payload tube reference point.">
+                                            <value>0.0</value>
+                                        </y>
+                                        <z description="Distance in z direction with regard to the payload tube reference point.">
+                                            <value>0.0</value>
+                                        </z>
+                                        <upper_z description="Upper payload tube reference point in z-direction.">
+                                            <value>1.778</value>
+                                        </upper_z>
+                                        <lower_z description="Lower payload tube reference point in z-direction.">
+                                            <value>-2.090166</value>
+                                        </lower_z>
+                                    </front_reference_points>
+                                    <aft_reference_points description="Reference points in the aft of payload tube.">
+                                        <x description="Distance in x direction with regard to the payload tube reference point.">
+                                            <value>27.016456</value>
+                                        </x>
+                                        <y description="Distance in y direction with regard to the payload tube reference point.">
+                                            <value>0.0</value>
+                                        </y>
+                                        <z description="Distance in z direction with regard to the payload tube reference point.">
+                                            <value>0.0</value>
+                                        </z>
+                                        <upper_z description="Upper payload tube reference point in z-direction.">
+                                            <value>1.778</value>
+                                        </upper_z>
+                                        <lower_z description="Lower payload tube reference point in z-direction.">
+                                            <value>-2.090166</value>
+                                        </lower_z>
+                                    </aft_reference_points>
+                                </payload_tube_reference_points>
+                                <payload_tube_wall_reference_points description="Payload tube wall reference points in x, y and z-direction referred to fuselage nose point.">
+                                    <front_reference_points description="Reference points in the front of payload tube.">
+                                        <x description="Distance in x direction with regard to the payload tube reference point.">
+                                            <value>0.0</value>
+                                        </x>
+                                        <left_y description="Left wall reference point in y-direction.">
+                                            <value>-1.84658</value>
+                                        </left_y>
+                                        <right_y description="Right wall reference point in y-direction.">
+                                            <value>1.84658</value>
+                                        </right_y>
+                                        <z description="Distance in z direction with regard to the payload tube reference point.">
+                                            <value>0.0</value>
+                                        </z>
+                                    </front_reference_points>
+                                    <aft_reference_points description="Reference points in the aft of payload tube.">
+                                        <x description="Distance in x direction with regard to the payload tube reference point.">
+                                            <value>0.0</value>
+                                        </x>
+                                        <left_y description="Left wall reference point in y-direction.">
+                                            <value>-1.84658</value>
+                                        </left_y>
+                                        <right_y description="Right wall reference point in y-direction.">
+                                            <value>1.84658</value>
+                                        </right_y>
+                                        <z description="Distance in z direction with regard to the payload tube reference point.">
+                                            <value>0.0</value>
+                                        </z>
+                                    </aft_reference_points>
+                                </payload_tube_wall_reference_points>
+                                <payload_tube_structural_wall_thickness description="Structural wall thickness of the payload tube.">
+                                    <value>0.137414</value>
+                                </payload_tube_structural_wall_thickness>
+                                <payload_tube_water_volume description="Total water volume of one entire payload tube.">
+                                    <value>188.945335573</value>
+                                </payload_tube_water_volume>
+                                <payload_decks description="Geometrical description of the payload decks.">
+                                    <payload_deck ID="0" description="Geometrical description of the payload decks in one payload tube.">
+                                        <name description="Name of the payload deck.">
+                                            <value>passenger_deck_1</value>
+                                        </name>
+                                        <position description="Position of the payload deck with regard to the payload tube reference point.">
+                                            <x description="Distance in x direction with regard to the payload tube reference point.">
+                                                <value>0.0</value>
+                                            </x>
+                                            <y description="Distance in y direction with regard to the payload tube reference point.">
+                                                <value>0.0</value>
+                                            </y>
+                                            <z description="Distance in z direction with regard to the payload tube reference point.">
+                                                <value>-0.4826</value>
+                                            </z>
+                                        </position>
+                                        <payload_deck_structural_floor_thickness description="Structural floor thickness of current payload deck.">
+                                            <value>0.206248</value>
+                                        </payload_deck_structural_floor_thickness>
+                                        <payload_deck_water_volume description="Total water volume of the payload deck.">
+                                            <value>125.96355704866666</value>
+                                        </payload_deck_water_volume>
+                                        <payload_deck_length description="Total length of the payload deck.">
+                                            <value>27.016456</value>
+                                        </payload_deck_length>
+                                        <payload_deck_required_galley_power description="Required galley power of the payload deck.">
+                                            <value>9000</value>
+                                        </payload_deck_required_galley_power>
+                                    </payload_deck>
+                                    <payload_deck ID="1" description="Geometrical description of the payload decks in one payload tube.">
+                                        <name description="Name of the payload deck.">
+                                            <value>cargo_deck</value>
+                                        </name>
+                                        <position description="Position of the payload deck with regard to the payload tube reference point.">
+                                            <x description="Distance in x direction with regard to the payload tube reference point.">
+                                                <value>3.75</value>
+                                            </x>
+                                            <y description="Distance in y direction with regard to the payload tube reference point.">
+                                                <value>0.0</value>
+                                            </y>
+                                            <z description="Distance in z direction with regard to the payload tube reference point.">
+                                                <value>-1.831848</value>
+                                            </z>
+                                        </position>
+                                        <payload_deck_structural_floor_thickness description="Structural floor thickness of current payload deck.">
+                                            <value>0.206248</value>
+                                        </payload_deck_structural_floor_thickness>
+                                        <payload_deck_water_volume description="Total water volume of the payload deck.">
+                                            <value>62.98177852433333</value>
+                                        </payload_deck_water_volume>
+                                        <payload_deck_length description="Total length of the payload deck.">
+                                            <value>13.508228</value>
+                                        </payload_deck_length>
+                                        <payload_deck_required_galley_power description="Required galley power of the payload deck.">
+                                            <value>0</value>
+                                        </payload_deck_required_galley_power>
+                                    </payload_deck>
+                                </payload_decks>
+                            </payload_tube>
+                        </fuselage_accommodation>
+                        <sections description="Geometrical description of the fuselage sections of one entire fuselage.">
+                            <section ID="0" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_0</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>-0.957580772</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>0.068075648</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>0.236859405</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>0.267845269</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>0.496500597</value>
+                                </width>
+                            </section>
+                            <section ID="1" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_1</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>-0.924669034</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>0.192850112</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>0.410780143</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>0.467251904</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>0.836740921</value>
+                                </width>
+                            </section>
+                            <section ID="2" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_2</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>-0.88671607</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>0.325974005</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>0.51432337</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>0.617142191</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>1.09949371</value>
+                                </width>
+                            </section>
+                            <section ID="3" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_3</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>-0.814819481</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>0.552671561</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>0.638938798</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>0.811819183</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>1.332869486</value>
+                                </width>
+                            </section>
+                            <section ID="4" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_4</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>-0.746964181</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>0.779068819</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>0.756396515</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>0.976541153</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>1.597847703</value>
+                                </width>
+                            </section>
+                            <section ID="5" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_5</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>-0.624593025</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>1.123655542</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>0.945319536</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>1.211739628</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>1.950706682</value>
+                                </width>
+                            </section>
+                            <section ID="6" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_6</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>-0.499674101</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>1.438280013</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>1.097107435</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>1.430154001</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>2.243644807</value>
+                                </width>
+                            </section>
+                            <section ID="7" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_7</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>-0.21769763</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>2.128158942</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>1.34967515</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>1.867790838</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>2.796234326</value>
+                                </width>
+                            </section>
+                            <section ID="8" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_8</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>-0.174885536</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>2.619107088</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>1.558414858</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>1.972433715</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>3.095828445</value>
+                                </width>
+                            </section>
+                            <section ID="9" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_9</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>-0.083279283</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>3.445878719</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>1.734079899</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>2.114075921</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>3.508608277</value>
+                                </width>
+                            </section>
+                            <section ID="10" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_10</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>-0.041639641</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>4.194982413</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>1.833938046</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>2.167619711</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>3.762303773</value>
+                                </width>
+                            </section>
+                            <section ID="11" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_11</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>0.0</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>5.168818078</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>1.877197398</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>2.219703367</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>3.908262138</value>
+                                </width>
+                            </section>
+                            <section ID="12" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_12</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>0.0</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>6.2175644</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>1.915417119</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>2.227583628</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>3.967986828</value>
+                                </width>
+                            </section>
+                            <section ID="13" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_13</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>0.0</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>6.2175644</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>1.915417119</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>2.227583628</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>3.967986828</value>
+                                </width>
+                            </section>
+                            <section ID="14" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_14</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>0.0</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>27.427594123</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>1.915413925</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>2.227579912</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>3.967986828</value>
+                                </width>
+                            </section>
+                            <section ID="15" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_15</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>0.0</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>27.427594123</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>1.915413925</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>2.227579912</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>3.967986828</value>
+                                </width>
+                            </section>
+                            <section ID="16" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_16</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>0.0</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>31.853242791</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>1.699062858</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>1.736999316</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>3.3288491</value>
+                                </width>
+                            </section>
+                            <section ID="17" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_17</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>0.0</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>32.701609594</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>1.657090968</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>1.517589228</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>3.095828445</value>
+                                </width>
+                            </section>
+                            <section ID="18" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_18</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>0.0</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>34.3983432</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>1.575335554</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>0.93980933</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>2.46334671</value>
+                                </width>
+                            </section>
+                            <section ID="19" description="Geometrical description of one fuselage section.">
+                                <name description="Name of the payload deck.">
+                                    <value>section_19</value>
+                                </name>
+                                <section_shape description="Contains a string with the path to the shape *.dat file or the key word: ellipse.">
+                                    <value>ellipse</value>
+                                </section_shape>
+                                <origin description="Origin of fuselage section (local).">
+                                    <x description="Distance in x direction with regard to the payload tube reference point.">
+                                        <value>-0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the payload tube reference point.">
+                                        <value>0.92429206</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the payload tube reference point.">
+                                        <value>37.359258283</value>
+                                    </z>
+                                </origin>
+                                <upper_height description="Height of the upper half of the fuselage section.">
+                                    <value>0.528165979</value>
+                                </upper_height>
+                                <lower_height description="Height of the lower half of the fuselage section.">
+                                    <value>0.614244216</value>
+                                </lower_height>
+                                <width description="Width of the fuselage section.">
+                                    <value>0.559150813</value>
+                                </width>
+                            </section>
+                        </sections>
+                        <mass_breakdown description="Mass breakdown of fuselage design module in accordance to CPACS.">
+                            <fuselage_structure description="Mass breakdown of the fuselage structure block.">
+                                <component_mass ID="0" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>door_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>360.0</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="1" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>fuselage_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>8635.93153501</value>
+                                    </mass>
+                                </component_mass>
+                            </fuselage_structure>
+                            <fuselage_furnishing description="Mass breakdown of the fuselage furnishing block.">
+                                <component_mass ID="0" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>lavatory_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>290.01</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="1" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>flight_attendant_seat_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>84.0</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="2" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>flight_crew_seat_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>170.0</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="3" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>flight_observer_seat_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>55.0</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="4" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>floor_covering_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>174.608165622</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="5" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>linings_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>425.913348182</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="6" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>acoustic_and_thermal_insolation_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>653.996303412</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="7" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>overhead_bin_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>364.722156</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="8" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>lighting_panel_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>117.0</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="9" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>oxygen_system_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>246.51999999999998</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="10" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>cargo_linings_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>304.739744035</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="11" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>cargo_loadings_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>54.032912</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="12" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>miscellaneous_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>294.054262925</value>
+                                    </mass>
+                                </component_mass>
+                            </fuselage_furnishing>
+                            <fuselage_operator_items description="Mass breakdown of the fuselage  operator items block.">
+                                <component_mass ID="0" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>total_emergency_equipment_masses</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>898.6026248000001</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="1" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>flight_attendant_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>280.0</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="2" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>flight_crew_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>170.0</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="3" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>in_flight_entertainment</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>270.0</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="4" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>total_fixed_galley_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>342.0</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="5" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>total_seat_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>1287.0</value>
+                                    </mass>
+                                </component_mass>
+                                <component_mass ID="6" description="Mass of a single component of the fuselage  operator items block.">
+                                    <name description="Name of the payload deck.">
+                                        <value>catering_mass</value>
+                                    </name>
+                                    <mass description="Mass of the payload tubes of one entire fuselage.">
+                                        <value>952.02</value>
+                                    </mass>
+                                </component_mass>
+                            </fuselage_operator_items>
+                        </mass_breakdown>
+                    </fuselage>
+                </geometry>
+            </specific>
+        </fuselage>
+    </calculation_results>
+</module_results_file>

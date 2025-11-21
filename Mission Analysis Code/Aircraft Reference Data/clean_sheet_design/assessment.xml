@@ -1,0 +1,3035 @@
+<assessment_file>
+    <inputs>
+        <engineering>
+            <annual_working_hours description="Working hours of one engineer per year">
+                <value>1712</value>
+                <unit>h</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>2500</upper_boundary>
+            </annual_working_hours>
+            <wage_per_hour description="Wage per hours of one engineer">
+                <value>153</value>
+                <unit>US</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>500</upper_boundary>
+            </wage_per_hour>
+        </engineering>
+        <production_phase>
+            <number_produced_aircraft description="Number of produced aircraft per program">
+                <value>1500</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>10000</upper_boundary>
+            </number_produced_aircraft>
+            <primary_material_recycling_switch description="Enables primary material recycling. Switch: true (primary material will be recycled) / false (no recycling)">
+                <value>true</value>
+            </primary_material_recycling_switch>
+        </production_phase>
+        <testing_phase>
+            <number_of_structural_test_aircraft description="Number of aircraft for structural tests">
+                <value>2</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>10</upper_boundary>
+            </number_of_structural_test_aircraft>
+            <number_of_flight_test_aircraft description="Number of aircraft for flight tests">
+                <value>6</value>
+                <unit>1</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>10</upper_boundary>
+            </number_of_flight_test_aircraft>
+        </testing_phase>
+        <operating_phase>
+            <duration_operation description="Operating years of aircraft">
+                <value>25</value>
+                <unit>a</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>50</upper_boundary>
+            </duration_operation>
+        </operating_phase>
+    </inputs>
+    <calculation_results>
+        <emissions_aircraft_development>
+            <CED description="Total development CED">
+                <value>2.473968103e+14</value>
+                <unit>J</unit>
+                <lower_boundary>-1e+30</lower_boundary>
+                <upper_boundary>1.797693135e+308</upper_boundary>
+            </CED>
+            <CO2 description="Total development CO2">
+                <value>11174773.99</value>
+                <unit>kg</unit>
+                <lower_boundary>-1e+30</lower_boundary>
+                <upper_boundary>1.797693135e+308</upper_boundary>
+            </CO2>
+            <H2O description="Total development H2O">
+                <value>71944841.14</value>
+                <unit>kg</unit>
+                <lower_boundary>-1e+30</lower_boundary>
+                <upper_boundary>1.797693135e+308</upper_boundary>
+            </H2O>
+            <NOx description="Total development NOx">
+                <value>15869.23945</value>
+                <unit>kg</unit>
+                <lower_boundary>-1e+30</lower_boundary>
+                <upper_boundary>1.797693135e+308</upper_boundary>
+            </NOx>
+            <CO description="Total development CO">
+                <value>6512.152401</value>
+                <unit>kg</unit>
+                <lower_boundary>-1e+30</lower_boundary>
+                <upper_boundary>1.797693135e+308</upper_boundary>
+            </CO>
+            <SO2 description="Total development SO2">
+                <value>26674.9155</value>
+                <unit>kg</unit>
+                <lower_boundary>-1e+30</lower_boundary>
+                <upper_boundary>1.797693135e+308</upper_boundary>
+            </SO2>
+            <CH4 description="Total development CH4">
+                <value>24969.15088</value>
+                <unit>kg</unit>
+                <lower_boundary>-1e+30</lower_boundary>
+                <upper_boundary>1.797693135e+308</upper_boundary>
+            </CH4>
+            <PM10 description="Total development PM10">
+                <value>196.8946943</value>
+                <unit>kg</unit>
+                <lower_boundary>-1e+30</lower_boundary>
+                <upper_boundary>1.797693135e+308</upper_boundary>
+            </PM10>
+            <HC description="Total development HC">
+                <value>0</value>
+                <unit>kg</unit>
+                <lower_boundary>-1e+30</lower_boundary>
+                <upper_boundary>1.797693135e+308</upper_boundary>
+            </HC>
+            <N2O description="Total development N2O">
+                <value>364472595.9</value>
+                <unit>kg</unit>
+                <lower_boundary>-1e+30</lower_boundary>
+                <upper_boundary>1.797693135e+308</upper_boundary>
+            </N2O>
+            <PFC description="Total development PFC">
+                <value>6908.905953</value>
+                <unit>kg</unit>
+                <lower_boundary>-1e+30</lower_boundary>
+                <upper_boundary>1.797693135e+308</upper_boundary>
+            </PFC>
+            <NMVOC description="Total development NMVOC">
+                <value>531280396.9</value>
+                <unit>kg</unit>
+                <lower_boundary>-1e+30</lower_boundary>
+                <upper_boundary>1.797693135e+308</upper_boundary>
+            </NMVOC>
+            <soot description="Total development soot">
+                <value>0</value>
+                <unit>kg</unit>
+                <lower_boundary>-1e+30</lower_boundary>
+                <upper_boundary>1.797693135e+308</upper_boundary>
+            </soot>
+            <SO4 description="Total development SO4">
+                <value>0</value>
+                <unit>kg</unit>
+                <lower_boundary>-1e+30</lower_boundary>
+                <upper_boundary>1.797693135e+308</upper_boundary>
+            </SO4>
+        </emissions_aircraft_development>
+        <emissions_aircraft_production>
+            <total>
+                <CED description="Total production CED">
+                    <value>4.595366379e+13</value>
+                    <unit>J</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CED>
+                <CO2 description="Total production CO2">
+                    <value>2041824.55</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO2>
+                <H2O description="Total production H2O">
+                    <value>15248341.57</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </H2O>
+                <NOx description="Total production NOx">
+                    <value>3421.208551</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NOx>
+                <CO description="Total production CO">
+                    <value>2609.011123</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO>
+                <SO2 description="Total production SO2">
+                    <value>5780.569509</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO2>
+                <CH4 description="Total production CH4">
+                    <value>4454.769439</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CH4>
+                <PM10 description="Total production PM10">
+                    <value>27.5330397</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PM10>
+                <HC description="Total production HC">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </HC>
+                <N2O description="Total production N2O">
+                    <value>50303508.81</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </N2O>
+                <PFC description="Total production PFC">
+                    <value>953.5482652</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PFC>
+                <NMVOC description="Total production NMVOC">
+                    <value>73325864.36</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NMVOC>
+                <soot description="Total production soot">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </soot>
+                <SO4 description="Total production SO4">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO4>
+                <energy_carrier_demand>
+                    <diesel description="Demand for diesel">
+                        <value>3126993578</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </diesel>
+                    <kerosene description="Demand for kerosene">
+                        <value>3.342114275e+11</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </kerosene>
+                </energy_carrier_demand>
+            </total>
+            <airframe>
+                <CED description="Total emissions and energy without engine CED">
+                    <value>3.87784666e+13</value>
+                    <unit>J</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CED>
+                <CO2 description="Total emissions and energy without engine CO2">
+                    <value>1733742.296</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO2>
+                <H2O description="Total emissions and energy without engine H2O">
+                    <value>12803220.42</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </H2O>
+                <NOx description="Total emissions and energy without engine NOx">
+                    <value>2827.298979</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NOx>
+                <CO description="Total emissions and energy without engine CO">
+                    <value>1703.102993</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO>
+                <SO2 description="Total emissions and energy without engine SO2">
+                    <value>4533.430838</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO2>
+                <CH4 description="Total emissions and energy without engine CH4">
+                    <value>3780.093268</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CH4>
+                <PM10 description="Total emissions and energy without engine PM10">
+                    <value>23.37763833</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PM10>
+                <HC description="Total emissions and energy without engine HC">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </HC>
+                <N2O description="Total emissions and energy without engine N2O">
+                    <value>42645275.23</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </N2O>
+                <PFC description="Total emissions and energy without engine PFC">
+                    <value>808.3795579</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PFC>
+                <NMVOC description="Total emissions and energy without engine NMVOC">
+                    <value>62162694.83</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NMVOC>
+                <soot description="Total emissions and energy without engine soot">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </soot>
+                <SO4 description="Total emissions and energy without engine SO4">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO4>
+                <energy_carrier_demand>
+                    <diesel description="Demand for diesel">
+                        <value>3126993578</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </diesel>
+                    <kerosene description="Demand for kerosene">
+                        <value>3.342114275e+11</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </kerosene>
+                </energy_carrier_demand>
+            </airframe>
+            <engine>
+                <CED description="Engine material production, manufacturing and labour CED">
+                    <value>7.175197193e+12</value>
+                    <unit>J</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CED>
+                <CO2 description="Engine material production, manufacturing and labour CO2">
+                    <value>308082.2541</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO2>
+                <H2O description="Engine material production, manufacturing and labour H2O">
+                    <value>2445121.15</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </H2O>
+                <NOx description="Engine material production, manufacturing and labour NOx">
+                    <value>593.909572</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NOx>
+                <CO description="Engine material production, manufacturing and labour CO">
+                    <value>905.9081295</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO>
+                <SO2 description="Engine material production, manufacturing and labour SO2">
+                    <value>1247.138671</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO2>
+                <CH4 description="Engine material production, manufacturing and labour CH4">
+                    <value>674.6761703</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CH4>
+                <PM10 description="Engine material production, manufacturing and labour PM10">
+                    <value>4.15540137</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PM10>
+                <HC description="Engine material production, manufacturing and labour HC">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </HC>
+                <N2O description="Engine material production, manufacturing and labour N2O">
+                    <value>7658233.58</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </N2O>
+                <PFC description="Engine material production, manufacturing and labour PFC">
+                    <value>145.1687073</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PFC>
+                <NMVOC description="Engine material production, manufacturing and labour NMVOC">
+                    <value>11163169.53</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NMVOC>
+                <soot description="Engine material production, manufacturing and labour soot">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </soot>
+                <SO4 description="Engine material production, manufacturing and labour SO4">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO4>
+            </engine>
+            <wing>
+                <material_production>
+                    <CED description="Material Production for wing CED">
+                        <value>2.18313246e+12</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CED>
+                    <CO2 description="Material Production for wing CO2">
+                        <value>110387.1837</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Material Production for wing H2O">
+                        <value>1285590.181</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Material Production for wing NOx">
+                        <value>250.6994206</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Material Production for wing CO">
+                        <value>327.9859491</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO>
+                    <SO2 description="Material Production for wing SO2">
+                        <value>397.8006705</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO2>
+                    <CH4 description="Material Production for wing CH4">
+                        <value>231.2308414</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CH4>
+                    <PM10 description="Material Production for wing PM10">
+                        <value>0.008586784168</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PM10>
+                    <HC description="Material Production for wing HC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </HC>
+                    <N2O description="Material Production for wing N2O">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </N2O>
+                    <PFC description="Material Production for wing PFC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Material Production for wing NMVOC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NMVOC>
+                    <soot description="Material Production for wing soot">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Material Production for wing SO4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                </material_production>
+                <manufacturing>
+                    <CED description="Material Manufacturing for wing CED">
+                        <value>3.81463001e+12</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CED>
+                    <CO2 description="Material Manufacturing for wing CO2">
+                        <value>141458.8819</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Material Manufacturing for wing H2O">
+                        <value>1260555.814</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Material Manufacturing for wing NOx">
+                        <value>239.8513931</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Material Manufacturing for wing CO">
+                        <value>98.70686427</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO>
+                    <SO2 description="Material Manufacturing for wing SO2">
+                        <value>462.0990142</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO2>
+                    <CH4 description="Material Manufacturing for wing CH4">
+                        <value>286.3756476</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CH4>
+                    <PM10 description="Material Manufacturing for wing PM10">
+                        <value>3.45788378</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PM10>
+                    <HC description="Material Manufacturing for wing HC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </HC>
+                    <N2O description="Material Manufacturing for wing N2O">
+                        <value>6686780.926</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </N2O>
+                    <PFC description="Material Manufacturing for wing PFC">
+                        <value>126.7539482</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Material Manufacturing for wing NMVOC">
+                        <value>9747113.128</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NMVOC>
+                    <soot description="Material Manufacturing for wing soot">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Material Manufacturing for wing SO4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                </manufacturing>
+            </wing>
+            <fuselage>
+                <material_production>
+                    <CED description="Material Production for fuselage CED">
+                        <value>4.946672527e+12</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CED>
+                    <CO2 description="Material Production for fuselage CO2">
+                        <value>246480.8542</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Material Production for fuselage H2O">
+                        <value>2729709.677</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Material Production for fuselage NOx">
+                        <value>496.0529866</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Material Production for fuselage CO">
+                        <value>309.8254395</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO>
+                    <SO2 description="Material Production for fuselage SO2">
+                        <value>835.1388821</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO2>
+                    <CH4 description="Material Production for fuselage CH4">
+                        <value>505.808334</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CH4>
+                    <PM10 description="Material Production for fuselage PM10">
+                        <value>0.009939124135</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PM10>
+                    <HC description="Material Production for fuselage HC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </HC>
+                    <N2O description="Material Production for fuselage N2O">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </N2O>
+                    <PFC description="Material Production for fuselage PFC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Material Production for fuselage NMVOC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NMVOC>
+                    <soot description="Material Production for fuselage soot">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Material Production for fuselage SO4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                </material_production>
+                <manufacturing>
+                    <CED description="Material Manufacturing for fuselage CED">
+                        <value>8.140361608e+12</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CED>
+                    <CO2 description="Material Manufacturing for fuselage CO2">
+                        <value>316526.0385</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Material Manufacturing for fuselage H2O">
+                        <value>2820598.698</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Material Manufacturing for fuselage NOx">
+                        <value>536.687483</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Material Manufacturing for fuselage CO">
+                        <value>220.8648357</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO>
+                    <SO2 description="Material Manufacturing for fuselage SO2">
+                        <value>1033.985059</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO2>
+                    <CH4 description="Material Manufacturing for fuselage CH4">
+                        <value>640.7893801</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CH4>
+                    <PM10 description="Material Manufacturing for fuselage PM10">
+                        <value>7.737303163</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PM10>
+                    <HC description="Material Manufacturing for fuselage HC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </HC>
+                    <N2O description="Material Manufacturing for fuselage N2O">
+                        <value>14962229.65</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </N2O>
+                    <PFC description="Material Manufacturing for fuselage PFC">
+                        <value>283.6225237</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Material Manufacturing for fuselage NMVOC">
+                        <value>21809978.02</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NMVOC>
+                    <soot description="Material Manufacturing for fuselage soot">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Material Manufacturing for fuselage SO4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                </manufacturing>
+            </fuselage>
+            <tailplane>
+                <material_production>
+                    <CED description="Material Production for tailplane CED">
+                        <value>3.789070294e+11</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CED>
+                    <CO2 description="Material Production for tailplane CO2">
+                        <value>18956.5024</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Material Production for tailplane H2O">
+                        <value>89223.18948</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Material Production for tailplane NOx">
+                        <value>27.51913445</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Material Production for tailplane CO">
+                        <value>10.29201407</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO>
+                    <SO2 description="Material Production for tailplane SO2">
+                        <value>19.03587955</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO2>
+                    <CH4 description="Material Production for tailplane CH4">
+                        <value>37.96619367</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CH4>
+                    <PM10 description="Material Production for tailplane PM10">
+                        <value>0.0001293846076</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PM10>
+                    <HC description="Material Production for tailplane HC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </HC>
+                    <N2O description="Material Production for tailplane N2O">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </N2O>
+                    <PFC description="Material Production for tailplane PFC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Material Production for tailplane NMVOC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NMVOC>
+                    <soot description="Material Production for tailplane soot">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Material Production for tailplane SO4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                </material_production>
+                <manufacturing>
+                    <CED description="Material Manufacturing for tailplane CED">
+                        <value>4.799703095e+11</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CED>
+                    <CO2 description="Material Manufacturing for tailplane CO2">
+                        <value>20533.04061</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Material Manufacturing for tailplane H2O">
+                        <value>182972.2064</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Material Manufacturing for tailplane NOx">
+                        <value>34.81491108</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Material Manufacturing for tailplane CO">
+                        <value>14.32749945</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO>
+                    <SO2 description="Material Manufacturing for tailplane SO2">
+                        <value>67.07459934</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO2>
+                    <CH4 description="Material Manufacturing for tailplane CH4">
+                        <value>41.568</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CH4>
+                    <PM10 description="Material Manufacturing for tailplane PM10">
+                        <value>0.5019187706</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PM10>
+                    <HC description="Material Manufacturing for tailplane HC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </HC>
+                    <N2O description="Material Manufacturing for tailplane N2O">
+                        <value>970599.6716</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </N2O>
+                    <PFC description="Material Manufacturing for tailplane PFC">
+                        <value>18.39858998</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Material Manufacturing for tailplane NMVOC">
+                        <value>1414813.033</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NMVOC>
+                    <soot description="Material Manufacturing for tailplane soot">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Material Manufacturing for tailplane SO4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                </manufacturing>
+            </tailplane>
+            <fin>
+                <material_production>
+                    <CED description="Material Production for fin CED">
+                        <value>2.723422732e+11</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CED>
+                    <CO2 description="Material Production for fin CO2">
+                        <value>13623.333</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Material Production for fin H2O">
+                        <value>65074.76511</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Material Production for fin NOx">
+                        <value>19.8456159</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Material Production for fin CO">
+                        <value>7.381774181</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO>
+                    <SO2 description="Material Production for fin SO2">
+                        <value>14.03643852</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO2>
+                    <CH4 description="Material Production for fin CH4">
+                        <value>27.28935691</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CH4>
+                    <PM10 description="Material Production for fin PM10">
+                        <value>9.480972355e-05</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PM10>
+                    <HC description="Material Production for fin HC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </HC>
+                    <N2O description="Material Production for fin N2O">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </N2O>
+                    <PFC description="Material Production for fin PFC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Material Production for fin NMVOC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NMVOC>
+                    <soot description="Material Production for fin soot">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Material Production for fin SO4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                </material_production>
+                <manufacturing>
+                    <CED description="Material Manufacturing for fin CED">
+                        <value>3.460060925e+11</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CED>
+                    <CO2 description="Material Manufacturing for fin CO2">
+                        <value>14787.01028</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Material Manufacturing for fin H2O">
+                        <value>131768.6916</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Material Manufacturing for fin NOx">
+                        <value>25.07219743</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Material Manufacturing for fin CO">
+                        <value>10.31804717</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO>
+                    <SO2 description="Material Manufacturing for fin SO2">
+                        <value>48.30423358</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO2>
+                    <CH4 description="Material Manufacturing for fin CH4">
+                        <value>29.93548081</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CH4>
+                    <PM10 description="Material Manufacturing for fin PM10">
+                        <value>0.3614602513</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PM10>
+                    <HC description="Material Manufacturing for fin HC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </HC>
+                    <N2O description="Material Manufacturing for fin N2O">
+                        <value>698984.0224</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </N2O>
+                    <PFC description="Material Manufacturing for fin PFC">
+                        <value>13.24987099</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Material Manufacturing for fin NMVOC">
+                        <value>1018887.327</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NMVOC>
+                    <soot description="Material Manufacturing for fin soot">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Material Manufacturing for fin SO4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                </manufacturing>
+            </fin>
+            <landinggear>
+                <material_production>
+                    <CED description="Material Production for landinggear CED">
+                        <value>2.088179607e+11</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CED>
+                    <CO2 description="Material Production for landinggear CO2">
+                        <value>13946.894</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Material Production for landinggear H2O">
+                        <value>87380.7261</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Material Production for landinggear NOx">
+                        <value>41.43844844</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Material Production for landinggear CO">
+                        <value>166.3089968</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO>
+                    <SO2 description="Material Production for landinggear SO2">
+                        <value>40.94053688</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO2>
+                    <CH4 description="Material Production for landinggear CH4">
+                        <value>34.2568324</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CH4>
+                    <PM10 description="Material Production for landinggear PM10">
+                        <value>0.01947940658</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PM10>
+                    <HC description="Material Production for landinggear HC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </HC>
+                    <N2O description="Material Production for landinggear N2O">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </N2O>
+                    <PFC description="Material Production for landinggear PFC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Material Production for landinggear NMVOC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NMVOC>
+                    <soot description="Material Production for landinggear soot">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Material Production for landinggear SO4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                </material_production>
+                <manufacturing>
+                    <CED description="Material Manufacturing for landinggear CED">
+                        <value>1.017975492e+12</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CED>
+                    <CO2 description="Material Manufacturing for landinggear CO2">
+                        <value>37115.94769</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Material Manufacturing for landinggear H2O">
+                        <value>330744.3338</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Material Manufacturing for landinggear NOx">
+                        <value>62.9321513</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Material Manufacturing for landinggear CO">
+                        <value>25.8986835</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO>
+                    <SO2 description="Material Manufacturing for landinggear SO2">
+                        <value>121.2454291</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO2>
+                    <CH4 description="Material Manufacturing for landinggear CH4">
+                        <value>75.13917409</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CH4>
+                    <PM10 description="Material Manufacturing for landinggear PM10">
+                        <value>0.9072787212</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PM10>
+                    <HC description="Material Manufacturing for landinggear HC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </HC>
+                    <N2O description="Material Manufacturing for landinggear N2O">
+                        <value>1754475.984</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </N2O>
+                    <PFC description="Material Manufacturing for landinggear PFC">
+                        <value>33.25767069</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Material Manufacturing for landinggear NMVOC">
+                        <value>2557445.217</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NMVOC>
+                    <soot description="Material Manufacturing for landinggear soot">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Material Manufacturing for landinggear SO4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                </manufacturing>
+            </landinggear>
+            <pylon>
+                <material_production>
+                    <CED description="Material Production for pylon CED">
+                        <value>2.261831613e+11</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CED>
+                    <CO2 description="Material Production for pylon CO2">
+                        <value>12584.811</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Material Production for pylon H2O">
+                        <value>127116.609</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Material Production for pylon NOx">
+                        <value>37.00721004</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Material Production for pylon CO">
+                        <value>103.4891896</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO>
+                    <SO2 description="Material Production for pylon SO2">
+                        <value>92.78473452</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO2>
+                    <CH4 description="Material Production for pylon CH4">
+                        <value>27.60532271</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CH4>
+                    <PM10 description="Material Production for pylon PM10">
+                        <value>0.009270292391</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PM10>
+                    <HC description="Material Production for pylon HC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </HC>
+                    <N2O description="Material Production for pylon N2O">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </N2O>
+                    <PFC description="Material Production for pylon PFC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Material Production for pylon NMVOC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NMVOC>
+                    <soot description="Material Production for pylon soot">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Material Production for pylon SO4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                </material_production>
+                <manufacturing>
+                    <CED description="Material Manufacturing for pylon CED">
+                        <value>4.510855791e+11</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CED>
+                    <CO2 description="Material Manufacturing for pylon CO2">
+                        <value>15368.29737</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Material Manufacturing for pylon H2O">
+                        <value>136948.6055</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Material Manufacturing for pylon NOx">
+                        <value>26.05780199</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Material Manufacturing for pylon CO">
+                        <value>10.72365639</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO>
+                    <SO2 description="Material Manufacturing for pylon SO2">
+                        <value>50.20310475</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO2>
+                    <CH4 description="Material Manufacturing for pylon CH4">
+                        <value>31.11226424</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CH4>
+                    <PM10 description="Material Manufacturing for pylon PM10">
+                        <value>0.3756694913</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PM10>
+                    <HC description="Material Manufacturing for pylon HC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </HC>
+                    <N2O description="Material Manufacturing for pylon N2O">
+                        <value>726461.5438</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </N2O>
+                    <PFC description="Material Manufacturing for pylon PFC">
+                        <value>13.77073212</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Material Manufacturing for pylon NMVOC">
+                        <value>1058940.457</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NMVOC>
+                    <soot description="Material Manufacturing for pylon soot">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Material Manufacturing for pylon SO4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                </manufacturing>
+            </pylon>
+            <powerunit>
+                <material_production>
+                    <CED description="Material Production for powerunit CED">
+                        <value>1.695926608e+12</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CED>
+                    <CO2 description="Material Production for powerunit CO2">
+                        <value>94361.2058</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Material Production for powerunit H2O">
+                        <value>953123.2932</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Material Production for powerunit NOx">
+                        <value>277.4809222</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Material Production for powerunit CO">
+                        <value>775.964352</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO>
+                    <SO2 description="Material Production for powerunit SO2">
+                        <value>695.7020989</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO2>
+                    <CH4 description="Material Production for powerunit CH4">
+                        <value>206.9853521</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CH4>
+                    <PM10 description="Material Production for powerunit PM10">
+                        <value>0.06950886811</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PM10>
+                    <HC description="Material Production for powerunit HC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </HC>
+                    <N2O description="Material Production for powerunit N2O">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </N2O>
+                    <PFC description="Material Production for powerunit PFC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Material Production for powerunit NMVOC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NMVOC>
+                    <soot description="Material Production for powerunit soot">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Material Production for powerunit SO4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                </material_production>
+                <manufacturing>
+                    <CED description="Material Manufacturing for powerunit CED">
+                        <value>3.382250171e+12</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CED>
+                    <CO2 description="Material Manufacturing for powerunit CO2">
+                        <value>115231.8514</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Material Manufacturing for powerunit H2O">
+                        <value>1026843.831</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Material Manufacturing for powerunit NOx">
+                        <value>195.3820058</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Material Manufacturing for powerunit CO">
+                        <value>80.40622519</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO>
+                    <SO2 description="Material Manufacturing for powerunit SO2">
+                        <value>376.4240478</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO2>
+                    <CH4 description="Material Manufacturing for powerunit CH4">
+                        <value>233.2804813</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CH4>
+                    <PM10 description="Material Manufacturing for powerunit PM10">
+                        <value>2.816778589</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PM10>
+                    <HC description="Material Manufacturing for powerunit HC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </HC>
+                    <N2O description="Material Manufacturing for powerunit N2O">
+                        <value>5447025.563</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </N2O>
+                    <PFC description="Material Manufacturing for powerunit PFC">
+                        <value>103.25327</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Material Manufacturing for powerunit NMVOC">
+                        <value>7939960.193</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NMVOC>
+                    <soot description="Material Manufacturing for powerunit soot">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Material Manufacturing for powerunit SO4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                </manufacturing>
+            </powerunit>
+        </emissions_aircraft_production>
+        <emissions_aircraft_operations>
+            <design_mission description="Results of design mission calculation">
+                <lto_cycle description="Aircraft operational emissions during landing and takeoff cycle">
+                    <CED description="LTO CED">
+                        <value>6.961789025e+14</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CED>
+                    <CO2 description="LTO CO2">
+                        <value>40897458.47</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CO2>
+                    <H2O description="LTO H2O">
+                        <value>15584931.78</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </H2O>
+                    <NOx description="LTO NOx">
+                        <value>155095.2625</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </NOx>
+                    <CO description="LTO CO">
+                        <value>94091.97056</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CO>
+                    <SO2 description="LTO SO2">
+                        <value>10909.45224</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </SO2>
+                    <CH4 description="LTO CH4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CH4>
+                    <PM10 description="LTO PM10">
+                        <value>159.7335739</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </PM10>
+                    <HC description="LTO HC">
+                        <value>1018.041946</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </HC>
+                    <N2O description="LTO N2O">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </N2O>
+                    <PFC description="LTO PFC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </PFC>
+                    <NMVOC description="LTO NMVOC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </NMVOC>
+                    <soot description="LTO soot">
+                        <value>159.7335739</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </soot>
+                    <SO4 description="LTO SO4">
+                        <value>2597.48863</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </SO4>
+                    <energy_carrier_demand>
+                        <kerosene description="Demand for kerosene">
+                            <value>5.597587997e+14</value>
+                            <unit>J</unit>
+                            <lower_boundary>-1.797693135e+308</lower_boundary>
+                            <upper_boundary>1.797693135e+308</upper_boundary>
+                        </kerosene>
+                    </energy_carrier_demand>
+                    <c_soot_LTO_max description="Max soot concentration during LTO">
+                        <value>1.004917032e-06</value>
+                        <unit>1</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </c_soot_LTO_max>
+                </lto_cycle>
+                <cruise description="Aircraft operational emissions during cruise phase">
+                    <CED description="Cruise CED">
+                        <value>1.227854331e+16</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CED>
+                    <CO2 description="Cruise CO2">
+                        <value>721310590.1</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CO2>
+                    <H2O description="Cruise H2O">
+                        <value>274872247.7</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </H2O>
+                    <NOx description="Cruise NOx">
+                        <value>3307690.416</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </NOx>
+                    <CO description="Cruise CO">
+                        <value>354647.6729</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CO>
+                    <SO2 description="Cruise SO2">
+                        <value>192410.5734</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </SO2>
+                    <CH4 description="Cruise CH4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CH4>
+                    <PM10 description="Cruise PM10">
+                        <value>4095.122496</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </PM10>
+                    <HC description="Cruise HC">
+                        <value>12141.46019</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </HC>
+                    <N2O description="Cruise N2O">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </N2O>
+                    <PFC description="Cruise PFC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Cruise NMVOC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </NMVOC>
+                    <soot description="Cruise soot">
+                        <value>4095.122496</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </soot>
+                    <SO4 description="Cruise SO4">
+                        <value>45812.04129</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </SO4>
+                    <energy_carrier_demand>
+                        <kerosene description="Demand for kerosene">
+                            <value>9.872494897e+15</value>
+                            <unit>J</unit>
+                            <lower_boundary>-1.797693135e+308</lower_boundary>
+                            <upper_boundary>1.797693135e+308</upper_boundary>
+                        </kerosene>
+                    </energy_carrier_demand>
+                </cruise>
+                <total description="Total aircraft operational emissions for the mission (LTO + cruise)">
+                    <CED description="Total CED">
+                        <value>1.297472221e+16</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CED>
+                    <CO2 description="Total CO2">
+                        <value>762208048.5</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CO2>
+                    <H2O description="Total H2O">
+                        <value>290457179.5</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </H2O>
+                    <NOx description="Total NOx">
+                        <value>3462785.679</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </NOx>
+                    <CO description="Total CO">
+                        <value>448739.6434</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CO>
+                    <SO2 description="Total SO2">
+                        <value>203320.0257</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </SO2>
+                    <CH4 description="Total CH4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CH4>
+                    <PM10 description="Total PM10">
+                        <value>4254.85607</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </PM10>
+                    <HC description="Total HC">
+                        <value>13159.50214</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </HC>
+                    <N2O description="Total N2O">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </N2O>
+                    <PFC description="Total PFC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Total NMVOC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </NMVOC>
+                    <soot description="Total soot">
+                        <value>4254.85607</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </soot>
+                    <SO4 description="Total SO4">
+                        <value>48409.52992</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </SO4>
+                    <energy_carrier_demand>
+                        <kerosene description="Demand for kerosene">
+                            <value>1.04322537e+16</value>
+                            <unit>J</unit>
+                            <lower_boundary>-1.797693135e+308</lower_boundary>
+                            <upper_boundary>1.797693135e+308</upper_boundary>
+                        </kerosene>
+                    </energy_carrier_demand>
+                </total>
+            </design_mission>
+            <study_mission description="Results of study mission calculation">
+                <lto_cycle description="Aircraft operational emissions during landing and takeoff cycle">
+                    <CED description="LTO CED">
+                        <value>1.271883172e+15</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CED>
+                    <CO2 description="LTO CO2">
+                        <value>74717560.44</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="LTO H2O">
+                        <value>28472871.55</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="LTO NOx">
+                        <value>260946.167</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="LTO CO">
+                        <value>185722.0024</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CO>
+                    <SO2 description="LTO SO2">
+                        <value>19931.01009</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </SO2>
+                    <CH4 description="LTO CH4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CH4>
+                    <PM10 description="LTO PM10">
+                        <value>263.1862901</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </PM10>
+                    <HC description="LTO HC">
+                        <value>1934.658515</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </HC>
+                    <N2O description="LTO N2O">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </N2O>
+                    <PFC description="LTO PFC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </PFC>
+                    <NMVOC description="LTO NMVOC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </NMVOC>
+                    <soot description="LTO soot">
+                        <value>263.1862901</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="LTO SO4">
+                        <value>4745.478592</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                    <energy_carrier_demand>
+                        <kerosene description="Demand for kerosene">
+                            <value>1.022650637e+15</value>
+                            <unit>J</unit>
+                            <lower_boundary>-1.797693135e+308</lower_boundary>
+                            <upper_boundary>1.797693135e+308</upper_boundary>
+                        </kerosene>
+                    </energy_carrier_demand>
+                    <c_soot_LTO_max description="Max soot concentration during LTO">
+                        <value>1.000133098e-06</value>
+                        <unit>1</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </c_soot_LTO_max>
+                </lto_cycle>
+                <cruise description="Aircraft operational emissions during cruise phase">
+                    <CED description="Cruise CED">
+                        <value>7.374841093e+15</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CED>
+                    <CO2 description="Cruise CO2">
+                        <value>433239582.9</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </CO2>
+                    <H2O description="Cruise H2O">
+                        <value>165096062.1</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </H2O>
+                    <NOx description="Cruise NOx">
+                        <value>1963526.291</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </NOx>
+                    <CO description="Cruise CO">
+                        <value>294511.9888</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CO>
+                    <SO2 description="Cruise SO2">
+                        <value>115567.2435</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </SO2>
+                    <CH4 description="Cruise CH4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CH4>
+                    <PM10 description="Cruise PM10">
+                        <value>2027.899444</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </PM10>
+                    <HC description="Cruise HC">
+                        <value>7693.805664</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </HC>
+                    <N2O description="Cruise N2O">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </N2O>
+                    <PFC description="Cruise PFC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Cruise NMVOC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </NMVOC>
+                    <soot description="Cruise soot">
+                        <value>2027.899444</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </soot>
+                    <SO4 description="Cruise SO4">
+                        <value>27516.01035</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>inf</upper_boundary>
+                    </SO4>
+                    <energy_carrier_demand>
+                        <kerosene description="Demand for kerosene">
+                            <value>5.92970023e+15</value>
+                            <unit>J</unit>
+                            <lower_boundary>-1.797693135e+308</lower_boundary>
+                            <upper_boundary>1.797693135e+308</upper_boundary>
+                        </kerosene>
+                    </energy_carrier_demand>
+                </cruise>
+                <total description="Total aircraft operational emissions for the mission (LTO + cruise)">
+                    <CED description="Total CED">
+                        <value>8.646724265e+15</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CED>
+                    <CO2 description="Total CO2">
+                        <value>507957143.3</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CO2>
+                    <H2O description="Total H2O">
+                        <value>193568933.6</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </H2O>
+                    <NOx description="Total NOx">
+                        <value>2224472.458</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </NOx>
+                    <CO description="Total CO">
+                        <value>480233.9912</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CO>
+                    <SO2 description="Total SO2">
+                        <value>135498.2535</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </SO2>
+                    <CH4 description="Total CH4">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </CH4>
+                    <PM10 description="Total PM10">
+                        <value>2291.085734</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </PM10>
+                    <HC description="Total HC">
+                        <value>9628.46418</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </HC>
+                    <N2O description="Total N2O">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </N2O>
+                    <PFC description="Total PFC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </PFC>
+                    <NMVOC description="Total NMVOC">
+                        <value>0</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </NMVOC>
+                    <soot description="Total soot">
+                        <value>2291.085734</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </soot>
+                    <SO4 description="Total SO4">
+                        <value>32261.48894</value>
+                        <unit>kg</unit>
+                        <lower_boundary>-1e+30</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </SO4>
+                    <energy_carrier_demand>
+                        <kerosene description="Demand for kerosene">
+                            <value>6.952350866e+15</value>
+                            <unit>J</unit>
+                            <lower_boundary>-1.797693135e+308</lower_boundary>
+                            <upper_boundary>1.797693135e+308</upper_boundary>
+                        </kerosene>
+                    </energy_carrier_demand>
+                </total>
+            </study_mission>
+        </emissions_aircraft_operations>
+        <emissions_aircraft_maintenance>
+            <total>
+                <CED description="Total maintenance CED">
+                    <value>3.710723673e+13</value>
+                    <unit>J</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CED>
+                <CO2 description="Total maintenance CO2">
+                    <value>1670059.447</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO2>
+                <H2O description="Total maintenance H2O">
+                    <value>10600860.05</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </H2O>
+                <NOx description="Total maintenance NOx">
+                    <value>2523.540338</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NOx>
+                <CO description="Total maintenance CO">
+                    <value>2165.267549</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO>
+                <SO2 description="Total maintenance SO2">
+                    <value>3924.162732</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO2>
+                <CH4 description="Total maintenance CH4">
+                    <value>3789.462252</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CH4>
+                <PM10 description="Total maintenance PM10">
+                    <value>23.63092111</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PM10>
+                <HC description="Total maintenance HC">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </HC>
+                <N2O description="Total maintenance N2O">
+                    <value>42905086.99</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </N2O>
+                <PFC description="Total maintenance PFC">
+                    <value>813.3045234</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PFC>
+                <NMVOC description="Total maintenance NMVOC">
+                    <value>62541414.36</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NMVOC>
+                <soot description="Total maintenance soot">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </soot>
+                <SO4 description="Total maintenance SO4">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO4>
+            </total>
+            <labour>
+                <CED description="Maintenance labour CED">
+                    <value>2.17025824e+13</value>
+                    <unit>J</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CED>
+                <CO2 description="Maintenance labour CO2">
+                    <value>1019289.034</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO2>
+                <H2O description="Maintenance labour H2O">
+                    <value>4813993.939</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </H2O>
+                <NOx description="Maintenance labour NOx">
+                    <value>1252.741627</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NOx>
+                <CO description="Maintenance labour CO">
+                    <value>512.6763689</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO>
+                <SO2 description="Maintenance labour SO2">
+                    <value>1811.24786</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO2>
+                <CH4 description="Maintenance labour CH4">
+                    <value>2425.970494</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CH4>
+                <PM10 description="Maintenance labour PM10">
+                    <value>13.13437345</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PM10>
+                <HC description="Maintenance labour HC">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </HC>
+                <N2O description="Maintenance labour N2O">
+                    <value>22884338.12</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </N2O>
+                <PFC description="Maintenance labour PFC">
+                    <value>433.7932169</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PFC>
+                <NMVOC description="Maintenance labour NMVOC">
+                    <value>33357789.79</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NMVOC>
+                <soot description="Maintenance labour soot">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </soot>
+                <SO4 description="Maintenance labour SO4">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO4>
+            </labour>
+            <spare_parts>
+                <CED description="Spare parts production CED">
+                    <value>1.540465433e+13</value>
+                    <unit>J</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CED>
+                <CO2 description="Spare parts production CO2">
+                    <value>650770.4126</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO2>
+                <H2O description="Spare parts production H2O">
+                    <value>5786866.108</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </H2O>
+                <NOx description="Spare parts production NOx">
+                    <value>1270.798711</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NOx>
+                <CO description="Spare parts production CO">
+                    <value>1652.59118</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO>
+                <SO2 description="Spare parts production SO2">
+                    <value>2112.914872</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO2>
+                <CH4 description="Spare parts production CH4">
+                    <value>1363.491758</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CH4>
+                <PM10 description="Spare parts production PM10">
+                    <value>10.49654766</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PM10>
+                <HC description="Spare parts production HC">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </HC>
+                <N2O description="Spare parts production N2O">
+                    <value>20020748.87</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </N2O>
+                <PFC description="Spare parts production PFC">
+                    <value>379.5113065</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PFC>
+                <NMVOC description="Spare parts production NMVOC">
+                    <value>29183624.57</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NMVOC>
+                <soot description="Spare parts production soot">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </soot>
+                <SO4 description="Spare parts production SO4">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO4>
+            </spare_parts>
+        </emissions_aircraft_maintenance>
+        <emissions_aircraft_end_of_life>
+            <total>
+                <CED description="Total EoL CED">
+                    <value>-2.110327795e+12</value>
+                    <unit>J</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CED>
+                <CO2 description="Total EoL CO2">
+                    <value>-140395.2081</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO2>
+                <H2O description="Total EoL H2O">
+                    <value>-1984732.896</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </H2O>
+                <NOx description="Total EoL NOx">
+                    <value>-313.2842581</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NOx>
+                <CO description="Total EoL CO">
+                    <value>-589.620284</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO>
+                <SO2 description="Total EoL SO2">
+                    <value>-733.760899</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO2>
+                <CH4 description="Total EoL CH4">
+                    <value>-335.6143898</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CH4>
+                <PM10 description="Total EoL PM10">
+                    <value>0.1023222692</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PM10>
+                <HC description="Total EoL HC">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </HC>
+                <N2O description="Total EoL N2O">
+                    <value>112704.6764</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </N2O>
+                <PFC description="Total EoL PFC">
+                    <value>2.136418537</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PFC>
+                <NMVOC description="Total EoL NMVOC">
+                    <value>164286.1107</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NMVOC>
+                <soot description="Total EoL soot">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </soot>
+                <SO4 description="Total EoL SO4">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO4>
+                <energy_carrier_demand>
+                    <kerosene description="Demand for kerosene">
+                        <value>2.10749177e+11</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </kerosene>
+                </energy_carrier_demand>
+            </total>
+            <airframe>
+                <CED description="Airframe EoL CED">
+                    <value>-2.509668146e+12</value>
+                    <unit>J</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CED>
+                <CO2 description="Airframe EoL CO2">
+                    <value>-156991.5292</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO2>
+                <H2O description="Airframe EoL H2O">
+                    <value>-1991057.311</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </H2O>
+                <NOx description="Airframe EoL NOx">
+                    <value>-387.7831847</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NOx>
+                <CO description="Airframe EoL CO">
+                    <value>-601.4427854</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO>
+                <SO2 description="Airframe EoL SO2">
+                    <value>-738.1879901</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO2>
+                <CH4 description="Airframe EoL CH4">
+                    <value>-335.6143898</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CH4>
+                <PM10 description="Airframe EoL PM10">
+                    <value>0.01168626282</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PM10>
+                <HC description="Airframe EoL HC">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </HC>
+                <N2O description="Airframe EoL N2O">
+                    <value>112704.6764</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </N2O>
+                <PFC description="Airframe EoL PFC">
+                    <value>2.136418537</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PFC>
+                <NMVOC description="Airframe EoL NMVOC">
+                    <value>164286.1107</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NMVOC>
+                <soot description="Airframe EoL soot">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </soot>
+                <SO4 description="Airframe EoL SO4">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO4>
+                <energy_carrier_demand>
+                    <kerosene description="Demand for kerosene">
+                        <value>0</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </kerosene>
+                </energy_carrier_demand>
+            </airframe>
+            <engine>
+                <CED description="Engine EoL CED">
+                    <value>1.37229008e+11</value>
+                    <unit>J</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CED>
+                <CO2 description="Engine EoL CO2">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO2>
+                <H2O description="Engine EoL H2O">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </H2O>
+                <NOx description="Engine EoL NOx">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NOx>
+                <CO description="Engine EoL CO">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO>
+                <SO2 description="Engine EoL SO2">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO2>
+                <CH4 description="Engine EoL CH4">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CH4>
+                <PM10 description="Engine EoL PM10">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PM10>
+                <HC description="Engine EoL HC">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </HC>
+                <N2O description="Engine EoL N2O">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </N2O>
+                <PFC description="Engine EoL PFC">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PFC>
+                <NMVOC description="Engine EoL NMVOC">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NMVOC>
+                <soot description="Engine EoL soot">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </soot>
+                <SO4 description="Engine EoL SO4">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO4>
+            </engine>
+        </emissions_aircraft_end_of_life>
+        <emissions_aircraft_testing>
+            <total>
+                <CED description="Total CED">
+                    <value>2.53583412e+15</value>
+                    <unit>J</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CED>
+                <CO2 description="Total CO2">
+                    <value>78449246.49</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO2>
+                <H2O description="Total H2O">
+                    <value>307130830.4</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </H2O>
+                <NOx description="Total NOx">
+                    <value>293112.0913</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NOx>
+                <CO description="Total CO">
+                    <value>111199.9996</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO>
+                <SO2 description="Total SO2">
+                    <value>120850.5607</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO2>
+                <CH4 description="Total CH4">
+                    <value>75431.70812</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CH4>
+                <PM10 description="Total PM10">
+                    <value>983.9542219</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PM10>
+                <HC description="Total HC">
+                    <value>1159.95501</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </HC>
+                <N2O description="Total N2O">
+                    <value>1362807546</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </N2O>
+                <PFC description="Total PFC">
+                    <value>25833.24308</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PFC>
+                <NMVOC description="Total NMVOC">
+                    <value>1986522284</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NMVOC>
+                <soot description="Total soot">
+                    <value>266.1045454</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </soot>
+                <SO4 description="Total SO4">
+                    <value>0.128588546</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO4>
+                <energy_carrier_demand>
+                    <kerosene description="Demand for kerosene">
+                        <value>5.801450583e+14</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </kerosene>
+                </energy_carrier_demand>
+            </total>
+        </emissions_aircraft_testing>
+        <emissions_energy_carrier_production>
+            <total>
+                <CED description="Total fuel production CED">
+                    <value>8.793105559e+16</value>
+                    <unit>J</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CED>
+                <CO2 description="Total fuel production CO2">
+                    <value>241136214.8</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO2>
+                <H2O description="Total fuel production H2O">
+                    <value>173060361.1</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </H2O>
+                <NOx description="Total fuel production NOx">
+                    <value>774260.4869</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NOx>
+                <CO description="Total fuel production CO">
+                    <value>390411.006</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CO>
+                <SO2 description="Total fuel production SO2">
+                    <value>1623978.541</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO2>
+                <CH4 description="Total fuel production CH4">
+                    <value>3256158.977</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </CH4>
+                <PM10 description="Total fuel production PM10">
+                    <value>41665.71337</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PM10>
+                <HC description="Total fuel production HC">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </HC>
+                <N2O description="Total fuel production N2O">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </N2O>
+                <PFC description="Total fuel production PFC">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </PFC>
+                <NMVOC description="Total fuel production NMVOC">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </NMVOC>
+                <soot description="Total fuel production soot">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </soot>
+                <SO4 description="Total fuel production SO4">
+                    <value>0</value>
+                    <unit>kg</unit>
+                    <lower_boundary>-1e+30</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </SO4>
+                <energy_carrier_demand>
+                    <diesel description="Demand for diesel">
+                        <value>6253987156</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </diesel>
+                    <kerosene description="Demand for kerosene">
+                        <value>3.535023336e+16</value>
+                        <unit>J</unit>
+                        <lower_boundary>-1.797693135e+308</lower_boundary>
+                        <upper_boundary>1.797693135e+308</upper_boundary>
+                    </kerosene>
+                </energy_carrier_demand>
+            </total>
+        </emissions_energy_carrier_production>
+        <air_quality_index description="Results of the air quality index calculation">
+            <design_mission description="AQI results for the design_mission based on the method by Schaefer, using LTO emissions.">
+                <AQI description="Air quality index according to Schaefer">
+                    <value>0.266</value>
+                    <unit>1</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </AQI>
+                <tolerance_factor_CO description="Tolerance factor for CO">
+                    <value>0.165</value>
+                    <unit>1</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </tolerance_factor_CO>
+                <tolerance_factor_HC description="Tolerance factor for HC">
+                    <value>0.011</value>
+                    <unit>1</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </tolerance_factor_HC>
+                <tolerance_factor_NOx description="Tolerance factor for NOx">
+                    <value>0.557</value>
+                    <unit>1</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </tolerance_factor_NOx>
+                <tolerance_factor_soot description="Tolerance factor for soot">
+                    <value>0.333</value>
+                    <unit>1</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </tolerance_factor_soot>
+            </design_mission>
+            <study_mission description="AQI results for the study_mission based on the method by Schaefer, using LTO emissions.">
+                <AQI description="Air quality index according to Schaefer">
+                    <value>0.246</value>
+                    <unit>1</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </AQI>
+                <tolerance_factor_CO description="Tolerance factor for CO">
+                    <value>0.165</value>
+                    <unit>1</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </tolerance_factor_CO>
+                <tolerance_factor_HC description="Tolerance factor for HC">
+                    <value>0.01</value>
+                    <unit>1</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </tolerance_factor_HC>
+                <tolerance_factor_NOx description="Tolerance factor for NOx">
+                    <value>0.476</value>
+                    <unit>1</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </tolerance_factor_NOx>
+                <tolerance_factor_soot description="Tolerance factor for soot">
+                    <value>0.331</value>
+                    <unit>1</unit>
+                    <lower_boundary>-1.797693135e+308</lower_boundary>
+                    <upper_boundary>1.797693135e+308</upper_boundary>
+                </tolerance_factor_soot>
+            </study_mission>
+        </air_quality_index>
+        <climate_model>
+            <ATR description="Average Temperature Response per year for operating phase">
+                <value>1.958918722e-06</value>
+                <unit>K</unit>
+                <lower_boundary>0</lower_boundary>
+                <upper_boundary>1e+20</upper_boundary>
+            </ATR>
+        </climate_model>
+    </calculation_results>
+</assessment_file>

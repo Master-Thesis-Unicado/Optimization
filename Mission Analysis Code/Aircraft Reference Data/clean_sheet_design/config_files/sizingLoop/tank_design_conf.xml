@@ -1,0 +1,590 @@
+<module_configuration_file Name="Tank Design Runtime Configuration">
+        <control_settings description="General control settings for this tool">
+            <aircraft_exchange_file_name description="Specify the name of the exchange file">
+                <value>UNICADO-SMR-01.xml</value>
+            </aircraft_exchange_file_name>
+            <aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+                <value>../projects/UNICADO/UNICADO-SMR-01/</value>
+            </aircraft_exchange_file_directory>
+            <own_tool_level description="Specify the tool level of this tool">
+                <value>2</value>
+            </own_tool_level>
+            <console_output description="Selector to specify the console output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+                <value>mode_1</value>
+            </console_output>
+            <log_file_output description="Selector to specify the log file output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+                <value>mode_1</value>
+            </log_file_output>
+            <plot_output description="Specify the way plotting shall be handled">
+                <enable description="Switch to enable plotting. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                </enable>
+                <copy_plotting_files description="Switch if plotting files shall be copied. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                </copy_plotting_files>
+                <delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder. Switch: true (On) / false (Off)">
+                    <value>true</value>
+                </delete_plotting_files_from_tool_folder>
+            </plot_output>
+            <report_output description="Switch to generate an HTML report. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </report_output>
+            <tex_report description="Switch to generate a Tex report. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </tex_report>
+            <write_info_files description="Switch to generate info files. Switch: true (On) / false (Off)">
+                <value>false</value>
+            </write_info_files>
+            <log_file description="Specify the name of the log file">
+                <value>tank_design.log</value>
+            </log_file>
+            <inkscape_path description="Path to the inkscape application (DEFAULT: Use inkscape from the UNICADO repo structure)">
+                <value>C:/Programs/UNICADOworkflow/inkscape/</value>
+            </inkscape_path>
+            <gnuplot_path description="Path to the gnuplot application (DEFAULT: Use gnuplot from the UNICADO repo structure)">
+                <value>C:/Programs/UNICADOworkflow/gnuplot/</value>
+            </gnuplot_path>
+            <program_specific_control_settings description="Program specific control settings for this tool">
+                <xml_output description="Switch to export module specific data to XML ('true': On, 'false': Off)">
+                    <value>true</value>
+                </xml_output>
+            </program_specific_control_settings>
+        </control_settings>
+	    <program_settings description="program settings">
+            <configuration ID="tube_and_wing">
+                <fidelity_name description="Select fidelity name (options: empirical, numerical,...).">
+                    <value>empirical</value>
+                </fidelity_name>
+                <method_name description="Select method name (options: tank_design_tu_berlin).">
+                    <value>tank_design_tu_berlin</value>
+                    <default>tank_design_tu_berlin</default>
+                </method_name>
+                <fidelity ID="empirical">
+                    <tank_design_tu_berlin description="Empirical method to design the tanks of a tube-and-wing aircraft.">
+                        <general description="General (energy carrier independent) parameter.">
+                            <mass_technology_factor description="Mass technology factor accounting for mass savings (smaller than 1) or gains (greater than 1).">
+                                <value>1</value>
+                                <unit>1</unit>
+                                <lower_boundary>0.5</lower_boundary>
+                                <upper_boundary>1.5</upper_boundary>
+                                <default>1</default>
+                            </mass_technology_factor>
+                        </general>
+                        <specific description="Specific (energy carrier dependent) parameter.">
+                            
+                            <kerosene_tank_design_parameter description="Parameters for kerosene tank design.">
+                                <obelisk_calculation_method description="Obelisk volume calculation method (Torenbeek or Simpson).">
+                                    <value>Simpson</value>
+                                    <default>Torenbeek</default>
+                                </obelisk_calculation_method>
+                                <a_to_d_factor description="Factor ...">
+                                    <value>0.9</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.8</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>0.9</default>
+                                </a_to_d_factor>
+                                <factor_volume_usable description="Factor accounting for volume loss due to internal structure of integral tanks.">
+                                    <value>0.95</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.8</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>0.95</default>
+                                </factor_volume_usable>
+                                <temperature_expansion_allowance description="Factor accounting for temperature-dependent expansion of fuel.">
+                                    <value>0.95</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.9</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>0.95</default>
+                                </temperature_expansion_allowance>
+                                <buffer_inner_tank_segment description="Spanwise buffer of inner tank segment (in percent).">
+                                    <value>0.00</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.00</lower_boundary>
+                                    <upper_boundary>0.02</upper_boundary>
+                                    <default>0.00</default>
+                                </buffer_inner_tank_segment>
+                                <buffer_outer_tank_segment description="Spanwise buffer of outer tank segment (in percent).">
+                                    <value>0.01</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.01</lower_boundary>
+                                    <upper_boundary>0.02</upper_boundary>
+                                    <default>0.01</default>
+                                </buffer_outer_tank_segment>
+                                <buffer_center_tank_segment description="Spanwise buffer of inner tank segment (in percent).">
+                                    <value>0.01</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.01</lower_boundary>
+                                    <upper_boundary>0.02</upper_boundary>
+                                    <default>0.01</default>
+                                </buffer_center_tank_segment>
+                            </kerosene_tank_design_parameter>
+                            
+                            <liquid_hydrogen_tank_design_parameter description="Parameters for liquid hydrogen tank design.">
+                                
+                                <type_end_cap description="Tank end cap type (options: hemispherical, torispherical).">
+                                    <value>torispherical</value>
+                                    <default>torispherical</default>
+                                </type_end_cap>
+                                <internal_pressure description="Internal tank pressure (venting pressure).">
+                                    <value>1.5</value>
+                                    <unit>bar</unit>
+                                    <lower_boundary>1</lower_boundary>
+                                    <upper_boundary>5</upper_boundary>
+                                    <default>1.5</default>
+                                </internal_pressure>
+                                
+                                <type_insulation description="Insulation type (options: internal, external).">
+                                    <value>external</value>
+                                    <default>external</default>
+                                </type_insulation>
+                                <material_insulation description="Insulation material (options: polyurethane_foam).">
+                                    <value>polyurethane_foam</value>
+                                    <default>polyurethane_foam</default>
+                                </material_insulation>
+                                <thickness_insulation description="Thickness of insulation.">
+                                    <value>0.2</value>
+                                    <unit>m</unit>
+                                    <lower_boundary>0</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>0.2</default>
+                                </thickness_insulation>
+                                <density_insulation description="Density of insulation material (for polyurethane foam: 32).">
+                                    <value>32</value>
+                                    <unit>kg/m^3</unit>
+                                    <lower_boundary>0</lower_boundary>
+                                    <upper_boundary>100</upper_boundary>
+                                    <default>32</default>
+                                </density_insulation>
+                                
+                                <material_wall description="Tank wall material (options: aluminum).">
+                                    <value>aluminum</value>
+                                    <default>aluminum</default>
+                                </material_wall>
+                                <density_wall description="Density of wall material (for aluminum: 2850).">
+                                    <value>2850</value>
+                                    <unit>kg/m^3</unit>
+                                    <lower_boundary>0</lower_boundary>
+                                    <upper_boundary>5000</upper_boundary>
+                                    <default>2850</default>
+                                </density_wall>
+                                <thickness_wall_calculation_method description="Method for calculation of wall thickness (options: asme, ad-2000).">
+                                    <value>asme</value>
+                                    <default>asme</default>
+                                </thickness_wall_calculation_method>
+                                <tensile_stress_allowable description="Tensile stress allowable for wall material (for aluminum: 172 N/mm).">
+                                    <value>172</value>
+                                    <unit>N/mm</unit>
+                                    <lower_boundary>0</lower_boundary>
+                                    <upper_boundary>500</upper_boundary>
+                                    <default>172</default>
+                                </tensile_stress_allowable>
+                                <mass_baffle description="Additional mass of baffles.">
+                                    <value>45</value>
+                                    <unit>kg</unit>
+                                    <lower_boundary>0</lower_boundary>
+                                    <upper_boundary>100</upper_boundary>
+                                    <default>45</default>
+                                </mass_baffle>
+                                <mass_pumps description="Additional mass of pumps.">
+                                    <value>9.26</value>
+                                    <unit>kg</unit>
+                                    <lower_boundary>0</lower_boundary>
+                                    <upper_boundary>100</upper_boundary>
+                                    <default>9.26</default>
+                                </mass_pumps>
+                                <mass_vapor_barrier description="Mass of vapor barrier.">
+                                    <value>24</value>
+                                    <unit>kg</unit>
+                                    <lower_boundary>0</lower_boundary>
+                                    <upper_boundary>100</upper_boundary>
+                                    <default>24</default>
+                                </mass_vapor_barrier>
+                            </liquid_hydrogen_tank_design_parameter>
+                            
+                            <miscellaneous description="Miscellaneous parameter.">
+                                
+                                <factor_usable_diameter description="Usable fraction of fuselage outside diameter.">
+                                    <value>0.938</value>
+                                    <unit>percent/100</unit>
+                                    <lower_boundary>0.938</lower_boundary>
+                                    <upper_boundary>0.938</upper_boundary>
+                                    <default>0.938</default>
+                                </factor_usable_diameter>
+                                <factor_volume_allowance description="Additional allowance for tank volume.">
+                                    <value>0.072</value>
+                                    <unit>percent/100</unit>
+                                    <lower_boundary>0.072</lower_boundary>
+                                    <upper_boundary>0.072</upper_boundary>
+                                    <default>0.072</default>
+                                </factor_volume_allowance>
+                            </miscellaneous>
+                        </specific>
+                    </tank_design_tu_berlin>
+                </fidelity>
+            </configuration>
+            <configuration ID="blended_wing_body">
+                <fidelity_name description="Select fidelity name (options: empirical).">
+                    <value>empirical</value>
+                </fidelity_name>
+                <method_name description="Select method name (options: bwb_tank_design_tu_berlin).">
+                    <value>bwb_tank_design_tu_berlin</value>
+                    <default>bwb_tank_design_tu_berlin</default>
+                </method_name>
+                <fidelity ID="empirical">
+                    <bwb_tank_design_tu_berlin description="Empirical method to design the tanks of a blended-wing-body aircraft.">
+                        <general description="General (energy carrier independent) parameter.">
+                            <mass_technology_factor description="Mass technology factor accounting for mass savings (smaller than 1) or gains (greater than 1).">
+                                <value>1</value>
+                                <unit>1</unit>
+                                <lower_boundary>0.5</lower_boundary>
+                                <upper_boundary>1.5</upper_boundary>
+                                <default>1</default>
+                            </mass_technology_factor>
+                        </general>
+                        <specific description="Specific (energy carrier dependent) parameter.">
+                            
+                            <kerosene_tank_design_parameter description="Parameters for kerosene tank design.">
+                                <obelisk_calculation_method description="Obelisk volume calculation method (Torenbeek or Simpson).">
+                                    <value>Simpson</value>
+                                    <default>Torenbeek</default>
+                                </obelisk_calculation_method>
+                                <a_to_d_factor description="Factor ...">
+                                    <value>0.9</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.8</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>0.9</default>
+                                </a_to_d_factor>
+                                <factor_volume_usable description="Factor accounting for volume loss due to internal structure of integral tanks.">
+                                    <value>0.95</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.8</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>0.95</default>
+                                </factor_volume_usable>
+                                <temperature_expansion_allowance description="Factor accounting for temperature-dependent expansion of fuel.">
+                                    <value>0.95</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.9</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>0.95</default>
+                                </temperature_expansion_allowance>
+                                <buffer_inner_tank_segment description="Spanwise buffer of inner tank segment (in percent).">
+                                    <value>0.00</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.00</lower_boundary>
+                                    <upper_boundary>0.02</upper_boundary>
+                                    <default>0.00</default>
+                                </buffer_inner_tank_segment>
+                                <buffer_outer_tank_segment description="Spanwise buffer of outer tank segment (in percent).">
+                                    <value>0.01</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.01</lower_boundary>
+                                    <upper_boundary>0.02</upper_boundary>
+                                    <default>0.01</default>
+                                </buffer_outer_tank_segment>
+                                <buffer_center_tank_segment description="Spanwise buffer of inner tank segment (in percent).">
+                                    <value>0.01</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.01</lower_boundary>
+                                    <upper_boundary>0.02</upper_boundary>
+                                    <default>0.01</default>
+                                </buffer_center_tank_segment>
+                                <buffer_inner_blend_tank_segment description="Spanwise buffer of blend tank segment (in percent).">
+                                    <value>0.10</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.05</lower_boundary>
+                                    <upper_boundary>0.15</upper_boundary>
+                                    <default>0.01</default>
+                                </buffer_inner_blend_tank_segment>
+                            </kerosene_tank_design_parameter>
+                            
+                            <liquid_hydrogen_tank_design_parameter description="Parameters for liquid hydrogen tank design.">
+                                
+                                <type_end_cap description="Tank end cap type (options: hemispherical, torispherical).">
+                                    <value>torispherical</value>
+                                    <default>torispherical</default>
+                                </type_end_cap>
+                                <internal_pressure description="Internal tank pressure (venting pressure).">
+                                    <value>1.5</value>
+                                    <unit>bar</unit>
+                                    <lower_boundary>1</lower_boundary>
+                                    <upper_boundary>5</upper_boundary>
+                                    <default>1.5</default>
+                                </internal_pressure>
+                                
+                                <type_insulation description="Insulation type (options: internal, external).">
+                                    <value>external</value>
+                                    <default>external</default>
+                                </type_insulation>
+                                <material_insulation description="Insulation material (options: polyurethane_foam).">
+                                    <value>polyurethane_foam</value>
+                                    <default>polyurethane_foam</default>
+                                </material_insulation>
+                                <thickness_insulation description="Thickness of insulation.">
+                                    <value>0.2</value>
+                                    <unit>m</unit>
+                                    <lower_boundary>0</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>0.2</default>
+                                </thickness_insulation>
+                                <density_insulation description="Density of insulation material (for polyurethane foam: 32).">
+                                    <value>32</value>
+                                    <unit>kg/m^3</unit>
+                                    <lower_boundary>0</lower_boundary>
+                                    <upper_boundary>100</upper_boundary>
+                                    <default>32</default>
+                                </density_insulation>
+                                
+                                <material_wall description="Tank wall material (options: aluminum).">
+                                    <value>aluminum</value>
+                                    <default>aluminum</default>
+                                </material_wall>
+                                <density_wall description="Density of wall material (for aluminum: 2850).">
+                                    <value>2850</value>
+                                    <unit>kg/m^3</unit>
+                                    <lower_boundary>0</lower_boundary>
+                                    <upper_boundary>5000</upper_boundary>
+                                    <default>2850</default>
+                                </density_wall>
+                                <thickness_wall_calculation_method description="Method for calculation of wall thickness (options: asme, ad-2000).">
+                                    <value>asme</value>
+                                    <default>asme</default>
+                                </thickness_wall_calculation_method>
+                                <tensile_stress_allowable description="Tensile stress allowable for wall material (for aluminum: 172 N/mm).">
+                                    <value>172</value>
+                                    <unit>N/mm</unit>
+                                    <lower_boundary>0</lower_boundary>
+                                    <upper_boundary>500</upper_boundary>
+                                    <default>172</default>
+                                </tensile_stress_allowable>
+                                <mass_baffle description="Additional mass of baffles.">
+                                    <value>45</value>
+                                    <unit>kg</unit>
+                                    <lower_boundary>0</lower_boundary>
+                                    <upper_boundary>100</upper_boundary>
+                                    <default>45</default>
+                                </mass_baffle>
+                                <mass_pumps description="Additional mass of pumps.">
+                                    <value>9.26</value>
+                                    <unit>kg</unit>
+                                    <lower_boundary>0</lower_boundary>
+                                    <upper_boundary>100</upper_boundary>
+                                    <default>9.26</default>
+                                </mass_pumps>
+                                <mass_vapor_barrier description="Mass of vapor barrier.">
+                                    <value>24</value>
+                                    <unit>kg</unit>
+                                    <lower_boundary>0</lower_boundary>
+                                    <upper_boundary>100</upper_boundary>
+                                    <default>24</default>
+                                </mass_vapor_barrier>
+                            </liquid_hydrogen_tank_design_parameter>
+                            
+                            <miscellaneous>
+                                
+                                <factor_usable_diameter description="Usable fraction of fuselage outside diameter.">
+                                    <value>0.938</value>
+                                    <unit>percent/100</unit>
+                                    <lower_boundary>0.938</lower_boundary>
+                                    <upper_boundary>0.938</upper_boundary>
+                                    <default>0.938</default>
+                                </factor_usable_diameter>
+                                <factor_volume_allowance description="Additional allowance for tank volume.">
+                                    <value>0.072</value>
+                                    <unit>percent/100</unit>
+                                    <lower_boundary>0.072</lower_boundary>
+                                    <upper_boundary>0.072</upper_boundary>
+                                    <default>0.072</default>
+                                </factor_volume_allowance>
+                            </miscellaneous>
+                        </specific>
+                    </bwb_tank_design_tu_berlin>
+                </fidelity>
+            </configuration>
+            <configuration ID="tandem_wing">
+                <fidelity_name description="Select fidelity name (options: empirical)">
+                    <value>empirical</value>
+                </fidelity_name>
+                <method_name description="Select method name (options: tw_tank_design_tu_berlin)">
+                    <value>tw_tank_design_tu_berlin</value>
+                    <default>tw_tank_design_tu_berlin</default>
+                </method_name>
+                <fidelity ID="empirical">
+                    <tw_tank_design_tu_berlin description="Empirical method to design the tanks of a tandem-wing aircraft.">
+                        <general description="General (energy carrier independent) parameter.">
+                            <mass_technology_factor description="Mass technology factor accounting for mass savings (smaller than 1) or gains (greater than 1).">
+                                <value>1</value>
+                                <unit>1</unit>
+                                <lower_boundary>0.5</lower_boundary>
+                                <upper_boundary>1.5</upper_boundary>
+                                <default>1</default>
+                            </mass_technology_factor>
+                        </general>
+                        <specific description="Specific (energy carrier dependent) parameter.">
+                            
+                            <kerosene_tank_design_parameter description="Parameters for kerosene tank design.">
+                                <obelisk_calculation_method description="Obelisk volume calculation method (Torenbeek or Simpson).">
+                                    <value>Simpson</value>
+                                    <default>Torenbeek</default>
+                                </obelisk_calculation_method>
+                                <a_to_d_factor description="Factor ...">
+                                    <value>0.9</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.8</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>0.9</default>
+                                </a_to_d_factor>
+                                <factor_volume_usable description="Factor accounting for volume loss due to internal structure of integral tanks.">
+                                    <value>0.95</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.8</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>0.95</default>
+                                </factor_volume_usable>
+                                <temperature_expansion_allowance description="Factor accounting for temperature-dependent expansion of fuel.">
+                                    <value>0.95</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.9</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>0.95</default>
+                                </temperature_expansion_allowance>
+                                <buffer_inner_tank_segment description="Spanwise buffer of inner tank segment (in percent).">
+                                    <value>0.00</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.00</lower_boundary>
+                                    <upper_boundary>0.02</upper_boundary>
+                                    <default>0.00</default>
+                                </buffer_inner_tank_segment>
+                                <buffer_outer_tank_segment description="Spanwise buffer of outer tank segment (in percent).">
+                                    <value>0.01</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.01</lower_boundary>
+                                    <upper_boundary>0.02</upper_boundary>
+                                    <default>0.01</default>
+                                </buffer_outer_tank_segment>
+                                <buffer_center_tank_segment description="Spanwise buffer of inner tank segment (in percent).">
+                                    <value>0.01</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.01</lower_boundary>
+                                    <upper_boundary>0.02</upper_boundary>
+                                    <default>0.01</default>
+                                </buffer_center_tank_segment>
+                            </kerosene_tank_design_parameter>
+                            
+                            <miscellaneous>
+                                
+                                <factor_usable_diameter description="Usable fraction of fuselage outside diameter.">
+                                    <value>0.938</value>
+                                    <unit>percent/100</unit>
+                                    <lower_boundary>0.938</lower_boundary>
+                                    <upper_boundary>0.938</upper_boundary>
+                                    <default>0.938</default>
+                                </factor_usable_diameter>
+                                <factor_volume_allowance description="Additional allowance for tank volume.">
+                                    <value>0.072</value>
+                                    <unit>percent/100</unit>
+                                    <lower_boundary>0.072</lower_boundary>
+                                    <upper_boundary>0.072</upper_boundary>
+                                    <default>0.072</default>
+                                </factor_volume_allowance>
+                            </miscellaneous>
+                        </specific>
+                    </tw_tank_design_tu_berlin>
+                </fidelity>
+            </configuration>
+            <configuration ID="strut_braced_wing">
+                <fidelity_name description="Select fidelity name (options: empirical)">
+                    <value>empirical</value>
+                </fidelity_name>
+                <method_name description="Select method name (options: sbw_tank_design_tu_berlin)">
+                    <value>sbw_tank_design_tu_berlin</value>
+                    <default>sbw_tank_design_tu_berlin</default>
+                </method_name>
+                <fidelity ID="empirical">
+                    <sbw_tank_design_tu_berlin description="Empirical method to design the tanks of a strut-braced-wing aircraft.">
+                        <general description="General (energy carrier independent) parameter.">
+                            <mass_technology_factor description="Mass technology factor accounting for mass savings (smaller than 1) or gains (greater than 1).">
+                                <value>1</value>
+                                <unit>1</unit>
+                                <lower_boundary>0.5</lower_boundary>
+                                <upper_boundary>1.5</upper_boundary>
+                                <default>1</default>
+                            </mass_technology_factor>
+                        </general>
+                        <specific description="Specific (energy carrier dependent) parameter.">
+                            
+                            <kerosene_tank_design_parameter description="Parameters for kerosene tank design.">
+                                <obelisk_calculation_method description="Obelisk volume calculation method (Torenbeek or Simpson).">
+                                    <value>Simpson</value>
+                                    <default>Torenbeek</default>
+                                </obelisk_calculation_method>
+                                <a_to_d_factor description="Factor ...">
+                                    <value>0.9</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.8</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>0.9</default>
+                                </a_to_d_factor>
+                                <factor_volume_usable description="Factor accounting for volume loss due to internal structure of integral tanks.">
+                                    <value>0.95</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.8</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>0.95</default>
+                                </factor_volume_usable>
+                                <temperature_expansion_allowance description="Factor accounting for temperature-dependent expansion of fuel.">
+                                    <value>0.95</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.9</lower_boundary>
+                                    <upper_boundary>1.0</upper_boundary>
+                                    <default>0.95</default>
+                                </temperature_expansion_allowance>
+                                <buffer_inner_tank_segment description="Spanwise buffer of inner tank segment (in percent).">
+                                    <value>0.00</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.00</lower_boundary>
+                                    <upper_boundary>0.02</upper_boundary>
+                                    <default>0.00</default>
+                                </buffer_inner_tank_segment>
+                                <buffer_outer_tank_segment description="Spanwise buffer of outer tank segment (in percent).">
+                                    <value>0.01</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.01</lower_boundary>
+                                    <upper_boundary>0.02</upper_boundary>
+                                    <default>0.01</default>
+                                </buffer_outer_tank_segment>
+                                <buffer_center_tank_segment description="Spanwise buffer of inner tank segment (in percent).">
+                                    <value>0.01</value>
+                                    <unit>1</unit>
+                                    <lower_boundary>0.01</lower_boundary>
+                                    <upper_boundary>0.02</upper_boundary>
+                                    <default>0.01</default>
+                                </buffer_center_tank_segment>
+                            </kerosene_tank_design_parameter>
+                            
+                            <miscellaneous>
+                                
+                                <factor_usable_diameter description="Usable fraction of fuselage outside diameter.">
+                                    <value>0.938</value>
+                                    <unit>percent/100</unit>
+                                    <lower_boundary>0.938</lower_boundary>
+                                    <upper_boundary>0.938</upper_boundary>
+                                    <default>0.938</default>
+                                </factor_usable_diameter>
+                                <factor_volume_allowance description="Additional allowance for tank volume.">
+                                    <value>0.072</value>
+                                    <unit>percent/100</unit>
+                                    <lower_boundary>0.072</lower_boundary>
+                                    <upper_boundary>0.072</upper_boundary>
+                                    <default>0.072</default>
+                                </factor_volume_allowance>
+                            </miscellaneous>
+                        </specific>
+                    </sbw_tank_design_tu_berlin>
+                </fidelity>
+            </configuration>
+	    </program_settings>
+	</module_configuration_file>
