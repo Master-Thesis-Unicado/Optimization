@@ -28,7 +28,10 @@ from pyaerodynamics import Aircraft, Flight_Condition
 
 # Import atmospheric functions
 from atmosphere import Atmosphere
-from aircraft_config import G_C, S_REF_M2, M_MMO
+from aircraft_config import S_REF_M2, M_MMO
+
+# Get gravity constant from Atmosphere class (standard gravity)
+G_C = Atmosphere.G_C  # Standard gravity [m/s²] = 9.80665
 
 @dataclass
 class FlightState:
@@ -120,6 +123,11 @@ class PyAerodynamicsWrapper:
     def cl_max(self) -> float:
         """Get maximum lift coefficient for compatibility."""
         return self.params['CL_MAX']
+    
+    @property
+    def G_C(self) -> float:
+        """Get standard gravity constant [m/s²] from Atmosphere class."""
+        return Atmosphere.G_C
     
     def _create_flight_condition(self, altitude_m: float, mach: float) -> Flight_Condition:
         """Create a Flight_Condition object for the given altitude and Mach."""

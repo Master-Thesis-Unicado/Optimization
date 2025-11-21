@@ -25,7 +25,7 @@ import time
 
 from aircraft_config import (
     INITIAL_MASS_KG, ENGINE_STUB_PATH,
-    AtmosphericProperties, G_C, MAX_FUEL_KG, W_OE_KG, W_PL_KG
+    AtmosphericProperties, MAX_FUEL_KG, W_OE_KG, W_PL_KG
 )
 from mission_config import (
     TARGET_ALT_CLIMB_M,

@@ -255,7 +255,8 @@ class ClimbingCore:
             Raises:
                 RuntimeError: If strategy fails at first step and cannot create valid trajectory
             """
-            g0 = G_C
+            # Get gravity constant from aerodynamics wrapper (which gets it from Atmosphere class)
+            g0 = aero.G_C
 
             # Adjust initial velocity for constant speed and constant Mach strategies
             if "Constant speed" in label or "Constant Mach" in label:
@@ -1035,7 +1036,7 @@ class ClimbingCore:
                     D = aero.get_drag(M_avg, 0.5 * (h_curr + h_next), weight_avg)
                     T_per = eng.thrust_with_lever(lever_avg, M_avg, 0.5 * (h_curr + h_next))
                     T_tot = T_per * SystemConfiguration.N_ENGINES
-                    Ps = ((T_tot - D) * V) / (weight_avg * G_C)
+                    Ps = ((T_tot - D) * V) / (weight_avg * aero.G_C)
                     
                     if Ps > 0:
                         dt_array[i] = dh / Ps
@@ -1217,7 +1218,7 @@ class ClimbingCore:
                 return np.inf
             
             # Calculate specific excess power using dynamic mass
-            W = mass_kg * G_C
+            W = mass_kg * aero.G_C
             Ps = ((T_tot - D) * V) / W
             
             if not np.isfinite(Ps) or Ps <= 0:
@@ -1477,7 +1478,7 @@ class ClimbingCore:
             T, _, rho = _atmospheric_properties.isa_properties(float(alt))
             a = _atmospheric_properties.a_from_altitude(float(alt))
             V = mach * a
-            W = INITIAL_MASS_KG * G_C
+            W = INITIAL_MASS_KG * aero.G_C
             q_req = W / (S_REF_M2 * aero.cl_max)
             
             if rho > 0:

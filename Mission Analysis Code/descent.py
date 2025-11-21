@@ -7,7 +7,7 @@ from typing import Optional, Dict, Any, Tuple
 
 # Import aircraft configuration from centralized module
 from aircraft_config import (
-    G_C, a_from_altitude, isa_properties,
+    a_from_altitude, isa_properties,
     M_MIN_EFFECTIVE, M_MMO, N_ENGINES, S_REF_M2
 )
 
@@ -108,7 +108,8 @@ class DescentResults:
 def calculate_min_descent_mach(altitude_m: float, weight_kg: float, 
                                cl_max: Optional[float] = None,
                                s_ref_m2: Optional[float] = None,
-                               safety_margin: float = None) -> float:
+                               safety_margin: float = None,
+                               aero: Optional[PyAerodynamicsWrapper] = None) -> float:
     """
     Calculate minimum safe Mach number for descent based on stall speed.
     
@@ -158,7 +159,13 @@ def calculate_min_descent_mach(altitude_m: float, weight_kg: float,
             return 0.15
         
         # Calculate stall speed: V_stall = sqrt(2*W/(rho*S*CL_max))
-        weight_N = weight_kg * G_C
+        # Get gravity constant from aero if available, otherwise from Atmosphere
+        if aero is not None:
+            g = aero.G_C
+        else:
+            from atmosphere import Atmosphere
+            g = Atmosphere.G_C
+        weight_N = weight_kg * g
         q_min = weight_N / (s_ref_m2 * cl_max)  # Minimum dynamic pressure
         v_stall_mps = np.sqrt(2 * q_min / rho)  # Stall speed in m/s
         
@@ -466,7 +473,7 @@ class DescentCore:
                                 next_lever = lever_grid[next_lever_idx]
                                 
                                 # Calculate dynamic minimum Mach at next altitude using current weight
-                                min_mach_next = calculate_min_descent_mach(next_alt, current_weight)
+                                min_mach_next = calculate_min_descent_mach(next_alt, current_weight, aero=aero)
                                 
                                 # Check feasibility
                                 if (next_mach >= min_mach_next and 
@@ -665,7 +672,7 @@ class DescentCore:
                 fuel_flow_array[i] = mdot
                 
                 # Calculate Ps and descent rate
-                W = weight_array[i] * G_C
+                W = weight_array[i] * aero.G_C
                 Ps = ((T_tot - D) * V) / W if W > 0 else 0.0
                 Ps_array[i] = Ps
                 descent_rate_array[i] = Ps
@@ -765,7 +772,7 @@ class DescentCore:
                     if T_per_avg is None or T_per_avg < 0:
                         T_per_avg = 0.0
                     T_tot_avg = T_per_avg * N_ENGINES
-                    Ps_avg = ((T_tot_avg - D_avg) * V_avg) / (weight_avg * G_C)
+                    Ps_avg = ((T_tot_avg - D_avg) * V_avg) / (weight_avg * aero.G_C)
                     
                     if abs(Ps_avg) > 0.1:
                         dt_segment_array[i] = dh / abs(Ps_avg)
@@ -932,7 +939,7 @@ class DescentCore:
                 return np.inf
             
             # Calculate specific excess power
-            W = mass_kg * G_C
+            W = mass_kg * aero.G_C
             Ps = ((T_tot - D) * V) / W
             
             # For descent, Ps should be negative (energy dissipation)
@@ -1017,7 +1024,7 @@ class DescentCore:
             descent_fraction = k / (K - 1.0) if K > 1 else 0.0
             
             # Calculate dynamic minimum Mach at this altitude
-            min_mach_h = calculate_min_descent_mach(h, initial_weight_kg)
+            min_mach_h = calculate_min_descent_mach(h, initial_weight_kg, aero=aero)
             
             for i, M in enumerate(M_grid):
                 # Skip if Mach is out of valid range

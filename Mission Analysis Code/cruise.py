@@ -5,7 +5,7 @@ from typing import Optional, Tuple, Dict, Any
 
 # Import necessary components from existing modules
 from atmosphere import Atmosphere
-from aircraft_config import N_ENGINES, G_C
+from aircraft_config import N_ENGINES
 import climb
 from climb import ClimbingCore
 from pyaerodynamics_wrapper import PyAerodynamicsWrapper
@@ -30,7 +30,7 @@ from mission_config import (
 
 # Default cruise parameters (user adjustable)
 DEFAULT_TIME_STEP_S = 60.0    # 1 minute time steps
-GRAVITY_MS2 = G_C             # Standard gravity
+# Note: Gravity constant is now obtained from aero.G_C (PyAerodynamicsWrapper)
 
 # Import phase-specific parameters from centralized configuration
 THRUST_CONVERGENCE_TOL = THRUST_CONVERGENCE_TOL_CRUISE  # Newton tolerance for thrust balance
@@ -150,7 +150,8 @@ def calculate_required_thrust_cruise(drag_N: float, weight_kg: float,
     return float(drag_N)
 
 def calculate_specific_excess_power(thrust_total_N: float, drag_N: float, 
-                                  weight_kg: float, true_airspeed_mps: float) -> float:
+                                  weight_kg: float, true_airspeed_mps: float,
+                                  aero: PyAerodynamicsWrapper = None) -> float:
     """
     Calculate specific excess power for cruise.
     
@@ -163,11 +164,17 @@ def calculate_specific_excess_power(thrust_total_N: float, drag_N: float,
         drag_N: Drag force in Newtons  
         weight_kg: Aircraft weight in kg
         true_airspeed_mps: True airspeed in m/s
+        aero: Aerodynamics wrapper (for G_C access). If None, falls back to Atmosphere.G_C
         
     Returns:
         Specific excess power in m/s
     """
-    weight_N = weight_kg * GRAVITY_MS2
+    if aero is not None:
+        g = aero.G_C
+    else:
+        from atmosphere import Atmosphere
+        g = Atmosphere.G_C
+    weight_N = weight_kg * g
     return (thrust_total_N - drag_N) * true_airspeed_mps / weight_N
 
 def calculate_fuel_consumption_step(thrust_total_N: float, tsfc_kg_per_N_s: float, 
@@ -685,7 +692,7 @@ def simulate_steady_cruise(initial_state: CruiseInitialState,
         
         # Calculate specific excess power with current weight (dynamically updated)
         ps = calculate_specific_excess_power(thrust_total_N, drag_N, current_weight, 
-                                           true_airspeed_mps)
+                                           true_airspeed_mps, aero=aero)
         
         # Store current state
         time_array[step] = step * time_step_s

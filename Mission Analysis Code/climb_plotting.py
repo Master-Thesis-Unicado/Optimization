@@ -23,7 +23,7 @@ pio.renderers.default = "browser"
 # import needed types, helpers, and constants from logic
 from aircraft_config import (
     isa_properties, a_from_altitude, INITIAL_MASS_KG,
-    M_MMO, S_REF_M2, G_C
+    M_MMO, S_REF_M2
 )
 from climb import (
     ClimbingCore
@@ -85,12 +85,12 @@ class GridAndPlotting:
                                   M_grid=None,
                                   H_grid=None):
         """Compute specific excess power Ps = ((T-D)V)/W at maximum lever for visualization backgrounds."""
-        from aircraft_config import SystemConfiguration, G_C, a_from_altitude
+        from aircraft_config import SystemConfiguration, a_from_altitude
         
         if M_grid is None: M_grid = aero.mach_grid
         if H_grid is None: H_grid = aero.alt_grid_m
         Ps = np.full((len(H_grid), len(M_grid)), np.nan)
-        W = ref_mass_kg * G_C
+        W = ref_mass_kg * aero.G_C
         for k, h in enumerate(H_grid):
             a = a_from_altitude(float(h))
             for i, M in enumerate(M_grid):
@@ -159,7 +159,9 @@ def plot_strategies_interactive(
 
     # --- Background Es contours (light) ---
     Hm, Mm = np.meshgrid(H_plot, M_grid, indexing="ij")
-    g = G_C
+    # Get gravity constant from Atmosphere class (strategies_runs don't have aero directly)
+    from atmosphere import Atmosphere
+    g = Atmosphere.G_C
     Es = np.zeros_like(Ps_base)
     for k, h in enumerate(H_plot):
         a = a_from_altitude(float(h))
@@ -456,7 +458,9 @@ def plot_J_3d_plotly(M_grid, H_sched, lever_grid, J_grid_3d, min_path=None, titl
     
     # 2. CLmax (stall) limit - compute stall curve
     def _compute_mstall_curve():
-        W = INITIAL_MASS_KG * G_C
+        # Get gravity constant from Atmosphere class
+        from atmosphere import Atmosphere
+        W = INITIAL_MASS_KG * Atmosphere.G_C
         CL_MAX = 1.4  # Default CL_MAX for commercial aircraft
         out = np.full_like(H_sched, np.nan, float)
         for k, h in enumerate(H_sched):
