@@ -416,81 +416,127 @@ class ClimbingCore:
             )
         
         @staticmethod
-        def resample_strategy_run(sr: 'ClimbingCore.EnergyCalculator.StrategyRun', n_samples: int) -> 'ClimbingCore.EnergyCalculator.StrategyRun':
-            """Resample a StrategyRun onto a uniform-in-altitude grid of length n_samples."""
-            n = int(max(2, n_samples))
-
-            # Find the maximum length among all arrays to preserve all data
-            array_lengths = [
-                len(sr.alt_m),
-                len(sr.time_s),
-                len(sr.mach),
-                len(sr.lever),
-                len(sr.T_total_N),
-                len(sr.D_N),
-                len(sr.Ps_mps),
-                len(sr.mdot_kgps),
-                len(sr.cumFuel_kg),
-                len(sr.thrust_limited)
-            ]
-            max_length = max(array_lengths)
-
-            # If arrays have different lengths, pad shorter ones to match the longest
-            arrays_to_check = [
-                ('alt_m', sr.alt_m),
-                ('time_s', sr.time_s),
-                ('mach', sr.mach),
-                ('lever', sr.lever),
-                ('T_total_N', sr.T_total_N),
-                ('D_N', sr.D_N),
-                ('Ps_mps', sr.Ps_mps),
-                ('mdot_kgps', sr.mdot_kgps),
-                ('cumFuel_kg', sr.cumFuel_kg),
-                ('thrust_limited', sr.thrust_limited)
-            ]
-
-            for name, arr in arrays_to_check:
+        def _pad_array_to_length(arr: np.ndarray, target_length: int, pad_value) -> np.ndarray:
+            """
+            Pad array to target length with pad_value.
+            
+            Args:
+                arr: Array to pad
+                target_length: Target length
+                pad_value: Value to use for padding
+                
+            Returns:
+                Padded array (or original if already long enough)
+            """
+            if len(arr) >= target_length:
+                return arr
+            return np.concatenate([arr, np.full(target_length - len(arr), pad_value)])
+        
+        @staticmethod
+        def _pad_arrays_to_max_length(sr: 'ClimbingCore.EnergyCalculator.StrategyRun') -> dict:
+            """
+            Pad all arrays in StrategyRun to maximum length. Returns dict of padded arrays.
+            
+            This function creates copies of arrays and pads them to match the longest array,
+            avoiding mutation of the input StrategyRun object.
+            
+            Args:
+                sr: StrategyRun to process
+                
+            Returns:
+                dict: Dictionary of padded arrays keyed by array name
+            """
+            # Define all array names
+            array_names = ['alt_m', 'time_s', 'mach', 'lever', 'T_total_N', 'D_N', 
+                         'Ps_mps', 'mdot_kgps', 'cumFuel_kg', 'thrust_limited']
+            
+            # Find maximum length
+            array_lengths = [len(getattr(sr, name)) for name in array_names]
+            max_length = max(array_lengths) if array_lengths else 0
+            
+            # Create working copies and pad arrays
+            padded_arrays = {}
+            for name in array_names:
+                arr = np.array(getattr(sr, name), copy=True)
+                
                 if len(arr) != max_length:
-                    print(f"[WARNING] Array {name} has length {len(arr)} but max length is {max_length}. Padding to match.")
+                    dbg(f"[WARNING] Array {name} has length {len(arr)} but max length is {max_length}. Padding to match.")
                     if len(arr) < max_length:
-                        # Pad with last value to match max length
+                        # Determine pad value based on array type
                         if name == 'thrust_limited':
-                            arr = np.concatenate([arr, np.full(max_length - len(arr), arr[-1] if len(arr) > 0 else False)])
+                            pad_value = arr[-1] if len(arr) > 0 else False
                         else:
-                            arr = np.concatenate([arr, np.full(max_length - len(arr), arr[-1] if len(arr) > 0 else 0.0)])
-
-                    # Update the array in the StrategyRun object
-                    setattr(sr, name, arr)
-
-            # Use the updated max_length as the base length
-            base_length = max_length
-
-            # Use uniform step size consistent with 3D DP approach
-            uniform_step_size = (sr.alt_m[-1] - sr.alt_m[0]) / n
-            alt_new = np.arange(sr.alt_m[0], sr.alt_m[-1] + uniform_step_size, uniform_step_size)
-
+                            pad_value = arr[-1] if len(arr) > 0 else 0.0
+                        
+                        arr = ClimbingCore.StrategyManager._pad_array_to_length(arr, max_length, pad_value)
+                
+                padded_arrays[name] = arr
+            
+            return padded_arrays
+        
+        @staticmethod
+        def resample_strategy_run(sr: 'ClimbingCore.EnergyCalculator.StrategyRun', n_samples: int) -> 'ClimbingCore.EnergyCalculator.StrategyRun':
+            """
+            Resample a StrategyRun onto a uniform-in-altitude grid of length n_samples.
+            
+            This function takes a StrategyRun with potentially non-uniform altitude spacing
+            and resamples all arrays onto a uniform altitude grid using linear interpolation.
+            All arrays are interpolated based on altitude as the independent variable.
+            
+            The function creates working copies of arrays to avoid mutating the input object.
+            Arrays are first padded to ensure consistent lengths, then interpolated onto
+            the new uniform altitude grid.
+            
+            Args:
+                sr: StrategyRun to resample
+                n_samples: Number of points in resampled grid (must be >= 2)
+                
+            Returns:
+                StrategyRun: New StrategyRun with uniform altitude spacing and all arrays
+                           interpolated onto the new grid
+                            
+            Raises:
+                ValueError: If n_samples < 2 or if input arrays are invalid
+            """
+            if n_samples < 2:
+                raise ValueError(f"n_samples must be >= 2, got {n_samples}")
+            n = int(n_samples)
+            
+            # Pad arrays to maximum length (creates copies, doesn't mutate input)
+            padded_arrays = ClimbingCore.StrategyManager._pad_arrays_to_max_length(sr)
+            alt_old = padded_arrays['alt_m']
+            
+            # Generate uniform altitude grid using linspace for exact point count
+            alt_new = np.linspace(alt_old[0], alt_old[-1], n)
+            
             def safe_interp(y):
                 """Safe interpolation with length validation."""
-                if len(y) != len(sr.alt_m):
-                    print(f"[ERROR] Array length mismatch: {len(y)} vs {len(sr.alt_m)}")
-                    return np.full_like(alt_new, y[-1] if len(y) > 0 else 0.0)
-                return np.interp(alt_new, sr.alt_m, y)
-
-            time_new   = safe_interp(sr.time_s)
-            mach_new   = safe_interp(sr.mach)
-            lever_new  = safe_interp(sr.lever)
-            Ttot_new   = safe_interp(sr.T_total_N)
-            D_new      = safe_interp(sr.D_N)
-            Ps_new     = safe_interp(sr.Ps_mps)
-            mdot_new   = safe_interp(sr.mdot_kgps)
-            cumF_new   = safe_interp(sr.cumFuel_kg)
-            limited_f  = safe_interp(sr.thrust_limited.astype(float))
-            limited_new= (limited_f >= 0.5)
-
-            dt_new    = np.diff(time_new, prepend=time_new[0])
-            dFuel_new = np.diff(cumF_new,  prepend=cumF_new[0])
-            fuel_tot  = float(cumF_new[-1] - cumF_new[0])
-
+                if len(y) != len(alt_old):
+                    dbg(f"[ERROR] Array length mismatch in resample_strategy_run: {len(y)} vs {len(alt_old)} for strategy '{sr.label}'")
+                    if len(y) == 0:
+                        return np.zeros_like(alt_new)
+                    return np.full_like(alt_new, y[-1])
+                return np.interp(alt_new, alt_old, y)
+            
+            # Interpolate all arrays onto new altitude grid
+            time_new = safe_interp(padded_arrays['time_s'])
+            mach_new = safe_interp(padded_arrays['mach'])
+            lever_new = safe_interp(padded_arrays['lever'])
+            Ttot_new = safe_interp(padded_arrays['T_total_N'])
+            D_new = safe_interp(padded_arrays['D_N'])
+            Ps_new = safe_interp(padded_arrays['Ps_mps'])
+            mdot_new = safe_interp(padded_arrays['mdot_kgps'])
+            cumF_new = safe_interp(padded_arrays['cumFuel_kg'])
+            
+            # Handle boolean array (interpolate as float, then convert back)
+            limited_f = safe_interp(padded_arrays['thrust_limited'].astype(float))
+            limited_new = (limited_f >= 0.5)
+            
+            # Compute derived arrays
+            dt_new = np.diff(time_new, prepend=time_new[0])
+            dFuel_new = np.diff(cumF_new, prepend=cumF_new[0])
+            fuel_tot = float(cumF_new[-1] - cumF_new[0])
+            
             return ClimbingCore.EnergyCalculator.StrategyRun(
                 label=sr.label,
                 alt_m=alt_new,
