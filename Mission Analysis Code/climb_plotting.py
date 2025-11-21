@@ -26,8 +26,55 @@ from aircraft_config import (
     M_MMO, S_REF_M2, G_C
 )
 from climb import (
-    PlottingConfig, Y_AXIS_TOP_M, ClimbingCore
+    ClimbingCore
 )
+
+# Import mission configuration parameters
+from mission_config import (
+    TARGET_ALT_CLIMB_M
+)
+
+# ========= PLOTTING CONFIGURATION ========================
+class PlottingConfig:
+    """Configuration constants for visualization and graphical representation."""
+    
+    # Specific excess power contour levels for visualization
+    PS_LEVELS = np.array(
+        [-30,-25,-20,-15,-12,-10,-8,-6,-4,-2,-1,-0.5,
+          0.5,1,2,3,4,5,6,8,10,12,15,20,23,25,30,33,35,40,45,50],
+        dtype=float
+    )
+    
+    # User interface visualization limits
+    M_XMAX_UI = 1.25  # Maximum Mach number for SEP x-axis visualization
+
+# ========= GRID CONFIGURATION ========================
+class GridConfig:
+    """Configuration constants for grids, axes, and UI layout.
+    
+    These values control plotting and visualization aspects of the climb analysis.
+    The target altitude is imported from mission_config.py and used for:
+    - Calculating altitude fractions for penalty calculations
+    - Determining step sizes for constant Mach strategies
+    - Grid generation for dynamic programming optimization
+    
+    Plotting-specific parameters (ALT_STEP_M, Y_AXIS_TOP_M) are defined here
+    as they are specific to visualization, not mission parameters.
+    """
+    
+    # Target altitude (imported from mission_config.py - this is a mission parameter)
+    TARGET_ALT_M = TARGET_ALT_CLIMB_M  # Target climb altitude [m] (from mission_config.py)
+    
+    # Plotting and visualization settings (defined here - plotting-specific)
+    Y_AXIS_TOP_M = 14000.0  # Maximum altitude for plots [m]
+    ALT_STEP_M = 200.0  # Altitude step size for plotting [m]
+    
+    # Grid resolution settings
+    MACH_COLS = 81
+    N_PLOT_STEPS = 50  # uniform # of points per trajectory
+
+# Backward compatibility constants for external use
+Y_AXIS_TOP_M = GridConfig.Y_AXIS_TOP_M
 
 # Import visualization configuration for consistent styling
 from visualization_config import (

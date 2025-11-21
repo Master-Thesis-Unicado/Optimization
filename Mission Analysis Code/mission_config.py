@@ -13,24 +13,21 @@ from __future__ import annotations
 
 # ========= MISSION PARAMETERS (CONSOLIDATED FROM EXISTING CODE) =========
 
-# Climb phase parameters (from climb.py and main.py)
-TARGET_ALT_CLIMB_M = 8000    # Target climb altitude [m]
-ALT_STEP_M = 200.0              # Altitude step size for plotting [m]
-Y_AXIS_TOP_M = 14000.0          # Maximum altitude for plots [m]
-
 # Starting conditions (from main.py) - Climb phase initialization
 START_ALTITUDE_CLIMB_M = 10.0   # Takeoff altitude [m]
 START_VELOCITY_CLIMB_MS = 85.0  # Takeoff velocity [m/s]
 START_LEVER_CLIMB = 0.85        # Initial throttle lever position
 
 # Climb optimization parameters (from main.py) - Consistent phase-specific naming
-# ULTRA-HIGH RESOLUTION SETTINGS for maximum fuel efficiency optimization
+# Climb phase parameters (from climb.py and main.py)
+TARGET_ALT_CLIMB_M = 8000    # Target climb altitude [m]
 N_MACH_SAMPLES_CLIMB =15     # Number of Mach samples for DP optimization (ultra-fine: 101 samples)
 N_ALTITUDE_STEPS_CLIMB = 15      # Number of altitude steps for DP optimization (ultra-fine: 50 steps)
 N_LEVER_SAMPLES_CLIMB = 15     # Number of lever samples for DP optimization (ultra-fine: 50 samples)
 TARGET_MACH_CRUISE = 0.78        # Target Mach number at end of climb (cruise Mach)
 TARGET_MACH_TOLERANCE_CLIMB = 0.015  # Tolerance for target Mach achievement in climb
 STRATEGY_DT_CLIMB_S = 0.2       # Time step for climb strategy simulation [s]
+E_DOT_CMD_CLIMB = 14            # Strategy energy split magnitude [m/s] (used in climb.py for energy allocation between climb rate and speed)
 
 # Cruise phase parameters (from main.py and cruise.py)
 CRUISE_DISTANCE_KM = 4290.0     # Cruise distance [km]

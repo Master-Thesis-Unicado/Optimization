@@ -28,7 +28,7 @@ from aircraft_config import (
     AtmosphericProperties, G_C, MAX_FUEL_KG, W_OE_KG, W_PL_KG
 )
 from mission_config import (
-    TARGET_ALT_CLIMB_M, ALT_STEP_M, Y_AXIS_TOP_M,
+    TARGET_ALT_CLIMB_M,
     N_MACH_SAMPLES_CLIMB, N_ALTITUDE_STEPS_CLIMB, N_LEVER_SAMPLES_CLIMB,
     START_ALTITUDE_CLIMB_M, START_VELOCITY_CLIMB_MS, START_LEVER_CLIMB,
     TARGET_MACH_CRUISE, TARGET_MACH_TOLERANCE_CLIMB, STRATEGY_DT_CLIMB_S,
@@ -48,7 +48,10 @@ from pyengine_wrapper import EngineWrapper
 import cruise
 from cruise import run_cruise_simulation
 from cruise_plotting import plot_cruise_performance_detailed
-from climb_plotting import plot_strategies_interactive, plot_J_3d_plotly, create_strategy_comparison_plots, plot_climb_performance_detailed
+from climb_plotting import (
+    plot_strategies_interactive, plot_J_3d_plotly, create_strategy_comparison_plots, plot_climb_performance_detailed,
+    GridConfig
+)
 import descent
 from descent import run_descent_dp_optimization, compute_full_descent_envelope
 from descent_plotting import (plot_descent_trajectory_interactive, 
@@ -91,8 +94,8 @@ def main():
     M_min, M_max = float(aero.mach_grid[0]), float(aero.mach_grid[-1])
     M_dense = np.linspace(M_min, M_max, N_MACH_SAMPLES_CLIMB)
     H_plot  = np.arange(START_ALTITUDE_CLIMB_M, 
-                        Y_AXIS_TOP_M + 0.5*ALT_STEP_M, 
-                        ALT_STEP_M)
+                        GridConfig.Y_AXIS_TOP_M + 0.5*GridConfig.ALT_STEP_M, 
+                        GridConfig.ALT_STEP_M)
 
     # Effective minimum Mach from sheet
     climb.M_MIN_EFFECTIVE = max(climb.M_MIN_DEFAULT, float(aero.mach_grid[0]))

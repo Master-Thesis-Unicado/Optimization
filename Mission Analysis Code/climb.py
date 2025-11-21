@@ -15,11 +15,14 @@ from aircraft_config import (
 )
 
 # Import mission configuration parameters
-from mission_config import N_ALTITUDE_STEPS_CLIMB
+from mission_config import N_ALTITUDE_STEPS_CLIMB, E_DOT_CMD_CLIMB
 
 # Import wrappers for aerodynamics and engine
 from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 from pyengine_wrapper import EngineWrapper
+
+# Note: PlottingConfig and GridConfig are imported after ClimbingCore class definition
+# to avoid circular import issues (climb_plotting.py imports ClimbingCore from this module)
 
 # =========  2 - AERODYNAMICS AND ENGINE WRAPPERS =================
 # Note: EngineWrapper moved to pyengine_wrapper.py for better code organization
@@ -582,7 +585,7 @@ class ClimbingCore:
                 dadh = (a2 - a1) / eps  # 
                 
                 # Climb rate
-                dh_dt = w_c * StrategyConfig.E_DOT_CMD
+                dh_dt = w_c * E_DOT_CMD_CLIMB
                 
                 # Velocity change to maintain constant Mach: dV/dt = M * da/dh * dh/dt
                 # where M = V/a is the current Mach number
@@ -591,9 +594,9 @@ class ClimbingCore:
             else:
                 # Energy allocation computation for climb and speed components
                 # Energy rate balance: Ė = mg(dh/dt) + mV(dV/dt) = w_c*E_DOT + w_s*E_DOT
-                # Where E_DOT_CMD is specific energy rate [J/kg/s] = [m²/s³] = [m/s]·[m/s²]
-                dh_dt = w_c * StrategyConfig.E_DOT_CMD  # [m/s] climb rate from potential energy
-                dv_dt = (w_s * StrategyConfig.E_DOT_CMD * G_C) / max(V, 1e-9)  # [m/s²] acceleration from kinetic energy
+                # Where E_DOT_CMD_CLIMB is specific energy rate [J/kg/s] = [m²/s³] = [m/s]·[m/s²]
+                dh_dt = w_c * E_DOT_CMD_CLIMB  # [m/s] climb rate from potential energy
+                dv_dt = (w_s * E_DOT_CMD_CLIMB * G_C) / max(V, 1e-9)  # [m/s²] acceleration from kinetic energy
             
             return dh_dt, dv_dt
         
@@ -1492,6 +1495,11 @@ class ClimbingCore:
             return "Within Envelope"
     
     
+# Import plotting configuration (defined in climb_plotting.py)
+# Import placed here after ClimbingCore class definition to avoid circular import
+# (climb_plotting.py imports ClimbingCore from this module)
+from climb_plotting import PlottingConfig, GridConfig
+
 # =========  4 - SYSTEM UTILITIES =====================
 class SystemUtilities:
     """Centralized utility functions for the entire system."""
@@ -1622,43 +1630,16 @@ def find_lever_for_thrust(eng: EngineWrapper, required_thrust_total: float,
     return GridAndPlotting.find_lever_for_thrust(eng, required_thrust_total, mach, altitude_m, lever_grid, allow_refine)
 
 # =========  6 - PLOTTING CONFIGURATION ========================
-class PlottingConfig:
-    """Configuration constants for visualization and graphical representation."""
-    
-    # Specific excess power contour levels for visualization
-    PS_LEVELS = np.array(
-        [-30,-25,-20,-15,-12,-10,-8,-6,-4,-2,-1,-0.5,
-          0.5,1,2,3,4,5,6,8,10,12,15,20,23,25,30,33,35,40,45,50],
-        dtype=float
-    )
-    
-    # User interface visualization limits
-    M_XMAX_UI = 1.25  # Maximum Mach number for SEP x-axis visualization
+# Note: PlottingConfig and GridConfig are now defined in climb_plotting.py
+# They are imported at the top of this file for use throughout the module
 
 # =========  7 - STRATEGY CONFIGURATION ========================
-class StrategyConfig:
-    """Configuration constants for strategy simulation and energy management."""
-    
-    # Strategy energy split magnitude
-    E_DOT_CMD = 14  # [m/s] (split between climb & speed by each strategy)
-
-# =========  8 - GRID CONFIGURATION ========================
-class GridConfig:
-    """Configuration constants for grids, axes, and UI layout."""
-    
-    # Target and axis settings
-    TARGET_ALT_M = 10000.0
-    Y_AXIS_TOP_M = 14000.0
-    
-    # Grid resolution settings
-    ALT_STEP_M = 200.0
-    MACH_COLS = 81
-    N_PLOT_STEPS = 50  # uniform # of points per trajectory
+# Note: E_DOT_CMD_CLIMB is now imported from mission_config.py
 
 # Backward compatibility constants 
 PS_LEVELS = PlottingConfig.PS_LEVELS
 M_XMAX_UI = PlottingConfig.M_XMAX_UI
-E_DOT_CMD = StrategyConfig.E_DOT_CMD
+E_DOT_CMD = E_DOT_CMD_CLIMB  # Backward compatibility alias
 TARGET_ALT_M = GridConfig.TARGET_ALT_M
 Y_AXIS_TOP_M = GridConfig.Y_AXIS_TOP_M
 ALT_STEP_M = GridConfig.ALT_STEP_M
