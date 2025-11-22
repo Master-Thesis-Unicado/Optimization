@@ -15,7 +15,17 @@ from aircraft_config import (
 )
 
 # Import mission configuration parameters
-from mission_config import N_ALTITUDE_STEPS_CLIMB, E_DOT_CMD_CLIMB
+from mission_config import (
+    N_ALTITUDE_STEPS_CLIMB, E_DOT_CMD_CLIMB,
+    PENALTY_CLIMB_MACH_TRAJECTORY_GUIDANCE, PENALTY_CLIMB_LEVER_PENALTY_GUIDANCE,
+    PENALTY_CLIMB_TARGET_MACH_TOLERANCE, PENALTY_CLIMB_MACH_PENALTY_BASE_WEIGHT,
+    PENALTY_CLIMB_MAX_REASONABLE_MACH_RATE, PENALTY_CLIMB_TOTAL_STEPS_ESTIMATE,
+    PENALTY_CLIMB_URGENCY_MULTIPLIER, PENALTY_CLIMB_GUIDANCE_PENALTY_WEIGHT,
+    PENALTY_CLIMB_LEVER_PENALTY_WEIGHT, PENALTY_CLIMB_LEVER_PENALTY_THRESHOLD,
+    PENALTY_CLIMB_LEVER_PENALTY_EXPONENT, PENALTY_CLIMB_LEVER_PENALTY_CRITICAL_THRESHOLD,
+    PENALTY_CLIMB_LEVER_PENALTY_CRITICAL_MULTIPLIER, PENALTY_CLIMB_LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD,
+    PENALTY_CLIMB_LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER
+)
 
 # Import wrappers for aerodynamics and engine
 from pyaerodynamics_wrapper import PyAerodynamicsWrapper
@@ -45,7 +55,7 @@ class ClimbingCore:
     - DynamicProgrammingOptimizer: Computes optimal climb trajectories through 3D state space (altitude, Mach, lever)
       to minimize fuel consumption while satisfying aircraft constraints
     - PenaltySystem: Provides Mach trajectory guidance and lever position penalties to direct optimization
-      toward physically realizable flight paths and avoid infeasible solutions
+      toward physically realizable flight paths and avoid infeasible solutions (uses parameters from mission_config)
     - EnergyCalculator: Handles energy allocation and thrust calculations for all strategies
     
     Computational Features:
@@ -1259,32 +1269,32 @@ class ClimbingCore:
     
 # Note: simulate_strategy_path and resample_strategy_run moved to StrategyManager class
     
-    # ========= PENALTY SYSTEM (Nested Class) =========
+    # ========= PENALTY SYSTEM =========
     class PenaltySystem:
         """System for computing various penalties in the optimization process."""
         
-        # Feature flags
-        MACH_TRAJECTORY_GUIDANCE = True  # Enable reachability-constrained Mach guidance
-        LEVER_PENALTY_GUIDANCE = False  # Enable penalties for high lever positions
+        # Feature flags (from mission_config)
+        MACH_TRAJECTORY_GUIDANCE = PENALTY_CLIMB_MACH_TRAJECTORY_GUIDANCE
+        LEVER_PENALTY_GUIDANCE = PENALTY_CLIMB_LEVER_PENALTY_GUIDANCE
         
-        # Mach targeting constants
-        TARGET_MACH_TOLERANCE = 0.015  # Tolerance for target Mach constraint in DP
+        # Mach targeting constants (from mission_config)
+        TARGET_MACH_TOLERANCE = PENALTY_CLIMB_TARGET_MACH_TOLERANCE
         
-        # Mach trajectory guidance constants45
-        MACH_PENALTY_BASE_WEIGHT = 0.15  # Base penalty weight (kg per Mach² deviation)
-        MAX_REASONABLE_MACH_RATE = 0.1  # Max reasonable Mach change per optimization step
-        TOTAL_CLIMB_STEPS_ESTIMATE = N_ALTITUDE_STEPS_CLIMB  # Matches DP optimization grid resolution
-        URGENCY_MULTIPLIER = 1.8  # How much urgency scales with altitude progress  
-        GUIDANCE_PENALTY_WEIGHT = 0.3  # Strong guidance penalty when inside reachable corridor (increased from 0.1)
+        # Mach trajectory guidance constants (from mission_config)
+        MACH_PENALTY_BASE_WEIGHT = PENALTY_CLIMB_MACH_PENALTY_BASE_WEIGHT
+        MAX_REASONABLE_MACH_RATE = PENALTY_CLIMB_MAX_REASONABLE_MACH_RATE
+        TOTAL_CLIMB_STEPS_ESTIMATE = PENALTY_CLIMB_TOTAL_STEPS_ESTIMATE
+        URGENCY_MULTIPLIER = PENALTY_CLIMB_URGENCY_MULTIPLIER
+        GUIDANCE_PENALTY_WEIGHT = PENALTY_CLIMB_GUIDANCE_PENALTY_WEIGHT
         
-        # Lever penalty guidance constants
-        LEVER_PENALTY_WEIGHT = 3.0  # Base weight for lever penalty (kg per lever unit above threshold)
-        LEVER_PENALTY_THRESHOLD = 0.75  # Lever threshold above which penalties apply (85% = realistic climb limit)
-        LEVER_PENALTY_EXPONENT = 3.0  # Exponent for penalty curve (higher = more aggressive)
-        LEVER_PENALTY_CRITICAL_THRESHOLD = 0.90  # Critical threshold for very high penalties (90%+)
-        LEVER_PENALTY_CRITICAL_MULTIPLIER = 5.0  # Extra penalty multiplier for critical range
-        LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD = 0.95  # Ultra-critical threshold for maximum penalties (95%+)
-        LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER = 20.0  # Ultra-critical penalty multiplier (emergency thrust only)
+        # Lever penalty guidance constants (from mission_config)
+        LEVER_PENALTY_WEIGHT = PENALTY_CLIMB_LEVER_PENALTY_WEIGHT
+        LEVER_PENALTY_THRESHOLD = PENALTY_CLIMB_LEVER_PENALTY_THRESHOLD
+        LEVER_PENALTY_EXPONENT = PENALTY_CLIMB_LEVER_PENALTY_EXPONENT
+        LEVER_PENALTY_CRITICAL_THRESHOLD = PENALTY_CLIMB_LEVER_PENALTY_CRITICAL_THRESHOLD
+        LEVER_PENALTY_CRITICAL_MULTIPLIER = PENALTY_CLIMB_LEVER_PENALTY_CRITICAL_MULTIPLIER
+        LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD = PENALTY_CLIMB_LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD
+        LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER = PENALTY_CLIMB_LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER
         
         @staticmethod
         def compute_mach_penalty(current_mach: float, target_mach: float, prev_mach: float = None, 
@@ -1631,7 +1641,7 @@ MACH_TRAJECTORY_GUIDANCE = ClimbingCore.PenaltySystem.MACH_TRAJECTORY_GUIDANCE
 LEVER_PENALTY_GUIDANCE = ClimbingCore.PenaltySystem.LEVER_PENALTY_GUIDANCE
 TARGET_MACH_TOLERANCE = ClimbingCore.PenaltySystem.TARGET_MACH_TOLERANCE
 
-# Backward compatibility for old PenaltySystem class
+# Backward compatibility for PenaltySystem class
 PenaltySystem = ClimbingCore.PenaltySystem
 
 # Backward compatibility functions

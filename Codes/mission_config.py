@@ -69,3 +69,51 @@ N_LEVER_SAMPLES_DESCENT = 15     #  Number of lever samples for DP optimization 
 # Descent constraints (from descent.py)
 MIN_DESCENT_MACH = 0.2          # Minimum descent Mach
 MAX_DESCENT_MACH = 0.85         # Maximum descent Mach
+
+# Penalty system parameters - Climb phase (from climb.py)
+# Feature flags
+PENALTY_CLIMB_MACH_TRAJECTORY_GUIDANCE = True  # Enable reachability-constrained Mach guidance
+PENALTY_CLIMB_LEVER_PENALTY_GUIDANCE = False  # Enable penalties for high lever positions
+
+# Mach targeting constants
+PENALTY_CLIMB_TARGET_MACH_TOLERANCE = 0.015  # Tolerance for target Mach constraint in DP
+
+# Mach trajectory guidance constants
+PENALTY_CLIMB_MACH_PENALTY_BASE_WEIGHT = 0.15  # Base penalty weight (kg per Mach² deviation)
+PENALTY_CLIMB_MAX_REASONABLE_MACH_RATE = 0.1  # Max reasonable Mach change per optimization step
+PENALTY_CLIMB_TOTAL_STEPS_ESTIMATE = N_ALTITUDE_STEPS_CLIMB  # Matches DP optimization grid resolution
+PENALTY_CLIMB_URGENCY_MULTIPLIER = 1.8  # How much urgency scales with altitude progress  
+PENALTY_CLIMB_GUIDANCE_PENALTY_WEIGHT = 0.3  # Strong guidance penalty when inside reachable corridor (increased from 0.1)
+
+# Lever penalty guidance constants
+PENALTY_CLIMB_LEVER_PENALTY_WEIGHT = 3.0  # Base weight for lever penalty (kg per lever unit above threshold)
+PENALTY_CLIMB_LEVER_PENALTY_THRESHOLD = 0.75  # Lever threshold above which penalties apply (85% = realistic climb limit)
+PENALTY_CLIMB_LEVER_PENALTY_EXPONENT = 3.0  # Exponent for penalty curve (higher = more aggressive)
+PENALTY_CLIMB_LEVER_PENALTY_CRITICAL_THRESHOLD = 0.90  # Critical threshold for very high penalties (90%+)
+PENALTY_CLIMB_LEVER_PENALTY_CRITICAL_MULTIPLIER = 5.0  # Extra penalty multiplier for critical range
+PENALTY_CLIMB_LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD = 0.95  # Ultra-critical threshold for maximum penalties (95%+)
+PENALTY_CLIMB_LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER = 20.0  # Ultra-critical penalty multiplier (emergency thrust only)
+
+# Penalty system parameters - Descent phase (from descent.py)
+# Feature flags
+PENALTY_DESCENT_MACH_TRAJECTORY_GUIDANCE = True  # Enable reachability-constrained Mach guidance
+PENALTY_DESCENT_LEVER_PENALTY_GUIDANCE = True  # Enable penalties for high lever positions
+
+# Mach targeting constants
+PENALTY_DESCENT_TARGET_MACH_TOLERANCE = 0.015  # Tolerance for target Mach constraint in DP
+
+# Mach trajectory guidance constants (adjusted to match climb penalties for consistency)
+PENALTY_DESCENT_MACH_PENALTY_BASE_WEIGHT = 0.5  # Base penalty weight (kg per Mach² deviation) - slightly higher than climb (0.3) for target achievement
+PENALTY_DESCENT_MAX_REASONABLE_MACH_RATE = 0.018  # Max reasonable Mach change per optimization step - slightly lower than climb (0.02) for smoother deceleration
+PENALTY_DESCENT_TOTAL_STEPS_ESTIMATE = N_ALTITUDE_STEPS_DESCENT  # Matches DP optimization grid resolution
+PENALTY_DESCENT_URGENCY_MULTIPLIER = 2.5  # How much urgency scales with descent progress - slightly higher than climb (2.0) for approach criticality
+PENALTY_DESCENT_GUIDANCE_PENALTY_WEIGHT = 0.8  # Guidance penalty when inside reachable corridor - moderately higher than climb (0.5) to ensure target Mach
+
+# Lever penalty guidance constants
+PENALTY_DESCENT_LEVER_PENALTY_WEIGHT = 3.0  # Base weight for lever penalty (kg per lever unit above threshold)
+PENALTY_DESCENT_LEVER_PENALTY_THRESHOLD = 0.85  # Lever threshold above which penalties apply (85% = realistic descent limit)
+PENALTY_DESCENT_LEVER_PENALTY_EXPONENT = 3.0  # Exponent for penalty curve (higher = more aggressive)
+PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_THRESHOLD = 0.90  # Critical threshold for very high penalties (90%+)
+PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_MULTIPLIER = 5.0  # Extra penalty multiplier for critical range
+PENALTY_DESCENT_LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD = 0.95  # Ultra-critical threshold for maximum penalties (95%+)
+PENALTY_DESCENT_LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER = 20.0  # Ultra-critical penalty multiplier (emergency thrust only)

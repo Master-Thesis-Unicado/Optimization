@@ -20,7 +20,17 @@ from pyengine_wrapper import EngineWrapper
 from cruise import CruiseResults
 
 # Import mission configuration parameters
-from mission_config import N_ALTITUDE_STEPS_DESCENT
+from mission_config import (
+    N_ALTITUDE_STEPS_DESCENT,
+    PENALTY_DESCENT_MACH_TRAJECTORY_GUIDANCE, PENALTY_DESCENT_LEVER_PENALTY_GUIDANCE,
+    PENALTY_DESCENT_TARGET_MACH_TOLERANCE, PENALTY_DESCENT_MACH_PENALTY_BASE_WEIGHT,
+    PENALTY_DESCENT_MAX_REASONABLE_MACH_RATE, PENALTY_DESCENT_TOTAL_STEPS_ESTIMATE,
+    PENALTY_DESCENT_URGENCY_MULTIPLIER, PENALTY_DESCENT_GUIDANCE_PENALTY_WEIGHT,
+    PENALTY_DESCENT_LEVER_PENALTY_WEIGHT, PENALTY_DESCENT_LEVER_PENALTY_THRESHOLD,
+    PENALTY_DESCENT_LEVER_PENALTY_EXPONENT, PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_THRESHOLD,
+    PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_MULTIPLIER, PENALTY_DESCENT_LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD,
+    PENALTY_DESCENT_LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER
+)
 
 # =========  2 - DATA STRUCTURES =============================================
 @dataclass
@@ -218,32 +228,32 @@ class DescentCore:
         cost = DescentCore.compute_descent_cost(aero=aero, eng=engine, altitude=10000, mach=0.8, lever=0.1, ...)
     """
     
-    # ========= PENALTY SYSTEM (Nested Class) =========
+    # ========= PENALTY SYSTEM =========
     class PenaltySystem:
         """System for computing various penalties in the optimization process."""
         
-        # Feature flags
-        MACH_TRAJECTORY_GUIDANCE = True  # Enable reachability-constrained Mach guidance
-        LEVER_PENALTY_GUIDANCE = True  # Enable penalties for high lever positions
+        # Feature flags (from mission_config)
+        MACH_TRAJECTORY_GUIDANCE = PENALTY_DESCENT_MACH_TRAJECTORY_GUIDANCE
+        LEVER_PENALTY_GUIDANCE = PENALTY_DESCENT_LEVER_PENALTY_GUIDANCE
         
-        # Mach targeting constants
-        TARGET_MACH_TOLERANCE = 0.015  # Tolerance for target Mach constraint in DP
+        # Mach targeting constants (from mission_config)
+        TARGET_MACH_TOLERANCE = PENALTY_DESCENT_TARGET_MACH_TOLERANCE
         
-        # Mach trajectory guidance constants (adjusted to match climb penalties for consistency)
-        MACH_PENALTY_BASE_WEIGHT = 0.5  # Base penalty weight (kg per Mach² deviation) - slightly higher than climb (0.3) for target achievement
-        MAX_REASONABLE_MACH_RATE = 0.018  # Max reasonable Mach change per optimization step - slightly lower than climb (0.02) for smoother deceleration
-        TOTAL_DESCENT_STEPS_ESTIMATE = N_ALTITUDE_STEPS_DESCENT  # Matches DP optimization grid resolution
-        URGENCY_MULTIPLIER = 2.5  # How much urgency scales with descent progress - slightly higher than climb (2.0) for approach criticality
-        GUIDANCE_PENALTY_WEIGHT = 0.8  # Guidance penalty when inside reachable corridor - moderately higher than climb (0.5) to ensure target Mach
+        # Mach trajectory guidance constants (from mission_config)
+        MACH_PENALTY_BASE_WEIGHT = PENALTY_DESCENT_MACH_PENALTY_BASE_WEIGHT
+        MAX_REASONABLE_MACH_RATE = PENALTY_DESCENT_MAX_REASONABLE_MACH_RATE
+        TOTAL_DESCENT_STEPS_ESTIMATE = PENALTY_DESCENT_TOTAL_STEPS_ESTIMATE
+        URGENCY_MULTIPLIER = PENALTY_DESCENT_URGENCY_MULTIPLIER
+        GUIDANCE_PENALTY_WEIGHT = PENALTY_DESCENT_GUIDANCE_PENALTY_WEIGHT
         
-        # Lever penalty guidance constants
-        LEVER_PENALTY_WEIGHT = 3.0  # Base weight for lever penalty (kg per lever unit above threshold)
-        LEVER_PENALTY_THRESHOLD = 0.85  # Lever threshold above which penalties apply (85% = realistic descent limit)
-        LEVER_PENALTY_EXPONENT = 3.0  # Exponent for penalty curve (higher = more aggressive)
-        LEVER_PENALTY_CRITICAL_THRESHOLD = 0.90  # Critical threshold for very high penalties (90%+)
-        LEVER_PENALTY_CRITICAL_MULTIPLIER = 5.0  # Extra penalty multiplier for critical range
-        LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD = 0.95  # Ultra-critical threshold for maximum penalties (95%+)
-        LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER = 20.0  # Ultra-critical penalty multiplier (emergency thrust only)
+        # Lever penalty guidance constants (from mission_config)
+        LEVER_PENALTY_WEIGHT = PENALTY_DESCENT_LEVER_PENALTY_WEIGHT
+        LEVER_PENALTY_THRESHOLD = PENALTY_DESCENT_LEVER_PENALTY_THRESHOLD
+        LEVER_PENALTY_EXPONENT = PENALTY_DESCENT_LEVER_PENALTY_EXPONENT
+        LEVER_PENALTY_CRITICAL_THRESHOLD = PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_THRESHOLD
+        LEVER_PENALTY_CRITICAL_MULTIPLIER = PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_MULTIPLIER
+        LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD = PENALTY_DESCENT_LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD
+        LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER = PENALTY_DESCENT_LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER
         
         @staticmethod
         def compute_mach_penalty(current_mach: float, target_mach: float, prev_mach: float = None, 
