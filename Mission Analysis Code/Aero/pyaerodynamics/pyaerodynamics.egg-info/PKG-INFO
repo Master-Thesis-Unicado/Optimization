@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: pyaerodynamics
+Version: 0.0.0
+Summary: Python binding of the pyaerodynamics2 C++ library of UNICADO
+Author-email: Smt <meric.taneri@tum.de>
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Requires-Python: >=3.10

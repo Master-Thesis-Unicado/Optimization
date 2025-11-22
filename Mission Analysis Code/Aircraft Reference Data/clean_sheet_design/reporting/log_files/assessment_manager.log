@@ -1,0 +1,518 @@
+2025-10-16 09:29:25,962 - PRINT - Configuration loaded successfully.
+2025-10-16 09:29:25,962 - PRINT - Starting Assessment Manager...
+2025-10-16 09:29:25,962 - PRINT - Preparing to execute tool: cost_aircraft_operations
+2025-10-16 09:29:46,095 - PRINT - Prints from cost_aircraft_operations:
+2025-10-16 09:29:26,840 - PRINT - Cost estimation of aircraft operations started...
+2025-10-16 09:29:26,847 - PRINT - ----------------------------------------------------------
+2025-10-16 09:29:26,847 - PRINT - Operating cost estimation results for design mission.   
+2025-10-16 09:29:26,847 - PRINT - ----------------------------------------------------------
+2025-10-16 09:29:26,849 - PRINT - Capital costs: 5,515,766 USD
+2025-10-16 09:29:26,849 - PRINT - Crew costs (per year): 5,655,936 USD
+2025-10-16 09:29:26,850 - PRINT - ROUTE INDEPENDENT COSTS (per year): 11,171,702 USD
+2025-10-16 09:29:26,850 - PRINT -                              *                            
+2025-10-16 09:29:27,167 - PRINT - Fuel costs (per year): 8,451,671 USD
+2025-10-16 09:29:27,175 - PRINT - Handling costs (per year): 1,621,817 USD
+2025-10-16 09:29:27,177 - PRINT - Landing costs (per year): 644,587 USD
+2025-10-16 09:29:27,326 - PRINT - Air traffic control costs (per year): 4,723,678 USD
+2025-10-16 09:29:27,332 - PRINT - Maintenance costs (per year): 4,163,827 USD
+2025-10-16 09:29:27,519 - PRINT - ROUTE DEPENDENT COSTS (per year): 19,605,582 USD
+2025-10-16 09:29:27,519 - PRINT -                              *                            
+2025-10-16 09:29:27,576 - PRINT - DIRECT OPERATING COSTS (per year): 30,777,284 USD
+2025-10-16 09:29:27,576 - PRINT - ----------------------------------------------------------
+2025-10-16 09:29:28,079 - WARNING - No calculation method for indirect operating costs (IOC) implemented. IOC set to 0.
+2025-10-16 09:29:28,079 - PRINT - Operating cost estimation results for study mission.   
+2025-10-16 09:29:28,079 - PRINT - ----------------------------------------------------------
+2025-10-16 09:29:28,080 - PRINT - Capital costs: 5,515,766 USD
+2025-10-16 09:29:28,080 - PRINT - Crew costs (per year): 2,785,120 USD
+2025-10-16 09:29:28,080 - PRINT - ROUTE INDEPENDENT COSTS (per year): 8,300,886 USD
+2025-10-16 09:29:28,080 - PRINT -                              *                            
+2025-10-16 09:29:28,284 - PRINT - Fuel costs (per year): 7,143,715 USD
+2025-10-16 09:29:28,285 - PRINT - Handling costs (per year): 2,396,596 USD
+2025-10-16 09:29:28,285 - PRINT - Landing costs (per year): 1,270,029 USD
+2025-10-16 09:29:28,460 - PRINT - Air traffic control costs (per year): 3,040,425 USD
+2025-10-16 09:29:28,463 - PRINT - Maintenance costs (per year): 3,997,926 USD
+2025-10-16 09:29:28,534 - PRINT - ROUTE DEPENDENT COSTS (per year): 17,848,693 USD
+2025-10-16 09:29:28,534 - PRINT -                              *                            
+2025-10-16 09:29:28,590 - PRINT - DIRECT OPERATING COSTS (per year): 26,149,580 USD
+2025-10-16 09:29:28,590 - PRINT - ----------------------------------------------------------
+2025-10-16 09:29:29,120 - WARNING - No calculation method for indirect operating costs (IOC) implemented. IOC set to 0.
+2025-10-16 09:29:29,157 - PRINT - Plots are generated and saved...
+2025-10-16 09:29:43,350 - PRINT - HTML report is generated and saved...
+2025-10-16 09:29:43,361 - PRINT - Method-specific data are written to 'cost_aircraft_operations_results.xml'...
+2025-10-16 09:29:43,363 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:29:43,363 - PRINT - Cost estimation of aircraft operations finished.
+
+2025-10-16 09:29:46,097 - PRINT - Preparing to execute tool: emissions_aircraft_development
+2025-10-16 09:29:47,875 - PRINT - Prints from emissions_aircraft_development:
+*******************************************************************************
+16.10.2025 09:29:46 - Start emissions_aircraft_development
+16.10.2025 09:29:46 - [MODULE RUNTIMEINFO] - emissions_aircraft_development
+16.10.2025 09:29:46 -    [CONSOLE  ] - [ON]
+16.10.2025 09:29:46 -    [LOG      ] - [ON]
+16.10.2025 09:29:46 -    [PLOT     ] - [ON]
+16.10.2025 09:29:46 -       [COPY  ] - [ON]
+16.10.2025 09:29:46 -       [DELETE] - [ON]
+16.10.2025 09:29:46 -    [REPORT   ] - [ON]
+16.10.2025 09:29:46 -    [TEX      ] - [OFF]
+16.10.2025 09:29:46 -    [INFOFILES] - [OFF]
+16.10.2025 09:29:46 -    [GNUPLOT]
+16.10.2025 09:29:46 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:29:46 -       [FILENAME] - 
+16.10.2025 09:29:46 -    [INKSCAPE]
+16.10.2025 09:29:46 -       [PATH    ] - ../../inkscape
+16.10.2025 09:29:46 -       [FILENAME] - 
+16.10.2025 09:29:46 -    [LOGFILE]
+16.10.2025 09:29:46 -       [PATH    ] - 
+16.10.2025 09:29:46 -       [FILENAME] - emissions_aircraft_development.log
+16.10.2025 09:29:46 -    [IO/ACXML]
+16.10.2025 09:29:46 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:29:46 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:29:46 -    [MODCONFIG]
+16.10.2025 09:29:46 -       [PATH    ] - .
+16.10.2025 09:29:46 -       [FILENAME] - emissions_aircraft_development_conf.xml
+16.10.2025 09:29:46 - Checking directory... [REPORT]
+16.10.2025 09:29:46 - Checking directory... [TEX]
+16.10.2025 09:29:46 - Checking directory... [HTML]
+16.10.2025 09:29:46 - Checking directory... [PLOT]
+16.10.2025 09:29:46 - Checking directory... [CSVFILES]
+16.10.2025 09:29:46 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:29:46 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:29:46 - Checking directory... [PLOTFILES]
+16.10.2025 09:29:46 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:29:46 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:29:46 - Checking directory... [LOGFILES]
+16.10.2025 09:29:46 - Initializing development emissions calculation according to Schaefer
+16.10.2025 09:29:46 - WARNING: element recurring_costs in node C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/assessment.xml not found. power_unit_engineering_factor from config will be used!
+16.10.2025 09:29:46 - Running development emissions calculation according to Schaefer
+16.10.2025 09:29:46 -  Calculation of development resources
+16.10.2025 09:29:46 -  Calculation of development emissions
+16.10.2025 09:29:46 - Updating development emissions calculation according to Schaefer
+16.10.2025 09:29:46 - Reporting development emissions calculation according to Schaefer
+16.10.2025 09:29:47 - CSS code written to style.css successfully.
+16.10.2025 09:29:47 - Saving development emissions calculation according to Schaefer
+16.10.2025 09:29:47 - Finish emissions_aircraft_development
+
+2025-10-16 09:29:47,876 - PRINT - Preparing to execute tool: emissions_aircraft_production
+2025-10-16 09:29:49,103 - PRINT - Prints from emissions_aircraft_production:
+*******************************************************************************
+16.10.2025 09:29:48 - Start emissions_aircraft_production
+16.10.2025 09:29:48 - [MODULE RUNTIMEINFO] - emissions_aircraft_production
+16.10.2025 09:29:48 -    [CONSOLE  ] - [ON]
+16.10.2025 09:29:48 -    [LOG      ] - [ON]
+16.10.2025 09:29:48 -    [PLOT     ] - [ON]
+16.10.2025 09:29:48 -       [COPY  ] - [ON]
+16.10.2025 09:29:48 -       [DELETE] - [ON]
+16.10.2025 09:29:48 -    [REPORT   ] - [ON]
+16.10.2025 09:29:48 -    [TEX      ] - [OFF]
+16.10.2025 09:29:48 -    [INFOFILES] - [OFF]
+16.10.2025 09:29:48 -    [GNUPLOT]
+16.10.2025 09:29:48 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:29:48 -       [FILENAME] - 
+16.10.2025 09:29:48 -    [INKSCAPE]
+16.10.2025 09:29:48 -       [PATH    ] - ../../inkscape
+16.10.2025 09:29:48 -       [FILENAME] - 
+16.10.2025 09:29:48 -    [LOGFILE]
+16.10.2025 09:29:48 -       [PATH    ] - 
+16.10.2025 09:29:48 -       [FILENAME] - emissions_aircraft_production.log
+16.10.2025 09:29:48 -    [IO/ACXML]
+16.10.2025 09:29:48 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:29:48 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:29:48 -    [MODCONFIG]
+16.10.2025 09:29:48 -       [PATH    ] - .
+16.10.2025 09:29:48 -       [FILENAME] - emissions_aircraft_production_conf.xml
+16.10.2025 09:29:48 - Checking directory... [REPORT]
+16.10.2025 09:29:48 - Checking directory... [TEX]
+16.10.2025 09:29:48 - Checking directory... [HTML]
+16.10.2025 09:29:48 - Checking directory... [PLOT]
+16.10.2025 09:29:48 - Checking directory... [CSVFILES]
+16.10.2025 09:29:48 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:29:48 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:29:48 - Checking directory... [PLOTFILES]
+16.10.2025 09:29:48 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:29:48 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:29:48 - Checking directory... [LOGFILES]
+16.10.2025 09:29:48 - Initializing production emissions calculation according to Schaefer
+16.10.2025 09:29:48 - WARNING: element calculation_results/cost_aircraft_operations/recurring_costs in node C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/assessment.xml not found. Total recurring costs not available. Costs will be calculated based on wing mass.
+16.10.2025 09:29:48 - WARNING: element calculation_results/cost_aircraft_operations/recurring_costs in node C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/assessment.xml not found. Final assembly costs not available in assessment.xml. Costs will be calculated.
+16.10.2025 09:29:48 - Running production emissions calculation according to Schaefer
+16.10.2025 09:29:48 -  Calculating production resources...
+16.10.2025 09:29:48 -   Primary material recycling is enabled. The credit entry method is assumed.
+16.10.2025 09:29:48 -   Production mode: calculate resources per component.
+16.10.2025 09:29:48 -  Calculating production emissions...
+16.10.2025 09:29:48 -   Engine production is calculated additionally.
+16.10.2025 09:29:48 - Updating production emissions calculation according to Schaefer
+16.10.2025 09:29:48 - Reporting production emissions calculation according to Schaefer
+16.10.2025 09:29:48 - CSS code written to style.css successfully.
+16.10.2025 09:29:48 - Saving production emissions calculation according to Schaefer
+16.10.2025 09:29:48 - Finish emissions_aircraft_production
+
+2025-10-16 09:29:49,104 - PRINT - Preparing to execute tool: emissions_aircraft_operations
+2025-10-16 09:30:05,839 - PRINT - Prints from emissions_aircraft_operations:
+*******************************************************************************
+16.10.2025 09:29:49 - Start emissions_aircraft_operations
+16.10.2025 09:29:49 - [MODULE RUNTIMEINFO] - emissions_aircraft_operations
+16.10.2025 09:29:49 -    [CONSOLE  ] - [ON]
+16.10.2025 09:29:49 -    [LOG      ] - [ON]
+16.10.2025 09:29:49 -    [PLOT     ] - [ON]
+16.10.2025 09:29:49 -       [COPY  ] - [ON]
+16.10.2025 09:29:49 -       [DELETE] - [ON]
+16.10.2025 09:29:49 -    [REPORT   ] - [ON]
+16.10.2025 09:29:49 -    [TEX      ] - [OFF]
+16.10.2025 09:29:49 -    [INFOFILES] - [OFF]
+16.10.2025 09:29:49 -    [GNUPLOT]
+16.10.2025 09:29:49 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:29:49 -       [FILENAME] - 
+16.10.2025 09:29:49 -    [INKSCAPE]
+16.10.2025 09:29:49 -       [PATH    ] - ../inkscape
+16.10.2025 09:29:49 -       [FILENAME] - 
+16.10.2025 09:29:49 -    [LOGFILE]
+16.10.2025 09:29:49 -       [PATH    ] - 
+16.10.2025 09:29:49 -       [FILENAME] - emissions_aircraft_operations.log
+16.10.2025 09:29:49 -    [IO/ACXML]
+16.10.2025 09:29:49 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:29:49 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:29:49 -    [MODCONFIG]
+16.10.2025 09:29:49 -       [PATH    ] - .
+16.10.2025 09:29:49 -       [FILENAME] - emissions_aircraft_operations_conf.xml
+16.10.2025 09:29:49 - Checking directory... [REPORT]
+16.10.2025 09:29:49 - Checking directory... [TEX]
+16.10.2025 09:29:49 - Checking directory... [HTML]
+16.10.2025 09:29:49 - Checking directory... [PLOT]
+16.10.2025 09:29:49 - Checking directory... [CSVFILES]
+16.10.2025 09:29:49 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:29:49 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:29:49 - Checking directory... [PLOTFILES]
+16.10.2025 09:29:49 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:29:49 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:29:49 - Checking directory... [LOGFILES]
+16.10.2025 09:29:49 - Initializing standard operations
+16.10.2025 09:29:49 - Found 2 mission(s) to process:
+16.10.2025 09:29:49 -  - design
+16.10.2025 09:29:49 -  - study
+16.10.2025 09:29:49 - Running standard operations for all discovered missions
+16.10.2025 09:29:49 - --- Calculating emissions for: design mission ---
+16.10.2025 09:29:49 - WARNING: required "thrust_taxi" violates thrust_limit from engine deck!
+16.10.2025 09:29:49 - WARNING: Reached lower speed limit.
+16.10.2025 09:29:49 - WARNING: thrust_taxi        = 8379.13 N
+16.10.2025 09:29:49 - WARNING: engine_thrust_limited = 9837.39 N
+16.10.2025 09:29:49 - WARNING: Engine rating set to idle.
+16.10.2025 09:29:52 - --- Calculating emissions for: study mission ---
+16.10.2025 09:29:53 - WARNING: required "thrust_taxi" violates thrust_limit from engine deck!
+16.10.2025 09:29:53 - WARNING: Reached lower speed limit.
+16.10.2025 09:29:53 - WARNING: thrust_taxi        = 8379.13 N
+16.10.2025 09:29:53 - WARNING: engine_thrust_limited = 9837.39 N
+16.10.2025 09:29:53 - WARNING: Engine rating set to idle.
+16.10.2025 09:29:55 - Updating standard operations results for all missions
+16.10.2025 09:29:55 - Updating assessment.xml for: design mission
+16.10.2025 09:29:55 - Updating assessment.xml for: study mission
+16.10.2025 09:29:55 - Reporting standard operations results for all missions
+16.10.2025 09:29:55 - Appending report section for: design mission
+16.10.2025 09:29:55 - Plotting standard operations results for: design mission
+16.10.2025 09:30:01 - Appending report section for: study mission
+16.10.2025 09:30:01 - Plotting standard operations results for: study mission
+16.10.2025 09:30:05 - CSS code written to style.css successfully.
+16.10.2025 09:30:05 - Saving assessment xml
+16.10.2025 09:30:05 - Finish emissions_aircraft_operations
+
+2025-10-16 09:30:05,840 - PRINT - Preparing to execute tool: emissions_aircraft_maintenance
+2025-10-16 09:30:07,423 - PRINT - Prints from emissions_aircraft_maintenance:
+*******************************************************************************
+16.10.2025 09:30:06 - Start emissions_aircraft_maintenance
+16.10.2025 09:30:06 - [MODULE RUNTIMEINFO] - emissions_aircraft_maintenance
+16.10.2025 09:30:06 -    [CONSOLE  ] - [ON]
+16.10.2025 09:30:06 -    [LOG      ] - [ON]
+16.10.2025 09:30:06 -    [PLOT     ] - [ON]
+16.10.2025 09:30:06 -       [COPY  ] - [ON]
+16.10.2025 09:30:06 -       [DELETE] - [ON]
+16.10.2025 09:30:06 -    [REPORT   ] - [ON]
+16.10.2025 09:30:06 -    [TEX      ] - [OFF]
+16.10.2025 09:30:06 -    [INFOFILES] - [OFF]
+16.10.2025 09:30:06 -    [GNUPLOT]
+16.10.2025 09:30:06 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:30:06 -       [FILENAME] - 
+16.10.2025 09:30:06 -    [INKSCAPE]
+16.10.2025 09:30:06 -       [PATH    ] - ../../inkscape
+16.10.2025 09:30:06 -       [FILENAME] - 
+16.10.2025 09:30:06 -    [LOGFILE]
+16.10.2025 09:30:06 -       [PATH    ] - 
+16.10.2025 09:30:06 -       [FILENAME] - emissions_aircraft_maintenance.log
+16.10.2025 09:30:06 -    [IO/ACXML]
+16.10.2025 09:30:06 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:30:06 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:30:06 -    [MODCONFIG]
+16.10.2025 09:30:06 -       [PATH    ] - .
+16.10.2025 09:30:06 -       [FILENAME] - emissions_aircraft_maintenance_conf.xml
+16.10.2025 09:30:06 - Checking directory... [REPORT]
+16.10.2025 09:30:06 - Checking directory... [TEX]
+16.10.2025 09:30:06 - Checking directory... [HTML]
+16.10.2025 09:30:06 - Checking directory... [PLOT]
+16.10.2025 09:30:06 - Checking directory... [CSVFILES]
+16.10.2025 09:30:06 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:30:06 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:30:06 - Checking directory... [PLOTFILES]
+16.10.2025 09:30:06 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:30:06 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:30:06 - Checking directory... [LOGFILES]
+16.10.2025 09:30:06 - Initializing maintenance emissions calculation according to Schaefer
+16.10.2025 09:30:06 - Running maintenance emissions calculation according to Schaefer
+16.10.2025 09:30:06 - WARNING: Recurring costs not found in assessment.xml. Using fallback NASA cost method for all components.
+16.10.2025 09:30:06 - WARNING: Maintenance costs not found in assessment.xml. Using fallback American Airlines cost method.
+16.10.2025 09:30:06 - WARNING: Direct maintenance labour costs not found. Using fallback TUB method.
+16.10.2025 09:30:06 -   Calculating spare parts emissions using cost scaling of components inventory from production phase...
+16.10.2025 09:30:06 - Updating maintenance emissions calculation according to Schaefer
+16.10.2025 09:30:06 - Reporting maintenance emissions calculation according to Schaefer
+16.10.2025 09:30:07 - CSS code written to style.css successfully.
+16.10.2025 09:30:07 - Saving maintenance emissions calculation according to Schaefer
+16.10.2025 09:30:07 - Finish emissions_aircraft_maintenance
+
+2025-10-16 09:30:07,426 - PRINT - Preparing to execute tool: emissions_aircraft_end_of_life
+2025-10-16 09:30:08,657 - PRINT - Prints from emissions_aircraft_end_of_life:
+*******************************************************************************
+16.10.2025 09:30:07 - Start emissions_aircraft_end_of_life
+16.10.2025 09:30:07 - [MODULE RUNTIMEINFO] - emissions_aircraft_end_of_life
+16.10.2025 09:30:07 -    [CONSOLE  ] - [ON]
+16.10.2025 09:30:07 -    [LOG      ] - [ON]
+16.10.2025 09:30:07 -    [PLOT     ] - [ON]
+16.10.2025 09:30:07 -       [COPY  ] - [ON]
+16.10.2025 09:30:07 -       [DELETE] - [ON]
+16.10.2025 09:30:07 -    [REPORT   ] - [ON]
+16.10.2025 09:30:07 -    [TEX      ] - [OFF]
+16.10.2025 09:30:07 -    [INFOFILES] - [OFF]
+16.10.2025 09:30:07 -    [GNUPLOT]
+16.10.2025 09:30:07 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:30:07 -       [FILENAME] - 
+16.10.2025 09:30:07 -    [INKSCAPE]
+16.10.2025 09:30:07 -       [PATH    ] - ../../inkscape
+16.10.2025 09:30:07 -       [FILENAME] - 
+16.10.2025 09:30:07 -    [LOGFILE]
+16.10.2025 09:30:07 -       [PATH    ] - 
+16.10.2025 09:30:07 -       [FILENAME] - emissions_aircraft_end_of_life.log
+16.10.2025 09:30:07 -    [IO/ACXML]
+16.10.2025 09:30:07 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:30:07 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:30:07 -    [MODCONFIG]
+16.10.2025 09:30:07 -       [PATH    ] - .
+16.10.2025 09:30:07 -       [FILENAME] - emissions_aircraft_end_of_life_conf.xml
+16.10.2025 09:30:07 - Checking directory... [REPORT]
+16.10.2025 09:30:07 - Checking directory... [TEX]
+16.10.2025 09:30:07 - Checking directory... [HTML]
+16.10.2025 09:30:07 - Checking directory... [PLOT]
+16.10.2025 09:30:07 - Checking directory... [CSVFILES]
+16.10.2025 09:30:07 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:30:07 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:30:07 - Checking directory... [PLOTFILES]
+16.10.2025 09:30:07 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:30:07 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:30:07 - Checking directory... [LOGFILES]
+16.10.2025 09:30:07 - Initializing end of life emissions calculation according to Schaefer
+16.10.2025 09:30:07 - Running end of life emissions calculation according to Schaefer
+16.10.2025 09:30:07 -   Primary material recycling was accounted for in the production phase (credit entry method). Recycling of the final component is however also accounted for here as a quasi-closed system assumed (final recycling used by another system).
+16.10.2025 09:30:07 - Updating end of life emissions calculation according to Schaefer
+16.10.2025 09:30:07 - Reporting end of life emissions calculation according to Schaefer
+16.10.2025 09:30:08 - CSS code written to style.css successfully.
+16.10.2025 09:30:08 - Saving end of life emissions calculation according to Schaefer
+16.10.2025 09:30:08 - Finish emissions_aircraft_end_of_life
+
+2025-10-16 09:30:08,658 - PRINT - Preparing to execute tool: emissions_aircraft_testing
+2025-10-16 09:30:09,954 - PRINT - Prints from emissions_aircraft_testing:
+*******************************************************************************
+16.10.2025 09:30:08 - Start emissions_aircraft_testing
+16.10.2025 09:30:08 - [MODULE RUNTIMEINFO] - emissions_aircraft_testing
+16.10.2025 09:30:08 -    [CONSOLE  ] - [ON]
+16.10.2025 09:30:08 -    [LOG      ] - [ON]
+16.10.2025 09:30:08 -    [PLOT     ] - [ON]
+16.10.2025 09:30:08 -       [COPY  ] - [ON]
+16.10.2025 09:30:08 -       [DELETE] - [ON]
+16.10.2025 09:30:08 -    [REPORT   ] - [ON]
+16.10.2025 09:30:08 -    [TEX      ] - [OFF]
+16.10.2025 09:30:08 -    [INFOFILES] - [OFF]
+16.10.2025 09:30:08 -    [GNUPLOT]
+16.10.2025 09:30:08 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:30:08 -       [FILENAME] - 
+16.10.2025 09:30:08 -    [INKSCAPE]
+16.10.2025 09:30:08 -       [PATH    ] - ../../inkscape
+16.10.2025 09:30:08 -       [FILENAME] - 
+16.10.2025 09:30:08 -    [LOGFILE]
+16.10.2025 09:30:08 -       [PATH    ] - 
+16.10.2025 09:30:08 -       [FILENAME] - emissions_aircraft_testing.log
+16.10.2025 09:30:08 -    [IO/ACXML]
+16.10.2025 09:30:08 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:30:08 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:30:08 -    [MODCONFIG]
+16.10.2025 09:30:08 -       [PATH    ] - .
+16.10.2025 09:30:08 -       [FILENAME] - emissions_aircraft_testing_conf.xml
+16.10.2025 09:30:08 - Checking directory... [REPORT]
+16.10.2025 09:30:08 - Checking directory... [TEX]
+16.10.2025 09:30:08 - Checking directory... [HTML]
+16.10.2025 09:30:08 - Checking directory... [PLOT]
+16.10.2025 09:30:08 - Checking directory... [CSVFILES]
+16.10.2025 09:30:08 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:30:08 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:30:08 - Checking directory... [PLOTFILES]
+16.10.2025 09:30:08 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:30:08 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:30:08 - Checking directory... [LOGFILES]
+16.10.2025 09:30:08 - Initializing testing emissions calculation according to Schaefer
+16.10.2025 09:30:09 - Running testing emissions calculation according to Schaefer
+16.10.2025 09:30:09 - Updating testing emissions calculation according to Schaefer
+16.10.2025 09:30:09 - Reporting testing emissions calculation according to Schaefer
+16.10.2025 09:30:09 - CSS code written to style.css successfully.
+16.10.2025 09:30:09 - Saving testing emissions calculation according to Schaefer
+16.10.2025 09:30:09 - Finish emissions_aircraft_testing
+
+2025-10-16 09:30:09,955 - PRINT - Preparing to execute tool: emissions_energy_carrier_production
+2025-10-16 09:30:10,806 - PRINT - Prints from emissions_energy_carrier_production:
+*******************************************************************************
+16.10.2025 09:30:10 - Start emissions_energy_carrier_production
+16.10.2025 09:30:10 - [MODULE RUNTIMEINFO] - emissions_energy_carrier_production
+16.10.2025 09:30:10 -    [CONSOLE  ] - [ON]
+16.10.2025 09:30:10 -    [LOG      ] - [ON]
+16.10.2025 09:30:10 -    [PLOT     ] - [ON]
+16.10.2025 09:30:10 -       [COPY  ] - [ON]
+16.10.2025 09:30:10 -       [DELETE] - [ON]
+16.10.2025 09:30:10 -    [REPORT   ] - [ON]
+16.10.2025 09:30:10 -    [TEX      ] - [OFF]
+16.10.2025 09:30:10 -    [INFOFILES] - [OFF]
+16.10.2025 09:30:10 -    [GNUPLOT]
+16.10.2025 09:30:10 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:30:10 -       [FILENAME] - 
+16.10.2025 09:30:10 -    [INKSCAPE]
+16.10.2025 09:30:10 -       [PATH    ] - ../../inkscape
+16.10.2025 09:30:10 -       [FILENAME] - 
+16.10.2025 09:30:10 -    [LOGFILE]
+16.10.2025 09:30:10 -       [PATH    ] - 
+16.10.2025 09:30:10 -       [FILENAME] - emissions_energy_carrier_production.log
+16.10.2025 09:30:10 -    [IO/ACXML]
+16.10.2025 09:30:10 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:30:10 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:30:10 -    [MODCONFIG]
+16.10.2025 09:30:10 -       [PATH    ] - .
+16.10.2025 09:30:10 -       [FILENAME] - emissions_energy_carrier_production_conf.xml
+16.10.2025 09:30:10 - Checking directory... [REPORT]
+16.10.2025 09:30:10 - Checking directory... [TEX]
+16.10.2025 09:30:10 - Checking directory... [HTML]
+16.10.2025 09:30:10 - Checking directory... [PLOT]
+16.10.2025 09:30:10 - Checking directory... [CSVFILES]
+16.10.2025 09:30:10 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:30:10 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:30:10 - Checking directory... [PLOTFILES]
+16.10.2025 09:30:10 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:30:10 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:30:10 - Checking directory... [LOGFILES]
+16.10.2025 09:30:10 - Initializing energy carrier production emissions calculation
+16.10.2025 09:30:10 - Running energy carrier production emissions calculation
+16.10.2025 09:30:10 - Updating energy carrier production emissions
+16.10.2025 09:30:10 - Reporting energy carrier production emissions
+16.10.2025 09:30:10 - Generating fuel consumption breakdown plot for Study Mission Lifecycle...
+16.10.2025 09:30:10 - CSS code written to style.css successfully.
+16.10.2025 09:30:10 - Saving energy carrier production emissions
+16.10.2025 09:30:10 - Finish emissions_energy_carrier_production
+
+2025-10-16 09:30:10,807 - PRINT - Preparing to execute tool: evaluation_air_quality_index
+2025-10-16 09:30:11,496 - PRINT - Prints from air_quality_index:
+*******************************************************************************
+16.10.2025 09:30:10 - Start air_quality_index
+16.10.2025 09:30:11 - [MODULE RUNTIMEINFO] - air_quality_index
+16.10.2025 09:30:11 -    [CONSOLE  ] - [ON]
+16.10.2025 09:30:11 -    [LOG      ] - [ON]
+16.10.2025 09:30:11 -    [PLOT     ] - [ON]
+16.10.2025 09:30:11 -       [COPY  ] - [ON]
+16.10.2025 09:30:11 -       [DELETE] - [ON]
+16.10.2025 09:30:11 -    [REPORT   ] - [ON]
+16.10.2025 09:30:11 -    [TEX      ] - [OFF]
+16.10.2025 09:30:11 -    [INFOFILES] - [OFF]
+16.10.2025 09:30:11 -    [GNUPLOT]
+16.10.2025 09:30:11 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:30:11 -       [FILENAME] - 
+16.10.2025 09:30:11 -    [INKSCAPE]
+16.10.2025 09:30:11 -       [PATH    ] - ../../inkscape
+16.10.2025 09:30:11 -       [FILENAME] - 
+16.10.2025 09:30:11 -    [LOGFILE]
+16.10.2025 09:30:11 -       [PATH    ] - 
+16.10.2025 09:30:11 -       [FILENAME] - air_quality_index.log
+16.10.2025 09:30:11 -    [IO/ACXML]
+16.10.2025 09:30:11 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:30:11 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:30:11 -    [MODCONFIG]
+16.10.2025 09:30:11 -       [PATH    ] - .
+16.10.2025 09:30:11 -       [FILENAME] - air_quality_index_conf.xml
+16.10.2025 09:30:11 - Checking directory... [REPORT]
+16.10.2025 09:30:11 - Checking directory... [TEX]
+16.10.2025 09:30:11 - Checking directory... [HTML]
+16.10.2025 09:30:11 - Checking directory... [PLOT]
+16.10.2025 09:30:11 - Checking directory... [CSVFILES]
+16.10.2025 09:30:11 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:30:11 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:30:11 - Checking directory... [PLOTFILES]
+16.10.2025 09:30:11 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:30:11 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:30:11 - Checking directory... [LOGFILES]
+16.10.2025 09:30:11 - Initializing air quality index calculation according to Schaefer
+16.10.2025 09:30:11 - Found 2 mission(s) to process for AQI:
+16.10.2025 09:30:11 -  - design_mission
+16.10.2025 09:30:11 -  - study_mission
+16.10.2025 09:30:11 - Running air quality index calculation for all discovered missions
+16.10.2025 09:30:11 - --- Calculating AQI for: design_mission ---
+16.10.2025 09:30:11 - --- Calculating AQI for: study_mission ---
+16.10.2025 09:30:11 - Updating assessment.xml with AQI results for all missions
+16.10.2025 09:30:11 - Reporting air quality index calculation for all missions
+16.10.2025 09:30:11 - CSS code written to style.css successfully.
+16.10.2025 09:30:11 - Saving AQI results to assessment.xml
+16.10.2025 09:30:11 - Finish air_quality_index
+
+2025-10-16 09:30:11,497 - PRINT - Preparing to execute tool: evaluation_climate_model
+2025-10-16 09:30:13,410 - PRINT - Prints from climate_model:
+*******************************************************************************
+16.10.2025 09:30:11 - Start climate_model
+16.10.2025 09:30:11 - [MODULE RUNTIMEINFO] - climate_model
+16.10.2025 09:30:11 -    [CONSOLE  ] - [ON]
+16.10.2025 09:30:11 -    [LOG      ] - [ON]
+16.10.2025 09:30:11 -    [PLOT     ] - [ON]
+16.10.2025 09:30:11 -       [COPY  ] - [ON]
+16.10.2025 09:30:11 -       [DELETE] - [ON]
+16.10.2025 09:30:11 -    [REPORT   ] - [ON]
+16.10.2025 09:30:11 -    [TEX      ] - [OFF]
+16.10.2025 09:30:11 -    [INFOFILES] - [OFF]
+16.10.2025 09:30:11 -    [GNUPLOT]
+16.10.2025 09:30:11 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:30:11 -       [FILENAME] - 
+16.10.2025 09:30:11 -    [INKSCAPE]
+16.10.2025 09:30:11 -       [PATH    ] - ../../inkscape
+16.10.2025 09:30:11 -       [FILENAME] - 
+16.10.2025 09:30:11 -    [LOGFILE]
+16.10.2025 09:30:11 -       [PATH    ] - 
+16.10.2025 09:30:11 -       [FILENAME] - climate_model.log
+16.10.2025 09:30:11 -    [IO/ACXML]
+16.10.2025 09:30:11 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:30:11 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:30:11 -    [MODCONFIG]
+16.10.2025 09:30:11 -       [PATH    ] - .
+16.10.2025 09:30:11 -       [FILENAME] - climate_model_conf.xml
+16.10.2025 09:30:11 - Checking directory... [REPORT]
+16.10.2025 09:30:11 - Checking directory... [TEX]
+16.10.2025 09:30:11 - Checking directory... [HTML]
+16.10.2025 09:30:11 - Checking directory... [PLOT]
+16.10.2025 09:30:11 - Checking directory... [CSVFILES]
+16.10.2025 09:30:11 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:30:11 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:30:11 - Checking directory... [PLOTFILES]
+16.10.2025 09:30:11 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:30:11 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:30:11 - Checking directory... [LOGFILES]
+16.10.2025 09:30:11 - Initializing climate model based on Dallara for kerosene powered aircraft...
+16.10.2025 09:30:11 -   ...reading the config file. 
+16.10.2025 09:30:11 -   ...reading the aircraft xml. 
+16.10.2025 09:30:11 -   ...and reading the assessment xml. 
+16.10.2025 09:30:11 - ... finished initialization!
+16.10.2025 09:30:11 - Running climate model ...
+16.10.2025 09:30:11 - ... finished running!
+16.10.2025 09:30:11 - Updating the assessment xml ...
+16.10.2025 09:30:11 - ... finished updating!
+16.10.2025 09:30:11 - Create climate model report...
+16.10.2025 09:30:11 -   ...and generate plots. 
+16.10.2025 09:30:13 - CSS code written to style.css successfully.
+16.10.2025 09:30:13 - ... finished report! 
+16.10.2025 09:30:13 - Saving climate model results based on Dallara for kerosene powered aircraft!
+16.10.2025 09:30:13 - Finish climate_model
+
+2025-10-16 09:30:13,412 - PRINT - Assessment Manager execution completed.

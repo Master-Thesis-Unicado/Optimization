@@ -1,0 +1,17 @@
+# C:\Programs\UNICADOworkflow\workingDirectoryRCE\UNICADOworkflow_2025-10-16_09-20-18_13\UNICADO-SMR-01\reporting\plots\csv_files/systems_design_requirement_energy_sinks_max_energy_plot.csv
+# Design Energy of the individual systems
+# (1)System; (2) ATA; (3) Design Bleed Air [kg/s]; (4) Design Electric [W]; (5) Design Hydraulic [W]; (6) Max Mission Bleed Air [kg/s]; (7) Max Mission Electric [W]; (8) Max Mission Hydraulic [W]
+FCS; ATA-27; 0; 0; 89050.8; 0; 0; 20623.3; 
+FireProtection; ATA-26; 0; 0; 89050.8; 0; 0; 20623.3; 
+FuelSystem; ATA-28; 0; 11854.9; 89050.8; 0; 11854.9; 20623.3; 
+Furnishings; ATA-25; 0; 18225; 89050.8; 0; 14625; 20623.3; 
+IceRainProtection; ATA-30; 1.98314; 14026.9; 89050.8; 1.98314; 14026.9; 20623.3; 
+LandingGear; ATA-32; 1.98314; 14026.9; 69474; 1.98314; 14026.9; 69474; 
+LightingSystem; ATA-33; 1.98314; 6710.69; 69474; 1.98314; 6060.69; 69474; 
+RemainingConsumers; ATA-XX; 1.98314; 5285.02; 7926.24; 1.98314; 4587.6; 795.097; 
+ECS; ATA-21; 1.43441; 17168.3; 7926.24; 1.19422; 12876.2; 795.097; 
+BleedAirSystem; ATA-36; 3.59741; 17168.3; 7926.24; 3.34458; 12876.2; 795.097; 
+ElectricSystem; ATA-24; 3.59741; 17168.3; 7926.24; 3.34458; 12876.2; 795.097; 
+HydraulicSystem; ATA-29; 3.59741; 49564.8; 7926.24; 3.34458; 22164.1; 795.097; 
+APU; ATA-49; 3.59741; 49564.8; 7926.24; 3.34458; 22164.1; 795.097; 
+Engine; ATA-70; 3.59741; 49564.8; 7926.24; 3.34458; 22164.1; 795.097; 

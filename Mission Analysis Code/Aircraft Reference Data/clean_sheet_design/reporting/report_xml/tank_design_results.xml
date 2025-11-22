@@ -1,0 +1,31 @@
+<module_results_file Name="Tank design specific outputs">
+    <general_information description="General information on module execution">
+        <workflow_version description="Version number of the current workflow">
+            <value>not available</value>
+        </workflow_version>
+        <execution_date description="Execution date and time of the code">
+            <value>2025-10-16_09-26-16</value>
+        </execution_date>
+        <project_name description="Name of the current aircraft project">
+            <value>UNICADO-SMR-01</value>
+        </project_name>
+        <method_name description="Name of current module calculation method">
+            <value>tank_design_tu_berlin</value>
+        </method_name>
+        <routing_layer description="Routing layer information">
+            <layer_1 description="Routing layer_1">
+                <value>tube_and_wing</value>
+            </layer_1>
+            <layer_2 description="Routing layer_2">
+                <value>empirical</value>
+            </layer_2>
+            <layer_3 description="Routing layer_3">
+                <value>tank_design_tu_berlin</value>
+            </layer_3>
+            <user_layer description="Routing user_layer">
+                <value>kerosene</value>
+            </user_layer>
+        </routing_layer>
+    </general_information>
+    <calculation_results description="Results of calculation method" />
+</module_results_file>

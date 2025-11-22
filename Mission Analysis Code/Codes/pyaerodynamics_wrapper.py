@@ -21,10 +21,32 @@ from dataclasses import dataclass
 
 # Add the correct path to the pyaerodynamics module relative to this file
 _current_file = Path(__file__).resolve()
-_pyaerodynamics_path = _current_file.parent / 'Aero' / 'pyaerodynamics' / 'pyaerodynamics' / 'Release'
-sys.path.append(str(_pyaerodynamics_path))
+# Since this file is in Codes/, go up one level to reach root, then into Aero
+_root_dir = _current_file.parent.parent  # Go from Codes/ to root
+_pyaerodynamics_release_path = _root_dir / 'Aero' / 'pyaerodynamics' / 'pyaerodynamics' / 'Release'
+_pyaerodynamics_package_path = _root_dir / 'Aero' / 'pyaerodynamics'
 
-from pyaerodynamics import Aircraft, Flight_Condition
+# Add Release folder to path first (for DLL dependencies and .pyd module)
+if str(_pyaerodynamics_release_path) not in sys.path:
+    sys.path.insert(0, str(_pyaerodynamics_release_path))
+# Add package parent directory to path (for package imports)
+if str(_pyaerodynamics_package_path) not in sys.path:
+    sys.path.insert(0, str(_pyaerodynamics_package_path))
+
+# Load the .pyd module directly from Release directory
+import importlib.util
+_pyd_file = _pyaerodynamics_release_path / 'pyaerodynamics.cp311-win_amd64.pyd'
+if _pyd_file.exists():
+    # Load the compiled .pyd file directly as a module
+    # The module name must match the PyInit function in the compiled module
+    spec = importlib.util.spec_from_file_location("pyaerodynamics", _pyd_file)
+    _pyaerodynamics_core = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(_pyaerodynamics_core)
+    Aircraft = _pyaerodynamics_core.Aircraft
+    Flight_Condition = _pyaerodynamics_core.Flight_Condition
+else:
+    # Fallback: try regular import (in case module is installed)
+    from pyaerodynamics import Aircraft, Flight_Condition
 
 # Import atmospheric functions
 from atmosphere import Atmosphere

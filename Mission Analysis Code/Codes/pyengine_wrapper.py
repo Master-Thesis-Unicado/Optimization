@@ -11,9 +11,17 @@ mission analysis phases (climb, cruise, descent).
 """
 
 from __future__ import annotations
+import sys
 import numpy as np
 from pathlib import Path
 import time
+
+# Add root directory to Python path to find pyengine module
+_current_file = Path(__file__).resolve()
+_root_dir = _current_file.parent.parent  # Go from Codes/ to root
+if str(_root_dir) not in sys.path:
+    sys.path.insert(0, str(_root_dir))
+
 import pyengine as engine
 
 # Import aircraft configuration parameters

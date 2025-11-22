@@ -1,0 +1,14 @@
+# ./csv_filesperformance_assessment_missionFuel.csv
+# (1) Range [m]; (2) Payload [kg]; (3) Fuel [kg]; (4) TOM [kg]; (5) OME [kg]
+0; 19300; 0; 62339.3; 
+4.53839e+06; 19300; 14368.1; 76707.4; 
+6.81077e+06; 14439; 19229.1; 76707.4; 
+9.4022e+06; 0; 19229.1; 62268.5; 
+
+
+# Design Point 
+4.53839e+06; 19300; 
+
+
+# Mission Point
+4.5374e+06; 19300; 

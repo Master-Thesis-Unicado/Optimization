@@ -1,0 +1,228 @@
+<module_configuration_file Name="weight_and_balance_analysis_conf.xml">
+    <control_settings description="General control settings for this tool">
+        <aircraft_exchange_file_name description="Specify the name of the exchange file">
+            <value>UNICADO-SMR-01.xml</value>
+        </aircraft_exchange_file_name>
+        <aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+            <value>C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/</value>
+        </aircraft_exchange_file_directory>
+        <own_tool_level description="Specify the tool level of this tool">
+            <value>3</value>
+        </own_tool_level>
+        <console_output description="Selector to specify the console output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+            <value>mode_1</value>
+        </console_output>
+        <log_file_output description="Selector to specify the log file output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+            <value>mode_1</value>
+        </log_file_output>
+        <plot_output description="Specify the way plotting shall be handled">
+            <enable description="Switch to enable plotting. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </enable>
+            <copy_plotting_files description="Switch if plotting files shall be copied. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </copy_plotting_files>
+            <delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder. Switch: true (On) / false (Off)">
+                <value>true</value>
+            </delete_plotting_files_from_tool_folder>
+        </plot_output>
+        <report_output description="Switch to generate an HTML report. Switch: true (On) / false (Off)">
+            <value>true</value>
+        </report_output>
+        <tex_report description="Switch to generate a Tex report. Switch: true (On) / false (Off)">
+            <value>true</value>
+        </tex_report>
+        <write_info_files description="Switch to generate info files. Switch: true (On) / false (Off)">
+            <value>false</value>
+        </write_info_files>
+        <log_file description="Specify the name of the log file">
+            <value>C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/weight_and_balance_analysis.log</value>
+        </log_file>
+        <inkscape_path description="Path to the inkscape application (DEFAULT: Use inkscape from the UNICADO repo structure)">
+            <value>C:/Programs/UNICADOworkflow/inkscape/</value>
+        </inkscape_path>
+        <gnuplot_path description="Path to the gnuplot application (DEFAULT: Use gnuplot from the UNICADO repo structure)">
+            <value>C:/Programs/UNICADOworkflow/gnuplot/</value>
+        </gnuplot_path>
+        <program_specific_control_settings description="Program specific control settings for this tool">
+            <xml_output description="Switch to export module specific data to XML. Switch: true (On) / false (Off)">
+                <value>false</value>
+            </xml_output>
+        </program_specific_control_settings>        
+    </control_settings>
+    <program_settings description="program settings">
+        <mission_selector description="Choose the mission, that shall be analyzed. Selector: design_mission / study_mission">
+            <value>study_mission</value>
+        </mission_selector>
+        <tube_and_wing description="Weight and balance analysis">
+            <category description="Category name">
+                <value>standard</value>
+            </category>
+            <standard description="Standard weight and balance">
+                <method description="Method name">
+                    <value>basic</value>
+                </method>
+                <basic description="Basic configuration">
+                    <calculation_methods description="Calculation methods for basic configuration">
+                        <inertia description="Selector for the calculation method of the mass moments of inertia. Selector: mode_0 (by_lth_table) / mode_1 (by_components) / mode_2 (by_Raymer)">
+                            <method description="selected method">
+                                <value>mode_2</value>
+                            </method>
+                        </inertia>
+                        <refueling_mode description="Selector to specify if refueling should be done for the design or ferry range mission. Selector: mode_0 (design mission) / mode_1 (ferry range)">
+                            <method description="selected method">
+                                <value>mode_0</value>
+                            </method>
+                        </refueling_mode>
+                        <defueling_mode description="Selector to specify if defueling should be considered or not in the loading diagram. Selector: mode_0 (not active) / mode_1 (active)">
+                            <method description="selected method">
+                                <value>mode_1</value>
+                            </method>
+                        </defueling_mode>
+                        <passengers_boarding_mode description="Selector to specify the order how the passengers occupy the seats. Selector: mode_0 (each row at a time) / mode_1 (from window to aisle)">
+                            <method description="selected method">
+                                <value>mode_0</value>
+                            </method>
+                        </passengers_boarding_mode>
+                        <loading_mode description="Selector to specify in which order the loading is performed. Selector: mode_0 (refueling-passengers-cargo-defueling) / mode_1 (refueling-cargo-passengers-defueling) / mode_2 (cargo-refueling-passengers-defueling) / mode_3 (passengers-refueling-cargo-defueling) / mode_4 (passengers-cargo-refueling-defueling)">
+                            <method description="selected method">
+                                <value>mode_0</value>
+                            </method>
+                        </loading_mode>                        
+                    </calculation_methods>
+                </basic>
+            </standard>
+        </tube_and_wing>
+        <tandem_wing description="Weight and balance analysis">
+            <category description="Category name">
+                <value>standard</value>
+            </category>
+            <standard description="Standard weight and balance">
+                <method description="Method name">
+                    <value>basic</value>
+                </method>
+                <basic description="Basic configuration">
+                    <calculation_methods description="Calculation methods for basic configuration">
+                        <inertia description="Selector for the calculation method of the mass moments of inertia. Selector: mode_0 (by_components)">
+                            <method description="selected method">
+                                <value>mode_0</value>
+                            </method>
+                        </inertia>
+                        <refueling_mode description="Selector to specify if refueling should be done for the design or ferry range mission. Selector: mode_0 (design mission) / mode_1 (ferry range)">
+                            <method description="selected method">
+                                <value>mode_0</value>
+                            </method>
+                        </refueling_mode>
+                        <defueling_mode description="Selector to specify if defueling should be considered or not in the loading diagram. Selector: mode_0 (not active) / mode_1 (active)">
+                            <method description="selected method">
+                                <value>mode_1</value>
+                            </method>
+                        </defueling_mode>
+                        <passengers_boarding_mode description="Selector to specify the order how the passengers occupy the seats. Selector: mode_0 (each row at a time) / mode_1 (from window to aisle)">
+                            <method description="selected method">
+                                <value>mode_0</value>
+                            </method>
+                        </passengers_boarding_mode>
+                        <loading_mode description="Selector to specify in which order the loading is performed. Selector: mode_0 (refueling-passengers-cargo-defueling) / mode_1 (refueling-cargo-passengers-defueling) / mode_2 (cargo-refueling-passengers-defueling) / mode_3 (passengers-refueling-cargo-defueling) / mode_4 (passengers-cargo-refueling-defueling)">
+                            <method description="selected method">
+                                <value>mode_0</value>
+                            </method>
+                        </loading_mode>                        
+                    </calculation_methods>
+                </basic>
+            </standard>
+        </tandem_wing>
+        <strut_braced_wing description="Weight and balance analysis">
+            <category description="Category name">
+                <value>standard</value>
+            </category>
+            <standard description="Standard weight and balance">
+                <method description="Method name">
+                    <value>basic</value>
+                </method>
+                <basic description="Basic configuration">
+                    <calculation_methods description="Calculation methods for basic configuration">
+                        <inertia description="Selector for the calculation method of the mass moments of inertia. Selector: mode_0 (by_lth_table) / mode_1 (by_components) / mode_2 (by_Raymer)">
+                            <method description="selected method">
+                                <value>mode_2</value>
+                            </method>
+                        </inertia>
+                        <refueling_mode description="Selector to specify if refueling should be done for the design or ferry range mission. Selector: mode_0 (design mission) / mode_1 (ferry range)">
+                            <method description="selected method">
+                                <value>mode_0</value>
+                            </method>
+                        </refueling_mode>
+                        <defueling_mode description="Selector to specify if defueling should be considered or not in the loading diagram. Selector: mode_0 (not active) / mode_1 (active)">
+                            <method description="selected method">
+                                <value>mode_1</value>
+                            </method>
+                        </defueling_mode>
+                        <passengers_boarding_mode description="Selector to specify the order how the passengers occupy the seats. Selector: mode_0 (each row at a time) / mode_1 (from window to aisle)">
+                            <method description="selected method">
+                                <value>mode_0</value>
+                            </method>
+                        </passengers_boarding_mode>
+                        <loading_mode description="Selector to specify in which order the loading is performed. Selector: mode_0 (refueling-passengers-cargo-defueling) / mode_1 (refueling-cargo-passengers-defueling) / mode_2 (cargo-refueling-passengers-defueling) / mode_3 (passengers-refueling-cargo-defueling) / mode_4 (passengers-cargo-refueling-defueling)">
+                            <method description="selected method">
+                                <value>mode_0</value>
+                            </method>
+                        </loading_mode>                        
+                    </calculation_methods>
+                </basic>
+            </standard>
+        </strut_braced_wing>
+        <blended_wing_body description="Weight and balance analysis">
+            <category description="Category name">
+                <value>standard</value>
+            </category>
+            <standard description="Standard weight and balance">
+                <method description="Method name">
+                    <value>basic</value>
+                </method>
+                <basic description="Basic configuration">
+                    <calculation_methods description="Calculation methods for basic configuration">
+                        <inertia description="Selector for the calculation method of the mass moments of inertia. Selector: mode_0 (by_components) / mode_1 (by_Raymer)">
+                            <method description="selected method">
+                                <value>mode_1</value>
+                            </method>
+                        </inertia>
+                        <refueling_mode description="Selector to specify if refueling should be done for the design or ferry range mission. Selector: mode_0 (design mission) / mode_1 (ferry range)">
+                            <method description="selected method">
+                                <value>mode_0</value>
+                            </method>
+                        </refueling_mode>
+                        <defueling_mode description="Selector to specify if defueling should be considered or not in the loading diagram. Selector: mode_0 (not active) / mode_1 (active)">
+                            <method description="selected method">
+                                <value>mode_1</value>
+                            </method>
+                        </defueling_mode>
+                        <boarding_mode description="Selector to specify the order how the boarding is performed">
+                            <payload_tube_boarding_order description="Selector to specify the order how the payload tubes get occupied. Selector: mode_0 (one tube after the other) / mode_1 (parallel)">
+                                <method description="selected method">
+                                    <value>mode_1</value>
+                                </method>
+                                <parameters description="payload tube boarding order parameters">
+                                    <mode_0 description="one tube after the other">
+                                        <boarding_order description="Define the IDs in the order, how the payload tubes get ordered">
+                                            <value>0_1_2</value>
+                                        </boarding_order>
+                                    </mode_0>
+                                </parameters>
+                            </payload_tube_boarding_order>
+                            <passengers_boarding_mode description="Selector to specify the order how the passengers occupy the seats. Selector: mode_0 (each row at a time) / mode_1 (from window to aisle)">
+                                <method description="selected method">
+                                    <value>mode_0</value>
+                                </method>
+                            </passengers_boarding_mode>
+                        </boarding_mode>
+                        <loading_mode description="Selector to specify in which order the loading is performed. Selector: mode_0 (refueling-passengers-cargo-defueling) / mode_1 (refueling-cargo-passengers-defueling) / mode_2 (cargo-refueling-passengers-defueling) / mode_3 (passengers-refueling-cargo-defueling) / mode_4 (passengers-cargo-refueling-defueling)">
+                            <method description="selected method">
+                                <value>mode_0</value>
+                            </method>
+                        </loading_mode>                        
+                    </calculation_methods>
+                </basic>
+            </standard>
+        </blended_wing_body>
+    </program_settings>
+</module_configuration_file>

@@ -1,0 +1,2672 @@
+2025-10-16 09:20:41,786 - PRINT - Weight and balance analysis started...
+2025-10-16 09:20:42,131 - CRITICAL - The take_off_energy node not found in the mission analysis block. Fuel mass needed for the take_off segment set to 0.
+2025-10-16 09:20:42,131 - CRITICAL - The landing_energy node not found in the mission analysis block. Fuel mass needed for the landing segment set to 0.
+2025-10-16 09:20:42,131 - PRINT - Mass properties of component wing read ...
+2025-10-16 09:20:42,132 - PRINT - wing - mass: 5234.8739
+2025-10-16 09:20:42,132 - PRINT - Mass properties of component fuselage read ...
+2025-10-16 09:20:42,132 - PRINT - fuselage - mass: 16430.1511
+2025-10-16 09:20:42,132 - PRINT - Mass properties of component empennage read ...
+2025-10-16 09:20:42,132 - PRINT - empennage - mass: 863.4898
+2025-10-16 09:20:42,132 - PRINT - Mass properties of component landing_gear read ...
+2025-10-16 09:20:42,132 - PRINT - landing_gear - mass: 2204.1200
+2025-10-16 09:20:42,132 - PRINT - Mass properties of component propulsion read ...
+2025-10-16 09:20:42,132 - PRINT - propulsion - mass: 6790.5619
+2025-10-16 09:20:42,132 - PRINT - Mass properties of component systems read ...
+2025-10-16 09:20:42,133 - PRINT - systems - mass: 5240.2325
+2025-10-16 09:20:42,133 - PRINT - Mass properties of component tank read ...
+2025-10-16 09:20:42,133 - PRINT - tank - mass: 0.0000
+2025-10-16 09:20:42,133 - WARNING - CGs of fuselage operator items estimated here at 16.78 m
+2025-10-16 09:20:42,133 - PRINT - == Manufacturer mass empty == 
+2025-10-16 09:20:42,134 - PRINT - mass ... 32225.7882
+2025-10-16 09:20:42,134 - PRINT - x ... 16.4776
+2025-10-16 09:20:42,134 - PRINT - y ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - z ... -0.7277
+2025-10-16 09:20:42,134 - PRINT - j_xx ... 403217.3635
+2025-10-16 09:20:42,134 - PRINT - j_yy ... 1525083.9958
+2025-10-16 09:20:42,134 - PRINT - j_zz ... 1775225.7612
+2025-10-16 09:20:42,134 - PRINT - j_xy ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_xz ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_yx ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_yz ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_zx ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_zy ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - == Operating mass empty == 
+2025-10-16 09:20:42,134 - PRINT - mass ... 36763.5292
+2025-10-16 09:20:42,134 - PRINT - x ... 16.4208
+2025-10-16 09:20:42,134 - PRINT - y ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - z ... -0.6379
+2025-10-16 09:20:42,134 - PRINT - j_xx ... 459994.7472
+2025-10-16 09:20:42,134 - PRINT - j_yy ... 1739832.3848
+2025-10-16 09:20:42,134 - PRINT - j_zz ... 2025196.8273
+2025-10-16 09:20:42,134 - PRINT - j_xy ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_xz ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_yx ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_yz ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_zx ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_zy ... 0.0000
+2025-10-16 09:20:42,134 - WARNING - The CG of the maximum payload is set at the fuselage CG.
+2025-10-16 09:20:42,134 - WARNING - The maximum payload mass is equal the maximum structural payload mass.
+2025-10-16 09:20:42,134 - PRINT - == Maximimum payload mass == 
+2025-10-16 09:20:42,134 - PRINT - mass ... 19300.0000
+2025-10-16 09:20:42,134 - PRINT - x ... 16.8143
+2025-10-16 09:20:42,134 - PRINT - y ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - z ... -0.2413
+2025-10-16 09:20:42,134 - PRINT - j_xx ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_yy ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_zz ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_xy ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_xz ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_yx ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_yz ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_zx ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - j_zy ... 0.0000
+2025-10-16 09:20:42,134 - PRINT - == Maximum zero fuel mass == 
+2025-10-16 09:20:42,135 - PRINT - mass ... 56063.5292
+2025-10-16 09:20:42,135 - PRINT - x ... 16.5563
+2025-10-16 09:20:42,135 - PRINT - y ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - z ... -0.5013
+2025-10-16 09:20:42,135 - PRINT - j_xx ... 701481.3186
+2025-10-16 09:20:42,135 - PRINT - j_yy ... 2653204.0265
+2025-10-16 09:20:42,135 - PRINT - j_zz ... 3088378.1816
+2025-10-16 09:20:42,135 - PRINT - j_xy ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_xz ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_yx ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_yz ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_zx ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_zy ... 0.0000
+2025-10-16 09:20:42,135 - WARNING - The CG of the design payload is set at the fuselage CG.
+2025-10-16 09:20:42,135 - PRINT - == Design payload mass == 
+2025-10-16 09:20:42,135 - PRINT - mass ... 19300.0000
+2025-10-16 09:20:42,135 - PRINT - x ... 16.8143
+2025-10-16 09:20:42,135 - PRINT - y ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - z ... -0.2413
+2025-10-16 09:20:42,135 - PRINT - j_xx ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_yy ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_zz ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_xy ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_xz ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_yx ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_yz ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_zx ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_zy ... 0.0000
+2025-10-16 09:20:42,135 - CRITICAL - Fuel mass to be filled up (12267.59 kg) exceeds the total capacity (12040.82 kg) of all tanks!
+2025-10-16 09:20:42,135 - CRITICAL - Fuel mass calculation failed ... Not enough capacity in the availabe tanks!
+2025-10-16 09:20:42,135 - CRITICAL - Fuel mass to be filled up (12115.72 kg) exceeds the total capacity (12040.82 kg) of all tanks!
+2025-10-16 09:20:42,135 - CRITICAL - Fuel mass calculation failed ... Not enough capacity in the availabe tanks!
+2025-10-16 09:20:42,135 - PRINT - == Mission fuel mass == 
+2025-10-16 09:20:42,135 - PRINT - mass ... 12267.5938
+2025-10-16 09:20:42,135 - PRINT - x ... 16.2379
+2025-10-16 09:20:42,135 - PRINT - y ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - z ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_xx ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_yy ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_zz ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_xy ... 0.0000
+2025-10-16 09:20:42,135 - PRINT - j_xz ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_yx ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_yz ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_zx ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_zy ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - == Design fuel mass (at takeoff) == 
+2025-10-16 09:20:42,136 - PRINT - mass ... 12115.7155
+2025-10-16 09:20:42,136 - PRINT - x ... 16.2379
+2025-10-16 09:20:42,136 - PRINT - y ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - z ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_xx ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_yy ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_zz ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_xy ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_xz ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_yx ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_yz ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_zx ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_zy ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - == Design mass (mission) == 
+2025-10-16 09:20:42,136 - PRINT - mass ... 68331.1230
+2025-10-16 09:20:42,136 - PRINT - x ... 16.4991
+2025-10-16 09:20:42,136 - PRINT - y ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - z ... -0.4113
+2025-10-16 09:20:42,136 - PRINT - j_xx ... 854976.6116
+2025-10-16 09:20:42,136 - PRINT - j_yy ... 3233767.3554
+2025-10-16 09:20:42,136 - PRINT - j_zz ... 3764164.5515
+2025-10-16 09:20:42,136 - PRINT - j_xy ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_xz ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_yx ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_yz ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_zx ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_zy ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - == Design mass takeoff == 
+2025-10-16 09:20:42,136 - PRINT - mass ... 68179.2447
+2025-10-16 09:20:42,136 - PRINT - x ... 16.4997
+2025-10-16 09:20:42,136 - PRINT - y ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - z ... -0.4122
+2025-10-16 09:20:42,136 - PRINT - j_xx ... 853076.2722
+2025-10-16 09:20:42,136 - PRINT - j_yy ... 3226579.7257
+2025-10-16 09:20:42,136 - PRINT - j_zz ... 3755798.0186
+2025-10-16 09:20:42,136 - PRINT - j_xy ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_xz ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_yx ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_yz ... 0.0000
+2025-10-16 09:20:42,136 - PRINT - j_zx ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_zy ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - == Design mass midflight == 
+2025-10-16 09:20:42,137 - PRINT - mass ... 63241.8567
+2025-10-16 09:20:42,137 - PRINT - x ... 16.5305
+2025-10-16 09:20:42,137 - PRINT - y ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - z ... -0.4444
+2025-10-16 09:20:42,137 - PRINT - j_xx ... 791298.4007
+2025-10-16 09:20:42,137 - PRINT - j_yy ... 2992918.0540
+2025-10-16 09:20:42,137 - PRINT - j_zz ... 3483811.5444
+2025-10-16 09:20:42,137 - PRINT - j_xy ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_xz ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_yx ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_yz ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_zx ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_zy ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - == Maximum Takeoff Mass == 
+2025-10-16 09:20:42,137 - PRINT - mass ... 68179.2447
+2025-10-16 09:20:42,137 - PRINT - x ... 16.4997
+2025-10-16 09:20:42,137 - PRINT - y ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - z ... -0.4122
+2025-10-16 09:20:42,137 - PRINT - j_xx ... 853076.2722
+2025-10-16 09:20:42,137 - PRINT - j_yy ... 3226579.7257
+2025-10-16 09:20:42,137 - PRINT - j_zz ... 3755798.0186
+2025-10-16 09:20:42,137 - PRINT - j_xy ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_xz ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_yx ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_yz ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_zx ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_zy ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - == Maximum fuel mass == 
+2025-10-16 09:20:42,137 - PRINT - mass ... 12040.8246
+2025-10-16 09:20:42,137 - PRINT - x ... 16.2379
+2025-10-16 09:20:42,137 - PRINT - y ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - z ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_xx ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_yy ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_zz ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_xy ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_xz ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_yx ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_yz ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_zx ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - j_zy ... 0.0000
+2025-10-16 09:20:42,137 - PRINT - == Ferry range mass == 
+2025-10-16 09:20:42,138 - PRINT - mass ... 48804.3538
+2025-10-16 09:20:42,138 - PRINT - x ... 16.3757
+2025-10-16 09:20:42,138 - PRINT - y ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - z ... -0.4805
+2025-10-16 09:20:42,138 - PRINT - j_xx ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - j_yy ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - j_zz ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - j_xy ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - j_xz ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - j_yx ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - j_yz ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - j_zx ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - j_zy ... 0.0000
+2025-10-16 09:20:42,138 - WARNING - Estimated CG of MTOM with max payload. (fuel CG set in wing CG, payload CG set in fuselage CG.)
+2025-10-16 09:20:42,138 - WARNING - Estimated CG of MTOM with max fuel. (payload CG set in fuselage CG.)
+2025-10-16 09:20:42,138 - PRINT - Calculate MLM by RWTH regression ...
+2025-10-16 09:20:42,138 - PRINT - == Maximum landing mass == 
+2025-10-16 09:20:42,138 - PRINT - mass ... 58127.9759
+2025-10-16 09:20:42,138 - PRINT - x ... 16.5299
+2025-10-16 09:20:42,138 - PRINT - y ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - z ... -0.4821
+2025-10-16 09:20:42,138 - PRINT - j_xx ... 727312.2077
+2025-10-16 09:20:42,138 - PRINT - j_yy ... 2750903.8755
+2025-10-16 09:20:42,138 - PRINT - j_zz ... 3202102.5989
+2025-10-16 09:20:42,138 - PRINT - j_xy ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - j_xz ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - j_yx ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - j_yz ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - j_zx ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - j_zy ... 0.0000
+2025-10-16 09:20:42,138 - PRINT - == Calculate loading diagramm cg change ==
+2025-10-16 09:20:42,138 - PRINT - REFUELING (design mission)...
+2025-10-16 09:20:42,138 - PRINT - Tank 'wing inner left' was filled with 1788.6378 kg kerosene.
+2025-10-16 09:20:42,138 - PRINT - Tank 'wing inner right' was filled with 1788.6378 kg kerosene.
+2025-10-16 09:20:42,138 - PRINT - Tank 'wing outer left' was filled with 2232.8858 kg kerosene.
+2025-10-16 09:20:42,138 - PRINT - Tank 'wing outer right' was filled with 2232.8858 kg kerosene.
+2025-10-16 09:20:42,138 - PRINT - Tank 'wing center' was filled with 3997.7773 kg kerosene.
+2025-10-16 09:20:42,138 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:20:42,138 - PRINT - ROW-WISE
+2025-10-16 09:20:42,138 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:20:42,139 - PRINT - BACK TO FRONT:
+2025-10-16 09:20:42,139 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:20:42,139 - PRINT - ROW-WISE
+2025-10-16 09:20:42,139 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:20:42,139 - PRINT - CARGO LOADING...
+2025-10-16 09:20:42,139 - PRINT - BACK TO FRONT:
+2025-10-16 09:20:42,139 - PRINT - CARGO LOADING...
+2025-10-16 09:20:42,139 - PRINT - DEFUELING...
+2025-10-16 09:20:42,139 - PRINT - From tank 'wing inner left' was defueld 1788.6378 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:20:42,139 - PRINT - From tank 'wing inner right' was defueld 1788.6378 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:20:42,139 - PRINT - From tank 'wing outer left' was defueld 2232.8858 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:20:42,139 - PRINT - From tank 'wing outer right' was defueld 2232.8858 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:20:42,139 - PRINT - From tank 'wing center' was defueld 1831.7289 kg. Fuel left in tank: 2166.0484 kg.
+2025-10-16 09:20:42,139 - PRINT - Most forward CG global position is 15.7576 m.
+2025-10-16 09:20:42,139 - PRINT - Most aft CG global position is 17.2078 m.
+2025-10-16 09:20:42,139 - PRINT - Corresponding mass most fwd CG is of 55044.3538 kg.
+2025-10-16 09:20:42,139 - PRINT - Corresponding mass most aft CG is of 56004.3538 kg.
+2025-10-16 09:20:42,164 - WARNING - Warning: "plot_output" switch in module configuration file set to "False". No plots generated.
+2025-10-16 09:20:42,164 - WARNING - Warning: "html_output" switch in module configuration file set to "False". No HTML report generated.
+2025-10-16 09:20:42,164 - WARNING - Warning: "xml_output" switch in module configuration file set to "False". No XML results file generated.
+2025-10-16 09:20:42,165 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:20:42,165 - PRINT - Weight and balance analysis finished.
+2025-10-16 09:21:20,323 - PRINT - Weight and balance analysis started...
+2025-10-16 09:21:20,527 - PRINT - Mass properties of component wing read ...
+2025-10-16 09:21:20,527 - PRINT - wing - mass: 6700.1527
+2025-10-16 09:21:20,527 - PRINT - Mass properties of component fuselage read ...
+2025-10-16 09:21:20,527 - PRINT - fuselage - mass: 16430.1511
+2025-10-16 09:21:20,527 - PRINT - Mass properties of component empennage read ...
+2025-10-16 09:21:20,527 - PRINT - empennage - mass: 945.3469
+2025-10-16 09:21:20,527 - PRINT - Mass properties of component landing_gear read ...
+2025-10-16 09:21:20,528 - PRINT - landing_gear - mass: 2671.1803
+2025-10-16 09:21:20,528 - PRINT - Mass properties of component propulsion read ...
+2025-10-16 09:21:20,528 - PRINT - propulsion - mass: 7996.0116
+2025-10-16 09:21:20,528 - PRINT - Mass properties of component systems read ...
+2025-10-16 09:21:20,528 - PRINT - systems - mass: 5725.0070
+2025-10-16 09:21:20,528 - PRINT - Mass properties of component tank read ...
+2025-10-16 09:21:20,528 - PRINT - tank - mass: 0.0000
+2025-10-16 09:21:20,528 - WARNING - CGs of fuselage operator items estimated here at 16.78 m
+2025-10-16 09:21:20,529 - PRINT - == Manufacturer mass empty == 
+2025-10-16 09:21:20,529 - PRINT - mass ... 35910.1243
+2025-10-16 09:21:20,529 - PRINT - x ... 16.2542
+2025-10-16 09:21:20,529 - PRINT - y ... 0.0000
+2025-10-16 09:21:20,529 - PRINT - z ... -0.7901
+2025-10-16 09:21:20,529 - PRINT - j_xx ... 546362.7974
+2025-10-16 09:21:20,529 - PRINT - j_yy ... 1699445.0369
+2025-10-16 09:21:20,529 - PRINT - j_zz ... 2158811.3179
+2025-10-16 09:21:20,529 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:20,529 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:20,529 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:20,529 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:20,529 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:20,529 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:20,529 - PRINT - == Operating mass empty == 
+2025-10-16 09:21:20,529 - PRINT - mass ... 40467.9495
+2025-10-16 09:21:20,529 - PRINT - x ... 16.2292
+2025-10-16 09:21:20,529 - PRINT - y ... 0.0000
+2025-10-16 09:21:20,529 - PRINT - z ... -0.7011
+2025-10-16 09:21:20,529 - PRINT - j_xx ... 615708.8706
+2025-10-16 09:21:20,529 - PRINT - j_yy ... 1915143.9104
+2025-10-16 09:21:20,529 - PRINT - j_zz ... 2432814.3949
+2025-10-16 09:21:20,529 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:20,529 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:20,529 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:20,529 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:20,529 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:20,529 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:20,529 - WARNING - The CG of the maximum payload is set at the fuselage CG.
+2025-10-16 09:21:20,529 - WARNING - The maximum payload mass is equal the maximum structural payload mass.
+2025-10-16 09:21:20,529 - PRINT - == Maximimum payload mass == 
+2025-10-16 09:21:20,529 - PRINT - mass ... 19300.0000
+2025-10-16 09:21:20,529 - PRINT - x ... 16.8143
+2025-10-16 09:21:20,529 - PRINT - y ... 0.0000
+2025-10-16 09:21:20,529 - PRINT - z ... -0.2413
+2025-10-16 09:21:20,530 - PRINT - j_xx ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_yy ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_zz ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - == Maximum zero fuel mass == 
+2025-10-16 09:21:20,530 - PRINT - mass ... 59767.9495
+2025-10-16 09:21:20,530 - PRINT - x ... 16.4182
+2025-10-16 09:21:20,530 - PRINT - y ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - z ... -0.5526
+2025-10-16 09:21:20,530 - PRINT - j_xx ... 909353.1335
+2025-10-16 09:21:20,530 - PRINT - j_yy ... 2828515.5522
+2025-10-16 09:21:20,530 - PRINT - j_zz ... 3593073.7707
+2025-10-16 09:21:20,530 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:20,530 - WARNING - The CG of the design payload is set at the fuselage CG.
+2025-10-16 09:21:20,530 - PRINT - == Design payload mass == 
+2025-10-16 09:21:20,530 - PRINT - mass ... 19300.0000
+2025-10-16 09:21:20,530 - PRINT - x ... 16.8143
+2025-10-16 09:21:20,530 - PRINT - y ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - z ... -0.2413
+2025-10-16 09:21:20,530 - PRINT - j_xx ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_yy ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_zz ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - == Mission fuel mass == 
+2025-10-16 09:21:20,530 - PRINT - mass ... 13406.2675
+2025-10-16 09:21:20,530 - PRINT - x ... 15.9094
+2025-10-16 09:21:20,530 - PRINT - y ... 0.0000
+2025-10-16 09:21:20,530 - PRINT - z ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_xx ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_yy ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_zz ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - == Design fuel mass (at takeoff) == 
+2025-10-16 09:21:20,531 - PRINT - mass ... 13221.6614
+2025-10-16 09:21:20,531 - PRINT - x ... 15.9149
+2025-10-16 09:21:20,531 - PRINT - y ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - z ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_xx ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_yy ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_zz ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - == Design mass (mission) == 
+2025-10-16 09:21:20,531 - PRINT - mass ... 73174.2170
+2025-10-16 09:21:20,531 - PRINT - x ... 16.3249
+2025-10-16 09:21:20,531 - PRINT - y ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - z ... -0.4514
+2025-10-16 09:21:20,531 - PRINT - j_xx ... 1113325.8553
+2025-10-16 09:21:20,531 - PRINT - j_yy ... 3462966.5641
+2025-10-16 09:21:20,531 - PRINT - j_zz ... 4399019.2384
+2025-10-16 09:21:20,531 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - == Design mass takeoff == 
+2025-10-16 09:21:20,531 - PRINT - mass ... 72989.6109
+2025-10-16 09:21:20,531 - PRINT - x ... 16.3270
+2025-10-16 09:21:20,531 - PRINT - y ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - z ... -0.4525
+2025-10-16 09:21:20,531 - PRINT - j_xx ... 1110517.1236
+2025-10-16 09:21:20,531 - PRINT - j_yy ... 3454230.0888
+2025-10-16 09:21:20,531 - PRINT - j_zz ... 4387921.2615
+2025-10-16 09:21:20,531 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:20,531 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - == Design mass midflight == 
+2025-10-16 09:21:20,532 - PRINT - mass ... 67619.3536
+2025-10-16 09:21:20,532 - PRINT - x ... 16.3436
+2025-10-16 09:21:20,532 - PRINT - y ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - z ... -0.4885
+2025-10-16 09:21:20,532 - PRINT - j_xx ... 1028810.1167
+2025-10-16 09:21:20,532 - PRINT - j_yy ... 3200082.9031
+2025-10-16 09:21:20,532 - PRINT - j_zz ... 4065077.1512
+2025-10-16 09:21:20,532 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - == Maximum Takeoff Mass == 
+2025-10-16 09:21:20,532 - PRINT - mass ... 72989.6109
+2025-10-16 09:21:20,532 - PRINT - x ... 16.3270
+2025-10-16 09:21:20,532 - PRINT - y ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - z ... -0.4525
+2025-10-16 09:21:20,532 - PRINT - j_xx ... 1110517.1236
+2025-10-16 09:21:20,532 - PRINT - j_yy ... 3454230.0888
+2025-10-16 09:21:20,532 - PRINT - j_zz ... 4387921.2615
+2025-10-16 09:21:20,532 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - == Maximum fuel mass == 
+2025-10-16 09:21:20,532 - PRINT - mass ... 16134.8057
+2025-10-16 09:21:20,532 - PRINT - x ... 15.8422
+2025-10-16 09:21:20,532 - PRINT - y ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - z ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_xx ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_yy ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_zz ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:20,532 - PRINT - == Ferry range mass == 
+2025-10-16 09:21:20,532 - PRINT - mass ... 56602.7552
+2025-10-16 09:21:20,533 - PRINT - x ... 16.1189
+2025-10-16 09:21:20,533 - PRINT - y ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - z ... -0.5012
+2025-10-16 09:21:20,533 - PRINT - j_xx ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - j_yy ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - j_zz ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:20,533 - WARNING - Estimated CG of MTOM with max payload. (fuel CG set in wing CG, payload CG set in fuselage CG.)
+2025-10-16 09:21:20,533 - WARNING - Estimated CG of MTOM with max fuel. (payload CG set in fuselage CG.)
+2025-10-16 09:21:20,533 - PRINT - Calculate MLM by RWTH regression ...
+2025-10-16 09:21:20,533 - PRINT - == Maximum landing mass == 
+2025-10-16 09:21:20,533 - PRINT - mass ... 61910.9512
+2025-10-16 09:21:20,533 - PRINT - x ... 16.3775
+2025-10-16 09:21:20,533 - PRINT - y ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - z ... -0.5303
+2025-10-16 09:21:20,533 - PRINT - j_xx ... 941958.3227
+2025-10-16 09:21:20,533 - PRINT - j_yy ... 2929933.0117
+2025-10-16 09:21:20,533 - PRINT - j_zz ... 3721904.7447
+2025-10-16 09:21:20,533 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:20,533 - PRINT - == Calculate loading diagramm cg change ==
+2025-10-16 09:21:20,533 - PRINT - REFUELING (design mission)...
+2025-10-16 09:21:20,533 - PRINT - Tank 'wing inner left' was filled with 2620.9234 kg kerosene.
+2025-10-16 09:21:20,533 - PRINT - Tank 'wing inner right' was filled with 2620.9234 kg kerosene.
+2025-10-16 09:21:20,533 - PRINT - Tank 'wing outer left' was filled with 2943.3831 kg kerosene.
+2025-10-16 09:21:20,533 - PRINT - Tank 'wing outer right' was filled with 2943.3831 kg kerosene.
+2025-10-16 09:21:20,533 - PRINT - Tank 'wing center' was filled with 2093.0485 kg kerosene.
+2025-10-16 09:21:20,533 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:21:20,533 - PRINT - ROW-WISE
+2025-10-16 09:21:20,533 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:21:20,533 - PRINT - BACK TO FRONT:
+2025-10-16 09:21:20,533 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:21:20,533 - PRINT - ROW-WISE
+2025-10-16 09:21:20,533 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:21:20,533 - PRINT - CARGO LOADING...
+2025-10-16 09:21:20,533 - PRINT - BACK TO FRONT:
+2025-10-16 09:21:20,534 - PRINT - CARGO LOADING...
+2025-10-16 09:21:20,534 - PRINT - DEFUELING...
+2025-10-16 09:21:20,534 - PRINT - From tank 'wing inner left' was defueld 2620.9234 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:21:20,534 - PRINT - From tank 'wing inner right' was defueld 2620.9234 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:21:20,534 - PRINT - From tank 'wing outer left' was defueld 2731.6481 kg. Fuel left in tank: 211.7350 kg.
+2025-10-16 09:21:20,534 - PRINT - From tank 'wing outer right' was defueld 2731.6481 kg. Fuel left in tank: 211.7350 kg.
+2025-10-16 09:21:20,534 - PRINT - From tank 'wing center' was defueld 0.0000 kg. Fuel left in tank: 2093.0485 kg.
+2025-10-16 09:21:20,534 - PRINT - Most forward CG global position is 15.6074 m.
+2025-10-16 09:21:20,534 - PRINT - Most aft CG global position is 16.9436 m.
+2025-10-16 09:21:20,534 - PRINT - Corresponding mass most fwd CG is of 59929.6109 kg.
+2025-10-16 09:21:20,534 - PRINT - Corresponding mass most aft CG is of 60889.6109 kg.
+2025-10-16 09:21:20,560 - WARNING - Warning: "plot_output" switch in module configuration file set to "False". No plots generated.
+2025-10-16 09:21:20,560 - WARNING - Warning: "html_output" switch in module configuration file set to "False". No HTML report generated.
+2025-10-16 09:21:20,560 - WARNING - Warning: "xml_output" switch in module configuration file set to "False". No XML results file generated.
+2025-10-16 09:21:20,560 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:21:20,560 - PRINT - Weight and balance analysis finished.
+2025-10-16 09:21:52,444 - PRINT - Weight and balance analysis started...
+2025-10-16 09:21:52,652 - PRINT - Mass properties of component wing read ...
+2025-10-16 09:21:52,652 - PRINT - wing - mass: 7304.7055
+2025-10-16 09:21:52,652 - PRINT - Mass properties of component fuselage read ...
+2025-10-16 09:21:52,652 - PRINT - fuselage - mass: 16430.1511
+2025-10-16 09:21:52,652 - PRINT - Mass properties of component empennage read ...
+2025-10-16 09:21:52,652 - PRINT - empennage - mass: 975.5419
+2025-10-16 09:21:52,652 - PRINT - Mass properties of component landing_gear read ...
+2025-10-16 09:21:52,652 - PRINT - landing_gear - mass: 2858.1662
+2025-10-16 09:21:52,652 - PRINT - Mass properties of component propulsion read ...
+2025-10-16 09:21:52,652 - PRINT - propulsion - mass: 8479.8230
+2025-10-16 09:21:52,652 - PRINT - Mass properties of component systems read ...
+2025-10-16 09:21:52,653 - PRINT - systems - mass: 5888.8493
+2025-10-16 09:21:52,653 - PRINT - Mass properties of component tank read ...
+2025-10-16 09:21:52,653 - PRINT - tank - mass: 0.0000
+2025-10-16 09:21:52,653 - WARNING - CGs of fuselage operator items estimated here at 16.78 m
+2025-10-16 09:21:52,653 - PRINT - == Manufacturer mass empty == 
+2025-10-16 09:21:52,654 - PRINT - mass ... 37371.4948
+2025-10-16 09:21:52,654 - PRINT - x ... 16.1034
+2025-10-16 09:21:52,654 - PRINT - y ... 0.0000
+2025-10-16 09:21:52,654 - PRINT - z ... -0.8136
+2025-10-16 09:21:52,654 - PRINT - j_xx ... 608714.3537
+2025-10-16 09:21:52,654 - PRINT - j_yy ... 1768604.3278
+2025-10-16 09:21:52,654 - PRINT - j_zz ... 2318738.8176
+2025-10-16 09:21:52,654 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:52,654 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:52,654 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:52,654 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:52,654 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:52,654 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:52,654 - PRINT - == Operating mass empty == 
+2025-10-16 09:21:52,654 - PRINT - mass ... 41937.3370
+2025-10-16 09:21:52,654 - PRINT - x ... 16.0960
+2025-10-16 09:21:52,654 - PRINT - y ... 0.0000
+2025-10-16 09:21:52,654 - PRINT - z ... -0.7250
+2025-10-16 09:21:52,654 - PRINT - j_xx ... 683083.7012
+2025-10-16 09:21:52,654 - PRINT - j_yy ... 1984682.6066
+2025-10-16 09:21:52,654 - PRINT - j_zz ... 2602029.4807
+2025-10-16 09:21:52,654 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:52,654 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:52,654 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:52,654 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:52,654 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:52,654 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:52,654 - WARNING - The CG of the maximum payload is set at the fuselage CG.
+2025-10-16 09:21:52,654 - WARNING - The maximum payload mass is equal the maximum structural payload mass.
+2025-10-16 09:21:52,654 - PRINT - == Maximimum payload mass == 
+2025-10-16 09:21:52,654 - PRINT - mass ... 19300.0000
+2025-10-16 09:21:52,654 - PRINT - x ... 16.8143
+2025-10-16 09:21:52,654 - PRINT - y ... 0.0000
+2025-10-16 09:21:52,654 - PRINT - z ... -0.2413
+2025-10-16 09:21:52,654 - PRINT - j_xx ... 0.0000
+2025-10-16 09:21:52,655 - PRINT - j_yy ... 0.0000
+2025-10-16 09:21:52,655 - PRINT - j_zz ... 0.0000
+2025-10-16 09:21:52,655 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:52,655 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - == Maximum zero fuel mass == 
+2025-10-16 09:21:52,656 - PRINT - mass ... 61237.3370
+2025-10-16 09:21:52,656 - PRINT - x ... 16.3224
+2025-10-16 09:21:52,656 - PRINT - y ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - z ... -0.5726
+2025-10-16 09:21:52,656 - PRINT - j_xx ... 997445.9471
+2025-10-16 09:21:52,656 - PRINT - j_yy ... 2898054.2483
+2025-10-16 09:21:52,656 - PRINT - j_zz ... 3799510.5946
+2025-10-16 09:21:52,656 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:52,656 - WARNING - The CG of the design payload is set at the fuselage CG.
+2025-10-16 09:21:52,656 - PRINT - == Design payload mass == 
+2025-10-16 09:21:52,656 - PRINT - mass ... 19300.0000
+2025-10-16 09:21:52,656 - PRINT - x ... 16.8143
+2025-10-16 09:21:52,656 - PRINT - y ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - z ... -0.2413
+2025-10-16 09:21:52,656 - PRINT - j_xx ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_yy ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_zz ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - == Mission fuel mass == 
+2025-10-16 09:21:52,656 - PRINT - mass ... 14074.5938
+2025-10-16 09:21:52,656 - PRINT - x ... 15.7200
+2025-10-16 09:21:52,656 - PRINT - y ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - z ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_xx ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_yy ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_zz ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:52,656 - PRINT - == Design fuel mass (at takeoff) == 
+2025-10-16 09:21:52,656 - PRINT - mass ... 13876.9877
+2025-10-16 09:21:52,656 - PRINT - x ... 15.7263
+2025-10-16 09:21:52,656 - PRINT - y ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - z ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_xx ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_yy ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_zz ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - == Design mass (mission) == 
+2025-10-16 09:21:52,657 - PRINT - mass ... 75311.9308
+2025-10-16 09:21:52,657 - PRINT - x ... 16.2098
+2025-10-16 09:21:52,657 - PRINT - y ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - z ... -0.4656
+2025-10-16 09:21:52,657 - PRINT - j_xx ... 1226695.7360
+2025-10-16 09:21:52,657 - PRINT - j_yy ... 3564133.7753
+2025-10-16 09:21:52,657 - PRINT - j_zz ... 4672777.9674
+2025-10-16 09:21:52,657 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - == Design mass takeoff == 
+2025-10-16 09:21:52,657 - PRINT - mass ... 75114.3246
+2025-10-16 09:21:52,657 - PRINT - x ... 16.2123
+2025-10-16 09:21:52,657 - PRINT - y ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - z ... -0.4668
+2025-10-16 09:21:52,657 - PRINT - j_xx ... 1223477.0875
+2025-10-16 09:21:52,657 - PRINT - j_yy ... 3554782.0727
+2025-10-16 09:21:52,657 - PRINT - j_zz ... 4660517.3643
+2025-10-16 09:21:52,657 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - == Design mass midflight == 
+2025-10-16 09:21:52,657 - PRINT - mass ... 69459.7897
+2025-10-16 09:21:52,657 - PRINT - x ... 16.2238
+2025-10-16 09:21:52,657 - PRINT - y ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - z ... -0.5048
+2025-10-16 09:21:52,657 - PRINT - j_xx ... 1131374.8959
+2025-10-16 09:21:52,657 - PRINT - j_yy ... 3287181.4590
+2025-10-16 09:21:52,657 - PRINT - j_zz ... 4309678.0493
+2025-10-16 09:21:52,657 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:52,657 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - == Maximum Takeoff Mass == 
+2025-10-16 09:21:52,658 - PRINT - mass ... 75114.3246
+2025-10-16 09:21:52,658 - PRINT - x ... 16.2123
+2025-10-16 09:21:52,658 - PRINT - y ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - z ... -0.4668
+2025-10-16 09:21:52,658 - PRINT - j_xx ... 1223477.0875
+2025-10-16 09:21:52,658 - PRINT - j_yy ... 3554782.0727
+2025-10-16 09:21:52,658 - PRINT - j_zz ... 4660517.3643
+2025-10-16 09:21:52,658 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - == Maximum fuel mass == 
+2025-10-16 09:21:52,658 - PRINT - mass ... 17877.2424
+2025-10-16 09:21:52,658 - PRINT - x ... 15.6261
+2025-10-16 09:21:52,658 - PRINT - y ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - z ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_xx ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_yy ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_zz ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - == Ferry range mass == 
+2025-10-16 09:21:52,658 - PRINT - mass ... 59814.5793
+2025-10-16 09:21:52,658 - PRINT - x ... 15.9556
+2025-10-16 09:21:52,658 - PRINT - y ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - z ... -0.5083
+2025-10-16 09:21:52,658 - PRINT - j_xx ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_yy ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_zz ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:52,658 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:52,658 - WARNING - Estimated CG of MTOM with max payload. (fuel CG set in wing CG, payload CG set in fuselage CG.)
+2025-10-16 09:21:52,659 - WARNING - Estimated CG of MTOM with max fuel. (payload CG set in fuselage CG.)
+2025-10-16 09:21:52,659 - PRINT - Calculate MLM by RWTH regression ...
+2025-10-16 09:21:52,659 - PRINT - == Maximum landing mass == 
+2025-10-16 09:21:52,659 - PRINT - mass ... 63575.8351
+2025-10-16 09:21:52,659 - PRINT - x ... 16.2751
+2025-10-16 09:21:52,659 - PRINT - y ... 0.0000
+2025-10-16 09:21:52,659 - PRINT - z ... -0.5490
+2025-10-16 09:21:52,659 - PRINT - j_xx ... 1035535.8711
+2025-10-16 09:21:52,659 - PRINT - j_yy ... 3008723.5697
+2025-10-16 09:21:52,659 - PRINT - j_zz ... 3944604.2412
+2025-10-16 09:21:52,659 - PRINT - j_xy ... 0.0000
+2025-10-16 09:21:52,659 - PRINT - j_xz ... 0.0000
+2025-10-16 09:21:52,659 - PRINT - j_yx ... 0.0000
+2025-10-16 09:21:52,659 - PRINT - j_yz ... 0.0000
+2025-10-16 09:21:52,659 - PRINT - j_zx ... 0.0000
+2025-10-16 09:21:52,659 - PRINT - j_zy ... 0.0000
+2025-10-16 09:21:52,659 - PRINT - == Calculate loading diagramm cg change ==
+2025-10-16 09:21:52,659 - PRINT - REFUELING (design mission)...
+2025-10-16 09:21:52,659 - PRINT - Tank 'wing inner left' was filled with 2991.8786 kg kerosene.
+2025-10-16 09:21:52,659 - PRINT - Tank 'wing inner right' was filled with 2991.8786 kg kerosene.
+2025-10-16 09:21:52,659 - PRINT - Tank 'wing outer left' was filled with 3241.0564 kg kerosene.
+2025-10-16 09:21:52,659 - PRINT - Tank 'wing outer right' was filled with 3241.0564 kg kerosene.
+2025-10-16 09:21:52,659 - PRINT - Tank 'wing center' was filled with 1411.1178 kg kerosene.
+2025-10-16 09:21:52,659 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:21:52,659 - PRINT - ROW-WISE
+2025-10-16 09:21:52,659 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:21:52,659 - PRINT - BACK TO FRONT:
+2025-10-16 09:21:52,659 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:21:52,659 - PRINT - ROW-WISE
+2025-10-16 09:21:52,659 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:21:52,659 - PRINT - CARGO LOADING...
+2025-10-16 09:21:52,659 - PRINT - BACK TO FRONT:
+2025-10-16 09:21:52,659 - PRINT - CARGO LOADING...
+2025-10-16 09:21:52,659 - PRINT - DEFUELING...
+2025-10-16 09:21:52,659 - PRINT - From tank 'wing inner left' was defueld 2991.8786 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:21:52,659 - PRINT - From tank 'wing inner right' was defueld 2991.8786 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:21:52,659 - PRINT - From tank 'wing outer left' was defueld 2632.4224 kg. Fuel left in tank: 608.6340 kg.
+2025-10-16 09:21:52,659 - PRINT - From tank 'wing outer right' was defueld 2632.4224 kg. Fuel left in tank: 608.6340 kg.
+2025-10-16 09:21:52,660 - PRINT - From tank 'wing center' was defueld 0.0000 kg. Fuel left in tank: 1411.1178 kg.
+2025-10-16 09:21:52,660 - PRINT - Most forward CG global position is 15.4932 m.
+2025-10-16 09:21:52,660 - PRINT - Most aft CG global position is 16.7868 m.
+2025-10-16 09:21:52,660 - PRINT - Corresponding mass most fwd CG is of 62054.3246 kg.
+2025-10-16 09:21:52,660 - PRINT - Corresponding mass most aft CG is of 63494.3246 kg.
+2025-10-16 09:21:52,686 - WARNING - Warning: "plot_output" switch in module configuration file set to "False". No plots generated.
+2025-10-16 09:21:52,686 - WARNING - Warning: "html_output" switch in module configuration file set to "False". No HTML report generated.
+2025-10-16 09:21:52,686 - WARNING - Warning: "xml_output" switch in module configuration file set to "False". No XML results file generated.
+2025-10-16 09:21:52,686 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:21:52,686 - PRINT - Weight and balance analysis finished.
+2025-10-16 09:22:31,234 - PRINT - Weight and balance analysis started...
+2025-10-16 09:22:31,641 - PRINT - Mass properties of component wing read ...
+2025-10-16 09:22:31,642 - PRINT - wing - mass: 7570.8599
+2025-10-16 09:22:31,642 - PRINT - Mass properties of component fuselage read ...
+2025-10-16 09:22:31,642 - PRINT - fuselage - mass: 16430.1511
+2025-10-16 09:22:31,642 - PRINT - Mass properties of component empennage read ...
+2025-10-16 09:22:31,642 - PRINT - empennage - mass: 987.1138
+2025-10-16 09:22:31,642 - PRINT - Mass properties of component landing_gear read ...
+2025-10-16 09:22:31,643 - PRINT - landing_gear - mass: 2941.0278
+2025-10-16 09:22:31,643 - PRINT - Mass properties of component propulsion read ...
+2025-10-16 09:22:31,643 - PRINT - propulsion - mass: 8694.3487
+2025-10-16 09:22:31,643 - PRINT - Mass properties of component systems read ...
+2025-10-16 09:22:31,643 - PRINT - systems - mass: 5956.9821
+2025-10-16 09:22:31,644 - PRINT - Mass properties of component tank read ...
+2025-10-16 09:22:31,644 - PRINT - tank - mass: 0.0000
+2025-10-16 09:22:31,644 - WARNING - CGs of fuselage operator items estimated here at 16.78 m
+2025-10-16 09:22:31,645 - PRINT - == Manufacturer mass empty == 
+2025-10-16 09:22:31,646 - PRINT - mass ... 38011.2255
+2025-10-16 09:22:31,646 - PRINT - x ... 16.0152
+2025-10-16 09:22:31,646 - PRINT - y ... 0.0000
+2025-10-16 09:22:31,646 - PRINT - z ... -0.8239
+2025-10-16 09:22:31,646 - PRINT - j_xx ... 637157.2998
+2025-10-16 09:22:31,646 - PRINT - j_yy ... 1798879.5543
+2025-10-16 09:22:31,646 - PRINT - j_zz ... 2390397.2154
+2025-10-16 09:22:31,646 - PRINT - j_xy ... 0.0000
+2025-10-16 09:22:31,646 - PRINT - j_xz ... 0.0000
+2025-10-16 09:22:31,646 - PRINT - j_yx ... 0.0000
+2025-10-16 09:22:31,646 - PRINT - j_yz ... 0.0000
+2025-10-16 09:22:31,646 - PRINT - j_zx ... 0.0000
+2025-10-16 09:22:31,646 - PRINT - j_zy ... 0.0000
+2025-10-16 09:22:31,646 - PRINT - == Operating mass empty == 
+2025-10-16 09:22:31,646 - PRINT - mass ... 42580.5833
+2025-10-16 09:22:31,646 - PRINT - x ... 16.0174
+2025-10-16 09:22:31,646 - PRINT - y ... 0.0000
+2025-10-16 09:22:31,646 - PRINT - z ... -0.7355
+2025-10-16 09:22:31,647 - PRINT - j_xx ... 713750.4555
+2025-10-16 09:22:31,647 - PRINT - j_yy ... 2015124.2115
+2025-10-16 09:22:31,647 - PRINT - j_zz ... 2677748.6533
+2025-10-16 09:22:31,647 - PRINT - j_xy ... 0.0000
+2025-10-16 09:22:31,647 - PRINT - j_xz ... 0.0000
+2025-10-16 09:22:31,647 - PRINT - j_yx ... 0.0000
+2025-10-16 09:22:31,647 - PRINT - j_yz ... 0.0000
+2025-10-16 09:22:31,647 - PRINT - j_zx ... 0.0000
+2025-10-16 09:22:31,647 - PRINT - j_zy ... 0.0000
+2025-10-16 09:22:31,647 - WARNING - The CG of the maximum payload is set at the fuselage CG.
+2025-10-16 09:22:31,647 - WARNING - The maximum payload mass is equal the maximum structural payload mass.
+2025-10-16 09:22:31,647 - PRINT - == Maximimum payload mass == 
+2025-10-16 09:22:31,647 - PRINT - mass ... 19300.0000
+2025-10-16 09:22:31,647 - PRINT - x ... 16.8143
+2025-10-16 09:22:31,647 - PRINT - y ... 0.0000
+2025-10-16 09:22:31,647 - PRINT - z ... -0.2413
+2025-10-16 09:22:31,647 - PRINT - j_xx ... 0.0000
+2025-10-16 09:22:31,647 - PRINT - j_yy ... 0.0000
+2025-10-16 09:22:31,647 - PRINT - j_zz ... 0.0000
+2025-10-16 09:22:31,647 - PRINT - j_xy ... 0.0000
+2025-10-16 09:22:31,648 - PRINT - j_xz ... 0.0000
+2025-10-16 09:22:31,648 - PRINT - j_yx ... 0.0000
+2025-10-16 09:22:31,648 - PRINT - j_yz ... 0.0000
+2025-10-16 09:22:31,648 - PRINT - j_zx ... 0.0000
+2025-10-16 09:22:31,648 - PRINT - j_zy ... 0.0000
+2025-10-16 09:22:31,648 - PRINT - == Maximum zero fuel mass == 
+2025-10-16 09:22:31,648 - PRINT - mass ... 61880.5833
+2025-10-16 09:22:31,648 - PRINT - x ... 16.2659
+2025-10-16 09:22:31,648 - PRINT - y ... 0.0000
+2025-10-16 09:22:31,648 - PRINT - z ... -0.5814
+2025-10-16 09:22:31,648 - PRINT - j_xx ... 1037263.7267
+2025-10-16 09:22:31,648 - PRINT - j_yy ... 2928495.8532
+2025-10-16 09:22:31,648 - PRINT - j_zz ... 3891460.2794
+2025-10-16 09:22:31,648 - PRINT - j_xy ... 0.0000
+2025-10-16 09:22:31,648 - PRINT - j_xz ... 0.0000
+2025-10-16 09:22:31,648 - PRINT - j_yx ... 0.0000
+2025-10-16 09:22:31,648 - PRINT - j_yz ... 0.0000
+2025-10-16 09:22:31,648 - PRINT - j_zx ... 0.0000
+2025-10-16 09:22:31,649 - PRINT - j_zy ... 0.0000
+2025-10-16 09:22:31,649 - WARNING - The CG of the design payload is set at the fuselage CG.
+2025-10-16 09:22:31,649 - PRINT - == Design payload mass == 
+2025-10-16 09:22:31,649 - PRINT - mass ... 19300.0000
+2025-10-16 09:22:31,649 - PRINT - x ... 16.8143
+2025-10-16 09:22:31,649 - PRINT - y ... 0.0000
+2025-10-16 09:22:31,649 - PRINT - z ... -0.2413
+2025-10-16 09:22:31,649 - PRINT - j_xx ... 0.0000
+2025-10-16 09:22:31,649 - PRINT - j_yy ... 0.0000
+2025-10-16 09:22:31,649 - PRINT - j_zz ... 0.0000
+2025-10-16 09:22:31,649 - PRINT - j_xy ... 0.0000
+2025-10-16 09:22:31,649 - PRINT - j_xz ... 0.0000
+2025-10-16 09:22:31,649 - PRINT - j_yx ... 0.0000
+2025-10-16 09:22:31,649 - PRINT - j_yz ... 0.0000
+2025-10-16 09:22:31,649 - PRINT - j_zx ... 0.0000
+2025-10-16 09:22:31,649 - PRINT - j_zy ... 0.0000
+2025-10-16 09:22:31,649 - PRINT - == Mission fuel mass == 
+2025-10-16 09:22:31,649 - PRINT - mass ... 14368.3204
+2025-10-16 09:22:31,649 - PRINT - x ... 15.5989
+2025-10-16 09:22:31,650 - PRINT - y ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - z ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_xx ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_yy ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_zz ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_xy ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_xz ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_yx ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_yz ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_zx ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_zy ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - == Design fuel mass (at takeoff) == 
+2025-10-16 09:22:31,650 - PRINT - mass ... 14164.9722
+2025-10-16 09:22:31,650 - PRINT - x ... 15.6055
+2025-10-16 09:22:31,650 - PRINT - y ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - z ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_xx ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_yy ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_zz ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_xy ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_xz ... 0.0000
+2025-10-16 09:22:31,650 - PRINT - j_yx ... 0.0000
+2025-10-16 09:22:31,651 - PRINT - j_yz ... 0.0000
+2025-10-16 09:22:31,651 - PRINT - j_zx ... 0.0000
+2025-10-16 09:22:31,651 - PRINT - j_zy ... 0.0000
+2025-10-16 09:22:31,651 - PRINT - == Design mass (mission) == 
+2025-10-16 09:22:31,651 - PRINT - mass ... 76248.9037
+2025-10-16 09:22:31,651 - PRINT - x ... 16.1402
+2025-10-16 09:22:31,651 - PRINT - y ... 0.0000
+2025-10-16 09:22:31,651 - PRINT - z ... -0.4718
+2025-10-16 09:22:31,651 - PRINT - j_xx ... 1278110.4793
+2025-10-16 09:22:31,651 - PRINT - j_yy ... 3608475.9760
+2025-10-16 09:22:31,651 - PRINT - j_zz ... 4795035.2788
+2025-10-16 09:22:31,651 - PRINT - j_xy ... 0.0000
+2025-10-16 09:22:31,651 - PRINT - j_xz ... 0.0000
+2025-10-16 09:22:31,651 - PRINT - j_yx ... 0.0000
+2025-10-16 09:22:31,651 - PRINT - j_yz ... 0.0000
+2025-10-16 09:22:31,651 - PRINT - j_zx ... 0.0000
+2025-10-16 09:22:31,651 - PRINT - j_zy ... 0.0000
+2025-10-16 09:22:31,651 - PRINT - == Design mass takeoff == 
+2025-10-16 09:22:31,651 - PRINT - mass ... 76045.5555
+2025-10-16 09:22:31,652 - PRINT - x ... 16.1429
+2025-10-16 09:22:31,652 - PRINT - y ... 0.0000
+2025-10-16 09:22:31,652 - PRINT - z ... -0.4731
+2025-10-16 09:22:31,652 - PRINT - j_xx ... 1274701.8874
+2025-10-16 09:22:31,652 - PRINT - j_yy ... 3598852.5340
+2025-10-16 09:22:31,652 - PRINT - j_zz ... 4782247.4027
+2025-10-16 09:22:31,652 - PRINT - j_xy ... 0.0000
+2025-10-16 09:22:31,652 - PRINT - j_xz ... 0.0000
+2025-10-16 09:22:31,652 - PRINT - j_yx ... 0.0000
+2025-10-16 09:22:31,652 - PRINT - j_yz ... 0.0000
+2025-10-16 09:22:31,652 - PRINT - j_zx ... 0.0000
+2025-10-16 09:22:31,652 - PRINT - j_zy ... 0.0000
+2025-10-16 09:22:31,652 - PRINT - == Design mass midflight == 
+2025-10-16 09:22:31,652 - PRINT - mass ... 70281.4258
+2025-10-16 09:22:31,652 - PRINT - x ... 16.1536
+2025-10-16 09:22:31,652 - PRINT - y ... 0.0000
+2025-10-16 09:22:31,652 - PRINT - z ... -0.5119
+2025-10-16 09:22:31,652 - PRINT - j_xx ... 1178081.5525
+2025-10-16 09:22:31,652 - PRINT - j_yy ... 3326065.3510
+2025-10-16 09:22:31,652 - PRINT - j_zz ... 4419760.8086
+2025-10-16 09:22:31,653 - PRINT - j_xy ... 0.0000
+2025-10-16 09:22:31,653 - PRINT - j_xz ... 0.0000
+2025-10-16 09:22:31,653 - PRINT - j_yx ... 0.0000
+2025-10-16 09:22:31,653 - PRINT - j_yz ... 0.0000
+2025-10-16 09:22:31,653 - PRINT - j_zx ... 0.0000
+2025-10-16 09:22:31,653 - PRINT - j_zy ... 0.0000
+2025-10-16 09:22:31,653 - PRINT - == Maximum Takeoff Mass == 
+2025-10-16 09:22:31,653 - PRINT - mass ... 76045.5555
+2025-10-16 09:22:31,653 - PRINT - x ... 16.1429
+2025-10-16 09:22:31,653 - PRINT - y ... 0.0000
+2025-10-16 09:22:31,653 - PRINT - z ... -0.4731
+2025-10-16 09:22:31,653 - PRINT - j_xx ... 1274701.8874
+2025-10-16 09:22:31,653 - PRINT - j_yy ... 3598852.5340
+2025-10-16 09:22:31,653 - PRINT - j_zz ... 4782247.4027
+2025-10-16 09:22:31,653 - PRINT - j_xy ... 0.0000
+2025-10-16 09:22:31,653 - PRINT - j_xz ... 0.0000
+2025-10-16 09:22:31,653 - PRINT - j_yx ... 0.0000
+2025-10-16 09:22:31,653 - PRINT - j_yz ... 0.0000
+2025-10-16 09:22:31,653 - PRINT - j_zx ... 0.0000
+2025-10-16 09:22:31,653 - PRINT - j_zy ... 0.0000
+2025-10-16 09:22:31,654 - PRINT - == Maximum fuel mass == 
+2025-10-16 09:22:31,654 - PRINT - mass ... 18659.9284
+2025-10-16 09:22:31,654 - PRINT - x ... 15.4929
+2025-10-16 09:22:31,654 - PRINT - y ... 0.0000
+2025-10-16 09:22:31,654 - PRINT - z ... 0.0000
+2025-10-16 09:22:31,654 - PRINT - j_xx ... 0.0000
+2025-10-16 09:22:31,654 - PRINT - j_yy ... 0.0000
+2025-10-16 09:22:31,654 - PRINT - j_zz ... 0.0000
+2025-10-16 09:22:31,654 - PRINT - j_xy ... 0.0000
+2025-10-16 09:22:31,654 - PRINT - j_xz ... 0.0000
+2025-10-16 09:22:31,654 - PRINT - j_yx ... 0.0000
+2025-10-16 09:22:31,654 - PRINT - j_yz ... 0.0000
+2025-10-16 09:22:31,654 - PRINT - j_zx ... 0.0000
+2025-10-16 09:22:31,654 - PRINT - j_zy ... 0.0000
+2025-10-16 09:22:31,654 - PRINT - == Ferry range mass == 
+2025-10-16 09:22:31,654 - PRINT - mass ... 61240.5117
+2025-10-16 09:22:31,654 - PRINT - x ... 15.8575
+2025-10-16 09:22:31,654 - PRINT - y ... 0.0000
+2025-10-16 09:22:31,654 - PRINT - z ... -0.5114
+2025-10-16 09:22:31,654 - PRINT - j_xx ... 0.0000
+2025-10-16 09:22:31,655 - PRINT - j_yy ... 0.0000
+2025-10-16 09:22:31,655 - PRINT - j_zz ... 0.0000
+2025-10-16 09:22:31,655 - PRINT - j_xy ... 0.0000
+2025-10-16 09:22:31,655 - PRINT - j_xz ... 0.0000
+2025-10-16 09:22:31,655 - PRINT - j_yx ... 0.0000
+2025-10-16 09:22:31,655 - PRINT - j_yz ... 0.0000
+2025-10-16 09:22:31,655 - PRINT - j_zx ... 0.0000
+2025-10-16 09:22:31,655 - PRINT - j_zy ... 0.0000
+2025-10-16 09:22:31,655 - WARNING - Estimated CG of MTOM with max payload. (fuel CG set in wing CG, payload CG set in fuselage CG.)
+2025-10-16 09:22:31,655 - WARNING - Estimated CG of MTOM with max fuel. (payload CG set in fuselage CG.)
+2025-10-16 09:22:31,655 - PRINT - Calculate MLM by RWTH regression ...
+2025-10-16 09:22:31,655 - PRINT - == Maximum landing mass == 
+2025-10-16 09:22:31,655 - PRINT - mass ... 64304.4078
+2025-10-16 09:22:31,655 - PRINT - x ... 16.2148
+2025-10-16 09:22:31,655 - PRINT - y ... 0.0000
+2025-10-16 09:22:31,656 - PRINT - z ... -0.5573
+2025-10-16 09:22:31,656 - PRINT - j_xx ... 1077892.7114
+2025-10-16 09:22:31,656 - PRINT - j_yy ... 3043203.2417
+2025-10-16 09:22:31,656 - PRINT - j_zz ... 4043886.3946
+2025-10-16 09:22:31,656 - PRINT - j_xy ... 0.0000
+2025-10-16 09:22:31,656 - PRINT - j_xz ... 0.0000
+2025-10-16 09:22:31,656 - PRINT - j_yx ... 0.0000
+2025-10-16 09:22:31,656 - PRINT - j_yz ... 0.0000
+2025-10-16 09:22:31,656 - PRINT - j_zx ... 0.0000
+2025-10-16 09:22:31,656 - PRINT - j_zy ... 0.0000
+2025-10-16 09:22:31,656 - PRINT - == Calculate loading diagramm cg change ==
+2025-10-16 09:22:31,656 - PRINT - REFUELING (design mission)...
+2025-10-16 09:22:31,656 - PRINT - Tank 'wing inner left' was filled with 3158.3705 kg kerosene.
+2025-10-16 09:22:31,656 - PRINT - Tank 'wing inner right' was filled with 3158.3705 kg kerosene.
+2025-10-16 09:22:31,656 - PRINT - Tank 'wing outer left' was filled with 3376.0610 kg kerosene.
+2025-10-16 09:22:31,656 - PRINT - Tank 'wing outer right' was filled with 3376.0610 kg kerosene.
+2025-10-16 09:22:31,657 - PRINT - Tank 'wing center' was filled with 1096.1093 kg kerosene.
+2025-10-16 09:22:31,657 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:22:31,657 - PRINT - ROW-WISE
+2025-10-16 09:22:31,657 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:22:31,657 - PRINT - BACK TO FRONT:
+2025-10-16 09:22:31,657 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:22:31,657 - PRINT - ROW-WISE
+2025-10-16 09:22:31,657 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:22:31,657 - PRINT - CARGO LOADING...
+2025-10-16 09:22:31,657 - PRINT - BACK TO FRONT:
+2025-10-16 09:22:31,657 - PRINT - CARGO LOADING...
+2025-10-16 09:22:31,657 - PRINT - DEFUELING...
+2025-10-16 09:22:31,657 - PRINT - From tank 'wing inner left' was defueld 3158.3705 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:22:31,657 - PRINT - From tank 'wing inner right' was defueld 3158.3705 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:22:31,657 - PRINT - From tank 'wing outer left' was defueld 2586.3527 kg. Fuel left in tank: 789.7082 kg.
+2025-10-16 09:22:31,657 - PRINT - From tank 'wing outer right' was defueld 2586.3527 kg. Fuel left in tank: 789.7082 kg.
+2025-10-16 09:22:31,657 - PRINT - From tank 'wing center' was defueld 0.0000 kg. Fuel left in tank: 1096.1093 kg.
+2025-10-16 09:22:31,657 - PRINT - Most forward CG global position is 15.4201 m.
+2025-10-16 09:22:31,658 - PRINT - Most aft CG global position is 16.6966 m.
+2025-10-16 09:22:31,658 - PRINT - Corresponding mass most fwd CG is of 62985.5555 kg.
+2025-10-16 09:22:31,658 - PRINT - Corresponding mass most aft CG is of 64425.5555 kg.
+2025-10-16 09:22:31,713 - WARNING - Warning: "plot_output" switch in module configuration file set to "False". No plots generated.
+2025-10-16 09:22:31,713 - WARNING - Warning: "html_output" switch in module configuration file set to "False". No HTML report generated.
+2025-10-16 09:22:31,713 - WARNING - Warning: "xml_output" switch in module configuration file set to "False". No XML results file generated.
+2025-10-16 09:22:31,713 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:22:31,713 - PRINT - Weight and balance analysis finished.
+2025-10-16 09:23:41,162 - PRINT - Weight and balance analysis started...
+2025-10-16 09:23:41,615 - PRINT - Mass properties of component wing read ...
+2025-10-16 09:23:41,615 - PRINT - wing - mass: 7688.8072
+2025-10-16 09:23:41,615 - PRINT - Mass properties of component fuselage read ...
+2025-10-16 09:23:41,616 - PRINT - fuselage - mass: 16430.1511
+2025-10-16 09:23:41,616 - PRINT - Mass properties of component empennage read ...
+2025-10-16 09:23:41,616 - PRINT - empennage - mass: 991.2768
+2025-10-16 09:23:41,616 - PRINT - Mass properties of component landing_gear read ...
+2025-10-16 09:23:41,617 - PRINT - landing_gear - mass: 2977.3975
+2025-10-16 09:23:41,617 - PRINT - Mass properties of component propulsion read ...
+2025-10-16 09:23:41,617 - PRINT - propulsion - mass: 8788.5271
+2025-10-16 09:23:41,617 - PRINT - Mass properties of component systems read ...
+2025-10-16 09:23:41,617 - PRINT - systems - mass: 5986.4133
+2025-10-16 09:23:41,617 - PRINT - Mass properties of component tank read ...
+2025-10-16 09:23:41,618 - PRINT - tank - mass: 0.0000
+2025-10-16 09:23:41,618 - WARNING - CGs of fuselage operator items estimated here at 16.78 m
+2025-10-16 09:23:41,619 - PRINT - == Manufacturer mass empty == 
+2025-10-16 09:23:41,619 - PRINT - mass ... 38291.7861
+2025-10-16 09:23:41,620 - PRINT - x ... 15.9655
+2025-10-16 09:23:41,620 - PRINT - y ... 0.0000
+2025-10-16 09:23:41,620 - PRINT - z ... -0.8285
+2025-10-16 09:23:41,620 - PRINT - j_xx ... 649817.6244
+2025-10-16 09:23:41,620 - PRINT - j_yy ... 1812157.0744
+2025-10-16 09:23:41,620 - PRINT - j_zz ... 2422078.0438
+2025-10-16 09:23:41,620 - PRINT - j_xy ... 0.0000
+2025-10-16 09:23:41,620 - PRINT - j_xz ... 0.0000
+2025-10-16 09:23:41,620 - PRINT - j_yx ... 0.0000
+2025-10-16 09:23:41,620 - PRINT - j_yz ... 0.0000
+2025-10-16 09:23:41,620 - PRINT - j_zx ... 0.0000
+2025-10-16 09:23:41,620 - PRINT - j_zy ... 0.0000
+2025-10-16 09:23:41,621 - PRINT - == Operating mass empty == 
+2025-10-16 09:23:41,621 - PRINT - mass ... 42862.6729
+2025-10-16 09:23:41,621 - PRINT - x ... 15.9729
+2025-10-16 09:23:41,621 - PRINT - y ... 0.0000
+2025-10-16 09:23:41,621 - PRINT - z ... -0.7402
+2025-10-16 09:23:41,621 - PRINT - j_xx ... 727386.2918
+2025-10-16 09:23:41,621 - PRINT - j_yy ... 2028474.0905
+2025-10-16 09:23:41,621 - PRINT - j_zz ... 2711201.2674
+2025-10-16 09:23:41,621 - PRINT - j_xy ... 0.0000
+2025-10-16 09:23:41,621 - PRINT - j_xz ... 0.0000
+2025-10-16 09:23:41,621 - PRINT - j_yx ... 0.0000
+2025-10-16 09:23:41,621 - PRINT - j_yz ... 0.0000
+2025-10-16 09:23:41,621 - PRINT - j_zx ... 0.0000
+2025-10-16 09:23:41,621 - PRINT - j_zy ... 0.0000
+2025-10-16 09:23:41,622 - WARNING - The CG of the maximum payload is set at the fuselage CG.
+2025-10-16 09:23:41,622 - WARNING - The maximum payload mass is equal the maximum structural payload mass.
+2025-10-16 09:23:41,622 - PRINT - == Maximimum payload mass == 
+2025-10-16 09:23:41,622 - PRINT - mass ... 19300.0000
+2025-10-16 09:23:41,622 - PRINT - x ... 16.8143
+2025-10-16 09:23:41,622 - PRINT - y ... 0.0000
+2025-10-16 09:23:41,622 - PRINT - z ... -0.2413
+2025-10-16 09:23:41,622 - PRINT - j_xx ... 0.0000
+2025-10-16 09:23:41,622 - PRINT - j_yy ... 0.0000
+2025-10-16 09:23:41,622 - PRINT - j_zz ... 0.0000
+2025-10-16 09:23:41,622 - PRINT - j_xy ... 0.0000
+2025-10-16 09:23:41,622 - PRINT - j_xz ... 0.0000
+2025-10-16 09:23:41,622 - PRINT - j_yx ... 0.0000
+2025-10-16 09:23:41,622 - PRINT - j_yz ... 0.0000
+2025-10-16 09:23:41,622 - PRINT - j_zx ... 0.0000
+2025-10-16 09:23:41,623 - PRINT - j_zy ... 0.0000
+2025-10-16 09:23:41,623 - PRINT - == Maximum zero fuel mass == 
+2025-10-16 09:23:41,623 - PRINT - mass ... 62162.6729
+2025-10-16 09:23:41,623 - PRINT - x ... 16.2341
+2025-10-16 09:23:41,623 - PRINT - y ... 0.0000
+2025-10-16 09:23:41,623 - PRINT - z ... -0.5853
+2025-10-16 09:23:41,623 - PRINT - j_xx ... 1054910.3232
+2025-10-16 09:23:41,623 - PRINT - j_yy ... 2941845.7322
+2025-10-16 09:23:41,623 - PRINT - j_zz ... 3931988.0471
+2025-10-16 09:23:41,623 - PRINT - j_xy ... 0.0000
+2025-10-16 09:23:41,623 - PRINT - j_xz ... 0.0000
+2025-10-16 09:23:41,623 - PRINT - j_yx ... 0.0000
+2025-10-16 09:23:41,623 - PRINT - j_yz ... 0.0000
+2025-10-16 09:23:41,624 - PRINT - j_zx ... 0.0000
+2025-10-16 09:23:41,624 - PRINT - j_zy ... 0.0000
+2025-10-16 09:23:41,624 - WARNING - The CG of the design payload is set at the fuselage CG.
+2025-10-16 09:23:41,624 - PRINT - == Design payload mass == 
+2025-10-16 09:23:41,624 - PRINT - mass ... 19300.0000
+2025-10-16 09:23:41,624 - PRINT - x ... 16.8143
+2025-10-16 09:23:41,624 - PRINT - y ... 0.0000
+2025-10-16 09:23:41,624 - PRINT - z ... -0.2413
+2025-10-16 09:23:41,624 - PRINT - j_xx ... 0.0000
+2025-10-16 09:23:41,625 - PRINT - j_yy ... 0.0000
+2025-10-16 09:23:41,625 - PRINT - j_zz ... 0.0000
+2025-10-16 09:23:41,625 - PRINT - j_xy ... 0.0000
+2025-10-16 09:23:41,625 - PRINT - j_xz ... 0.0000
+2025-10-16 09:23:41,625 - PRINT - j_yx ... 0.0000
+2025-10-16 09:23:41,625 - PRINT - j_yz ... 0.0000
+2025-10-16 09:23:41,625 - PRINT - j_zx ... 0.0000
+2025-10-16 09:23:41,625 - PRINT - j_zy ... 0.0000
+2025-10-16 09:23:41,625 - PRINT - == Mission fuel mass == 
+2025-10-16 09:23:41,625 - PRINT - mass ... 14495.9416
+2025-10-16 09:23:41,625 - PRINT - x ... 15.5268
+2025-10-16 09:23:41,626 - PRINT - y ... 0.0000
+2025-10-16 09:23:41,626 - PRINT - z ... 0.0000
+2025-10-16 09:23:41,626 - PRINT - j_xx ... 0.0000
+2025-10-16 09:23:41,626 - PRINT - j_yy ... 0.0000
+2025-10-16 09:23:41,626 - PRINT - j_zz ... 0.0000
+2025-10-16 09:23:41,626 - PRINT - j_xy ... 0.0000
+2025-10-16 09:23:41,626 - PRINT - j_xz ... 0.0000
+2025-10-16 09:23:41,626 - PRINT - j_yx ... 0.0000
+2025-10-16 09:23:41,626 - PRINT - j_yz ... 0.0000
+2025-10-16 09:23:41,626 - PRINT - j_zx ... 0.0000
+2025-10-16 09:23:41,626 - PRINT - j_zy ... 0.0000
+2025-10-16 09:23:41,626 - PRINT - == Design fuel mass (at takeoff) == 
+2025-10-16 09:23:41,626 - PRINT - mass ... 14290.0769
+2025-10-16 09:23:41,627 - PRINT - x ... 15.5336
+2025-10-16 09:23:41,627 - PRINT - y ... 0.0000
+2025-10-16 09:23:41,627 - PRINT - z ... 0.0000
+2025-10-16 09:23:41,627 - PRINT - j_xx ... 0.0000
+2025-10-16 09:23:41,627 - PRINT - j_yy ... 0.0000
+2025-10-16 09:23:41,627 - PRINT - j_zz ... 0.0000
+2025-10-16 09:23:41,627 - PRINT - j_xy ... 0.0000
+2025-10-16 09:23:41,627 - PRINT - j_xz ... 0.0000
+2025-10-16 09:23:41,627 - PRINT - j_yx ... 0.0000
+2025-10-16 09:23:41,627 - PRINT - j_yz ... 0.0000
+2025-10-16 09:23:41,627 - PRINT - j_zx ... 0.0000
+2025-10-16 09:23:41,627 - PRINT - j_zy ... 0.0000
+2025-10-16 09:23:41,627 - PRINT - == Design mass (mission) == 
+2025-10-16 09:23:41,627 - PRINT - mass ... 76658.6146
+2025-10-16 09:23:41,628 - PRINT - x ... 16.1004
+2025-10-16 09:23:41,628 - PRINT - y ... 0.0000
+2025-10-16 09:23:41,628 - PRINT - z ... -0.4746
+2025-10-16 09:23:41,628 - PRINT - j_xx ... 1300908.7295
+2025-10-16 09:23:41,628 - PRINT - j_yy ... 3627865.5253
+2025-10-16 09:23:41,628 - PRINT - j_zz ... 4848902.7572
+2025-10-16 09:23:41,628 - PRINT - j_xy ... 0.0000
+2025-10-16 09:23:41,628 - PRINT - j_xz ... 0.0000
+2025-10-16 09:23:41,628 - PRINT - j_yx ... 0.0000
+2025-10-16 09:23:41,628 - PRINT - j_yz ... 0.0000
+2025-10-16 09:23:41,628 - PRINT - j_zx ... 0.0000
+2025-10-16 09:23:41,628 - PRINT - j_zy ... 0.0000
+2025-10-16 09:23:41,628 - PRINT - == Design mass takeoff == 
+2025-10-16 09:23:41,628 - PRINT - mass ... 76452.7498
+2025-10-16 09:23:41,629 - PRINT - x ... 16.1032
+2025-10-16 09:23:41,629 - PRINT - y ... 0.0000
+2025-10-16 09:23:41,629 - PRINT - z ... -0.4759
+2025-10-16 09:23:41,629 - PRINT - j_xx ... 1297415.1725
+2025-10-16 09:23:41,629 - PRINT - j_yy ... 3618122.9856
+2025-10-16 09:23:41,629 - PRINT - j_zz ... 4835881.1534
+2025-10-16 09:23:41,629 - PRINT - j_xy ... 0.0000
+2025-10-16 09:23:41,629 - PRINT - j_xz ... 0.0000
+2025-10-16 09:23:41,629 - PRINT - j_yx ... 0.0000
+2025-10-16 09:23:41,629 - PRINT - j_yz ... 0.0000
+2025-10-16 09:23:41,629 - PRINT - j_zx ... 0.0000
+2025-10-16 09:23:41,629 - PRINT - j_zy ... 0.0000
+2025-10-16 09:23:41,629 - PRINT - == Design mass midflight == 
+2025-10-16 09:23:41,630 - PRINT - mass ... 70623.9983
+2025-10-16 09:23:41,630 - PRINT - x ... 16.1141
+2025-10-16 09:23:41,630 - PRINT - y ... 0.0000
+2025-10-16 09:23:41,630 - PRINT - z ... -0.5152
+2025-10-16 09:23:41,630 - PRINT - j_xx ... 1198500.3437
+2025-10-16 09:23:41,630 - PRINT - j_yy ... 3342277.5791
+2025-10-16 09:23:41,630 - PRINT - j_zz ... 4467193.9618
+2025-10-16 09:23:41,630 - PRINT - j_xy ... 0.0000
+2025-10-16 09:23:41,630 - PRINT - j_xz ... 0.0000
+2025-10-16 09:23:41,630 - PRINT - j_yx ... 0.0000
+2025-10-16 09:23:41,630 - PRINT - j_yz ... 0.0000
+2025-10-16 09:23:41,630 - PRINT - j_zx ... 0.0000
+2025-10-16 09:23:41,630 - PRINT - j_zy ... 0.0000
+2025-10-16 09:23:41,630 - PRINT - == Maximum Takeoff Mass == 
+2025-10-16 09:23:41,631 - PRINT - mass ... 76452.7498
+2025-10-16 09:23:41,631 - PRINT - x ... 16.1032
+2025-10-16 09:23:41,631 - PRINT - y ... 0.0000
+2025-10-16 09:23:41,631 - PRINT - z ... -0.4759
+2025-10-16 09:23:41,631 - PRINT - j_xx ... 1297415.1725
+2025-10-16 09:23:41,631 - PRINT - j_yy ... 3618122.9856
+2025-10-16 09:23:41,631 - PRINT - j_zz ... 4835881.1534
+2025-10-16 09:23:41,631 - PRINT - j_xy ... 0.0000
+2025-10-16 09:23:41,631 - PRINT - j_xz ... 0.0000
+2025-10-16 09:23:41,631 - PRINT - j_yx ... 0.0000
+2025-10-16 09:23:41,631 - PRINT - j_yz ... 0.0000
+2025-10-16 09:23:41,631 - PRINT - j_zx ... 0.0000
+2025-10-16 09:23:41,631 - PRINT - j_zy ... 0.0000
+2025-10-16 09:23:41,631 - PRINT - == Maximum fuel mass == 
+2025-10-16 09:23:41,632 - PRINT - mass ... 19003.7957
+2025-10-16 09:23:41,632 - PRINT - x ... 15.4154
+2025-10-16 09:23:41,632 - PRINT - y ... 0.0000
+2025-10-16 09:23:41,632 - PRINT - z ... 0.0000
+2025-10-16 09:23:41,632 - PRINT - j_xx ... 0.0000
+2025-10-16 09:23:41,632 - PRINT - j_yy ... 0.0000
+2025-10-16 09:23:41,632 - PRINT - j_zz ... 0.0000
+2025-10-16 09:23:41,632 - PRINT - j_xy ... 0.0000
+2025-10-16 09:23:41,632 - PRINT - j_xz ... 0.0000
+2025-10-16 09:23:41,632 - PRINT - j_yx ... 0.0000
+2025-10-16 09:23:41,632 - PRINT - j_yz ... 0.0000
+2025-10-16 09:23:41,632 - PRINT - j_zx ... 0.0000
+2025-10-16 09:23:41,632 - PRINT - j_zy ... 0.0000
+2025-10-16 09:23:41,633 - PRINT - == Ferry range mass == 
+2025-10-16 09:23:41,633 - PRINT - mass ... 61866.4686
+2025-10-16 09:23:41,633 - PRINT - x ... 15.8016
+2025-10-16 09:23:41,633 - PRINT - y ... 0.0000
+2025-10-16 09:23:41,633 - PRINT - z ... -0.5128
+2025-10-16 09:23:41,633 - PRINT - j_xx ... 0.0000
+2025-10-16 09:23:41,633 - PRINT - j_yy ... 0.0000
+2025-10-16 09:23:41,633 - PRINT - j_zz ... 0.0000
+2025-10-16 09:23:41,633 - PRINT - j_xy ... 0.0000
+2025-10-16 09:23:41,633 - PRINT - j_xz ... 0.0000
+2025-10-16 09:23:41,633 - PRINT - j_yx ... 0.0000
+2025-10-16 09:23:41,633 - PRINT - j_yz ... 0.0000
+2025-10-16 09:23:41,633 - PRINT - j_zx ... 0.0000
+2025-10-16 09:23:41,633 - PRINT - j_zy ... 0.0000
+2025-10-16 09:23:41,634 - WARNING - Estimated CG of MTOM with max payload. (fuel CG set in wing CG, payload CG set in fuselage CG.)
+2025-10-16 09:23:41,634 - WARNING - Estimated CG of MTOM with max fuel. (payload CG set in fuselage CG.)
+2025-10-16 09:23:41,634 - PRINT - Calculate MLM by RWTH regression ...
+2025-10-16 09:23:41,634 - PRINT - == Maximum landing mass == 
+2025-10-16 09:23:41,634 - PRINT - mass ... 64622.7756
+2025-10-16 09:23:41,634 - PRINT - x ... 16.1807
+2025-10-16 09:23:41,634 - PRINT - y ... 0.0000
+2025-10-16 09:23:41,634 - PRINT - z ... -0.5610
+2025-10-16 09:23:41,634 - PRINT - j_xx ... 1096658.6525
+2025-10-16 09:23:41,634 - PRINT - j_yy ... 3058269.9833
+2025-10-16 09:23:41,634 - PRINT - j_zz ... 4087597.4181
+2025-10-16 09:23:41,634 - PRINT - j_xy ... 0.0000
+2025-10-16 09:23:41,634 - PRINT - j_xz ... 0.0000
+2025-10-16 09:23:41,634 - PRINT - j_yx ... 0.0000
+2025-10-16 09:23:41,634 - PRINT - j_yz ... 0.0000
+2025-10-16 09:23:41,634 - PRINT - j_zx ... 0.0000
+2025-10-16 09:23:41,635 - PRINT - j_zy ... 0.0000
+2025-10-16 09:23:41,635 - PRINT - == Calculate loading diagramm cg change ==
+2025-10-16 09:23:41,635 - PRINT - REFUELING (design mission)...
+2025-10-16 09:23:41,635 - PRINT - Tank 'wing inner left' was filled with 3232.0614 kg kerosene.
+2025-10-16 09:23:41,635 - PRINT - Tank 'wing inner right' was filled with 3232.0614 kg kerosene.
+2025-10-16 09:23:41,635 - PRINT - Tank 'wing outer left' was filled with 3434.8587 kg kerosene.
+2025-10-16 09:23:41,635 - PRINT - Tank 'wing outer right' was filled with 3434.8587 kg kerosene.
+2025-10-16 09:23:41,635 - PRINT - Tank 'wing center' was filled with 956.2368 kg kerosene.
+2025-10-16 09:23:41,635 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:23:41,635 - PRINT - ROW-WISE
+2025-10-16 09:23:41,635 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:23:41,635 - PRINT - BACK TO FRONT:
+2025-10-16 09:23:41,635 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:23:41,635 - PRINT - ROW-WISE
+2025-10-16 09:23:41,635 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:23:41,635 - PRINT - CARGO LOADING...
+2025-10-16 09:23:41,635 - PRINT - BACK TO FRONT:
+2025-10-16 09:23:41,636 - PRINT - CARGO LOADING...
+2025-10-16 09:23:41,636 - PRINT - DEFUELING...
+2025-10-16 09:23:41,636 - PRINT - From tank 'wing inner left' was defueld 3232.0614 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:23:41,636 - PRINT - From tank 'wing inner right' was defueld 3232.0614 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:23:41,636 - PRINT - From tank 'wing outer left' was defueld 2565.1168 kg. Fuel left in tank: 869.7419 kg.
+2025-10-16 09:23:41,636 - PRINT - From tank 'wing outer right' was defueld 2565.1168 kg. Fuel left in tank: 869.7419 kg.
+2025-10-16 09:23:41,636 - PRINT - From tank 'wing center' was defueld 0.0000 kg. Fuel left in tank: 956.2368 kg.
+2025-10-16 09:23:41,636 - PRINT - Most forward CG global position is 15.3766 m.
+2025-10-16 09:23:41,636 - PRINT - Most aft CG global position is 16.6463 m.
+2025-10-16 09:23:41,636 - PRINT - Corresponding mass most fwd CG is of 62912.7498 kg.
+2025-10-16 09:23:41,636 - PRINT - Corresponding mass most aft CG is of 64832.7498 kg.
+2025-10-16 09:23:41,691 - WARNING - Warning: "plot_output" switch in module configuration file set to "False". No plots generated.
+2025-10-16 09:23:41,691 - WARNING - Warning: "html_output" switch in module configuration file set to "False". No HTML report generated.
+2025-10-16 09:23:41,691 - WARNING - Warning: "xml_output" switch in module configuration file set to "False". No XML results file generated.
+2025-10-16 09:23:41,691 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:23:41,691 - PRINT - Weight and balance analysis finished.
+2025-10-16 09:24:52,101 - PRINT - Weight and balance analysis started...
+2025-10-16 09:24:52,562 - PRINT - Mass properties of component wing read ...
+2025-10-16 09:24:52,562 - PRINT - wing - mass: 7740.6924
+2025-10-16 09:24:52,562 - PRINT - Mass properties of component fuselage read ...
+2025-10-16 09:24:52,562 - PRINT - fuselage - mass: 16430.1511
+2025-10-16 09:24:52,562 - PRINT - Mass properties of component empennage read ...
+2025-10-16 09:24:52,563 - PRINT - empennage - mass: 992.6508
+2025-10-16 09:24:52,563 - PRINT - Mass properties of component landing_gear read ...
+2025-10-16 09:24:52,563 - PRINT - landing_gear - mass: 2993.3108
+2025-10-16 09:24:52,563 - PRINT - Mass properties of component propulsion read ...
+2025-10-16 09:24:52,564 - PRINT - propulsion - mass: 8829.7372
+2025-10-16 09:24:52,564 - PRINT - Mass properties of component systems read ...
+2025-10-16 09:24:52,564 - PRINT - systems - mass: 5999.1453
+2025-10-16 09:24:52,564 - PRINT - Mass properties of component tank read ...
+2025-10-16 09:24:52,564 - PRINT - tank - mass: 0.0000
+2025-10-16 09:24:52,565 - WARNING - CGs of fuselage operator items estimated here at 16.78 m
+2025-10-16 09:24:52,566 - PRINT - == Manufacturer mass empty == 
+2025-10-16 09:24:52,566 - PRINT - mass ... 38414.2338
+2025-10-16 09:24:52,566 - PRINT - x ... 15.9385
+2025-10-16 09:24:52,566 - PRINT - y ... 0.0000
+2025-10-16 09:24:52,566 - PRINT - z ... -0.8306
+2025-10-16 09:24:52,566 - PRINT - j_xx ... 655386.2290
+2025-10-16 09:24:52,566 - PRINT - j_yy ... 1817951.9081
+2025-10-16 09:24:52,566 - PRINT - j_zz ... 2435966.5886
+2025-10-16 09:24:52,566 - PRINT - j_xy ... 0.0000
+2025-10-16 09:24:52,566 - PRINT - j_xz ... 0.0000
+2025-10-16 09:24:52,567 - PRINT - j_yx ... 0.0000
+2025-10-16 09:24:52,567 - PRINT - j_yz ... 0.0000
+2025-10-16 09:24:52,567 - PRINT - j_zx ... 0.0000
+2025-10-16 09:24:52,567 - PRINT - j_zy ... 0.0000
+2025-10-16 09:24:52,567 - PRINT - == Operating mass empty == 
+2025-10-16 09:24:52,567 - PRINT - mass ... 42985.7876
+2025-10-16 09:24:52,567 - PRINT - x ... 15.9487
+2025-10-16 09:24:52,567 - PRINT - y ... 0.0000
+2025-10-16 09:24:52,567 - PRINT - z ... -0.7422
+2025-10-16 09:24:52,567 - PRINT - j_xx ... 733381.6251
+2025-10-16 09:24:52,567 - PRINT - j_yy ... 2034300.4869
+2025-10-16 09:24:52,567 - PRINT - j_zz ... 2725863.0964
+2025-10-16 09:24:52,568 - PRINT - j_xy ... 0.0000
+2025-10-16 09:24:52,568 - PRINT - j_xz ... 0.0000
+2025-10-16 09:24:52,568 - PRINT - j_yx ... 0.0000
+2025-10-16 09:24:52,568 - PRINT - j_yz ... 0.0000
+2025-10-16 09:24:52,568 - PRINT - j_zx ... 0.0000
+2025-10-16 09:24:52,568 - PRINT - j_zy ... 0.0000
+2025-10-16 09:24:52,568 - WARNING - The CG of the maximum payload is set at the fuselage CG.
+2025-10-16 09:24:52,568 - WARNING - The maximum payload mass is equal the maximum structural payload mass.
+2025-10-16 09:24:52,568 - PRINT - == Maximimum payload mass == 
+2025-10-16 09:24:52,568 - PRINT - mass ... 19300.0000
+2025-10-16 09:24:52,568 - PRINT - x ... 16.8143
+2025-10-16 09:24:52,568 - PRINT - y ... 0.0000
+2025-10-16 09:24:52,569 - PRINT - z ... -0.2413
+2025-10-16 09:24:52,569 - PRINT - j_xx ... 0.0000
+2025-10-16 09:24:52,569 - PRINT - j_yy ... 0.0000
+2025-10-16 09:24:52,569 - PRINT - j_zz ... 0.0000
+2025-10-16 09:24:52,569 - PRINT - j_xy ... 0.0000
+2025-10-16 09:24:52,569 - PRINT - j_xz ... 0.0000
+2025-10-16 09:24:52,569 - PRINT - j_yx ... 0.0000
+2025-10-16 09:24:52,569 - PRINT - j_yz ... 0.0000
+2025-10-16 09:24:52,569 - PRINT - j_zx ... 0.0000
+2025-10-16 09:24:52,569 - PRINT - j_zy ... 0.0000
+2025-10-16 09:24:52,569 - PRINT - == Maximum zero fuel mass == 
+2025-10-16 09:24:52,569 - PRINT - mass ... 62285.7876
+2025-10-16 09:24:52,569 - PRINT - x ... 16.2169
+2025-10-16 09:24:52,570 - PRINT - y ... 0.0000
+2025-10-16 09:24:52,570 - PRINT - z ... -0.5870
+2025-10-16 09:24:52,570 - PRINT - j_xx ... 1062659.4203
+2025-10-16 09:24:52,570 - PRINT - j_yy ... 2947672.1286
+2025-10-16 09:24:52,570 - PRINT - j_zz ... 3949736.3970
+2025-10-16 09:24:52,570 - PRINT - j_xy ... 0.0000
+2025-10-16 09:24:52,570 - PRINT - j_xz ... 0.0000
+2025-10-16 09:24:52,570 - PRINT - j_yx ... 0.0000
+2025-10-16 09:24:52,570 - PRINT - j_yz ... 0.0000
+2025-10-16 09:24:52,570 - PRINT - j_zx ... 0.0000
+2025-10-16 09:24:52,570 - PRINT - j_zy ... 0.0000
+2025-10-16 09:24:52,570 - WARNING - The CG of the design payload is set at the fuselage CG.
+2025-10-16 09:24:52,570 - PRINT - == Design payload mass == 
+2025-10-16 09:24:52,571 - PRINT - mass ... 19300.0000
+2025-10-16 09:24:52,571 - PRINT - x ... 16.8143
+2025-10-16 09:24:52,571 - PRINT - y ... 0.0000
+2025-10-16 09:24:52,571 - PRINT - z ... -0.2413
+2025-10-16 09:24:52,571 - PRINT - j_xx ... 0.0000
+2025-10-16 09:24:52,571 - PRINT - j_yy ... 0.0000
+2025-10-16 09:24:52,571 - PRINT - j_zz ... 0.0000
+2025-10-16 09:24:52,571 - PRINT - j_xy ... 0.0000
+2025-10-16 09:24:52,571 - PRINT - j_xz ... 0.0000
+2025-10-16 09:24:52,571 - PRINT - j_yx ... 0.0000
+2025-10-16 09:24:52,571 - PRINT - j_yz ... 0.0000
+2025-10-16 09:24:52,571 - PRINT - j_zx ... 0.0000
+2025-10-16 09:24:52,571 - PRINT - j_zy ... 0.0000
+2025-10-16 09:24:52,572 - PRINT - == Mission fuel mass == 
+2025-10-16 09:24:52,572 - PRINT - mass ... 14551.4507
+2025-10-16 09:24:52,572 - PRINT - x ... 15.4865
+2025-10-16 09:24:52,572 - PRINT - y ... 0.0000
+2025-10-16 09:24:52,572 - PRINT - z ... 0.0000
+2025-10-16 09:24:52,572 - PRINT - j_xx ... 0.0000
+2025-10-16 09:24:52,572 - PRINT - j_yy ... 0.0000
+2025-10-16 09:24:52,572 - PRINT - j_zz ... 0.0000
+2025-10-16 09:24:52,572 - PRINT - j_xy ... 0.0000
+2025-10-16 09:24:52,572 - PRINT - j_xz ... 0.0000
+2025-10-16 09:24:52,573 - PRINT - j_yx ... 0.0000
+2025-10-16 09:24:52,573 - PRINT - j_yz ... 0.0000
+2025-10-16 09:24:52,573 - PRINT - j_zx ... 0.0000
+2025-10-16 09:24:52,573 - PRINT - j_zy ... 0.0000
+2025-10-16 09:24:52,573 - PRINT - == Design fuel mass (at takeoff) == 
+2025-10-16 09:24:52,573 - PRINT - mass ... 14344.4855
+2025-10-16 09:24:52,573 - PRINT - x ... 15.4933
+2025-10-16 09:24:52,573 - PRINT - y ... 0.0000
+2025-10-16 09:24:52,573 - PRINT - z ... 0.0000
+2025-10-16 09:24:52,573 - PRINT - j_xx ... 0.0000
+2025-10-16 09:24:52,573 - PRINT - j_yy ... 0.0000
+2025-10-16 09:24:52,573 - PRINT - j_zz ... 0.0000
+2025-10-16 09:24:52,573 - PRINT - j_xy ... 0.0000
+2025-10-16 09:24:52,574 - PRINT - j_xz ... 0.0000
+2025-10-16 09:24:52,574 - PRINT - j_yx ... 0.0000
+2025-10-16 09:24:52,574 - PRINT - j_yz ... 0.0000
+2025-10-16 09:24:52,574 - PRINT - j_zx ... 0.0000
+2025-10-16 09:24:52,574 - PRINT - j_zy ... 0.0000
+2025-10-16 09:24:52,574 - PRINT - == Design mass (mission) == 
+2025-10-16 09:24:52,574 - PRINT - mass ... 76837.2383
+2025-10-16 09:24:52,574 - PRINT - x ... 16.0786
+2025-10-16 09:24:52,574 - PRINT - y ... 0.0000
+2025-10-16 09:24:52,574 - PRINT - z ... -0.4758
+2025-10-16 09:24:52,574 - PRINT - j_xx ... 1310922.0937
+2025-10-16 09:24:52,574 - PRINT - j_yy ... 3636318.8852
+2025-10-16 09:24:52,575 - PRINT - j_zz ... 4872489.3493
+2025-10-16 09:24:52,575 - PRINT - j_xy ... 0.0000
+2025-10-16 09:24:52,575 - PRINT - j_xz ... 0.0000
+2025-10-16 09:24:52,575 - PRINT - j_yx ... 0.0000
+2025-10-16 09:24:52,575 - PRINT - j_yz ... 0.0000
+2025-10-16 09:24:52,575 - PRINT - j_zx ... 0.0000
+2025-10-16 09:24:52,575 - PRINT - j_zy ... 0.0000
+2025-10-16 09:24:52,575 - PRINT - == Design mass takeoff == 
+2025-10-16 09:24:52,575 - PRINT - mass ... 76630.2732
+2025-10-16 09:24:52,575 - PRINT - x ... 16.0815
+2025-10-16 09:24:52,575 - PRINT - y ... 0.0000
+2025-10-16 09:24:52,575 - PRINT - z ... -0.4771
+2025-10-16 09:24:52,576 - PRINT - j_xx ... 1307391.0562
+2025-10-16 09:24:52,576 - PRINT - j_yy ... 3626524.2692
+2025-10-16 09:24:52,576 - PRINT - j_zz ... 4859365.0433
+2025-10-16 09:24:52,576 - PRINT - j_xy ... 0.0000
+2025-10-16 09:24:52,576 - PRINT - j_xz ... 0.0000
+2025-10-16 09:24:52,576 - PRINT - j_yx ... 0.0000
+2025-10-16 09:24:52,576 - PRINT - j_yz ... 0.0000
+2025-10-16 09:24:52,576 - PRINT - j_zx ... 0.0000
+2025-10-16 09:24:52,576 - PRINT - j_zy ... 0.0000
+2025-10-16 09:24:52,576 - PRINT - == Design mass midflight == 
+2025-10-16 09:24:52,576 - PRINT - mass ... 70778.5371
+2025-10-16 09:24:52,576 - PRINT - x ... 16.0930
+2025-10-16 09:24:52,576 - PRINT - y ... 0.0000
+2025-10-16 09:24:52,577 - PRINT - z ... -0.5166
+2025-10-16 09:24:52,577 - PRINT - j_xx ... 1207554.4379
+2025-10-16 09:24:52,577 - PRINT - j_yy ... 3349591.1226
+2025-10-16 09:24:52,577 - PRINT - j_zz ... 4488288.1795
+2025-10-16 09:24:52,577 - PRINT - j_xy ... 0.0000
+2025-10-16 09:24:52,577 - PRINT - j_xz ... 0.0000
+2025-10-16 09:24:52,577 - PRINT - j_yx ... 0.0000
+2025-10-16 09:24:52,577 - PRINT - j_yz ... 0.0000
+2025-10-16 09:24:52,577 - PRINT - j_zx ... 0.0000
+2025-10-16 09:24:52,577 - PRINT - j_zy ... 0.0000
+2025-10-16 09:24:52,577 - PRINT - == Maximum Takeoff Mass == 
+2025-10-16 09:24:52,577 - PRINT - mass ... 76630.2732
+2025-10-16 09:24:52,577 - PRINT - x ... 16.0815
+2025-10-16 09:24:52,578 - PRINT - y ... 0.0000
+2025-10-16 09:24:52,578 - PRINT - z ... -0.4771
+2025-10-16 09:24:52,578 - PRINT - j_xx ... 1307391.0562
+2025-10-16 09:24:52,578 - PRINT - j_yy ... 3626524.2692
+2025-10-16 09:24:52,578 - PRINT - j_zz ... 4859365.0433
+2025-10-16 09:24:52,578 - PRINT - j_xy ... 0.0000
+2025-10-16 09:24:52,578 - PRINT - j_xz ... 0.0000
+2025-10-16 09:24:52,578 - PRINT - j_yx ... 0.0000
+2025-10-16 09:24:52,578 - PRINT - j_yz ... 0.0000
+2025-10-16 09:24:52,578 - PRINT - j_zx ... 0.0000
+2025-10-16 09:24:52,578 - PRINT - j_zy ... 0.0000
+2025-10-16 09:24:52,578 - PRINT - == Maximum fuel mass == 
+2025-10-16 09:24:52,579 - PRINT - mass ... 19154.4438
+2025-10-16 09:24:52,579 - PRINT - x ... 15.3726
+2025-10-16 09:24:52,579 - PRINT - y ... 0.0000
+2025-10-16 09:24:52,579 - PRINT - z ... 0.0000
+2025-10-16 09:24:52,579 - PRINT - j_xx ... 0.0000
+2025-10-16 09:24:52,579 - PRINT - j_yy ... 0.0000
+2025-10-16 09:24:52,579 - PRINT - j_zz ... 0.0000
+2025-10-16 09:24:52,579 - PRINT - j_xy ... 0.0000
+2025-10-16 09:24:52,579 - PRINT - j_xz ... 0.0000
+2025-10-16 09:24:52,579 - PRINT - j_yx ... 0.0000
+2025-10-16 09:24:52,579 - PRINT - j_yz ... 0.0000
+2025-10-16 09:24:52,579 - PRINT - j_zx ... 0.0000
+2025-10-16 09:24:52,579 - PRINT - j_zy ... 0.0000
+2025-10-16 09:24:52,580 - PRINT - == Ferry range mass == 
+2025-10-16 09:24:52,580 - PRINT - mass ... 62140.2314
+2025-10-16 09:24:52,580 - PRINT - x ... 15.7711
+2025-10-16 09:24:52,580 - PRINT - y ... 0.0000
+2025-10-16 09:24:52,580 - PRINT - z ... -0.5134
+2025-10-16 09:24:52,580 - PRINT - j_xx ... 0.0000
+2025-10-16 09:24:52,580 - PRINT - j_yy ... 0.0000
+2025-10-16 09:24:52,580 - PRINT - j_zz ... 0.0000
+2025-10-16 09:24:52,580 - PRINT - j_xy ... 0.0000
+2025-10-16 09:24:52,580 - PRINT - j_xz ... 0.0000
+2025-10-16 09:24:52,580 - PRINT - j_yx ... 0.0000
+2025-10-16 09:24:52,580 - PRINT - j_yz ... 0.0000
+2025-10-16 09:24:52,580 - PRINT - j_zx ... 0.0000
+2025-10-16 09:24:52,580 - PRINT - j_zy ... 0.0000
+2025-10-16 09:24:52,581 - WARNING - Estimated CG of MTOM with max payload. (fuel CG set in wing CG, payload CG set in fuselage CG.)
+2025-10-16 09:24:52,581 - WARNING - Estimated CG of MTOM with max fuel. (payload CG set in fuselage CG.)
+2025-10-16 09:24:52,581 - PRINT - Calculate MLM by RWTH regression ...
+2025-10-16 09:24:52,581 - PRINT - == Maximum landing mass == 
+2025-10-16 09:24:52,581 - PRINT - mass ... 64761.5336
+2025-10-16 09:24:52,581 - PRINT - x ... 16.1623
+2025-10-16 09:24:52,581 - PRINT - y ... 0.0000
+2025-10-16 09:24:52,581 - PRINT - z ... -0.5626
+2025-10-16 09:24:52,581 - PRINT - j_xx ... 1104898.1859
+2025-10-16 09:24:52,581 - PRINT - j_yy ... 3064836.6969
+2025-10-16 09:24:52,581 - PRINT - j_zz ... 4106731.1847
+2025-10-16 09:24:52,581 - PRINT - j_xy ... 0.0000
+2025-10-16 09:24:52,581 - PRINT - j_xz ... 0.0000
+2025-10-16 09:24:52,581 - PRINT - j_yx ... 0.0000
+2025-10-16 09:24:52,581 - PRINT - j_yz ... 0.0000
+2025-10-16 09:24:52,582 - PRINT - j_zx ... 0.0000
+2025-10-16 09:24:52,582 - PRINT - j_zy ... 0.0000
+2025-10-16 09:24:52,582 - PRINT - == Calculate loading diagramm cg change ==
+2025-10-16 09:24:52,582 - PRINT - REFUELING (design mission)...
+2025-10-16 09:24:52,582 - PRINT - Tank 'wing inner left' was filled with 3261.2099 kg kerosene.
+2025-10-16 09:24:52,582 - PRINT - Tank 'wing inner right' was filled with 3261.2099 kg kerosene.
+2025-10-16 09:24:52,582 - PRINT - Tank 'wing outer left' was filled with 3463.7738 kg kerosene.
+2025-10-16 09:24:52,582 - PRINT - Tank 'wing outer right' was filled with 3463.7738 kg kerosene.
+2025-10-16 09:24:52,582 - PRINT - Tank 'wing center' was filled with 894.5181 kg kerosene.
+2025-10-16 09:24:52,582 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:24:52,582 - PRINT - ROW-WISE
+2025-10-16 09:24:52,582 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:24:52,582 - PRINT - BACK TO FRONT:
+2025-10-16 09:24:52,582 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:24:52,583 - PRINT - ROW-WISE
+2025-10-16 09:24:52,583 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:24:52,583 - PRINT - CARGO LOADING...
+2025-10-16 09:24:52,583 - PRINT - BACK TO FRONT:
+2025-10-16 09:24:52,583 - PRINT - CARGO LOADING...
+2025-10-16 09:24:52,583 - PRINT - DEFUELING...
+2025-10-16 09:24:52,583 - PRINT - From tank 'wing inner left' was defueld 3261.2099 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:24:52,583 - PRINT - From tank 'wing inner right' was defueld 3261.2099 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:24:52,583 - PRINT - From tank 'wing outer left' was defueld 2558.7978 kg. Fuel left in tank: 904.9760 kg.
+2025-10-16 09:24:52,583 - PRINT - From tank 'wing outer right' was defueld 2558.7978 kg. Fuel left in tank: 904.9760 kg.
+2025-10-16 09:24:52,583 - PRINT - From tank 'wing center' was defueld 0.0000 kg. Fuel left in tank: 894.5181 kg.
+2025-10-16 09:24:52,583 - PRINT - Most forward CG global position is 15.3523 m.
+2025-10-16 09:24:52,584 - PRINT - Most aft CG global position is 16.6192 m.
+2025-10-16 09:24:52,584 - PRINT - Corresponding mass most fwd CG is of 63090.2732 kg.
+2025-10-16 09:24:52,584 - PRINT - Corresponding mass most aft CG is of 65010.2732 kg.
+2025-10-16 09:24:52,630 - WARNING - Warning: "plot_output" switch in module configuration file set to "False". No plots generated.
+2025-10-16 09:24:52,630 - WARNING - Warning: "html_output" switch in module configuration file set to "False". No HTML report generated.
+2025-10-16 09:24:52,631 - WARNING - Warning: "xml_output" switch in module configuration file set to "False". No XML results file generated.
+2025-10-16 09:24:52,631 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:24:52,631 - PRINT - Weight and balance analysis finished.
+2025-10-16 09:25:58,782 - PRINT - Weight and balance analysis started...
+2025-10-16 09:25:59,253 - PRINT - Mass properties of component wing read ...
+2025-10-16 09:25:59,254 - PRINT - wing - mass: 7763.3377
+2025-10-16 09:25:59,254 - PRINT - Mass properties of component fuselage read ...
+2025-10-16 09:25:59,254 - PRINT - fuselage - mass: 16430.1511
+2025-10-16 09:25:59,254 - PRINT - Mass properties of component empennage read ...
+2025-10-16 09:25:59,254 - PRINT - empennage - mass: 993.0404
+2025-10-16 09:25:59,255 - PRINT - Mass properties of component landing_gear read ...
+2025-10-16 09:25:59,255 - PRINT - landing_gear - mass: 3000.2504
+2025-10-16 09:25:59,255 - PRINT - Mass properties of component propulsion read ...
+2025-10-16 09:25:59,255 - PRINT - propulsion - mass: 8847.7091
+2025-10-16 09:25:59,255 - PRINT - Mass properties of component systems read ...
+2025-10-16 09:25:59,256 - PRINT - systems - mass: 6004.7338
+2025-10-16 09:25:59,256 - PRINT - Mass properties of component tank read ...
+2025-10-16 09:25:59,256 - PRINT - tank - mass: 0.0000
+2025-10-16 09:25:59,257 - WARNING - CGs of fuselage operator items estimated here at 16.78 m
+2025-10-16 09:25:59,258 - PRINT - == Manufacturer mass empty == 
+2025-10-16 09:25:59,258 - PRINT - mass ... 38467.4386
+2025-10-16 09:25:59,258 - PRINT - x ... 15.9245
+2025-10-16 09:25:59,258 - PRINT - y ... 0.0000
+2025-10-16 09:25:59,258 - PRINT - z ... -0.8315
+2025-10-16 09:25:59,258 - PRINT - j_xx ... 657817.8721
+2025-10-16 09:25:59,258 - PRINT - j_yy ... 1820469.8214
+2025-10-16 09:25:59,259 - PRINT - j_zz ... 2442019.7664
+2025-10-16 09:25:59,259 - PRINT - j_xy ... 0.0000
+2025-10-16 09:25:59,259 - PRINT - j_xz ... 0.0000
+2025-10-16 09:25:59,259 - PRINT - j_yx ... 0.0000
+2025-10-16 09:25:59,259 - PRINT - j_yz ... 0.0000
+2025-10-16 09:25:59,259 - PRINT - j_zx ... 0.0000
+2025-10-16 09:25:59,259 - PRINT - j_zy ... 0.0000
+2025-10-16 09:25:59,259 - PRINT - == Operating mass empty == 
+2025-10-16 09:25:59,259 - PRINT - mass ... 43039.3224
+2025-10-16 09:25:59,259 - PRINT - x ... 15.9361
+2025-10-16 09:25:59,259 - PRINT - y ... 0.0000
+2025-10-16 09:25:59,260 - PRINT - z ... -0.7432
+2025-10-16 09:25:59,260 - PRINT - j_xx ... 736000.0168
+2025-10-16 09:25:59,260 - PRINT - j_yy ... 2036834.0172
+2025-10-16 09:25:59,260 - PRINT - j_zz ... 2732255.6366
+2025-10-16 09:25:59,260 - PRINT - j_xy ... 0.0000
+2025-10-16 09:25:59,260 - PRINT - j_xz ... 0.0000
+2025-10-16 09:25:59,260 - PRINT - j_yx ... 0.0000
+2025-10-16 09:25:59,260 - PRINT - j_yz ... 0.0000
+2025-10-16 09:25:59,260 - PRINT - j_zx ... 0.0000
+2025-10-16 09:25:59,260 - PRINT - j_zy ... 0.0000
+2025-10-16 09:25:59,260 - WARNING - The CG of the maximum payload is set at the fuselage CG.
+2025-10-16 09:25:59,261 - WARNING - The maximum payload mass is equal the maximum structural payload mass.
+2025-10-16 09:25:59,261 - PRINT - == Maximimum payload mass == 
+2025-10-16 09:25:59,261 - PRINT - mass ... 19300.0000
+2025-10-16 09:25:59,261 - PRINT - x ... 16.8143
+2025-10-16 09:25:59,261 - PRINT - y ... 0.0000
+2025-10-16 09:25:59,261 - PRINT - z ... -0.2413
+2025-10-16 09:25:59,261 - PRINT - j_xx ... 0.0000
+2025-10-16 09:25:59,261 - PRINT - j_yy ... 0.0000
+2025-10-16 09:25:59,261 - PRINT - j_zz ... 0.0000
+2025-10-16 09:25:59,261 - PRINT - j_xy ... 0.0000
+2025-10-16 09:25:59,261 - PRINT - j_xz ... 0.0000
+2025-10-16 09:25:59,261 - PRINT - j_yx ... 0.0000
+2025-10-16 09:25:59,261 - PRINT - j_yz ... 0.0000
+2025-10-16 09:25:59,261 - PRINT - j_zx ... 0.0000
+2025-10-16 09:25:59,262 - PRINT - j_zy ... 0.0000
+2025-10-16 09:25:59,262 - PRINT - == Maximum zero fuel mass == 
+2025-10-16 09:25:59,262 - PRINT - mass ... 62339.3224
+2025-10-16 09:25:59,262 - PRINT - x ... 16.2080
+2025-10-16 09:25:59,262 - PRINT - y ... 0.0000
+2025-10-16 09:25:59,262 - PRINT - z ... -0.5878
+2025-10-16 09:25:59,262 - PRINT - j_xx ... 1066042.3953
+2025-10-16 09:25:59,262 - PRINT - j_yy ... 2950205.6589
+2025-10-16 09:25:59,262 - PRINT - j_zz ... 3957473.2024
+2025-10-16 09:25:59,262 - PRINT - j_xy ... 0.0000
+2025-10-16 09:25:59,262 - PRINT - j_xz ... 0.0000
+2025-10-16 09:25:59,262 - PRINT - j_yx ... 0.0000
+2025-10-16 09:25:59,263 - PRINT - j_yz ... 0.0000
+2025-10-16 09:25:59,263 - PRINT - j_zx ... 0.0000
+2025-10-16 09:25:59,263 - PRINT - j_zy ... 0.0000
+2025-10-16 09:25:59,263 - WARNING - The CG of the design payload is set at the fuselage CG.
+2025-10-16 09:25:59,263 - PRINT - == Design payload mass == 
+2025-10-16 09:25:59,263 - PRINT - mass ... 19300.0000
+2025-10-16 09:25:59,263 - PRINT - x ... 16.8143
+2025-10-16 09:25:59,263 - PRINT - y ... 0.0000
+2025-10-16 09:25:59,263 - PRINT - z ... -0.2413
+2025-10-16 09:25:59,263 - PRINT - j_xx ... 0.0000
+2025-10-16 09:25:59,263 - PRINT - j_yy ... 0.0000
+2025-10-16 09:25:59,263 - PRINT - j_zz ... 0.0000
+2025-10-16 09:25:59,264 - PRINT - j_xy ... 0.0000
+2025-10-16 09:25:59,264 - PRINT - j_xz ... 0.0000
+2025-10-16 09:25:59,264 - PRINT - j_yx ... 0.0000
+2025-10-16 09:25:59,264 - PRINT - j_yz ... 0.0000
+2025-10-16 09:25:59,264 - PRINT - j_zx ... 0.0000
+2025-10-16 09:25:59,264 - PRINT - j_zy ... 0.0000
+2025-10-16 09:25:59,264 - PRINT - == Mission fuel mass == 
+2025-10-16 09:25:59,264 - PRINT - mass ... 14575.5621
+2025-10-16 09:25:59,264 - PRINT - x ... 15.4642
+2025-10-16 09:25:59,264 - PRINT - y ... 0.0000
+2025-10-16 09:25:59,265 - PRINT - z ... 0.0000
+2025-10-16 09:25:59,265 - PRINT - j_xx ... 0.0000
+2025-10-16 09:25:59,265 - PRINT - j_yy ... 0.0000
+2025-10-16 09:25:59,265 - PRINT - j_zz ... 0.0000
+2025-10-16 09:25:59,265 - PRINT - j_xy ... 0.0000
+2025-10-16 09:25:59,265 - PRINT - j_xz ... 0.0000
+2025-10-16 09:25:59,265 - PRINT - j_yx ... 0.0000
+2025-10-16 09:25:59,265 - PRINT - j_yz ... 0.0000
+2025-10-16 09:25:59,265 - PRINT - j_zx ... 0.0000
+2025-10-16 09:25:59,265 - PRINT - j_zy ... 0.0000
+2025-10-16 09:25:59,265 - PRINT - == Design fuel mass (at takeoff) == 
+2025-10-16 09:25:59,265 - PRINT - mass ... 14368.1172
+2025-10-16 09:25:59,266 - PRINT - x ... 15.4710
+2025-10-16 09:25:59,266 - PRINT - y ... 0.0000
+2025-10-16 09:25:59,266 - PRINT - z ... 0.0000
+2025-10-16 09:25:59,266 - PRINT - j_xx ... 0.0000
+2025-10-16 09:25:59,266 - PRINT - j_yy ... 0.0000
+2025-10-16 09:25:59,266 - PRINT - j_zz ... 0.0000
+2025-10-16 09:25:59,266 - PRINT - j_xy ... 0.0000
+2025-10-16 09:25:59,267 - PRINT - j_xz ... 0.0000
+2025-10-16 09:25:59,267 - PRINT - j_yx ... 0.0000
+2025-10-16 09:25:59,267 - PRINT - j_yz ... 0.0000
+2025-10-16 09:25:59,267 - PRINT - j_zx ... 0.0000
+2025-10-16 09:25:59,267 - PRINT - j_zy ... 0.0000
+2025-10-16 09:25:59,267 - PRINT - == Design mass (mission) == 
+2025-10-16 09:25:59,267 - PRINT - mass ... 76914.8845
+2025-10-16 09:25:59,267 - PRINT - x ... 16.0671
+2025-10-16 09:25:59,267 - PRINT - y ... 0.0000
+2025-10-16 09:25:59,267 - PRINT - z ... -0.4764
+2025-10-16 09:25:59,267 - PRINT - j_xx ... 1315293.8558
+2025-10-16 09:25:59,267 - PRINT - j_yy ... 3639993.4878
+2025-10-16 09:25:59,267 - PRINT - j_zz ... 4882770.3389
+2025-10-16 09:25:59,267 - PRINT - j_xy ... 0.0000
+2025-10-16 09:25:59,268 - PRINT - j_xz ... 0.0000
+2025-10-16 09:25:59,268 - PRINT - j_yx ... 0.0000
+2025-10-16 09:25:59,268 - PRINT - j_yz ... 0.0000
+2025-10-16 09:25:59,268 - PRINT - j_zx ... 0.0000
+2025-10-16 09:25:59,268 - PRINT - j_zy ... 0.0000
+2025-10-16 09:25:59,268 - PRINT - == Design mass takeoff == 
+2025-10-16 09:25:59,268 - PRINT - mass ... 76707.4396
+2025-10-16 09:25:59,268 - PRINT - x ... 16.0700
+2025-10-16 09:25:59,268 - PRINT - y ... 0.0000
+2025-10-16 09:25:59,268 - PRINT - z ... -0.4777
+2025-10-16 09:25:59,268 - PRINT - j_xx ... 1311746.4155
+2025-10-16 09:25:59,268 - PRINT - j_yy ... 3630176.1687
+2025-10-16 09:25:59,268 - PRINT - j_zz ... 4869601.1630
+2025-10-16 09:25:59,268 - PRINT - j_xy ... 0.0000
+2025-10-16 09:25:59,268 - PRINT - j_xz ... 0.0000
+2025-10-16 09:25:59,268 - PRINT - j_yx ... 0.0000
+2025-10-16 09:25:59,268 - PRINT - j_yz ... 0.0000
+2025-10-16 09:25:59,268 - PRINT - j_zx ... 0.0000
+2025-10-16 09:25:59,269 - PRINT - j_zy ... 0.0000
+2025-10-16 09:25:59,269 - PRINT - == Design mass midflight == 
+2025-10-16 09:25:59,269 - PRINT - mass ... 70845.7113
+2025-10-16 09:25:59,269 - PRINT - x ... 16.0818
+2025-10-16 09:25:59,269 - PRINT - y ... 0.0000
+2025-10-16 09:25:59,269 - PRINT - z ... -0.5172
+2025-10-16 09:25:59,269 - PRINT - j_xx ... 1211507.1015
+2025-10-16 09:25:59,269 - PRINT - j_yy ... 3352770.1362
+2025-10-16 09:25:59,269 - PRINT - j_zz ... 4497482.3798
+2025-10-16 09:25:59,269 - PRINT - j_xy ... 0.0000
+2025-10-16 09:25:59,269 - PRINT - j_xz ... 0.0000
+2025-10-16 09:25:59,269 - PRINT - j_yx ... 0.0000
+2025-10-16 09:25:59,269 - PRINT - j_yz ... 0.0000
+2025-10-16 09:25:59,269 - PRINT - j_zx ... 0.0000
+2025-10-16 09:25:59,269 - PRINT - j_zy ... 0.0000
+2025-10-16 09:25:59,269 - PRINT - == Maximum Takeoff Mass == 
+2025-10-16 09:25:59,269 - PRINT - mass ... 76707.4396
+2025-10-16 09:25:59,270 - PRINT - x ... 16.0700
+2025-10-16 09:25:59,270 - PRINT - y ... 0.0000
+2025-10-16 09:25:59,270 - PRINT - z ... -0.4777
+2025-10-16 09:25:59,270 - PRINT - j_xx ... 1311746.4155
+2025-10-16 09:25:59,270 - PRINT - j_yy ... 3630176.1687
+2025-10-16 09:25:59,270 - PRINT - j_zz ... 4869601.1630
+2025-10-16 09:25:59,270 - PRINT - j_xy ... 0.0000
+2025-10-16 09:25:59,270 - PRINT - j_xz ... 0.0000
+2025-10-16 09:25:59,270 - PRINT - j_yx ... 0.0000
+2025-10-16 09:25:59,270 - PRINT - j_yz ... 0.0000
+2025-10-16 09:25:59,270 - PRINT - j_zx ... 0.0000
+2025-10-16 09:25:59,270 - PRINT - j_zy ... 0.0000
+2025-10-16 09:25:59,270 - PRINT - == Maximum fuel mass == 
+2025-10-16 09:25:59,270 - PRINT - mass ... 19229.1299
+2025-10-16 09:25:59,270 - PRINT - x ... 15.3491
+2025-10-16 09:25:59,270 - PRINT - y ... 0.0000
+2025-10-16 09:25:59,270 - PRINT - z ... 0.0000
+2025-10-16 09:25:59,270 - PRINT - j_xx ... 0.0000
+2025-10-16 09:25:59,271 - PRINT - j_yy ... 0.0000
+2025-10-16 09:25:59,271 - PRINT - j_zz ... 0.0000
+2025-10-16 09:25:59,271 - PRINT - j_xy ... 0.0000
+2025-10-16 09:25:59,271 - PRINT - j_xz ... 0.0000
+2025-10-16 09:25:59,271 - PRINT - j_yx ... 0.0000
+2025-10-16 09:25:59,271 - PRINT - j_yz ... 0.0000
+2025-10-16 09:25:59,271 - PRINT - j_zx ... 0.0000
+2025-10-16 09:25:59,271 - PRINT - j_zy ... 0.0000
+2025-10-16 09:25:59,271 - PRINT - == Ferry range mass == 
+2025-10-16 09:25:59,271 - PRINT - mass ... 62268.4522
+2025-10-16 09:25:59,271 - PRINT - x ... 15.7548
+2025-10-16 09:25:59,271 - PRINT - y ... 0.0000
+2025-10-16 09:25:59,271 - PRINT - z ... -0.5137
+2025-10-16 09:25:59,271 - PRINT - j_xx ... 0.0000
+2025-10-16 09:25:59,271 - PRINT - j_yy ... 0.0000
+2025-10-16 09:25:59,272 - PRINT - j_zz ... 0.0000
+2025-10-16 09:25:59,272 - PRINT - j_xy ... 0.0000
+2025-10-16 09:25:59,272 - PRINT - j_xz ... 0.0000
+2025-10-16 09:25:59,272 - PRINT - j_yx ... 0.0000
+2025-10-16 09:25:59,272 - PRINT - j_yz ... 0.0000
+2025-10-16 09:25:59,272 - PRINT - j_zx ... 0.0000
+2025-10-16 09:25:59,272 - PRINT - j_zy ... 0.0000
+2025-10-16 09:25:59,272 - WARNING - Estimated CG of MTOM with max payload. (fuel CG set in wing CG, payload CG set in fuselage CG.)
+2025-10-16 09:25:59,272 - WARNING - Estimated CG of MTOM with max fuel. (payload CG set in fuselage CG.)
+2025-10-16 09:25:59,272 - PRINT - Calculate MLM by RWTH regression ...
+2025-10-16 09:25:59,272 - PRINT - == Maximum landing mass == 
+2025-10-16 09:25:59,273 - PRINT - mass ... 64821.8418
+2025-10-16 09:25:59,273 - PRINT - x ... 16.1527
+2025-10-16 09:25:59,273 - PRINT - y ... 0.0000
+2025-10-16 09:25:59,273 - PRINT - z ... -0.5633
+2025-10-16 09:25:59,273 - PRINT - j_xx ... 1108495.0703
+2025-10-16 09:25:59,273 - PRINT - j_yy ... 3067690.7822
+2025-10-16 09:25:59,273 - PRINT - j_zz ... 4115070.4282
+2025-10-16 09:25:59,273 - PRINT - j_xy ... 0.0000
+2025-10-16 09:25:59,273 - PRINT - j_xz ... 0.0000
+2025-10-16 09:25:59,273 - PRINT - j_yx ... 0.0000
+2025-10-16 09:25:59,273 - PRINT - j_yz ... 0.0000
+2025-10-16 09:25:59,273 - PRINT - j_zx ... 0.0000
+2025-10-16 09:25:59,273 - PRINT - j_zy ... 0.0000
+2025-10-16 09:25:59,273 - PRINT - == Calculate loading diagramm cg change ==
+2025-10-16 09:25:59,273 - PRINT - REFUELING (design mission)...
+2025-10-16 09:25:59,273 - PRINT - Tank 'wing inner left' was filled with 3280.0232 kg kerosene.
+2025-10-16 09:25:59,274 - PRINT - Tank 'wing inner right' was filled with 3280.0232 kg kerosene.
+2025-10-16 09:25:59,274 - PRINT - Tank 'wing outer left' was filled with 3474.7762 kg kerosene.
+2025-10-16 09:25:59,274 - PRINT - Tank 'wing outer right' was filled with 3474.7762 kg kerosene.
+2025-10-16 09:25:59,274 - PRINT - Tank 'wing center' was filled with 858.5184 kg kerosene.
+2025-10-16 09:25:59,274 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:25:59,274 - PRINT - ROW-WISE
+2025-10-16 09:25:59,274 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:25:59,274 - PRINT - BACK TO FRONT:
+2025-10-16 09:25:59,274 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:25:59,274 - PRINT - ROW-WISE
+2025-10-16 09:25:59,274 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:25:59,274 - PRINT - CARGO LOADING...
+2025-10-16 09:25:59,275 - PRINT - BACK TO FRONT:
+2025-10-16 09:25:59,275 - PRINT - CARGO LOADING...
+2025-10-16 09:25:59,275 - PRINT - DEFUELING...
+2025-10-16 09:25:59,275 - PRINT - From tank 'wing inner left' was defueld 3280.0232 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:25:59,275 - PRINT - From tank 'wing inner right' was defueld 3280.0232 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:25:59,275 - PRINT - From tank 'wing outer left' was defueld 2549.9092 kg. Fuel left in tank: 924.8670 kg.
+2025-10-16 09:25:59,275 - PRINT - From tank 'wing outer right' was defueld 2549.9092 kg. Fuel left in tank: 924.8670 kg.
+2025-10-16 09:25:59,275 - PRINT - From tank 'wing center' was defueld 0.0000 kg. Fuel left in tank: 858.5184 kg.
+2025-10-16 09:25:59,275 - PRINT - Most forward CG global position is 15.3393 m.
+2025-10-16 09:25:59,275 - PRINT - Most aft CG global position is 16.6050 m.
+2025-10-16 09:25:59,275 - PRINT - Corresponding mass most fwd CG is of 63167.4396 kg.
+2025-10-16 09:25:59,275 - PRINT - Corresponding mass most aft CG is of 65087.4396 kg.
+2025-10-16 09:25:59,325 - WARNING - Warning: "plot_output" switch in module configuration file set to "False". No plots generated.
+2025-10-16 09:25:59,325 - WARNING - Warning: "html_output" switch in module configuration file set to "False". No HTML report generated.
+2025-10-16 09:25:59,325 - WARNING - Warning: "xml_output" switch in module configuration file set to "False". No XML results file generated.
+2025-10-16 09:25:59,325 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:25:59,325 - PRINT - Weight and balance analysis finished.
+2025-10-16 09:27:32,582 - PRINT - Weight and balance analysis started...
+2025-10-16 09:27:33,019 - PRINT - Mass properties of component wing read ...
+2025-10-16 09:27:33,020 - PRINT - wing - mass: 7763.3377
+2025-10-16 09:27:33,020 - PRINT - Mass properties of component fuselage read ...
+2025-10-16 09:27:33,020 - PRINT - fuselage - mass: 16430.1511
+2025-10-16 09:27:33,020 - PRINT - Mass properties of component empennage read ...
+2025-10-16 09:27:33,020 - PRINT - empennage - mass: 993.0404
+2025-10-16 09:27:33,020 - PRINT - Mass properties of component landing_gear read ...
+2025-10-16 09:27:33,021 - PRINT - landing_gear - mass: 3000.2504
+2025-10-16 09:27:33,021 - PRINT - Mass properties of component propulsion read ...
+2025-10-16 09:27:33,021 - PRINT - propulsion - mass: 8847.7091
+2025-10-16 09:27:33,021 - PRINT - Mass properties of component systems read ...
+2025-10-16 09:27:33,021 - PRINT - systems - mass: 6004.7338
+2025-10-16 09:27:33,021 - PRINT - Mass properties of component tank read ...
+2025-10-16 09:27:33,022 - PRINT - tank - mass: 0.0000
+2025-10-16 09:27:33,022 - WARNING - CGs of fuselage operator items estimated here at 16.78 m
+2025-10-16 09:27:33,023 - PRINT - == Manufacturer mass empty == 
+2025-10-16 09:27:33,023 - PRINT - mass ... 38467.4386
+2025-10-16 09:27:33,023 - PRINT - x ... 15.9245
+2025-10-16 09:27:33,023 - PRINT - y ... 0.0000
+2025-10-16 09:27:33,023 - PRINT - z ... -0.8315
+2025-10-16 09:27:33,023 - PRINT - j_xx ... 657817.8721
+2025-10-16 09:27:33,023 - PRINT - j_yy ... 1820469.8214
+2025-10-16 09:27:33,023 - PRINT - j_zz ... 2442019.7664
+2025-10-16 09:27:33,024 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:33,024 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:33,024 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:33,024 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:33,024 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:33,024 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:33,024 - PRINT - == Operating mass empty == 
+2025-10-16 09:27:33,024 - PRINT - mass ... 43039.3224
+2025-10-16 09:27:33,024 - PRINT - x ... 15.9361
+2025-10-16 09:27:33,024 - PRINT - y ... 0.0000
+2025-10-16 09:27:33,024 - PRINT - z ... -0.7432
+2025-10-16 09:27:33,024 - PRINT - j_xx ... 736000.0168
+2025-10-16 09:27:33,024 - PRINT - j_yy ... 2036834.0172
+2025-10-16 09:27:33,024 - PRINT - j_zz ... 2732255.6366
+2025-10-16 09:27:33,024 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:33,024 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:33,024 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:33,024 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:33,024 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:33,025 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:33,025 - WARNING - The CG of the maximum payload is set at the fuselage CG.
+2025-10-16 09:27:33,025 - WARNING - The maximum payload mass is equal the maximum structural payload mass.
+2025-10-16 09:27:33,025 - PRINT - == Maximimum payload mass == 
+2025-10-16 09:27:33,025 - PRINT - mass ... 19300.0000
+2025-10-16 09:27:33,025 - PRINT - x ... 16.8143
+2025-10-16 09:27:33,025 - PRINT - y ... 0.0000
+2025-10-16 09:27:33,025 - PRINT - z ... -0.2413
+2025-10-16 09:27:33,025 - PRINT - j_xx ... 0.0000
+2025-10-16 09:27:33,025 - PRINT - j_yy ... 0.0000
+2025-10-16 09:27:33,025 - PRINT - j_zz ... 0.0000
+2025-10-16 09:27:33,025 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:33,025 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:33,025 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:33,025 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:33,025 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:33,025 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:33,025 - PRINT - == Maximum zero fuel mass == 
+2025-10-16 09:27:33,025 - PRINT - mass ... 62339.3224
+2025-10-16 09:27:33,025 - PRINT - x ... 16.2080
+2025-10-16 09:27:33,026 - PRINT - y ... 0.0000
+2025-10-16 09:27:33,026 - PRINT - z ... -0.5878
+2025-10-16 09:27:33,026 - PRINT - j_xx ... 1066042.3953
+2025-10-16 09:27:33,026 - PRINT - j_yy ... 2950205.6589
+2025-10-16 09:27:33,026 - PRINT - j_zz ... 3957473.2024
+2025-10-16 09:27:33,026 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:33,026 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:33,026 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:33,026 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:33,026 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:33,026 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:33,026 - WARNING - The CG of the design payload is set at the fuselage CG.
+2025-10-16 09:27:33,026 - PRINT - == Design payload mass == 
+2025-10-16 09:27:33,026 - PRINT - mass ... 19300.0000
+2025-10-16 09:27:33,026 - PRINT - x ... 16.8143
+2025-10-16 09:27:33,026 - PRINT - y ... 0.0000
+2025-10-16 09:27:33,026 - PRINT - z ... -0.2413
+2025-10-16 09:27:33,026 - PRINT - j_xx ... 0.0000
+2025-10-16 09:27:33,026 - PRINT - j_yy ... 0.0000
+2025-10-16 09:27:33,026 - PRINT - j_zz ... 0.0000
+2025-10-16 09:27:33,027 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:33,027 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:33,027 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:33,027 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:33,027 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:33,027 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:33,027 - PRINT - == Mission fuel mass == 
+2025-10-16 09:27:33,027 - PRINT - mass ... 14575.5621
+2025-10-16 09:27:33,027 - PRINT - x ... 15.4642
+2025-10-16 09:27:33,027 - PRINT - y ... 0.0000
+2025-10-16 09:27:33,027 - PRINT - z ... 0.0000
+2025-10-16 09:27:33,027 - PRINT - j_xx ... 0.0000
+2025-10-16 09:27:33,027 - PRINT - j_yy ... 0.0000
+2025-10-16 09:27:33,027 - PRINT - j_zz ... 0.0000
+2025-10-16 09:27:33,028 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:33,028 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:33,028 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:33,028 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:33,028 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:33,028 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:33,028 - PRINT - == Design fuel mass (at takeoff) == 
+2025-10-16 09:27:33,028 - PRINT - mass ... 14368.1172
+2025-10-16 09:27:33,028 - PRINT - x ... 15.4710
+2025-10-16 09:27:33,028 - PRINT - y ... 0.0000
+2025-10-16 09:27:33,028 - PRINT - z ... 0.0000
+2025-10-16 09:27:33,028 - PRINT - j_xx ... 0.0000
+2025-10-16 09:27:33,028 - PRINT - j_yy ... 0.0000
+2025-10-16 09:27:33,029 - PRINT - j_zz ... 0.0000
+2025-10-16 09:27:33,029 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:33,029 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:33,029 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:33,029 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:33,029 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:33,029 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:33,030 - PRINT - == Design mass (mission) == 
+2025-10-16 09:27:33,030 - PRINT - mass ... 76914.8845
+2025-10-16 09:27:33,030 - PRINT - x ... 16.0671
+2025-10-16 09:27:33,030 - PRINT - y ... 0.0000
+2025-10-16 09:27:33,030 - PRINT - z ... -0.4764
+2025-10-16 09:27:33,030 - PRINT - j_xx ... 1315293.8558
+2025-10-16 09:27:33,030 - PRINT - j_yy ... 3639993.4878
+2025-10-16 09:27:33,031 - PRINT - j_zz ... 4882770.3389
+2025-10-16 09:27:33,031 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:33,031 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:33,031 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:33,031 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:33,031 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:33,031 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:33,032 - PRINT - == Design mass takeoff == 
+2025-10-16 09:27:33,032 - PRINT - mass ... 76707.4396
+2025-10-16 09:27:33,032 - PRINT - x ... 16.0700
+2025-10-16 09:27:33,032 - PRINT - y ... 0.0000
+2025-10-16 09:27:33,032 - PRINT - z ... -0.4777
+2025-10-16 09:27:33,032 - PRINT - j_xx ... 1311746.4155
+2025-10-16 09:27:33,032 - PRINT - j_yy ... 3630176.1687
+2025-10-16 09:27:33,032 - PRINT - j_zz ... 4869601.1630
+2025-10-16 09:27:33,032 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:33,032 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:33,032 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:33,032 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:33,032 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:33,032 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:33,032 - PRINT - == Design mass midflight == 
+2025-10-16 09:27:33,032 - PRINT - mass ... 70845.7113
+2025-10-16 09:27:33,033 - PRINT - x ... 16.0818
+2025-10-16 09:27:33,033 - PRINT - y ... 0.0000
+2025-10-16 09:27:33,033 - PRINT - z ... -0.5172
+2025-10-16 09:27:33,033 - PRINT - j_xx ... 1211507.1015
+2025-10-16 09:27:33,033 - PRINT - j_yy ... 3352770.1362
+2025-10-16 09:27:33,033 - PRINT - j_zz ... 4497482.3798
+2025-10-16 09:27:33,033 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:33,033 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:33,033 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:33,033 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:33,033 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:33,033 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:33,033 - PRINT - == Maximum Takeoff Mass == 
+2025-10-16 09:27:33,033 - PRINT - mass ... 76707.4396
+2025-10-16 09:27:33,033 - PRINT - x ... 16.0700
+2025-10-16 09:27:33,033 - PRINT - y ... 0.0000
+2025-10-16 09:27:33,033 - PRINT - z ... -0.4777
+2025-10-16 09:27:33,033 - PRINT - j_xx ... 1311746.4155
+2025-10-16 09:27:33,033 - PRINT - j_yy ... 3630176.1687
+2025-10-16 09:27:33,034 - PRINT - j_zz ... 4869601.1630
+2025-10-16 09:27:33,034 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:33,034 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:33,034 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:33,034 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:33,034 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:33,034 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:33,034 - PRINT - == Maximum fuel mass == 
+2025-10-16 09:27:33,034 - PRINT - mass ... 19229.1299
+2025-10-16 09:27:33,034 - PRINT - x ... 15.3491
+2025-10-16 09:27:33,034 - PRINT - y ... 0.0000
+2025-10-16 09:27:33,034 - PRINT - z ... 0.0000
+2025-10-16 09:27:33,034 - PRINT - j_xx ... 0.0000
+2025-10-16 09:27:33,034 - PRINT - j_yy ... 0.0000
+2025-10-16 09:27:33,034 - PRINT - j_zz ... 0.0000
+2025-10-16 09:27:33,034 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:33,034 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:33,034 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:33,034 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:33,035 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:33,035 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:33,035 - PRINT - == Ferry range mass == 
+2025-10-16 09:27:33,035 - PRINT - mass ... 62268.4522
+2025-10-16 09:27:33,035 - PRINT - x ... 15.7548
+2025-10-16 09:27:33,035 - PRINT - y ... 0.0000
+2025-10-16 09:27:33,035 - PRINT - z ... -0.5137
+2025-10-16 09:27:33,035 - PRINT - j_xx ... 0.0000
+2025-10-16 09:27:33,035 - PRINT - j_yy ... 0.0000
+2025-10-16 09:27:33,035 - PRINT - j_zz ... 0.0000
+2025-10-16 09:27:33,035 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:33,035 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:33,035 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:33,035 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:33,035 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:33,035 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:33,035 - WARNING - Estimated CG of MTOM with max payload. (fuel CG set in wing CG, payload CG set in fuselage CG.)
+2025-10-16 09:27:33,035 - WARNING - Estimated CG of MTOM with max fuel. (payload CG set in fuselage CG.)
+2025-10-16 09:27:33,035 - PRINT - Calculate MLM by RWTH regression ...
+2025-10-16 09:27:33,036 - PRINT - == Maximum landing mass == 
+2025-10-16 09:27:33,036 - PRINT - mass ... 64821.8418
+2025-10-16 09:27:33,036 - PRINT - x ... 16.1527
+2025-10-16 09:27:33,036 - PRINT - y ... 0.0000
+2025-10-16 09:27:33,036 - PRINT - z ... -0.5633
+2025-10-16 09:27:33,036 - PRINT - j_xx ... 1108495.0703
+2025-10-16 09:27:33,036 - PRINT - j_yy ... 3067690.7822
+2025-10-16 09:27:33,036 - PRINT - j_zz ... 4115070.4282
+2025-10-16 09:27:33,036 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:33,036 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:33,036 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:33,036 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:33,036 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:33,036 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:33,036 - PRINT - == Calculate loading diagramm cg change ==
+2025-10-16 09:27:33,036 - PRINT - REFUELING (design mission)...
+2025-10-16 09:27:33,036 - PRINT - Tank 'wing inner left' was filled with 3280.0232 kg kerosene.
+2025-10-16 09:27:33,036 - PRINT - Tank 'wing inner right' was filled with 3280.0232 kg kerosene.
+2025-10-16 09:27:33,037 - PRINT - Tank 'wing outer left' was filled with 3474.7762 kg kerosene.
+2025-10-16 09:27:33,037 - PRINT - Tank 'wing outer right' was filled with 3474.7762 kg kerosene.
+2025-10-16 09:27:33,037 - PRINT - Tank 'wing center' was filled with 858.5184 kg kerosene.
+2025-10-16 09:27:33,037 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:27:33,037 - PRINT - ROW-WISE
+2025-10-16 09:27:33,037 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:27:33,037 - PRINT - BACK TO FRONT:
+2025-10-16 09:27:33,037 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:27:33,037 - PRINT - ROW-WISE
+2025-10-16 09:27:33,037 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:27:33,037 - PRINT - CARGO LOADING...
+2025-10-16 09:27:33,037 - PRINT - BACK TO FRONT:
+2025-10-16 09:27:33,037 - PRINT - CARGO LOADING...
+2025-10-16 09:27:33,037 - PRINT - DEFUELING...
+2025-10-16 09:27:33,037 - PRINT - From tank 'wing inner left' was defueld 3280.0232 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:27:33,037 - PRINT - From tank 'wing inner right' was defueld 3280.0232 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:27:33,037 - PRINT - From tank 'wing outer left' was defueld 2549.9092 kg. Fuel left in tank: 924.8670 kg.
+2025-10-16 09:27:33,037 - PRINT - From tank 'wing outer right' was defueld 2549.9092 kg. Fuel left in tank: 924.8670 kg.
+2025-10-16 09:27:33,038 - PRINT - From tank 'wing center' was defueld 0.0000 kg. Fuel left in tank: 858.5184 kg.
+2025-10-16 09:27:33,038 - PRINT - Most forward CG global position is 15.3393 m.
+2025-10-16 09:27:33,038 - PRINT - Most aft CG global position is 16.6050 m.
+2025-10-16 09:27:33,038 - PRINT - Corresponding mass most fwd CG is of 63167.4396 kg.
+2025-10-16 09:27:33,038 - PRINT - Corresponding mass most aft CG is of 65087.4396 kg.
+2025-10-16 09:27:34,016 - PRINT - plotted
+2025-10-16 09:27:34,017 - PRINT - Creating weight_and_balance_analysis_design_mission report
+2025-10-16 09:27:34,027 - WARNING - Warning: "xml_output" switch in module configuration file set to "False". No XML results file generated.
+2025-10-16 09:27:34,027 - WARNING - Warning: No "method_tex_output" function in "methodtexoutput.py" file implemented yet.
+2025-10-16 09:27:34,027 - PRINT - Weight and balance analysis finished.
+2025-10-16 09:27:59,123 - PRINT - Weight and balance analysis started...
+2025-10-16 09:27:59,592 - PRINT - Mass properties of component wing read ...
+2025-10-16 09:27:59,592 - PRINT - wing - mass: 7763.3377
+2025-10-16 09:27:59,592 - PRINT - Mass properties of component fuselage read ...
+2025-10-16 09:27:59,592 - PRINT - fuselage - mass: 16430.1511
+2025-10-16 09:27:59,592 - PRINT - Mass properties of component empennage read ...
+2025-10-16 09:27:59,593 - PRINT - empennage - mass: 993.0404
+2025-10-16 09:27:59,593 - PRINT - Mass properties of component landing_gear read ...
+2025-10-16 09:27:59,593 - PRINT - landing_gear - mass: 3000.2504
+2025-10-16 09:27:59,593 - PRINT - Mass properties of component propulsion read ...
+2025-10-16 09:27:59,593 - PRINT - propulsion - mass: 8847.7091
+2025-10-16 09:27:59,594 - PRINT - Mass properties of component systems read ...
+2025-10-16 09:27:59,594 - PRINT - systems - mass: 6004.7338
+2025-10-16 09:27:59,594 - PRINT - Mass properties of component tank read ...
+2025-10-16 09:27:59,594 - PRINT - tank - mass: 0.0000
+2025-10-16 09:27:59,595 - WARNING - CGs of fuselage operator items estimated here at 16.78 m
+2025-10-16 09:27:59,596 - PRINT - == Manufacturer mass empty == 
+2025-10-16 09:27:59,596 - PRINT - mass ... 38467.4386
+2025-10-16 09:27:59,596 - PRINT - x ... 15.9245
+2025-10-16 09:27:59,597 - PRINT - y ... 0.0000
+2025-10-16 09:27:59,597 - PRINT - z ... -0.8315
+2025-10-16 09:27:59,597 - PRINT - j_xx ... 657817.8721
+2025-10-16 09:27:59,597 - PRINT - j_yy ... 1820469.8214
+2025-10-16 09:27:59,597 - PRINT - j_zz ... 2442019.7664
+2025-10-16 09:27:59,597 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:59,597 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:59,597 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:59,597 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:59,597 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:59,597 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:59,597 - PRINT - == Operating mass empty == 
+2025-10-16 09:27:59,598 - PRINT - mass ... 43039.3224
+2025-10-16 09:27:59,598 - PRINT - x ... 15.9361
+2025-10-16 09:27:59,598 - PRINT - y ... 0.0000
+2025-10-16 09:27:59,598 - PRINT - z ... -0.7432
+2025-10-16 09:27:59,598 - PRINT - j_xx ... 736000.0168
+2025-10-16 09:27:59,598 - PRINT - j_yy ... 2036834.0172
+2025-10-16 09:27:59,598 - PRINT - j_zz ... 2732255.6366
+2025-10-16 09:27:59,598 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:59,598 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:59,598 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:59,598 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:59,598 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:59,598 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:59,598 - WARNING - The CG of the maximum payload is set at the fuselage CG.
+2025-10-16 09:27:59,598 - WARNING - The maximum payload mass is equal the maximum structural payload mass.
+2025-10-16 09:27:59,599 - PRINT - == Maximimum payload mass == 
+2025-10-16 09:27:59,599 - PRINT - mass ... 19300.0000
+2025-10-16 09:27:59,599 - PRINT - x ... 16.8143
+2025-10-16 09:27:59,599 - PRINT - y ... 0.0000
+2025-10-16 09:27:59,599 - PRINT - z ... -0.2413
+2025-10-16 09:27:59,599 - PRINT - j_xx ... 0.0000
+2025-10-16 09:27:59,599 - PRINT - j_yy ... 0.0000
+2025-10-16 09:27:59,599 - PRINT - j_zz ... 0.0000
+2025-10-16 09:27:59,599 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:59,599 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:59,599 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:59,599 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:59,599 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:59,600 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:59,600 - PRINT - == Maximum zero fuel mass == 
+2025-10-16 09:27:59,600 - PRINT - mass ... 62339.3224
+2025-10-16 09:27:59,600 - PRINT - x ... 16.2080
+2025-10-16 09:27:59,600 - PRINT - y ... 0.0000
+2025-10-16 09:27:59,600 - PRINT - z ... -0.5878
+2025-10-16 09:27:59,600 - PRINT - j_xx ... 1066042.3953
+2025-10-16 09:27:59,600 - PRINT - j_yy ... 2950205.6589
+2025-10-16 09:27:59,600 - PRINT - j_zz ... 3957473.2024
+2025-10-16 09:27:59,600 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:59,600 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:59,600 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:59,600 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:59,601 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:59,601 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:59,601 - WARNING - The CG of the design payload is set at the fuselage CG.
+2025-10-16 09:27:59,601 - PRINT - == Design payload mass == 
+2025-10-16 09:27:59,601 - PRINT - mass ... 14475.0000
+2025-10-16 09:27:59,601 - PRINT - x ... 16.8143
+2025-10-16 09:27:59,601 - PRINT - y ... 0.0000
+2025-10-16 09:27:59,601 - PRINT - z ... -0.2413
+2025-10-16 09:27:59,601 - PRINT - j_xx ... 0.0000
+2025-10-16 09:27:59,601 - PRINT - j_yy ... 0.0000
+2025-10-16 09:27:59,601 - PRINT - j_zz ... 0.0000
+2025-10-16 09:27:59,601 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:59,601 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:59,602 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:59,602 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:59,602 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:59,602 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:59,602 - PRINT - == Mission fuel mass == 
+2025-10-16 09:27:59,602 - PRINT - mass ... 6371.2615
+2025-10-16 09:27:59,602 - PRINT - x ... 14.8805
+2025-10-16 09:27:59,602 - PRINT - y ... 0.0000
+2025-10-16 09:27:59,602 - PRINT - z ... 0.0000
+2025-10-16 09:27:59,602 - PRINT - j_xx ... 0.0000
+2025-10-16 09:27:59,603 - PRINT - j_yy ... 0.0000
+2025-10-16 09:27:59,603 - PRINT - j_zz ... 0.0000
+2025-10-16 09:27:59,603 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:59,603 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:59,603 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:59,603 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:59,603 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:59,603 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:59,603 - PRINT - == Design fuel mass (at takeoff) == 
+2025-10-16 09:27:59,603 - PRINT - mass ... 6163.8165
+2025-10-16 09:27:59,604 - PRINT - x ... 14.8805
+2025-10-16 09:27:59,604 - PRINT - y ... 0.0000
+2025-10-16 09:27:59,604 - PRINT - z ... 0.0000
+2025-10-16 09:27:59,604 - PRINT - j_xx ... 0.0000
+2025-10-16 09:27:59,604 - PRINT - j_yy ... 0.0000
+2025-10-16 09:27:59,604 - PRINT - j_zz ... 0.0000
+2025-10-16 09:27:59,604 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:59,604 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:59,604 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:59,604 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:59,604 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:59,604 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:59,604 - PRINT - == Design mass (mission) == 
+2025-10-16 09:27:59,604 - PRINT - mass ... 63885.5838
+2025-10-16 09:27:59,604 - PRINT - x ... 16.0298
+2025-10-16 09:27:59,605 - PRINT - y ... 0.0000
+2025-10-16 09:27:59,605 - PRINT - z ... -0.5553
+2025-10-16 09:27:59,605 - PRINT - j_xx ... 1092484.4581
+2025-10-16 09:27:59,605 - PRINT - j_yy ... 3023382.4141
+2025-10-16 09:27:59,605 - PRINT - j_zz ... 4055634.1720
+2025-10-16 09:27:59,605 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:59,605 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:59,605 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:59,605 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:59,605 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:59,605 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:59,605 - PRINT - == Design mass takeoff == 
+2025-10-16 09:27:59,605 - PRINT - mass ... 63678.1389
+2025-10-16 09:27:59,605 - PRINT - x ... 16.0336
+2025-10-16 09:27:59,606 - PRINT - y ... 0.0000
+2025-10-16 09:27:59,606 - PRINT - z ... -0.5571
+2025-10-16 09:27:59,606 - PRINT - j_xx ... 1088937.0161
+2025-10-16 09:27:59,606 - PRINT - j_yy ... 3013565.0903
+2025-10-16 09:27:59,606 - PRINT - j_zz ... 4042464.9897
+2025-10-16 09:27:59,606 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:59,606 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:59,606 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:59,606 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:59,606 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:59,606 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:59,606 - PRINT - == Design mass midflight == 
+2025-10-16 09:27:59,606 - PRINT - mass ... 61798.8641
+2025-10-16 09:27:59,607 - PRINT - x ... 16.0686
+2025-10-16 09:27:59,607 - PRINT - y ... 0.0000
+2025-10-16 09:27:59,607 - PRINT - z ... -0.5741
+2025-10-16 09:27:59,607 - PRINT - j_xx ... 1056800.2119
+2025-10-16 09:27:59,607 - PRINT - j_yy ... 2924628.4945
+2025-10-16 09:27:59,607 - PRINT - j_zz ... 3923163.4104
+2025-10-16 09:27:59,607 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:59,607 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:59,607 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:59,607 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:59,607 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:59,607 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:59,607 - PRINT - == Maximum fuel mass == 
+2025-10-16 09:27:59,607 - PRINT - mass ... 19229.1299
+2025-10-16 09:27:59,607 - PRINT - x ... 15.3491
+2025-10-16 09:27:59,608 - PRINT - y ... 0.0000
+2025-10-16 09:27:59,608 - PRINT - z ... 0.0000
+2025-10-16 09:27:59,608 - PRINT - j_xx ... 0.0000
+2025-10-16 09:27:59,608 - PRINT - j_yy ... 0.0000
+2025-10-16 09:27:59,608 - PRINT - j_zz ... 0.0000
+2025-10-16 09:27:59,608 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:59,608 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:59,608 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:59,608 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:59,608 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:59,608 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:59,608 - PRINT - == Ferry range mass == 
+2025-10-16 09:27:59,608 - PRINT - mass ... 62268.4522
+2025-10-16 09:27:59,608 - PRINT - x ... 15.7548
+2025-10-16 09:27:59,608 - PRINT - y ... 0.0000
+2025-10-16 09:27:59,609 - PRINT - z ... -0.5137
+2025-10-16 09:27:59,609 - PRINT - j_xx ... 0.0000
+2025-10-16 09:27:59,609 - PRINT - j_yy ... 0.0000
+2025-10-16 09:27:59,609 - PRINT - j_zz ... 0.0000
+2025-10-16 09:27:59,609 - PRINT - j_xy ... 0.0000
+2025-10-16 09:27:59,609 - PRINT - j_xz ... 0.0000
+2025-10-16 09:27:59,609 - PRINT - j_yx ... 0.0000
+2025-10-16 09:27:59,609 - PRINT - j_yz ... 0.0000
+2025-10-16 09:27:59,609 - PRINT - j_zx ... 0.0000
+2025-10-16 09:27:59,609 - PRINT - j_zy ... 0.0000
+2025-10-16 09:27:59,609 - WARNING - Estimated CG of MTOM with max payload. (fuel CG set in wing CG, payload CG set in fuselage CG.)
+2025-10-16 09:27:59,609 - WARNING - Estimated CG of MTOM with max fuel. (payload CG set in fuselage CG.)
+2025-10-16 09:27:59,609 - PRINT - Calculate MLM by RWTH regression ...
+2025-10-16 09:27:59,610 - PRINT - == Calculate loading diagramm cg change ==
+2025-10-16 09:27:59,610 - PRINT - REFUELING (design mission)...
+2025-10-16 09:27:59,610 - PRINT - Tank 'wing inner left' was filled with 3081.9083 kg kerosene.
+2025-10-16 09:27:59,610 - PRINT - Tank 'wing inner right' was filled with 3081.9083 kg kerosene.
+2025-10-16 09:27:59,610 - PRINT - Tank 'wing outer left' was filled with 0.0000 kg kerosene.
+2025-10-16 09:27:59,610 - PRINT - Tank 'wing outer right' was filled with 0.0000 kg kerosene.
+2025-10-16 09:27:59,610 - PRINT - Tank 'wing center' was filled with 0.0000 kg kerosene.
+2025-10-16 09:27:59,610 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:27:59,610 - PRINT - ROW-WISE
+2025-10-16 09:27:59,611 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:27:59,611 - PRINT - BACK TO FRONT:
+2025-10-16 09:27:59,611 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:27:59,611 - PRINT - ROW-WISE
+2025-10-16 09:27:59,611 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:27:59,611 - PRINT - CARGO LOADING...
+2025-10-16 09:27:59,611 - PRINT - BACK TO FRONT:
+2025-10-16 09:27:59,611 - PRINT - CARGO LOADING...
+2025-10-16 09:27:59,611 - PRINT - DEFUELING...
+2025-10-16 09:27:59,611 - PRINT - From tank 'wing inner left' was defueld 1865.1294 kg. Fuel left in tank: 1216.7789 kg.
+2025-10-16 09:27:59,611 - PRINT - From tank 'wing inner right' was defueld 1865.1294 kg. Fuel left in tank: 1216.7789 kg.
+2025-10-16 09:27:59,611 - PRINT - From tank 'wing outer left' was defueld 0.0000 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:27:59,611 - PRINT - From tank 'wing outer right' was defueld 0.0000 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:27:59,611 - PRINT - From tank 'wing center' was defueld 0.0000 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:27:59,612 - PRINT - Most forward CG global position is 15.3370 m.
+2025-10-16 09:27:59,612 - PRINT - Most aft CG global position is 16.4333 m.
+2025-10-16 09:27:59,612 - PRINT - Corresponding mass most fwd CG is of 54003.1389 kg.
+2025-10-16 09:27:59,612 - PRINT - Corresponding mass most aft CG is of 54403.1389 kg.
+2025-10-16 09:28:00,616 - PRINT - plotted
+2025-10-16 09:28:00,616 - PRINT - Creating weight_and_balance_analysis_study_mission report
+2025-10-16 09:28:00,647 - WARNING - Warning: "xml_output" switch in module configuration file set to "False". No XML results file generated.
+2025-10-16 09:28:00,647 - WARNING - Warning: No "method_tex_output" function in "methodtexoutput.py" file implemented yet.
+2025-10-16 09:28:00,647 - PRINT - Weight and balance analysis finished.
+2025-10-16 09:28:22,026 - PRINT - Weight and balance analysis started...
+2025-10-16 09:28:22,498 - PRINT - Mass properties of component wing read ...
+2025-10-16 09:28:22,498 - PRINT - wing - mass: 7763.3377
+2025-10-16 09:28:22,498 - PRINT - Mass properties of component fuselage read ...
+2025-10-16 09:28:22,498 - PRINT - fuselage - mass: 16430.1511
+2025-10-16 09:28:22,498 - PRINT - Mass properties of component empennage read ...
+2025-10-16 09:28:22,499 - PRINT - empennage - mass: 993.0404
+2025-10-16 09:28:22,499 - PRINT - Mass properties of component landing_gear read ...
+2025-10-16 09:28:22,499 - PRINT - landing_gear - mass: 3000.2504
+2025-10-16 09:28:22,499 - PRINT - Mass properties of component propulsion read ...
+2025-10-16 09:28:22,499 - PRINT - propulsion - mass: 8847.7091
+2025-10-16 09:28:22,499 - PRINT - Mass properties of component systems read ...
+2025-10-16 09:28:22,500 - PRINT - systems - mass: 6004.7338
+2025-10-16 09:28:22,500 - PRINT - Mass properties of component tank read ...
+2025-10-16 09:28:22,500 - PRINT - tank - mass: 0.0000
+2025-10-16 09:28:22,500 - WARNING - CGs of fuselage operator items estimated here at 16.78 m
+2025-10-16 09:28:22,501 - PRINT - == Manufacturer mass empty == 
+2025-10-16 09:28:22,501 - PRINT - mass ... 38467.4386
+2025-10-16 09:28:22,502 - PRINT - x ... 15.9245
+2025-10-16 09:28:22,502 - PRINT - y ... 0.0000
+2025-10-16 09:28:22,502 - PRINT - z ... -0.8315
+2025-10-16 09:28:22,502 - PRINT - j_xx ... 657817.8721
+2025-10-16 09:28:22,502 - PRINT - j_yy ... 1820469.8214
+2025-10-16 09:28:22,502 - PRINT - j_zz ... 2442019.7664
+2025-10-16 09:28:22,502 - PRINT - j_xy ... 0.0000
+2025-10-16 09:28:22,502 - PRINT - j_xz ... 0.0000
+2025-10-16 09:28:22,502 - PRINT - j_yx ... 0.0000
+2025-10-16 09:28:22,502 - PRINT - j_yz ... 0.0000
+2025-10-16 09:28:22,502 - PRINT - j_zx ... 0.0000
+2025-10-16 09:28:22,502 - PRINT - j_zy ... 0.0000
+2025-10-16 09:28:22,502 - PRINT - == Operating mass empty == 
+2025-10-16 09:28:22,502 - PRINT - mass ... 43039.3224
+2025-10-16 09:28:22,502 - PRINT - x ... 15.9361
+2025-10-16 09:28:22,503 - PRINT - y ... 0.0000
+2025-10-16 09:28:22,503 - PRINT - z ... -0.7432
+2025-10-16 09:28:22,503 - PRINT - j_xx ... 736000.0168
+2025-10-16 09:28:22,503 - PRINT - j_yy ... 2036834.0172
+2025-10-16 09:28:22,503 - PRINT - j_zz ... 2732255.6366
+2025-10-16 09:28:22,503 - PRINT - j_xy ... 0.0000
+2025-10-16 09:28:22,503 - PRINT - j_xz ... 0.0000
+2025-10-16 09:28:22,503 - PRINT - j_yx ... 0.0000
+2025-10-16 09:28:22,503 - PRINT - j_yz ... 0.0000
+2025-10-16 09:28:22,503 - PRINT - j_zx ... 0.0000
+2025-10-16 09:28:22,503 - PRINT - j_zy ... 0.0000
+2025-10-16 09:28:22,503 - WARNING - The CG of the maximum payload is set at the fuselage CG.
+2025-10-16 09:28:22,503 - WARNING - The maximum payload mass is equal the maximum structural payload mass.
+2025-10-16 09:28:22,503 - PRINT - == Maximimum payload mass == 
+2025-10-16 09:28:22,503 - PRINT - mass ... 19300.0000
+2025-10-16 09:28:22,503 - PRINT - x ... 16.8143
+2025-10-16 09:28:22,503 - PRINT - y ... 0.0000
+2025-10-16 09:28:22,504 - PRINT - z ... -0.2413
+2025-10-16 09:28:22,504 - PRINT - j_xx ... 0.0000
+2025-10-16 09:28:22,504 - PRINT - j_yy ... 0.0000
+2025-10-16 09:28:22,504 - PRINT - j_zz ... 0.0000
+2025-10-16 09:28:22,504 - PRINT - j_xy ... 0.0000
+2025-10-16 09:28:22,504 - PRINT - j_xz ... 0.0000
+2025-10-16 09:28:22,504 - PRINT - j_yx ... 0.0000
+2025-10-16 09:28:22,504 - PRINT - j_yz ... 0.0000
+2025-10-16 09:28:22,504 - PRINT - j_zx ... 0.0000
+2025-10-16 09:28:22,504 - PRINT - j_zy ... 0.0000
+2025-10-16 09:28:22,504 - PRINT - == Maximum zero fuel mass == 
+2025-10-16 09:28:22,504 - PRINT - mass ... 62339.3224
+2025-10-16 09:28:22,504 - PRINT - x ... 16.2080
+2025-10-16 09:28:22,504 - PRINT - y ... 0.0000
+2025-10-16 09:28:22,504 - PRINT - z ... -0.5878
+2025-10-16 09:28:22,504 - PRINT - j_xx ... 1066042.3953
+2025-10-16 09:28:22,504 - PRINT - j_yy ... 2950205.6589
+2025-10-16 09:28:22,504 - PRINT - j_zz ... 3957473.2024
+2025-10-16 09:28:22,504 - PRINT - j_xy ... 0.0000
+2025-10-16 09:28:22,505 - PRINT - j_xz ... 0.0000
+2025-10-16 09:28:22,505 - PRINT - j_yx ... 0.0000
+2025-10-16 09:28:22,505 - PRINT - j_yz ... 0.0000
+2025-10-16 09:28:22,505 - PRINT - j_zx ... 0.0000
+2025-10-16 09:28:22,505 - PRINT - j_zy ... 0.0000
+2025-10-16 09:28:22,505 - WARNING - The CG of the design payload is set at the fuselage CG.
+2025-10-16 09:28:22,505 - PRINT - == Design payload mass == 
+2025-10-16 09:28:22,505 - PRINT - mass ... 14475.0000
+2025-10-16 09:28:22,505 - PRINT - x ... 16.8143
+2025-10-16 09:28:22,505 - PRINT - y ... 0.0000
+2025-10-16 09:28:22,505 - PRINT - z ... -0.2413
+2025-10-16 09:28:22,505 - PRINT - j_xx ... 0.0000
+2025-10-16 09:28:22,505 - PRINT - j_yy ... 0.0000
+2025-10-16 09:28:22,505 - PRINT - j_zz ... 0.0000
+2025-10-16 09:28:22,505 - PRINT - j_xy ... 0.0000
+2025-10-16 09:28:22,505 - PRINT - j_xz ... 0.0000
+2025-10-16 09:28:22,505 - PRINT - j_yx ... 0.0000
+2025-10-16 09:28:22,505 - PRINT - j_yz ... 0.0000
+2025-10-16 09:28:22,505 - PRINT - j_zx ... 0.0000
+2025-10-16 09:28:22,506 - PRINT - j_zy ... 0.0000
+2025-10-16 09:28:22,506 - PRINT - == Mission fuel mass == 
+2025-10-16 09:28:22,506 - PRINT - mass ... 6371.8950
+2025-10-16 09:28:22,506 - PRINT - x ... 14.8805
+2025-10-16 09:28:22,506 - PRINT - y ... 0.0000
+2025-10-16 09:28:22,506 - PRINT - z ... 0.0000
+2025-10-16 09:28:22,506 - PRINT - j_xx ... 0.0000
+2025-10-16 09:28:22,506 - PRINT - j_yy ... 0.0000
+2025-10-16 09:28:22,506 - PRINT - j_zz ... 0.0000
+2025-10-16 09:28:22,506 - PRINT - j_xy ... 0.0000
+2025-10-16 09:28:22,506 - PRINT - j_xz ... 0.0000
+2025-10-16 09:28:22,506 - PRINT - j_yx ... 0.0000
+2025-10-16 09:28:22,506 - PRINT - j_yz ... 0.0000
+2025-10-16 09:28:22,506 - PRINT - j_zx ... 0.0000
+2025-10-16 09:28:22,506 - PRINT - j_zy ... 0.0000
+2025-10-16 09:28:22,506 - PRINT - == Design fuel mass (at takeoff) == 
+2025-10-16 09:28:22,507 - PRINT - mass ... 6164.4500
+2025-10-16 09:28:22,507 - PRINT - x ... 14.8805
+2025-10-16 09:28:22,507 - PRINT - y ... 0.0000
+2025-10-16 09:28:22,507 - PRINT - z ... 0.0000
+2025-10-16 09:28:22,507 - PRINT - j_xx ... 0.0000
+2025-10-16 09:28:22,507 - PRINT - j_yy ... 0.0000
+2025-10-16 09:28:22,507 - PRINT - j_zz ... 0.0000
+2025-10-16 09:28:22,507 - PRINT - j_xy ... 0.0000
+2025-10-16 09:28:22,507 - PRINT - j_xz ... 0.0000
+2025-10-16 09:28:22,507 - PRINT - j_yx ... 0.0000
+2025-10-16 09:28:22,507 - PRINT - j_yz ... 0.0000
+2025-10-16 09:28:22,507 - PRINT - j_zx ... 0.0000
+2025-10-16 09:28:22,507 - PRINT - j_zy ... 0.0000
+2025-10-16 09:28:22,507 - PRINT - == Design mass (mission) == 
+2025-10-16 09:28:22,507 - PRINT - mass ... 63886.2174
+2025-10-16 09:28:22,507 - PRINT - x ... 16.0298
+2025-10-16 09:28:22,507 - PRINT - y ... 0.0000
+2025-10-16 09:28:22,507 - PRINT - z ... -0.5553
+2025-10-16 09:28:22,508 - PRINT - j_xx ... 1092495.2921
+2025-10-16 09:28:22,508 - PRINT - j_yy ... 3023412.3965
+2025-10-16 09:28:22,508 - PRINT - j_zz ... 4055674.3911
+2025-10-16 09:28:22,508 - PRINT - j_xy ... 0.0000
+2025-10-16 09:28:22,508 - PRINT - j_xz ... 0.0000
+2025-10-16 09:28:22,508 - PRINT - j_yx ... 0.0000
+2025-10-16 09:28:22,508 - PRINT - j_yz ... 0.0000
+2025-10-16 09:28:22,508 - PRINT - j_zx ... 0.0000
+2025-10-16 09:28:22,508 - PRINT - j_zy ... 0.0000
+2025-10-16 09:28:22,508 - PRINT - == Design mass takeoff == 
+2025-10-16 09:28:22,508 - PRINT - mass ... 63678.7724
+2025-10-16 09:28:22,508 - PRINT - x ... 16.0336
+2025-10-16 09:28:22,508 - PRINT - y ... 0.0000
+2025-10-16 09:28:22,508 - PRINT - z ... -0.5571
+2025-10-16 09:28:22,508 - PRINT - j_xx ... 1088947.8501
+2025-10-16 09:28:22,508 - PRINT - j_yy ... 3013595.0727
+2025-10-16 09:28:22,508 - PRINT - j_zz ... 4042505.2088
+2025-10-16 09:28:22,509 - PRINT - j_xy ... 0.0000
+2025-10-16 09:28:22,509 - PRINT - j_xz ... 0.0000
+2025-10-16 09:28:22,509 - PRINT - j_yx ... 0.0000
+2025-10-16 09:28:22,509 - PRINT - j_yz ... 0.0000
+2025-10-16 09:28:22,509 - PRINT - j_zx ... 0.0000
+2025-10-16 09:28:22,509 - PRINT - j_zy ... 0.0000
+2025-10-16 09:28:22,509 - PRINT - == Design mass midflight == 
+2025-10-16 09:28:22,509 - PRINT - mass ... 61810.8408
+2025-10-16 09:28:22,509 - PRINT - x ... 16.0684
+2025-10-16 09:28:22,509 - PRINT - y ... 0.0000
+2025-10-16 09:28:22,509 - PRINT - z ... -0.5740
+2025-10-16 09:28:22,509 - PRINT - j_xx ... 1057005.0219
+2025-10-16 09:28:22,510 - PRINT - j_yy ... 2925195.2933
+2025-10-16 09:28:22,510 - PRINT - j_zz ... 3923923.7272
+2025-10-16 09:28:22,510 - PRINT - j_xy ... 0.0000
+2025-10-16 09:28:22,510 - PRINT - j_xz ... 0.0000
+2025-10-16 09:28:22,510 - PRINT - j_yx ... 0.0000
+2025-10-16 09:28:22,510 - PRINT - j_yz ... 0.0000
+2025-10-16 09:28:22,510 - PRINT - j_zx ... 0.0000
+2025-10-16 09:28:22,510 - PRINT - j_zy ... 0.0000
+2025-10-16 09:28:22,510 - PRINT - == Maximum fuel mass == 
+2025-10-16 09:28:22,510 - PRINT - mass ... 19229.1299
+2025-10-16 09:28:22,510 - PRINT - x ... 15.3491
+2025-10-16 09:28:22,510 - PRINT - y ... 0.0000
+2025-10-16 09:28:22,510 - PRINT - z ... 0.0000
+2025-10-16 09:28:22,510 - PRINT - j_xx ... 0.0000
+2025-10-16 09:28:22,510 - PRINT - j_yy ... 0.0000
+2025-10-16 09:28:22,510 - PRINT - j_zz ... 0.0000
+2025-10-16 09:28:22,510 - PRINT - j_xy ... 0.0000
+2025-10-16 09:28:22,510 - PRINT - j_xz ... 0.0000
+2025-10-16 09:28:22,511 - PRINT - j_yx ... 0.0000
+2025-10-16 09:28:22,511 - PRINT - j_yz ... 0.0000
+2025-10-16 09:28:22,511 - PRINT - j_zx ... 0.0000
+2025-10-16 09:28:22,511 - PRINT - j_zy ... 0.0000
+2025-10-16 09:28:22,511 - PRINT - == Ferry range mass == 
+2025-10-16 09:28:22,511 - PRINT - mass ... 62268.4522
+2025-10-16 09:28:22,511 - PRINT - x ... 15.7548
+2025-10-16 09:28:22,511 - PRINT - y ... 0.0000
+2025-10-16 09:28:22,511 - PRINT - z ... -0.5137
+2025-10-16 09:28:22,511 - PRINT - j_xx ... 0.0000
+2025-10-16 09:28:22,511 - PRINT - j_yy ... 0.0000
+2025-10-16 09:28:22,511 - PRINT - j_zz ... 0.0000
+2025-10-16 09:28:22,511 - PRINT - j_xy ... 0.0000
+2025-10-16 09:28:22,511 - PRINT - j_xz ... 0.0000
+2025-10-16 09:28:22,511 - PRINT - j_yx ... 0.0000
+2025-10-16 09:28:22,511 - PRINT - j_yz ... 0.0000
+2025-10-16 09:28:22,511 - PRINT - j_zx ... 0.0000
+2025-10-16 09:28:22,511 - PRINT - j_zy ... 0.0000
+2025-10-16 09:28:22,511 - WARNING - Estimated CG of MTOM with max payload. (fuel CG set in wing CG, payload CG set in fuselage CG.)
+2025-10-16 09:28:22,512 - WARNING - Estimated CG of MTOM with max fuel. (payload CG set in fuselage CG.)
+2025-10-16 09:28:22,512 - PRINT - Calculate MLM by RWTH regression ...
+2025-10-16 09:28:22,512 - PRINT - == Calculate loading diagramm cg change ==
+2025-10-16 09:28:22,512 - PRINT - REFUELING (design mission)...
+2025-10-16 09:28:22,512 - PRINT - Tank 'wing inner left' was filled with 3082.2250 kg kerosene.
+2025-10-16 09:28:22,512 - PRINT - Tank 'wing inner right' was filled with 3082.2250 kg kerosene.
+2025-10-16 09:28:22,512 - PRINT - Tank 'wing outer left' was filled with 0.0000 kg kerosene.
+2025-10-16 09:28:22,512 - PRINT - Tank 'wing outer right' was filled with 0.0000 kg kerosene.
+2025-10-16 09:28:22,512 - PRINT - Tank 'wing center' was filled with 0.0000 kg kerosene.
+2025-10-16 09:28:22,512 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:28:22,513 - PRINT - ROW-WISE
+2025-10-16 09:28:22,513 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:28:22,513 - PRINT - BACK TO FRONT:
+2025-10-16 09:28:22,513 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:28:22,513 - PRINT - ROW-WISE
+2025-10-16 09:28:22,513 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:28:22,513 - PRINT - CARGO LOADING...
+2025-10-16 09:28:22,513 - PRINT - BACK TO FRONT:
+2025-10-16 09:28:22,513 - PRINT - CARGO LOADING...
+2025-10-16 09:28:22,513 - PRINT - DEFUELING...
+2025-10-16 09:28:22,513 - PRINT - From tank 'wing inner left' was defueld 1865.4461 kg. Fuel left in tank: 1216.7789 kg.
+2025-10-16 09:28:22,513 - PRINT - From tank 'wing inner right' was defueld 1865.4461 kg. Fuel left in tank: 1216.7789 kg.
+2025-10-16 09:28:22,513 - PRINT - From tank 'wing outer left' was defueld 0.0000 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:28:22,513 - PRINT - From tank 'wing outer right' was defueld 0.0000 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:28:22,513 - PRINT - From tank 'wing center' was defueld 0.0000 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:28:22,513 - PRINT - Most forward CG global position is 15.3369 m.
+2025-10-16 09:28:22,513 - PRINT - Most aft CG global position is 16.4333 m.
+2025-10-16 09:28:22,514 - PRINT - Corresponding mass most fwd CG is of 54003.7724 kg.
+2025-10-16 09:28:22,514 - PRINT - Corresponding mass most aft CG is of 54403.7724 kg.
+2025-10-16 09:28:23,532 - PRINT - plotted
+2025-10-16 09:28:23,532 - PRINT - Creating weight_and_balance_analysis_study_mission report
+2025-10-16 09:28:23,574 - WARNING - Warning: "xml_output" switch in module configuration file set to "False". No XML results file generated.
+2025-10-16 09:28:23,575 - WARNING - Warning: No "method_tex_output" function in "methodtexoutput.py" file implemented yet.
+2025-10-16 09:28:23,575 - PRINT - Weight and balance analysis finished.
+2025-10-16 09:28:59,834 - PRINT - Weight and balance analysis started...
+2025-10-16 09:29:00,293 - PRINT - Mass properties of component wing read ...
+2025-10-16 09:29:00,294 - PRINT - wing - mass: 7763.3377
+2025-10-16 09:29:00,294 - PRINT - Mass properties of component fuselage read ...
+2025-10-16 09:29:00,294 - PRINT - fuselage - mass: 16430.1511
+2025-10-16 09:29:00,294 - PRINT - Mass properties of component empennage read ...
+2025-10-16 09:29:00,295 - PRINT - empennage - mass: 993.0404
+2025-10-16 09:29:00,295 - PRINT - Mass properties of component landing_gear read ...
+2025-10-16 09:29:00,295 - PRINT - landing_gear - mass: 3000.2504
+2025-10-16 09:29:00,295 - PRINT - Mass properties of component propulsion read ...
+2025-10-16 09:29:00,295 - PRINT - propulsion - mass: 8847.7091
+2025-10-16 09:29:00,295 - PRINT - Mass properties of component systems read ...
+2025-10-16 09:29:00,296 - PRINT - systems - mass: 6004.7338
+2025-10-16 09:29:00,296 - PRINT - Mass properties of component tank read ...
+2025-10-16 09:29:00,296 - PRINT - tank - mass: 0.0000
+2025-10-16 09:29:00,297 - WARNING - CGs of fuselage operator items estimated here at 16.78 m
+2025-10-16 09:29:00,297 - PRINT - == Manufacturer mass empty == 
+2025-10-16 09:29:00,298 - PRINT - mass ... 38467.4386
+2025-10-16 09:29:00,298 - PRINT - x ... 15.9245
+2025-10-16 09:29:00,298 - PRINT - y ... 0.0000
+2025-10-16 09:29:00,298 - PRINT - z ... -0.8315
+2025-10-16 09:29:00,298 - PRINT - j_xx ... 657817.8721
+2025-10-16 09:29:00,298 - PRINT - j_yy ... 1820469.8214
+2025-10-16 09:29:00,298 - PRINT - j_zz ... 2442019.7664
+2025-10-16 09:29:00,298 - PRINT - j_xy ... 0.0000
+2025-10-16 09:29:00,298 - PRINT - j_xz ... 0.0000
+2025-10-16 09:29:00,298 - PRINT - j_yx ... 0.0000
+2025-10-16 09:29:00,298 - PRINT - j_yz ... 0.0000
+2025-10-16 09:29:00,298 - PRINT - j_zx ... 0.0000
+2025-10-16 09:29:00,298 - PRINT - j_zy ... 0.0000
+2025-10-16 09:29:00,299 - PRINT - == Operating mass empty == 
+2025-10-16 09:29:00,299 - PRINT - mass ... 43039.3224
+2025-10-16 09:29:00,299 - PRINT - x ... 15.9361
+2025-10-16 09:29:00,299 - PRINT - y ... 0.0000
+2025-10-16 09:29:00,299 - PRINT - z ... -0.7432
+2025-10-16 09:29:00,299 - PRINT - j_xx ... 736000.0168
+2025-10-16 09:29:00,299 - PRINT - j_yy ... 2036834.0172
+2025-10-16 09:29:00,299 - PRINT - j_zz ... 2732255.6366
+2025-10-16 09:29:00,299 - PRINT - j_xy ... 0.0000
+2025-10-16 09:29:00,299 - PRINT - j_xz ... 0.0000
+2025-10-16 09:29:00,299 - PRINT - j_yx ... 0.0000
+2025-10-16 09:29:00,299 - PRINT - j_yz ... 0.0000
+2025-10-16 09:29:00,299 - PRINT - j_zx ... 0.0000
+2025-10-16 09:29:00,299 - PRINT - j_zy ... 0.0000
+2025-10-16 09:29:00,300 - WARNING - The CG of the maximum payload is set at the fuselage CG.
+2025-10-16 09:29:00,300 - WARNING - The maximum payload mass is equal the maximum structural payload mass.
+2025-10-16 09:29:00,300 - PRINT - == Maximimum payload mass == 
+2025-10-16 09:29:00,300 - PRINT - mass ... 19300.0000
+2025-10-16 09:29:00,300 - PRINT - x ... 16.8143
+2025-10-16 09:29:00,300 - PRINT - y ... 0.0000
+2025-10-16 09:29:00,300 - PRINT - z ... -0.2413
+2025-10-16 09:29:00,300 - PRINT - j_xx ... 0.0000
+2025-10-16 09:29:00,300 - PRINT - j_yy ... 0.0000
+2025-10-16 09:29:00,300 - PRINT - j_zz ... 0.0000
+2025-10-16 09:29:00,300 - PRINT - j_xy ... 0.0000
+2025-10-16 09:29:00,300 - PRINT - j_xz ... 0.0000
+2025-10-16 09:29:00,300 - PRINT - j_yx ... 0.0000
+2025-10-16 09:29:00,300 - PRINT - j_yz ... 0.0000
+2025-10-16 09:29:00,300 - PRINT - j_zx ... 0.0000
+2025-10-16 09:29:00,301 - PRINT - j_zy ... 0.0000
+2025-10-16 09:29:00,301 - PRINT - == Maximum zero fuel mass == 
+2025-10-16 09:29:00,301 - PRINT - mass ... 62339.3224
+2025-10-16 09:29:00,301 - PRINT - x ... 16.2080
+2025-10-16 09:29:00,301 - PRINT - y ... 0.0000
+2025-10-16 09:29:00,301 - PRINT - z ... -0.5878
+2025-10-16 09:29:00,301 - PRINT - j_xx ... 1066042.3953
+2025-10-16 09:29:00,301 - PRINT - j_yy ... 2950205.6589
+2025-10-16 09:29:00,301 - PRINT - j_zz ... 3957473.2024
+2025-10-16 09:29:00,301 - PRINT - j_xy ... 0.0000
+2025-10-16 09:29:00,301 - PRINT - j_xz ... 0.0000
+2025-10-16 09:29:00,301 - PRINT - j_yx ... 0.0000
+2025-10-16 09:29:00,301 - PRINT - j_yz ... 0.0000
+2025-10-16 09:29:00,302 - PRINT - j_zx ... 0.0000
+2025-10-16 09:29:00,302 - PRINT - j_zy ... 0.0000
+2025-10-16 09:29:00,302 - WARNING - The CG of the design payload is set at the fuselage CG.
+2025-10-16 09:29:00,302 - PRINT - == Design payload mass == 
+2025-10-16 09:29:00,302 - PRINT - mass ... 14475.0000
+2025-10-16 09:29:00,302 - PRINT - x ... 16.8143
+2025-10-16 09:29:00,302 - PRINT - y ... 0.0000
+2025-10-16 09:29:00,302 - PRINT - z ... -0.2413
+2025-10-16 09:29:00,302 - PRINT - j_xx ... 0.0000
+2025-10-16 09:29:00,302 - PRINT - j_yy ... 0.0000
+2025-10-16 09:29:00,302 - PRINT - j_zz ... 0.0000
+2025-10-16 09:29:00,302 - PRINT - j_xy ... 0.0000
+2025-10-16 09:29:00,302 - PRINT - j_xz ... 0.0000
+2025-10-16 09:29:00,302 - PRINT - j_yx ... 0.0000
+2025-10-16 09:29:00,302 - PRINT - j_yz ... 0.0000
+2025-10-16 09:29:00,303 - PRINT - j_zx ... 0.0000
+2025-10-16 09:29:00,303 - PRINT - j_zy ... 0.0000
+2025-10-16 09:29:00,303 - PRINT - == Mission fuel mass == 
+2025-10-16 09:29:00,303 - PRINT - mass ... 6371.2615
+2025-10-16 09:29:00,303 - PRINT - x ... 14.8805
+2025-10-16 09:29:00,303 - PRINT - y ... 0.0000
+2025-10-16 09:29:00,303 - PRINT - z ... 0.0000
+2025-10-16 09:29:00,303 - PRINT - j_xx ... 0.0000
+2025-10-16 09:29:00,303 - PRINT - j_yy ... 0.0000
+2025-10-16 09:29:00,303 - PRINT - j_zz ... 0.0000
+2025-10-16 09:29:00,304 - PRINT - j_xy ... 0.0000
+2025-10-16 09:29:00,304 - PRINT - j_xz ... 0.0000
+2025-10-16 09:29:00,304 - PRINT - j_yx ... 0.0000
+2025-10-16 09:29:00,304 - PRINT - j_yz ... 0.0000
+2025-10-16 09:29:00,304 - PRINT - j_zx ... 0.0000
+2025-10-16 09:29:00,304 - PRINT - j_zy ... 0.0000
+2025-10-16 09:29:00,304 - PRINT - == Design fuel mass (at takeoff) == 
+2025-10-16 09:29:00,304 - PRINT - mass ... 6163.8165
+2025-10-16 09:29:00,305 - PRINT - x ... 14.8805
+2025-10-16 09:29:00,305 - PRINT - y ... 0.0000
+2025-10-16 09:29:00,305 - PRINT - z ... 0.0000
+2025-10-16 09:29:00,305 - PRINT - j_xx ... 0.0000
+2025-10-16 09:29:00,305 - PRINT - j_yy ... 0.0000
+2025-10-16 09:29:00,305 - PRINT - j_zz ... 0.0000
+2025-10-16 09:29:00,306 - PRINT - j_xy ... 0.0000
+2025-10-16 09:29:00,306 - PRINT - j_xz ... 0.0000
+2025-10-16 09:29:00,306 - PRINT - j_yx ... 0.0000
+2025-10-16 09:29:00,306 - PRINT - j_yz ... 0.0000
+2025-10-16 09:29:00,306 - PRINT - j_zx ... 0.0000
+2025-10-16 09:29:00,306 - PRINT - j_zy ... 0.0000
+2025-10-16 09:29:00,306 - PRINT - == Design mass (mission) == 
+2025-10-16 09:29:00,306 - PRINT - mass ... 63885.5838
+2025-10-16 09:29:00,306 - PRINT - x ... 16.0298
+2025-10-16 09:29:00,306 - PRINT - y ... 0.0000
+2025-10-16 09:29:00,306 - PRINT - z ... -0.5553
+2025-10-16 09:29:00,306 - PRINT - j_xx ... 1092484.4581
+2025-10-16 09:29:00,307 - PRINT - j_yy ... 3023382.4141
+2025-10-16 09:29:00,307 - PRINT - j_zz ... 4055634.1720
+2025-10-16 09:29:00,307 - PRINT - j_xy ... 0.0000
+2025-10-16 09:29:00,307 - PRINT - j_xz ... 0.0000
+2025-10-16 09:29:00,307 - PRINT - j_yx ... 0.0000
+2025-10-16 09:29:00,307 - PRINT - j_yz ... 0.0000
+2025-10-16 09:29:00,307 - PRINT - j_zx ... 0.0000
+2025-10-16 09:29:00,307 - PRINT - j_zy ... 0.0000
+2025-10-16 09:29:00,307 - PRINT - == Design mass takeoff == 
+2025-10-16 09:29:00,307 - PRINT - mass ... 63678.1389
+2025-10-16 09:29:00,308 - PRINT - x ... 16.0336
+2025-10-16 09:29:00,308 - PRINT - y ... 0.0000
+2025-10-16 09:29:00,308 - PRINT - z ... -0.5571
+2025-10-16 09:29:00,308 - PRINT - j_xx ... 1088937.0161
+2025-10-16 09:29:00,308 - PRINT - j_yy ... 3013565.0903
+2025-10-16 09:29:00,308 - PRINT - j_zz ... 4042464.9897
+2025-10-16 09:29:00,308 - PRINT - j_xy ... 0.0000
+2025-10-16 09:29:00,308 - PRINT - j_xz ... 0.0000
+2025-10-16 09:29:00,308 - PRINT - j_yx ... 0.0000
+2025-10-16 09:29:00,308 - PRINT - j_yz ... 0.0000
+2025-10-16 09:29:00,308 - PRINT - j_zx ... 0.0000
+2025-10-16 09:29:00,308 - PRINT - j_zy ... 0.0000
+2025-10-16 09:29:00,308 - PRINT - == Design mass midflight == 
+2025-10-16 09:29:00,308 - PRINT - mass ... 61798.8641
+2025-10-16 09:29:00,308 - PRINT - x ... 16.0686
+2025-10-16 09:29:00,309 - PRINT - y ... 0.0000
+2025-10-16 09:29:00,309 - PRINT - z ... -0.5741
+2025-10-16 09:29:00,309 - PRINT - j_xx ... 1056800.2119
+2025-10-16 09:29:00,309 - PRINT - j_yy ... 2924628.4945
+2025-10-16 09:29:00,309 - PRINT - j_zz ... 3923163.4104
+2025-10-16 09:29:00,309 - PRINT - j_xy ... 0.0000
+2025-10-16 09:29:00,309 - PRINT - j_xz ... 0.0000
+2025-10-16 09:29:00,309 - PRINT - j_yx ... 0.0000
+2025-10-16 09:29:00,309 - PRINT - j_yz ... 0.0000
+2025-10-16 09:29:00,309 - PRINT - j_zx ... 0.0000
+2025-10-16 09:29:00,309 - PRINT - j_zy ... 0.0000
+2025-10-16 09:29:00,309 - PRINT - == Maximum fuel mass == 
+2025-10-16 09:29:00,309 - PRINT - mass ... 19229.1299
+2025-10-16 09:29:00,309 - PRINT - x ... 15.3491
+2025-10-16 09:29:00,310 - PRINT - y ... 0.0000
+2025-10-16 09:29:00,310 - PRINT - z ... 0.0000
+2025-10-16 09:29:00,310 - PRINT - j_xx ... 0.0000
+2025-10-16 09:29:00,310 - PRINT - j_yy ... 0.0000
+2025-10-16 09:29:00,310 - PRINT - j_zz ... 0.0000
+2025-10-16 09:29:00,310 - PRINT - j_xy ... 0.0000
+2025-10-16 09:29:00,310 - PRINT - j_xz ... 0.0000
+2025-10-16 09:29:00,310 - PRINT - j_yx ... 0.0000
+2025-10-16 09:29:00,310 - PRINT - j_yz ... 0.0000
+2025-10-16 09:29:00,310 - PRINT - j_zx ... 0.0000
+2025-10-16 09:29:00,310 - PRINT - j_zy ... 0.0000
+2025-10-16 09:29:00,310 - PRINT - == Ferry range mass == 
+2025-10-16 09:29:00,311 - PRINT - mass ... 62268.4522
+2025-10-16 09:29:00,311 - PRINT - x ... 15.7548
+2025-10-16 09:29:00,311 - PRINT - y ... 0.0000
+2025-10-16 09:29:00,311 - PRINT - z ... -0.5137
+2025-10-16 09:29:00,311 - PRINT - j_xx ... 0.0000
+2025-10-16 09:29:00,311 - PRINT - j_yy ... 0.0000
+2025-10-16 09:29:00,311 - PRINT - j_zz ... 0.0000
+2025-10-16 09:29:00,312 - PRINT - j_xy ... 0.0000
+2025-10-16 09:29:00,312 - PRINT - j_xz ... 0.0000
+2025-10-16 09:29:00,312 - PRINT - j_yx ... 0.0000
+2025-10-16 09:29:00,312 - PRINT - j_yz ... 0.0000
+2025-10-16 09:29:00,312 - PRINT - j_zx ... 0.0000
+2025-10-16 09:29:00,312 - PRINT - j_zy ... 0.0000
+2025-10-16 09:29:00,312 - WARNING - Estimated CG of MTOM with max payload. (fuel CG set in wing CG, payload CG set in fuselage CG.)
+2025-10-16 09:29:00,312 - WARNING - Estimated CG of MTOM with max fuel. (payload CG set in fuselage CG.)
+2025-10-16 09:29:00,312 - PRINT - Calculate MLM by RWTH regression ...
+2025-10-16 09:29:00,313 - PRINT - == Calculate loading diagramm cg change ==
+2025-10-16 09:29:00,313 - PRINT - REFUELING (design mission)...
+2025-10-16 09:29:00,313 - PRINT - Tank 'wing inner left' was filled with 3081.9083 kg kerosene.
+2025-10-16 09:29:00,313 - PRINT - Tank 'wing inner right' was filled with 3081.9083 kg kerosene.
+2025-10-16 09:29:00,313 - PRINT - Tank 'wing outer left' was filled with 0.0000 kg kerosene.
+2025-10-16 09:29:00,313 - PRINT - Tank 'wing outer right' was filled with 0.0000 kg kerosene.
+2025-10-16 09:29:00,314 - PRINT - Tank 'wing center' was filled with 0.0000 kg kerosene.
+2025-10-16 09:29:00,314 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:29:00,314 - PRINT - ROW-WISE
+2025-10-16 09:29:00,314 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:29:00,314 - PRINT - BACK TO FRONT:
+2025-10-16 09:29:00,314 - PRINT - PASSENGERS BOARDING...
+2025-10-16 09:29:00,315 - PRINT - ROW-WISE
+2025-10-16 09:29:00,315 - WARNING - If the data is to be read from excel and not from acommodationIO modify/adapt this
+2025-10-16 09:29:00,315 - PRINT - CARGO LOADING...
+2025-10-16 09:29:00,315 - PRINT - BACK TO FRONT:
+2025-10-16 09:29:00,315 - PRINT - CARGO LOADING...
+2025-10-16 09:29:00,315 - PRINT - DEFUELING...
+2025-10-16 09:29:00,315 - PRINT - From tank 'wing inner left' was defueld 1865.1294 kg. Fuel left in tank: 1216.7789 kg.
+2025-10-16 09:29:00,315 - PRINT - From tank 'wing inner right' was defueld 1865.1294 kg. Fuel left in tank: 1216.7789 kg.
+2025-10-16 09:29:00,315 - PRINT - From tank 'wing outer left' was defueld 0.0000 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:29:00,315 - PRINT - From tank 'wing outer right' was defueld 0.0000 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:29:00,316 - PRINT - From tank 'wing center' was defueld 0.0000 kg. Fuel left in tank: 0.0000 kg.
+2025-10-16 09:29:00,316 - PRINT - Most forward CG global position is 15.3370 m.
+2025-10-16 09:29:00,316 - PRINT - Most aft CG global position is 16.4333 m.
+2025-10-16 09:29:00,316 - PRINT - Corresponding mass most fwd CG is of 54003.1389 kg.
+2025-10-16 09:29:00,316 - PRINT - Corresponding mass most aft CG is of 54403.1389 kg.
+2025-10-16 09:29:01,257 - PRINT - plotted
+2025-10-16 09:29:01,257 - PRINT - Creating weight_and_balance_analysis_study_mission report
+2025-10-16 09:29:01,278 - WARNING - Warning: "xml_output" switch in module configuration file set to "False". No XML results file generated.
+2025-10-16 09:29:01,278 - WARNING - Warning: No "method_tex_output" function in "methodtexoutput.py" file implemented yet.
+2025-10-16 09:29:01,279 - PRINT - Weight and balance analysis finished.
