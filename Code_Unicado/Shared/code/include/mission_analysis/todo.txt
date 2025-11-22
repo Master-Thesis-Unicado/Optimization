@@ -1,4 +1,0 @@
-add diagnostics stuff
-make stuff constant and reference to the inputs
-make the check-point to check-point flight 
-add error handling and flags that constraint analysis can read
