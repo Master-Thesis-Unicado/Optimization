@@ -277,8 +277,7 @@ class ClimbingCore:
                 V = float(V_hist[-1])
                 t = float(t_hist[-1])
                 a = a_from_altitude(h)
-                M = V / max(a, 1e-9)
-                Mq = float(np.clip(M, M_MIN_DEFAULT, 0.94))
+                Mq = float(np.clip(V / max(a, 1e-9), M_MIN_DEFAULT, 0.94))
 
                 # Calculate current altitude fraction for strategy functions
                 current_altitude_fraction = (h - h0_m) / (target_alt_m - h0_m) if target_alt_m > h0_m else 0.0
@@ -303,7 +302,7 @@ class ClimbingCore:
                 )
                 
                 # Compute energy allocation using centralized method
-                dh_dt, dv_dt = ClimbingCore.EnergyCalculator.compute_energy_allocation(strategy_fn, w_c, w_s, h, V, a)
+                dh_dt, dv_dt = ClimbingCore.EnergyCalculator.compute_energy_allocation(strategy_fn, w_c, w_s, h, V, a, Mq)
                 
                 D = float(aero.get_drag(Mq, h, mass_kg))
                 W = mass_kg * g0
@@ -358,8 +357,6 @@ class ClimbingCore:
                 h_hist.append(h_new)
                 V_hist.append(V_new)
                 t_hist.append(t_new)
-                if h_new >= target_alt_m:
-                    break
 
             # Convert histories to numpy arrays
             alt = np.asarray(h_hist, float)
@@ -376,23 +373,33 @@ class ClimbingCore:
             # Pad arrays to match length of altitude history (all arrays should have same length)
             base_length = len(h_hist)
             
-            # Helper function to pad array to base_length
-            def pad_array(arr, pad_value):
-                if len(arr) < base_length:
-                    return np.asarray(arr + [pad_value] * (base_length - len(arr)), float)
-                return np.asarray(arr, float)
+            # Convert lists to numpy arrays and pad using centralized method
+            lever = ClimbingCore.StrategyManager._pad_array_to_length(
+                np.asarray(lever_hist, float), base_length, 
+                lever_hist[-1] if lever_hist else np.nan
+            )
+            Ttot = ClimbingCore.StrategyManager._pad_array_to_length(
+                np.asarray(Ttot_hist, float), base_length,
+                Ttot_hist[-1] if Ttot_hist else np.nan
+            )
+            Darr = ClimbingCore.StrategyManager._pad_array_to_length(
+                np.asarray(D_hist, float), base_length,
+                D_hist[-1] if D_hist else np.nan
+            )
+            Psarr = ClimbingCore.StrategyManager._pad_array_to_length(
+                np.asarray(Ps_hist, float), base_length,
+                Ps_hist[-1] if Ps_hist else np.nan
+            )
+            mdot = ClimbingCore.StrategyManager._pad_array_to_length(
+                np.asarray(mdot_hist, float), base_length,
+                mdot_hist[-1] if mdot_hist else np.nan
+            )
             
-            lever = pad_array(lever_hist, lever_hist[-1] if lever_hist else np.nan)
-            Ttot = pad_array(Ttot_hist, Ttot_hist[-1] if Ttot_hist else np.nan)
-            Darr = pad_array(D_hist, D_hist[-1] if D_hist else np.nan)
-            Psarr = pad_array(Ps_hist, Ps_hist[-1] if Ps_hist else np.nan)
-            mdot = pad_array(mdot_hist, mdot_hist[-1] if mdot_hist else np.nan)
-            
-            # Boolean array padding
-            if len(limited_hist) < base_length:
-                limited = np.asarray(limited_hist + [limited_hist[-1] if limited_hist else False] * (base_length - len(limited_hist)), bool)
-            else:
-                limited = np.asarray(limited_hist, bool)
+            # Boolean array padding using same centralized method
+            limited = ClimbingCore.StrategyManager._pad_array_to_length(
+                np.asarray(limited_hist, bool), base_length,
+                limited_hist[-1] if limited_hist else False
+            )
             
             # Prepend initial values for dt and dFuel (these represent changes between points)
             dtarr = np.asarray([0.0] + dt_hist, float)
@@ -463,16 +470,15 @@ class ClimbingCore:
             for name in array_names:
                 arr = np.array(getattr(sr, name), copy=True)
                 
-                if len(arr) != max_length:
+                if len(arr) < max_length:
                     dbg(f"[WARNING] Array {name} has length {len(arr)} but max length is {max_length}. Padding to match.")
-                    if len(arr) < max_length:
-                        # Determine pad value based on array type
-                        if name == 'thrust_limited':
-                            pad_value = arr[-1] if len(arr) > 0 else False
-                        else:
-                            pad_value = arr[-1] if len(arr) > 0 else 0.0
-                        
-                        arr = ClimbingCore.StrategyManager._pad_array_to_length(arr, max_length, pad_value)
+                    # Determine pad value based on array type
+                    if name == 'thrust_limited':
+                        pad_value = arr[-1] if len(arr) > 0 else False
+                    else:
+                        pad_value = arr[-1] if len(arr) > 0 else 0.0
+                    
+                    arr = ClimbingCore.StrategyManager._pad_array_to_length(arr, max_length, pad_value)
                 
                 padded_arrays[name] = arr
             
@@ -564,7 +570,7 @@ class ClimbingCore:
         
         @staticmethod
         def compute_energy_allocation(strategy_fn: Callable, w_c: float, w_s: float, 
-                                     h: float, V: float, a: float) -> tuple[float, float]:
+                                     h: float, V: float, a: float, current_mach: float) -> tuple[float, float]:
             """
             Compute climb rate and acceleration rate based on energy allocation weights.
             
@@ -575,6 +581,7 @@ class ClimbingCore:
                 h: Current altitude [m]
                 V: Current velocity [m/s]
                 a: Current speed of sound [m/s]
+                current_mach: Current Mach number (clipped to valid range)
                 
             Returns:
                 tuple: (dh_dt, dv_dt) - climb rate [m/s] and acceleration rate [m/s²]
@@ -583,14 +590,13 @@ class ClimbingCore:
                 eps = GridConfig.TARGET_ALT_M / GridConfig.N_PLOT_STEPS  # Uniform step size based on N_PLOT_STEPS
                 a1 = _atmospheric_properties.a_from_altitude(h - eps/2)
                 a2 = _atmospheric_properties.a_from_altitude(h + eps/2)
-                dadh = (a2 - a1) / eps  # 
+                dadh = (a2 - a1) / eps  # Derivative of speed of sound with respect to altitude [m/s per m]
                 
                 # Climb rate
                 dh_dt = w_c * E_DOT_CMD_CLIMB
                 
                 # Velocity change to maintain constant Mach: dV/dt = M * da/dh * dh/dt
-                # where M = V/a is the current Mach number
-                current_mach = V / max(a, 1e-9)
+                # where M is the current Mach number
                 dv_dt = current_mach * dadh * dh_dt
             else:
                 # Energy allocation computation for climb and speed components
