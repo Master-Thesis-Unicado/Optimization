@@ -64,7 +64,7 @@ class SystemConfiguration:
     ENGINE_ALT_CLIP  = None      # meters; None = no clip
     M_MIN_DEFAULT    = 0.0        # From engine envelope: minimum operational Mach
     M_MIN_EFFECTIVE  = M_MIN_DEFAULT
-    M_MMO            = 0.94       # From engine envelope: maximum operational Mach
+    M_MMO            = 0.9392     # From engine envelope analysis: maximum operational Mach (at lever=1.0, altitude=10500 m)
     CL_MAX           = None       # Maximum lift coefficient 
 
     # DEBUG

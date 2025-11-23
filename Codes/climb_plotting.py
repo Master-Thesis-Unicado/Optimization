@@ -170,7 +170,15 @@ def plot_strategies_interactive(
     Es_levels = np.linspace(np.nanmin(Es), np.nanmax(Es), 8)
     ax_left.contour(Mm, Hm, Es, levels=Es_levels, colors=[(0.6, 0.6, 0.6)], linewidths=0.8, zorder=0)
 
-    # CLmax + MMO + operating fill
+    # Engine envelope limits (from engine envelope analysis)
+    # Maximum service ceiling altitude: 13994.1 m at lever=1.0, Mach=0.900
+    MAX_SERVICE_CEILING_M = 13994.1
+    # Maximum operational Mach from engine envelope: 0.9392 at lever=1.0, altitude=10500 m
+    MAX_ENGINE_MACH = 0.9392
+    # Minimum operational Mach from engine envelope test: 0.200 (tested range)
+    MIN_ENGINE_MACH = 0.200
+    
+    # CLmax + Engine Mach limits + operating fill
     def _compute_mstall_curve():
         W = INITIAL_MASS_KG * g
         # Use CL_MAX from aircraft_config (set by PyAerodynamicsWrapper), fallback to 1.6 if not set
@@ -184,12 +192,23 @@ def plot_strategies_interactive(
                 out[k] = V / max(a,1e-12)
         return out
     M_stall = _compute_mstall_curve()
-    ax_left.axvline(M_MMO, color="red", linewidth=2.0, linestyle="--", label=f"MMO={M_MMO:.2f}", zorder=2)
+    ax_left.axvline(MAX_ENGINE_MACH, color="red", linewidth=2.0, linestyle="--", label=f"Max Engine Mach={MAX_ENGINE_MACH:.3f}", zorder=2)
     if np.isfinite(M_stall).any():
-        ax_left.plot(M_stall, H_plot, linestyle="--", color="red", linewidth=1.6, label="CLmax", zorder=2)
-        cond = np.isfinite(M_stall) & (M_stall < M_MMO)
+        ax_left.plot(M_stall, H_plot, linestyle="--", color="red", linewidth=2.0, label="CLmax", zorder=2)
+        cond = np.isfinite(M_stall) & (M_stall < MAX_ENGINE_MACH)
         if np.any(cond):
-            ax_left.fill_betweenx(H_plot[cond], M_stall[cond], M_MMO, alpha=0.12, color="tab:green", zorder=1)
+            ax_left.fill_betweenx(H_plot[cond], M_stall[cond], MAX_ENGINE_MACH, alpha=0.12, color="tab:green", zorder=1)
+    
+    # Add maximum service ceiling limit (horizontal line)
+    # Always show if within reasonable range (even if slightly above Y_AXIS_TOP_M for visibility)
+    if MAX_SERVICE_CEILING_M <= Y_AXIS_TOP_M + 1000:  # Allow slight margin
+        ax_left.axhline(MAX_SERVICE_CEILING_M, color="red", linewidth=2.0, linestyle="--", 
+                        label=f"Max Service Ceiling={MAX_SERVICE_CEILING_M/1000:.2f} km", zorder=2)
+    
+    # Add minimum engine Mach limit (vertical line)
+    if MIN_ENGINE_MACH >= M_grid[0]:
+        ax_left.axvline(MIN_ENGINE_MACH, color="red", linewidth=2.0, linestyle="--", 
+                       label=f"Min Engine Mach={MIN_ENGINE_MACH:.3f}", zorder=2)
 
     # Ps contours
     neg = [lv for lv in PlottingConfig.PS_LEVELS if lv < 0]; pos = [lv for lv in PlottingConfig.PS_LEVELS if lv > 0]
@@ -406,9 +425,14 @@ def plot_J_3d_plotly(M_grid, H_sched, lever_grid, J_grid_3d, min_path=None, titl
     """
     Visualize J values in 3D (Mach, Altitude, Lever) using Plotly.
     Optionally overlay the minimum-fuel path as a line if min_path is provided.
-    Includes flight envelope limits (MMO, CLmax, operating envelope).
+    Includes flight envelope limits (Max Engine Mach, CLmax, operating envelope).
     Enhanced with user-friendly features: camera presets, data filtering, and export.
     """
+    # Engine envelope limits (from engine envelope analysis)
+    MAX_ENGINE_MACH = 0.9392  # Maximum operational Mach from engine envelope analysis
+    MAX_SERVICE_CEILING_M = 13994.1  # Maximum service ceiling altitude at lever=1.0, Mach=0.900
+    MIN_ENGINE_MACH = 0.200  # Minimum operational Mach from engine envelope test
+    
     # Prepare meshgrid for scatter
     M, H, L = np.meshgrid(M_grid, H_sched, lever_grid, indexing='ij')
     # Flatten arrays for plotting - NEW AXIS ASSIGNMENT
@@ -440,12 +464,12 @@ def plot_J_3d_plotly(M_grid, H_sched, lever_grid, J_grid_3d, min_path=None, titl
     fig = go.Figure()
     
     # Add flight envelope limits
-    # 1. MMO (Maximum Mach Operating) limit - vertical plane at M_MMO
-    # Create a vertical plane at M_MMO across all altitudes and lever positions
+    # 1. Maximum Engine Mach limit - vertical plane at MAX_ENGINE_MACH
+    # Create a vertical plane at MAX_ENGINE_MACH across all altitudes and lever positions
     lever_range = np.linspace(0, 1, 10)
     alt_range = np.linspace(H_sched[0], H_sched[-1], 10)
     L_mmo, H_mmo = np.meshgrid(lever_range, alt_range)
-    M_mmo = np.full_like(L_mmo, M_MMO)
+    M_mmo = np.full_like(L_mmo, MAX_ENGINE_MACH)
     
     fig.add_trace(go.Surface(
         x=L_mmo,
@@ -454,7 +478,7 @@ def plot_J_3d_plotly(M_grid, H_sched, lever_grid, J_grid_3d, min_path=None, titl
         colorscale=[[0, Colors.ENVELOPE_LIMIT], [1, Colors.ENVELOPE_LIMIT]],
         opacity=0.45,
         showscale=False,
-        name=f'MMO Limit (M={M_MMO:.2f})'
+        name=f'Max Engine Mach Limit (M={MAX_ENGINE_MACH:.3f})'
     ))
     
     # 2. CLmax (stall) limit - compute stall curve
@@ -501,9 +525,9 @@ def plot_J_3d_plotly(M_grid, H_sched, lever_grid, J_grid_3d, min_path=None, titl
                 name='Flight Envelope Limit'
             ))
     
-    # 3. Operating envelope boundaries (between stall and MMO) - as lines
+    # 3. Operating envelope boundaries (between stall and Max Engine Mach) - as lines
     if np.isfinite(M_stall).any():
-        cond = np.isfinite(M_stall) & (M_stall < M_MMO)
+        cond = np.isfinite(M_stall) & (M_stall < MAX_ENGINE_MACH)
         if np.any(cond):
             # Create operating envelope boundary lines (separate traces to avoid connecting lines)
             for lever_val in [0.0, 0.5, 1.0]:  # Show at different lever positions
@@ -517,15 +541,51 @@ def plot_J_3d_plotly(M_grid, H_sched, lever_grid, J_grid_3d, min_path=None, titl
                     name='Operating Envelope' if lever_val == 0.0 else None,
                     showlegend=(lever_val == 0.0)
                 ))
-                # MMO edge line
+                # Max Engine Mach edge line
                 fig.add_trace(go.Scatter3d(
                     x=[lever_val] * int(np.sum(cond)),
-                    y=(M_MMO * np.ones_like(M_stall[cond])),
+                    y=(MAX_ENGINE_MACH * np.ones_like(M_stall[cond])),
                     z=H_sched[cond],
                     mode='lines',
                     line=dict(color=Colors.ENVELOPE_LIMIT, width=LineStyles.THICK),
                     showlegend=False
                 ))
+    
+    # 4. Maximum Service Ceiling limit - horizontal plane
+    # Always show if within reasonable range (even if slightly above H_sched for visibility)
+    if MAX_SERVICE_CEILING_M <= (H_sched[-1] if len(H_sched) > 0 else 15000) + 1000:
+        lever_range_ceiling = np.linspace(0, 1, 10)
+        mach_range_ceiling = np.linspace(M_grid[0] if len(M_grid) > 0 else 0.1, MAX_ENGINE_MACH, 10)
+        L_ceiling, M_ceiling = np.meshgrid(lever_range_ceiling, mach_range_ceiling)
+        H_ceiling = np.full_like(L_ceiling, MAX_SERVICE_CEILING_M)
+        
+        fig.add_trace(go.Surface(
+            x=L_ceiling,
+            y=M_ceiling,
+            z=H_ceiling,
+            colorscale=[[0, Colors.ENVELOPE_LIMIT], [1, Colors.ENVELOPE_LIMIT]],
+            opacity=0.45,
+            showscale=False,
+            name=f'Max Service Ceiling ({MAX_SERVICE_CEILING_M/1000:.2f} km)'
+        ))
+    
+    # 5. Minimum Engine Mach limit - vertical plane
+    if MIN_ENGINE_MACH >= (M_grid[0] if len(M_grid) > 0 else 0.0):
+        lever_range_min = np.linspace(0, 1, 10)
+        alt_range_min = np.linspace(H_sched[0], H_sched[-1], 10)
+        L_min, H_min = np.meshgrid(lever_range_min, alt_range_min)
+        M_min = np.full_like(L_min, MIN_ENGINE_MACH)
+        
+        fig.add_trace(go.Surface(
+            x=L_min,
+            y=M_min,
+            z=H_min,
+            colorscale=[[0, Colors.ENVELOPE_LIMIT], [1, Colors.ENVELOPE_LIMIT]],
+            opacity=0.45,
+            showscale=False,
+            name=f'Min Engine Mach ({MIN_ENGINE_MACH:.3f})'
+        ))
+    
     # Add J values scatter plot (dark purple)
     fig.add_trace(go.Scatter3d(
         x=x, y=y, z=z,

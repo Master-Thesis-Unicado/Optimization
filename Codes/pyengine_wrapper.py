@@ -84,7 +84,8 @@ class EngineWrapper:
             self._last_call_key = cache_key
             return self._thrust_cache[cache_key]
         
-        Mq = float(np.clip(M, 0.0, 0.94))  # avoid M >= 0.94
+        from aircraft_config import M_MMO
+        Mq = float(np.clip(M, 0.0, M_MMO))  # avoid M >= M_MMO
         alt_in_m = self._to_engine_alt(h_m)
         try:
             Tv = self._eng.get_thrust_with_lever_position(float(lever), Mq, float(alt_in_m))

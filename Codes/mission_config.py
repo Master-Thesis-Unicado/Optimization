@@ -20,7 +20,7 @@ START_LEVER_CLIMB = 0.85        # Initial throttle lever position
 
 # Climb optimization parameters (from main.py) - Consistent phase-specific naming
 # Climb phase parameters (from climb.py and main.py)
-TARGET_ALT_CLIMB_M = 8000    # Target climb altitude [m]
+TARGET_ALT_CLIMB_M = 10500    # Target climb altitude [m]
 N_MACH_SAMPLES_CLIMB =15     # Number of Mach samples for DP optimization (ultra-fine: 101 samples)
 N_ALTITUDE_STEPS_CLIMB = 15      # Number of altitude steps for DP optimization (ultra-fine: 50 steps)
 N_LEVER_SAMPLES_CLIMB = 15     # Number of lever samples for DP optimization (ultra-fine: 50 samples)
