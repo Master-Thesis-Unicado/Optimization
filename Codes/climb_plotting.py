@@ -23,7 +23,7 @@ pio.renderers.default = "browser"
 # import needed types, helpers, and constants from logic
 from aircraft_config import (
     isa_properties, a_from_altitude, INITIAL_MASS_KG,
-    M_MMO, S_REF_M2
+    M_MMO, S_REF_M2, CL_MAX
 )
 from climb import (
     ClimbingCore
@@ -173,11 +173,12 @@ def plot_strategies_interactive(
     # CLmax + MMO + operating fill
     def _compute_mstall_curve():
         W = INITIAL_MASS_KG * g
-        CL_MAX = 1.4  # Typical CL_MAX for commercial aircraft
+        # Use CL_MAX from aircraft_config (set by PyAerodynamicsWrapper), fallback to 1.4 if not set
+        cl_max_value = CL_MAX if CL_MAX is not None else 1.4
         out = np.full_like(H_plot, np.nan, float)
         for k, h in enumerate(H_plot):
             _, _, rho = isa_properties(float(h)); a = a_from_altitude(float(h))
-            q_req = W / (S_REF_M2 * CL_MAX)
+            q_req = W / (S_REF_M2 * cl_max_value)
             if rho > 0:
                 V = np.sqrt(2*q_req/max(rho,1e-12))
                 out[k] = V / max(a,1e-12)
@@ -461,12 +462,13 @@ def plot_J_3d_plotly(M_grid, H_sched, lever_grid, J_grid_3d, min_path=None, titl
         # Get gravity constant from Atmosphere class
         from atmosphere import Atmosphere
         W = INITIAL_MASS_KG * Atmosphere.G_C
-        CL_MAX = 1.4  # Default CL_MAX for commercial aircraft
+        # Use CL_MAX from aircraft_config (set by PyAerodynamicsWrapper), fallback to 1.4 if not set
+        cl_max_value = CL_MAX if CL_MAX is not None else 1.4
         out = np.full_like(H_sched, np.nan, float)
         for k, h in enumerate(H_sched):
             _, _, rho = isa_properties(float(h))
             a = a_from_altitude(float(h))
-            q_req = W / (S_REF_M2 * CL_MAX)
+            q_req = W / (S_REF_M2 * cl_max_value)
             if rho > 0:
                 V = np.sqrt(2*q_req/max(rho,1e-12))
                 out[k] = V / max(a,1e-12)

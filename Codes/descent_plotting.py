@@ -26,7 +26,7 @@ except:
 pio.renderers.default = "browser"
 
 # Import necessary components
-from aircraft_config import isa_properties, a_from_altitude, G_C, M_MMO, S_REF_M2, INITIAL_MASS_KG
+from aircraft_config import isa_properties, a_from_altitude, G_C, M_MMO, S_REF_M2, INITIAL_MASS_KG, CL_MAX
 from descent import DescentResults, DescentInitialState, calculate_min_descent_mach
 from cruise import CruiseResults
 from climb import MinFuelSchedule
@@ -1559,14 +1559,14 @@ def plot_descent_J_3d_plotly(M_grid: np.ndarray, H_sched: np.ndarray,
     # 2. CLmax (stall) limit - compute stall curve for descent altitudes
     def _compute_mstall_curve_descent():
         W = initial_weight_kg * G_C
+        # Use CL_MAX from aircraft_config (set by PyAerodynamicsWrapper), fallback to 1.4 if not set
+        cl_max_value = CL_MAX if CL_MAX is not None else 1.4
         out = np.full_like(H_sched, np.nan, float)
         for k, h in enumerate(H_sched):
             _, _, rho = isa_properties(float(h))
             a = a_from_altitude(float(h))
-            # Use default CL_MAX for commercial aircraft
-            CL_MAX = 1.4  # Default CL_MAX for commercial aircraft
-            if CL_MAX is not None and CL_MAX > 0:
-                q_req = W / (S_REF_M2 * CL_MAX)
+            if cl_max_value > 0:
+                q_req = W / (S_REF_M2 * cl_max_value)
                 if rho > 0:
                     V = np.sqrt(2*q_req/max(rho,1e-12))
                     out[k] = V / max(a,1e-12)

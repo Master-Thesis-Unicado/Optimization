@@ -87,12 +87,12 @@ class PyAerodynamicsWrapper:
         Initialize the pyaerodynamics wrapper.
         
         Args:
-            xml_path: Path to the aircraft configuration XML file (relative to root or absolute)
+            xml_path: Path to the aircraft configuration XML file
         """
-        # Resolve path relative to root directory if it's a relative path
+        # Resolve XML path relative to project root if it's a relative path
         xml_path_obj = Path(xml_path)
         if not xml_path_obj.is_absolute():
-            # Use the same root directory calculation as pyaerodynamics paths
+            # Resolve relative to project root directory
             self.xml_path = str(_root_dir / xml_path)
         else:
             self.xml_path = xml_path
