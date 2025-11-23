@@ -607,7 +607,7 @@ def simulate_steady_cruise(initial_state: CruiseInitialState,
     Args:
         initial_state: Initial cruise state from climb
         target_distance_km: Cruise distance in kilometers
-        aero: Aerodynamics tables
+        aero: Aerodynamics wrapper
         engine: Engine wrapper
         time_step_s: Time step for simulation in seconds
         
@@ -665,7 +665,7 @@ def simulate_steady_cruise(initial_state: CruiseInitialState,
         temperature_array[step] = T
         density_array[step] = rho
         
-        # Get drag from aero tables with current dynamic weight
+        # Get drag from aerodynamics wrapper with current dynamic weight
         drag_N = aero.get_drag(initial_state.mach, initial_state.altitude_m, current_weight)
         
         # For steady cruise: thrust = drag (now properly accounts for weight effects on drag)
@@ -845,7 +845,7 @@ class CruiseSegmentManager:
         
         Args:
             initial_state: Current cruise state before climb
-            aero: Aerodynamics tables
+            aero: Aerodynamics wrapper
             engine: Engine wrapper
             M_grid: Mach number grid for DP optimization
             H_sched: Altitude schedule for DP optimization
@@ -988,7 +988,7 @@ def run_cruise_simulation(climb_result: ClimbingCore.MinFuelSchedule,
         climb_result: Results from 3D DP climb optimization
         initial_mass_kg: Initial aircraft mass before climb  
         target_distance_km: Cruise distance in kilometers
-        aero: Aerodynamics tables
+        aero: Aerodynamics wrapper
         engine: Engine wrapper
         time_step_s: Time step for simulation (default 60s)
         create_plots: Whether to create visualization plots

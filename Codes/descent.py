@@ -218,7 +218,7 @@ class DescentCore:
     Computational Features:
     - Fuel-optimal descent path computation using dynamic programming in 3D state space
     - Penalty-based guidance to ensure physically realizable Mach trajectories and lever schedules
-    - Integration with aerodynamic tables and engine models for accurate calculations
+    - Integration with aerodynamic wrapper and engine models for accurate calculations
     
     Implementation:
         # Optimal descent calculation
@@ -388,7 +388,7 @@ class DescentCore:
             Uses penalty system to guide toward target Mach (0.25) at approach altitude (300m).
             
             Args:
-                aero: Aerodynamics tables
+                aero: Aerodynamics wrapper
                 eng: Engine wrapper
                 M_grid: Mach number grid
                 H_sched: Altitude schedule (descending from high to low)
@@ -916,7 +916,7 @@ class DescentCore:
         Compute fuel cost density J = mdot/|Ps| + penalties for a given 3D state.
         
         Args:
-            aero: Aerodynamics tables
+            aero: Aerodynamics wrapper
             eng: Engine wrapper
             altitude: Altitude in meters
             mach: Mach number
@@ -1001,7 +1001,7 @@ class DescentCore:
         and optimization purposes.
         
         Args:
-            aero: Aerodynamics tables
+            aero: Aerodynamics wrapper
             eng: Engine wrapper
             M_grid: Mach number grid
             H_sched: Altitude schedule (descending from high to low)
@@ -1125,7 +1125,7 @@ def run_descent_dp_optimization(cruise_results: CruiseResults,
         cruise_results: Results from cruise simulation
         climb_fuel_kg: Fuel consumed during climb
         climb_time_s: Time spent in climb
-        aero: Aerodynamics tables
+        aero: Aerodynamics wrapper
         engine: Engine wrapper
         target_altitude_m: Target altitude for descent end (300m for approach)
         target_mach: Target Mach number at final altitude (0.25 for approach)
@@ -1221,7 +1221,7 @@ MACH_TRAJECTORY_GUIDANCE = DescentCore.PenaltySystem.MACH_TRAJECTORY_GUIDANCE
 LEVER_PENALTY_GUIDANCE = DescentCore.PenaltySystem.LEVER_PENALTY_GUIDANCE
 TARGET_MACH_TOLERANCE = DescentCore.PenaltySystem.TARGET_MACH_TOLERANCE
 
-# Backward compatibility for old PenaltySystem class
+# Backward compatibility for PenaltySystem class
 PenaltySystem = DescentCore.PenaltySystem
 
 # Backward compatibility functions

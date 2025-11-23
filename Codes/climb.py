@@ -63,7 +63,7 @@ class ClimbingCore:
     - Fuel-optimal climb path computation using dynamic programming in 3D state space
     - Penalty-based guidance to ensure physically realizable Mach trajectories and lever schedules
     - Strategy simulation and comparison capabilities for performance analysis
-    - Integration with aerodynamic tables and engine models for accurate calculations
+    - Integration with aerodynamic wrapper and engine models for accurate calculations
     
     Implementation:
         # Strategy simulation
@@ -676,7 +676,7 @@ class ClimbingCore:
             and allows transitions to 49 neighboring points in the 3D space at each step (7x7 grid).
             
             Args:
-                aero: Aerodynamics tables
+                aero: Aerodynamics wrapper
                 eng: Engine wrapper
                 M_grid: Mach number grid
                 H_sched: Altitude schedule
@@ -1199,7 +1199,7 @@ class ClimbingCore:
         Compute fuel cost density J = mdot/Ps + penalties for a given 3D state.
         
         Args:
-            aero: Aerodynamics tables
+            aero: Aerodynamics wrapper
             eng: Engine wrapper
             altitude: Altitude in meters
             mach: Mach number
@@ -1421,7 +1421,7 @@ class ClimbingCore:
         and optimization purposes.
         
         Args:
-            aero: Aerodynamics tables
+            aero: Aerodynamics wrapper
             eng: Engine wrapper
             M_grid: Mach number grid
             H_sched: Altitude schedule
@@ -1475,7 +1475,7 @@ class ClimbingCore:
         
         Args:
             strategy: Climbing strategy object with mach and alt_m arrays
-            aero: Aerodynamics tables for performance calculations
+            aero: Aerodynamics wrapper for performance calculations
             
         Returns:
             str: Status message indicating envelope compliance
@@ -1542,7 +1542,7 @@ class SystemUtilities:
     
     @staticmethod
     def apply_params_to_globals(params: Dict[str, Any]) -> None:
-        """Apply recognized scalar parameters from Excel to module-level defaults."""
+        """Apply recognized scalar parameters to module-level defaults."""
         g = globals()
         for key, val in params.items():
             if key in g:
@@ -1660,11 +1660,11 @@ PenaltySystem = ClimbingCore.PenaltySystem
 # Backward compatibility functions
 def compute_mach_penalty(current_mach: float, target_mach: float, prev_mach: float = None, 
                          altitude_fraction: float = None) -> float:
- 
+    """Backward compatibility wrapper for ClimbingCore.PenaltySystem.compute_mach_penalty"""
     return ClimbingCore.PenaltySystem.compute_mach_penalty(current_mach, target_mach, prev_mach, altitude_fraction)
 
 def compute_lever_penalty(current_lever: float, altitude_fraction: float = None) -> float:
- 
+    """Backward compatibility wrapper for ClimbingCore.PenaltySystem.compute_lever_penalty"""
     return ClimbingCore.PenaltySystem.compute_lever_penalty(current_lever, altitude_fraction)
 
 # Backward compatibility for 3D Dynamic Programming functions

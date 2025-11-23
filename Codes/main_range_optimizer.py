@@ -108,7 +108,7 @@ def main():
                        GridConfig.ALT_STEP_M)
     
     climb.M_MIN_EFFECTIVE = max(climb.M_MIN_DEFAULT, float(aero.mach_grid[0]))
-    print(f"[INFO] Effective M_MIN set to {climb.M_MIN_EFFECTIVE:.3f} (sheet min Mach={aero.mach_grid[0]:.3f}).")
+    print(f"[INFO] Effective M_MIN set to {climb.M_MIN_EFFECTIVE:.3f} (min Mach={aero.mach_grid[0]:.3f}).")
     
     print("[ENGINE] Loading engine stub …")
     eng = EngineWrapper("lls/stubs/engines/PW1127G-JM")
