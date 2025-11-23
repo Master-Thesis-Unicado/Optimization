@@ -110,7 +110,7 @@ class PyAerodynamicsWrapper:
         
         # Aircraft parameters (extracted from pyaerodynamics or defaults)
         # Set CL_MAX to a reasonable default (typical for commercial aircraft)
-        cl_max_value = 1.4  # Typical CL_MAX for commercial aircraft
+        cl_max_value = 1.6  # Typical CL_MAX for commercial aircraft
         
         self.params = {
             'S_REF_M2': S_REF_M2,

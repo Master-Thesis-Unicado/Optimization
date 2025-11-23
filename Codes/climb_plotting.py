@@ -173,8 +173,8 @@ def plot_strategies_interactive(
     # CLmax + MMO + operating fill
     def _compute_mstall_curve():
         W = INITIAL_MASS_KG * g
-        # Use CL_MAX from aircraft_config (set by PyAerodynamicsWrapper), fallback to 1.4 if not set
-        cl_max_value = CL_MAX if CL_MAX is not None else 1.4
+        # Use CL_MAX from aircraft_config (set by PyAerodynamicsWrapper), fallback to 1.6 if not set
+        cl_max_value = CL_MAX if CL_MAX is not None else 1.6
         out = np.full_like(H_plot, np.nan, float)
         for k, h in enumerate(H_plot):
             _, _, rho = isa_properties(float(h)); a = a_from_altitude(float(h))
@@ -462,8 +462,8 @@ def plot_J_3d_plotly(M_grid, H_sched, lever_grid, J_grid_3d, min_path=None, titl
         # Get gravity constant from Atmosphere class
         from atmosphere import Atmosphere
         W = INITIAL_MASS_KG * Atmosphere.G_C
-        # Use CL_MAX from aircraft_config (set by PyAerodynamicsWrapper), fallback to 1.4 if not set
-        cl_max_value = CL_MAX if CL_MAX is not None else 1.4
+        # Use CL_MAX from aircraft_config (set by PyAerodynamicsWrapper), fallback to 1.6 if not set
+        cl_max_value = CL_MAX if CL_MAX is not None else 1.6
         out = np.full_like(H_sched, np.nan, float)
         for k, h in enumerate(H_sched):
             _, _, rho = isa_properties(float(h))

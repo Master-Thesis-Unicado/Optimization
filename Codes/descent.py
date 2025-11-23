@@ -144,7 +144,7 @@ def calculate_min_descent_mach(altitude_m: float, weight_kg: float,
     """
     # Use defaults if not provided
     if cl_max is None:
-        cl_max = 1.4  # Typical CL_MAX for commercial aircraft
+        cl_max = 1.6  # Typical CL_MAX for commercial aircraft
     if s_ref_m2 is None:
         s_ref_m2 = S_REF_M2
     if safety_margin is None:

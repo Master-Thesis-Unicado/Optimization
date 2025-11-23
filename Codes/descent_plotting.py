@@ -1559,8 +1559,8 @@ def plot_descent_J_3d_plotly(M_grid: np.ndarray, H_sched: np.ndarray,
     # 2. CLmax (stall) limit - compute stall curve for descent altitudes
     def _compute_mstall_curve_descent():
         W = initial_weight_kg * G_C
-        # Use CL_MAX from aircraft_config (set by PyAerodynamicsWrapper), fallback to 1.4 if not set
-        cl_max_value = CL_MAX if CL_MAX is not None else 1.4
+        # Use CL_MAX from aircraft_config (set by PyAerodynamicsWrapper), fallback to 1.6 if not set
+        cl_max_value = CL_MAX if CL_MAX is not None else 1.6
         out = np.full_like(H_sched, np.nan, float)
         for k, h in enumerate(H_sched):
             _, _, rho = isa_properties(float(h))
