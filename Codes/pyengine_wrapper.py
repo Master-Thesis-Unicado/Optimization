@@ -52,7 +52,15 @@ class EngineWrapper:
         engine.precompute_grid(M_grid, H_grid, lever_grid)  # Pre-compute for optimization
     """
     def __init__(self, stub_path: str):
-        self._eng = engine.Engine(str(Path(stub_path)),0.9945)
+        # Resolve path relative to root directory if it's a relative path
+        stub_path_obj = Path(stub_path)
+        if not stub_path_obj.is_absolute():
+            # Use the same root directory calculation as pyengine import
+            resolved_stub_path = _root_dir / stub_path
+        else:
+            resolved_stub_path = stub_path_obj
+        
+        self._eng = engine.Engine(str(resolved_stub_path), 0.9945)
         # Initialize computational caching system
         self._thrust_cache = {}
         self._tsfc_cache = {}
