@@ -96,7 +96,7 @@ def main():
     print(f"[MISSION] Target Mach: {TARGET_MACH_CRUISE:.3f}")
     
     # ========= INITIALIZE AERODYNAMICS AND ENGINE =============================
-    print("\n[READ] Aerodynamics (Excel Sheet4) …")
+    print("\n[READ] Aerodynamics (pyaerodynamics library) …")
     aero = PyAerodynamicsWrapper()
     
     atmospheric_props = AtmosphericProperties()

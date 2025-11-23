@@ -87,7 +87,7 @@ def main():
     print(f"[MISSION] Target Mach: {TARGET_MACH_CRUISE:.3f}")
     print(f"[MISSION] Cruise distance: {CRUISE_DISTANCE_KM:.0f} km")
     
-    print("[READ] Aerodynamics (Excel Sheet4) …")
+    print("[READ] Aerodynamics (pyaerodynamics library) …")
     aero = PyAerodynamicsWrapper()
 
     # Dense grids for contours

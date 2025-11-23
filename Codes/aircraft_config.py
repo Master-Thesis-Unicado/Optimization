@@ -12,7 +12,7 @@ Configuration includes:
 - Aircraft physical parameters (mass, engines, reference area)
 - Engine operational limits (Mach limits, altitude constraints)
 - Atmospheric property calculations
-- File paths for aerodynamic data and engine models
+- File paths for engine models
 - Debug and system flags
 """
 
@@ -24,8 +24,6 @@ class SystemConfiguration:
     """Centralized configuration management for the entire system."""
     
     # USER PATHS / SETTINGS
-    AERO_XLSX  = r"D:\Icloud\iCloudDrive\Master Thesis\Mission Analysis Code\Aero\Ps Curves.xlsx"
-    AERO_SHEET = "Sheet4"
     ENGINE_STUB_PATH = r"D:/Icloud/iCloudDrive/Master Thesis/Mission Analysis Code/lls/stubs/engines/PW1127G-JM"
 
     # Aircraft / engines
@@ -66,8 +64,8 @@ class SystemConfiguration:
     ENGINE_ALT_CLIP  = None      # meters; None = no clip
     M_MIN_DEFAULT    = 0.0        # From engine envelope: minimum operational Mach
     M_MIN_EFFECTIVE  = M_MIN_DEFAULT
-    M_MMO            = 0.94       # From engine envelope: maximum operational Mach (may be overridden from Excel)
-    CL_MAX           = None       # Will be set from Excel cell 
+    M_MMO            = 0.94       # From engine envelope: maximum operational Mach
+    CL_MAX           = None       # Maximum lift coefficient 
 
     # DEBUG
     DEBUG = True  # Console printing
@@ -99,8 +97,6 @@ _atmospheric_properties = AtmosphericProperties()
 _config = SystemConfiguration()
 
 # Expose configuration as module-level constants for easy access
-AERO_XLSX = _config.AERO_XLSX
-AERO_SHEET = _config.AERO_SHEET
 ENGINE_STUB_PATH = _config.ENGINE_STUB_PATH
 N_ENGINES = _config.N_ENGINES
 S_REF_M2 = _config.S_REF_M2
