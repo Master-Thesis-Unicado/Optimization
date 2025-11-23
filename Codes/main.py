@@ -371,7 +371,7 @@ def main():
         
         # Early feasibility check (partial mission)
         if total_fuel > MAX_FUEL_KG:
-            print(f"\n  ⚠️  WARNING: Climb+Cruise fuel ({total_fuel:.1f} kg) already exceeds capacity ({MAX_FUEL_KG:.1f} kg)")
+            print(f"\n   WARNING: Climb+Cruise fuel ({total_fuel:.1f} kg) already exceeds capacity ({MAX_FUEL_KG:.1f} kg)")
             print(f"  Mission will be infeasible after descent phase")
         
         print("="*80)

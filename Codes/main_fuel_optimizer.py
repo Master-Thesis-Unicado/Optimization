@@ -9,7 +9,7 @@ from aircraft_config import (
     ENGINE_STUB_PATH, MAX_FUEL_KG, W_OE_KG, W_PL_KG
 )
 from mission_config import (
-    TARGET_ALT_CLIMB_M, ALT_STEP_M, Y_AXIS_TOP_M,
+    TARGET_ALT_CLIMB_M,
     N_MACH_SAMPLES_CLIMB, N_ALTITUDE_STEPS_CLIMB, N_LEVER_SAMPLES_CLIMB,
     START_ALTITUDE_CLIMB_M,
     CRUISE_DISTANCE_KM, CRUISE_TIME_STEP_S,
@@ -24,6 +24,7 @@ from climb import (
     compute_sep_grid_maxlever,
     compute_full_engine_envelope
 )
+from climb_plotting import GridConfig
 
 # ========= AERODYNAMICS AND ENGINE WRAPPERS ===========================
 from pyaerodynamics_wrapper import PyAerodynamicsWrapper
@@ -82,8 +83,8 @@ def main():
     M_min, M_max = float(aero.mach_grid[0]), float(aero.mach_grid[-1])
     M_dense = np.linspace(M_min, M_max, N_MACH_SAMPLES_CLIMB)
     H_plot = np.arange(START_ALTITUDE_CLIMB_M, 
-                        Y_AXIS_TOP_M + 0.5*ALT_STEP_M, 
-                        ALT_STEP_M)
+                        GridConfig.Y_AXIS_TOP_M + 0.5*GridConfig.ALT_STEP_M, 
+                        GridConfig.ALT_STEP_M)
     
     # Pre-compute grids for performance
     print("[OPTIMIZATION] Pre-computing engine grids...")
