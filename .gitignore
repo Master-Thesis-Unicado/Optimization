@@ -6,6 +6,8 @@
 # Within Codes, ignore these patterns
 Codes/__pycache__/
 Codes/*.pyc
+Codes/Images/
+Codes/simulation data/
 
 # Python cache
 __pycache__/
