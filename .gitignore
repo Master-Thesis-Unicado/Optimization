@@ -1,0 +1,29 @@
+# Ignore everything except Codes folder
+/*
+!.gitignore
+!/Codes/
+
+# Within Codes, ignore these patterns
+Codes/__pycache__/
+Codes/*.pyc
+Codes/Images/
+
+# Large HTML files (exceed GitHub's 50MB limit)
+*.html
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+

@@ -1,0 +1,16 @@
+# Large simulation data files
+simulation data/*.xlsx
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
