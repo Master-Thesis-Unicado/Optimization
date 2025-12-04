@@ -6,10 +6,6 @@
 # Within Codes, ignore these patterns
 Codes/__pycache__/
 Codes/*.pyc
-Codes/Images/
-
-# Large HTML files (exceed GitHub's 50MB limit)
-*.html
 
 # Python cache
 __pycache__/
