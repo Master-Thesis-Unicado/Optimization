@@ -135,16 +135,16 @@ Grid structure: (M_i, h_k, δ_j) where:
 # ────────────────────────────────────────────────────────────────────────────
 # Climb Phase Grid: (M_i, h_k, δ_j)
 # ────────────────────────────────────────────────────────────────────────────
-N_MACH_SAMPLES_CLIMB = 70                           # I: number of Mach points
-N_ALTITUDE_STEPS_CLIMB = 70                         # K: number of altitude levels
-N_LEVER_SAMPLES_CLIMB = 70                          # L: number of throttle positions
+N_MACH_SAMPLES_CLIMB = 80                           # I: number of Mach points
+N_ALTITUDE_STEPS_CLIMB = 80                         # K: number of altitude levels
+N_LEVER_SAMPLES_CLIMB = 80                          # L: number of throttle positions
 
 # ────────────────────────────────────────────────────────────────────────────
 # Descent Phase Grid: (M_i, h_k, δ_j)
 # ────────────────────────────────────────────────────────────────────────────
-N_MACH_SAMPLES_DESCENT = 70                         # I: number of Mach points
-N_ALTITUDE_STEPS_DESCENT = 70                       # K: number of altitude levels
-N_LEVER_SAMPLES_DESCENT = 70                        # L: number of throttle positions
+N_MACH_SAMPLES_DESCENT = 80                         # I: number of Mach points
+N_ALTITUDE_STEPS_DESCENT = 80                       # K: number of altitude levels
+N_LEVER_SAMPLES_DESCENT = 80                        # L: number of throttle positions
 
 
 # ========================================================================

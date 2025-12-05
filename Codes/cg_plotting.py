@@ -492,7 +492,10 @@ def plot_cg_analysis(save_plots: bool = True, show_plots: bool = True):
     yaxis_config_1 = get_axis_config("Aircraft x_CG (m)")
     yaxis_config_1['range'] = [cg_y_min, cg_y_max]
     fig.update_yaxes(**yaxis_config_1, row=1, col=1)
-    fig.update_xaxes(**get_axis_config("Aircraft Mass (kg)"), row=1, col=2)
+    # Reverse x-axis for Aircraft Mass plot (mass decreases from left to right)
+    xaxis_config_mass = get_axis_config("Aircraft Mass (kg)")
+    xaxis_config_mass['autorange'] = 'reversed'
+    fig.update_xaxes(**xaxis_config_mass, row=1, col=2)
     # Custom y-axis range for CG plot to focus on actual data variation
     yaxis_config_2 = get_axis_config("Aircraft x_CG (m)")
     yaxis_config_2['range'] = [cg_y_min, cg_y_max]
@@ -605,7 +608,10 @@ def plot_cg_analysis(save_plots: bool = True, show_plots: bool = True):
                 fig2.add_hline(y=ZERO_FUEL_CG_X, line_dash="dash", line_color=Colors.WARNING, line_width=LineStyles.MEDIUM,
                     annotation_text=f'Zero Fuel CG ({ZERO_FUEL_CG_X} m)', annotation_position="right", annotation_font_size=10)
                 fig2.update_layout(**get_standard_layout("CG ANALYSIS - Aircraft x_CG vs Aircraft Mass", subtitle, height=600, width=900))
-                fig2.update_xaxes(**get_axis_config("Aircraft Mass (kg)"))
+                # Reverse x-axis for Aircraft Mass plot (mass decreases from left to right)
+                xaxis_config_mass_fig2 = get_axis_config("Aircraft Mass (kg)")
+                xaxis_config_mass_fig2['autorange'] = 'reversed'
+                fig2.update_xaxes(**xaxis_config_mass_fig2)
                 # Custom y-axis range for CG plot to focus on actual data variation
                 yaxis_config_fig2 = get_axis_config("Aircraft x_CG (m)")
                 yaxis_config_fig2['range'] = [cg_y_min, cg_y_max]
