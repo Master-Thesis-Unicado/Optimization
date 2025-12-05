@@ -36,7 +36,7 @@ from mission_config import (
     N_MACH_SAMPLES_DESCENT, N_ALTITUDE_STEPS_DESCENT, N_LEVER_SAMPLES_DESCENT,
     MIN_DESCENT_MACH, MAX_DESCENT_MACH,
     # Other settings
-    ENABLE_STRATEGY_COMPARISON
+    ENABLE_STRATEGY_COMPARISON, ENABLE_EXCEL_EXPORT
 )
 import climb
 from climb import ClimbingCore
@@ -639,21 +639,24 @@ def main():
                 traceback.print_exc()
             
             # Export all mission data to Excel (AFTER CG history is recorded)
-            print(f"\n[EXPORT] Exporting mission data to Excel")
-            try:
-                excel_path = export_mission_to_excel(
-                    climb_result=dp_sched,
-                    cruise_result=cruise_results,
-                    descent_result=descent_result,
-                    initial_mass_kg=INITIAL_MASS_KG,
-                    climb_info=dp_info,
-                    descent_info=descent_info
-                )
-                print(f"[EXPORT] Mission data successfully exported to Excel")
-            except Exception as e:
-                print(f"[ERROR] Excel export failed: {str(e)}")
-                import traceback
-                traceback.print_exc()
+            if ENABLE_EXCEL_EXPORT:
+                print(f"\n[EXPORT] Exporting mission data to Excel")
+                try:
+                    excel_path = export_mission_to_excel(
+                        climb_result=dp_sched,
+                        cruise_result=cruise_results,
+                        descent_result=descent_result,
+                        initial_mass_kg=INITIAL_MASS_KG,
+                        climb_info=dp_info,
+                        descent_info=descent_info
+                    )
+                    print(f"[EXPORT] Mission data successfully exported to Excel")
+                except Exception as e:
+                    print(f"[ERROR] Excel export failed: {str(e)}")
+                    import traceback
+                    traceback.print_exc()
+            else:
+                print(f"\n[EXPORT] Excel export disabled (ENABLE_EXCEL_EXPORT = False)")
             
         except Exception as e:
             print(f"[ERROR] Descent simulation failed: {str(e)}")

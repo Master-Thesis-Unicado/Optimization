@@ -117,7 +117,7 @@ MAX_CRUISE_ALT_M = 15000.0                          # h_max [m]: maximum cruise 
 # ────────────────────────────────────────────────────────────────────────────
 MIN_DESCENT_MACH = 0.2                              # M_min [-]: minimum descent Mach
 MAX_DESCENT_MACH = 0.85                             # M_max [-]: maximum descent Mach
-STALL_SPEED_SAFETY_MARGIN = 1.3                     # Safety factor: M_min = M_stall × 1.3
+STALL_SPEED_SAFETY_MARGIN = 1.15                    # Safety factor: M_min = M_stall × 1.15
 ABSOLUTE_MIN_DESCENT_MACH = 0.15                    # M_abs_min [-]: absolute minimum (fallback)
 
 
@@ -135,16 +135,16 @@ Grid structure: (M_i, h_k, δ_j) where:
 # ────────────────────────────────────────────────────────────────────────────
 # Climb Phase Grid: (M_i, h_k, δ_j)
 # ────────────────────────────────────────────────────────────────────────────
-N_MACH_SAMPLES_CLIMB = 30                           # I: number of Mach points
-N_ALTITUDE_STEPS_CLIMB = 30                         # K: number of altitude levels
-N_LEVER_SAMPLES_CLIMB = 30                          # L: number of throttle positions
+N_MACH_SAMPLES_CLIMB = 50                           # I: number of Mach points
+N_ALTITUDE_STEPS_CLIMB = 50                         # K: number of altitude levels
+N_LEVER_SAMPLES_CLIMB = 50                          # L: number of throttle positions
 
 # ────────────────────────────────────────────────────────────────────────────
 # Descent Phase Grid: (M_i, h_k, δ_j)
 # ────────────────────────────────────────────────────────────────────────────
-N_MACH_SAMPLES_DESCENT = 30                         # I: number of Mach points
-N_ALTITUDE_STEPS_DESCENT = 30                       # K: number of altitude levels
-N_LEVER_SAMPLES_DESCENT = 30                        # L: number of throttle positions
+N_MACH_SAMPLES_DESCENT = 50                         # I: number of Mach points
+N_ALTITUDE_STEPS_DESCENT = 50                       # K: number of altitude levels
+N_LEVER_SAMPLES_DESCENT = 50                        # L: number of throttle positions
 
 
 # ========================================================================
@@ -184,7 +184,7 @@ PENALTY_CLIMB_LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER = 20.0  # α_ultra
 # 5.3: Descent Phase - Mach Trajectory Guidance
 # ────────────────────────────────────────────────────────────────────────────
 PENALTY_DESCENT_MACH_TRAJECTORY_GUIDANCE = True     # Enable Mach guidance
-PENALTY_DESCENT_TARGET_MACH_TOLERANCE = 0.010       # tol_M [-]
+PENALTY_DESCENT_TARGET_MACH_TOLERANCE = 0.030       # tol_M [-]
 PENALTY_DESCENT_MACH_PENALTY_BASE_WEIGHT = 0.5      # w_base [kg/Mach²]
 PENALTY_DESCENT_MAX_REASONABLE_MACH_RATE = 0.018    # dM/dk_max [-]
 PENALTY_DESCENT_TOTAL_STEPS_ESTIMATE = N_ALTITUDE_STEPS_DESCENT  # K_total
@@ -261,6 +261,11 @@ ENABLE_STRATEGY_COMPARISON = False                  # Boolean: enable strategy c
 # Cruise Phase Features
 # ────────────────────────────────────────────────────────────────────────────
 ENABLE_CRUISE_CLIMB = False                         # Boolean: enable cruise climb
+
+# ────────────────────────────────────────────────────────────────────────────
+# Export Features
+# ────────────────────────────────────────────────────────────────────────────
+ENABLE_EXCEL_EXPORT = False                         # Boolean: enable Excel export of mission data
 
 
 # ========================================================================

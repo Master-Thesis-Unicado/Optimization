@@ -23,7 +23,9 @@ from mission_config import (
     # Descent phase parameters
     TARGET_DESCENT_ALT_M, TARGET_DESCENT_MACH,
     N_MACH_SAMPLES_DESCENT, N_ALTITUDE_STEPS_DESCENT, N_LEVER_SAMPLES_DESCENT,
-    MIN_DESCENT_MACH, MAX_DESCENT_MACH
+    MIN_DESCENT_MACH, MAX_DESCENT_MACH,
+    # Feature flags
+    ENABLE_EXCEL_EXPORT
 )
 
 # ========= CLIMB MODULE ===========================================
@@ -285,20 +287,23 @@ def main():
         traceback.print_exc()
     
     # Export all mission data to Excel (includes optimization history and CG data)
-    print(f"\n[EXPORT] Exporting mission data to Excel")
-    try:
-        excel_path = export_mission_to_excel(
-            climb_result=final_climb,
-            cruise_result=final_cruise,
-            descent_result=final_descent,
-            initial_mass_kg=optimized_mass,
-            fuel_optimization_history=convergence_history
-        )
-        print(f"[EXPORT] Mission data successfully exported to Excel")
-    except Exception as e:
-        print(f"[ERROR] Excel export failed: {str(e)}")
-        import traceback
-        traceback.print_exc()
+    if ENABLE_EXCEL_EXPORT:
+        print(f"\n[EXPORT] Exporting mission data to Excel")
+        try:
+            excel_path = export_mission_to_excel(
+                climb_result=final_climb,
+                cruise_result=final_cruise,
+                descent_result=final_descent,
+                initial_mass_kg=optimized_mass,
+                fuel_optimization_history=convergence_history
+            )
+            print(f"[EXPORT] Mission data successfully exported to Excel")
+        except Exception as e:
+            print(f"[ERROR] Excel export failed: {str(e)}")
+            import traceback
+            traceback.print_exc()
+    else:
+        print(f"\n[EXPORT] Excel export disabled (ENABLE_EXCEL_EXPORT = False)")
     
     # ========= FINAL SUMMARY =========================================
     

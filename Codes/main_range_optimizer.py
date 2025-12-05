@@ -28,7 +28,9 @@ from mission_config import (
     # Range optimization parameters
     TARGET_MISSION_RANGE_KM, INITIAL_CRUISE_DISTANCE_KM,
     RANGE_OPTIMIZATION_TOLERANCE_KM, MAX_RANGE_OPTIMIZATION_ITERATIONS,
-    RANGE_OPTIMIZATION_DAMPING_FACTOR
+    RANGE_OPTIMIZATION_DAMPING_FACTOR,
+    # Feature flags
+    ENABLE_EXCEL_EXPORT
 )
 
 # ========= CLIMB MODULE ===========================================
@@ -518,22 +520,25 @@ def main():
         traceback.print_exc()
     
     # Export all mission data to Excel (includes optimization history and CG data)
-    print(f"\n[EXPORT] Exporting mission data to Excel")
-    try:
-        excel_path = export_mission_to_excel(
-            climb_result=dp_sched,
-            cruise_result=final_cruise_results,
-            descent_result=final_descent_results,
-            initial_mass_kg=INITIAL_MASS_KG,
-            range_optimization_history=optimizer.iteration_history,
-            climb_info=dp_info,
-            descent_info=final_descent_info
-        )
-        print(f"[EXPORT] Mission data successfully exported to Excel")
-    except Exception as e:
-        print(f"[ERROR] Excel export failed: {str(e)}")
-        import traceback
-        traceback.print_exc()
+    if ENABLE_EXCEL_EXPORT:
+        print(f"\n[EXPORT] Exporting mission data to Excel")
+        try:
+            excel_path = export_mission_to_excel(
+                climb_result=dp_sched,
+                cruise_result=final_cruise_results,
+                descent_result=final_descent_results,
+                initial_mass_kg=INITIAL_MASS_KG,
+                range_optimization_history=optimizer.iteration_history,
+                climb_info=dp_info,
+                descent_info=final_descent_info
+            )
+            print(f"[EXPORT] Mission data successfully exported to Excel")
+        except Exception as e:
+            print(f"[ERROR] Excel export failed: {str(e)}")
+            import traceback
+            traceback.print_exc()
+    else:
+        print(f"\n[EXPORT] Excel export disabled (ENABLE_EXCEL_EXPORT = False)")
     
     # ========= DISPLAY OPTIMIZATION PLOTS =====================================
     print("\n" + "="*80)
