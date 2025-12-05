@@ -605,7 +605,11 @@ def plot_cg_analysis(save_plots: bool = True, show_plots: bool = True):
                 fig2.add_hline(y=ZERO_FUEL_CG_X, line_dash="dash", line_color=Colors.WARNING, line_width=LineStyles.MEDIUM,
                     annotation_text=f'Zero Fuel CG ({ZERO_FUEL_CG_X} m)', annotation_position="right", annotation_font_size=10)
                 fig2.update_layout(**get_standard_layout("CG ANALYSIS - Aircraft x_CG vs Aircraft Mass", subtitle, height=600, width=900))
-                fig2.update_xaxes(**get_axis_config("Aircraft Mass (kg)")); fig2.update_yaxes(**get_axis_config("Aircraft x_CG (m)"))
+                fig2.update_xaxes(**get_axis_config("Aircraft Mass (kg)"))
+                # Custom y-axis range for CG plot to focus on actual data variation
+                yaxis_config_fig2 = get_axis_config("Aircraft x_CG (m)")
+                yaxis_config_fig2['range'] = [cg_y_min, cg_y_max]
+                fig2.update_yaxes(**yaxis_config_fig2)
                 fig2.write_image(os.path.join(cg_dir, f'{save_prefix}_cg_vs_mass.png'), width=1200, height=800, scale=2)
             
             # 3. Tank Fuel Evolution (Grouped)
