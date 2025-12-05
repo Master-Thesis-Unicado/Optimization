@@ -544,11 +544,8 @@ class DescentCore:
                                 next_mach = mach_grid[next_mach_idx]    # M_{i'} [-]
                                 next_lever = lever_grid[next_lever_idx]  # δ_{j'} [-]
                                 
-                                # Dynamic stall constraint: M ≥ M_stall(h, m)
-                                min_mach_next = calculate_min_descent_mach(next_alt, current_weight, aero=aero)
-                                
-                                # Flight envelope constraints: M ∈ [M_stall, M_MMO], δ ∈ [δ_min, δ_max]
-                                if (next_mach >= min_mach_next and 
+                                # Flight envelope constraints: M ∈ [M_min, M_MMO], δ ∈ [δ_min, δ_max]
+                                if (next_mach >= M_MIN_EFFECTIVE and 
                                     next_mach <= M_MMO and
                                     next_lever >= LEVER_MIN and 
                                     next_lever <= LEVER_MAX):
@@ -702,69 +699,10 @@ class DescentCore:
             fuel_array = np.array(path_costs)     # Cumulative cost [kg]
             weight_array = np.array(path_weights)  # m[k] [kg]
             
-            # Calculate detailed trajectory data
-            n_points = len(alt_array)
-            time_array = np.zeros(n_points)
-            dt_array = np.zeros(n_points)
-            # Note: dFuel_array will be calculated during reconstruction with consistent method
-            
-            thrust_array = np.zeros(n_points)
-            drag_array = np.zeros(n_points)
-            fuel_flow_array = np.zeros(n_points)
-            descent_rate_array = np.zeros(n_points)
-            T_array = np.zeros(n_points)
-            rho_array = np.zeros(n_points)
-            V_array = np.zeros(n_points)
-            Ps_array = np.zeros(n_points)
-            J_cost_array = np.zeros(n_points)  # J [kg/m]: fuel cost density
-            # weight_array already set from backtracking with dynamic mass values
-            
             # Calculate time increments and performance data with enhanced accuracy
+            n_points = len(alt_array)
             n_segments = n_points - 1  # Number of segments between points
             dt_segment_array = np.zeros(n_segments)  # Time for each segment
-            
-            for i in range(n_points):
-                h = alt_array[i]
-                M = mach_array[i]
-                lever = lever_array[i]
-                
-                # Atmospheric properties
-                temp_K, pressure_Pa, density_kgpm3 = isa_properties(h)
-                V = velocity_from_mach(M, h)
-                
-                T_array[i] = temp_K  # Temperature in Kelvin
-                rho_array[i] = density_kgpm3
-                V_array[i] = V
-                
-                # Thrust and drag
-                T_per = engine.thrust_with_lever(lever, M, h)
-                if T_per is None or T_per < 0:
-                    T_per = 0.0
-                T_tot = T_per * N_ENGINES
-                D = aero.get_drag(M, h, weight_array[i])
-                
-                thrust_array[i] = T_tot
-                drag_array[i] = D
-                
-                # Fuel flow with safety guards
-                tsfc = validate_tsfc(engine.tsfc_current(), fallback=0.0)
-                mdot = calculate_fuel_flow_rate_safe(tsfc, T_per, N_ENGINES)
-                fuel_flow_array[i] = mdot
-                
-                # Calculate Ps and descent rate using centralized function
-                Ps = calculate_specific_excess_power(T_tot, D, weight_array[i], V)
-                Ps_array[i] = Ps
-                descent_rate_array[i] = Ps
-                
-                # Calculate J cost density: J = ṁ/|Ps| [kg/m]
-                descent_fraction_i = i / (n_points - 1.0) if n_points > 1 else 0.0
-                J_cost_i = DescentCore.compute_cost(
-                    aero, engine, h, M, lever,
-                    weight_array[i], target_mach, descent_fraction_i
-                )
-                J_cost_array[i] = J_cost_i if np.isfinite(J_cost_i) and J_cost_i > 0 else 0.0
-            
-            # Enhanced time and fuel calculation for segments (consistent method, similar to climb.py)
             dFuel_segment_array = np.zeros(n_segments)  # Fuel for each segment
             
             for i in range(n_segments):
@@ -892,8 +830,20 @@ class DescentCore:
             total_time = time_array[-1]
             total_fuel = fuel_array[-1]
             final_weight = weight_array[-1]
-            avg_descent_rate = np.mean(np.abs(descent_rate_array[descent_rate_array != 0])) if np.any(descent_rate_array != 0) else 0.0
             avg_fuel_flow = total_fuel / total_time if total_time > 0 else 0.0
+            
+            # Compute performance arrays on-demand (consistent with climb.py approach)
+            # Calculate Ps gradient for descent rate
+            if len(time_array) > 1 and len(alt_array) > 1:
+                try:
+                    Ps_array = np.gradient(alt_array, time_array)  # Ps = dh/dt [m/s]
+                except ValueError:
+                    Ps_array = np.zeros_like(alt_array)
+            else:
+                Ps_array = np.zeros_like(alt_array)
+            
+            # Calculate average descent rate from Ps array
+            avg_descent_rate = np.mean(np.abs(Ps_array[Ps_array != 0])) if np.any(Ps_array != 0) else 0.0
             
             # Create result object (similar to MinFuelSchedule)
             descent_result = DescentResults(
@@ -904,25 +854,27 @@ class DescentCore:
                 cumFuel_kg=fuel_array,
                 dt_s=dt_array,
                 dFuel_kg=dFuel_array,
-                J_kg_per_m=J_cost_array,  # J [kg/m]: fuel cost density
-                thrust_total_N=thrust_array,
-                drag_N=drag_array,
-                fuel_flow_kgps=fuel_flow_array,
-                descent_rate_mps=descent_rate_array,
-                temperature_K=T_array,
-                density_kgpm3=rho_array,
-                true_airspeed_mps=V_array,
+                J_kg_per_m=np.array(path_costs),  # Use path costs from DP (consistent with climb)
+                thrust_total_N=np.array([engine.thrust_with_lever(lever, mach, alt) * N_ENGINES 
+                                        for alt, mach, lever in zip(alt_array, mach_array, lever_array)]),
+                drag_N=np.array([aero.get_drag(mach, alt, weight) 
+                                for alt, mach, weight in zip(alt_array, mach_array, weight_array)]),
+                fuel_flow_kgps=np.gradient(fuel_array, time_array) if len(time_array) > 1 else np.zeros_like(alt_array),
+                descent_rate_mps=Ps_array,
+                temperature_K=np.array([isa_properties(h)[0] for h in alt_array]),
+                density_kgpm3=np.array([isa_properties(h)[2] for h in alt_array]),
+                true_airspeed_mps=np.array([velocity_from_mach(M, h) for M, h in zip(mach_array, alt_array)]),
                 specific_excess_power_mps=Ps_array,
                 time_s=time_array,
-                mass_kg=weight_array,  # Renamed for physics accuracy
+                mass_kg=weight_array,
                 total_time_s=total_time,
                 total_fuel_consumed_kg=total_fuel,
-                final_mass_kg=final_weight,  # Renamed for physics accuracy
+                final_mass_kg=final_weight,
                 average_descent_rate_mps=avg_descent_rate,
                 average_fuel_flow_kgps=avg_fuel_flow,
                 initial_altitude_m=initial_state.altitude_m,
                 initial_mach=initial_state.mach,
-                initial_mass_kg=initial_state.mass_kg,  # Renamed for physics accuracy
+                initial_mass_kg=initial_state.mass_kg,
                 target_altitude_m=altitude_sched[-1],
                 target_mach=target_mach
             )
@@ -1107,12 +1059,9 @@ class DescentCore:
             # Descent progress for penalty system
             descent_fraction = k / (K - 1.0) if K > 1 else 0.0
             
-            # Dynamic stall constraint: M ≥ M_stall(h, m)
-            min_mach_h = calculate_min_descent_mach(h, mass_kg, aero=aero)
-            
             for i, M in enumerate(mach_grid):
-                # Flight envelope check: M ∈ [M_stall, M_MMO]
-                if M < min_mach_h or M > M_MMO:
+                # Flight envelope check: M ∈ [M_min, M_MMO]
+                if M < M_MIN_EFFECTIVE or M > M_MMO:
                     continue
                     
                 for j, lever in enumerate(lever_grid):
@@ -1248,11 +1197,6 @@ def run_optimization(cruise_results: CruiseResults,
     
     # Create descent altitude schedule (from high to low)
     H_descent = np.linspace(initial_state.altitude_m, target_altitude_m, n_altitude_steps)
-    
-    # Calculate dynamic minimum Mach at highest altitude
-    min_mach_start = calculate_min_descent_mach(initial_state.altitude_m, initial_state.mass_kg)
-    dbg(f"[DP-DESCENT] Dynamic min Mach at start: {min_mach_start:.3f} "
-        f"(h={initial_state.altitude_m:.0f}m, m={initial_state.mass_kg:.0f}kg)")
     
     # Create Mach grid (from target approach speed to cruise Mach)
     # CRITICAL: Grid must include target_mach to allow optimizer to reach it
