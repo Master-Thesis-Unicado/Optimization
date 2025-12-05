@@ -186,6 +186,12 @@ def plot_cg_analysis(save_plots: bool = True, show_plots: bool = True):
     cg_final = cg_x[-1] if len(cg_x) > 0 else CG_X_DEFAULT                # x_CG,f [m]
     cg_shift = cg_final - cg_initial                                       # Δx_CG,travel [m]
     
+    # Calculate focused y-axis range for CG plots (with padding for better visibility)
+    # Add 10% padding on each side to ensure data is clearly visible
+    cg_padding = max(cg_range * 0.1, 0.001)  # At least 1mm padding, or 10% of range
+    cg_y_min = cg_min - cg_padding
+    cg_y_max = cg_max + cg_padding
+    
     # Mass statistics
     weight_initial = weight_history[0] if len(weight_history) > 0 else 0.0    # m_0 [kg]
     weight_final = weight_history[-1] if len(weight_history) > 0 else 0.0     # m_f [kg]
@@ -482,9 +488,15 @@ def plot_cg_analysis(save_plots: bool = True, show_plots: bool = True):
     # Axis Configuration
     # ════════════════════════════════════════════════════════════════════
     fig.update_xaxes(**get_axis_config("Fuel Consumed (kg)"), row=1, col=1)
-    fig.update_yaxes(**get_axis_config("Aircraft x_CG (m)"), row=1, col=1)
+    # Custom y-axis range for CG plot to focus on actual data variation
+    yaxis_config_1 = get_axis_config("Aircraft x_CG (m)")
+    yaxis_config_1['range'] = [cg_y_min, cg_y_max]
+    fig.update_yaxes(**yaxis_config_1, row=1, col=1)
     fig.update_xaxes(**get_axis_config("Aircraft Mass (kg)"), row=1, col=2)
-    fig.update_yaxes(**get_axis_config("Aircraft x_CG (m)"), row=1, col=2)
+    # Custom y-axis range for CG plot to focus on actual data variation
+    yaxis_config_2 = get_axis_config("Aircraft x_CG (m)")
+    yaxis_config_2['range'] = [cg_y_min, cg_y_max]
+    fig.update_yaxes(**yaxis_config_2, row=1, col=2)
     fig.update_xaxes(**get_axis_config("Fuel Consumed (kg)"), row=2, col=1)
     fig.update_yaxes(**get_axis_config("Tank Fuel (kg)"), row=2, col=1)
     fig.update_xaxes(**get_axis_config("x_CG (m)"), row=2, col=2)
@@ -572,7 +584,11 @@ def plot_cg_analysis(save_plots: bool = True, show_plots: bool = True):
             fig1.add_hline(y=ZERO_FUEL_CG_X, line_dash="dash", line_color=Colors.WARNING, line_width=LineStyles.MEDIUM,
                 annotation_text=f'Zero Fuel CG ({ZERO_FUEL_CG_X} m)', annotation_position="right", annotation_font_size=10)
             fig1.update_layout(**get_standard_layout("CG ANALYSIS - Aircraft x_CG vs Fuel Consumed", subtitle, height=600, width=900))
-            fig1.update_xaxes(**get_axis_config("Fuel Consumed (kg)")); fig1.update_yaxes(**get_axis_config("Aircraft x_CG (m)"))
+            fig1.update_xaxes(**get_axis_config("Fuel Consumed (kg)"))
+            # Custom y-axis range for CG plot to focus on actual data variation
+            yaxis_config_fig1 = get_axis_config("Aircraft x_CG (m)")
+            yaxis_config_fig1['range'] = [cg_y_min, cg_y_max]
+            fig1.update_yaxes(**yaxis_config_fig1)
             fig1.write_image(os.path.join(cg_dir, f'{save_prefix}_cg_vs_fuel.png'), width=1200, height=800, scale=2)
             
             # 2. Aircraft x_CG vs Aircraft Mass
