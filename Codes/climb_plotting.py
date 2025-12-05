@@ -492,11 +492,6 @@ def plot_3d_cost_space(mach_grid: np.ndarray, altitude_sched: np.ndarray,
     
     return fig
 
-def plot_J_3d_plotly(*args, **kwargs):
-    """Deprecated: Use plot_3d_cost_space() instead. Maintained for backward compatibility."""
-    import warnings
-    warnings.warn("plot_J_3d_plotly() is deprecated, use plot_3d_cost_space() instead", DeprecationWarning, stacklevel=2)
-    return plot_3d_cost_space(*args, **kwargs)
 
 # =========================================================================
 # 2D PERFORMANCE ANALYSIS FUNCTIONS
@@ -810,12 +805,6 @@ def plot_performance_2d(climb_result, climb_info: Optional[Dict[str, Any]] = Non
     
     return fig
 
-def plot_climb_performance_detailed(*args, **kwargs):
-    """Deprecated: Use plot_performance_2d() instead. Maintained for backward compatibility."""
-    import warnings
-    warnings.warn("plot_climb_performance_detailed() is deprecated, use plot_performance_2d() instead", DeprecationWarning, stacklevel=2)
-    return plot_performance_2d(*args, **kwargs)
-
 
 # =========================================================================
 # COMPUTATIONAL SUPPORT FOR VISUALIZATION
@@ -865,14 +854,3 @@ def compute_full_envelope(aero, engine, mach_grid: np.ndarray,
         np.ndarray: J_envelope - 3D fuel cost density array
     """
     return ClimbingCore.compute_full_envelope(aero, engine, mach_grid, altitude_sched, lever_grid, mass_kg)
-
-
-def compute_full_engine_envelope(*args, **kwargs):
-    """
-    Deprecated wrapper. Use compute_full_envelope() instead.
-    
-    Maintained for backward compatibility with legacy code.
-    """
-    import warnings
-    warnings.warn("compute_full_engine_envelope() is deprecated, use compute_full_envelope() instead", DeprecationWarning, stacklevel=2)
-    return compute_full_envelope(*args, **kwargs)

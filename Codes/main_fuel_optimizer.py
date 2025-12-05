@@ -32,7 +32,7 @@ from mission_config import (
 from climb_plotting import (
     GridConfig,
     compute_sep_grid_maxlever,
-    compute_full_engine_envelope
+    compute_full_envelope
 )
 
 # ========= AERODYNAMICS AND ENGINE WRAPPERS ===========================
@@ -41,10 +41,10 @@ from pyengine_wrapper import EngineWrapper
 from descent import DescentCore
 
 # ========= PLOTTING MODULES (FINAL VISUALIZATION ONLY) ================
-from cruise_plotting import plot_cruise_performance_detailed
+from cruise_plotting import plot_performance_2d as plot_cruise_performance_2d
 from climb_plotting import (
-    plot_J_3d_plotly, 
-    plot_climb_performance_detailed
+    plot_3d_cost_space, 
+    plot_performance_2d as plot_climb_performance_2d
 )
 from descent_plotting import (
     plot_descent_trajectory_interactive, 
@@ -182,13 +182,13 @@ def main():
     
     # Climb plots
     print("[VISUALIZATION] Creating climb performance analysis")
-    plot_climb_performance_detailed(final_climb, None)
+    plot_climb_performance_2d(final_climb, None)
     
     # 3D climb visualization
     # Use initial mass as reference for envelope visualization
     print("[VISUALIZATION] Opening 3D climb visualization")
     lever_grid_envelope = np.linspace(LEVER_MIN, LEVER_MAX, N_LEVER_SAMPLES_CLIMB)
-    J_envelope = compute_full_engine_envelope(
+    J_envelope = compute_full_envelope(
         aero, eng, mach_grid, altitude_sched, lever_grid_envelope,
         mass_kg=INITIAL_MASS_KG
     )
@@ -199,7 +199,7 @@ def main():
         'lever': np.asarray(final_climb.lever, float),
     }
     
-    plot_J_3d_plotly(
+    plot_3d_cost_space(
         mach_grid, altitude_sched, lever_grid_envelope, J_envelope, 
         min_path=min_path,
         title="3D DP (Global Optimization)<br>Full Engine Envelope with Optimal Path"
@@ -207,7 +207,7 @@ def main():
     
     # Cruise plots
     print("[VISUALIZATION] Creating cruise performance analysis")
-    plot_cruise_performance_detailed(final_cruise)
+    plot_cruise_performance_2d(final_cruise)
     
     # Descent plots
     print("[VISUALIZATION] Opening descent visualizations")

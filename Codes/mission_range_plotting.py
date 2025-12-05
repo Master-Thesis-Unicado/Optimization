@@ -589,8 +589,8 @@ class RangeOptimizationVisualization:
             print("="*80)
             
             try:
-                from climb_plotting import plot_climb_performance_detailed
-                from cruise_plotting import plot_cruise_performance_detailed
+                from climb_plotting import plot_performance_2d as plot_climb_performance_2d
+                from cruise_plotting import plot_performance_2d as plot_cruise_performance_2d
                 from descent_plotting import plot_descent_trajectory_interactive
                 from mission_summary import plot_mission_summary_dashboard, plot_combined_performance_analysis
             except ImportError as e:
@@ -607,14 +607,14 @@ class RangeOptimizationVisualization:
             
             print(f"\n[CLIMB] Generating and saving climb phase plots...")
             try:
-                plot_climb_performance_detailed(climb_result, climb_info)
+                plot_climb_performance_2d(climb_result, climb_info)
                 print(f"[CLIMB] Climb plots saved to: {climb_dir}")
             except Exception as e:
                 print(f"[ERROR] Failed to save climb plots: {e}")
             
             print(f"\n[CRUISE] Generating and saving cruise phase plots...")
             try:
-                plot_cruise_performance_detailed(cruise_result)
+                plot_cruise_performance_2d(cruise_result)
                 print(f"[CRUISE] Cruise plots saved to: {cruise_dir}")
             except Exception as e:
                 print(f"[ERROR] Failed to save cruise plots: {e}")

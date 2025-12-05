@@ -1192,13 +1192,6 @@ class ClimbingCore:
         
         return J_envelope_transposed
     
-    @staticmethod
-    def compute_full_engine_envelope(*args, **kwargs):
-        """Deprecated: Use compute_full_envelope() instead. Maintained for backward compatibility."""
-        import warnings
-        warnings.warn("compute_full_engine_envelope() is deprecated, use compute_full_envelope() instead", DeprecationWarning, stacklevel=2)
-        return ClimbingCore.compute_full_envelope(*args, **kwargs)
-    
     # ────────────────────────────────────────────────────────────────────
     # Flight Envelope Validation
     # ────────────────────────────────────────────────────────────────────

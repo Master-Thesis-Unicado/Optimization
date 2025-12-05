@@ -902,13 +902,6 @@ class DescentCore:
             print(f"  Average descent rate: {avg_descent_rate:.2f} m/s ({avg_descent_rate*60.0:.0f} m/min)")
             
             return descent_result, info
-        
-        @staticmethod
-        def solve_descent_dp(*args, **kwargs):
-            """Deprecated: Use solve_3d_dp() instead. Maintained for backward compatibility."""
-            import warnings
-            warnings.warn("solve_descent_dp() is deprecated, use solve_3d_dp() instead", DeprecationWarning, stacklevel=2)
-            return DescentCore.DynamicProgrammingOptimizer.solve_3d_dp(*args, **kwargs)
 
     # ────────────────────────────────────────────────────────────────────
     # Cost Evaluation
@@ -1003,13 +996,6 @@ class DescentCore:
         except Exception:
             return np.inf
     
-    @staticmethod
-    def compute_descent_cost(*args, **kwargs):
-        """Deprecated: Use compute_cost() instead. Maintained for backward compatibility."""
-        import warnings
-        warnings.warn("compute_descent_cost() is deprecated, use compute_cost() instead", DeprecationWarning, stacklevel=2)
-        return DescentCore.compute_cost(*args, **kwargs)
-    
     # ────────────────────────────────────────────────────────────────────
     # Performance Envelope Analysis
     # ────────────────────────────────────────────────────────────────────
@@ -1086,13 +1072,6 @@ class DescentCore:
         
         # Return as (M, h, δ) ordering
         return J_envelope
-    
-    @staticmethod
-    def compute_full_descent_envelope(*args, **kwargs):
-        """Deprecated: Use compute_full_envelope() instead. Maintained for backward compatibility."""
-        import warnings
-        warnings.warn("compute_full_descent_envelope() is deprecated, use compute_full_envelope() instead", DeprecationWarning, stacklevel=2)
-        return DescentCore.compute_full_envelope(*args, **kwargs)
 
 # ========================================================================
 # SECTION 6: INTERFACE FUNCTIONS
@@ -1234,12 +1213,6 @@ def run_optimization(cruise_results: CruiseResults,
     print(f"{'='*80}\n")
     
     return dp_result, dp_info
-
-def run_descent_dp_optimization(*args, **kwargs):
-    """Deprecated wrapper. Use run_optimization() instead."""
-    import warnings
-    warnings.warn("run_descent_dp_optimization() is deprecated, use run_optimization() instead", DeprecationWarning, stacklevel=2)
-    return run_optimization(*args, **kwargs)
 
 # ========================================================================
 # SECTION 8: MODULE EXPORTS

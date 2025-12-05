@@ -356,9 +356,3 @@ def plot_performance_2d(cruise_results: 'CruiseResults'):
     fig.show(config=config)
     
     return fig
-
-def plot_cruise_performance_detailed(*args, **kwargs):
-    """Deprecated wrapper. Use plot_performance_2d() instead."""
-    import warnings
-    warnings.warn("plot_cruise_performance_detailed() is deprecated, use plot_performance_2d() instead", DeprecationWarning, stacklevel=2)
-    return plot_performance_2d(*args, **kwargs)
