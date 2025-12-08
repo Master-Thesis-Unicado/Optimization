@@ -48,7 +48,6 @@ from mission_utils import (
     find_lever_for_thrust,
     pad_array_to_length,
     calculate_specific_excess_power,
-    velocity_from_mach,
     calculate_stall_mach,
     calculate_fuel_flow_rate_safe,
     validate_tsfc,
@@ -722,7 +721,8 @@ class ClimbingCore:
                     lever_avg = 0.5 * (lever_curr + lever_next)
                     
                     # Compute Ps = (T-D)V/m with DP average mass
-                    V = velocity_from_mach(M_avg, h_avg)
+                    a = a_from_altitude(h_avg)
+                    V = M_avg * a
                     D = aero.get_drag(M_avg, h_avg, weight_avg)
                     T_per = engine.thrust_with_lever(lever_avg, M_avg, h_avg)
                     T_tot = T_per * SystemConfiguration.N_ENGINES
@@ -737,8 +737,9 @@ class ClimbingCore:
                         dF_array[i] = 0.0
                 
                 else:  # Horizontal segment: Δt = ΔV / a
-                    V_curr = velocity_from_mach(M_curr, h_curr)
-                    V_next = velocity_from_mach(M_next, h_curr)
+                    a_curr = a_from_altitude(h_curr)
+                    V_curr = M_curr * a_curr
+                    V_next = M_next * a_curr
                     
                     if abs(V_next - V_curr) > DP_MIN_VELOCITY_CHANGE_MPS:  # Significant ΔV
                         # Compute acceleration: a = (T-D)/m with DP average mass
@@ -912,7 +913,8 @@ class ClimbingCore:
                 mass_kg = INITIAL_MASS_KG
             
             # Kinematics: V = M · a(h)
-            V = velocity_from_mach(mach, altitude)
+            a = a_from_altitude(altitude)
+            V = mach * a
             
             # Propulsion: T = T(δ, M, h)
             T_per = engine.thrust_with_lever(lever, mach, altitude)

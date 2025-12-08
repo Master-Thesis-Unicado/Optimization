@@ -34,7 +34,7 @@ from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 from pyengine_wrapper import EngineWrapper
 
 # Atmospheric model: ISA properties T(h), ρ(h), a(h)
-from atmosphere import Atmosphere
+from aircraft_config import isa_properties, a_from_altitude
 
 # Climb optimization for cruise climb segments
 from climb import ClimbingCore
@@ -42,7 +42,6 @@ from climb import ClimbingCore
 # Utility functions: kinematics, energy balance, fuel consumption
 from mission_utils import (
     find_lever_for_thrust,
-    velocity_from_mach,
     calculate_specific_excess_power,
     update_weight_after_burn,
     calculate_fuel_consumption_step,
@@ -197,7 +196,8 @@ def combine_cruise_segments(initial_cruise: CruiseResults,
         dt = cruise_climb.dt_s[i + 1] if i + 1 < len(cruise_climb.dt_s) else cruise_climb.dt_s[i]
         
         # Calculate true airspeed
-        tas = velocity_from_mach(mach_avg, alt_avg)
+        a = a_from_altitude(alt_avg)
+        tas = mach_avg * a
         
         # Add distance for this segment
         segment_distance_km = (tas * dt) / 1000.0  # Convert m to km
@@ -222,9 +222,9 @@ def combine_cruise_segments(initial_cruise: CruiseResults,
     cruise_climb_temp = []
     cruise_climb_density = []
     for i, (alt, mach) in enumerate(zip(cruise_climb.alt_m, cruise_climb.mach)):
-        atm = Atmosphere()
-        temp_K, pressure_Pa, density_kgpm3 = atm.calculate_atmospheric_properties_meters(alt)
-        tas = velocity_from_mach(mach, alt)
+        temp_K, pressure_Pa, density_kgpm3 = isa_properties(alt)
+        a = a_from_altitude(alt)
+        tas = mach * a
         cruise_climb_tas.append(tas)
         cruise_climb_temp.append(temp_K)  # Temperature in Kelvin
         cruise_climb_density.append(density_kgpm3)
@@ -531,7 +531,8 @@ def simulate_steady_cruise(initial_state: CruiseInitialState,
     print(f"  Mach: {initial_state.mach:.3f}")
     
     # Calculate true airspeed (constant for constant Mach and altitude)
-    true_airspeed_mps = velocity_from_mach(initial_state.mach, initial_state.altitude_m)
+    a = a_from_altitude(initial_state.altitude_m)
+    true_airspeed_mps = initial_state.mach * a
     distance_per_step_km = (true_airspeed_mps * time_step_s) / 1000.0
     
     # Estimate number of steps needed
@@ -560,9 +561,8 @@ def simulate_steady_cruise(initial_state: CruiseInitialState,
     cumulative_distance = 0.0
     
     # Get atmospheric properties (constant altitude)
-    atm = Atmosphere()
-    temp_K, pressure_Pa, density_kgpm3 = atm.calculate_atmospheric_properties_meters(initial_state.altitude_m)
-    sound_speed_mps = atm.get_speed_of_sound(initial_state.altitude_m)
+    temp_K, pressure_Pa, density_kgpm3 = isa_properties(initial_state.altitude_m)
+    sound_speed_mps = a_from_altitude(initial_state.altitude_m)
     
     print(f"[CRUISE] Atmospheric conditions at cruise altitude ({initial_state.altitude_m:.0f} m):")
     print(f"  Temperature: {temp_K:.1f} K ({temp_K-273.15:.1f}°C)")
@@ -1011,7 +1011,8 @@ def run_cruise_simulation(climb_result: ClimbingCore.MinFuelSchedule,
             dt = cruise_climb_result.dt_s[i + 1] if i + 1 < len(cruise_climb_result.dt_s) else cruise_climb_result.dt_s[i]
             
             # Calculate true airspeed
-            tas = velocity_from_mach(mach_avg, alt_avg)
+            a = a_from_altitude(alt_avg)
+            tas = mach_avg * a
             
             # Add distance for this segment
             cruise_climb_distance_km += (tas * dt) / 1000.0  # Convert m to km

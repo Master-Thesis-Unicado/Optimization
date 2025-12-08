@@ -44,7 +44,6 @@ from cruise import CruiseResults
 # Utility functions: kinematics, energy, time integration
 from mission_utils import (
     find_lever_for_thrust,
-    velocity_from_mach,
     mach_from_velocity,
     calculate_stall_mach as calculate_stall_mach_util,
     calculate_specific_excess_power,
@@ -764,7 +763,8 @@ class DescentCore:
                     h_avg = 0.5 * (h_curr + h_next)
                     M_avg = 0.5 * (M_curr + M_next)
                     lever_avg = 0.5 * (lever_curr + lever_next)
-                    V_avg = velocity_from_mach(M_avg, h_avg)
+                    a_avg = a_from_altitude(h_avg)
+                    V_avg = M_avg * a_avg
                     D_avg = aero.get_drag(M_avg, h_avg, weight_avg)
                     T_per_avg = engine.thrust_with_lever(lever_avg, M_avg, h_avg)
                     if T_per_avg is None or T_per_avg < 0:
@@ -783,8 +783,9 @@ class DescentCore:
                         dbg(f"[DP-DESCENT] Vertical move {i}: h={h_curr:.0f}->{h_next:.0f}m, dt={dt_segment_array[i]:.3f}s, fuel={fuel_burned:.3f}kg (low Ps)")
                 else:  # Horizontal move (same altitude, different Mach/lever)
                     # Calculate time based on velocity change using DP mass values
-                    V_curr = velocity_from_mach(M_curr, h_curr)
-                    V_next = velocity_from_mach(M_next, h_curr)
+                    a_curr = a_from_altitude(h_curr)
+                    V_curr = M_curr * a_curr
+                    V_next = M_next * a_curr
                     
                     if abs(V_next - V_curr) > 0.1:  # Significant velocity change
                         # Use deceleration rate: dt = dV / a_decel with DP average mass
@@ -863,7 +864,7 @@ class DescentCore:
                 descent_rate_mps=Ps_array,
                 temperature_K=np.array([isa_properties(h)[0] for h in alt_array]),
                 density_kgpm3=np.array([isa_properties(h)[2] for h in alt_array]),
-                true_airspeed_mps=np.array([velocity_from_mach(M, h) for M, h in zip(mach_array, alt_array)]),
+                true_airspeed_mps=np.array([M * a_from_altitude(h) for M, h in zip(mach_array, alt_array)]),
                 specific_excess_power_mps=Ps_array,
                 time_s=time_array,
                 mass_kg=weight_array,
@@ -948,7 +949,8 @@ class DescentCore:
         
         try:
             # Kinematics: V = M · a(h)
-            V = velocity_from_mach(mach, altitude)
+            a = a_from_altitude(altitude)
+            V = mach * a
             
             # Propulsion: T = T(δ, M, h)
             T_per = engine.thrust_with_lever(lever, mach, altitude)
