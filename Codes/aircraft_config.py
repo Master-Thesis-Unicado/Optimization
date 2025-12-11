@@ -46,7 +46,7 @@ class SystemConfiguration:
     DEFAULT_PASSENGERS = 60     # N_pax [-]: passenger capacity
     
     # Fuel capacity
-    W_FUEL_KG = 14500   # m_fuel,max [kg]: maximum fuel capacity
+    W_FUEL_KG = 14500   # 19597 = max fuel , m_fuel,max [kg]: maximum fuel capacity
     
     # Computed mass properties
     @property
@@ -90,7 +90,16 @@ class SystemConfiguration:
     # ────────────────────────────────────────────────────────────────────
     
     # Fuel properties
-    KEROSENE_DENSITY_KGPM3 = 0.8  # ρ_fuel [kg/m³]: kerosene density
+    KEROSENE_DENSITY_KGPM3 = 800.0  # ρ_fuel [kg/m³]: kerosene density (standard Jet A-1)
+    
+    # Tank volumes: V_i [L] - physical tank capacities
+    TANK_VOLUMES_L = {
+        0: 4178.4,  # Tank 0: Inner Left [L]
+        1: 4426.5,  # Tank 1: Outer Left [L]
+        2: 4178.4,  # Tank 2: Inner Right [L]
+        3: 4426.5,  # Tank 3: Outer Right [L]
+        4: 7286.0   # Tank 4: Center Wing [L]
+    }
     
     # Tank center of gravity positions: x_CG [m] in body frame
     TANK_CG_POSITIONS = {
@@ -163,6 +172,7 @@ LEVER_MAX = _config.LEVER_MAX                 # δ_max [-]
 
 # Fuel system
 KEROSENE_DENSITY_KGPM3 = _config.KEROSENE_DENSITY_KGPM3  # ρ_fuel [kg/m³]
+TANK_VOLUMES_L = _config.TANK_VOLUMES_L                   # V_i [L]: tank volumes
 TANK_CG_POSITIONS = _config.TANK_CG_POSITIONS             # x_CG,tank [m]
 TANK_NAMES = _config.TANK_NAMES                           # Tank identifiers
 DEFAULT_COG_LOCATION = _config.DEFAULT_COG_LOCATION       # [x,y,z]_CG [m]

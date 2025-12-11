@@ -15,7 +15,16 @@ Mathematical formulation:
 Fuel distribution models:
     - OUTER_FIRST: Outer → Inner → Center depletion sequence
     - CENTER_FIRST: Center → Inner → Outer depletion sequence
-    - PROPORTIONAL: Uniform depletion across all tanks
+    - PROPORTIONAL: Proportional depletion based on tank volumes
+
+Tank capacities are calculated from physical volumes V_i [L] and fuel density ρ [kg/m³]:
+    m_max,i = (V_i / 1000) × ρ
+
+Capacity validation:
+    Binary classification:
+    - Low: W_FUEL_KG < theoretical capacity → use W_FUEL_KG as effective capacity
+    - High: W_FUEL_KG >= theoretical capacity → cap to theoretical maximum
+    If W_FUEL_KG > theoretical capacity, a warning is issued to indicate the mismatch.
 
 CG shift affects trim analysis and aerodynamic performance.
 """
@@ -27,7 +36,7 @@ from typing import Optional, Dict, Any, Literal, List
 # Aircraft mass components and fuel tank configuration
 from aircraft_config import (
     INITIAL_MASS_KG, W_FUEL_KG, W_OE_KG, W_PL_KG,
-    KEROSENE_DENSITY_KGPM3, TANK_CG_POSITIONS, TANK_NAMES,
+    KEROSENE_DENSITY_KGPM3, TANK_VOLUMES_L, TANK_CG_POSITIONS, TANK_NAMES,
     ZERO_FUEL_CG_X,
     FUEL_LEVEL_PRINT_ENABLED, FUEL_LEVEL_PRINT_SAMPLE_RATE
 )
@@ -42,9 +51,47 @@ from mission_config import CG_CONSUMPTION_SCENARIO
 # Consumption scenario enumeration
 ConsumptionScenario = Literal["OUTER_FIRST", "CENTER_FIRST", "PROPORTIONAL"]
 
-# Tank capacity parameters
-TOTAL_CAPACITY_KG = W_FUEL_KG           # m_fuel,total [kg]: total fuel capacity
-TANK_CAPACITY_KG = TOTAL_CAPACITY_KG / 5.0  # m_tank [kg]: capacity per tank (uniform)
+# Calculate individual tank mass capacities from volumes
+# Conversion: V_i [L] → V_i [m³] = V_i / 1000, then m_max,i = V_i [m³] × ρ [kg/m³]
+_L_TO_M3 = 1.0 / 1000.0  # Conversion factor: liters to cubic meters
+_theoretical_max_mass_per_tank = {
+    tank_id: (volume_L * _L_TO_M3) * KEROSENE_DENSITY_KGPM3
+    for tank_id, volume_L in TANK_VOLUMES_L.items()
+}
+_theoretical_total_capacity_kg = sum(_theoretical_max_mass_per_tank.values())
+
+# Validation: Binary classification of W_FUEL_KG vs theoretical tank capacity
+# Low: W_FUEL_KG < theoretical_total_capacity_kg → use W_FUEL_KG
+# High: W_FUEL_KG >= theoretical_total_capacity_kg → cap to theoretical maximum
+if W_FUEL_KG >= _theoretical_total_capacity_kg:
+    # Case: W_FUEL_KG >= theoretical capacity (high) - cap to physical maximum
+    if W_FUEL_KG > _theoretical_total_capacity_kg + 1e-6:
+        print(f"[CG_WARNING] W_FUEL_KG ({W_FUEL_KG:.2f} kg) exceeds theoretical tank capacity ({_theoretical_total_capacity_kg:.2f} kg)")
+        print(f"[CG_WARNING] Capping effective fuel capacity to theoretical maximum: {_theoretical_total_capacity_kg:.2f} kg")
+        print(f"[CG_WARNING] Excess fuel ({W_FUEL_KG - _theoretical_total_capacity_kg:.2f} kg) cannot be physically stored")
+    _effective_fuel_capacity_kg = _theoretical_total_capacity_kg
+else:
+    # Case: W_FUEL_KG < theoretical capacity (low) - use W_FUEL_KG
+    _effective_fuel_capacity_kg = W_FUEL_KG
+
+# Scaling factor to match effective fuel capacity (accounts for not filling tanks to 100%)
+# If theoretical capacity exceeds effective capacity, scale proportionally
+if _theoretical_total_capacity_kg > _effective_fuel_capacity_kg + 1e-6:
+    _capacity_scale_factor = _effective_fuel_capacity_kg / _theoretical_total_capacity_kg
+else:
+    _capacity_scale_factor = 1.0
+
+# Per-tank mass capacities [kg]: m_max,i = theoretical_max,i × scale_factor
+TANK_CAPACITY_KG = {
+    tank_id: mass_kg * _capacity_scale_factor
+    for tank_id, mass_kg in _theoretical_max_mass_per_tank.items()
+}
+
+# Effective total capacity (may be capped if W_FUEL_KG exceeded theoretical limit)
+TOTAL_CAPACITY_KG = _effective_fuel_capacity_kg  # m_fuel,total [kg]: effective fuel capacity
+
+# Legacy uniform capacity for backward compatibility (deprecated, use TANK_CAPACITY_KG[ID] instead)
+TANK_CAPACITY_KG_UNIFORM = TOTAL_CAPACITY_KG / 5.0
 
 # ========================================================================
 # SECTION 2: FUEL DISTRIBUTION COMPUTATION
@@ -90,7 +137,7 @@ class FuelDistributionCalculator:
             {tank_id: m_i [kg]} - fuel mass per tank
         """
         # Clamp to physical bounds: m_fuel ∈ [0, m_fuel,max]
-        fuel_remaining = max(0.0, min(fuel_remaining, W_FUEL_KG))
+        fuel_remaining = max(0.0, min(fuel_remaining, TOTAL_CAPACITY_KG))
         
         # Cache lookup for performance
         cache_key = round(fuel_remaining, 6)
@@ -126,7 +173,7 @@ class FuelDistributionCalculator:
         
         Tank grouping:
             Outer: {1,3}, Inner: {0,2}, Center: {4}
-            Capacity: m_tank = m_fuel,total / 5
+            Capacity: m_max,i calculated from tank volumes V_i [L] and fuel density ρ [kg/m³]
         
         Parameters:
             fuel_remaining: m_fuel [kg] - total fuel remaining
@@ -137,56 +184,58 @@ class FuelDistributionCalculator:
         tanks = {i: 0.0 for i in range(5)}
         
         # Fuel consumed: Δm_fuel = m_fuel,total - m_fuel,remaining
-        fuel_consumed = W_FUEL_KG - fuel_remaining
+        fuel_consumed = TOTAL_CAPACITY_KG - fuel_remaining
         
-        # Tank group capacities
-        capacity_per_tank = TANK_CAPACITY_KG       # m_tank [kg]
-        outer_capacity = capacity_per_tank * 2     # m_outer = 2·m_tank (tanks 1,3)
-        inner_capacity = capacity_per_tank * 2     # m_inner = 2·m_tank (tanks 0,2)
-        center_capacity = capacity_per_tank        # m_center = m_tank (tank 4)
+        # Tank group capacities (volume-based, per-tank)
+        outer_capacity = TANK_CAPACITY_KG[1] + TANK_CAPACITY_KG[3]  # m_outer = m_1 + m_3
+        inner_capacity = TANK_CAPACITY_KG[0] + TANK_CAPACITY_KG[2]  # m_inner = m_0 + m_2
+        center_capacity = TANK_CAPACITY_KG[4]                        # m_center = m_4
+        
+        # Proportional distribution factors for tanks within groups
+        outer_tank_1_ratio = TANK_CAPACITY_KG[1] / outer_capacity if outer_capacity > 0 else 0.5
+        inner_tank_0_ratio = TANK_CAPACITY_KG[0] / inner_capacity if inner_capacity > 0 else 0.5
         
         # Phase determination via consumed fuel thresholds
         if fuel_consumed < outer_capacity:
             # ────────────────────────────────────────────────────────────────
-            # Phase 1: Outer depletion (100% → 60%)
+            # Phase 1: Outer depletion (100% → transition)
             # ────────────────────────────────────────────────────────────────
-            outer_consumed = fuel_consumed
-            outer_remaining = outer_capacity - outer_consumed
+            outer_remaining = outer_capacity - fuel_consumed
             
-            # Distribution: Outer depleting, Inner and Center full
-            tanks[1] = outer_remaining / 2.0  # m_1 = m_outer,rem / 2
-            tanks[3] = outer_remaining / 2.0  # m_3 = m_outer,rem / 2
-            tanks[0] = capacity_per_tank      # m_0 = m_tank (full)
-            tanks[2] = capacity_per_tank      # m_2 = m_tank (full)
-            tanks[4] = capacity_per_tank      # m_4 = m_tank (full)
+            # Distribution: Outer depleting proportionally, Inner and Center full
+            tanks[1] = outer_remaining * outer_tank_1_ratio     # m_1 proportional to capacity
+            tanks[3] = outer_remaining * (1.0 - outer_tank_1_ratio)  # m_3 remaining
+            tanks[0] = TANK_CAPACITY_KG[0]                      # m_0 = m_max,0 (full)
+            tanks[2] = TANK_CAPACITY_KG[2]                      # m_2 = m_max,2 (full)
+            tanks[4] = TANK_CAPACITY_KG[4]                      # m_4 = m_max,4 (full)
         
         elif fuel_consumed < outer_capacity + inner_capacity:
             # ────────────────────────────────────────────────────────────────
-            # Phase 2: Inner depletion (60% → 20%)
+            # Phase 2: Inner depletion
             # ────────────────────────────────────────────────────────────────
             inner_consumed = fuel_consumed - outer_capacity
             inner_remaining = inner_capacity - inner_consumed
             
-            # Distribution: Outer empty, Inner depleting, Center full
-            tanks[1] = 0.0  # m_1 = 0 (empty)
-            tanks[3] = 0.0  # m_3 = 0 (empty)
-            tanks[0] = inner_remaining / 2.0  # m_0 = m_inner,rem / 2
-            tanks[2] = inner_remaining / 2.0  # m_2 = m_inner,rem / 2
-            tanks[4] = capacity_per_tank      # m_4 = m_tank (full)
+            # Distribution: Outer empty, Inner depleting proportionally, Center full
+            tanks[1] = 0.0                                       # m_1 = 0 (empty)
+            tanks[3] = 0.0                                       # m_3 = 0 (empty)
+            tanks[0] = inner_remaining * inner_tank_0_ratio     # m_0 proportional to capacity
+            tanks[2] = inner_remaining * (1.0 - inner_tank_0_ratio)  # m_2 remaining
+            tanks[4] = TANK_CAPACITY_KG[4]                      # m_4 = m_max,4 (full)
         
         else:
             # ────────────────────────────────────────────────────────────────
-            # Phase 3: Center depletion (20% → 0%)
+            # Phase 3: Center depletion
             # ────────────────────────────────────────────────────────────────
             center_consumed = fuel_consumed - outer_capacity - inner_capacity
             center_remaining = center_capacity - center_consumed
             
             # Distribution: Outer and Inner empty, Center depleting
-            tanks[1] = 0.0  # m_1 = 0 (empty)
-            tanks[3] = 0.0  # m_3 = 0 (empty)
-            tanks[0] = 0.0  # m_0 = 0 (empty)
-            tanks[2] = 0.0  # m_2 = 0 (empty)
-            tanks[4] = max(0.0, center_remaining)  # m_4 = m_center,rem
+            tanks[1] = 0.0                                       # m_1 = 0 (empty)
+            tanks[3] = 0.0                                       # m_3 = 0 (empty)
+            tanks[0] = 0.0                                       # m_0 = 0 (empty)
+            tanks[2] = 0.0                                       # m_2 = 0 (empty)
+            tanks[4] = max(0.0, center_remaining)                # m_4 = m_center,rem
         
         return tanks
     
@@ -214,65 +263,68 @@ class FuelDistributionCalculator:
         tanks = {i: 0.0 for i in range(5)}
         
         # Fuel consumed: Δm_fuel = m_fuel,total - m_fuel,remaining
-        fuel_consumed = W_FUEL_KG - fuel_remaining
+        fuel_consumed = TOTAL_CAPACITY_KG - fuel_remaining
         
-        # Tank group capacities
-        capacity_per_tank = TANK_CAPACITY_KG       # m_tank [kg]
-        center_capacity = capacity_per_tank        # m_center = m_tank (tank 4)
-        inner_capacity = capacity_per_tank * 2     # m_inner = 2·m_tank (tanks 0,2)
-        outer_capacity = capacity_per_tank * 2     # m_outer = 2·m_tank (tanks 1,3)
+        # Tank group capacities (volume-based, per-tank)
+        center_capacity = TANK_CAPACITY_KG[4]                        # m_center = m_4
+        inner_capacity = TANK_CAPACITY_KG[0] + TANK_CAPACITY_KG[2]  # m_inner = m_0 + m_2
+        outer_capacity = TANK_CAPACITY_KG[1] + TANK_CAPACITY_KG[3]  # m_outer = m_1 + m_3
+        
+        # Proportional distribution factors for tanks within groups
+        inner_tank_0_ratio = TANK_CAPACITY_KG[0] / inner_capacity if inner_capacity > 0 else 0.5
+        outer_tank_1_ratio = TANK_CAPACITY_KG[1] / outer_capacity if outer_capacity > 0 else 0.5
         
         # Phase determination via consumed fuel thresholds
         if fuel_consumed < center_capacity:
             # ────────────────────────────────────────────────────────────────
-            # Phase 1: Center depletion (100% → 80%)
+            # Phase 1: Center depletion
             # ────────────────────────────────────────────────────────────────
-            center_consumed = fuel_consumed
-            center_remaining = center_capacity - center_consumed
+            center_remaining = center_capacity - fuel_consumed
             
             # Distribution: Center depleting, Inner and Outer full
-            tanks[4] = center_remaining       # m_4 = m_center,rem
-            tanks[0] = capacity_per_tank      # m_0 = m_tank (full)
-            tanks[2] = capacity_per_tank      # m_2 = m_tank (full)
-            tanks[1] = capacity_per_tank      # m_1 = m_tank (full)
-            tanks[3] = capacity_per_tank      # m_3 = m_tank (full)
+            tanks[4] = center_remaining                            # m_4 = m_center,rem
+            tanks[0] = TANK_CAPACITY_KG[0]                         # m_0 = m_max,0 (full)
+            tanks[2] = TANK_CAPACITY_KG[2]                         # m_2 = m_max,2 (full)
+            tanks[1] = TANK_CAPACITY_KG[1]                         # m_1 = m_max,1 (full)
+            tanks[3] = TANK_CAPACITY_KG[3]                         # m_3 = m_max,3 (full)
         
         elif fuel_consumed < center_capacity + inner_capacity:
             # ────────────────────────────────────────────────────────────────
-            # Phase 2: Inner depletion (80% → 40%)
+            # Phase 2: Inner depletion
             # ────────────────────────────────────────────────────────────────
             inner_consumed = fuel_consumed - center_capacity
             inner_remaining = inner_capacity - inner_consumed
             
-            # Distribution: Center empty, Inner depleting, Outer full
-            tanks[4] = 0.0  # m_4 = 0 (empty)
-            tanks[0] = inner_remaining / 2.0  # m_0 = m_inner,rem / 2
-            tanks[2] = inner_remaining / 2.0  # m_2 = m_inner,rem / 2
-            tanks[1] = capacity_per_tank      # m_1 = m_tank (full)
-            tanks[3] = capacity_per_tank      # m_3 = m_tank (full)
+            # Distribution: Center empty, Inner depleting proportionally, Outer full
+            tanks[4] = 0.0                                         # m_4 = 0 (empty)
+            tanks[0] = inner_remaining * inner_tank_0_ratio        # m_0 proportional to capacity
+            tanks[2] = inner_remaining * (1.0 - inner_tank_0_ratio)  # m_2 remaining
+            tanks[1] = TANK_CAPACITY_KG[1]                         # m_1 = m_max,1 (full)
+            tanks[3] = TANK_CAPACITY_KG[3]                         # m_3 = m_max,3 (full)
         
         else:
             # ────────────────────────────────────────────────────────────────
-            # Phase 3: Outer depletion (40% → 0%)
+            # Phase 3: Outer depletion
             # ────────────────────────────────────────────────────────────────
             outer_consumed = fuel_consumed - center_capacity - inner_capacity
             outer_remaining = outer_capacity - outer_consumed
             
-            # Distribution: Center and Inner empty, Outer depleting
-            tanks[4] = 0.0  # m_4 = 0 (empty)
-            tanks[0] = 0.0  # m_0 = 0 (empty)
-            tanks[2] = 0.0  # m_2 = 0 (empty)
-            tanks[1] = max(0.0, outer_remaining / 2.0)  # m_1 = m_outer,rem / 2
-            tanks[3] = max(0.0, outer_remaining / 2.0)  # m_3 = m_outer,rem / 2
+            # Distribution: Center and Inner empty, Outer depleting proportionally
+            tanks[4] = 0.0                                         # m_4 = 0 (empty)
+            tanks[0] = 0.0                                         # m_0 = 0 (empty)
+            tanks[2] = 0.0                                         # m_2 = 0 (empty)
+            tanks[1] = max(0.0, outer_remaining * outer_tank_1_ratio)  # m_1 proportional to capacity
+            tanks[3] = max(0.0, outer_remaining * (1.0 - outer_tank_1_ratio))  # m_3 remaining
         
         return tanks
     
     def _calculate_even(self, fuel_remaining: float) -> Dict[int, float]:
         """
-        PROPORTIONAL depletion: Uniform distribution across all tanks.
+        PROPORTIONAL depletion: Distribution proportional to tank capacities.
         
-        Depletion: All tanks deplete at equal rate.
-        Distribution: m_i = m_fuel,remaining / N_tanks ∀i
+        Depletion: All tanks deplete proportionally to their volume-based capacities.
+        Distribution: m_i = m_fuel,remaining × (m_max,i / Σm_max,j)
+        where m_max,i is the mass capacity of tank i.
         
         Parameters:
             fuel_remaining: m_fuel [kg] - total fuel remaining
@@ -282,11 +334,19 @@ class FuelDistributionCalculator:
         """
         tanks = {i: 0.0 for i in range(5)}
         
-        # Uniform distribution: m_i = m_fuel / 5
-        fuel_per_tank = fuel_remaining / 5.0
+        # Total capacity: Σm_max,i
+        total_capacity = sum(TANK_CAPACITY_KG.values())
         
-        for tank_id in range(5):
-            tanks[tank_id] = fuel_per_tank
+        if total_capacity > 0:
+            # Proportional distribution: m_i = m_fuel × (m_max,i / Σm_max)
+            for tank_id in range(5):
+                capacity_ratio = TANK_CAPACITY_KG[tank_id] / total_capacity
+                tanks[tank_id] = fuel_remaining * capacity_ratio
+        else:
+            # Fallback: uniform distribution (should not occur)
+            fuel_per_tank = fuel_remaining / 5.0
+            for tank_id in range(5):
+                tanks[tank_id] = fuel_per_tank
         
         return tanks
     
@@ -347,7 +407,7 @@ class FuelDistributionCalculator:
         Returns:
             Δm_fuel [kg]: fuel consumed
         """
-        return W_FUEL_KG - fuel_remaining
+        return TOTAL_CAPACITY_KG - fuel_remaining
     
     def clear_cache(self):
         """Clear distribution cache for memory management."""
@@ -413,7 +473,7 @@ class FuelHistoryTracker:
                 return
         
         # Compute fuel consumed: Δm_fuel = m_fuel,total - m_fuel,remaining
-        fuel_consumed = W_FUEL_KG - fuel_remaining
+        fuel_consumed = TOTAL_CAPACITY_KG - fuel_remaining
         
         # Append to time series
         self.cg_history.append(cg_x)
@@ -505,7 +565,7 @@ class FuelSystem:
         self.scenario = scenario
         self.calculator = FuelDistributionCalculator(scenario)
         self.history_tracker = FuelHistoryTracker(scenario)
-        self.initial_fuel_kg = W_FUEL_KG  # m_fuel,0 [kg]
+        self.initial_fuel_kg = TOTAL_CAPACITY_KG  # m_fuel,0 [kg]: effective initial fuel capacity
     
     def calculate_cg_x(self, current_weight_kg: float, record_history: bool = False) -> float:
         """
@@ -532,7 +592,7 @@ class FuelSystem:
         fuel_remaining = current_weight_kg - W_OE_KG - W_PL_KG
         
         # Clamp to physical bounds: m_fuel ∈ [0, m_fuel,max]
-        fuel_remaining = max(0.0, min(fuel_remaining, W_FUEL_KG))
+        fuel_remaining = max(0.0, min(fuel_remaining, TOTAL_CAPACITY_KG))
         
         # Compute CG position
         cg_x = self.calculator.calculate_cg_x(fuel_remaining)
@@ -616,7 +676,8 @@ class FuelSystem:
     def tank_fuel_kg(self) -> Dict[int, float]:
         """Query current tank distribution from history endpoint."""
         if len(self.history_tracker.fuel_remaining_history) == 0:
-            return {i: TANK_CAPACITY_KG for i in range(5)}
+            # Initial state: all tanks at full capacity
+            return TANK_CAPACITY_KG.copy()
         latest_fuel_remaining = self.history_tracker.fuel_remaining_history[-1]
         return self.calculator.calculate_distribution(latest_fuel_remaining)
     
@@ -683,7 +744,9 @@ def _get_fuel_system(scenario: Optional[ConsumptionScenario] = None) -> FuelSyst
     
     # Singleton instantiation
     if _fuel_system is None:
-        print(f"[CG_SYSTEM] Initializing fuel system: scenario={scenario}, m_fuel,0={W_FUEL_KG:.3f} kg")
+        print(f"[CG_SYSTEM] Initializing fuel system: scenario={scenario}, m_fuel,0={TOTAL_CAPACITY_KG:.3f} kg")
+        if TOTAL_CAPACITY_KG < W_FUEL_KG - 1e-6:
+            print(f"[CG_SYSTEM] Note: Effective capacity ({TOTAL_CAPACITY_KG:.3f} kg) < W_FUEL_KG ({W_FUEL_KG:.3f} kg) due to tank volume limits")
         _fuel_system = FuelSystem(scenario=scenario)
     else:
         # Validate scenario consistency
