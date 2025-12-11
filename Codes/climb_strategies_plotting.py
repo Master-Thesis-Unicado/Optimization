@@ -44,6 +44,7 @@ from aircraft_config import (
     isa_properties, a_from_altitude, INITIAL_MASS_KG,
     M_MMO, S_REF_M2, CL_MAX
 )
+from mission_config import MAX_SERVICE_CEILING_M
 from climb import ClimbingCore, StrategyRun
 from climb_plotting import GridConfig, PlottingConfig
 
@@ -135,8 +136,6 @@ def plot_strategies_interactive(
     ax_left.contour(Mm, Hm, Es, levels=Es_levels, colors=[(0.6, 0.6, 0.6)], linewidths=0.8, zorder=0)
 
     # Engine envelope limits (from engine envelope analysis)
-    # Maximum service ceiling altitude: 13994.1 m at lever=1.0, Mach=0.900
-    MAX_SERVICE_CEILING_M = 13994.1
     # Maximum operational Mach from engine envelope: 0.9392 at lever=1.0, altitude=10500 m
     MAX_ENGINE_MACH = 0.9392
     # Minimum operational Mach from engine envelope test: 0.200 (tested range)

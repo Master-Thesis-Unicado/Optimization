@@ -37,7 +37,8 @@ from aircraft_config import (
 
 # Import mission configuration parameters
 from mission_config import (
-    TARGET_ALT_CLIMB_M
+    TARGET_ALT_CLIMB_M,
+    MAX_SERVICE_CEILING_M
 )
 
 # Import climb module for data structures
@@ -156,7 +157,6 @@ def plot_3d_cost_space(mach_grid: np.ndarray, altitude_sched: np.ndarray,
     """
     # Engine envelope limits (from engine envelope analysis)
     MAX_ENGINE_MACH = 0.9392  # Maximum operational Mach from engine envelope analysis
-    MAX_SERVICE_CEILING_M = 13994.1  # Maximum service ceiling altitude at lever=1.0, Mach=0.900
     MIN_ENGINE_MACH = 0.200  # Minimum operational Mach from engine envelope test
     
     # Prepare meshgrid for scatter

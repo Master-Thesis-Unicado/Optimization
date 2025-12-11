@@ -35,6 +35,9 @@ pio.renderers.default = "browser"
 # Aircraft parameters: ISA properties, Mach limits, reference geometry
 from aircraft_config import isa_properties, a_from_altitude, G_C, M_MMO, S_REF_M2, INITIAL_MASS_KG, CL_MAX
 
+# Mission configuration parameters
+from mission_config import MAX_SERVICE_CEILING_M
+
 # Mission phase data structures
 from descent import DescentResults, calculate_min_descent_mach
 from cruise import CruiseResults
@@ -548,7 +551,6 @@ def plot_3d_cost_space(mach_grid: np.ndarray, altitude_sched: np.ndarray,
                 ))
     
     # Constraint 3: h ≤ h_max - Service ceiling limit (horizontal plane)
-    MAX_SERVICE_CEILING_M = 13994.1  # h_max [m] at δ=1.0, M=0.900
     if MAX_SERVICE_CEILING_M <= (altitude_sched[0] if len(altitude_sched) > 0 else 15000) + 1000:
         lever_range_ceiling = np.linspace(0, 1.0, 10)
         mach_range_ceiling = np.linspace(mach_grid[0] if len(mach_grid) > 0 else 0.1, M_MMO, 10)

@@ -57,6 +57,7 @@ from mission_config import (
     ENABLE_CRUISE_CLIMB, CRUISE_CLIMB_TRIGGER_DISTANCE_FRACTION,
     CRUISE_CLIMB_ALTITUDE_INCREMENT_M,
     TARGET_DESCENT_ALT_M, TARGET_DESCENT_MACH,
+    MAX_SERVICE_CEILING_M,
     N_MACH_SAMPLES_DESCENT, N_ALTITUDE_STEPS_DESCENT, N_LEVER_SAMPLES_DESCENT
 )
 
@@ -2191,7 +2192,6 @@ def plot_complete_mission_3d(climb_result: MinFuelSchedule,
     # ════════════════════════════════════════════════════════════════════
     # Flight Envelope Constraints
     # ════════════════════════════════════════════════════════════════════
-    MAX_SERVICE_CEILING_M = 13994.1  # h_max [m]: service ceiling at δ=1.0, M=0.900
     
     # Constraint 1: Maximum Mach M ≤ M_MMO (vertical plane)
     max_alt = max(climb_alt[-1], cruise_alt[0], 12000)

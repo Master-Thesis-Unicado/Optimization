@@ -113,6 +113,11 @@ MIN_CRUISE_ALT_M = 1000.0                           # h_min [m]: minimum cruise 
 MAX_CRUISE_ALT_M = 15000.0                          # h_max [m]: maximum cruise altitude
 
 # ────────────────────────────────────────────────────────────────────────────
+# General Flight Envelope Limits
+# ────────────────────────────────────────────────────────────────────────────
+MAX_SERVICE_CEILING_M = 13994.1                     # That comes from engine model ! h_max [m]: maximum service ceiling at δ=1.0, M=0.900
+
+# ────────────────────────────────────────────────────────────────────────────
 # Descent Phase Bounds
 # ────────────────────────────────────────────────────────────────────────────
 MIN_DESCENT_MACH = 0.2                              # M_min [-]: minimum descent Mach
@@ -135,16 +140,16 @@ Grid structure: (M_i, h_k, δ_j) where:
 # ────────────────────────────────────────────────────────────────────────────
 # Climb Phase Grid: (M_i, h_k, δ_j)
 # ────────────────────────────────────────────────────────────────────────────
-N_MACH_SAMPLES_CLIMB = 20                           # I: number of Mach points
-N_ALTITUDE_STEPS_CLIMB = 20                         # K: number of altitude levels
-N_LEVER_SAMPLES_CLIMB = 20                          # L: number of throttle positions
+N_MACH_SAMPLES_CLIMB = 40                           # I: number of Mach points
+N_ALTITUDE_STEPS_CLIMB = 40                         # K: number of altitude levels
+N_LEVER_SAMPLES_CLIMB = 40                          # L: number of throttle positions
 
 # ────────────────────────────────────────────────────────────────────────────
 # Descent Phase Grid: (M_i, h_k, δ_j)
 # ────────────────────────────────────────────────────────────────────────────
-N_MACH_SAMPLES_DESCENT = 20                         # I: number of Mach points
-N_ALTITUDE_STEPS_DESCENT = 20                       # K: number of altitude levels
-N_LEVER_SAMPLES_DESCENT = 20                        # L: number of throttle positions
+N_MACH_SAMPLES_DESCENT = 40                         # I: number of Mach points
+N_ALTITUDE_STEPS_DESCENT = 40                       # K: number of altitude levels
+N_LEVER_SAMPLES_DESCENT = 40                        # L: number of throttle positions
 
 
 # ========================================================================
