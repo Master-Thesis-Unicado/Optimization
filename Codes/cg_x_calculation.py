@@ -33,7 +33,7 @@ from aircraft_config import (
 )
 
 # Default CG and consumption scenario
-from mission_config import CG_X_DEFAULT, CG_CONSUMPTION_SCENARIO
+from mission_config import CG_CONSUMPTION_SCENARIO
 
 # ========================================================================
 # SECTION 1: TYPE DEFINITIONS AND CONSTANTS
@@ -332,8 +332,8 @@ class FuelDistributionCalculator:
         if total_mass > 0:
             cg_x = total_cg_weighted_sum / total_mass
         else:
-            # Fallback: use default CG (should never happen)
-            cg_x = CG_X_DEFAULT
+            # Fallback: use zero-fuel CG (should never happen)
+            cg_x = ZERO_FUEL_CG_X
         
         return cg_x
     

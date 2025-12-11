@@ -38,7 +38,6 @@ pio.renderers.default = "browser"
 from cg_x_calculation import (
     FuelSystem, get_fuel_tank_status, TANK_NAMES, TANK_CG_POSITIONS
 )
-from mission_config import CG_X_DEFAULT
 from aircraft_config import ZERO_FUEL_CG_X
 
 # Visualization styling configuration
@@ -171,19 +170,19 @@ def plot_cg_analysis(save_plots: bool = True, show_plots: bool = True):
             if total_fuel_mass > 0:
                 fuel_tank_cg_history.append(weighted_sum / total_fuel_mass)
             else:
-                fuel_tank_cg_history.append(CG_X_DEFAULT)
+                fuel_tank_cg_history.append(ZERO_FUEL_CG_X)
         else:
-            fuel_tank_cg_history.append(CG_X_DEFAULT)
+            fuel_tank_cg_history.append(ZERO_FUEL_CG_X)
     
     fuel_tank_cg = np.array(fuel_tank_cg_history)  # x_CG,fuel(t) [m] - fuel tanks CG only
     
     # CG statistics
     total_fuel = fuel_consumed[-1] if len(fuel_consumed) > 0 else 0.0
-    cg_min = np.min(cg_x) if len(cg_x) > 0 else CG_X_DEFAULT              # x_CG,min [m]
-    cg_max = np.max(cg_x) if len(cg_x) > 0 else CG_X_DEFAULT              # x_CG,max [m]
+    cg_min = np.min(cg_x) if len(cg_x) > 0 else ZERO_FUEL_CG_X            # x_CG,min [m]
+    cg_max = np.max(cg_x) if len(cg_x) > 0 else ZERO_FUEL_CG_X            # x_CG,max [m]
     cg_range = cg_max - cg_min                                             # Δx_CG [m]
-    cg_initial = cg_x[0] if len(cg_x) > 0 else CG_X_DEFAULT               # x_CG,0 [m]
-    cg_final = cg_x[-1] if len(cg_x) > 0 else CG_X_DEFAULT                # x_CG,f [m]
+    cg_initial = cg_x[0] if len(cg_x) > 0 else ZERO_FUEL_CG_X             # x_CG,0 [m]
+    cg_final = cg_x[-1] if len(cg_x) > 0 else ZERO_FUEL_CG_X              # x_CG,f [m]
     cg_shift = cg_final - cg_initial                                       # Δx_CG,travel [m]
     
     # Calculate focused y-axis range for CG plots (with padding for better visibility)

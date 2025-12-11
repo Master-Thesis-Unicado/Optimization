@@ -140,16 +140,16 @@ Grid structure: (M_i, h_k, δ_j) where:
 # ────────────────────────────────────────────────────────────────────────────
 # Climb Phase Grid: (M_i, h_k, δ_j)
 # ────────────────────────────────────────────────────────────────────────────
-N_MACH_SAMPLES_CLIMB = 40                           # I: number of Mach points
-N_ALTITUDE_STEPS_CLIMB = 40                         # K: number of altitude levels
-N_LEVER_SAMPLES_CLIMB = 40                          # L: number of throttle positions
+N_MACH_SAMPLES_CLIMB = 30                           # I: number of Mach points
+N_ALTITUDE_STEPS_CLIMB = 30                         # K: number of altitude levels
+N_LEVER_SAMPLES_CLIMB = 30                          # L: number of throttle positions
 
 # ────────────────────────────────────────────────────────────────────────────
 # Descent Phase Grid: (M_i, h_k, δ_j)
 # ────────────────────────────────────────────────────────────────────────────
-N_MACH_SAMPLES_DESCENT = 40                         # I: number of Mach points
-N_ALTITUDE_STEPS_DESCENT = 40                       # K: number of altitude levels
-N_LEVER_SAMPLES_DESCENT = 40                        # L: number of throttle positions
+N_MACH_SAMPLES_DESCENT = 30                         # I: number of Mach points
+N_ALTITUDE_STEPS_DESCENT = 30                       # K: number of altitude levels
+N_LEVER_SAMPLES_DESCENT = 30                        # L: number of throttle positions
 
 
 # ========================================================================
@@ -342,11 +342,10 @@ Defines CG computation mode and fuel consumption sequence.
 # CG Calculation Mode and Default Values
 # ────────────────────────────────────────────────────────────────────────────
 USE_DYNAMIC_CG = True                               # Boolean: True = dynamic CG from fuel distribution
-                                                    #          False = static CG_X_DEFAULT
-CG_X_DEFAULT = 14.0                                 # x_CG,default [m]: default CG position
+                                                    #          False = static ZERO_FUEL_CG_X
 
 # ────────────────────────────────────────────────────────────────────────────
 # Fuel Consumption Scenario
 # ────────────────────────────────────────────────────────────────────────────
-CG_CONSUMPTION_SCENARIO = "CENTER_FIRST"            # Fuel depletion sequence
+CG_CONSUMPTION_SCENARIO = "PROPORTIONAL"            # Fuel depletion sequence
                                                     # Options: "OUTER_FIRST", "CENTER_FIRST", "PROPORTIONAL"

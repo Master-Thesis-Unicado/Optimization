@@ -111,8 +111,8 @@ class SystemConfiguration:
     }
     
     # Aircraft center of gravity
-    DEFAULT_COG_LOCATION = [14.0, 0.0, 0.0]  # [x, y, z] [m]: default CG position
     ZERO_FUEL_CG_X = 16.208                  # x_CG,ZFW [m]: CG position at zero fuel weight (OEW + Payload, no fuel)
+    DEFAULT_COG_LOCATION = [ZERO_FUEL_CG_X, 0.0, 0.0]  # [x, y, z] [m]: default CG position (x-component references ZERO_FUEL_CG_X)
     
     # Diagnostic configuration
     FUEL_LEVEL_PRINT_ENABLED = True
