@@ -693,8 +693,24 @@ class RangeOptimizationVisualization:
             """
             figures = {}
             
+            # Check if called from main_range_optimizer to save to Optimized folder
+            import inspect
+            frame = inspect.currentframe()
+            try:
+                caller_frame = frame.f_back
+                caller_file = caller_frame.f_globals.get('__file__', '')
+                save_to_optimized = 'main_range_optimizer' in caller_file
+            except:
+                save_to_optimized = False
+            finally:
+                del frame
+            
             if save_dir:
                 output_path = Path(save_dir)
+                output_path.mkdir(parents=True, exist_ok=True)
+                print(f"\n[DASHBOARD] Creating optimization dashboard in: {output_path}")
+            elif save_to_optimized:
+                output_path = Path(get_or_create_run_directory(phase="Optimized"))
                 output_path.mkdir(parents=True, exist_ok=True)
                 print(f"\n[DASHBOARD] Creating optimization dashboard in: {output_path}")
             else:
@@ -712,6 +728,12 @@ class RangeOptimizationVisualization:
                 save_path=str(range_opt_path / "convergence_history.html")
             )
             figures['convergence'] = fig_convergence
+            # Save PNG version
+            try:
+                fig_convergence.write_image(str(range_opt_path / "convergence_history.png"), width=1600, height=1000, scale=2)
+                print(f"[EXPORT] Convergence history PNG saved to: {range_opt_path / 'convergence_history.png'}")
+            except Exception as e:
+                print(f"[WARNING] Could not save convergence history PNG: {e}")
             
             print("[DASHBOARD] Generating cruise adjustment strategy plot...")
             fig_adjustment = RangeOptimizationVisualization.AdjustmentPlotter.plot_cruise_adjustment_strategy(
@@ -719,6 +741,12 @@ class RangeOptimizationVisualization:
                 save_path=str(range_opt_path / "cruise_adjustment.html")
             )
             figures['adjustment'] = fig_adjustment
+            # Save PNG version
+            try:
+                fig_adjustment.write_image(str(range_opt_path / "cruise_adjustment.png"), width=1600, height=1000, scale=2)
+                print(f"[EXPORT] Cruise adjustment PNG saved to: {range_opt_path / 'cruise_adjustment.png'}")
+            except Exception as e:
+                print(f"[WARNING] Could not save cruise adjustment PNG: {e}")
             
             if iteration_data:
                 print("[DASHBOARD] Generating distance breakdown plot...")
@@ -727,6 +755,12 @@ class RangeOptimizationVisualization:
                     save_path=str(range_opt_path / "distance_breakdown.html")
                 )
                 figures['breakdown'] = fig_breakdown
+                # Save PNG version
+                try:
+                    fig_breakdown.write_image(str(range_opt_path / "distance_breakdown.png"), width=1600, height=1000, scale=2)
+                    print(f"[EXPORT] Distance breakdown PNG saved to: {range_opt_path / 'distance_breakdown.png'}")
+                except Exception as e:
+                    print(f"[WARNING] Could not save distance breakdown PNG: {e}")
             
             print("[DASHBOARD] Generating optimization summary table...")
             fig_summary = RangeOptimizationVisualization.SummaryGenerator.create_optimization_summary_table(
@@ -734,6 +768,12 @@ class RangeOptimizationVisualization:
                 save_path=str(range_opt_path / "optimization_summary.html")
             )
             figures['summary'] = fig_summary
+            # Save PNG version
+            try:
+                fig_summary.write_image(str(range_opt_path / "optimization_summary.png"), width=1600, height=800, scale=2)
+                print(f"[EXPORT] Optimization summary PNG saved to: {range_opt_path / 'optimization_summary.png'}")
+            except Exception as e:
+                print(f"[WARNING] Could not save optimization summary PNG: {e}")
             
             print(f"[DASHBOARD] Range optimization plots saved to: {range_opt_path}")
             

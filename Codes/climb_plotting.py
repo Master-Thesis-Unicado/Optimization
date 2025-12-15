@@ -137,7 +137,8 @@ class GridAndPlotting:
 
 def plot_3d_cost_space(mach_grid: np.ndarray, altitude_sched: np.ndarray, 
                       lever_grid: np.ndarray, J_grid_3d: np.ndarray, 
-                      min_path: Optional[Dict] = None, title: Optional[str] = None):
+                      min_path: Optional[Dict] = None, title: Optional[str] = None,
+                      save_to_optimized: bool = False):
     """
     Visualize fuel cost density (J) in 3D state space using interactive Plotly.
     
@@ -470,10 +471,13 @@ def plot_3d_cost_space(mach_grid: np.ndarray, altitude_sched: np.ndarray,
         "drawcircle", "drawrect", "eraseshape"
     ]
     
-    # Save to Climb folder (both HTML for interaction and PNG for static)
-    climb_dir = get_or_create_run_directory(phase="Climb")
-    output_path_html = os.path.join(climb_dir, 'climb_J_3d_plot.html')
-    output_path_png = os.path.join(climb_dir, 'climb_J_3d_plot.png')
+    # Save to appropriate folder (both HTML for interaction and PNG for static)
+    if save_to_optimized:
+        output_dir = get_or_create_run_directory(phase="Optimized")
+    else:
+        output_dir = get_or_create_run_directory(phase="Climb")
+    output_path_html = os.path.join(output_dir, 'climb_J_3d_plot.html')
+    output_path_png = os.path.join(output_dir, 'climb_J_3d_plot.png')
     
     pio.write_html(
         fig, 
@@ -732,9 +736,24 @@ def plot_performance_2d(climb_result, climb_info: Optional[Dict[str, Any]] = Non
     config = ExportConfig.get_plotly_config()
     config['toImageButtonOptions']['filename'] = 'climb_performance_2d'
     
-    # Save individual plots as separate HTML files in timestamped directory/Climb subfolder
+    # Save individual plots as separate PNG files
     try:
-        run_dir = get_or_create_run_directory(phase="Climb")
+        # Check if we should save to Optimized folder (from main_fuel_optimizer or main_range_optimizer)
+        import inspect
+        frame = inspect.currentframe()
+        try:
+            caller_frame = frame.f_back
+            caller_file = caller_frame.f_globals.get('__file__', '')
+            save_to_optimized = 'main_fuel_optimizer' in caller_file or 'main_range_optimizer' in caller_file
+        except:
+            save_to_optimized = False
+        finally:
+            del frame
+        
+        if save_to_optimized:
+            run_dir = get_or_create_run_directory(phase="Optimized")
+        else:
+            run_dir = get_or_create_run_directory(phase="Climb")
         save_prefix = "climb_performance"
         
         # 1. Fuel Flow Rate

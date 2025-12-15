@@ -287,7 +287,22 @@ def plot_performance_2d(cruise_results: 'CruiseResults'):
     # Individual Panel Export (PNG)
     # ════════════════════════════════════════════════════════════════════
     try:
-        run_dir = get_or_create_run_directory(phase="Cruise")
+        # Check if we should save to Optimized folder
+        import inspect
+        frame = inspect.currentframe()
+        try:
+            caller_frame = frame.f_back
+            caller_file = caller_frame.f_globals.get('__file__', '')
+            save_to_optimized = 'main_fuel_optimizer' in caller_file or 'main_range_optimizer' in caller_file
+        except:
+            save_to_optimized = False
+        finally:
+            del frame
+        
+        if save_to_optimized:
+            run_dir = get_or_create_run_directory(phase="Optimized")
+        else:
+            run_dir = get_or_create_run_directory(phase="Cruise")
         save_prefix = "cruise_performance"
         
         # Panel 1: Fuel flow ṁ(t)

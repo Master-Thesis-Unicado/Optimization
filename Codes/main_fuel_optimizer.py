@@ -202,7 +202,8 @@ def main():
     plot_3d_cost_space(
         mach_grid, altitude_sched, lever_grid_envelope, J_envelope, 
         min_path=min_path,
-        title="3D DP (Global Optimization)<br>Full Engine Envelope with Optimal Path"
+        title="3D DP (Global Optimization)<br>Full Engine Envelope with Optimal Path",
+        save_to_optimized=True
     )
     
     # Cruise plots
@@ -231,7 +232,8 @@ def main():
         mach_grid_descent, H_descent, lever_grid_descent, J_descent_envelope,
         min_path=descent_path,
         title="3D DP Descent (Global Optimization)<br>Full Envelope with Optimal Path",
-        mass_kg=final_cruise.mass_kg[-1]
+        mass_kg=final_cruise.mass_kg[-1],
+        save_to_optimized=True
     )
     
     # Complete mission 3D
@@ -241,7 +243,8 @@ def main():
         cruise_result=final_cruise,
         descent_result=final_descent,
         climb_info={},
-        descent_info={}
+        descent_info={},
+        save_to_optimized=True
     )
     
     # Mission summary dashboard
@@ -250,7 +253,8 @@ def main():
         climb_result=final_climb,
         cruise_result=final_cruise,
         descent_result=final_descent,
-        initial_mass_kg=optimized_mass
+        initial_mass_kg=optimized_mass,
+        save_to_optimized=True
     )
     
     # Combined performance analysis
@@ -259,7 +263,8 @@ def main():
         climb_result=final_climb,
         cruise_result=final_cruise,
         descent_result=final_descent,
-        initial_mass_kg=optimized_mass
+        initial_mass_kg=optimized_mass,
+        save_to_optimized=True
     )
     
     # Record mission history for CG analysis

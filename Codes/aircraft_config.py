@@ -116,7 +116,7 @@ class SystemConfiguration:
         1: "Outer Left",
         2: "Inner Right",
         3: "Outer Right",
-        4: "Center Wing"
+        4: "Center"
     }
     
     # Aircraft center of gravity

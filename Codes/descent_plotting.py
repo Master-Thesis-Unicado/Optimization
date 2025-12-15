@@ -312,7 +312,22 @@ def plot_performance_2d(descent_result: DescentResults,
     # Individual Panel Export (PNG)
     # ════════════════════════════════════════════════════════════════════
     try:
-        run_dir = get_or_create_run_directory(phase="Descent")
+        # Check if we should save to Optimized folder
+        import inspect
+        frame = inspect.currentframe()
+        try:
+            caller_frame = frame.f_back
+            caller_file = caller_frame.f_globals.get('__file__', '')
+            save_to_optimized = 'main_fuel_optimizer' in caller_file or 'main_range_optimizer' in caller_file
+        except:
+            save_to_optimized = False
+        finally:
+            del frame
+        
+        if save_to_optimized:
+            run_dir = get_or_create_run_directory(phase="Optimized")
+        else:
+            run_dir = get_or_create_run_directory(phase="Descent")
         save_prefix = "descent_performance"
         summary = descent_result.get_summary_dict()
         subtitle_text = (
@@ -401,7 +416,8 @@ def plot_3d_cost_space(mach_grid: np.ndarray, altitude_sched: np.ndarray,
                       lever_grid: np.ndarray, J_grid_3d: np.ndarray,
                       min_path: Optional[Dict] = None, 
                       title: Optional[str] = None,
-                      mass_kg: Optional[float] = None):
+                      mass_kg: Optional[float] = None,
+                      save_to_optimized: bool = False):
     """
     Visualize fuel cost density J(δ,M,h) in 3D state space.
     
@@ -744,10 +760,13 @@ def plot_3d_cost_space(mach_grid: np.ndarray, altitude_sched: np.ndarray,
         "drawcircle", "drawrect", "eraseshape"
     ]
     
-    # Save to Descent folder (both HTML for interaction and PNG for static)
-    descent_dir = get_or_create_run_directory(phase="Descent")
-    output_path_html = os.path.join(descent_dir, 'descent_J_3d_plot.html')
-    output_path_png = os.path.join(descent_dir, 'descent_J_3d_plot.png')
+    # Save to appropriate folder (both HTML for interaction and PNG for static)
+    if save_to_optimized:
+        output_dir = get_or_create_run_directory(phase="Optimized")
+    else:
+        output_dir = get_or_create_run_directory(phase="Descent")
+    output_path_html = os.path.join(output_dir, 'descent_J_3d_plot.html')
+    output_path_png = os.path.join(output_dir, 'descent_J_3d_plot.png')
     
     pio.write_html(
         fig, 
@@ -786,4 +805,5 @@ def plot_descent_J_3d_plotly(*args, **kwargs):
     """Deprecated wrapper. Use plot_3d_cost_space() instead."""
     import warnings
     warnings.warn("plot_descent_J_3d_plotly() is deprecated, use plot_3d_cost_space() instead", DeprecationWarning, stacklevel=2)
+    # Pass through save_to_optimized if provided
     return plot_3d_cost_space(*args, **kwargs)

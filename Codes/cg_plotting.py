@@ -410,15 +410,15 @@ def plot_cg_analysis(save_plots: bool = True, show_plots: bool = True):
     # ────────────────────────────────────────────────────────────────────
     status = get_fuel_tank_status()
     if status.get('initialized', False):
-        # Tank ordering for visual display: Inner L, Outer L, Center, Inner R, Outer R
+        # Tank ordering for visual display: Outer L, Inner L, Center, Inner R, Outer R
         tank_fuel_dict = status.get('tank_fuel_kg', {})
         if not tank_fuel_dict:
             tank_names = []
             tank_fuel = []
             bar_colors = []
         else:
-            # Spatial ordering: tanks {0,1,4,2,3}
-            tank_order_indices = [0, 1, 4, 2, 3]
+            # Spatial ordering: tanks {1,0,4,2,3}
+            tank_order_indices = [1, 0, 4, 2, 3]
             tank_order_names = [TANK_NAMES[i] for i in tank_order_indices if i in TANK_NAMES]
             tank_names = [name for name in tank_order_names if name in tank_fuel_dict]
             tank_fuel = [tank_fuel_dict[name] for name in tank_names]
@@ -669,7 +669,7 @@ def plot_cg_analysis(save_plots: bool = True, show_plots: bool = True):
             if status.get('initialized', False):
                 tank_fuel_dict = status.get('tank_fuel_kg', {})
                 if tank_fuel_dict:
-                    tank_order_indices = [0, 1, 4, 2, 3]
+                    tank_order_indices = [1, 0, 4, 2, 3]
                     tank_order_names = [TANK_NAMES[i] for i in tank_order_indices if i in TANK_NAMES]
                     tank_names = [name for name in tank_order_names if name in tank_fuel_dict]
                     tank_fuel = [tank_fuel_dict[name] for name in tank_names]

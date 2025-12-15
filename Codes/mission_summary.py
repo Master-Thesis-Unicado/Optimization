@@ -200,7 +200,8 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
                                    descent_result: DescentResults,
                                    initial_mass_kg: float,
                                    save_html: Optional[str] = None,
-                                   simulation_duration_min: Optional[float] = None):
+                                   simulation_duration_min: Optional[float] = None,
+                                   save_to_optimized: bool = False):
     """
     Create comprehensive mission summary dashboard with scientific visualization.
     
@@ -1017,8 +1018,11 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
         )
     )
     
-    # Save to Mission Summary subfolder
-    run_dir = get_or_create_run_directory(phase="MissionSummary")
+    # Save to appropriate folder
+    if save_to_optimized:
+        run_dir = get_or_create_run_directory(phase="Optimized")
+    else:
+        run_dir = get_or_create_run_directory(phase="MissionSummary")
     output_path_html = os.path.join(run_dir, 'mission_summary_dashboard.html')
     output_path_png = os.path.join(run_dir, 'mission_summary_dashboard.png')
     
@@ -1164,7 +1168,8 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
                                      cruise_result: CruiseResults,
                                      descent_result: DescentResults,
                                      initial_mass_kg: float,
-                                     save_html: Optional[str] = None):
+                                     save_html: Optional[str] = None,
+                                     save_to_optimized: bool = False):
     """
     Create combined performance analysis showing all three phases side-by-side.
     
@@ -1673,8 +1678,11 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
         text="<b>DESCENT</b>", showarrow=False, font=dict(size=16, color=Colors.DESCENT)
     )
     
-    # Save to CombinedPerformance subfolder
-    run_dir = get_or_create_run_directory(phase="CombinedPerformance")
+    # Save to appropriate folder
+    if save_to_optimized:
+        run_dir = get_or_create_run_directory(phase="Optimized")
+    else:
+        run_dir = get_or_create_run_directory(phase="CombinedPerformance")
     output_path_html = os.path.join(run_dir, 'combined_performance_analysis.html')
     output_path_png = os.path.join(run_dir, 'combined_performance_analysis.png')
     
@@ -1837,7 +1845,8 @@ def plot_complete_mission_3d(climb_result: MinFuelSchedule,
                             descent_result: DescentResults,
                             climb_info: Dict[str, Any],
                             descent_info: Dict[str, Any],
-                            save_html: Optional[str] = None):
+                            save_html: Optional[str] = None,
+                            save_to_optimized: bool = False):
     """
     Generate complete mission trajectory in 3D state space (δ,M,h).
     
@@ -2344,8 +2353,11 @@ def plot_complete_mission_3d(climb_result: MinFuelSchedule,
         ]
     )
     
-    # Save to Mission3D subfolder
-    run_dir = get_or_create_run_directory(phase="Mission3D")
+    # Save to appropriate folder
+    if save_to_optimized:
+        run_dir = get_or_create_run_directory(phase="Optimized")
+    else:
+        run_dir = get_or_create_run_directory(phase="Mission3D")
     output_path_html = os.path.join(run_dir, 'complete_mission_3d.html')
     output_path_png = os.path.join(run_dir, 'complete_mission_3d.png')
     
