@@ -115,7 +115,7 @@ def main():
     print("\n[OPTIMIZATION] Fuel capacity optimization loop initiated")
     optimal_result, convergence_history = optimize_fuel_capacity(
         aero=aero,
-        engine=eng,
+        eng=eng,
         mach_grid=M_dense,
         H_plot=H_plot,
         lever_samples=N_LEVER_SAMPLES_CLIMB
@@ -269,6 +269,8 @@ def main():
             climb_result=final_climb,
             cruise_result=final_cruise,
             descent_result=final_descent
+            ,
+            initial_fuel_kg=optimized_fuel
         )
         print(f"[CG] Mission history recorded successfully")
     except Exception as e:

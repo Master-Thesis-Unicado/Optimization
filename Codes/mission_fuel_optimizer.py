@@ -57,6 +57,9 @@ from mission_config import (
     FUEL_OPTIMIZATION_INITIAL_FUEL_HIGH_KG
 )
 
+# CG fuel system control
+from cg_x_calculation import initialize_fuel_system
+
 # Import wrappers
 from pyaerodynamics_wrapper import PyAerodynamicsWrapper
 from pyengine_wrapper import EngineWrapper
@@ -407,10 +410,12 @@ class FuelOptimizationCore:
                 
                 # Run mission with current fuel estimate
                 try:
+                    # Ensure CG system uses the candidate fuel for this iteration
+                    initialize_fuel_system(initial_fuel_kg=fuel_mid)
                     iteration_result = FuelOptimizationCore.IterationExecutor.run_single_mission_iteration(
                         initial_fuel_kg=fuel_mid,
                         aero=aero,
-                        engine=eng,
+                        eng=eng,
                         mach_grid=mach_grid,
                         H_plot=H_plot,
                         lever_samples=lever_samples,

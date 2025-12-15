@@ -5,10 +5,10 @@
 Aircraft physical parameters and operational limits.
 
 Centralized configuration for mission analysis:
-    - Geometric parameters: S_ref, N_engines
-    - Mass breakdown: m_OE, m_PL, m_fuel, m_TO
-    - Operational limits: M_min, M_MMO, CL_max, h_max
-    - Fuel system: tank CG positions, density
+    - Geometric parameters: wing reference area, engine count
+    - Mass breakdown: operating empty mass, payload, fuel, takeoff mass
+    - Operational limits: Mach envelope, lift coefficient ceiling, throttle bounds
+    - Fuel system: tank volumes, tank CG locations, kerosene density
     - Atmospheric models: ISA properties
 
 Provides backward-compatible exports for all modules.
@@ -46,22 +46,22 @@ class SystemConfiguration:
     DEFAULT_PASSENGERS = 60     # N_pax [-]: passenger capacity
     
     # Fuel capacity
-    W_FUEL_KG = 14500   # 19597 = max fuel , m_fuel,max [kg]: maximum fuel capacity
+    W_FUEL_KG = 14500   # m_fuel,max [kg]: usable fuel capacity (Jet A-1)
     
     # Computed mass properties
     @property
     def W_OE_KG(self):
-        """m_OE [kg]: Operating Empty Weight = m_airframe + m_propulsion + m_systems."""
+        """m_OE [kg]: operating empty mass = m_airframe + m_propulsion + m_systems."""
         return self.W_AIRFRAME_KG + self.W_PROPULSION_KG + self.W_SYSTEMS_KG
     
     @property
     def W_PL_KG(self):
-        """m_PL [kg]: Payload mass = m_pax · N_pax."""
+        """m_PL [kg]: payload mass = m_pax · N_pax."""
         return self.PAYLOAD_PER_PERSON_KG * self.DEFAULT_PASSENGERS
     
     @property
     def W_TO_KG(self):
-        """m_TO [kg]: Takeoff mass = m_OE + m_fuel + m_PL."""
+        """m_TO [kg]: takeoff mass = m_OE + m_fuel + m_PL."""
         return self.W_OE_KG + self.W_FUEL_KG + self.W_PL_KG
     
     
@@ -70,7 +70,7 @@ class SystemConfiguration:
     # ────────────────────────────────────────────────────────────────────
     
     # Altitude limits
-    ENGINE_ALT_CLIP = None      # h_clip [m]: altitude clipping (None = no limit)
+    ENGINE_ALT_CLIP = None      # h_clip [m]: altitude clipping (None = no enforced cap)
     
     # Mach number limits
     M_MIN_DEFAULT = 0.0         # M_min,default [-]: nominal minimum Mach
@@ -90,7 +90,7 @@ class SystemConfiguration:
     # ────────────────────────────────────────────────────────────────────
     
     # Fuel properties
-    KEROSENE_DENSITY_KGPM3 = 800.0  # ρ_fuel [kg/m³]: kerosene density (standard Jet A-1)
+    KEROSENE_DENSITY_KGPM3 = 800.0  # ρ_fuel [kg/m³]: kerosene density (Jet A-1 standard)
     
     # Tank volumes: V_i [L] - physical tank capacities
     TANK_VOLUMES_L = {

@@ -108,7 +108,11 @@ class FuelDistributionCalculator:
     Includes caching for performance optimization.
     """
     
-    def __init__(self, scenario: ConsumptionScenario = "OUTER_FIRST"):
+    def __init__(
+        self,
+        scenario: ConsumptionScenario = "OUTER_FIRST",
+        total_capacity_kg: float = TOTAL_CAPACITY_KG
+    ):
         """
         Initialize distribution calculator with consumption scenario.
         
@@ -121,6 +125,12 @@ class FuelDistributionCalculator:
             scenario: ConsumptionScenario - depletion order
         """
         self.scenario = scenario
+        self.total_capacity_kg = total_capacity_kg
+        # Scale tank capacities to match the requested total capacity
+        capacity_scale = total_capacity_kg / TOTAL_CAPACITY_KG if TOTAL_CAPACITY_KG > 0 else 1.0
+        self.tank_capacity_kg = {
+            tank_id: mass_kg * capacity_scale for tank_id, mass_kg in TANK_CAPACITY_KG.items()
+        }
         self._distribution_cache: Dict[float, Dict[int, float]] = {}
     
     def calculate_distribution(self, fuel_remaining: float) -> Dict[int, float]:
@@ -137,7 +147,7 @@ class FuelDistributionCalculator:
             {tank_id: m_i [kg]} - fuel mass per tank
         """
         # Clamp to physical bounds: m_fuel ∈ [0, m_fuel,max]
-        fuel_remaining = max(0.0, min(fuel_remaining, TOTAL_CAPACITY_KG))
+        fuel_remaining = max(0.0, min(fuel_remaining, self.total_capacity_kg))
         
         # Cache lookup for performance
         cache_key = round(fuel_remaining, 6)
@@ -184,16 +194,16 @@ class FuelDistributionCalculator:
         tanks = {i: 0.0 for i in range(5)}
         
         # Fuel consumed: Δm_fuel = m_fuel,total - m_fuel,remaining
-        fuel_consumed = TOTAL_CAPACITY_KG - fuel_remaining
+        fuel_consumed = self.total_capacity_kg - fuel_remaining
         
         # Tank group capacities (volume-based, per-tank)
-        outer_capacity = TANK_CAPACITY_KG[1] + TANK_CAPACITY_KG[3]  # m_outer = m_1 + m_3
-        inner_capacity = TANK_CAPACITY_KG[0] + TANK_CAPACITY_KG[2]  # m_inner = m_0 + m_2
-        center_capacity = TANK_CAPACITY_KG[4]                        # m_center = m_4
+        outer_capacity = self.tank_capacity_kg[1] + self.tank_capacity_kg[3]  # m_outer = m_1 + m_3
+        inner_capacity = self.tank_capacity_kg[0] + self.tank_capacity_kg[2]  # m_inner = m_0 + m_2
+        center_capacity = self.tank_capacity_kg[4]                             # m_center = m_4
         
         # Proportional distribution factors for tanks within groups
-        outer_tank_1_ratio = TANK_CAPACITY_KG[1] / outer_capacity if outer_capacity > 0 else 0.5
-        inner_tank_0_ratio = TANK_CAPACITY_KG[0] / inner_capacity if inner_capacity > 0 else 0.5
+        outer_tank_1_ratio = self.tank_capacity_kg[1] / outer_capacity if outer_capacity > 0 else 0.5
+        inner_tank_0_ratio = self.tank_capacity_kg[0] / inner_capacity if inner_capacity > 0 else 0.5
         
         # Phase determination via consumed fuel thresholds
         if fuel_consumed < outer_capacity:
@@ -205,9 +215,9 @@ class FuelDistributionCalculator:
             # Distribution: Outer depleting proportionally, Inner and Center full
             tanks[1] = outer_remaining * outer_tank_1_ratio     # m_1 proportional to capacity
             tanks[3] = outer_remaining * (1.0 - outer_tank_1_ratio)  # m_3 remaining
-            tanks[0] = TANK_CAPACITY_KG[0]                      # m_0 = m_max,0 (full)
-            tanks[2] = TANK_CAPACITY_KG[2]                      # m_2 = m_max,2 (full)
-            tanks[4] = TANK_CAPACITY_KG[4]                      # m_4 = m_max,4 (full)
+            tanks[0] = self.tank_capacity_kg[0]                      # m_0 = m_max,0 (full)
+            tanks[2] = self.tank_capacity_kg[2]                      # m_2 = m_max,2 (full)
+            tanks[4] = self.tank_capacity_kg[4]                      # m_4 = m_max,4 (full)
         
         elif fuel_consumed < outer_capacity + inner_capacity:
             # ────────────────────────────────────────────────────────────────
@@ -221,7 +231,7 @@ class FuelDistributionCalculator:
             tanks[3] = 0.0                                       # m_3 = 0 (empty)
             tanks[0] = inner_remaining * inner_tank_0_ratio     # m_0 proportional to capacity
             tanks[2] = inner_remaining * (1.0 - inner_tank_0_ratio)  # m_2 remaining
-            tanks[4] = TANK_CAPACITY_KG[4]                      # m_4 = m_max,4 (full)
+            tanks[4] = self.tank_capacity_kg[4]                      # m_4 = m_max,4 (full)
         
         else:
             # ────────────────────────────────────────────────────────────────
@@ -263,16 +273,16 @@ class FuelDistributionCalculator:
         tanks = {i: 0.0 for i in range(5)}
         
         # Fuel consumed: Δm_fuel = m_fuel,total - m_fuel,remaining
-        fuel_consumed = TOTAL_CAPACITY_KG - fuel_remaining
+        fuel_consumed = self.total_capacity_kg - fuel_remaining
         
         # Tank group capacities (volume-based, per-tank)
-        center_capacity = TANK_CAPACITY_KG[4]                        # m_center = m_4
-        inner_capacity = TANK_CAPACITY_KG[0] + TANK_CAPACITY_KG[2]  # m_inner = m_0 + m_2
-        outer_capacity = TANK_CAPACITY_KG[1] + TANK_CAPACITY_KG[3]  # m_outer = m_1 + m_3
+        center_capacity = self.tank_capacity_kg[4]                        # m_center = m_4
+        inner_capacity = self.tank_capacity_kg[0] + self.tank_capacity_kg[2]  # m_inner = m_0 + m_2
+        outer_capacity = self.tank_capacity_kg[1] + self.tank_capacity_kg[3]  # m_outer = m_1 + m_3
         
         # Proportional distribution factors for tanks within groups
-        inner_tank_0_ratio = TANK_CAPACITY_KG[0] / inner_capacity if inner_capacity > 0 else 0.5
-        outer_tank_1_ratio = TANK_CAPACITY_KG[1] / outer_capacity if outer_capacity > 0 else 0.5
+        inner_tank_0_ratio = self.tank_capacity_kg[0] / inner_capacity if inner_capacity > 0 else 0.5
+        outer_tank_1_ratio = self.tank_capacity_kg[1] / outer_capacity if outer_capacity > 0 else 0.5
         
         # Phase determination via consumed fuel thresholds
         if fuel_consumed < center_capacity:
@@ -283,10 +293,10 @@ class FuelDistributionCalculator:
             
             # Distribution: Center depleting, Inner and Outer full
             tanks[4] = center_remaining                            # m_4 = m_center,rem
-            tanks[0] = TANK_CAPACITY_KG[0]                         # m_0 = m_max,0 (full)
-            tanks[2] = TANK_CAPACITY_KG[2]                         # m_2 = m_max,2 (full)
-            tanks[1] = TANK_CAPACITY_KG[1]                         # m_1 = m_max,1 (full)
-            tanks[3] = TANK_CAPACITY_KG[3]                         # m_3 = m_max,3 (full)
+            tanks[0] = self.tank_capacity_kg[0]                         # m_0 = m_max,0 (full)
+            tanks[2] = self.tank_capacity_kg[2]                         # m_2 = m_max,2 (full)
+            tanks[1] = self.tank_capacity_kg[1]                         # m_1 = m_max,1 (full)
+            tanks[3] = self.tank_capacity_kg[3]                         # m_3 = m_max,3 (full)
         
         elif fuel_consumed < center_capacity + inner_capacity:
             # ────────────────────────────────────────────────────────────────
@@ -299,8 +309,8 @@ class FuelDistributionCalculator:
             tanks[4] = 0.0                                         # m_4 = 0 (empty)
             tanks[0] = inner_remaining * inner_tank_0_ratio        # m_0 proportional to capacity
             tanks[2] = inner_remaining * (1.0 - inner_tank_0_ratio)  # m_2 remaining
-            tanks[1] = TANK_CAPACITY_KG[1]                         # m_1 = m_max,1 (full)
-            tanks[3] = TANK_CAPACITY_KG[3]                         # m_3 = m_max,3 (full)
+            tanks[1] = self.tank_capacity_kg[1]                         # m_1 = m_max,1 (full)
+            tanks[3] = self.tank_capacity_kg[3]                         # m_3 = m_max,3 (full)
         
         else:
             # ────────────────────────────────────────────────────────────────
@@ -335,12 +345,12 @@ class FuelDistributionCalculator:
         tanks = {i: 0.0 for i in range(5)}
         
         # Total capacity: Σm_max,i
-        total_capacity = sum(TANK_CAPACITY_KG.values())
+        total_capacity = sum(self.tank_capacity_kg.values())
         
         if total_capacity > 0:
             # Proportional distribution: m_i = m_fuel × (m_max,i / Σm_max)
             for tank_id in range(5):
-                capacity_ratio = TANK_CAPACITY_KG[tank_id] / total_capacity
+                capacity_ratio = self.tank_capacity_kg[tank_id] / total_capacity
                 tanks[tank_id] = fuel_remaining * capacity_ratio
         else:
             # Fallback: uniform distribution (should not occur)
@@ -407,7 +417,7 @@ class FuelDistributionCalculator:
         Returns:
             Δm_fuel [kg]: fuel consumed
         """
-        return TOTAL_CAPACITY_KG - fuel_remaining
+        return self.total_capacity_kg - fuel_remaining
     
     def clear_cache(self):
         """Clear distribution cache for memory management."""
@@ -428,7 +438,7 @@ class FuelHistoryTracker:
     pure function semantics for CG computation.
     """
     
-    def __init__(self, scenario: ConsumptionScenario):
+    def __init__(self, scenario: ConsumptionScenario, total_capacity_kg: float):
         """
         Initialize history arrays.
         
@@ -436,6 +446,7 @@ class FuelHistoryTracker:
             scenario: ConsumptionScenario - depletion order identifier
         """
         self.scenario = scenario
+        self.total_capacity_kg = total_capacity_kg
         
         # Time-series arrays
         self.cg_history: List[float] = []                              # x_CG(t) [m]
@@ -473,7 +484,7 @@ class FuelHistoryTracker:
                 return
         
         # Compute fuel consumed: Δm_fuel = m_fuel,total - m_fuel,remaining
-        fuel_consumed = TOTAL_CAPACITY_KG - fuel_remaining
+        fuel_consumed = self.total_capacity_kg - fuel_remaining
         
         # Append to time series
         self.cg_history.append(cg_x)
@@ -555,7 +566,7 @@ class FuelSystem:
     Primary API: calculate_cg_x(m_total, record_history) → x_CG
     """
     
-    def __init__(self, scenario: ConsumptionScenario = "OUTER_FIRST"):
+    def __init__(self, scenario: ConsumptionScenario = "OUTER_FIRST", initial_fuel_kg: float = TOTAL_CAPACITY_KG):
         """
         Initialize fuel system with consumption scenario.
         
@@ -563,9 +574,9 @@ class FuelSystem:
             scenario: ConsumptionScenario - depletion sequence
         """
         self.scenario = scenario
-        self.calculator = FuelDistributionCalculator(scenario)
-        self.history_tracker = FuelHistoryTracker(scenario)
-        self.initial_fuel_kg = TOTAL_CAPACITY_KG  # m_fuel,0 [kg]: effective initial fuel capacity
+        self.initial_fuel_kg = initial_fuel_kg  # m_fuel,0 [kg]: effective initial fuel capacity
+        self.calculator = FuelDistributionCalculator(scenario, total_capacity_kg=self.initial_fuel_kg)
+        self.history_tracker = FuelHistoryTracker(scenario, total_capacity_kg=self.initial_fuel_kg)
     
     def calculate_cg_x(self, current_weight_kg: float, record_history: bool = False) -> float:
         """
@@ -592,7 +603,7 @@ class FuelSystem:
         fuel_remaining = current_weight_kg - W_OE_KG - W_PL_KG
         
         # Clamp to physical bounds: m_fuel ∈ [0, m_fuel,max]
-        fuel_remaining = max(0.0, min(fuel_remaining, TOTAL_CAPACITY_KG))
+        fuel_remaining = max(0.0, min(fuel_remaining, self.initial_fuel_kg))
         
         # Compute CG position
         cg_x = self.calculator.calculate_cg_x(fuel_remaining)
@@ -677,7 +688,7 @@ class FuelSystem:
         """Query current tank distribution from history endpoint."""
         if len(self.history_tracker.fuel_remaining_history) == 0:
             # Initial state: all tanks at full capacity
-            return TANK_CAPACITY_KG.copy()
+            return self.calculator.tank_capacity_kg.copy()
         latest_fuel_remaining = self.history_tracker.fuel_remaining_history[-1]
         return self.calculator.calculate_distribution(latest_fuel_remaining)
     
@@ -713,7 +724,10 @@ class FuelSystem:
 # Global fuel system instance (singleton pattern)
 _fuel_system: Optional[FuelSystem] = None
 
-def _get_fuel_system(scenario: Optional[ConsumptionScenario] = None) -> FuelSystem:
+def _get_fuel_system(
+    scenario: Optional[ConsumptionScenario] = None,
+    initial_fuel_kg: Optional[float] = None
+) -> FuelSystem:
     """
     Access or instantiate global fuel system singleton.
     
@@ -742,18 +756,26 @@ def _get_fuel_system(scenario: Optional[ConsumptionScenario] = None) -> FuelSyst
     else:
         scenario = config_scenario
     
+    # Determine effective initial fuel
+    effective_initial_fuel = initial_fuel_kg if initial_fuel_kg is not None else TOTAL_CAPACITY_KG
+    
     # Singleton instantiation
     if _fuel_system is None:
-        print(f"[CG_SYSTEM] Initializing fuel system: scenario={scenario}, m_fuel,0={TOTAL_CAPACITY_KG:.3f} kg")
-        if TOTAL_CAPACITY_KG < W_FUEL_KG - 1e-6:
-            print(f"[CG_SYSTEM] Note: Effective capacity ({TOTAL_CAPACITY_KG:.3f} kg) < W_FUEL_KG ({W_FUEL_KG:.3f} kg) due to tank volume limits")
-        _fuel_system = FuelSystem(scenario=scenario)
+        print(f"[CG_SYSTEM] Initializing fuel system: scenario={scenario}, m_fuel,0={effective_initial_fuel:.3f} kg")
+        if effective_initial_fuel < W_FUEL_KG - 1e-6:
+            print(f"[CG_SYSTEM] Note: Effective capacity ({effective_initial_fuel:.3f} kg) < W_FUEL_KG ({W_FUEL_KG:.3f} kg) due to tank volume limits")
+        _fuel_system = FuelSystem(scenario=scenario, initial_fuel_kg=effective_initial_fuel)
     else:
         # Validate scenario consistency
         if _fuel_system.scenario != scenario:
             print(f"[CG_WARNING] Scenario change detected: '{_fuel_system.scenario}' → '{scenario}'")
             print(f"[CG_WARNING] Reinitializing fuel system")
-            _fuel_system = FuelSystem(scenario=scenario)
+            _fuel_system = FuelSystem(scenario=scenario, initial_fuel_kg=effective_initial_fuel)
+        else:
+            # If an override fuel is provided and differs, reinitialize
+            if abs(_fuel_system.initial_fuel_kg - effective_initial_fuel) > 1e-6:
+                print(f"[CG_SYSTEM] Reinitializing fuel system with updated initial fuel: {effective_initial_fuel:.3f} kg")
+                _fuel_system = FuelSystem(scenario=scenario, initial_fuel_kg=effective_initial_fuel)
     
     return _fuel_system
 
@@ -762,7 +784,8 @@ def _get_fuel_system(scenario: Optional[ConsumptionScenario] = None) -> FuelSyst
 # ========================================================================
 
 def record_mission_history(climb_result=None, cruise_result=None, descent_result=None,
-                          scenario: Optional[ConsumptionScenario] = None) -> None:
+                          scenario: Optional[ConsumptionScenario] = None,
+                          initial_fuel_kg: Optional[float] = None) -> None:
     """
     Populate history from mission trajectory m_total(t) arrays.
     
@@ -782,7 +805,7 @@ def record_mission_history(climb_result=None, cruise_result=None, descent_result
         descent_result: Object with mass_kg array (optional)
         scenario: ConsumptionScenario (optional, uses config default)
     """
-    fuel_system = _get_fuel_system(scenario)
+    fuel_system = _get_fuel_system(scenario, initial_fuel_kg=initial_fuel_kg)
     
     # ────────────────────────────────────────────────────────────────────
     # Climb Phase Recording
@@ -831,3 +854,14 @@ def get_fuel_tank_status() -> Dict[str, Any]:
     """
     fuel_system = _get_fuel_system()
     return fuel_system.get_current_status()
+
+
+def initialize_fuel_system(initial_fuel_kg: Optional[float] = None,
+                           scenario: Optional[ConsumptionScenario] = None) -> None:
+    """
+    Initialize or reinitialize the global fuel system with an explicit fuel load.
+    
+    This helper lets callers (e.g., per-iteration optimizers) set the initial fuel
+    used by CG calculations without altering the default mission configuration.
+    """
+    _get_fuel_system(scenario=scenario, initial_fuel_kg=initial_fuel_kg)

@@ -1249,23 +1249,6 @@ class ClimbingCore:
         else:
             return "Within Envelope"
     
-    
-# ========================================================================
-# Import Plotting Configuration (after ClimbingCore definition)
-# ========================================================================
-# Deferred import to avoid circular dependency: climb_plotting imports ClimbingCore
-import sys
-from pathlib import Path
-_codes_dir = Path(__file__).parent
-_root_dir = _codes_dir.parent
-_original_path = sys.path.copy()
-if str(_root_dir) in sys.path:
-    sys.path.remove(str(_root_dir))
-try:
-    from climb_plotting import PlottingConfig, GridConfig, GridAndPlotting
-finally:
-    sys.path[:] = _original_path
-
 # ========================================================================
 # SECTION 4: SYSTEM UTILITIES
 # ========================================================================
