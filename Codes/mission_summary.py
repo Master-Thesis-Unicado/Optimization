@@ -1022,7 +1022,7 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     if save_to_optimized:
         run_dir = get_or_create_run_directory(phase="Optimized")
     else:
-        run_dir = get_or_create_run_directory(phase="MissionSummary")
+        run_dir = get_or_create_run_directory(phase="Mission Summary")
     output_path_html = os.path.join(run_dir, 'mission_summary_dashboard.html')
     output_path_png = os.path.join(run_dir, 'mission_summary_dashboard.png')
     

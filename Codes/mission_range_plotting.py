@@ -566,12 +566,11 @@ class RangeOptimizationVisualization:
             """
             Generate and export all phase plots for converged mission.
             
-            Directory structure:
-                base_output_dir/
-                    Climb/          - climb phase plots
-                    Cruise/         - cruise phase plots
-                    Descent/        - descent phase plots
-                    Mission_Summary/ - combined mission analysis
+            Plots are saved to timestamped directories via get_or_create_run_directory():
+                Images/YYYY-MM-DD_HH-MM-SS/Climb/          - climb phase plots
+                Images/YYYY-MM-DD_HH-MM-SS/Cruise/         - cruise phase plots
+                Images/YYYY-MM-DD_HH-MM-SS/Descent/        - descent phase plots
+                Images/YYYY-MM-DD_HH-MM-SS/Mission Summary/ - combined mission analysis
             
             Parameters:
                 climb_result: MinFuelSchedule - climb trajectory
@@ -582,7 +581,7 @@ class RangeOptimizationVisualization:
                 aero: aerodynamics model
                 engine: propulsion model
                 initial_mass_kg: m_0 [kg] - initial mass
-                base_output_dir: Path - output directory root
+                base_output_dir: Path - output directory root (legacy parameter, not used)
             """
             print("\n" + "="*80)
             print("SAVING CONVERGED MISSION PHASE PLOTS")
@@ -597,32 +596,24 @@ class RangeOptimizationVisualization:
                 print(f"[WARNING] Could not import phase plotting functions: {e}")
                 return
             
-            climb_dir = base_output_dir / "Climb"
-            cruise_dir = base_output_dir / "Cruise"
-            descent_dir = base_output_dir / "Descent"
-            mission_dir = base_output_dir / "Mission_Summary"
-            
-            for directory in [climb_dir, cruise_dir, descent_dir, mission_dir]:
-                directory.mkdir(parents=True, exist_ok=True)
-            
             print(f"\n[CLIMB] Generating and saving climb phase plots...")
             try:
                 plot_climb_performance_2d(climb_result, climb_info)
-                print(f"[CLIMB] Climb plots saved to: {climb_dir}")
+                print(f"[CLIMB] Climb plots saved successfully")
             except Exception as e:
                 print(f"[ERROR] Failed to save climb plots: {e}")
             
             print(f"\n[CRUISE] Generating and saving cruise phase plots...")
             try:
                 plot_cruise_performance_2d(cruise_result)
-                print(f"[CRUISE] Cruise plots saved to: {cruise_dir}")
+                print(f"[CRUISE] Cruise plots saved successfully")
             except Exception as e:
                 print(f"[ERROR] Failed to save cruise plots: {e}")
             
             print(f"\n[DESCENT] Generating and saving descent phase plots...")
             try:
                 plot_descent_trajectory_interactive(descent_result)
-                print(f"[DESCENT] Descent plots saved to: {descent_dir}")
+                print(f"[DESCENT] Descent plots saved successfully")
             except Exception as e:
                 print(f"[ERROR] Failed to save descent plots: {e}")
             
@@ -633,7 +624,7 @@ class RangeOptimizationVisualization:
                     cruise_result=cruise_result,
                     descent_result=descent_result,
                     initial_mass_kg=initial_mass_kg,
-                    save_to_optimized=True
+                    save_to_optimized=False
                 )
                 
                 plot_combined_performance_analysis(
@@ -641,9 +632,9 @@ class RangeOptimizationVisualization:
                     cruise_result=cruise_result,
                     descent_result=descent_result,
                     initial_mass_kg=initial_mass_kg,
-                    save_to_optimized=True
+                    save_to_optimized=False
                 )
-                print(f"[MISSION] Mission summary saved to: {mission_dir}")
+                print(f"[MISSION] Mission summary saved to Mission Summary folder")
             except Exception as e:
                 print(f"[ERROR] Failed to save mission summary: {e}")
             
