@@ -270,7 +270,7 @@ ENABLE_CRUISE_CLIMB = False                         # Boolean: enable cruise cli
 # ────────────────────────────────────────────────────────────────────────────
 # Export Features
 # ────────────────────────────────────────────────────────────────────────────
-ENABLE_EXCEL_EXPORT = False                         # Boolean: enable Excel export of mission data
+ENABLE_EXCEL_EXPORT = True                         # Boolean: enable Excel export of mission data
 
 
 # ========================================================================
@@ -290,7 +290,7 @@ E_DOT_CMD_CLIMB = 14                                # Ė_cmd [m/s]: specific ene
 # ────────────────────────────────────────────────────────────────────────────
 # 8.2: Cruise Phase - Basic Mission Parameters
 # ────────────────────────────────────────────────────────────────────────────
-CRUISE_DISTANCE_KM = 3700                           # s_cruise [km]: cruise distance
+CRUISE_DISTANCE_KM = 3745.91                          # For 3768km cruise for 4000km range, s_cruise [km]: cruise distance
 CRUISE_TIME_STEP_S = 0.1                            # Δt [s]: integration time step
 
 # ────────────────────────────────────────────────────────────────────────────
@@ -315,7 +315,7 @@ Includes range matching and fuel optimization convergence criteria.
 # 9.1: Range Optimization (Iterative Distance Matching)
 # ────────────────────────────────────────────────────────────────────────────
 TARGET_MISSION_RANGE_KM = 4000                    # s_target [km]: target total range
-INITIAL_CRUISE_DISTANCE_KM = 3700.0                 # s_cruise,0 [km]: initial cruise estimate
+INITIAL_CRUISE_DISTANCE_KM = 3740.0                 # s_cruise,0 [km]: initial cruise estimate
 RANGE_OPTIMIZATION_TOLERANCE_KM = 3.0               # ε_range [km]: convergence tolerance
 MAX_RANGE_OPTIMIZATION_ITERATIONS = 15              # N_iter,max: iteration limit
 RANGE_OPTIMIZATION_DAMPING_FACTOR = 0.75            # α_damp ∈ [0,1]: adjustment damping

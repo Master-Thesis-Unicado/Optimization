@@ -266,7 +266,7 @@ def main():
         cruise_final_mass_kg = float(cruise_results.mass_kg[-1])
         cruise_fuel_consumed_kg = float(cruise_results.total_fuel_consumed_kg)
         
-        print(f"\n[MASS] Phase-wise mass tracking:")
+        print(f"\n[MASS] Phase-wise mass tracking (Iteration {iteration}):")
         print(f"  Initial takeoff mass: {INITIAL_MASS_KG:.2f} kg")
         print(f"  Climb ending mass:    {climb_final_mass_kg:.2f} kg (burned {climb_fuel:.2f} kg)")
         print(f"  Cruise starting mass: {cruise_initial_mass_kg:.2f} kg")
@@ -279,9 +279,17 @@ def main():
         
         print(f"  Cruise ending mass:   {cruise_final_mass_kg:.2f} kg (burned {cruise_fuel_consumed_kg:.2f} kg)")
         print(f"  → Descent will start with mass: {cruise_final_mass_kg:.2f} kg")
+        print(f"[VERIFY] Cruise final mass extracted: {cruise_results.mass_kg[-1]:.6f} kg (array) = {cruise_final_mass_kg:.6f} kg (float)")
         
         # ========= DESCENT PHASE OPTIMIZATION =================================
-        print(f"\n[DESCENT] Descent optimization executing with initial mass {cruise_final_mass_kg:.2f} kg")
+        print(f"\n[DESCENT] Descent optimization executing (Iteration {iteration})")
+        print(f"[DESCENT] Cruise results final mass: {cruise_results.mass_kg[-1]:.6f} kg")
+        print(f"[DESCENT] Cruise results final altitude: {cruise_results.altitude_m[-1]:.6f} m")
+        print(f"[DESCENT] Cruise results final Mach: {cruise_results.mach_number[-1]:.6f}")
+        print(f"[DESCENT] Descent initial mass target: {cruise_final_mass_kg:.6f} kg")
+        
+        # Store cruise final mass before descent optimization for verification
+        cruise_mass_before_descent = cruise_results.mass_kg[-1]
         
         try:
             descent_results, descent_info = run_descent_optimization(
@@ -297,6 +305,13 @@ def main():
                 lever_samples=N_LEVER_SAMPLES_DESCENT
             )
             
+            # Verify that cruise_results was not modified by descent optimization
+            cruise_mass_after_descent = cruise_results.mass_kg[-1]
+            if abs(cruise_mass_before_descent - cruise_mass_after_descent) > 1e-6:
+                print(f"[WARNING] Cruise results mass changed during descent optimization!")
+                print(f"  Before: {cruise_mass_before_descent:.6f} kg")
+                print(f"  After: {cruise_mass_after_descent:.6f} kg")
+            
             descent_initial_mass_kg = float(descent_results.mass_kg[0]) if len(descent_results.mass_kg) > 0 else cruise_final_mass_kg
             descent_final_mass_kg = float(descent_results.final_mass_kg)
             descent_fuel_kg = float(descent_results.total_fuel_consumed_kg)
@@ -304,11 +319,14 @@ def main():
             mass_continuity_error = abs(descent_initial_mass_kg - cruise_final_mass_kg)
             if mass_continuity_error > 0.1:
                 print(f"[WARNING] Mass continuity issue detected")
-                print(f"  Cruise final mass: {cruise_final_mass_kg:.2f} kg")
-                print(f"  Descent initial mass: {descent_initial_mass_kg:.2f} kg")
-                print(f"  Difference: {mass_continuity_error:.2f} kg")
+                print(f"  Cruise final mass: {cruise_final_mass_kg:.6f} kg")
+                print(f"  Descent initial mass: {descent_initial_mass_kg:.6f} kg")
+                print(f"  Difference: {mass_continuity_error:.6f} kg")
             else:
                 print(f"[MASS] Mass continuity verified: Descent initial mass matches cruise final mass")
+                print(f"  Cruise final mass: {cruise_final_mass_kg:.6f} kg")
+                print(f"  Descent initial mass: {descent_initial_mass_kg:.6f} kg")
+                print(f"  Mass continuity error: {mass_continuity_error:.6f} kg")
             
             print(f"  Descent ending mass: {descent_final_mass_kg:.2f} kg (burned {descent_fuel_kg:.2f} kg)")
             
@@ -322,6 +340,17 @@ def main():
             cruise_result=cruise_results,
             descent_result=descent_results
         )
+        
+        # ========= DIAGNOSTIC: Verify descent distance calculation ============
+        print(f"\n[DIAGNOSTIC] Distance breakdown (Iteration {iteration}):")
+        print(f"  Climb distance:   {distance_breakdown['climb_km']:.6f} km")
+        print(f"  Cruise distance:  {distance_breakdown['cruise_km']:.6f} km")
+        print(f"  Descent distance: {distance_breakdown['descent_km']:.6f} km")
+        print(f"  Total distance:   {distance_breakdown['total_km']:.6f} km")
+        print(f"[DIAGNOSTIC] Descent initial mass used: {descent_initial_mass_kg:.6f} kg")
+        print(f"[DIAGNOSTIC] Descent trajectory points: {len(descent_results.mass_kg)}")
+        if len(descent_results.mass_kg) > 0:
+            print(f"[DIAGNOSTIC] Descent mass range: {descent_results.mass_kg[0]:.6f} kg → {descent_results.mass_kg[-1]:.6f} kg")
         
         # ========= CHECK CONVERGENCE ==========================================
         converged, error_km = optimizer.check_convergence(total_distance_km)

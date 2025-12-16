@@ -632,14 +632,16 @@ class RangeOptimizationVisualization:
                     climb_result=climb_result,
                     cruise_result=cruise_result,
                     descent_result=descent_result,
-                    initial_mass_kg=initial_mass_kg
+                    initial_mass_kg=initial_mass_kg,
+                    save_to_optimized=True
                 )
                 
                 plot_combined_performance_analysis(
                     climb_result=climb_result,
                     cruise_result=cruise_result,
                     descent_result=descent_result,
-                    initial_mass_kg=initial_mass_kg
+                    initial_mass_kg=initial_mass_kg,
+                    save_to_optimized=True
                 )
                 print(f"[MISSION] Mission summary saved to: {mission_dir}")
             except Exception as e:
