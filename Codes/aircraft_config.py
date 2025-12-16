@@ -37,16 +37,16 @@ class SystemConfiguration:
     # ────────────────────────────────────────────────────────────────────
     
     # Operating Empty Weight (m_OE) components
-    W_AIRFRAME_KG = 35850.0   # m_airframe [kg]: airframe structure
+    W_AIRFRAME_KG = 33450.0   # m_airframe [kg]: airframe structure
     W_PROPULSION_KG = 11950.0 # m_propulsion [kg]: propulsion system
     W_SYSTEMS_KG = 9554.0     # m_systems [kg]: avionics and systems
     
     # Payload parameters
-    PAYLOAD_PER_PERSON_KG = 80  # m_pax [kg]: mass per passenger
+    PAYLOAD_PER_PERSON_KG = 120  # m_pax [kg]: mass per passenger
     DEFAULT_PASSENGERS = 60     # N_pax [-]: passenger capacity
     
     # Fuel capacity
-    W_FUEL_KG = 14500   # m_fuel,max [kg]: usable fuel capacity (Jet A-1)
+    W_FUEL_KG = 14500   # m_fuel [kg]: usable fuel capacity 
     
     # Computed mass properties
     @property

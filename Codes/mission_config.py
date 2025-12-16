@@ -189,12 +189,12 @@ PENALTY_CLIMB_LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER = 20.0  # α_ultra
 # 5.3: Descent Phase - Mach Trajectory Guidance
 # ────────────────────────────────────────────────────────────────────────────
 PENALTY_DESCENT_MACH_TRAJECTORY_GUIDANCE = True     # Enable Mach guidance
-PENALTY_DESCENT_TARGET_MACH_TOLERANCE = 0.030       # tol_M [-]
-PENALTY_DESCENT_MACH_PENALTY_BASE_WEIGHT = 0.5      # w_base [kg/Mach²]
-PENALTY_DESCENT_MAX_REASONABLE_MACH_RATE = 0.018    # dM/dk_max [-]
+PENALTY_DESCENT_TARGET_MACH_TOLERANCE = 0.010       # tol_M [-]  
+PENALTY_DESCENT_MACH_PENALTY_BASE_WEIGHT = 0.15      # w_base [kg/Mach²]    
+PENALTY_DESCENT_MAX_REASONABLE_MACH_RATE = 0.1      # dM/dk_max [-]  
 PENALTY_DESCENT_TOTAL_STEPS_ESTIMATE = N_ALTITUDE_STEPS_DESCENT  # K_total
-PENALTY_DESCENT_URGENCY_MULTIPLIER = 2.5            # α_urgency
-PENALTY_DESCENT_GUIDANCE_PENALTY_WEIGHT = 0.8       # w_guidance
+PENALTY_DESCENT_URGENCY_MULTIPLIER = 1.8            # α_urgency  
+PENALTY_DESCENT_GUIDANCE_PENALTY_WEIGHT = 0.3       # w_guidance  
 
 # ────────────────────────────────────────────────────────────────────────────
 # 5.4: Descent Phase - Lever Penalty System
@@ -202,7 +202,7 @@ PENALTY_DESCENT_GUIDANCE_PENALTY_WEIGHT = 0.8       # w_guidance
 # Penalty function: P(δ) = w·[(δ-δ_MCT)^p + critical terms]
 PENALTY_DESCENT_LEVER_PENALTY_GUIDANCE = True       # Enable lever penalties
 PENALTY_DESCENT_LEVER_PENALTY_WEIGHT = 3.0          # w_lever
-PENALTY_DESCENT_LEVER_PENALTY_THRESHOLD = 0.85      # δ_MCT (85%)
+PENALTY_DESCENT_LEVER_PENALTY_THRESHOLD = 0.75      # δ_MCT (75%) (consistent with climb)
 PENALTY_DESCENT_LEVER_PENALTY_EXPONENT = 3.0        # p
 PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_THRESHOLD = 0.90  # δ_crit (90%)
 PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_MULTIPLIER = 5.0  # α_crit
@@ -290,7 +290,7 @@ E_DOT_CMD_CLIMB = 14                                # Ė_cmd [m/s]: specific ene
 # ────────────────────────────────────────────────────────────────────────────
 # 8.2: Cruise Phase - Basic Mission Parameters
 # ────────────────────────────────────────────────────────────────────────────
-CRUISE_DISTANCE_KM = 3800                           # s_cruise [km]: cruise distance
+CRUISE_DISTANCE_KM = 3700                           # s_cruise [km]: cruise distance
 CRUISE_TIME_STEP_S = 0.1                            # Δt [s]: integration time step
 
 # ────────────────────────────────────────────────────────────────────────────
@@ -314,8 +314,8 @@ Includes range matching and fuel optimization convergence criteria.
 # ────────────────────────────────────────────────────────────────────────────
 # 9.1: Range Optimization (Iterative Distance Matching)
 # ────────────────────────────────────────────────────────────────────────────
-TARGET_MISSION_RANGE_KM = 4537.4                    # s_target [km]: target total range
-INITIAL_CRUISE_DISTANCE_KM = 4278.0                 # s_cruise,0 [km]: initial cruise estimate
+TARGET_MISSION_RANGE_KM = 4000                    # s_target [km]: target total range
+INITIAL_CRUISE_DISTANCE_KM = 3700.0                 # s_cruise,0 [km]: initial cruise estimate
 RANGE_OPTIMIZATION_TOLERANCE_KM = 3.0               # ε_range [km]: convergence tolerance
 MAX_RANGE_OPTIMIZATION_ITERATIONS = 15              # N_iter,max: iteration limit
 RANGE_OPTIMIZATION_DAMPING_FACTOR = 0.75            # α_damp ∈ [0,1]: adjustment damping
