@@ -34,7 +34,7 @@ import time
 
 # Import mission phase modules
 import climb
-from climb import ClimbingCore, MinFuelSchedule
+from climb import ClimbingCore, MinFuelSchedule, create_climb_initial_state
 import cruise
 from cruise import run_cruise_simulation, CruiseResults
 import descent
@@ -238,15 +238,16 @@ class FuelOptimizationCore:
                                 TARGET_ALT_CLIMB_M + uniform_step_size, 
                                 uniform_step_size)
             
+            # Create initial state for climb
+            initial_state = create_climb_initial_state(start_mach=start_mach, mass_kg=initial_mass_kg)
+            
             # Solve 3D DP for climb
             dp_sched, dp_info = ClimbingCore.DynamicProgrammingOptimizer.solve_3d_dp(
-                aero, eng, mach_grid, altitude_sched, 
+                aero, eng, mach_grid, altitude_sched,
+                initial_state=initial_state,
                 lever_samples=lever_samples,
                 target_mach=TARGET_MACH_CRUISE,
-                target_mach_tolerance=TARGET_MACH_TOLERANCE,
-                start_mach=start_mach,
-                start_lever=START_LEVER_CLIMB,
-                mass_kg=initial_mass_kg
+                target_mach_tolerance=TARGET_MACH_TOLERANCE
             )
             
             climb_fuel = float(np.nan_to_num(dp_sched.cumFuel_kg, nan=0.0)[-1])

@@ -20,6 +20,8 @@ from aircraft_config import (
 # Mission parameters: altitude steps, energy rate, penalty coefficients, consolidated parameters
 from mission_config import (
     N_ALTITUDE_STEPS_CLIMB, N_LEVER_SAMPLES_CLIMB, E_DOT_CMD_CLIMB,
+    START_ALTITUDE_CLIMB_M, START_VELOCITY_CLIMB_MS, START_LEVER_CLIMB,
+    TARGET_ALT_CLIMB_M, TARGET_MACH_CRUISE,
     PENALTY_CLIMB_MACH_TRAJECTORY_GUIDANCE, PENALTY_CLIMB_LEVER_PENALTY_GUIDANCE,
     PENALTY_CLIMB_TARGET_MACH_TOLERANCE, PENALTY_CLIMB_MACH_PENALTY_BASE_WEIGHT,
     PENALTY_CLIMB_MAX_REASONABLE_MACH_RATE, PENALTY_CLIMB_TOTAL_STEPS_ESTIMATE,
@@ -56,12 +58,36 @@ from mission_utils import (
     calculate_time_from_altitude_change,
     calculate_time_from_velocity_change,
     build_time_array_from_segments,
-    find_closest_index
+    find_closest_index,
+    mach_from_velocity
 )
 
 # ========================================================================
 # SECTION 2: DATA STRUCTURES
 # ========================================================================
+
+@dataclass
+class ClimbInitialState:
+    """
+    Initial state vector for climb phase from takeoff.
+    
+    State: X_0 = (h_0, M_0, m_0) at takeoff
+    """
+    altitude_m: float                  # h_0 [m]: initial altitude
+    mach: float                        # M_0 [-]: initial Mach number
+    mass_kg: float                     # m_0 [kg]: aircraft mass at climb start
+    lever: float                       # δ_0 [-]: initial throttle position
+    
+    def __post_init__(self):
+        """Validate state: h >= 0, M in safe range, m > 0, lever in [0,1]."""
+        if self.altitude_m < 0:
+            raise ValueError(f"Initial altitude {self.altitude_m:.0f}m must be non-negative")
+        if not (M_MIN_EFFECTIVE <= self.mach <= M_MMO):
+            raise ValueError(f"Initial Mach {self.mach:.3f} outside safe range [{M_MIN_EFFECTIVE}, {M_MMO}]")
+        if self.mass_kg <= 0:
+            raise ValueError(f"Mass must be positive: {self.mass_kg:.1f} kg")
+        if not (LEVER_MIN <= self.lever <= LEVER_MAX):
+            raise ValueError(f"Initial lever {self.lever:.3f} outside range [{LEVER_MIN}, {LEVER_MAX}]")
 
 @dataclass
 class MinFuelSchedule:
@@ -333,12 +359,10 @@ class ClimbingCore:
         @staticmethod
         def solve_3d_dp(aero: PyAerodynamicsWrapper, engine: EngineWrapper,
                         mach_grid: np.ndarray, altitude_sched: np.ndarray,
+                        initial_state: ClimbInitialState,
                         lever_samples: int = N_LEVER_SAMPLES_CLIMB,
                         target_mach: float = None,
-                        target_mach_tolerance: float = PENALTY_CLIMB_TARGET_MACH_TOLERANCE,
-                        start_mach: float = None,
-                        start_lever: float = None,
-                        mass_kg: float = None):
+                        target_mach_tolerance: float = PENALTY_CLIMB_TARGET_MACH_TOLERANCE):
             """
             Solve 3D Bellman equation for optimal climb trajectory.
             
@@ -354,20 +378,15 @@ class ClimbingCore:
                 engine: EngineWrapper - thrust model T(δ,M,h)
                 mach_grid: np.ndarray - M_i, i=1..I (Mach discretization)
                 altitude_sched: np.ndarray - h_k, k=1..K (altitude schedule)
+                initial_state: ClimbInitialState - X_0 from takeoff
                 lever_samples: int - number of throttle positions L
                 target_mach: float - M_target at h_final (optional)
                 target_mach_tolerance: float - terminal Mach tolerance
-                start_mach: float - M_0 at h_0 (optional, default M_min)
-                start_lever: float - δ_0 at h_0 (optional, default 0)
-                mass_kg: float - m_0 [kg] initial mass (optional)
             
             Returns:
                 MinFuelSchedule: optimal trajectory X*(k)
                 dict: optimization metadata (costs, path length, time)
             """
-            # Lazy import for GridConfig (avoids circular dependency)
-            from climb_plotting import GridConfig
-            
             # Grid dimensions: K altitude levels, I Mach points, L lever positions
             K, I = len(altitude_sched), len(mach_grid)
             L = lever_samples
@@ -380,44 +399,35 @@ class ClimbingCore:
             weight_matrix = np.full((K, I, L), np.nan)  # m[k,i,j]: mass [kg]
             prv = np.full((K, I, L, 3), -1, dtype=int)  # predecessor[k,i,j] = [k',i',j']
         
-            # Determine initial state indices (M_0, δ_0)
-            if start_mach is not None:
-                start_mach_idx = find_closest_index(start_mach, mach_grid)
-                actual_start_mach = mach_grid[start_mach_idx]
-                dbg(f"[3D-DP] Initial Mach: M_0 = {actual_start_mach:.3f} (requested {start_mach:.3f})")
-            else:
-                start_mach_idx = 0  # Default: M_0 = M_min
+            # Determine initial state indices from ClimbInitialState
+            start_mach_idx = find_closest_index(initial_state.mach, mach_grid)
+            start_lever_idx = find_closest_index(initial_state.lever, lever_grid)
+            actual_start_mach = mach_grid[start_mach_idx]
+            actual_start_lever = lever_grid[start_lever_idx]
             
-            if start_lever is not None:
-                start_lever_idx = find_closest_index(start_lever, lever_grid)
-                actual_start_lever = lever_grid[start_lever_idx]
-                dbg(f"[3D-DP] Initial lever: δ_0 = {actual_start_lever:.3f} (requested {start_lever:.3f})")
-            else:
-                start_lever_idx = 0  # Default: δ_0 = 0
+            dbg(f"[3D-DP] Initial Mach: M_0 = {actual_start_mach:.3f} (requested {initial_state.mach:.3f})")
+            dbg(f"[3D-DP] Initial lever: δ_0 = {actual_start_lever:.3f} (requested {initial_state.lever:.3f})")
             
             # Validate initial state X_0 = (h_0, M_0, δ_0)
-            if (mach_grid[start_mach_idx] >= M_MIN_EFFECTIVE and 
-                mach_grid[start_mach_idx] <= M_MMO and
-                lever_grid[start_lever_idx] >= LEVER_MIN and 
-                lever_grid[start_lever_idx] <= LEVER_MAX):
+            if (actual_start_mach >= M_MIN_EFFECTIVE and 
+                actual_start_mach <= M_MMO and
+                actual_start_lever >= LEVER_MIN and 
+                actual_start_lever <= LEVER_MAX):
                 
-                # Compute altitude fraction for penalty system
-                altitude_fraction = altitude_sched[0] / GridConfig.TARGET_ALT_M if GridConfig.TARGET_ALT_M > 0 else 0.0
-                
-                # Set initial mass m_0
-                initial_mass = mass_kg if mass_kg is not None else INITIAL_MASS_KG
+                # Compute climb progress fraction (step-based, consistent with descent)
+                climb_fraction = 0.0  # Initial step: k=0
                 
                 # Verify feasibility via cost computation
-                cost = ClimbingCore.compute_cost(aero, engine, altitude_sched[0], mach_grid[start_mach_idx], lever_grid[start_lever_idx],
-                                                  target_mach=target_mach, prev_mach=None, altitude_fraction=altitude_fraction, mass_kg=initial_mass)
+                cost = ClimbingCore.compute_cost(aero, engine, altitude_sched[0], actual_start_mach, actual_start_lever,
+                                                  initial_state.mass_kg, target_mach=target_mach, prev_mach=None, climb_fraction=climb_fraction)
                 if np.isfinite(cost) and cost > 0:
                     F[0, start_mach_idx, start_lever_idx] = 0.0  # Boundary condition: F[0] = 0
-                    weight_matrix[0, start_mach_idx, start_lever_idx] = initial_mass
-                    dbg(f"[3D-DP] Initial state validated: h_0={altitude_sched[0]:.0f}m, M_0={mach_grid[start_mach_idx]:.3f}, δ_0={lever_grid[start_lever_idx]:.3f}, m_0={initial_mass:.0f}kg")
+                    weight_matrix[0, start_mach_idx, start_lever_idx] = initial_state.mass_kg
+                    dbg(f"[3D-DP] Initial state validated: h_0={altitude_sched[0]:.0f}m, M_0={actual_start_mach:.3f}, δ_0={actual_start_lever:.3f}, m_0={initial_state.mass_kg:.0f}kg")
                 else:
                     raise RuntimeError(f"[3D-DP] Initial state infeasible: cost={cost}")
             else:
-                raise RuntimeError(f"[3D-DP] Initial state violates bounds: M={mach_grid[start_mach_idx]:.3f}, δ={lever_grid[start_lever_idx]:.3f}")
+                raise RuntimeError(f"[3D-DP] Initial state violates bounds: M={actual_start_mach:.3f}, δ={actual_start_lever:.3f}")
             
             if not np.isfinite(F[0, start_mach_idx, start_lever_idx]):
                 raise RuntimeError("[3D-DP] Initialization failed: no feasible starting point")
@@ -431,8 +441,9 @@ class ClimbingCore:
                 next_alt = altitude_sched[k + 1]     # h_{k+1} [m]
                 dh = next_alt - current_alt          # Δh [m]
                 
-                # Progress tracking
+                # Progress tracking (step-based, consistent with descent)
                 climb_fraction = k / (K - 1.0) if K > 1 else 0.0
+                next_climb_fraction = (k + 1) / (K - 1.0) if K > 1 else 1.0
                 if k % DP_PROGRESS_REPORT_INTERVAL == 0:
                     dbg(f"[DP-CLIMB] Altitude level k={k}/{K-1}: h={current_alt:.0f}m → {next_alt:.0f}m (progress: {climb_fraction*100:.1f}%)")
                 
@@ -482,24 +493,21 @@ class ClimbingCore:
                                     # ────────────────────────────────────────────────────────
                                     # Cost Computation with Mass Coupling
                                     # ────────────────────────────────────────────────────────
-                                    # Altitude fractions for penalty system
-                                    current_alt_fraction = current_alt / GridConfig.TARGET_ALT_M if GridConfig.TARGET_ALT_M > 0 else 0.0
-                                    next_alt_fraction = next_alt / GridConfig.TARGET_ALT_M if GridConfig.TARGET_ALT_M > 0 else 0.0
-                                    
+                                    # Climb progress fractions for penalty system (step-based)
                                     prev_mach = mach_grid[i] if k > 0 else None
                                     
                                     # Current state cost: J_k = J(h_k, M_i, δ_j, m_k)
                                     current_cost = ClimbingCore.compute_cost(aero, engine, current_alt, current_mach, current_lever,
-                                                                             target_mach=target_mach, prev_mach=prev_mach, 
-                                                                             altitude_fraction=current_alt_fraction, mass_kg=current_weight)
+                                                                             current_weight, target_mach=target_mach, prev_mach=prev_mach, 
+                                                                             climb_fraction=climb_fraction)
                                     
                                     if not (np.isfinite(current_cost) and current_cost > 0):
                                         continue
                                     
                                     # Next state cost (initial): J_{k+1}^(0) using m_k
                                     next_cost_initial = ClimbingCore.compute_cost(aero, engine, next_alt, next_mach, next_lever,
-                                                                                   target_mach=target_mach, prev_mach=current_mach, 
-                                                                                   altitude_fraction=next_alt_fraction, mass_kg=current_weight)
+                                                                                   current_weight, target_mach=target_mach, prev_mach=current_mach, 
+                                                                                   climb_fraction=next_climb_fraction)
                                     
                                     if not (np.isfinite(next_cost_initial) and next_cost_initial > 0):
                                         continue
@@ -516,8 +524,8 @@ class ClimbingCore:
                                     # Cost refinement: Recompute J_{k+1} with updated mass m_{k+1}
                                     # Accounts for Ps ∝ 1/m → J = ṁ/Ps ∝ m
                                     next_cost_refined = ClimbingCore.compute_cost(aero, engine, next_alt, next_mach, next_lever,
-                                                                                   target_mach=target_mach, prev_mach=current_mach, 
-                                                                                   altitude_fraction=next_alt_fraction, mass_kg=next_weight)
+                                                                                   next_weight, target_mach=target_mach, prev_mach=current_mach, 
+                                                                                   climb_fraction=next_climb_fraction)
                                     
                                     if not (np.isfinite(next_cost_refined) and next_cost_refined > 0):
                                         next_cost = next_cost_initial  # Fallback
@@ -667,8 +675,8 @@ class ClimbingCore:
                 # Cost at current state: J_k [kg/m]
                 current_cost = ClimbingCore.compute_cost(
                     aero, engine, h_curr, M_curr, lever_curr,
-                    target_mach=target_mach, prev_mach=None,
-                    altitude_fraction=None, mass_kg=weight_curr
+                    weight_curr, target_mach=target_mach, prev_mach=None,
+                    climb_fraction=None
                 )
                 
                 if not (np.isfinite(current_cost) and current_cost > 0):
@@ -686,8 +694,8 @@ class ClimbingCore:
                 # Cost at next state using DP mass (weight_next from DP forward pass)
                 next_cost = ClimbingCore.compute_cost(
                     aero, engine, h_next, M_next, lever_next,
-                    target_mach=target_mach, prev_mach=M_curr,
-                    altitude_fraction=None, mass_kg=weight_next
+                    weight_next, target_mach=target_mach, prev_mach=M_curr,
+                    climb_fraction=None
                 )
                 
                 if not (np.isfinite(next_cost) and next_cost > 0):
@@ -865,19 +873,13 @@ class ClimbingCore:
             }
             
             return schedule, info
-        
-        @staticmethod
-        def solve_3d_fixed_mass(*args, **kwargs):
-            """Deprecated: Use solve_3d_dp() instead. Maintained for backward compatibility."""
-            import warnings
-            warnings.warn("solve_3d_fixed_mass() is deprecated, use solve_3d_dp() instead", DeprecationWarning, stacklevel=2)
-            return ClimbingCore.DynamicProgrammingOptimizer.solve_3d_dp(*args, **kwargs)
     
     @staticmethod
     def compute_cost(aero: PyAerodynamicsWrapper, engine: EngineWrapper, 
                        altitude: float, mach: float, lever: float,
+                       mass_kg: float,
                        target_mach: float = None, prev_mach: float = None,
-                       altitude_fraction: float = None, mass_kg: float = None) -> float:
+                       climb_fraction: float = None) -> float:
         """
         Evaluate augmented fuel cost density at state (h, M, δ).
         
@@ -899,18 +901,15 @@ class ClimbingCore:
             altitude: h [m] - altitude
             mach: M [-] - Mach number
             lever: δ [-] - throttle position ∈ [0,1]
+            mass_kg: m [kg] - aircraft mass (required)
             target_mach: M_target [-] - terminal Mach (optional)
             prev_mach: M_prev [-] - previous Mach for smoothness (optional)
-            altitude_fraction: h/h_target [-] - climb progress (optional)
-            mass_kg: m [kg] - aircraft mass (default: m_0)
+            climb_fraction: k/(K-1) [-] - climb progress ∈ [0,1] (step-based)
         
         Returns:
             J_aug [kg/m]: augmented fuel cost density, or ∞ if infeasible
         """
         try:
-            # Mass: use provided value or default to m_0
-            if mass_kg is None:
-                mass_kg = INITIAL_MASS_KG
             
             # Kinematics: V = M · a(h)
             a = a_from_altitude(altitude)
@@ -944,24 +943,17 @@ class ClimbingCore:
             
             # Augmented cost: J_aug = J + penalties
             if target_mach is not None and ClimbingCore.PenaltySystem.MACH_TRAJECTORY_GUIDANCE:
-                mach_penalty = ClimbingCore.PenaltySystem.compute_mach_penalty(mach, target_mach, prev_mach, altitude_fraction)
+                mach_penalty = ClimbingCore.PenaltySystem.compute_mach_penalty(mach, target_mach, prev_mach, climb_fraction)
                 J += mach_penalty
             
             if ClimbingCore.PenaltySystem.LEVER_PENALTY_GUIDANCE:
-                lever_penalty = ClimbingCore.PenaltySystem.compute_lever_penalty(lever, altitude_fraction)
+                lever_penalty = ClimbingCore.PenaltySystem.compute_lever_penalty(lever, climb_fraction)
                 J += lever_penalty
             
             return J
             
         except Exception:
             return np.inf
-    
-    @staticmethod
-    def compute_3d_cost(*args, **kwargs):
-        """Deprecated: Use compute_cost() instead. Maintained for backward compatibility."""
-        import warnings
-        warnings.warn("compute_3d_cost() is deprecated, use compute_cost() instead", DeprecationWarning, stacklevel=2)
-        return ClimbingCore.compute_cost(*args, **kwargs)
     
     # ────────────────────────────────────────────────────────────────────
     # Penalty Functions for Trajectory Guidance
@@ -1002,7 +994,7 @@ class ClimbingCore:
         
         @staticmethod
         def compute_mach_penalty(current_mach: float, target_mach: float, prev_mach: float = None, 
-                                 altitude_fraction: float = None) -> float:
+                                 climb_fraction: float = None) -> float:
             """
             Mach trajectory penalty via reachability corridor.
             
@@ -1023,16 +1015,16 @@ class ClimbingCore:
                 current_mach: M [-] - current Mach
                 target_mach: M_target [-] - terminal Mach
                 prev_mach: unused (kept for API compatibility)
-                altitude_fraction: h/h_target [-] - climb progress ∈ [0,1]
+                climb_fraction: k/(K-1) [-] - climb progress ∈ [0,1] (step-based)
             
             Returns:
                 penalty [kg/m]: Mach deviation penalty
             """
-            if altitude_fraction is None:
-                altitude_fraction = 0.0
+            if climb_fraction is None:
+                climb_fraction = 0.0
             
-            # Remaining climb fraction: ξ_rem = 1 - h/h_target
-            remaining_fraction = 1.0 - altitude_fraction
+            # Remaining climb fraction: ξ_rem = 1 - progress
+            remaining_fraction = 1.0 - climb_fraction
             estimated_steps_remaining = remaining_fraction * ClimbingCore.PenaltySystem.TOTAL_CLIMB_STEPS_ESTIMATE
             
             # Maximum reachable Mach deviation: ΔM_max = dM/dk_max · k_rem
@@ -1058,14 +1050,14 @@ class ClimbingCore:
                 
             else:
                 # Within corridor: apply progressive guidance
-                if altitude_fraction > MACH_GUIDANCE_FINAL_PHASE_START:
+                if climb_fraction > MACH_GUIDANCE_FINAL_PHASE_START:
                     # Final phase: strong convergence to M_target
-                    final_phase_strength = (altitude_fraction - MACH_GUIDANCE_FINAL_PHASE_START) / MACH_GUIDANCE_FINAL_PHASE_RANGE  # ξ ∈ [0,1]
+                    final_phase_strength = (climb_fraction - MACH_GUIDANCE_FINAL_PHASE_START) / MACH_GUIDANCE_FINAL_PHASE_RANGE  # ξ ∈ [0,1]
                     mach_deviation = current_mach - target_mach
                     
                     # Terminal phase boost: extra convergence
-                    if altitude_fraction > MACH_GUIDANCE_TERMINAL_PHASE_START:
-                        final_boost = ((altitude_fraction - MACH_GUIDANCE_TERMINAL_PHASE_START) / MACH_GUIDANCE_TERMINAL_PHASE_RANGE) * MACH_GUIDANCE_TERMINAL_BOOST_MULTIPLIER
+                    if climb_fraction > MACH_GUIDANCE_TERMINAL_PHASE_START:
+                        final_boost = ((climb_fraction - MACH_GUIDANCE_TERMINAL_PHASE_START) / MACH_GUIDANCE_TERMINAL_PHASE_RANGE) * MACH_GUIDANCE_TERMINAL_BOOST_MULTIPLIER
                         final_phase_strength *= (1.0 + final_boost)
                         
                     penalty = final_phase_strength * ClimbingCore.PenaltySystem.GUIDANCE_PENALTY_WEIGHT * (mach_deviation ** 2)
@@ -1075,7 +1067,7 @@ class ClimbingCore:
             return penalty
         
         @staticmethod
-        def compute_lever_penalty(current_lever: float, altitude_fraction: float = None) -> float:
+        def compute_lever_penalty(current_lever: float, climb_fraction: float = None) -> float:
             """
             Lever penalty to discourage sustained high thrust operation.
             
@@ -1083,8 +1075,8 @@ class ClimbingCore:
             Sustained high thrust causes increased wear, fuel consumption, and operational costs.
             
             Thrust regimes:
-                δ ≤ 0.85: Maximum Continuous Thrust (MCT) - unlimited duration, no penalty
-                0.85 < δ ≤ 0.90: Takeoff/climb thrust - time-limited, moderate penalty
+                δ ≤ 0.75: Maximum Continuous Thrust (MCT) - unlimited duration, no penalty
+                0.75 < δ ≤ 0.90: Takeoff/climb thrust - time-limited, moderate penalty
                 0.90 < δ ≤ 0.95: Maximum climb thrust - high wear, significant penalty
                 δ > 0.95: Emergency thrust - severe penalty
             
@@ -1093,7 +1085,7 @@ class ClimbingCore:
             
             Parameters:
                 current_lever: δ [-] - throttle position ∈ [0,1]
-                altitude_fraction: unused (kept for API compatibility)
+                climb_fraction: unused (kept for API compatibility)
             
             Returns:
                 penalty [kg/m]: lever position penalty (altitude-independent)
@@ -1132,7 +1124,7 @@ class ClimbingCore:
     
     @staticmethod
     def compute_full_envelope(aero: PyAerodynamicsWrapper, engine: EngineWrapper, mach_grid: np.ndarray, 
-                             altitude_sched: np.ndarray, lever_grid: np.ndarray, mass_kg: float = None):
+                             altitude_sched: np.ndarray, lever_grid: np.ndarray, mass_kg: float):
         """
         Compute 3D performance envelope J(M, h, δ) over feasible state space.
         
@@ -1148,14 +1140,11 @@ class ClimbingCore:
             mach_grid: np.ndarray - M_i, i=1..I (Mach discretization)
             altitude_sched: np.ndarray - h_k, k=1..K (altitude discretization)
             lever_grid: np.ndarray - δ_j, j=1..L (throttle lever discretization)
-            mass_kg: float - reference mass [kg] for envelope (default: INITIAL_MASS_KG)
+            mass_kg: float - reference mass [kg] for envelope (required)
             
         Returns:
             J_envelope: np.ndarray (I×K×L) - fuel cost density [kg/m]
         """
-        # Use provided mass or default to initial mass
-        if mass_kg is None:
-            mass_kg = INITIAL_MASS_KG
         
         print(f"[CLIMB] Computing performance envelope J(M,h,δ) at reference mass={mass_kg:.0f}kg")
         print(f"[CLIMB] Grid: {len(mach_grid)} Mach × {len(altitude_sched)} Alt × {len(lever_grid)} Lever")
@@ -1176,7 +1165,7 @@ class ClimbingCore:
                         LEVER_MIN <= lever <= LEVER_MAX):
                         
                         # Compute J = ṁ/Ps with reference mass
-                        cost = ClimbingCore.compute_cost(aero, engine, h, M, lever, mass_kg=mass_kg)
+                        cost = ClimbingCore.compute_cost(aero, engine, h, M, lever, mass_kg, climb_fraction=None)
                         
                         if np.isfinite(cost) and cost > 0:
                             J_envelope[k, i, j] = cost
@@ -1265,6 +1254,35 @@ def dbg(msg: str):
     """Module-level debug function for backward compatibility."""
     SystemUtilities.dbg(msg)
 
+def create_climb_initial_state(start_mach: float = None,
+                               start_lever: float = None,
+                               mass_kg: float = None) -> ClimbInitialState:
+    """
+    Create ClimbInitialState from configuration or provided parameters.
+    
+    Parameters:
+        start_mach: M_0 [-] - initial Mach (optional, computed from velocity if not provided)
+        start_lever: δ_0 [-] - initial throttle (optional, uses START_LEVER_CLIMB)
+        mass_kg: m_0 [kg] - initial mass (optional, uses INITIAL_MASS_KG)
+    
+    Returns:
+        ClimbInitialState: initial state for climb optimization
+    """
+    # Compute Mach from velocity if not provided
+    if start_mach is None:
+        start_mach = mach_from_velocity(START_VELOCITY_CLIMB_MS, START_ALTITUDE_CLIMB_M)
+    
+    # Use defaults if not provided
+    start_lever = start_lever if start_lever is not None else START_LEVER_CLIMB
+    mass_kg = mass_kg if mass_kg is not None else INITIAL_MASS_KG
+    
+    return ClimbInitialState(
+        altitude_m=START_ALTITUDE_CLIMB_M,
+        mach=start_mach,
+        mass_kg=mass_kg,
+        lever=start_lever
+    )
+
 def run_optimization(aero: PyAerodynamicsWrapper, engine: EngineWrapper,
                     mach_grid: np.ndarray, altitude_sched: np.ndarray,
                     lever_samples: int = N_LEVER_SAMPLES_CLIMB,
@@ -1298,14 +1316,15 @@ def run_optimization(aero: PyAerodynamicsWrapper, engine: EngineWrapper,
         MinFuelSchedule: optimal trajectory X*(k)
         dict: optimization metadata
     """
+    # Create initial state from parameters (backward compatible)
+    initial_state = create_climb_initial_state(start_mach, start_lever, mass_kg)
+    
     return ClimbingCore.DynamicProgrammingOptimizer.solve_3d_dp(
         aero, engine, mach_grid, altitude_sched,
+        initial_state=initial_state,
         lever_samples=lever_samples,
         target_mach=target_mach,
-        target_mach_tolerance=target_mach_tolerance,
-        start_mach=start_mach,
-        start_lever=start_lever,
-        mass_kg=mass_kg
+        target_mach_tolerance=target_mach_tolerance
     )
 
 # ========================================================================

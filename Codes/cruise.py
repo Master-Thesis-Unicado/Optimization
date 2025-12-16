@@ -37,7 +37,7 @@ from pyengine_wrapper import EngineWrapper
 from aircraft_config import isa_properties, a_from_altitude
 
 # Climb optimization for cruise climb segments
-from climb import ClimbingCore
+from climb import ClimbingCore, ClimbInitialState
 
 # Utility functions: kinematics, energy balance, fuel consumption
 from mission_utils import (
@@ -832,16 +832,16 @@ class CruiseSegmentManager:
             start_lever_on_grid = lever_grid_dp[start_lever_idx]
             
             # Verify feasibility by computing cost
-            # Use a simple altitude fraction (0.0 for start of cruise climb)
+            # Use climb_fraction=0.0 for start of cruise climb
             test_cost = ClimbingCore.compute_cost(
                 aero, engine, 
                 initial_state.altitude_m, 
                 initial_state.mach, 
                 start_lever_on_grid,
+                initial_state.mass_kg,
                 target_mach=initial_state.mach,
                 prev_mach=None,
-                altitude_fraction=0.0,
-                mass_kg=initial_state.mass_kg
+                climb_fraction=0.0
             )
             
             if np.isfinite(test_cost) and test_cost > 0:
@@ -857,10 +857,10 @@ class CruiseSegmentManager:
                         initial_state.altitude_m,
                         initial_state.mach,
                         test_lever,
+                        initial_state.mass_kg,
                         target_mach=initial_state.mach,
                         prev_mach=None,
-                        altitude_fraction=0.0,
-                        mass_kg=initial_state.mass_kg
+                        climb_fraction=0.0
                     )
                     if np.isfinite(test_cost) and test_cost > 0:
                         start_lever = test_lever
@@ -872,6 +872,14 @@ class CruiseSegmentManager:
             print(f"[CRUISE] WARNING: Could not find feasible lever, using {CRUISE_CLIMB_FALLBACK_LEVER:.2f} as fallback")
             start_lever = CRUISE_CLIMB_FALLBACK_LEVER
         
+        # Create initial state for cruise climb
+        cruise_climb_initial_state = ClimbInitialState(
+            altitude_m=initial_state.altitude_m,
+            mach=initial_state.mach,
+            mass_kg=initial_state.mass_kg,
+            lever=start_lever
+        )
+        
         # Run DP optimization for cruise climb
         # Target Mach is the current cruise Mach (maintain same Mach)
         cruise_climb_result, cruise_climb_info = ClimbingCore.DynamicProgrammingOptimizer.solve_3d_dp(
@@ -879,12 +887,10 @@ class CruiseSegmentManager:
             engine=engine,
             mach_grid=mach_grid,
             altitude_sched=climb_h_sched,
+            initial_state=cruise_climb_initial_state,
             lever_samples=N_LEVER_SAMPLES_CLIMB,
             target_mach=initial_state.mach,  # Maintain cruise Mach
-            target_mach_tolerance=self.mach_tolerance,
-            start_mach=initial_state.mach,  # Start at current cruise Mach
-            start_lever=start_lever,  # Use feasible starting lever (on grid)
-            mass_kg=initial_state.mass_kg  # Use current mass
+            target_mach_tolerance=self.mach_tolerance
         )
         
         print("[CRUISE] Cruise climb optimization completed")

@@ -35,7 +35,7 @@ from mission_config import (
 
 # ========= CLIMB MODULE ===========================================
 import climb
-from climb import ClimbingCore
+from climb import ClimbingCore, create_climb_initial_state
 from climb_plotting import compute_sep_grid_maxlever
 from climb_plotting import GridConfig
 
@@ -156,16 +156,15 @@ def main():
     
     print("[CLIMB] Solving 3D fixed-mass DP for climb phase")
     
-    a = a_from_altitude(START_ALTITUDE_CLIMB_M)
-    start_mach = START_VELOCITY_CLIMB_MS / a
+    # Create initial state for climb
+    initial_state = create_climb_initial_state()
     
     dp_sched, dp_info = ClimbingCore.DynamicProgrammingOptimizer.solve_3d_dp(
         aero, eng, mach_grid, altitude_sched,
+        initial_state=initial_state,
         lever_samples=N_LEVER_SAMPLES_CLIMB,
         target_mach=TARGET_MACH_CRUISE,
-        target_mach_tolerance=TARGET_MACH_TOLERANCE,
-        start_mach=start_mach,
-        start_lever=START_LEVER_CLIMB
+        target_mach_tolerance=TARGET_MACH_TOLERANCE
     )
     
     climb_fuel = float(np.nan_to_num(dp_sched.cumFuel_kg, nan=0.0)[-1])

@@ -39,7 +39,7 @@ from mission_config import (
     ENABLE_STRATEGY_COMPARISON, ENABLE_EXCEL_EXPORT
 )
 import climb
-from climb import ClimbingCore
+from climb import ClimbingCore, create_climb_initial_state
 from climb_plotting import (
     compute_sep_grid_maxlever,
     compute_full_envelope
@@ -147,17 +147,15 @@ def main():
                           TARGET_ALT_CLIMB_M, 
                           N_ALTITUDE_STEPS_CLIMB)
     print("[CLIMB] Solving 3D dynamic programming optimization for minimum fuel climb path")
-    # Calculate starting Mach from takeoff velocity at start altitude
-    a = a_from_altitude(START_ALTITUDE_CLIMB_M)
-    start_mach = START_VELOCITY_CLIMB_MS / a
+    # Create initial state for climb
+    initial_state = create_climb_initial_state()
     
     dp_sched, dp_info = ClimbingCore.DynamicProgrammingOptimizer.solve_3d_dp(
-        aero, eng, mach_grid, altitude_sched, 
+        aero, eng, mach_grid, altitude_sched,
+        initial_state=initial_state,
         lever_samples=N_LEVER_SAMPLES_CLIMB, 
         target_mach=TARGET_MACH_CRUISE,
-        target_mach_tolerance=TARGET_MACH_TOLERANCE, 
-        start_mach=start_mach, 
-        start_lever=START_LEVER_CLIMB
+        target_mach_tolerance=TARGET_MACH_TOLERANCE
     )
 
     # ========= STRATEGY COMPARISON (OPTIONAL) =========================================
