@@ -205,12 +205,16 @@ class FuelDistributionCalculator:
         outer_tank_1_ratio = self.tank_capacity_kg[1] / outer_capacity if outer_capacity > 0 else 0.5
         inner_tank_0_ratio = self.tank_capacity_kg[0] / inner_capacity if inner_capacity > 0 else 0.5
         
-        # Phase determination via consumed fuel thresholds
-        if fuel_consumed < outer_capacity:
+        # Overlap threshold: start next phase when current phase has 20 kg remaining
+        # This ensures continuous fuel consumption without gaps
+        overlap_kg = 20.0  # [kg] - overlap amount for smooth transition
+        
+        # Phase determination with overlap transitions
+        if fuel_consumed < outer_capacity - overlap_kg:
             # ────────────────────────────────────────────────────────────────
-            # Phase 1: Outer depletion (100% → transition)
+            # Phase 1: Outer depletion only
             # ────────────────────────────────────────────────────────────────
-            outer_remaining = outer_capacity - fuel_consumed
+            outer_remaining = max(0.0, outer_capacity - fuel_consumed)
             
             # Distribution: Outer depleting proportionally, Inner and Center full
             tanks[1] = outer_remaining * outer_tank_1_ratio     # m_1 proportional to capacity
@@ -219,12 +223,29 @@ class FuelDistributionCalculator:
             tanks[2] = self.tank_capacity_kg[2]                      # m_2 = m_max,2 (full)
             tanks[4] = self.tank_capacity_kg[4]                      # m_4 = m_max,4 (full)
         
-        elif fuel_consumed < outer_capacity + inner_capacity:
+        elif fuel_consumed < outer_capacity:
             # ────────────────────────────────────────────────────────────────
-            # Phase 2: Inner depletion
+            # Phase 1-2 Transition: Overlap period (both Outer and Inner depleting)
             # ────────────────────────────────────────────────────────────────
-            inner_consumed = fuel_consumed - outer_capacity
-            inner_remaining = inner_capacity - inner_consumed
+            # Outer tanks: remaining overlap_kg being depleted
+            outer_remaining = max(0.0, outer_capacity - fuel_consumed)
+            # Inner tanks: start depleting during overlap
+            inner_consumed_in_overlap = fuel_consumed - (outer_capacity - overlap_kg)
+            inner_remaining = max(0.0, inner_capacity - inner_consumed_in_overlap)
+            
+            # Distribution: Both Outer and Inner depleting, Center full
+            tanks[1] = outer_remaining * outer_tank_1_ratio
+            tanks[3] = outer_remaining * (1.0 - outer_tank_1_ratio)
+            tanks[0] = inner_remaining * inner_tank_0_ratio
+            tanks[2] = inner_remaining * (1.0 - inner_tank_0_ratio)
+            tanks[4] = self.tank_capacity_kg[4]                      # m_4 = m_max,4 (full)
+        
+        elif fuel_consumed < outer_capacity + inner_capacity - overlap_kg:
+            # ────────────────────────────────────────────────────────────────
+            # Phase 2: Inner depletion only
+            # ────────────────────────────────────────────────────────────────
+            inner_consumed = max(0.0, fuel_consumed - outer_capacity)
+            inner_remaining = max(0.0, inner_capacity - inner_consumed)
             
             # Distribution: Outer empty, Inner depleting proportionally, Center full
             tanks[1] = 0.0                                       # m_1 = 0 (empty)
@@ -233,12 +254,29 @@ class FuelDistributionCalculator:
             tanks[2] = inner_remaining * (1.0 - inner_tank_0_ratio)  # m_2 remaining
             tanks[4] = self.tank_capacity_kg[4]                      # m_4 = m_max,4 (full)
         
+        elif fuel_consumed < outer_capacity + inner_capacity:
+            # ────────────────────────────────────────────────────────────────
+            # Phase 2-3 Transition: Overlap period (both Inner and Center depleting)
+            # ────────────────────────────────────────────────────────────────
+            # Inner tanks: remaining overlap_kg being depleted
+            inner_remaining = max(0.0, inner_capacity - (fuel_consumed - outer_capacity))
+            # Center tank: start depleting during overlap
+            center_consumed_in_overlap = fuel_consumed - (outer_capacity + inner_capacity - overlap_kg)
+            center_remaining = max(0.0, center_capacity - center_consumed_in_overlap)
+            
+            # Distribution: Outer empty, Inner and Center depleting
+            tanks[1] = 0.0                                       # m_1 = 0 (empty)
+            tanks[3] = 0.0                                       # m_3 = 0 (empty)
+            tanks[0] = inner_remaining * inner_tank_0_ratio
+            tanks[2] = inner_remaining * (1.0 - inner_tank_0_ratio)
+            tanks[4] = center_remaining                           # m_4 depleting
+        
         else:
             # ────────────────────────────────────────────────────────────────
-            # Phase 3: Center depletion
+            # Phase 3: Center depletion only
             # ────────────────────────────────────────────────────────────────
-            center_consumed = fuel_consumed - outer_capacity - inner_capacity
-            center_remaining = center_capacity - center_consumed
+            center_consumed = max(0.0, fuel_consumed - outer_capacity - inner_capacity)
+            center_remaining = max(0.0, center_capacity - center_consumed)
             
             # Distribution: Outer and Inner empty, Center depleting
             tanks[1] = 0.0                                       # m_1 = 0 (empty)
@@ -284,12 +322,16 @@ class FuelDistributionCalculator:
         inner_tank_0_ratio = self.tank_capacity_kg[0] / inner_capacity if inner_capacity > 0 else 0.5
         outer_tank_1_ratio = self.tank_capacity_kg[1] / outer_capacity if outer_capacity > 0 else 0.5
         
-        # Phase determination via consumed fuel thresholds
-        if fuel_consumed < center_capacity:
+        # Overlap threshold: start next phase when current phase has 20 kg remaining
+        # This ensures continuous fuel consumption without gaps
+        overlap_kg = 20.0  # [kg] - overlap amount for smooth transition
+        
+        # Phase determination with overlap transitions
+        if fuel_consumed < center_capacity - overlap_kg:
             # ────────────────────────────────────────────────────────────────
-            # Phase 1: Center depletion
+            # Phase 1: Center depletion only
             # ────────────────────────────────────────────────────────────────
-            center_remaining = center_capacity - fuel_consumed
+            center_remaining = max(0.0, center_capacity - fuel_consumed)
             
             # Distribution: Center depleting, Inner and Outer full
             tanks[4] = center_remaining                            # m_4 = m_center,rem
@@ -298,12 +340,29 @@ class FuelDistributionCalculator:
             tanks[1] = self.tank_capacity_kg[1]                         # m_1 = m_max,1 (full)
             tanks[3] = self.tank_capacity_kg[3]                         # m_3 = m_max,3 (full)
         
-        elif fuel_consumed < center_capacity + inner_capacity:
+        elif fuel_consumed < center_capacity:
             # ────────────────────────────────────────────────────────────────
-            # Phase 2: Inner depletion
+            # Phase 1-2 Transition: Overlap period (both Center and Inner depleting)
             # ────────────────────────────────────────────────────────────────
-            inner_consumed = fuel_consumed - center_capacity
-            inner_remaining = inner_capacity - inner_consumed
+            # Center tank: remaining overlap_kg being depleted
+            center_remaining = max(0.0, center_capacity - fuel_consumed)
+            # Inner tanks: start depleting during overlap
+            inner_consumed_in_overlap = fuel_consumed - (center_capacity - overlap_kg)
+            inner_remaining = max(0.0, inner_capacity - inner_consumed_in_overlap)
+            
+            # Distribution: Both Center and Inner depleting, Outer full
+            tanks[4] = center_remaining
+            tanks[0] = inner_remaining * inner_tank_0_ratio
+            tanks[2] = inner_remaining * (1.0 - inner_tank_0_ratio)
+            tanks[1] = self.tank_capacity_kg[1]                         # m_1 = m_max,1 (full)
+            tanks[3] = self.tank_capacity_kg[3]                         # m_3 = m_max,3 (full)
+        
+        elif fuel_consumed < center_capacity + inner_capacity - overlap_kg:
+            # ────────────────────────────────────────────────────────────────
+            # Phase 2: Inner depletion only
+            # ────────────────────────────────────────────────────────────────
+            inner_consumed = max(0.0, fuel_consumed - center_capacity)
+            inner_remaining = max(0.0, inner_capacity - inner_consumed)
             
             # Distribution: Center empty, Inner depleting proportionally, Outer full
             tanks[4] = 0.0                                         # m_4 = 0 (empty)
@@ -312,12 +371,29 @@ class FuelDistributionCalculator:
             tanks[1] = self.tank_capacity_kg[1]                         # m_1 = m_max,1 (full)
             tanks[3] = self.tank_capacity_kg[3]                         # m_3 = m_max,3 (full)
         
+        elif fuel_consumed < center_capacity + inner_capacity:
+            # ────────────────────────────────────────────────────────────────
+            # Phase 2-3 Transition: Overlap period (both Inner and Outer depleting)
+            # ────────────────────────────────────────────────────────────────
+            # Inner tanks: remaining overlap_kg being depleted
+            inner_remaining = max(0.0, inner_capacity - (fuel_consumed - center_capacity))
+            # Outer tanks: start depleting during overlap
+            outer_consumed_in_overlap = fuel_consumed - (center_capacity + inner_capacity - overlap_kg)
+            outer_remaining = max(0.0, outer_capacity - outer_consumed_in_overlap)
+            
+            # Distribution: Center empty, Inner and Outer depleting
+            tanks[4] = 0.0                                         # m_4 = 0 (empty)
+            tanks[0] = inner_remaining * inner_tank_0_ratio
+            tanks[2] = inner_remaining * (1.0 - inner_tank_0_ratio)
+            tanks[1] = outer_remaining * outer_tank_1_ratio
+            tanks[3] = outer_remaining * (1.0 - outer_tank_1_ratio)
+        
         else:
             # ────────────────────────────────────────────────────────────────
-            # Phase 3: Outer depletion
+            # Phase 3: Outer depletion only
             # ────────────────────────────────────────────────────────────────
-            outer_consumed = fuel_consumed - center_capacity - inner_capacity
-            outer_remaining = outer_capacity - outer_consumed
+            outer_consumed = max(0.0, fuel_consumed - center_capacity - inner_capacity)
+            outer_remaining = max(0.0, outer_capacity - outer_consumed)
             
             # Distribution: Center and Inner empty, Outer depleting proportionally
             tanks[4] = 0.0                                         # m_4 = 0 (empty)

@@ -23,7 +23,7 @@ from mission_config import (
     START_ALTITUDE_CLIMB_M, START_VELOCITY_CLIMB_MS, START_LEVER_CLIMB,
     TARGET_ALT_CLIMB_M, TARGET_MACH_CRUISE,
     PENALTY_CLIMB_MACH_TRAJECTORY_GUIDANCE, PENALTY_CLIMB_LEVER_PENALTY_GUIDANCE,
-    PENALTY_CLIMB_TARGET_MACH_TOLERANCE, PENALTY_CLIMB_MACH_PENALTY_BASE_WEIGHT,
+    PENALTY_CLIMB_TARGET_MACH_TOLERANCE,
     PENALTY_CLIMB_MAX_REASONABLE_MACH_RATE, PENALTY_CLIMB_TOTAL_STEPS_ESTIMATE,
     PENALTY_CLIMB_URGENCY_MULTIPLIER, PENALTY_CLIMB_GUIDANCE_PENALTY_WEIGHT,
     PENALTY_CLIMB_LEVER_PENALTY_WEIGHT, PENALTY_CLIMB_LEVER_PENALTY_THRESHOLD,
@@ -977,7 +977,6 @@ class ClimbingCore:
         TARGET_MACH_TOLERANCE = PENALTY_CLIMB_TARGET_MACH_TOLERANCE
         
         # Mach penalty coefficients
-        MACH_PENALTY_BASE_WEIGHT = PENALTY_CLIMB_MACH_PENALTY_BASE_WEIGHT
         MAX_REASONABLE_MACH_RATE = PENALTY_CLIMB_MAX_REASONABLE_MACH_RATE
         TOTAL_CLIMB_STEPS_ESTIMATE = PENALTY_CLIMB_TOTAL_STEPS_ESTIMATE
         URGENCY_MULTIPLIER = PENALTY_CLIMB_URGENCY_MULTIPLIER
@@ -1007,8 +1006,8 @@ class ClimbingCore:
                 M_max = M_target + ΔM_max
             
             Penalty structure:
-                - M < M_min: P = urgency · w_base · (M_min - M)²
-                - M > M_max: P = urgency · w_base · (M - M_max)²
+                - M < M_min: P = urgency · (M_min - M)²
+                - M > M_max: P = urgency · (M - M_max)²
                 - M_min ≤ M ≤ M_max: Progressive guidance toward M_target
             
             Parameters:
@@ -1041,12 +1040,12 @@ class ClimbingCore:
             if current_mach < min_reachable_mach:
                 # Too low: risk undershooting M_target
                 deviation = min_reachable_mach - current_mach
-                penalty = urgency * ClimbingCore.PenaltySystem.MACH_PENALTY_BASE_WEIGHT * (deviation ** 2)
+                penalty = urgency * (deviation ** 2)
                 
             elif current_mach > max_reachable_mach:
                 # Too high: risk overshooting M_target
                 deviation = current_mach - max_reachable_mach  
-                penalty = urgency * ClimbingCore.PenaltySystem.MACH_PENALTY_BASE_WEIGHT * (deviation ** 2)
+                penalty = urgency * (deviation ** 2)
                 
             else:
                 # Within corridor: apply progressive guidance

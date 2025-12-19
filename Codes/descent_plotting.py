@@ -395,6 +395,16 @@ def plot_performance_2d(descent_result: DescentResults,
         fig6.update_xaxes(**get_axis_config("t [min]")); fig6.update_yaxes(**get_axis_config("Σm_fuel [kg]"))
         fig6.write_image(os.path.join(run_dir, f'{save_prefix}_fuel.png'), width=1200, height=800, scale=2)
         
+        # Panel 7: Mach Number M(t)
+        fig7 = go.Figure()
+        descent_mach = np.asarray(descent_result.mach, float)
+        fig7.add_trace(go.Scatter(x=time_min, y=descent_mach, mode='lines', name='Mach Number (Descent)',
+            line=dict(color=Colors.DESCENT, width=LineStyles.THICK),
+            hovertemplate='<b>Descent</b><br>Time: %{x:.1f} min<br>Mach: %{y:.3f}<extra></extra>'))
+        fig7.update_layout(**get_standard_layout("DESCENT PERFORMANCE - Mach Number", subtitle_text, height=600, width=900))
+        fig7.update_xaxes(**get_axis_config("t [min]")); fig7.update_yaxes(**get_axis_config("M [-]"))
+        fig7.write_image(os.path.join(run_dir, f'{save_prefix}_mach.png'), width=1200, height=800, scale=2)
+        
         print(f"[EXPORT] Individual panels saved to: {run_dir}")
     except Exception as e:
         print(f"[WARNING] Panel export failed: {e}")

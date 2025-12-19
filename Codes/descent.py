@@ -18,7 +18,7 @@ from aircraft_config import (
 from mission_config import (
     N_ALTITUDE_STEPS_DESCENT, N_MACH_SAMPLES_DESCENT, N_LEVER_SAMPLES_DESCENT, TARGET_DESCENT_ALT_M, MIN_DESCENT_MACH,
     PENALTY_DESCENT_MACH_TRAJECTORY_GUIDANCE, PENALTY_DESCENT_LEVER_PENALTY_GUIDANCE,
-    PENALTY_DESCENT_TARGET_MACH_TOLERANCE, PENALTY_DESCENT_MACH_PENALTY_BASE_WEIGHT,
+    PENALTY_DESCENT_TARGET_MACH_TOLERANCE,
     PENALTY_DESCENT_MAX_REASONABLE_MACH_RATE, PENALTY_DESCENT_TOTAL_STEPS_ESTIMATE,
     PENALTY_DESCENT_URGENCY_MULTIPLIER, PENALTY_DESCENT_GUIDANCE_PENALTY_WEIGHT,
     PENALTY_DESCENT_LEVER_PENALTY_WEIGHT, PENALTY_DESCENT_LEVER_PENALTY_THRESHOLD,
@@ -264,7 +264,6 @@ class DescentCore:
         TARGET_MACH_TOLERANCE = PENALTY_DESCENT_TARGET_MACH_TOLERANCE
         
         # Mach penalty coefficients
-        MACH_PENALTY_BASE_WEIGHT = PENALTY_DESCENT_MACH_PENALTY_BASE_WEIGHT
         MAX_REASONABLE_MACH_RATE = PENALTY_DESCENT_MAX_REASONABLE_MACH_RATE
         TOTAL_DESCENT_STEPS_ESTIMATE = PENALTY_DESCENT_TOTAL_STEPS_ESTIMATE
         URGENCY_MULTIPLIER = PENALTY_DESCENT_URGENCY_MULTIPLIER
@@ -296,8 +295,8 @@ class DescentCore:
                 M_max = M_target + ΔM_max
             
             Penalty structure:
-                - M < M_min: P = urgency · w_base · (M_min - M)² (too slow, stall risk)
-                - M > M_max: P = urgency · w_base · (M - M_max)² (too fast, won't decelerate)
+                - M < M_min: P = urgency · (M_min - M)² (too slow, stall risk)
+                - M > M_max: P = urgency · (M - M_max)² (too fast, won't decelerate)
                 - M_min ≤ M ≤ M_max: Progressive guidance toward M_target
             
             Parameters:
@@ -331,12 +330,12 @@ class DescentCore:
             if current_mach < min_reachable_mach:
                 # Too slow: stall risk, cannot reach target
                 deviation = min_reachable_mach - current_mach
-                penalty = urgency * DescentCore.PenaltySystem.MACH_PENALTY_BASE_WEIGHT * (deviation ** 2)
+                penalty = urgency * (deviation ** 2)
                 
             elif current_mach > max_reachable_mach:
                 # Too fast: insufficient deceleration distance to reach M_target
                 deviation = current_mach - max_reachable_mach  
-                penalty = urgency * DescentCore.PenaltySystem.MACH_PENALTY_BASE_WEIGHT * (deviation ** 2)
+                penalty = urgency * (deviation ** 2)
                 
             else:
                 # Within corridor: apply progressive guidance

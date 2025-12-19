@@ -815,6 +815,16 @@ def plot_performance_2d(climb_result, climb_info: Optional[Dict[str, Any]] = Non
         fig6.update_xaxes(**get_axis_config("Time (min)")); fig6.update_yaxes(**get_axis_config("Cumulative Fuel (kg)"))
         fig6.write_image(os.path.join(run_dir, f'{save_prefix}_fuel.png'), width=1200, height=800, scale=2)
         
+        # 7. Mach Number
+        fig7 = go.Figure()
+        climb_mach = np.asarray(climb_result.mach, float)
+        fig7.add_trace(go.Scatter(x=climb_time_min, y=climb_mach, mode='lines', name='Mach Number (Climb)',
+            line=dict(color=Colors.CLIMB, width=LineStyles.THICK),
+            hovertemplate='<b>Climb</b><br>Time: %{x:.1f} min<br>Mach: %{y:.3f}<extra></extra>'))
+        fig7.update_layout(**get_standard_layout("CLIMB PERFORMANCE - Mach Number", subtitle, height=600, width=900))
+        fig7.update_xaxes(**get_axis_config("Time (min)")); fig7.update_yaxes(**get_axis_config("Mach"))
+        fig7.write_image(os.path.join(run_dir, f'{save_prefix}_mach.png'), width=1200, height=800, scale=2)
+        
         print(f"[EXPORT] Individual climb plots saved as PNG to: {run_dir}")
     except Exception as e:
         print(f"[WARNING] Could not save individual climb plots: {e}")

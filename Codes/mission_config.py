@@ -140,16 +140,16 @@ Grid structure: (M_i, h_k, δ_j) where:
 # ────────────────────────────────────────────────────────────────────────────
 # Climb Phase Grid: (M_i, h_k, δ_j)
 # ────────────────────────────────────────────────────────────────────────────
-N_MACH_SAMPLES_CLIMB = 55                           # I: number of Mach points
-N_ALTITUDE_STEPS_CLIMB = 55                         # K: number of altitude levels
-N_LEVER_SAMPLES_CLIMB = 55                          # L: number of throttle positions
+N_MACH_SAMPLES_CLIMB = 50                           # I: number of Mach points
+N_ALTITUDE_STEPS_CLIMB = 50                         # K: number of altitude levels
+N_LEVER_SAMPLES_CLIMB = 50                         # L: number of throttle positions
 
 # ────────────────────────────────────────────────────────────────────────────
 # Descent Phase Grid: (M_i, h_k, δ_j)
 # ────────────────────────────────────────────────────────────────────────────
-N_MACH_SAMPLES_DESCENT = 55                         # I: number of Mach points
-N_ALTITUDE_STEPS_DESCENT = 55                       # K: number of altitude levels
-N_LEVER_SAMPLES_DESCENT = 55                        # L: number of throttle positions
+N_MACH_SAMPLES_DESCENT = 50                         # I: number of Mach points
+N_ALTITUDE_STEPS_DESCENT = 50                       # K: number of altitude levels
+N_LEVER_SAMPLES_DESCENT = 50                        # L: number of throttle positions
 
 
 # ========================================================================
@@ -166,7 +166,6 @@ maintaining safe operating conditions and target constraints.
 # ────────────────────────────────────────────────────────────────────────────
 PENALTY_CLIMB_MACH_TRAJECTORY_GUIDANCE = True       # Enable Mach guidance
 PENALTY_CLIMB_TARGET_MACH_TOLERANCE = 0.010         # tol_M [-]
-PENALTY_CLIMB_MACH_PENALTY_BASE_WEIGHT = 0.15       # w_base [kg/Mach²]
 PENALTY_CLIMB_MAX_REASONABLE_MACH_RATE = 0.1        # dM/dk_max [-]
 PENALTY_CLIMB_TOTAL_STEPS_ESTIMATE = N_ALTITUDE_STEPS_CLIMB  # K_total
 PENALTY_CLIMB_URGENCY_MULTIPLIER = 1.8              # α_urgency
@@ -177,8 +176,8 @@ PENALTY_CLIMB_GUIDANCE_PENALTY_WEIGHT = 0.3         # w_guidance
 # ────────────────────────────────────────────────────────────────────────────
 # Penalty function: P(δ) = w·[(δ-δ_MCT)^p + critical terms]
 PENALTY_CLIMB_LEVER_PENALTY_GUIDANCE = True         # Enable lever penalties
-PENALTY_CLIMB_LEVER_PENALTY_WEIGHT = 3.0            # w_lever
-PENALTY_CLIMB_LEVER_PENALTY_THRESHOLD = 0.75        # δ_MCT (75%)
+PENALTY_CLIMB_LEVER_PENALTY_WEIGHT = 3            # w_lever
+PENALTY_CLIMB_LEVER_PENALTY_THRESHOLD = 0.70        # δ_MCT (75%)
 PENALTY_CLIMB_LEVER_PENALTY_EXPONENT = 3.0          # p
 PENALTY_CLIMB_LEVER_PENALTY_CRITICAL_THRESHOLD = 0.90  # δ_crit (90%)
 PENALTY_CLIMB_LEVER_PENALTY_CRITICAL_MULTIPLIER = 5.0  # α_crit
@@ -190,7 +189,6 @@ PENALTY_CLIMB_LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER = 20.0  # α_ultra
 # ────────────────────────────────────────────────────────────────────────────
 PENALTY_DESCENT_MACH_TRAJECTORY_GUIDANCE = True     # Enable Mach guidance
 PENALTY_DESCENT_TARGET_MACH_TOLERANCE = 0.010       # tol_M [-]  
-PENALTY_DESCENT_MACH_PENALTY_BASE_WEIGHT = 0.15      # w_base [kg/Mach²]    
 PENALTY_DESCENT_MAX_REASONABLE_MACH_RATE = 0.1      # dM/dk_max [-]  
 PENALTY_DESCENT_TOTAL_STEPS_ESTIMATE = N_ALTITUDE_STEPS_DESCENT  # K_total
 PENALTY_DESCENT_URGENCY_MULTIPLIER = 1.8            # α_urgency  
@@ -201,8 +199,8 @@ PENALTY_DESCENT_GUIDANCE_PENALTY_WEIGHT = 0.3       # w_guidance
 # ────────────────────────────────────────────────────────────────────────────
 # Penalty function: P(δ) = w·[(δ-δ_MCT)^p + critical terms]
 PENALTY_DESCENT_LEVER_PENALTY_GUIDANCE = True       # Enable lever penalties
-PENALTY_DESCENT_LEVER_PENALTY_WEIGHT = 3.0          # w_lever
-PENALTY_DESCENT_LEVER_PENALTY_THRESHOLD = 0.75      # δ_MCT (75%) (consistent with climb)
+PENALTY_DESCENT_LEVER_PENALTY_WEIGHT = 3          # w_lever
+PENALTY_DESCENT_LEVER_PENALTY_THRESHOLD = 0.70      # δ_MCT (75%) (consistent with climb)
 PENALTY_DESCENT_LEVER_PENALTY_EXPONENT = 3.0        # p
 PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_THRESHOLD = 0.90  # δ_crit (90%)
 PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_MULTIPLIER = 5.0  # α_crit
@@ -270,7 +268,7 @@ ENABLE_CRUISE_CLIMB = False                         # Boolean: enable cruise cli
 # ────────────────────────────────────────────────────────────────────────────
 # Export Features
 # ────────────────────────────────────────────────────────────────────────────
-ENABLE_EXCEL_EXPORT = True                         # Boolean: enable Excel export of mission data
+ENABLE_EXCEL_EXPORT = False                         # Boolean: enable Excel export of mission data
 
 
 # ========================================================================
@@ -290,7 +288,7 @@ E_DOT_CMD_CLIMB = 14                                # Ė_cmd [m/s]: specific ene
 # ────────────────────────────────────────────────────────────────────────────
 # 8.2: Cruise Phase - Basic Mission Parameters
 # ────────────────────────────────────────────────────────────────────────────
-CRUISE_DISTANCE_KM = 3745.91                          # For 3768km cruise for 4000km range, s_cruise [km]: cruise distance
+CRUISE_DISTANCE_KM = 3768                         # For 3768km cruise for 4000km range, s_cruise [km]: cruise distance
 CRUISE_TIME_STEP_S = 0.1                            # Δt [s]: integration time step
 
 # ────────────────────────────────────────────────────────────────────────────
@@ -315,7 +313,7 @@ Includes range matching and fuel optimization convergence criteria.
 # 9.1: Range Optimization (Iterative Distance Matching)
 # ────────────────────────────────────────────────────────────────────────────
 TARGET_MISSION_RANGE_KM = 4000                    # s_target [km]: target total range
-INITIAL_CRUISE_DISTANCE_KM = 3740.0                 # s_cruise,0 [km]: initial cruise estimate
+INITIAL_CRUISE_DISTANCE_KM = 3200.0                 # s_cruise,0 [km]: initial cruise estimate
 RANGE_OPTIMIZATION_TOLERANCE_KM = 3.0               # ε_range [km]: convergence tolerance
 MAX_RANGE_OPTIMIZATION_ITERATIONS = 15              # N_iter,max: iteration limit
 RANGE_OPTIMIZATION_DAMPING_FACTOR = 0.75            # α_damp ∈ [0,1]: adjustment damping
@@ -347,5 +345,5 @@ USE_DYNAMIC_CG = True                               # Boolean: True = dynamic CG
 # ────────────────────────────────────────────────────────────────────────────
 # Fuel Consumption Scenario
 # ────────────────────────────────────────────────────────────────────────────
-CG_CONSUMPTION_SCENARIO = "PROPORTIONAL"            # Fuel depletion sequence
-                                                    # Options: "OUTER_FIRST", "CENTER_FIRST", "PROPORTIONAL"
+CG_CONSUMPTION_SCENARIO = "INNER_FIRST"             # Fuel depletion sequence
+                                                    # Options: "OUTER_FIRST", "CENTER_FIRST", "PROPORTIONAL", "INNER_FIRST"

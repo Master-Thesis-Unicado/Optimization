@@ -58,7 +58,32 @@ from mission_config import (
     CRUISE_CLIMB_ALTITUDE_INCREMENT_M,
     TARGET_DESCENT_ALT_M, TARGET_DESCENT_MACH,
     MAX_SERVICE_CEILING_M,
-    N_MACH_SAMPLES_DESCENT, N_ALTITUDE_STEPS_DESCENT, N_LEVER_SAMPLES_DESCENT
+    N_MACH_SAMPLES_DESCENT, N_ALTITUDE_STEPS_DESCENT, N_LEVER_SAMPLES_DESCENT,
+    # Penalty system parameters
+    PENALTY_CLIMB_MACH_TRAJECTORY_GUIDANCE, PENALTY_CLIMB_TARGET_MACH_TOLERANCE,
+    PENALTY_CLIMB_MAX_REASONABLE_MACH_RATE,
+    PENALTY_CLIMB_URGENCY_MULTIPLIER, PENALTY_CLIMB_GUIDANCE_PENALTY_WEIGHT,
+    PENALTY_CLIMB_LEVER_PENALTY_GUIDANCE, PENALTY_CLIMB_LEVER_PENALTY_WEIGHT,
+    PENALTY_CLIMB_LEVER_PENALTY_THRESHOLD, PENALTY_CLIMB_LEVER_PENALTY_EXPONENT,
+    PENALTY_CLIMB_LEVER_PENALTY_CRITICAL_THRESHOLD, PENALTY_CLIMB_LEVER_PENALTY_CRITICAL_MULTIPLIER,
+    PENALTY_CLIMB_LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD, PENALTY_CLIMB_LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER,
+    PENALTY_DESCENT_MACH_TRAJECTORY_GUIDANCE, PENALTY_DESCENT_TARGET_MACH_TOLERANCE,
+    PENALTY_DESCENT_MAX_REASONABLE_MACH_RATE,
+    PENALTY_DESCENT_URGENCY_MULTIPLIER, PENALTY_DESCENT_GUIDANCE_PENALTY_WEIGHT,
+    PENALTY_DESCENT_LEVER_PENALTY_GUIDANCE, PENALTY_DESCENT_LEVER_PENALTY_WEIGHT,
+    PENALTY_DESCENT_LEVER_PENALTY_THRESHOLD, PENALTY_DESCENT_LEVER_PENALTY_EXPONENT,
+    PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_THRESHOLD, PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_MULTIPLIER,
+    PENALTY_DESCENT_LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD, PENALTY_DESCENT_LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER,
+    # Mach guidance parameters
+    MACH_GUIDANCE_FINAL_PHASE_START, MACH_GUIDANCE_FINAL_PHASE_RANGE,
+    MACH_GUIDANCE_TERMINAL_PHASE_START, MACH_GUIDANCE_TERMINAL_PHASE_RANGE,
+    MACH_GUIDANCE_TERMINAL_BOOST_MULTIPLIER,
+    # Fuel optimization parameters
+    FUEL_OPTIMIZATION_CONVERGENCE_TOLERANCE_KG, FUEL_OPTIMIZATION_SAFETY_BUFFER_PERCENT,
+    FUEL_OPTIMIZATION_MAX_ITERATIONS, FUEL_OPTIMIZATION_INITIAL_FUEL_LOW_KG,
+    FUEL_OPTIMIZATION_INITIAL_FUEL_HIGH_KG,
+    # CG consumption scenario
+    CG_CONSUMPTION_SCENARIO
 )
 
 # Mission phase data structures
@@ -226,6 +251,28 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     climb_time_s = np.sum(climb_result.dt_s) if len(climb_result.dt_s) > 0 else 0.0
     climb_fuel = climb_result.cumFuel_kg[-1]
     
+    # Calculate min/max Mach and lever for each phase
+    climb_mach_array = np.asarray(climb_result.mach, float)
+    climb_lever_array = np.asarray(climb_result.lever, float)
+    climb_mach_min = float(np.min(climb_mach_array)) if len(climb_mach_array) > 0 else 0.0
+    climb_mach_max = float(np.max(climb_mach_array)) if len(climb_mach_array) > 0 else 0.0
+    climb_lever_min = float(np.min(climb_lever_array)) * 100 if len(climb_lever_array) > 0 else 0.0
+    climb_lever_max = float(np.max(climb_lever_array)) * 100 if len(climb_lever_array) > 0 else 0.0
+    
+    cruise_mach_array = np.asarray(cruise_result.mach_number, float)
+    cruise_lever_array = np.asarray(cruise_result.lever_position, float) * 100
+    cruise_mach_min = float(np.min(cruise_mach_array)) if len(cruise_mach_array) > 0 else 0.0
+    cruise_mach_max = float(np.max(cruise_mach_array)) if len(cruise_mach_array) > 0 else 0.0
+    cruise_lever_min = float(np.min(cruise_lever_array)) if len(cruise_lever_array) > 0 else 0.0
+    cruise_lever_max = float(np.max(cruise_lever_array)) if len(cruise_lever_array) > 0 else 0.0
+    
+    descent_mach_array = np.asarray(descent_result.mach, float)
+    descent_lever_array = np.asarray(descent_result.lever, float) * 100
+    descent_mach_min = float(np.min(descent_mach_array)) if len(descent_mach_array) > 0 else 0.0
+    descent_mach_max = float(np.max(descent_mach_array)) if len(descent_mach_array) > 0 else 0.0
+    descent_lever_min = float(np.min(descent_lever_array)) if len(descent_lever_array) > 0 else 0.0
+    descent_lever_max = float(np.max(descent_lever_array)) if len(descent_lever_array) > 0 else 0.0
+    
     # Calculate climb horizontal distance (ground distance covered during climb)
     # Using average true airspeed and time, accounting for vertical component
     if len(climb_result.dt_s) > 0 and len(climb_result.mach) > 0:
@@ -266,7 +313,7 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     
     # Create figure with subplots including aerodynamic data and fuel management
     fig = make_subplots(
-        rows=9, cols=3,
+        rows=10, cols=3,
         subplot_titles=(
             '<b>Mission Profile</b>',
             '<b>Phase Breakdown</b>',
@@ -283,7 +330,13 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
             '<b>Descent Configuration</b>',
             '<b>Range Optimization</b>',
             '<b>Cruise Climb</b>',
-            '<b>Aircraft Configuration</b>'
+            '<b>Aircraft Configuration</b>',
+            '<b>Climb Penalty System</b>',
+            '<b>Descent Penalty System</b>',
+            '<b>Mach Guidance</b>',
+            '<b>Fuel Optimization</b>',
+            '<b>CG Consumption</b>',
+            None
         ),
         specs=[
             [{"colspan": 3, "type": "scatter"}, None, None],
@@ -294,9 +347,10 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
             [{"type": "table"}, {"type": "table"}, {"type": "table"}],
             [{"type": "table"}, {"type": "table"}, {"type": "table"}],
             [{"type": "table"}, {"type": "table"}, {"type": "table"}],
-            [None, None, None]
+            [{"type": "table"}, {"type": "table"}, {"type": "table"}],
+            [{"type": "table"}, {"type": "table"}, None]
         ],
-        row_heights=[0.07, 0.07, 0.07, 0.09, 0.16, 0.24, 0.24, 0.00, 0.00],
+        row_heights=[0.07, 0.07, 0.07, 0.09, 0.16, 0.20, 0.20, 0.20, 0.20, 0.10],
         vertical_spacing=0.02,
         horizontal_spacing=0.10
     )
@@ -835,13 +889,15 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
                 values=[
                     ['<b>Target Altitude</b>', '<b>Start Altitude</b>', '<b>Start Velocity</b>', '<b>Start Lever</b>',
                      '<b>Mach Samples</b>', '<b>Altitude Steps</b>', '<b>Lever Samples</b>',
-                     '<b>Target Mach</b>', '<b>Mach Tolerance</b>', '<b>Strategy Time Step</b>'],
+                     '<b>Target Mach</b>', '<b>Mach Tolerance</b>', '<b>Strategy Time Step</b>',
+                     '<b>Min Mach</b>', '<b>Max Mach</b>', '<b>Min Lever (%)</b>', '<b>Max Lever (%)</b>'],
                     [f'{TARGET_ALT_CLIMB_M:.0f} m', f'{START_ALTITUDE_CLIMB_M:.1f} m', 
                      f'{START_VELOCITY_CLIMB_MS:.1f} m/s', f'{START_LEVER_CLIMB:.2f}',
                     f'{N_MACH_SAMPLES_CLIMB}', f'{N_ALTITUDE_STEPS_CLIMB}', f'{N_LEVER_SAMPLES_CLIMB}',
-                    f'{TARGET_MACH_CRUISE:.3f}', f'{TARGET_MACH_TOLERANCE:.3f}', f'{STRATEGY_DT_CLIMB_S:.1f} s']
+                    f'{TARGET_MACH_CRUISE:.3f}', f'{TARGET_MACH_TOLERANCE:.3f}', f'{STRATEGY_DT_CLIMB_S:.1f} s',
+                    f'{climb_mach_min:.3f}', f'{climb_mach_max:.3f}', f'{climb_lever_min:.1f}', f'{climb_lever_max:.1f}']
                 ],
-                fill_color=[['white', 'white', 'lightgray', 'lightgray'] * 5],  # 10 rows: white/grey alternating rows
+                fill_color=[['white', 'white', 'lightgray', 'lightgray'] * 6 + ['white', 'white']],  # 13 rows: white/grey alternating rows
                 align=['left', 'right'],
                 font=dict(size=10, family=Typography.FONT_FAMILY)
             )
@@ -860,10 +916,12 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
             ),
             cells=dict(
                 values=[
-                    ['<b>Cruise Distance</b>', '<b>Cruise Time Step</b>'],
-                    [f'{CRUISE_DISTANCE_KM:.1f} km', f'{CRUISE_TIME_STEP_S:.1f} s']
+                    ['<b>Cruise Distance</b>', '<b>Cruise Time Step</b>',
+                     '<b>Min Mach</b>', '<b>Max Mach</b>', '<b>Min Lever (%)</b>', '<b>Max Lever (%)</b>'],
+                    [f'{CRUISE_DISTANCE_KM:.1f} km', f'{CRUISE_TIME_STEP_S:.1f} s',
+                     f'{cruise_mach_min:.3f}', f'{cruise_mach_max:.3f}', f'{cruise_lever_min:.1f}', f'{cruise_lever_max:.1f}']
                 ],
-                fill_color=[['white', 'white', 'lightgray', 'lightgray']],  # 2 rows: white/grey alternating rows
+                fill_color=[['white', 'white', 'lightgray', 'lightgray'] * 3],  # 6 rows: white/grey alternating rows
                 align=['left', 'right'],
                 font=dict(size=10, family=Typography.FONT_FAMILY)
             )
@@ -883,11 +941,13 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
             cells=dict(
                 values=[
                     ['<b>Target Altitude</b>', '<b>Target Mach</b>',
-                     '<b>Mach Samples</b>', '<b>Altitude Steps</b>', '<b>Lever Samples</b>'],
+                     '<b>Mach Samples</b>', '<b>Altitude Steps</b>', '<b>Lever Samples</b>',
+                     '<b>Min Mach</b>', '<b>Max Mach</b>', '<b>Min Lever (%)</b>', '<b>Max Lever (%)</b>'],
                     [f'{TARGET_DESCENT_ALT_M:.1f} m', f'{TARGET_DESCENT_MACH:.3f}',
-                     f'{N_MACH_SAMPLES_DESCENT}', f'{N_ALTITUDE_STEPS_DESCENT}', f'{N_LEVER_SAMPLES_DESCENT}']
+                     f'{N_MACH_SAMPLES_DESCENT}', f'{N_ALTITUDE_STEPS_DESCENT}', f'{N_LEVER_SAMPLES_DESCENT}',
+                     f'{descent_mach_min:.3f}', f'{descent_mach_max:.3f}', f'{descent_lever_min:.1f}', f'{descent_lever_max:.1f}']
                 ],
-                fill_color=[['white', 'white', 'lightgray', 'lightgray'] * 2 + ['white', 'white']],  # 5 rows: white/grey alternating rows
+                fill_color=[['white', 'white', 'lightgray', 'lightgray'] * 4 + ['white', 'white']],  # 9 rows: white/grey alternating rows
                 align=['left', 'right'],
                 font=dict(size=10, family=Typography.FONT_FAMILY)
             )
@@ -976,6 +1036,163 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
         row=7, col=3
     )
     
+    # ========= ROW 8 COL 1: CLIMB PENALTY SYSTEM TABLE =========
+    fig.add_trace(
+        go.Table(
+            header=dict(
+                values=['<b>Climb Penalty Parameter</b>', '<b>Value</b>'],
+                fill_color=Colors.CLIMB,
+                align='center',
+                font=dict(color='white', size=Typography.AXIS_LABEL_SIZE, family=Typography.FONT_FAMILY)
+            ),
+            cells=dict(
+                values=[
+                    ['<b>Mach Guidance Enabled</b>', '<b>Target Mach Tolerance</b>',
+                     '<b>Max Reasonable Mach Rate</b>',
+                     '<b>Urgency Multiplier</b>', '<b>Guidance Penalty Weight</b>',
+                     '<b>Lever Penalty Enabled</b>', '<b>Lever Penalty Weight</b>',
+                     '<b>Lever Penalty Threshold</b>', '<b>Lever Penalty Exponent</b>',
+                     '<b>Critical Threshold</b>', '<b>Critical Multiplier</b>',
+                     '<b>Ultra Critical Threshold</b>', '<b>Ultra Critical Multiplier</b>'],
+                    ['Yes' if PENALTY_CLIMB_MACH_TRAJECTORY_GUIDANCE else 'No',
+                     f'{PENALTY_CLIMB_TARGET_MACH_TOLERANCE:.3f}',
+                     f'{PENALTY_CLIMB_MAX_REASONABLE_MACH_RATE:.2f}',
+                     f'{PENALTY_CLIMB_URGENCY_MULTIPLIER:.1f}',
+                     f'{PENALTY_CLIMB_GUIDANCE_PENALTY_WEIGHT:.2f}',
+                     'Yes' if PENALTY_CLIMB_LEVER_PENALTY_GUIDANCE else 'No',
+                     f'{PENALTY_CLIMB_LEVER_PENALTY_WEIGHT:.1f}',
+                     f'{PENALTY_CLIMB_LEVER_PENALTY_THRESHOLD:.2f}',
+                     f'{PENALTY_CLIMB_LEVER_PENALTY_EXPONENT:.1f}',
+                     f'{PENALTY_CLIMB_LEVER_PENALTY_CRITICAL_THRESHOLD:.2f}',
+                     f'{PENALTY_CLIMB_LEVER_PENALTY_CRITICAL_MULTIPLIER:.1f}',
+                     f'{PENALTY_CLIMB_LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD:.2f}',
+                     f'{PENALTY_CLIMB_LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER:.1f}']
+                ],
+                fill_color=[['white', 'white', 'lightgray', 'lightgray'] * 6 + ['white', 'white']],  # 13 rows: white/grey alternating rows
+                align=['left', 'right'],
+                font=dict(size=9, family=Typography.FONT_FAMILY)
+            )
+        ),
+        row=8, col=1
+    )
+    
+    # ========= ROW 8 COL 2: DESCENT PENALTY SYSTEM TABLE =========
+    fig.add_trace(
+        go.Table(
+            header=dict(
+                values=['<b>Descent Penalty Parameter</b>', '<b>Value</b>'],
+                fill_color=Colors.DESCENT,
+                align='center',
+                font=dict(color='white', size=Typography.AXIS_LABEL_SIZE, family=Typography.FONT_FAMILY)
+            ),
+            cells=dict(
+                values=[
+                    ['<b>Mach Guidance Enabled</b>', '<b>Target Mach Tolerance</b>',
+                     '<b>Max Reasonable Mach Rate</b>',
+                     '<b>Urgency Multiplier</b>', '<b>Guidance Penalty Weight</b>',
+                     '<b>Lever Penalty Enabled</b>', '<b>Lever Penalty Weight</b>',
+                     '<b>Lever Penalty Threshold</b>', '<b>Lever Penalty Exponent</b>',
+                     '<b>Critical Threshold</b>', '<b>Critical Multiplier</b>',
+                     '<b>Ultra Critical Threshold</b>', '<b>Ultra Critical Multiplier</b>'],
+                    ['Yes' if PENALTY_DESCENT_MACH_TRAJECTORY_GUIDANCE else 'No',
+                     f'{PENALTY_DESCENT_TARGET_MACH_TOLERANCE:.3f}',
+                     f'{PENALTY_DESCENT_MAX_REASONABLE_MACH_RATE:.2f}',
+                     f'{PENALTY_DESCENT_URGENCY_MULTIPLIER:.1f}',
+                     f'{PENALTY_DESCENT_GUIDANCE_PENALTY_WEIGHT:.2f}',
+                     'Yes' if PENALTY_DESCENT_LEVER_PENALTY_GUIDANCE else 'No',
+                     f'{PENALTY_DESCENT_LEVER_PENALTY_WEIGHT:.1f}',
+                     f'{PENALTY_DESCENT_LEVER_PENALTY_THRESHOLD:.2f}',
+                     f'{PENALTY_DESCENT_LEVER_PENALTY_EXPONENT:.1f}',
+                     f'{PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_THRESHOLD:.2f}',
+                     f'{PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_MULTIPLIER:.1f}',
+                     f'{PENALTY_DESCENT_LEVER_PENALTY_ULTRA_CRITICAL_THRESHOLD:.2f}',
+                     f'{PENALTY_DESCENT_LEVER_PENALTY_ULTRA_CRITICAL_MULTIPLIER:.1f}']
+                ],
+                fill_color=[['white', 'white', 'lightgray', 'lightgray'] * 6 + ['white', 'white']],  # 13 rows: white/grey alternating rows
+                align=['left', 'right'],
+                font=dict(size=9, family=Typography.FONT_FAMILY)
+            )
+        ),
+        row=8, col=2
+    )
+    
+    # ========= ROW 8 COL 3: MACH GUIDANCE TABLE =========
+    fig.add_trace(
+        go.Table(
+            header=dict(
+                values=['<b>Mach Guidance Parameter</b>', '<b>Value</b>'],
+                fill_color=Colors.CRUISE,
+                align='center',
+                font=dict(color='white', size=Typography.AXIS_LABEL_SIZE, family=Typography.FONT_FAMILY)
+            ),
+            cells=dict(
+                values=[
+                    ['<b>Final Phase Start</b>', '<b>Final Phase Range</b>',
+                     '<b>Terminal Phase Start</b>', '<b>Terminal Phase Range</b>',
+                     '<b>Terminal Boost Multiplier</b>'],
+                    [f'{MACH_GUIDANCE_FINAL_PHASE_START:.1f}',
+                     f'{MACH_GUIDANCE_FINAL_PHASE_RANGE:.1f}',
+                     f'{MACH_GUIDANCE_TERMINAL_PHASE_START:.1f}',
+                     f'{MACH_GUIDANCE_TERMINAL_PHASE_RANGE:.1f}',
+                     f'{MACH_GUIDANCE_TERMINAL_BOOST_MULTIPLIER:.1f}']
+                ],
+                fill_color=[['white', 'white', 'lightgray', 'lightgray'] * 2 + ['white', 'white']],  # 5 rows: white/grey alternating rows
+                align=['left', 'right'],
+                font=dict(size=10, family=Typography.FONT_FAMILY)
+            )
+        ),
+        row=8, col=3
+    )
+    
+    # ========= ROW 9 COL 1: FUEL OPTIMIZATION TABLE =========
+    fig.add_trace(
+        go.Table(
+            header=dict(
+                values=['<b>Fuel Optimization Parameter</b>', '<b>Value</b>'],
+                fill_color=Colors.CRUISE,
+                align='center',
+                font=dict(color='white', size=Typography.AXIS_LABEL_SIZE, family=Typography.FONT_FAMILY)
+            ),
+            cells=dict(
+                values=[
+                    ['<b>Convergence Tolerance</b>', '<b>Safety Buffer</b>',
+                     '<b>Max Iterations</b>', '<b>Initial Fuel Low</b>', '<b>Initial Fuel High</b>'],
+                    [f'{FUEL_OPTIMIZATION_CONVERGENCE_TOLERANCE_KG:.1f} kg',
+                     f'{FUEL_OPTIMIZATION_SAFETY_BUFFER_PERCENT*100:.1f}%',
+                     f'{FUEL_OPTIMIZATION_MAX_ITERATIONS}',
+                     f'{FUEL_OPTIMIZATION_INITIAL_FUEL_LOW_KG:.1f} kg',
+                     f'{FUEL_OPTIMIZATION_INITIAL_FUEL_HIGH_KG:.1f} kg']
+                ],
+                fill_color=[['white', 'white', 'lightgray', 'lightgray'] * 2 + ['white', 'white']],  # 5 rows: white/grey alternating rows
+                align=['left', 'right'],
+                font=dict(size=10, family=Typography.FONT_FAMILY)
+            )
+        ),
+        row=9, col=1
+    )
+    
+    # ========= ROW 9 COL 2: CG CONSUMPTION SCENARIO TABLE =========
+    fig.add_trace(
+        go.Table(
+            header=dict(
+                values=['<b>CG Configuration</b>', '<b>Value</b>'],
+                fill_color=Colors.CRUISE,
+                align='center',
+                font=dict(color='white', size=Typography.AXIS_LABEL_SIZE, family=Typography.FONT_FAMILY)
+            ),
+            cells=dict(
+                values=[
+                    ['<b>Fuel Consumption Scenario</b>'],
+                    [f'{CG_CONSUMPTION_SCENARIO}']
+                ],
+                fill_color=[['white', 'white']],  # 1 row
+                align=['left', 'right'],
+                font=dict(size=10, family=Typography.FONT_FAMILY)
+            )
+        ),
+        row=9, col=2
+    )
+    
     # Main title with comprehensive summary - add warning if infeasible
     feasibility_warning = ""
     if fuel_deficit > 0:
@@ -990,7 +1207,7 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     )
     
     # Increase height to accommodate additional configuration tables
-    dashboard_height = Layout.DASHBOARD_HEIGHT * 2.5  # 150% increase for new tables and better visibility
+    dashboard_height = Layout.DASHBOARD_HEIGHT * 3.0  # Increased for new penalty, fuel optimization, and CG tables
     
     layout_config = get_standard_layout(
         "COMPLETE MISSION ANALYSIS SUMMARY",
@@ -1195,19 +1412,19 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
         climb_result, cruise_result, descent_result, initial_mass_kg
     )
     
-    # Create combined subplots: 3 phases × 6 metrics = 3 rows × 6 columns
+    # Create combined subplots: 3 phases × 7 metrics = 3 rows × 7 columns
     fig = make_subplots(
-        rows=3, cols=6,
+        rows=3, cols=7,
         subplot_titles=(
             # Row 1: Climb Phase
             '<b>Climb: Fuel Flow</b>', '<b>Climb: Thrust/Drag</b>', '<b>Climb: Mass</b>',
-            '<b>Climb: Lever</b>', '<b>Climb: Airspeed</b>', '<b>Climb: Fuel</b>',
+            '<b>Climb: Lever</b>', '<b>Climb: Airspeed</b>', '<b>Climb: Fuel</b>', '<b>Climb: Mach</b>',
             # Row 2: Cruise Phase  
             '<b>Cruise: Fuel Flow</b>', '<b>Cruise: Thrust/Drag</b>', '<b>Cruise: Mass</b>',
-            '<b>Cruise: Lever</b>', '<b>Cruise: Airspeed</b>', '<b>Cruise: Fuel</b>',
+            '<b>Cruise: Lever</b>', '<b>Cruise: Airspeed</b>', '<b>Cruise: Fuel</b>', '<b>Cruise: Mach</b>',
             # Row 3: Descent Phase
             '<b>Descent: Fuel Flow</b>', '<b>Descent: Thrust/Drag</b>', '<b>Descent: Mass</b>',
-            '<b>Descent: Lever</b>', '<b>Descent: Airspeed</b>', '<b>Descent: Fuel</b>'
+            '<b>Descent: Lever</b>', '<b>Descent: Airspeed</b>', '<b>Descent: Fuel</b>', '<b>Descent: Mach</b>'
         ),
         vertical_spacing=0.08,
         horizontal_spacing=0.02
@@ -1254,6 +1471,7 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
     cruise_lever = cruise_result.lever_position * 100
     cruise_fuel_consumed = cruise_result.fuel_consumed_kg
     cruise_tas_ms = cruise_result.true_airspeed_mps
+    cruise_mach = np.asarray(cruise_result.mach_number, float)
     
     # ========= DESCENT PHASE DATA =========
     descent_time_min = descent_result.time_s / 60.0
@@ -1263,6 +1481,7 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
     descent_mass_kg = descent_result.mass_kg
     descent_lever = descent_result.lever * 100
     descent_cum_fuel_kg = descent_result.cumFuel_kg
+    descent_mach = np.asarray(descent_result.mach, float)
     
     # Calculate descent true airspeed
     descent_tas_ms = []
@@ -1369,6 +1588,19 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
         row=1, col=6
     )
     
+    # 7. Mach Number
+    fig.add_trace(
+        go.Scatter(
+            x=climb_time_min,
+            y=climb_mach,
+            mode='lines',
+            name='Climb Mach',
+            line=dict(color=Colors.CLIMB, width=LineStyles.THICK),
+            showlegend=False
+        ),
+        row=1, col=7
+    )
+    
     # CRUISE PHASE (Row 2)
     # 1. Fuel Flow Rate
     fig.add_trace(
@@ -1463,6 +1695,19 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
             showlegend=False
         ),
         row=2, col=6
+    )
+    
+    # 7. Mach Number
+    fig.add_trace(
+        go.Scatter(
+            x=cruise_time_min,
+            y=cruise_mach,
+            mode='lines',
+            name='Cruise Mach',
+            line=dict(color=Colors.CRUISE, width=LineStyles.THICK),
+            showlegend=False
+        ),
+        row=2, col=7
     )
     
     # DESCENT PHASE (Row 3)
@@ -1561,6 +1806,19 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
         row=3, col=6
     )
     
+    # 7. Mach Number
+    fig.add_trace(
+        go.Scatter(
+            x=descent_time_min,
+            y=descent_mach,
+            mode='lines',
+            name='Descent Mach',
+            line=dict(color=Colors.DESCENT, width=LineStyles.THICK),
+            showlegend=False
+        ),
+        row=3, col=7
+    )
+    
     # Calculate mission totals
     # Use mass tracking for consistent fuel calculation
     total_fuel_sum = climb_fuel_kg[-1] + cruise_fuel_consumed[-1] + descent_cum_fuel_kg[-1]
@@ -1622,7 +1880,7 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
             font=dict(size=18)
         ),
         height=1000,
-        width=1800,
+        width=2100,
         template='plotly_white',
         font=dict(family="Arial, sans-serif", size=11),
         showlegend=False,
@@ -1631,7 +1889,7 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
     
     # Update axes labels
     for row in range(1, 4):
-        for col in range(1, 7):
+        for col in range(1, 8):
             fig.update_xaxes(title_text="Time (min)", row=row, col=col, gridcolor='lightgray')
             
             if col == 1:  # Fuel Flow
@@ -1663,6 +1921,8 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
                 fig.update_yaxes(title_text="TAS (m/s)", row=row, col=col, gridcolor='lightgray')
             elif col == 6:  # Fuel
                 fig.update_yaxes(title_text="Fuel (kg)", row=row, col=col, gridcolor='lightgray')
+            elif col == 7:  # Mach
+                fig.update_yaxes(title_text="Mach", row=row, col=col, gridcolor='lightgray')
     
     # Add phase labels on the left
     fig.add_annotation(
@@ -1702,10 +1962,10 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
     try:
         save_prefix = "combined_performance"
         
-        # CLIMB PHASE - All 6 metrics in one figure
-        fig_climb = make_subplots(rows=2, cols=3,
+        # CLIMB PHASE - All 7 metrics in one figure
+        fig_climb = make_subplots(rows=3, cols=3,
             subplot_titles=('<b>Fuel Flow</b>', '<b>Thrust/Drag</b>', '<b>Mass</b>',
-                           '<b>Lever</b>', '<b>Airspeed</b>', '<b>Fuel</b>'),
+                           '<b>Lever</b>', '<b>Airspeed</b>', '<b>Fuel</b>', '<b>Mach</b>', None, None),
             vertical_spacing=0.12, horizontal_spacing=0.12)
         
         # Fuel Flow
@@ -1731,21 +1991,25 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
         fig_climb.add_trace(go.Scatter(x=climb_time_min, y=climb_fuel_kg, mode='lines', name='Fuel',
             line=dict(color=Colors.CLIMB, width=LineStyles.THICK), fill='tozeroy', fillcolor='rgba(65, 105, 225, 0.15)',
             showlegend=False), row=2, col=3)
+        # Mach
+        fig_climb.add_trace(go.Scatter(x=climb_time_min, y=climb_mach, mode='lines', name='Mach',
+            line=dict(color=Colors.CLIMB, width=LineStyles.THICK), showlegend=False), row=3, col=1)
         
         fig_climb.update_layout(title=dict(text="<b>CLIMB PHASE - Performance Analysis</b>", x=0.5, xanchor='center'),
-            height=800, width=1400, template='plotly_white', showlegend=False)
+            height=1000, width=1400, template='plotly_white', showlegend=False)
         fig_climb.update_xaxes(title_text="Time (min)", row=1, col=1); fig_climb.update_yaxes(title_text="Fuel Flow (kg/h)", row=1, col=1)
         fig_climb.update_xaxes(title_text="Time (min)", row=1, col=2); fig_climb.update_yaxes(title_text="Force (kN)", row=1, col=2)
         fig_climb.update_xaxes(title_text="Time (min)", row=1, col=3); fig_climb.update_yaxes(title_text="Mass (kg)", row=1, col=3)
         fig_climb.update_xaxes(title_text="Time (min)", row=2, col=1); fig_climb.update_yaxes(title_text="Lever (%)", row=2, col=1)
         fig_climb.update_xaxes(title_text="Time (min)", row=2, col=2); fig_climb.update_yaxes(title_text="TAS (m/s)", row=2, col=2)
         fig_climb.update_xaxes(title_text="Time (min)", row=2, col=3); fig_climb.update_yaxes(title_text="Fuel (kg)", row=2, col=3)
-        fig_climb.write_image(os.path.join(run_dir, f'{save_prefix}_climb_phase.png'), width=1800, height=1000, scale=2)
+        fig_climb.update_xaxes(title_text="Time (min)", row=3, col=1); fig_climb.update_yaxes(title_text="Mach", row=3, col=1)
+        fig_climb.write_image(os.path.join(run_dir, f'{save_prefix}_climb_phase.png'), width=1800, height=1200, scale=2)
         
-        # CRUISE PHASE - All 6 metrics in one figure
-        fig_cruise = make_subplots(rows=2, cols=3,
+        # CRUISE PHASE - All 7 metrics in one figure
+        fig_cruise = make_subplots(rows=3, cols=3,
             subplot_titles=('<b>Fuel Flow</b>', '<b>Thrust/Drag</b>', '<b>Mass</b>',
-                           '<b>Lever</b>', '<b>Airspeed</b>', '<b>Fuel</b>'),
+                           '<b>Lever</b>', '<b>Airspeed</b>', '<b>Fuel</b>', '<b>Mach</b>', None, None),
             vertical_spacing=0.12, horizontal_spacing=0.12)
         
         # Fuel Flow
@@ -1771,21 +2035,25 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
         fig_cruise.add_trace(go.Scatter(x=cruise_time_min, y=cruise_fuel_consumed, mode='lines', name='Fuel',
             line=dict(color=Colors.CRUISE, width=LineStyles.THICK), fill='tozeroy', fillcolor='rgba(0, 128, 0, 0.15)',
             showlegend=False), row=2, col=3)
+        # Mach
+        fig_cruise.add_trace(go.Scatter(x=cruise_time_min, y=cruise_mach, mode='lines', name='Mach',
+            line=dict(color=Colors.CRUISE, width=LineStyles.THICK), showlegend=False), row=3, col=1)
         
         fig_cruise.update_layout(title=dict(text="<b>CRUISE PHASE - Performance Analysis</b>", x=0.5, xanchor='center'),
-            height=800, width=1400, template='plotly_white', showlegend=False)
+            height=1000, width=1400, template='plotly_white', showlegend=False)
         fig_cruise.update_xaxes(title_text="Time (min)", row=1, col=1); fig_cruise.update_yaxes(title_text="Fuel Flow (kg/h)", row=1, col=1)
         fig_cruise.update_xaxes(title_text="Time (min)", row=1, col=2); fig_cruise.update_yaxes(title_text="Force (kN)", row=1, col=2)
         fig_cruise.update_xaxes(title_text="Time (min)", row=1, col=3); fig_cruise.update_yaxes(title_text="Mass (kg)", row=1, col=3)
         fig_cruise.update_xaxes(title_text="Time (min)", row=2, col=1); fig_cruise.update_yaxes(title_text="Lever (%)", row=2, col=1)
         fig_cruise.update_xaxes(title_text="Time (min)", row=2, col=2); fig_cruise.update_yaxes(title_text="TAS (m/s)", row=2, col=2)
         fig_cruise.update_xaxes(title_text="Time (min)", row=2, col=3); fig_cruise.update_yaxes(title_text="Fuel (kg)", row=2, col=3)
-        fig_cruise.write_image(os.path.join(run_dir, f'{save_prefix}_cruise_phase.png'), width=1800, height=1000, scale=2)
+        fig_cruise.update_xaxes(title_text="Time (min)", row=3, col=1); fig_cruise.update_yaxes(title_text="Mach", row=3, col=1)
+        fig_cruise.write_image(os.path.join(run_dir, f'{save_prefix}_cruise_phase.png'), width=1800, height=1200, scale=2)
         
-        # DESCENT PHASE - All 6 metrics in one figure
-        fig_descent = make_subplots(rows=2, cols=3,
+        # DESCENT PHASE - All 7 metrics in one figure
+        fig_descent = make_subplots(rows=3, cols=3,
             subplot_titles=('<b>Fuel Flow</b>', '<b>Thrust/Drag</b>', '<b>Mass</b>',
-                           '<b>Lever</b>', '<b>Airspeed</b>', '<b>Fuel</b>'),
+                           '<b>Lever</b>', '<b>Airspeed</b>', '<b>Fuel</b>', '<b>Mach</b>', None, None),
             vertical_spacing=0.12, horizontal_spacing=0.12)
         
         # Fuel Flow
@@ -1811,16 +2079,20 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
         fig_descent.add_trace(go.Scatter(x=descent_time_min, y=descent_cum_fuel_kg, mode='lines', name='Fuel',
             line=dict(color=Colors.DESCENT, width=LineStyles.THICK), fill='tozeroy', fillcolor='rgba(220, 20, 60, 0.15)',
             showlegend=False), row=2, col=3)
+        # Mach
+        fig_descent.add_trace(go.Scatter(x=descent_time_min, y=descent_mach, mode='lines', name='Mach',
+            line=dict(color=Colors.DESCENT, width=LineStyles.THICK), showlegend=False), row=3, col=1)
         
         fig_descent.update_layout(title=dict(text="<b>DESCENT PHASE - Performance Analysis</b>", x=0.5, xanchor='center'),
-            height=800, width=1400, template='plotly_white', showlegend=False)
+            height=1000, width=1400, template='plotly_white', showlegend=False)
         fig_descent.update_xaxes(title_text="Time (min)", row=1, col=1); fig_descent.update_yaxes(title_text="Fuel Flow (kg/h)", row=1, col=1)
         fig_descent.update_xaxes(title_text="Time (min)", row=1, col=2); fig_descent.update_yaxes(title_text="Force (kN)", row=1, col=2)
         fig_descent.update_xaxes(title_text="Time (min)", row=1, col=3); fig_descent.update_yaxes(title_text="Mass (kg)", row=1, col=3)
         fig_descent.update_xaxes(title_text="Time (min)", row=2, col=1); fig_descent.update_yaxes(title_text="Lever (%)", row=2, col=1)
         fig_descent.update_xaxes(title_text="Time (min)", row=2, col=2); fig_descent.update_yaxes(title_text="TAS (m/s)", row=2, col=2)
         fig_descent.update_xaxes(title_text="Time (min)", row=2, col=3); fig_descent.update_yaxes(title_text="Fuel (kg)", row=2, col=3)
-        fig_descent.write_image(os.path.join(run_dir, f'{save_prefix}_descent_phase.png'), width=1800, height=1000, scale=2)
+        fig_descent.update_xaxes(title_text="Time (min)", row=3, col=1); fig_descent.update_yaxes(title_text="Mach", row=3, col=1)
+        fig_descent.write_image(os.path.join(run_dir, f'{save_prefix}_descent_phase.png'), width=1800, height=1200, scale=2)
         
         print(f"[EXPORT] Individual combined performance plots saved as PNG to: {run_dir}")
     except Exception as e:
