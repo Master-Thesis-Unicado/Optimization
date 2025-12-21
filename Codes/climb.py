@@ -1515,7 +1515,20 @@ class ClimbingCore:
 # Import plotting configuration (defined in climb_plotting.py)
 # Import placed here after ClimbingCore class definition to avoid circular import
 # (climb_plotting.py imports ClimbingCore from this module)
-from climb_plotting import PlottingConfig, GridConfig, GridAndPlotting
+# Ensure we import from the local climb_plotting.py, not the root one
+import sys
+from pathlib import Path
+_codes_dir = Path(__file__).parent
+# Temporarily remove root directory from path to avoid importing root climb_plotting.py
+_root_dir = _codes_dir.parent
+_original_path = sys.path.copy()
+if str(_root_dir) in sys.path:
+    sys.path.remove(str(_root_dir))
+try:
+    from climb_plotting import PlottingConfig, GridConfig, GridAndPlotting
+finally:
+    # Restore original path
+    sys.path[:] = _original_path
 
 # =========  4 - SYSTEM UTILITIES =====================
 class SystemUtilities:
