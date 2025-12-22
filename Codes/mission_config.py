@@ -140,16 +140,16 @@ Grid structure: (M_i, h_k, δ_j) where:
 # ────────────────────────────────────────────────────────────────────────────
 # Climb Phase Grid: (M_i, h_k, δ_j)
 # ────────────────────────────────────────────────────────────────────────────
-N_MACH_SAMPLES_CLIMB = 15                           # I: number of Mach points
-N_ALTITUDE_STEPS_CLIMB = 15                         # K: number of altitude levels
-N_LEVER_SAMPLES_CLIMB = 15                         # L: number of throttle positions
+N_MACH_SAMPLES_CLIMB = 55                           # I: number of Mach points
+N_ALTITUDE_STEPS_CLIMB = 55                         # K: number of altitude levels
+N_LEVER_SAMPLES_CLIMB = 55                         # L: number of throttle positions
 
 # ────────────────────────────────────────────────────────────────────────────
 # Descent Phase Grid: (M_i, h_k, δ_j)
 # ────────────────────────────────────────────────────────────────────────────
-N_MACH_SAMPLES_DESCENT = 15                         # I: number of Mach points
-N_ALTITUDE_STEPS_DESCENT = 15                       # K: number of altitude levels
-N_LEVER_SAMPLES_DESCENT = 15                        # L: number of throttle positions
+N_MACH_SAMPLES_DESCENT = 55                         # I: number of Mach points
+N_ALTITUDE_STEPS_DESCENT = 55                       # K: number of altitude levels
+N_LEVER_SAMPLES_DESCENT = 55                        # L: number of throttle positions
 
 
 # ========================================================================
@@ -176,7 +176,7 @@ PENALTY_CLIMB_GUIDANCE_PENALTY_WEIGHT = 0.3         # w_guidance
 # ────────────────────────────────────────────────────────────────────────────
 # Penalty function: P(δ) = w·[(δ-δ_MCT)^p + critical terms]
 PENALTY_CLIMB_LEVER_PENALTY_GUIDANCE = True         # Enable lever penalties
-PENALTY_CLIMB_LEVER_PENALTY_WEIGHT = 3            # w_lever
+PENALTY_CLIMB_LEVER_PENALTY_WEIGHT = 4            # w_lever
 PENALTY_CLIMB_LEVER_PENALTY_THRESHOLD = 0.70        # δ_MCT (75%)
 PENALTY_CLIMB_LEVER_PENALTY_EXPONENT = 3.0          # p
 PENALTY_CLIMB_LEVER_PENALTY_CRITICAL_THRESHOLD = 0.90  # δ_crit (90%)
@@ -199,7 +199,7 @@ PENALTY_DESCENT_GUIDANCE_PENALTY_WEIGHT = 0.3       # w_guidance
 # ────────────────────────────────────────────────────────────────────────────
 # Penalty function: P(δ) = w·[(δ-δ_MCT)^p + critical terms]
 PENALTY_DESCENT_LEVER_PENALTY_GUIDANCE = True       # Enable lever penalties
-PENALTY_DESCENT_LEVER_PENALTY_WEIGHT = 3          # w_lever
+PENALTY_DESCENT_LEVER_PENALTY_WEIGHT = 4          # w_lever
 PENALTY_DESCENT_LEVER_PENALTY_THRESHOLD = 0.70      # δ_MCT (75%) (consistent with climb)
 PENALTY_DESCENT_LEVER_PENALTY_EXPONENT = 3.0        # p
 PENALTY_DESCENT_LEVER_PENALTY_CRITICAL_THRESHOLD = 0.90  # δ_crit (90%)
@@ -268,7 +268,7 @@ ENABLE_CRUISE_CLIMB = False                         # Boolean: enable cruise cli
 # ────────────────────────────────────────────────────────────────────────────
 # Export Features
 # ────────────────────────────────────────────────────────────────────────────
-ENABLE_EXCEL_EXPORT = False                         # Boolean: enable Excel export of mission data
+ENABLE_EXCEL_EXPORT = True                         # Boolean: enable Excel export of mission data
 
 
 # ========================================================================

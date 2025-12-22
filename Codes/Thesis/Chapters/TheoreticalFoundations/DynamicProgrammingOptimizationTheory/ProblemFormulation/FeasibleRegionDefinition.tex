@@ -24,6 +24,16 @@ m_k > 0
 |M_{final} - M_{target}| < \epsilon_{M} \quad \text{(at terminal altitude level $K-1$)}
 \end{equation}
 
+The physical and operational limits governing the climb phase are mapped into the 3D state space in Figure \ref{fig:Three-dimensionalFeasibleDesignSpace} notably, this mapping only includes points above an  \begin{equation} P_s >0 \end{equation} and excludes any states that fall outside the permissible engine operating envelope.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{Images/FeasibleRegionDefinition/FeasibleRegionDefinition.png}
+    \caption{Three-dimensional Feasible Design Space}
+    \label{fig:Three-dimensionalFeasibleDesignSpace}
+\end{figure}
+
+
 In these constraints, $M_{min}(h_k, m_k)$ is the minimum safe Mach accounting for stall boundaries, $M_{MMO}$ is the maximum operating Mach, $\delta_{min} = 0$ and $\delta_{max} = 1$ define the throttle lever range, and $m_k$ is the aircraft mass which must remain positive throughout the trajectory. 
 
 The specific excess power constraint depends on the flight phase. For climb, states must have $P_s > 0$ to allow the aircraft to gain altitude. For descent, states must have $P_s < 0$ to allow altitude loss.

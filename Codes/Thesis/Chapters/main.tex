@@ -46,7 +46,7 @@
 % =========================================
 
 % FIX 1: Updated path. CoverPage is at the root, not inside Chapters.
-\input{CoverPage/CoverPage}
+ 
 
 \newpage
 \pagenumbering{roman} % Roman numerals for front matter
@@ -80,12 +80,31 @@
 \newpage
 \chapter{Introduction}
 \label{chap:Introduction}
-\input{Introduction/Introduction}
-\input{Introduction/ProblemStatement}
-\input{Introduction/ResearchMotivationandBackground}
-\input{Introduction/ResearchObjectives}
-\input{Introduction/ScopeAndLimitations}
-\input{Introduction/ThesisStructureandOrganization}
+\input{Chapters/Introduction/Introduction}
+
+\section{Problem Statement}
+\input{Chapters/Introduction/ProblemStatement}
+
+\section{Research Motivation and Background}
+\input{Chapters/Introduction/ResearchMotivationandBackground}
+
+\section{Research Objectives}
+\input{Chapters/Introduction/ResearchObjectives}
+
+\section{Scope and Limitations}
+\input{Chapters/Introduction/ScopeAndLimitations}
+
+\subsection{Scope}
+\input{Chapters/Introduction/Scope}
+
+\subsection{Limitations}
+\input{Chapters/Introduction/Limitations}
+
+\subsection{Limitations}
+\input{Chapters/Introduction/Assumptions}
+
+\section{Thesis Structure and Organization}
+\input{Chapters/Introduction/ThesisStructureandOrganization}
 
 % =========================================
 % CHAPTER 2: THEORETICAL FOUNDATIONS
@@ -94,7 +113,6 @@
 \chapter{Theoretical Foundations}
 \label{chap:TheoreticalFoundations}
 
-% Based on image_d16c12.png (Inputting specific files, not folders)
 \section{Atmospheric Modeling}
 \label{sec:atmospheric_modeling}
 
@@ -104,7 +122,7 @@
 \label{sec:isa_layer_structure}
 \input{Chapters/TheoreticalFoundations/AtmosphericModeling/ISALayerStructure}
 
-\subsection{Speed of Sound}
+\subsection{Speed of Sound and True Airspeed}
 \label{sec:speed_of_sound}
 \input{Chapters/TheoreticalFoundations/AtmosphericModeling/SpeedOfSound}
 
@@ -112,7 +130,6 @@
 \label{sec:dynamic_pressure}
 \input{Chapters/TheoreticalFoundations/AtmosphericModeling/DynamicPressure}
 
-\newpage
 \section{Aircraft Equations of Motion}
 \label{sec:aircraft_equations_of_motion}
 \input{Chapters/TheoreticalFoundations/AircraftEquationsofMotion/Intro}
@@ -129,7 +146,7 @@
 \label{sssec:specific_excess_power}
 \input{Chapters/TheoreticalFoundations/AircraftEquationsofMotion/SpecificExcessPower}
 
-\newpage
+ 
 \section{Aircraft Mass and Center of Gravity}
 \label{sec:aircraft_mass_and_cg}
 
@@ -141,8 +158,7 @@
 \label{sec:dynamic_cg_calculation}
 \input{Chapters/TheoreticalFoundations/AircraftMassandCenterofGravity/DynamicCGCalculation}
 
-
-\newpage
+ 
 \section{Aerodynamic Modeling}
 \label{sec:aerodynamic_modeling}
 \input{Chapters/TheoreticalFoundations/AerodynamicModelling/Intro}
@@ -163,7 +179,7 @@
 \label{sec:flight_envelope_constraints}
 \input{Chapters/TheoreticalFoundations/AerodynamicModelling/FlightEnvelopeConstraints}
 
-\newpage
+
 \section{Propulsion System Modeling}
 \label{sec:propulsion_modeling}
 \input{Chapters/TheoreticalFoundations/PropulsionSystemModeling/Intro}
@@ -176,7 +192,7 @@
 \label{sec:thrust_specific_fuel_consumption}
 \input{Chapters/TheoreticalFoundations/PropulsionSystemModeling/ThrustSpecificFuelConsumption}
  
-\newpage 
+
 \section{Dynamic Programming Optimization Theory}
 \label{sec:dp_optimization_theory}
 
@@ -274,8 +290,7 @@
 
 \subsubsection{Time and Distance Integration}
 \input{Chapters/MissionPhaseModelingAndOptimization/ClimbPhaseOptimization/TimeandDistanceIntegration}
-
-\newpage
+ 
 \subsection{Cruise Phase}
 \label{subsec:cruise_phase}
 \subsubsection{Cruise Phase Simulation}
@@ -295,8 +310,7 @@
 
 \subsubsection{Time and Distance Integration}
 \input{Chapters/MissionPhaseModelingAndOptimization/CruisePhaseSimulation/TimeAndDistanceIntegration}
-
-\newpage
+ 
 \subsection{Descent Phase Optimization}
 \label{subsec:descent_phase}
 \input{Chapters/MissionPhaseModelingAndOptimization/DescentPhaseOptimization/DescentPhaseOptimization}
@@ -313,7 +327,6 @@
 \subsubsection{Time and Distance Integration}
 \input{Chapters/MissionPhaseModelingAndOptimization/DescentPhaseOptimization/TimeAndDistanceIntegration}
 
-\newpage
 \subsection{Mission Integration and Continuity}
 \label{subsec:mission_integration}
 \input{Chapters/MissionPhaseModelingAndOptimization/MissionIntegrationandContinuity/Intro}
@@ -329,8 +342,7 @@
 
 
 
-
-\newpage
+ 
 \section{Mission-Level Optimization Algorithms}
 \label{sec:mission_level_optimization}
 \input{Chapters/MissionLevelOptimizationAlgorithms/Intro}
@@ -351,8 +363,7 @@
 \subsubsection{Safety Buffer Application}
 \input{Chapters/MissionLevelOptimizationAlgorithms/FuelCapacityOptimization/SafetyBufferApplication}
 
-\subsubsection{Iteration History and Analysis}
-\input{Chapters/MissionLevelOptimizationAlgorithms/FuelCapacityOptimization/IterationHistoryandAnalysis}
+ 
 
 \subsection{Mission Range Optimization}
 \label{subsec:mission_range_optimization}
@@ -370,8 +381,7 @@
 \subsubsection{Distance Integration Methods}
 \input{Chapters/MissionLevelOptimizationAlgorithms/MissionRangeOptimization/DistanceIntegrationMethods}
 
-\subsubsection{Multi-Objective Considerations}
-\input{Chapters/MissionLevelOptimizationAlgorithms/MissionRangeOptimization/MultiObjectiveConsiderations}
+ 
 
 % =========================================
 % CHAPTER 4: RESULTS AND VALIDATION
@@ -380,79 +390,45 @@
 \chapter{Results and Validation}
 \label{chap:Results}
 \input{Chapters/CaseStudiesAndValidation/Intro} 
-% =========================================
-% 4.1 Reference Aircraft Configuration
-% =========================================
-\section{Reference Aircraft Configuration}
-
-\subsection{Aircraft Specifications }
-\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/AircraftSpecifications}
-
-\subsection{Engine Characteristics}
-\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/EngineCharacteristics}
-
-\subsection{Fuel Tank Configuration}
-\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/FuelTankConfiguration}
-
-\paragraph{Fuel Consumption Scenarios}
-\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/FuelConsumptionScenarios}
-
-\subsection{Aerodynamic Data}
-\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/AerodynamicData}
-
-% =========================================
-% 4.2 Baseline Mission Profile
-% =========================================
-\newpage
-\section{Baseline Mission Profile}
-\input{Chapters/CaseStudiesAndValidation/BaselineMissionProfile/Intro}
-
-\subsection{Mission Specification}
-\input{Chapters/CaseStudiesAndValidation/BaselineMissionProfile/MissionSpecification}
-
-\subsubsection{Initial Conditions}
-\input{Chapters/CaseStudiesAndValidation/BaselineMissionProfile/InitialConditions}
-
-\subsubsection{Terminal Constraints}
-\input{Chapters/CaseStudiesAndValidation/BaselineMissionProfile/TerminalConstraints}
+ 
 
 % =========================================
 % 4.3 Sensitivity Analysis
 % =========================================
-\newpage
+
 \section{Sensitivity Analysis}
 \input{Chapters/CaseStudiesAndValidation/SensitivityStudies/Intro}
 
 \subsection{Grid Resolution Sensitivity}
 \input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/GridResolutionSensitivity}
 
-\newpage
+
 \subsubsection{Fuel Consumption Analysis}
 \label{sec:FuelConsumptionAnalysis}
 \input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/FuelConsumption}
 
-\newpage
+
 \subsubsection{Computation Time Analysis}
 \input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/ComputationalPerformance}
 
-\newpage
+
 \subsubsection{Mission Duration}
 \input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/MissionDurationAndVerticalRates}
 
-\newpage
+
 \subsubsection{Vertical Rates}
 \input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/ClimbAndDescentRates}
 
 
-\newpage
+
 \subsubsection{Terminal Mach Constraint Satisfaction}
 \input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/TerminalMachConstraintSatisfaction}
 
-\newpage
+
 \subsubsection{Throttle Lever Position Analysis}
 \input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/ThrottleLeverPositionAnalysis}
 
-\newpage
+
 \subsubsection{Center of Gravity Travel Analysis}
 \input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/CenterOfGravityTravelAnalysis}
 
@@ -461,33 +437,24 @@
 
 
 
-\newpage
+
 \subsection{Penalty Coefficient Sensitivity}
 \input{Chapters/CaseStudiesAndValidation/SensitivityStudies/PenaltyParameters/PenaltyCoefficientSensitivity}
 
-\newpage
+
 \subsubsection{Lever Position Penalty Impact Analysis}
 \input{Chapters/CaseStudiesAndValidation/SensitivityStudies/PenaltyParameters/LeverPositionPenaltyImpactAnalysis}
 
-\newpage
+
 \subsubsection{Lever Penalty Weight Variation Analysis}
 \input{Chapters/CaseStudiesAndValidation/SensitivityStudies/PenaltyParameters/LeverPenaltyWeightVariationAnalysis}
 
 
-\newpage
+
 \subsubsection{Mach Penalty Weight Variation Analysis}
 \input{Chapters/CaseStudiesAndValidation/SensitivityStudies/PenaltyParameters/MachPenaltyWeightVariationAnalysis}
 
 
-
-\newpage
-\subsection{Mass Variation Studies}
-\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/MassVariationStudies}
-
-\subsection{Target Altitude Sensitivity}
-\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/TargetAltitudeSensitivity}
-
-\newpage
 \section{Optimal Trajectory Results}
 \input{Chapters/CaseStudiesAndValidation/OptimalTrajectoryResults/Intro}
 
@@ -520,7 +487,7 @@
 % =========================================
 % 4.5 Mission-Level Optimization Results
 % =========================================
-\newpage
+
 \section{Mission-Level Optimization Results}
 \input{Chapters/CaseStudiesAndValidation/MissionLevelOptimizationDemonstrations/Intro}
 
@@ -555,6 +522,39 @@
 
 \subsubsection{Fuel Optimization Results}
 \input{Chapters/CaseStudiesAndValidation/MissionLevelOptimizationDemonstrations/FuelOptimizationResults}
+
+\section{Reference Aircraft Configuration}
+
+\subsection{Aircraft Specifications }
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/AircraftSpecifications}
+
+\subsection{Engine Characteristics}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/EngineCharacteristics}
+
+\subsection{Fuel Tank Configuration}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/FuelTankConfiguration}
+
+\paragraph{Fuel Consumption Scenarios}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/FuelConsumptionScenarios}
+
+\subsection{Aerodynamic Data}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/AerodynamicData}
+
+% =========================================
+% 4.2 Baseline Mission Profile
+% =========================================
+
+\section{Baseline Mission Profile}
+\input{Chapters/CaseStudiesAndValidation/BaselineMissionProfile/Intro}
+
+\subsection{Mission Specification}
+\input{Chapters/CaseStudiesAndValidation/BaselineMissionProfile/MissionSpecification}
+
+\subsubsection{Initial Conditions}
+\input{Chapters/CaseStudiesAndValidation/BaselineMissionProfile/InitialConditions}
+
+\subsubsection{Terminal Constraints}
+\input{Chapters/CaseStudiesAndValidation/BaselineMissionProfile/TerminalConstraints}
 
 
 

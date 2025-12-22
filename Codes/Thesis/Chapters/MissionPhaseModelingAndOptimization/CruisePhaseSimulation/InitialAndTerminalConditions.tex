@@ -1,1 +1,15 @@
-The initial cruise state is defined by the terminal state of the climb phase: altitude $h_{cruise}$, Mach number $M_{cruise}$, and mass $m_{cruise}$ at the transition point. The terminal cruise state provides the initial conditions for descent, maintaining continuity in altitude, speed, and mass across phase boundaries.
+Time and distance integration for cruise follows the same segment-wise approach as climb, adapted for level flight conditions. At each time step, the time increment $\Delta t$ is fixed by the simulation time step size.
+
+Ground distance accumulation proceeds through:
+
+\begin{equation}
+\Delta s_k = V_{TAS} \cdot \Delta t = M_{cruise} \cdot a(h_{cruise}) \cdot \Delta t
+\end{equation}
+
+where $V_{TAS} = M_{cruise} \cdot a(h_{cruise})$ is the constant true airspeed for level cruise at fixed Mach and altitude. The cumulative cruise distance follows from:
+
+\begin{equation}
+s_k = \sum_{i=0}^{k} \Delta s_i = V_{TAS} \cdot t_k
+\end{equation}
+
+where $t_k = k \cdot \Delta t$ is the cumulative time. The cumulative cruise distance contributes to total mission range calculations.

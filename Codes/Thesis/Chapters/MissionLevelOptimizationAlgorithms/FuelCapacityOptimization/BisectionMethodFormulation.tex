@@ -16,10 +16,3 @@ A complete mission simulation is executed with fuel capacity set to $F_{mid}$, y
 \text{If } F_{consumed} \leq F_{mid}: \quad F_{high} = F_{mid} \quad \text{(have excess fuel)}
 \end{equation}
 
-This process continues until the bounds converge within tolerance:
-
-\begin{equation}
-|F_{high} - F_{low}| < \epsilon_{tol}
-\end{equation}
-
-The bisection method guarantees monotonic convergence, avoiding oscillation issues that can occur with fixed-point iteration approaches. 

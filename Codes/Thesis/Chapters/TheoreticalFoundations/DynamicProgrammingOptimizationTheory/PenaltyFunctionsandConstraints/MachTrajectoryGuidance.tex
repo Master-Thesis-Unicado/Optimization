@@ -12,7 +12,16 @@ M_{min} = M_{target} - \Delta M_{max}
 M_{max} = M_{target} + \Delta M_{max}
 \end{equation}
 
-Here, $k_{remaining} = K \cdot (1 - \xi)$ is the estimated remaining steps, where $\xi = k/(K-1)$ is the normalized step-based progress fraction ($k$ is the current altitude step index, $K$ is the total number of altitude steps). The maximum reasonable Mach rate $\frac{dM}{dk}_{max} = 0.1$ establishes the physical limit for Mach number changes per altitude step.
+Here, the estimated number of remaining steps is defined as
+\[
+k_{\text{remaining}} = K \cdot (1 - \xi),
+\]
+where
+\[
+\xi = \frac{k}{K - 1}
+\]
+denotes the normalized step-based progress fraction, with $k$ representing the current altitude step index and $K$ the total number of altitude steps.
+
 
 The penalty structure applies different treatments depending on the current Mach position relative to the corridor. For Mach numbers outside the reachability corridor, quadratic penalties enforce constraint satisfaction:
 

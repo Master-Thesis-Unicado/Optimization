@@ -1,4 +1,4 @@
-This section presents the numerical and algorithmic realization of the trajectory optimization framework. While Chapter~\ref{chap:Theoretical_Foundations} introduced the physical models and optimization theory underpinning the problem, the emphasis here is on how these elements are assembled into a computable methodology. To avoid redundancy, theoretical formulations are not re-derived; instead, the relevant models and definitions are explicitly referenced and employed as building blocks for the implementation.
+This section presents the numerical and algorithmic realization of the trajectory optimization framework. While Chapter~\ref{chap:TheoreticalFoundations} introduced the physical models and optimization theory underpinning the problem, the emphasis here is on how these elements are assembled into a computable methodology. To avoid redundancy, theoretical formulations are not re-derived; instead, the relevant models and definitions are explicitly referenced and employed as building blocks for the implementation.
 
 \subsection{Implicit Allocation of Climb Rates}
 
@@ -50,9 +50,11 @@ The trajectory optimization problem is solved using a deterministic dynamic prog
 \subsection{Bellman Recursion Implementation}
 
 Let $F[k,i,j]$ denote the minimum cumulative cost-to-go associated with state $(h_k, M_i, \delta_j)$. The Bellman recursion is implemented following Section~\ref{sssec:bellman_recursion} as
+
 \begin{equation}
-F[k+1,i',j'] = \min_{(i,j)} \left{ F[k,i,j] + J(X_k \rightarrow X_{k+1}),\Delta h \right}.
+F[k+1,i',j'] = \min_{(i,j)} \left( F[k,i,j] + J(X_k \rightarrow X_{k+1}) \right)
 \end{equation}
+
 
 A predecessor matrix is maintained to store the indices of the optimal previous state, enabling reconstruction of the optimal trajectory by backtracking, as described in Section~\ref{par:optimal_path_backtracking}.
 

@@ -1,15 +1,27 @@
-Time and distance are computed through post-processing of the optimal state sequence following trajectory extraction. The descent rate at each segment is:
-
-\begin{equation}
-\text{Descent Rate}_k = |P_{s,k}| = \left|\frac{(T-D)V}{mg}\right|_k
-\end{equation}
-
-Time for each segment follows from:
+Time and distance are computed through post-processing of the optimal state sequence following trajectory extraction, following the same approach as climb. For each segment from $h_k$ to $h_{k+1}$, the time increment is:
 
 \begin{equation}
 \Delta t_k = \frac{|\Delta h_k|}{|P_{s,k}|}
 \end{equation}
 
-where the absolute values account for the negative altitude change and negative specific excess power during descent.
+where $P_{s,k}$ denotes the specific excess power at the segment, computed using average conditions between states $k$ and $k+1$:
 
-Ground distance during descent is computed similarly to climb, integrating true airspeed over time with the small-angle approximation. Summing segment distances throughout the descent profile yields the cumulative distance, which contributes to total mission range calculations.
+\begin{equation}
+P_{s,k} = \frac{(T_k - D_k) V_k}{m_k g}
+\end{equation}
+
+with $T_k$, $D_k$, $V_k$, and $m_k$ evaluated at average altitude $\bar{h}_k = (h_k + h_{k+1})/2$, average Mach $\bar{M}_k = (M_k + M_{k+1})/2$, and average weight $\bar{m}_k = (m_k + m_{k+1})/2$ for the segment. The absolute values account for the negative altitude change ($\Delta h_k < 0$) and negative specific excess power ($P_{s,k} < 0$) during descent.
+
+Ground distance follows from integrating true airspeed over time. For each segment:
+
+\begin{equation}
+\Delta s_k = V_{TAS,k} \cdot \Delta t_k = \bar{M}_k \cdot a(\bar{h}_k) \cdot \Delta t_k
+\end{equation}
+
+where $V_{TAS,k} = \bar{M}_k \cdot a(\bar{h}_k)$ is the true airspeed computed using average conditions for the segment. The small-angle approximation assumes the horizontal velocity component approximately equals the true airspeed for typical descent angles. Summing segment distances throughout the descent profile yields the cumulative distance:
+
+\begin{equation}
+s_k = \sum_{i=0}^{k} \Delta s_i
+\end{equation}
+
+The cumulative descent distance contributes to total mission range calculations.
