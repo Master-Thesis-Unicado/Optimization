@@ -1,0 +1,111 @@
+
+Fuel optimization analysis determines the minimum fuel capacity required to complete the specified mission profile while maintaining operational feasibility and constraint satisfaction. The bisection search algorithm converges to the optimal fuel capacity through iterative feasibility assessment, updating bounds based on mission completion status.
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \caption{Fuel optimization convergence statistics and results.}
+    \label{tab:fuel_optimization_summary}
+    \begin{tabular}{l c}
+        \hline
+        Parameter & Value \\
+        \hline
+        Total Iterations & 13 \\
+        Final Deficit & 0.75 kg \\
+        Convergence Status & Equilibrium Achieved \\
+        Original Capacity & 14{,}500.0 kg \\
+        Optimized Capacity & 13{,}279.1 kg \\
+        Capacity Savings & 1{,}220.9 kg (8.4\%) \\
+        Mission Duration & 4.90 hours (294.2 min) \\
+        Final Mass & 62{,}141 kg \\
+        \hline
+    \end{tabular}
+\end{table}
+
+The bisection algorithm converges in 13 iterations, achieving equilibrium with final deficit of 0.75 kg, within the specified tolerance. Initial bisection bounds bracket the solution between $m_{fuel,low} = 10,000$ kg and $m_{fuel,high} = 19,500$ kg, with the algorithm systematically narrowing the interval through feasibility assessment at each iteration. Minimum fuel capacity is identified as $m_{fuel,min} = 13,279.1$ kg, representing an 8.4\% reduction from the original capacity of 14,500.0 kg. This reduction yields capacity savings of 1,220.9 kg, confirming the optimization's effectiveness in identifying fuel-efficient mission configurations.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/FuelOptimization/BisectionBoundsEvolution.png}
+    \caption{Bisection bounds evolution: upper bound, lower bound, and current fuel estimate convergence.}
+    \label{fig:fuel_optimization_bounds}
+\end{figure}
+
+Bisection bounds evolution throughout the optimization process shows upper and lower bounds converging from initial values of approximately 19,500 kg and 10,000 kg respectively to the final optimized capacity near 13,279.1 kg. The current fuel estimate, representing the test fuel quantity evaluated at each iteration, exhibits convergence behavior with initial fluctuations followed by stabilization. All three quantities converge to the optimal fuel capacity by iteration 7, with subsequent iterations providing refinement to achieve the final tolerance satisfaction.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/FuelOptimization/FuelDeficitConvvergence.png}
+    \caption{Fuel deficit convergence: absolute fuel deficit evolution over iterations.}
+    \label{fig:fuel_optimization_deficit}
+\end{figure}
+
+The fuel deficit convergence history shows the absolute fuel deficit decreasing from approximately 2,000 kg at initial iterations to 0.75 kg at convergence. Rapid initial error reduction occurs, with deficit decreasing from 2,000 kg to approximately 80 kg by iteration 3, followed by more gradual refinement. The logarithmic scale reveals the convergence trajectory, with deficit reaching values below 1 kg by iteration 13, confirming successful tolerance achievement. Minor fluctuations observed during intermediate iterations (e.g., increase at iteration 4) reflect the bisection algorithm's bound update mechanism, where feasibility assessment determines bound adjustments. The convergence pattern demonstrates typical bisection behavior, with error reduction rate decreasing as the solution interval narrows, requiring progressively smaller bound adjustments to achieve tolerance satisfaction.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/FuelOptimization/FuelChangeEvolution.png}
+    \caption{Fuel change evolution: percentage change from initial fuel estimate over iterations.}
+    \label{fig:fuel_optimization_change}
+\end{figure}
+
+Fuel change evolution relative to the initial fuel estimate shows initial adjustment with fuel change reaching approximately 2.4\% above the initial estimate at iteration 2, followed by convergence to a stable value of approximately 1.2\% change from the initial fuel. Stabilization occurs from iteration 7 onwards, with fuel change remaining relatively constant, indicating that the bisection algorithm has identified the optimal fuel capacity within acceptable precision.
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \caption{Optimized mission performance metrics: phase breakdown and fuel consumption.}
+    \label{tab:fuel_optimization_mission_metrics}
+    \begin{tabular}{l c c c}
+        \hline
+        Metric & Climb & Cruise & Descent \\
+        \hline
+        \textbf{Duration} & & & \\
+        Time (min) & 15.7 & 271.3 & 7.2 \\
+        Time (hours) & 0.26 & 4.52 & 0.12 \\
+        \hline
+        \textbf{Fuel Consumption} & & & \\
+        Fuel (kg) & 1{,}104.3 & 11{,}425.5 & 117.0 \\
+        Percentage of Total & 8.7\% & 90.3\% & 0.9\% \\
+        \hline
+        \textbf{Total Mission} & & & \\
+        Total Distance (km) & \multicolumn{3}{c}{3{,}991} \\
+        Total Duration (min) & \multicolumn{3}{c}{294.2} \\
+        Total Fuel (kg) & \multicolumn{3}{c}{12{,}646.8} \\
+        Fuel Efficiency (kg/km) & \multicolumn{3}{c}{3.17} \\
+        Initial Mass (kg) & \multicolumn{3}{c}{75{,}433.1} \\
+        Final Mass (kg) & \multicolumn{3}{c}{62{,}141.1} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+The cruise phase dominates both mission duration (271.3 minutes, 92.2\% of total) and fuel consumption (11,425.5 kg, 90.3\% of total), reflecting the extended cruise segment required for the 3,991 km total mission range. The climb phase consumes 1,104.3 kg (8.7\% of total) over 15.7 minutes, while the descent phase requires minimal fuel consumption of 117.0 kg (0.9\% of total) over 7.2 minutes. Total mission fuel consumption is 12,646.8 kg, yielding fuel efficiency of 3.17 kg/km. Initial mission mass is 75,433.1 kg, decreasing to final mass of 62,141.1 kg as fuel is consumed throughout the mission. The optimized fuel capacity of 13,279.1 kg provides a safety margin of 632.3 kg (4.8\% of optimized capacity) above the consumed fuel, ensuring operational feasibility with appropriate reserve.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/FuelOptimization/CapacityComparison.png}
+    \caption{Capacity comparison: original capacity, optimized capacity, and achieved savings.}
+    \label{fig:fuel_optimization_capacity}
+\end{figure}
+
+The capacity comparison shows the original capacity of 14,500.0 kg reduced to optimized capacity of 13,279.1 kg, achieving savings of 1,220.9 kg. This 8.4\% reduction represents substantial fuel capacity optimization, enabling more efficient mission planning while maintaining operational safety margins.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/FuelOptimization/FuelBreakdownByPhase.png}
+    \caption{Fuel breakdown by phase: fuel consumption distribution across mission phases.}
+    \label{fig:fuel_optimization_breakdown}
+\end{figure}
+
+Fuel consumption breakdown across mission phases shows the cruise phase accounting for 90.3\% of total fuel consumption (11,425.5 kg), highlighting the dominance of cruise segment fuel requirements. The climb phase contributes 8.7\% (1,104.3 kg), while the descent phase requires minimal fuel at 0.9\% (117.0 kg). This distribution reflects the energy-intensive nature of extended cruise operations compared to climb and descent phases, where altitude changes occur over shorter durations.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/FuelOptimization/MissionDurationByPhase.png}
+    \caption{Mission duration by phase: time distribution across climb, cruise, and descent phases.}
+    \label{fig:fuel_optimization_duration}
+\end{figure}
+
+Mission duration breakdown by phase shows the cruise phase occupying 4.52 hours (271.3 minutes), representing 92.2\% of the total mission duration of 4.90 hours (294.2 minutes). The climb phase requires 0.26 hours (15.7 minutes), while the descent phase completes in 0.12 hours (7.2 minutes). This duration distribution reflects the extended cruise segment necessary to achieve the target mission range, with climb and descent phases representing relatively brief transition periods.
+
+The fuel optimization analysis identifies the minimum fuel capacity required for mission completion, achieving 8.4\% capacity reduction while maintaining operational feasibility. Bisection convergence exhibits stable behavior with 13 iterations required to achieve tolerance satisfaction. The optimized mission configuration provides efficient fuel utilization with appropriate safety margins, enabling improved mission planning capabilities for the specified mission profile.

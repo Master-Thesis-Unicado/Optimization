@@ -1,0 +1,29 @@
+Computational time increases with grid size product $N_{grid} = K \times I \times L$ due to the three-dimensional state space discretization. Simulation times increase from 4.9 minutes for the coarsest grid ($15 \times 15 \times 15$) to 33.5 minutes for the finest grid ($55 \times 55 \times 55$), representing a 6.84 times increase in computational cost. The computational cost ratio relative to the $15 \times 15 \times 15$ baseline shows increasing ratios of 1.00, 1.04, 1.49, 1.94, 2.35, 3.41, 3.94, 5.73, and 6.84 respectively, reflecting the three-dimensional state space discretization where each grid dimension contributes multiplicatively to computational complexity as shown in the Table~\ref{tab:GridResolutionSensitivityAnalysis:SimulationTime}.
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \begin{tabular}{l c c}
+        \hline
+        Grid Size & Simulation Time & Time Ratio \\
+        $(K \times I \times L)$ & $t_{sim}$ (min) & $t/t_{15}$ \\
+        \hline
+        $15 \times 15 \times 15$ & 4.9 & 1.00 \\
+        $20 \times 20 \times 20$ & 5.1 & 1.04 \\
+        $25 \times 25 \times 25$ & 7.3 & 1.49 \\
+        $30 \times 30 \times 30$ & 9.5 & 1.94 \\
+        $35 \times 35 \times 35$ & 11.5 & 2.35 \\
+        $40 \times 40 \times 40$ & 16.7 & 3.41 \\
+        $45 \times 45 \times 45$ & 19.3 & 3.94 \\
+        $50 \times 50 \times 50$ & 28.1 & 5.73 \\
+        $55 \times 55 \times 55$ & 33.5 & 6.84 \\
+        \hline
+    \end{tabular}
+    \caption{Grid Resolution Sensitivity Analysis: Simulation Time}
+    \label{tab:GridResolutionSensitivityAnalysis:SimulationTime}
+\end{table}
+
+
+The analysis reveals a clear trade-off between solution accuracy and computational expense, with diminishing returns on accuracy improvement for grid densities above approximately 30-35, where marginal fuel consumption improvements become less than 1\% while computational cost continues to increase substantially.  
+
+

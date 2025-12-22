@@ -1,0 +1,10 @@
+
+Total mission fuel consumption is tracked by accumulating fuel burned in each phase:
+
+\begin{equation}
+m_{fuel,total} = m_{fuel,climb} + m_{fuel,cruise} + m_{fuel,descent}
+\end{equation}
+
+The fuel consumed in each phase is computed from the respective trajectory data: for climb and descent, fuel is obtained from the cost function integration, while for cruise, fuel accumulates through the time-stepping integration of fuel flow rate.
+
+Mass continuity is verified at phase transitions, ensuring that the final mass from one phase equals the initial mass of the subsequent phase, accounting for fuel consumed during the transition segment.

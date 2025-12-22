@@ -1,0 +1,19 @@
+Distance computation for each phase proceeds through integration of true airspeed over time. For climb and descent phases, the distance is computed from the optimized trajectory:
+
+\begin{equation}
+s_{climb} = \int_{0}^{t_{climb}} V_{TAS}(t) \, dt \approx \sum_{i} M_i \cdot a(h_i) \cdot \Delta t_i
+\end{equation}
+
+\begin{equation}
+s_{descent} = \int_{0}^{t_{descent}} V_{TAS}(t) \, dt \approx \sum_{i} M_i \cdot a(h_i) \cdot \Delta t_i
+\end{equation}
+
+where the small-angle approximation assumes that horizontal velocity approximately equals true airspeed for typical climb and descent angles.
+
+For cruise, distance is determined directly from the specified cruise distance parameter, as level cruise maintains constant true airspeed:
+
+\begin{equation}
+s_{cruise} = V_{TAS} \cdot t_{cruise} = M_{cruise} \cdot a(h_{cruise}) \cdot t_{cruise}
+\end{equation}
+
+

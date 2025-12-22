@@ -1,0 +1,35 @@
+Systematic comparison of fuel consumption scenarios quantifies center of gravity travel characteristics and associated mission performance impacts. The analysis evaluates three depletion strategies: proportional depletion, outer-first depletion, and inner-first depletion, measuring CG travel distance, total fuel consumption, and mission duration for each configuration. All scenarios employ initial fuel mass $m_{fuel,0} = 14,500$ kg, representing maximum fuel capacity for the reference aircraft configuration.
+
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \begin{tabular}{l c c c}
+        \hline
+        Fuel Consumption & CG Travel & Fuel Consumption & Mission Duration \\
+        Strategy & $\Delta x_{CG}$ (m) & $m_{fuel}$ (kg) & $t_{mission}$ (min) \\
+        \hline
+        Proportional & 0.143 & 13{,}093.7 & 293.6 \\
+        Outer First & 0.139 & 13{,}099.5 & 293.6 \\
+        Inner First & 0.160 & 13{,}088.2 & 293.6 \\
+        \hline
+    \end{tabular}
+    \caption{Comparative Analysis of Fuel Consumption Scenarios}
+    \label{tab:cg_consumption_scenario_comparison}
+\end{table}
+
+Table~\ref{tab:cg_consumption_scenario_comparison} presents quantitative comparison of the three fuel consumption scenarios. CG travel distance, defined as the total longitudinal displacement range of the aircraft center of gravity throughout the mission, exhibits distinct variations across depletion strategies. Inner-first depletion produces the largest CG travel distance ($\Delta x_{CG} = 0.160$ m), representing a 12.2\% increase relative to outer-first depletion ($\Delta x_{CG} = 0.139$ m) and an 11.9\% increase relative to proportional depletion ($\Delta x_{CG} = 0.143$ m). Outer-first depletion yields the smallest CG travel distance, with proportional depletion producing intermediate values.
+
+The observed CG travel variations reflect fundamental differences in depletion sequences and associated CG evolution patterns. The zero-fuel CG position, defined as the center of gravity location with operating empty weight and payload but no fuel, is located at $x_{CG,ZFW} = 16.208$ m. This reference position provides the baseline for CG evolution as fuel is consumed throughout the mission. Inner-first depletion initiates fuel consumption from forward-located inner tanks ($x = 14.88$ m), positioned forward of the zero-fuel CG, causing initial forward CG movement relative to the zero-fuel position. As depletion progresses through center tanks ($x = 14.99$ m), also forward of the zero-fuel CG, and finally outer tanks ($x = 16.09$ m), positioned slightly aft of the zero-fuel CG, the CG shifts progressively aft, creating a larger total travel distance as the CG traverses from forward to aft positions. Outer-first depletion reverses this sequence, consuming fuel from aft-located outer tanks first, followed by forward-located inner and center tanks. This sequence produces more localized CG movement, as the CG shifts forward during the final depletion phases but with reduced total travel distance due to the initial aft position. Proportional depletion maintains relatively uniform fuel distribution across all tanks throughout the mission, resulting in moderate CG travel as the weighted average CG position shifts gradually with fuel consumption relative to the zero-fuel CG reference.
+
+
+Fuel consumption analysis reveals minimal sensitivity to depletion strategy, with total fuel consumption varying by only 11.3 kg (0.086\%) across the three scenarios. Inner-first depletion achieves the lowest fuel consumption ($m_{fuel} = 13,088.2$ kg), while outer-first depletion produces the highest consumption ($m_{fuel} = 13,099.5$ kg), representing a difference of 11.3 kg. Proportional depletion yields intermediate fuel consumption ($m_{fuel} = 13,093.7$ kg), positioned between the two sequential depletion strategies. The minimal fuel consumption variation indicates that depletion sequence effects on trajectory optimization are subtle, with the dynamic programming algorithm adapting trajectory characteristics to maintain near-optimal fuel efficiency regardless of CG evolution patterns.
+
+Mission duration remains constant across all three scenarios ($t_{mission} = 293.6$ minutes), demonstrating that depletion strategy does not affect mission timing. This invariance reflects the optimization algorithm's focus on fuel minimization rather than time constraints, with mission duration emerging as a consequence of optimal trajectory selection. The constant mission duration confirms that CG position variations, while affecting trim drag and aerodynamic characteristics, do not substantially alter the fundamental trajectory optimization solution that determines mission timing.
+
+The relationship between CG travel and fuel consumption exhibits an inverse correlation: inner-first depletion produces the largest CG travel (0.160 m) but the lowest fuel consumption (13,088.2 kg), while outer-first depletion produces the smallest CG travel (0.139 m) but the highest fuel consumption (13,099.5 kg). This relationship suggests that forward CG positions during early mission phases may provide aerodynamic benefits through reduced trim drag, enabling more fuel-efficient trajectories despite larger CG travel distances. The forward CG position reduces horizontal tail download requirements for trim equilibrium, decreasing induced drag and improving overall mission efficiency. Conversely, outer-first depletion maintains aft CG positions during initial mission phases, potentially requiring increased trim drag that offsets the benefits of reduced CG travel.
+
+The analysis demonstrates that fuel consumption scenario selection involves trade-offs between CG stability and fuel efficiency. Inner-first depletion offers superior fuel efficiency with acceptable CG travel characteristics, while outer-first depletion minimizes CG movement at the cost of slightly increased fuel consumption. Proportional depletion provides a balanced compromise, maintaining moderate CG travel and fuel consumption. The selection of appropriate depletion strategy depends on operational priorities, with fuel efficiency favoring inner-first depletion, CG stability favoring outer-first depletion, and balanced performance favoring proportional depletion.
+
+
+

@@ -1,0 +1,656 @@
+\documentclass[12pt, a4paper]{report}
+
+% =========================================
+% PREAMBLE
+% =========================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}    % Essential for math equations
+\usepackage{amssymb}    % Extra math symbols
+\usepackage{graphicx}   % For images
+\usepackage{geometry}   % Page margins
+\usepackage{hyperref}   % Interactive links
+\usepackage{caption}    % Better captions
+\usepackage{float}      % For image positioning
+\usepackage{biblatex}   % Bibliography support
+\addbibresource{references.bib} % Ensure you have this file
+\usepackage{subcaption}
+\usepackage{cleveref}  % Enhanced cross-referencing
+\usepackage{booktabs}  % Professional tables
+\usepackage{siunitx}   % Scientific units formatting
+
+% Hyperref configuration for academic documents
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue,
+    pdftitle={Thesis Title},
+    pdfauthor={Author Name}
+}
+
+% Formatting settings
+\geometry{margin=1in}
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0pt}
+
+% Title information (update with actual thesis details)
+\title{Thesis Title}
+\author{Murat Mert CAFEROGLU}
+\date{\today}
+
+\begin{document}
+
+% =========================================
+% FRONT MATTER
+% =========================================
+
+% FIX 1: Updated path. CoverPage is at the root, not inside Chapters.
+\input{CoverPage/CoverPage}
+
+\newpage
+\pagenumbering{roman} % Roman numerals for front matter
+
+% Abstract
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\input{Chapters/Abstract/Abstract}
+
+% Acknowledgments (optional but recommended - uncomment if needed)
+\chapter*{Acknowledgments}
+\addcontentsline{toc}{chapter}{Acknowledgments}
+\input{Chapters/Acknowledgments/Acknowledgments}
+
+%Declaration of Originality (if required by institution - uncomment if needed)
+\chapter*{Declaration of Originality}
+\addcontentsline{toc}{chapter}{Declaration of Originality}
+\input{Chapters/Declaration/Declaration}
+
+% Table of Contents
+\tableofcontents
+\listoffigures
+\listoftables
+\newpage
+
+\pagenumbering{arabic} % Arabic numerals for main content
+
+% =========================================
+% CHAPTER 1: INTRODUCTION
+% =========================================
+\newpage
+\chapter{Introduction}
+\label{chap:Introduction}
+\input{Introduction/Introduction}
+\input{Introduction/ProblemStatement}
+\input{Introduction/ResearchMotivationandBackground}
+\input{Introduction/ResearchObjectives}
+\input{Introduction/ScopeAndLimitations}
+\input{Introduction/ThesisStructureandOrganization}
+
+% =========================================
+% CHAPTER 2: THEORETICAL FOUNDATIONS
+% =========================================
+\newpage
+\chapter{Theoretical Foundations}
+\label{chap:TheoreticalFoundations}
+
+% Based on image_d16c12.png (Inputting specific files, not folders)
+\section{Atmospheric Modeling}
+\label{sec:atmospheric_modeling}
+
+\input{Chapters/TheoreticalFoundations/AtmosphericModeling/Intro}
+
+\subsection{ISA Layer Structure}
+\label{sec:isa_layer_structure}
+\input{Chapters/TheoreticalFoundations/AtmosphericModeling/ISALayerStructure}
+
+\subsection{Speed of Sound}
+\label{sec:speed_of_sound}
+\input{Chapters/TheoreticalFoundations/AtmosphericModeling/SpeedOfSound}
+
+\subsection{Dynamic Pressure}
+\label{sec:dynamic_pressure}
+\input{Chapters/TheoreticalFoundations/AtmosphericModeling/DynamicPressure}
+
+\newpage
+\section{Aircraft Equations of Motion}
+\label{sec:aircraft_equations_of_motion}
+\input{Chapters/TheoreticalFoundations/AircraftEquationsofMotion/Intro}
+
+\subsection{Point Mass Dynamic Formulation}
+\label{sec:point_mass_dynamic_formulation}
+\input{Chapters/TheoreticalFoundations/AircraftEquationsofMotion/PointMassDynamicFormulation}
+
+\subsection{Energy-State Approximation}
+\label{sec:energy_state_approximation}
+\input{Chapters/TheoreticalFoundations/AircraftEquationsofMotion/EnergyStateApproximation}
+
+\subsection{Specific Excess Power}
+\label{sssec:specific_excess_power}
+\input{Chapters/TheoreticalFoundations/AircraftEquationsofMotion/SpecificExcessPower}
+
+\newpage
+\section{Aircraft Mass and Center of Gravity}
+\label{sec:aircraft_mass_and_cg}
+
+\subsection{Mass Breakdown and Components}
+\label{sec:mass_breakdown_and_components}
+\input{Chapters/TheoreticalFoundations/AircraftMassandCenterofGravity/MassBreakdownandComponents}
+
+\subsection{Dynamic CG Calculation}
+\label{sec:dynamic_cg_calculation}
+\input{Chapters/TheoreticalFoundations/AircraftMassandCenterofGravity/DynamicCGCalculation}
+
+
+\newpage
+\section{Aerodynamic Modeling}
+\label{sec:aerodynamic_modeling}
+\input{Chapters/TheoreticalFoundations/AerodynamicModelling/Intro}
+
+\subsection{Lift and Drag Forces}
+\label{sec:lift_and_drag_forces}
+\input{Chapters/TheoreticalFoundations/AerodynamicModelling/LiftandDragForces}
+
+\subsection{Trim Analysis and Equilibrium}
+\label{sec:trim_analysis_and_equilibrium}
+\input{Chapters/TheoreticalFoundations/AerodynamicModelling/TrimAnalysisandEquilibrium}
+
+\subsection{Drag Polar and Mass Dependency}
+\label{sec:drag_polar_and_mass_dependency}
+\input{Chapters/TheoreticalFoundations/AerodynamicModelling/DragPolarandMassDependency}
+
+\subsection{Flight Envelope Constraints}
+\label{sec:flight_envelope_constraints}
+\input{Chapters/TheoreticalFoundations/AerodynamicModelling/FlightEnvelopeConstraints}
+
+\newpage
+\section{Propulsion System Modeling}
+\label{sec:propulsion_modeling}
+\input{Chapters/TheoreticalFoundations/PropulsionSystemModeling/Intro}
+
+\subsection{Thrust Production Mechanics}
+\label{sec:thrust_production_mechanics}
+\input{Chapters/TheoreticalFoundations/PropulsionSystemModeling/ThrustProductionMechanics}
+
+\subsection{Thrust-Specific Fuel Consumption}
+\label{sec:thrust_specific_fuel_consumption}
+\input{Chapters/TheoreticalFoundations/PropulsionSystemModeling/ThrustSpecificFuelConsumption}
+ 
+\newpage 
+\section{Dynamic Programming Optimization Theory}
+\label{sec:dp_optimization_theory}
+
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/Intro}
+\subsection{Fundamentals of Dynamic Programming}
+\label{sec:dp_fundamentals}
+
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/FundamentalsOfDynamicProgramming/Intro}
+
+\subsubsection{Principle of Optimality}
+\label{sssec:principle_of_optimality}
+
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/FundamentalsOfDynamicProgramming/PrincipleOfOptimality}
+
+\subsubsection{Stage-Based Decomposition}
+\label{sssec:stage_based_decomposition}
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/FundamentalsOfDynamicProgramming/StageBasedDecomposition}
+
+\subsubsection{Cost-to-Go Functions}
+\label{sssec:cost_to_go_functions}
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/FundamentalsOfDynamicProgramming/CosttoGoFunctions}
+
+
+\subsection{Problem Formulation}
+\label{sec:problem_formulation}
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/ProblemFormulation/Intro}
+
+\subsubsection{Three-Dimensional State Space: State Variables and Discretization}
+\label{sssec:three_dimensional_state_space}
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/ProblemFormulation/StateVariablesAndDiscretization}
+
+\subsubsection{Feasible Region Definition}
+\label{sssec:feasible_region_definition}
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/ProblemFormulation/FeasibleRegionDefinition}
+
+\subsubsection{Cost Function Formulation}
+\label{sssec:cost_function_formulation}
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/ProblemFormulation/CostFunctionFormulation}
+
+\subsection{Solution Algorithm}
+\label{sec:solution_algorithm}
+
+\subsubsection{Bellman Recursion}
+\label{sssec:bellman_recursion}
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/SolutionAlgorithm/BellmanRecursion}
+
+\paragraph{Transition Kernel Design}
+\label{par:transition_kernel_design}
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/SolutionAlgorithm/TransitionKernelDesign}
+
+\paragraph{Optimal Path Backtracking}
+\label{par:optimal_path_backtracking}
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/SolutionAlgorithm/OptimalPathBackTracking}
+
+\subsection{Penalty Functions and Constraints}
+\label{sec:penalty_functions_and_constraints}
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/PenaltyFunctionsandConstraints/Intro}
+
+\subsubsection{Mach Trajectory Guidance} 
+\label{sssec:mach_trajectory_guidance}
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/PenaltyFunctionsandConstraints/MachTrajectoryGuidance}
+
+\subsubsection{Throttle Lever Penalties}
+\label{sssec:throttle_lever_penalties}
+\input{Chapters/TheoreticalFoundations/DynamicProgrammingOptimizationTheory/PenaltyFunctionsandConstraints/ThrottleLeverPenalties}
+
+
+% =========================================
+% CHAPTER 3: METHODOLOGY
+% =========================================
+\newpage
+\chapter{Methodology}
+\label{chap:Methodology}
+
+\section{Optimization Methodology}
+\label{sec:optimization_methodology}
+\input{Chapters/OptimizationMethodology/Intro}
+
+\section{Mission Phase Modeling and Optimization}
+\label{sec:mission_phase_modeling}
+\input{Chapters/MissionPhaseModelingAndOptimization/Intro}
+
+\subsection{Climb Phase Optimization}
+\label{subsec:climb_phase}
+\input{Chapters/MissionPhaseModelingAndOptimization/ClimbPhaseOptimization/ClimbPhaseOptimization}
+
+\subsubsection{Climb Problem Formulation}
+\input{Chapters/MissionPhaseModelingAndOptimization/ClimbPhaseOptimization/ClimbProblemFormulation}
+
+\subsubsection{Initial and Terminal Conditions}
+\input{Chapters/MissionPhaseModelingAndOptimization/ClimbPhaseOptimization/InitialandTerminalConditions}
+
+\subsubsection{3D DP Implementation}
+\input{Chapters/MissionPhaseModelingAndOptimization/ClimbPhaseOptimization/3DDPImplementation}
+
+\subsubsection{Time and Distance Integration}
+\input{Chapters/MissionPhaseModelingAndOptimization/ClimbPhaseOptimization/TimeandDistanceIntegration}
+
+\newpage
+\subsection{Cruise Phase}
+\label{subsec:cruise_phase}
+\subsubsection{Cruise Phase Simulation}
+\input{Chapters/MissionPhaseModelingAndOptimization/CruisePhaseSimulation/CruisePhaseSimulation}
+
+\subsubsection{Cruise Problem Formulation}
+\input{Chapters/MissionPhaseModelingAndOptimization/CruisePhaseSimulation/CruiseProblemFormulation}
+
+\subsubsection{Initial And Terminal Conditions}
+\input{Chapters/MissionPhaseModelingAndOptimization/CruisePhaseSimulation/InitialAndTerminalConditions}
+
+\subsubsection{Cruise Implementation}
+\input{Chapters/MissionPhaseModelingAndOptimization/CruisePhaseSimulation/CruiseImplementation}
+
+\subsubsection{Cruise Climb Optimization}
+\input{Chapters/MissionPhaseModelingAndOptimization/CruisePhaseSimulation/CruiseClimbOptimization}
+
+\subsubsection{Time and Distance Integration}
+\input{Chapters/MissionPhaseModelingAndOptimization/CruisePhaseSimulation/TimeAndDistanceIntegration}
+
+\newpage
+\subsection{Descent Phase Optimization}
+\label{subsec:descent_phase}
+\input{Chapters/MissionPhaseModelingAndOptimization/DescentPhaseOptimization/DescentPhaseOptimization}
+
+\subsubsection{Descent Problem Formulation}
+\input{Chapters/MissionPhaseModelingAndOptimization/DescentPhaseOptimization/DescentProblemFormulation}
+
+\subsubsection{Initial and Terminal Conditions}
+\input{Chapters/MissionPhaseModelingAndOptimization/DescentPhaseOptimization/InitialAndTerminalConditions}
+
+\subsubsection{3D DP Implementation}
+\input{Chapters/MissionPhaseModelingAndOptimization/DescentPhaseOptimization/3DDPforImplementation}
+
+\subsubsection{Time and Distance Integration}
+\input{Chapters/MissionPhaseModelingAndOptimization/DescentPhaseOptimization/TimeAndDistanceIntegration}
+
+\newpage
+\subsection{Mission Integration and Continuity}
+\label{subsec:mission_integration}
+\input{Chapters/MissionPhaseModelingAndOptimization/MissionIntegrationandContinuity/Intro}
+
+\subsubsection{Phase Transition States}
+\input{Chapters/MissionPhaseModelingAndOptimization/MissionIntegrationandContinuity/PhaseTransitionStates}
+
+\subsubsection{Cumulative Fuel Accounting}
+\input{Chapters/MissionPhaseModelingAndOptimization/MissionIntegrationandContinuity/CumulativeFuelAccounting}
+
+\subsubsection{Time and Distance Aggregation}
+\input{Chapters/MissionPhaseModelingAndOptimization/MissionIntegrationandContinuity/TimeAndDistanceAggregation}
+
+
+
+
+\newpage
+\section{Mission-Level Optimization Algorithms}
+\label{sec:mission_level_optimization}
+\input{Chapters/MissionLevelOptimizationAlgorithms/Intro}
+
+\subsection{Fuel Capacity Optimization}
+\label{subsec:fuel_capacity_optimization}
+\input{Chapters/MissionLevelOptimizationAlgorithms/FuelCapacityOptimization/Intro}
+
+\subsubsection{Bisection Method Formulation}
+\input{Chapters/MissionLevelOptimizationAlgorithms/FuelCapacityOptimization/BisectionMethodFormulation}
+
+\subsubsection{Fuel Deficit Function}
+\input{Chapters/MissionLevelOptimizationAlgorithms/FuelCapacityOptimization/FuelDeficitFunction}
+
+\subsubsection{Convergence Criteria}
+\input{Chapters/MissionLevelOptimizationAlgorithms/FuelCapacityOptimization/ConvergenceCriteria}
+
+\subsubsection{Safety Buffer Application}
+\input{Chapters/MissionLevelOptimizationAlgorithms/FuelCapacityOptimization/SafetyBufferApplication}
+
+\subsubsection{Iteration History and Analysis}
+\input{Chapters/MissionLevelOptimizationAlgorithms/FuelCapacityOptimization/IterationHistoryandAnalysis}
+
+\subsection{Mission Range Optimization}
+\label{subsec:mission_range_optimization}
+\input{Chapters/MissionLevelOptimizationAlgorithms/MissionRangeOptimization/Intro}
+
+\subsubsection{Range Targeting Problem}
+\input{Chapters/MissionLevelOptimizationAlgorithms/MissionRangeOptimization/RangeTargetingProblem}
+
+\subsubsection{Damped Iterative Scheme}
+\input{Chapters/MissionLevelOptimizationAlgorithms/MissionRangeOptimization/DampedIterativeScheme}
+
+\subsubsection{Cruise Trajectory Adjustment}
+\input{Chapters/MissionLevelOptimizationAlgorithms/MissionRangeOptimization/CruiseTrajectoryAdjustment}
+
+\subsubsection{Distance Integration Methods}
+\input{Chapters/MissionLevelOptimizationAlgorithms/MissionRangeOptimization/DistanceIntegrationMethods}
+
+\subsubsection{Multi-Objective Considerations}
+\input{Chapters/MissionLevelOptimizationAlgorithms/MissionRangeOptimization/MultiObjectiveConsiderations}
+
+% =========================================
+% CHAPTER 4: RESULTS AND VALIDATION
+% =========================================
+\newpage
+\chapter{Results and Validation}
+\label{chap:Results}
+\input{Chapters/CaseStudiesAndValidation/Intro} 
+% =========================================
+% 4.1 Reference Aircraft Configuration
+% =========================================
+\section{Reference Aircraft Configuration}
+
+\subsection{Aircraft Specifications }
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/AircraftSpecifications}
+
+\subsection{Engine Characteristics}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/EngineCharacteristics}
+
+\subsection{Fuel Tank Configuration}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/FuelTankConfiguration}
+
+\paragraph{Fuel Consumption Scenarios}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/FuelConsumptionScenarios}
+
+\subsection{Aerodynamic Data}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftConfiguration/AerodynamicData}
+
+% =========================================
+% 4.2 Baseline Mission Profile
+% =========================================
+\newpage
+\section{Baseline Mission Profile}
+\input{Chapters/CaseStudiesAndValidation/BaselineMissionProfile/Intro}
+
+\subsection{Mission Specification}
+\input{Chapters/CaseStudiesAndValidation/BaselineMissionProfile/MissionSpecification}
+
+\subsubsection{Initial Conditions}
+\input{Chapters/CaseStudiesAndValidation/BaselineMissionProfile/InitialConditions}
+
+\subsubsection{Terminal Constraints}
+\input{Chapters/CaseStudiesAndValidation/BaselineMissionProfile/TerminalConstraints}
+
+% =========================================
+% 4.3 Sensitivity Analysis
+% =========================================
+\newpage
+\section{Sensitivity Analysis}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/Intro}
+
+\subsection{Grid Resolution Sensitivity}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/GridResolutionSensitivity}
+
+\newpage
+\subsubsection{Fuel Consumption Analysis}
+\label{sec:FuelConsumptionAnalysis}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/FuelConsumption}
+
+\newpage
+\subsubsection{Computation Time Analysis}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/ComputationalPerformance}
+
+\newpage
+\subsubsection{Mission Duration}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/MissionDurationAndVerticalRates}
+
+\newpage
+\subsubsection{Vertical Rates}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/ClimbAndDescentRates}
+
+
+\newpage
+\subsubsection{Terminal Mach Constraint Satisfaction}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/TerminalMachConstraintSatisfaction}
+
+\newpage
+\subsubsection{Throttle Lever Position Analysis}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/ThrottleLeverPositionAnalysis}
+
+\newpage
+\subsubsection{Center of Gravity Travel Analysis}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/CenterOfGravityTravelAnalysis}
+
+\subsubsection{Summary}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/GridResolutionSensitivity/Summary}
+
+
+
+\newpage
+\subsection{Penalty Coefficient Sensitivity}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/PenaltyParameters/PenaltyCoefficientSensitivity}
+
+\newpage
+\subsubsection{Lever Position Penalty Impact Analysis}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/PenaltyParameters/LeverPositionPenaltyImpactAnalysis}
+
+\newpage
+\subsubsection{Lever Penalty Weight Variation Analysis}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/PenaltyParameters/LeverPenaltyWeightVariationAnalysis}
+
+
+\newpage
+\subsubsection{Mach Penalty Weight Variation Analysis}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/PenaltyParameters/MachPenaltyWeightVariationAnalysis}
+
+
+
+\newpage
+\subsection{Mass Variation Studies}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/MassVariationStudies}
+
+\subsection{Target Altitude Sensitivity}
+\input{Chapters/CaseStudiesAndValidation/SensitivityStudies/TargetAltitudeSensitivity}
+
+\newpage
+\section{Optimal Trajectory Results}
+\input{Chapters/CaseStudiesAndValidation/OptimalTrajectoryResults/Intro}
+
+
+\subsection{Climb Phase Results}
+\input{Chapters/CaseStudiesAndValidation/OptimalTrajectoryResults/ClimbPhaseResults}
+
+\subsection{Cruise Phase Results}
+\input{Chapters/CaseStudiesAndValidation/OptimalTrajectoryResults/CruisePhaseResults}
+
+\subsection{Descent Phase Results}
+\input{Chapters/CaseStudiesAndValidation/OptimalTrajectoryResults/DescentPhaseResults}
+
+\subsection{Complete Mission Summary}
+\input{Chapters/CaseStudiesAndValidation/OptimalTrajectoryResults/CompleteMissionSummary}
+
+
+
+\subsection{Center of Gravity Analysis}
+
+\subsubsection{Quantitative CG Travel Analysis}
+\input{Chapters/CaseStudiesAndValidation/CenterofGravityAnalysis/FuelConsumptionScenarioComparison}
+
+\subsubsection{CG Travel Range}
+\input{Chapters/CaseStudiesAndValidation/CenterofGravityAnalysis/CGTravelRange}
+
+\subsubsection{Impact on Trim Analysis}
+\input{Chapters/CaseStudiesAndValidation/CenterofGravityAnalysis/ImpactOnTrimAnalysis}
+
+% =========================================
+% 4.5 Mission-Level Optimization Results
+% =========================================
+\newpage
+\section{Mission-Level Optimization Results}
+\input{Chapters/CaseStudiesAndValidation/MissionLevelOptimizationDemonstrations/Intro}
+
+\subsection{Range Targeting Example}
+\input{Chapters/CaseStudiesAndValidation/MissionLevelOptimizationDemonstrations/RangeTargeting}
+
+
+\section{Mission Level Analysis Results}
+\input{Chapters/CaseStudiesAndValidation/MissionLevelOptimizationDemonstrations/RangeTargeting}
+
+
+\subsection{Range Optimization Analysis}
+\input{Chapters/CaseStudiesAndValidation/MissionLevelOptimizationDemonstrations/RangeOptimizationAnalysis}
+
+
+\subsubsection{Optimization Methodology}
+\input{Chapters/CaseStudiesAndValidation/MissionLevelOptimizationDemonstrations/OptimizationMethodology}
+
+
+
+\subsubsection{Range Optimization Results}
+\input{Chapters/CaseStudiesAndValidation/MissionLevelOptimizationDemonstrations/RangeOptimizationResults}
+
+
+\subsection{Fuel Optimization Analysis Results}
+\input{Chapters/CaseStudiesAndValidation/MissionLevelOptimizationDemonstrations/FuelOptimizationAnalysisResults}
+
+
+\subsubsection{Optimization Methodology}
+\input{Chapters/CaseStudiesAndValidation/MissionLevelOptimizationDemonstrations/OptimizationMethodology}
+
+
+\subsubsection{Fuel Optimization Results}
+\input{Chapters/CaseStudiesAndValidation/MissionLevelOptimizationDemonstrations/FuelOptimizationResults}
+
+
+
+\subsection{Climb Phase Results}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftResults/ClimbPhaseResults}
+ 
+\subsection{Cruise Phase Results}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftResults/CruisePhaseResults}
+ 
+\subsection{Descent Phase Results}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftResults/DescentPhaseResults}
+\subsection{Center of Gravity Analysis}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftResults/DescentPhaseResults}
+
+\subsection{Complete Mission Summary}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftResults/CGAnalysis}
+
+
+\subsection{Comparison with Reference Mission}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftResults/ComparisonwithReferenceMission}
+
+
+\subsection{Reference Mission Characteristics}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftResults/ReferenceMissionCharacteristics}
+
+\subsection{Mission-Level Performance Comparison}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftResults/MissionLevelPerformanceComparison }
+
+\subsection{Phase-Specific Performance Comparison}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftResults/PhaseSpecificPerformanceComparison}
+
+\subsection{AerodynamicPerformanceComparison}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftResults/AerodynamicPerformanceComparison}
+
+
+
+\subsubsection{Trajectory Characteristics Comparison}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftResults/TrajectoryCharacteristicsComparison}
+
+
+\subsection{Fuel Consumption Comparison}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftResults/FuelConsumptionComparison}
+
+
+
+
+\subsection{Time-Fuel Trade-offs}
+\input{Chapters/CaseStudiesAndValidation/ReferenceAircraftResults/TimeFueltradeOffs}
+
+
+
+
+
+
+% =========================================
+% CHAPTER 5: DISCUSSION
+% =========================================
+\newpage
+\chapter{Discussion}
+\label{chap:Discussion}
+
+\section{Physical Insights and Trajectory Characteristics}
+\label{sec:physical_insights}
+\input{Chapters/DiscussionAndAnalysis/PhysicalInsightandTrajectoryCharacteristics}
+
+\section{Optimization Performance Analysis}
+\label{sec:optimization_performance}
+\input{Chapters/DiscussionAndAnalysis/OptimizationPerformanceAnalysis}
+
+\section{Mission-Level Optimization Convergence}
+\label{sec:mission_convergence}
+\input{Chapters/DiscussionAndAnalysis/MissionLevelOptimizationConvergence}
+
+\section{Penalty System Effectiveness}
+\label{sec:penalty_effectiveness}
+\input{Chapters/DiscussionAndAnalysis/PenaltySystemEffectiveness}
+
+\section{Limitations and Assumptions}
+\label{sec:limitations}
+\input{Chapters/DiscussionAndAnalysis/LimitationsandAssumptions}
+
+% =========================================
+% CHAPTER 6: CONCLUSION
+% =========================================
+\newpage
+\chapter{Conclusion}
+\label{chap:Conclusion}
+% \input{Chapters/Conclusion/Conclusion}
+
+% =========================================
+% REFERENCES & APPENDIX
+% =========================================
+\printbibliography
+
+\appendix
+\chapter{Appendix}
+% \input{Chapters/Appendix/Appendix}
+
+\end{document}

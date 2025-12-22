@@ -1,0 +1,48 @@
+The Mach trajectory guidance penalty ensures that the optimal trajectory remains within a reachability corridor that guarantees the target Mach number can be achieved by the terminal altitude. The corridor is defined based on the maximum reasonable Mach rate of change and the remaining altitude steps. The corridor bounds are computed as:
+
+\begin{equation}
+\Delta M_{max} = \frac{dM}{dk}_{max} \cdot k_{remaining}
+\end{equation}
+
+\begin{equation}
+M_{min} = M_{target} - \Delta M_{max}
+\end{equation}
+
+\begin{equation}
+M_{max} = M_{target} + \Delta M_{max}
+\end{equation}
+
+Here, $k_{remaining} = K \cdot (1 - \xi)$ is the estimated remaining steps, where $\xi = k/(K-1)$ is the normalized step-based progress fraction ($k$ is the current altitude step index, $K$ is the total number of altitude steps). The maximum reasonable Mach rate $\frac{dM}{dk}_{max} = 0.1$ establishes the physical limit for Mach number changes per altitude step.
+
+The penalty structure applies different treatments depending on the current Mach position relative to the corridor. For Mach numbers outside the reachability corridor, quadratic penalties enforce constraint satisfaction:
+
+\begin{equation}
+P_{mach}(M) = \begin{cases}
+\alpha_{urgency} \cdot (M_{min} - M)^2 & \text{if } M < M_{min} \\
+f_{guidance}(M, M_{target}, \xi) & \text{if } M_{min} \leq M \leq M_{max} \\
+\alpha_{urgency} \cdot (M - M_{max})^2 & \text{if } M > M_{max}
+\end{cases}
+\end{equation}
+
+where $\alpha_{urgency}$ is the urgency multiplier that increases with altitude fraction to strengthen penalty enforcement near the terminal condition:
+
+\begin{equation}
+\alpha_{urgency} = (1 - \xi_{remaining}) \cdot \alpha_{urgency,max}
+\end{equation}
+
+where $\xi_{remaining} = 1 - \xi$ represents the remaining climb fraction and $\alpha_{urgency,max} = 2.5$ is the maximum urgency multiplier. This formulation ensures that Mach constraint violations become increasingly penalized as the aircraft approaches the terminal altitude, forcing convergence to the target Mach number.
+
+For Mach numbers within the reachability corridor ($M_{min} \leq M \leq M_{max}$), a progressive guidance function $f_{guidance}$ encourages convergence to the target Mach. During the final phase of climb, defined when the normalized step-based progress fraction exceeds $\xi_{final} = 0.7$, the guidance penalty applies:
+
+\begin{equation}
+f_{guidance}(M, M_{target}, \xi) = \begin{cases}
+w_{guidance} \cdot \alpha_{phase} \cdot (M - M_{target})^2 & \text{if } \xi > \xi_{final} \\
+0 & \text{if } \xi \leq \xi_{final}
+\end{cases}
+\end{equation}
+
+where $w_{guidance} = 0.3$ kg/Mach$^2$ is the guidance penalty weight and $\alpha_{phase}$ is a phase-dependent strength factor that increases during the final climb phase. The phase strength factor is computed as $\alpha_{phase} = (\xi - \xi_{final}) / \Delta\xi_{final}$, where $\Delta\xi_{final} = 0.3$ is the final phase range. In the terminal phase ($\xi > \xi_{terminal} = 0.9$), an additional boost multiplier $\alpha_{boost} = 2.0$ further strengthens the guidance toward the target Mach number, applied as $\alpha_{phase} \leftarrow \alpha_{phase} \cdot (1 + \alpha_{boost} \cdot (\xi - \xi_{terminal}) / \Delta\xi_{terminal})$, where $\Delta\xi_{terminal} = 0.1$ is the terminal phase range.
+
+The guidance penalty weight parameter $w_{guidance}$ controls the relative importance of trajectory guidance within the reachability corridor during the final climb phase. The urgency multiplier $\alpha_{urgency}$ scales the penalty magnitude for trajectories outside the corridor, ensuring constraint violations become increasingly penalized as the aircraft approaches the terminal altitude.
+
+It is important to distinguish between the Mach trajectory guidance penalty system and the terminal Mach constraint enforcement. The guidance penalty system operates during the forward pass of the dynamic programming algorithm, influencing the trajectory path by adding penalties to the cost function. However, the terminal Mach constraint is enforced independently through a hard constraint mechanism applied after the forward pass completes. The terminal constraint identifies all Mach states within tolerance of the target Mach number and masks all other terminal states by setting their cost-to-go values to infinity. The optimal terminal state is then selected as the state with minimum cost-to-go among the valid terminal states. This hard constraint enforcement ensures that the terminal Mach number always satisfies the tolerance requirement, regardless of whether the guidance penalty system is enabled or disabled. When guidance is disabled, the optimizer minimizes fuel consumption without trajectory guidance during the forward pass, but the terminal constraint still enforces the target Mach requirement. Consequently, the terminal Mach number may be identical whether guidance is enabled or disabled, as the hard constraint selects from the same set of valid terminal states. The guidance system primarily affects the trajectory path and fuel consumption, while the terminal constraint determines the final Mach selection.

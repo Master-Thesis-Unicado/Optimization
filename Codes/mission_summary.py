@@ -736,7 +736,7 @@ def plot_mission_summary_dashboard(climb_result: MinFuelSchedule,
     
     # ========= ROW 3 COL 3: KEY PARAMETERS TABLE =========
     avg_climb_rate_mpm = np.mean(np.abs(climb_result.Ps_mps)) * 60.0 if len(climb_result.Ps_mps) > 0 else 0
-    avg_descent_rate_mpm = np.mean(np.abs(descent_result.descent_rate_mps)) * 60.0 if len(descent_result.descent_rate_mps) > 0 else 0
+    avg_descent_rate_mpm = np.mean(np.abs(descent_result.Ps_mps)) * 60.0 if len(descent_result.Ps_mps) > 0 else 0
     cruise_mach = cruise_result.mach_number[-1]
     cruise_altitude_ft = cruise_result.altitude_m[-1] * 3.28084
     # Use provided simulation duration or default to mission time if not provided
@@ -1436,7 +1436,7 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
     climb_alt_m = np.asarray(climb_result.alt_m, float)
     climb_mach = np.asarray(climb_result.mach, float)
     climb_lever = np.asarray(climb_result.lever, float)
-    climb_thrust_N = np.asarray(climb_result.T_total_N, float)
+    climb_thrust_N = np.asarray(climb_result.thrust_total_N, float)
     climb_drag_N = np.asarray(climb_result.D_N, float)
     climb_fuel_kg = np.asarray(climb_result.cumFuel_kg, float)
     climb_mass_kg = np.asarray(climb_result.mass_kg, float)  # Use actual dynamic mass from DP optimization
@@ -1464,9 +1464,9 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
     
     # ========= CRUISE PHASE DATA =========
     cruise_time_min = cruise_result.time_s / 60.0
-    cruise_fuel_flow_kgh = cruise_result.fuel_flow_kgps * 3600
+    cruise_fuel_flow_kgh = cruise_result.mdot_kgps * 3600
     cruise_thrust_kn = cruise_result.thrust_total_N / 1000
-    cruise_drag_kn = cruise_result.drag_N / 1000
+    cruise_drag_kn = cruise_result.D_N / 1000
     cruise_mass_kg = cruise_result.mass_kg
     cruise_lever = cruise_result.lever_position * 100
     cruise_fuel_consumed = cruise_result.fuel_consumed_kg
@@ -1475,9 +1475,9 @@ def plot_combined_performance_analysis(climb_result: MinFuelSchedule,
     
     # ========= DESCENT PHASE DATA =========
     descent_time_min = descent_result.time_s / 60.0
-    descent_fuel_flow_kgh = descent_result.fuel_flow_kgps * 3600
+    descent_fuel_flow_kgh = descent_result.mdot_kgps * 3600
     descent_thrust_kn = descent_result.thrust_total_N / 1000
-    descent_drag_kn = descent_result.drag_N / 1000
+    descent_drag_kn = descent_result.D_N / 1000
     descent_mass_kg = descent_result.mass_kg
     descent_lever = descent_result.lever * 100
     descent_cum_fuel_kg = descent_result.cumFuel_kg

@@ -1,0 +1,22 @@
+Specific excess power $P_s$ quantifies the rate at which energy can be gained per unit weight. It emerges from the power balance equation relating thrust power, drag power, and the rate of change of potential and kinetic energy. Starting from the longitudinal force balance,
+\begin{equation}
+T - D = m\frac{dV}{dt} + mg\sin\gamma,
+\end{equation}
+using $\sin\gamma = \frac{dh/dt}{V}$ and multiplying by $V$ yields
+\begin{equation}
+(T-D)V = mV\frac{dV}{dt} + mg\frac{dh}{dt}.
+\end{equation}
+Division by $mg$ provides the specific power rate,
+\begin{equation}
+\frac{(T-D)V}{mg} = \frac{dh}{dt} + \frac{V}{g}\frac{dV}{dt},
+\end{equation}
+which equals the time derivative of $E = gh + \tfrac{1}{2}V^2$ scaled by $1/g$ and therefore defines the specific excess power:
+\begin{equation}
+P_s = \frac{(T-D)V}{mg} = \frac{dh}{dt} + \frac{V}{g}\frac{dV}{dt}
+\end{equation}
+
+The formulation $P_s = (T-D)V/(mg)$ shows that $P_s$ represents excess power normalized by aircraft weight, expressed in units of velocity [m/s]. This metric directly relates to climb capability: positive $P_s$ enables altitude gain and/or acceleration, while the distribution between $\frac{dh}{dt}$ and $\frac{V}{g}\frac{dV}{dt}$ determines whether energy is allocated to climbing or accelerating.In the implementation, this relationship is computed dynamically for each state of the simulation.
+
+ For level flight conditions where altitude remains constant, the energy rate equation simplifies to $P_s = 0$, which requires $T = D$. During cruise simulation, this equilibrium condition determines the required thrust setting at each point along the trajectory.
+
+

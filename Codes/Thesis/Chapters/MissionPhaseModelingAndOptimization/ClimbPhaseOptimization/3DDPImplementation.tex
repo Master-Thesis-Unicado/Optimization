@@ -1,0 +1,7 @@
+The dynamic programming implementation for climb involves several steps. The altitude schedule uses uniform spacing from $h_0$ to $h_{target}$, establishing the sequence of altitude levels $h_k$ for $k = 0, 1, \ldots, K-1$.
+
+The Mach grid spans the operational range from $M_{min}$ to $M_{MMO}$, discretized into $I$ uniformly spaced points. The throttle lever grid covers the full range $[0, 1]$ with $L$ uniformly spaced positions.
+
+The forward pass executes the Bellman recursion from $k = 0$ to $k = K-1$, evaluating transitions through the $7 \times 7$ neighborhood structure and updating cost-to-go values according to the minimum cost principle. The predictor-corrector method accounts for mass coupling effects during each transition evaluation.
+
+Following the forward pass, backtracking from the optimal terminal state extracts the optimal trajectory. Predecessor links reconstruct the complete altitude-Mach-lever profile.

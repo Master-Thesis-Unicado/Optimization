@@ -1,0 +1,3 @@
+The initial climb state comprises takeoff altitude $h_0$, initial velocity $V_0$, and initial throttle lever position $\delta_0$. The initial Mach number follows from $M_0 = V_0/a(h_0)$, where $a(h_0)$ denotes the speed of sound at takeoff altitude.
+
+The terminal condition requires reaching target cruise altitude $h_{target}$ with Mach number within tolerance of the target cruise Mach $M_{target}$. The penalty system enforces this constraint during optimization, with additional enforcement through post-processing of the cost-to-go matrix at the final altitude stage.

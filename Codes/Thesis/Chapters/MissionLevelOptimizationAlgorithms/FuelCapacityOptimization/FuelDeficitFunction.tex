@@ -1,0 +1,17 @@
+The fuel deficit quantifies the shortfall or surplus relative to consumption requirements:
+
+\begin{equation}
+\text{Deficit} = F_{consumed} - F_{available}
+\end{equation}
+
+A positive deficit indicates insufficient fuel capacity, while a negative deficit represents fuel surplus. The optimization seeks to minimize the absolute deficit while ensuring non-negative capacity:
+
+\begin{equation}
+\min_{F_{available}} |\text{Deficit}| \quad \text{subject to } \text{Deficit} \leq 0
+\end{equation}
+
+By updating bounds according to the deficit sign, the bisection method upholds this constraint and guarantees that the converged solution represents the lowest fuel capacity that meets mission requirements.
+
+The deficit calculation is performed for each iteration, providing  information regarding fuel sufficiency at each test point in the optimization process.
+
+ 

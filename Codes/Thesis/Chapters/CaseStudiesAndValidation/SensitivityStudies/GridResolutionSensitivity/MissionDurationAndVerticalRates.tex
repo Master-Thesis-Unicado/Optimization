@@ -1,0 +1,38 @@
+Mission duration analysis reveals relatively small sensitivity to grid resolution, with durations increasing from 287.0 minutes at grid density 15 to 294.6 minutes at grid density 55, representing a 2.6\% increase as shown in the 
+Table~\ref{tab:mission_duration}. 
+
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \begin{tabular}{l c c}
+        \hline
+        Grid Size & Mission Duration & Duration Change \\
+        $(K \times I \times L)$ & $t_{mission}$ (min) & $\Delta t$ (\%) \\
+        \hline
+        $15 \times 15 \times 15$ & 287.0 & -- \\
+        $20 \times 20 \times 20$ & 287.0 & 0.0 \\
+        $25 \times 25 \times 25$ & 289.4 & 0.8 \\
+        $30 \times 30 \times 30$ & 291.7 & 1.6 \\
+        $35 \times 35 \times 35$ & 292.4 & 1.9 \\
+        $40 \times 40 \times 40$ & 293.4 & 2.2 \\
+        $45 \times 45 \times 45$ & 294.0 & 2.4 \\
+        $50 \times 50 \times 50$ & 294.3 & 2.5 \\
+        $55 \times 55 \times 55$ & 294.6 & 2.6 \\
+        \hline
+    \end{tabular}
+    \caption{Mission Duration Across Different Grid Resolutions}
+    \label{tab:mission_duration}
+\end{table}
+
+
+Unlike terminal Mach number constraints, no explicit constraints are imposed on mission duration in the optimization formulation. The dynamic programming algorithm selects Mach number and throttle lever position trajectories to minimize fuel consumption, and the resulting mission duration emerges as a consequence of these optimal control selections. This modest variation in mission duration indicates that grid resolution primarily affects fuel efficiency through trajectory optimization rather than mission timing. The increasing mission duration with finer grids reflects the optimizer's enhanced ability to exploit more fuel-efficient trajectory segments, which may require slightly longer flight times to achieve optimal fuel consumption.
+
+
+
+
+
+
+
+ 
+ 

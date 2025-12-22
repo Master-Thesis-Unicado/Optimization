@@ -104,7 +104,7 @@ class MinFuelSchedule:
     J_kg_per_m: np.ndarray         # J [kg/m]: fuel cost density
     mdot_kgps: np.ndarray          # ṁ [kg/s]: fuel flow rate
     Ps_mps: np.ndarray             # Ps [m/s]: specific excess power
-    T_total_N: np.ndarray          # T_total [N]: total thrust
+    thrust_total_N: np.ndarray     # T_total [N]: total thrust
     D_N: np.ndarray                # D [N]: drag
     lever: np.ndarray              # δ [-]: throttle lever position [0,1]
     T_per_engine_N: np.ndarray     # T_eng [N]: thrust per engine
@@ -205,7 +205,7 @@ class ClimbingCore:
         time_new = safe_interp(padded_arrays['time_s'])      # t(h) [s]
         mach_new = safe_interp(padded_arrays['mach'])        # M(h) [-]
         lever_new = safe_interp(padded_arrays['lever'])      # δ(h) [-]
-        Ttot_new = safe_interp(padded_arrays['T_total_N'])   # T(h) [N]
+        Ttot_new = safe_interp(padded_arrays['thrust_total_N'])   # T(h) [N]
         D_new = safe_interp(padded_arrays['D_N'])            # D(h) [N]
         Ps_new = safe_interp(padded_arrays['Ps_mps'])        # Ps(h) [m/s]
         mdot_new = safe_interp(padded_arrays['mdot_kgps'])   # ṁ(h) [kg/s]
@@ -226,7 +226,7 @@ class ClimbingCore:
             mach=mach_new,
             time_s=time_new,
             lever=lever_new,
-            T_total_N=Ttot_new,
+            thrust_total_N=Ttot_new,
             D_N=D_new,
             Ps_mps=Ps_new,
             mdot_kgps=mdot_new,
@@ -252,7 +252,7 @@ class ClimbingCore:
             dict: {name: padded_array} for all trajectory variables
         """
         # Array catalog
-        array_names = ['alt_m', 'time_s', 'mach', 'lever', 'T_total_N', 'D_N', 
+        array_names = ['alt_m', 'time_s', 'mach', 'lever', 'thrust_total_N', 'D_N', 
                      'Ps_mps', 'mdot_kgps', 'cumFuel_kg', 'thrust_limited']
         
         # Determine maximum length L_max
@@ -331,7 +331,7 @@ class ClimbingCore:
             mach: np.ndarray               # M [-]: Mach number
             time_s: np.ndarray             # t [s]: time
             lever: np.ndarray              # δ [-]: throttle lever [0,1]
-            T_total_N: np.ndarray          # T [N]: total thrust
+            thrust_total_N: np.ndarray     # T [N]: total thrust
             D_N: np.ndarray                # D [N]: drag
             Ps_mps: np.ndarray             # Ps [m/s]: specific excess power
             mdot_kgps: np.ndarray          # ṁ [kg/s]: fuel flow rate
@@ -848,7 +848,7 @@ class ClimbingCore:
                 J_kg_per_m=np.array(path_costs),
                 mdot_kgps=mdot_kgps,
                 Ps_mps=Ps_mps,
-                T_total_N=np.array([engine.thrust_with_lever(lever, mach, alt) * SystemConfiguration.N_ENGINES 
+                thrust_total_N=np.array([engine.thrust_with_lever(lever, mach, alt) * SystemConfiguration.N_ENGINES 
                                    for alt, mach, lever in zip(alt_array, mach_array, lever_array)]),
                 D_N=np.array([aero.get_drag(mach, alt, weight) for alt, mach, weight in zip(alt_array, mach_array, weight_array)]),
                 lever=lever_array,

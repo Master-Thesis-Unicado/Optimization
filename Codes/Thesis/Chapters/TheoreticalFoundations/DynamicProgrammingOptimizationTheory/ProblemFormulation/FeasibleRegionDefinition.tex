@@ -1,0 +1,31 @@
+Physical and operational limits define the feasible region at each altitude. A state $(h_k, M_i, \delta_j)$ is feasible if it satisfies all of the following constraints. States that violate any constraint are considered infeasible and excluded from the optimization.
+
+\begin{equation}
+M_{min}(h_k, m_k) \leq M_i \leq M_{MMO}
+\end{equation}
+
+\begin{equation}
+\delta_{min} \leq \delta_j \leq \delta_{max}
+\end{equation}
+
+\begin{equation}
+P_s(h_k, M_i, \delta_j, m_k) > 0 \quad \text{(for climb)}
+\end{equation}
+
+\begin{equation}
+P_s(h_k, M_i, \delta_j, m_k) < 0 \quad \text{(for descent)}
+\end{equation}
+
+\begin{equation}
+m_k > 0
+\end{equation}
+
+\begin{equation}
+|M_{final} - M_{target}| < \epsilon_{M} \quad \text{(at terminal altitude level $K-1$)}
+\end{equation}
+
+In these constraints, $M_{min}(h_k, m_k)$ is the minimum safe Mach accounting for stall boundaries, $M_{MMO}$ is the maximum operating Mach, $\delta_{min} = 0$ and $\delta_{max} = 1$ define the throttle lever range, and $m_k$ is the aircraft mass which must remain positive throughout the trajectory. 
+
+The specific excess power constraint depends on the flight phase. For climb, states must have $P_s > 0$ to allow the aircraft to gain altitude. For descent, states must have $P_s < 0$ to allow altitude loss.
+
+The terminal constraint ensures that the final state reaches the target Mach number within tolerance $\epsilon_{M}$. 

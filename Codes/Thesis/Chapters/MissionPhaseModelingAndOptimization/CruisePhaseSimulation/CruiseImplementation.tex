@@ -1,0 +1,14 @@
+Cruise simulation employs explicit Euler integration with fixed time step $\Delta t$. At each time step, the current mass computes drag, determines required thrust, and calculates fuel consumption.
+
+Mass evolution follows:
+
+\begin{equation}
+m(t + \Delta t) = m(t) - \dot{m}(t) \cdot \Delta t
+\end{equation}
+
+where the fuel flow rate is:
+
+\begin{equation}
+\dot{m}(t) = \text{TSFC}(\delta, M, h) \cdot T(\delta, M, h) \cdot N_{eng}
+\end{equation}
+ 

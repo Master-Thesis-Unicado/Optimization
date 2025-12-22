@@ -1,0 +1,12 @@
+
+The cost-to-go function $F[k, i, j]$ represents the minimum cumulative cost from state $(h_k, M_i, \delta_j)$ to the terminal condition. The indices $i$ and $j$ index discrete Mach number and throttle lever positions within the discretized state space.
+
+The cost-to-go function obeys the recursive relationship:
+
+\begin{equation}
+F[k, i, j] = \min_{(i', j') \in \text{Reachable}(i,j)} \left\{ F[k-1, i', j'] + J_{aug}(X_{k-1} \to X_k) \cdot \Delta h \right\}
+\end{equation}
+
+where $\text{Reachable}(i,j)$ denotes the set of states at stage $k-1$ from which transition to state $(i,j)$ at stage $k$ is feasible, and $J_{aug}(X_{k-1} \to X_k)$ is the augmented cost density for the transition.
+
+The boundary condition at the initial stage establishes $F[0, i_0, j_0] = 0$ for the initial state $(i_0, j_0)$, and $F[0, i, j] = \infty$ for all other states at stage 0.

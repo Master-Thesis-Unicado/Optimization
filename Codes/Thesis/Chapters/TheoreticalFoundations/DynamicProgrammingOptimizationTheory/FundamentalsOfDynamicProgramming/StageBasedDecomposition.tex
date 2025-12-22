@@ -1,0 +1,3 @@
+
+The trajectory optimization problem can be broken down into altitude stages. Each stage corresponds to a discrete altitude level $h_k$, starting at $h_0$ and ending at $h_{K-1}$. As the index $k$ increases, the aircraft progresses step by step through these altitude levels.
+At each stage, the task is to select a state $(M_k, \delta_k)$ from the feasible region. The optimal choice is the one that minimizes the total cost from that stage onward. With this structure, the continuous optimization problem becomes a manageable series of discrete decisions.

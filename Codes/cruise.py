@@ -95,9 +95,10 @@ class CruiseResults:
     mass_kg: np.ndarray                    # m(t) [kg]: aircraft mass
     fuel_consumed_kg: np.ndarray           # m_fuel(t) [kg]: cumulative fuel
     thrust_total_N: np.ndarray             # T(t) [N]: total thrust
-    drag_N: np.ndarray                     # D(t) [N]: drag
-    fuel_flow_kgps: np.ndarray             # ṁ(t) [kg/s]: fuel flow rate
-    specific_excess_power_mps: np.ndarray  # Ps(t) [m/s]: specific excess power
+    T_per_engine_N: np.ndarray             # T_eng(t) [N]: thrust per engine
+    D_N: np.ndarray                        # D(t) [N]: drag
+    mdot_kgps: np.ndarray                  # ṁ(t) [kg/s]: fuel flow rate
+    Ps_mps: np.ndarray                     # Ps(t) [m/s]: specific excess power
     lever_position: np.ndarray             # δ(t) [-]: throttle lever [0,1]
     altitude_m: np.ndarray                 # h(t) [m]: altitude
     mach_number: np.ndarray                # M(t) [-]: Mach number
@@ -293,51 +294,60 @@ def combine_cruise_segments(initial_cruise: CruiseResults,
     if continued_cruise is not None:
         thrust_combined = np.concatenate([
             initial_cruise.thrust_total_N,
-            cruise_climb.T_total_N,
+            cruise_climb.thrust_total_N,
             continued_cruise.thrust_total_N
+        ])
+        thrust_per_engine_combined = np.concatenate([
+            initial_cruise.T_per_engine_N,
+            cruise_climb.T_per_engine_N,
+            continued_cruise.T_per_engine_N
         ])
     else:
         thrust_combined = np.concatenate([
             initial_cruise.thrust_total_N,
-            cruise_climb.T_total_N
+            cruise_climb.thrust_total_N
+        ])
+        thrust_per_engine_combined = np.concatenate([
+            initial_cruise.T_per_engine_N,
+            cruise_climb.T_per_engine_N
         ])
     
     # Concatenate drag arrays
     if continued_cruise is not None:
         drag_combined = np.concatenate([
-            initial_cruise.drag_N,
+            initial_cruise.D_N,
             cruise_climb.D_N,
-            continued_cruise.drag_N
+            continued_cruise.D_N
         ])
     else:
         drag_combined = np.concatenate([
-            initial_cruise.drag_N,
+            initial_cruise.D_N,
             cruise_climb.D_N
         ])
     
     # Concatenate fuel flow arrays
     if continued_cruise is not None:
         fuel_flow_combined = np.concatenate([
-            initial_cruise.fuel_flow_kgps,
+            initial_cruise.mdot_kgps,
             cruise_climb.mdot_kgps,
-            continued_cruise.fuel_flow_kgps
+            continued_cruise.mdot_kgps
         ])
     else:
         fuel_flow_combined = np.concatenate([
-            initial_cruise.fuel_flow_kgps,
+            initial_cruise.mdot_kgps,
             cruise_climb.mdot_kgps
         ])
     
     # Concatenate specific excess power arrays
     if continued_cruise is not None:
         ps_combined = np.concatenate([
-            initial_cruise.specific_excess_power_mps,
+            initial_cruise.Ps_mps,
             cruise_climb.Ps_mps,
-            continued_cruise.specific_excess_power_mps
+            continued_cruise.Ps_mps
         ])
     else:
         ps_combined = np.concatenate([
-            initial_cruise.specific_excess_power_mps,
+            initial_cruise.Ps_mps,
             cruise_climb.Ps_mps
         ])
     
@@ -441,9 +451,10 @@ def combine_cruise_segments(initial_cruise: CruiseResults,
         mass_kg=mass_combined,  # Renamed for physics accuracy
         fuel_consumed_kg=fuel_consumed_combined,
         thrust_total_N=thrust_combined,
-        drag_N=drag_combined,
-        fuel_flow_kgps=fuel_flow_combined,
-        specific_excess_power_mps=ps_combined,
+        T_per_engine_N=thrust_per_engine_combined,
+        D_N=drag_combined,
+        mdot_kgps=fuel_flow_combined,
+        Ps_mps=ps_combined,
         lever_position=lever_combined,
         altitude_m=altitude_combined,
         mach_number=mach_combined,
@@ -545,6 +556,7 @@ def simulate_steady_cruise(initial_state: CruiseInitialState,
     mass_array = np.zeros(n_steps + 1)  # Renamed for physics accuracy
     fuel_consumed_array = np.zeros(n_steps + 1)
     thrust_array = np.zeros(n_steps + 1)
+    thrust_per_engine_array = np.zeros(n_steps + 1)
     drag_array = np.zeros(n_steps + 1)
     fuel_flow_array = np.zeros(n_steps + 1)
     ps_array = np.zeros(n_steps + 1)
@@ -612,6 +624,7 @@ def simulate_steady_cruise(initial_state: CruiseInitialState,
         mass_array[step] = current_mass  # Renamed for physics accuracy
         fuel_consumed_array[step] = cumulative_fuel
         thrust_array[step] = thrust_total_N
+        thrust_per_engine_array[step] = thrust_per_engine_N if thrust_per_engine_N else 0.0
         drag_array[step] = drag_N
         fuel_flow_array[step] = fuel_flow_kgps
         ps_array[step] = ps
@@ -628,6 +641,7 @@ def simulate_steady_cruise(initial_state: CruiseInitialState,
             mass_array = mass_array[:actual_steps]  # Renamed for physics accuracy
             fuel_consumed_array = fuel_consumed_array[:actual_steps]
             thrust_array = thrust_array[:actual_steps]
+            thrust_per_engine_array = thrust_per_engine_array[:actual_steps]
             drag_array = drag_array[:actual_steps]
             fuel_flow_array = fuel_flow_array[:actual_steps]
             ps_array = ps_array[:actual_steps]
@@ -674,9 +688,10 @@ def simulate_steady_cruise(initial_state: CruiseInitialState,
         mass_kg=mass_array,  # Renamed for physics accuracy
         fuel_consumed_kg=fuel_consumed_array,
         thrust_total_N=thrust_array,
-        drag_N=drag_array,
-        fuel_flow_kgps=fuel_flow_array,
-        specific_excess_power_mps=ps_array,
+        T_per_engine_N=thrust_per_engine_array,
+        D_N=drag_array,
+        mdot_kgps=fuel_flow_array,
+        Ps_mps=ps_array,
         lever_position=lever_array,
         altitude_m=altitude_array,
         mach_number=mach_array,

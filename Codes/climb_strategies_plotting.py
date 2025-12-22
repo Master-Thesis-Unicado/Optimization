@@ -205,7 +205,7 @@ def plot_strategies_interactive(
     k = 0           # step index
 
     def _coerce_run(run: StrategyRun):
-        return (run.label, run.alt_m, run.mach, run.lever, run.time_s, run.T_total_N,
+        return (run.label, run.alt_m, run.mach, run.lever, run.time_s, run.thrust_total_N,
                 run.D_N, run.Ps_mps, run.mdot_kgps, run.dt_s, run.dFuel_kg, run.cumFuel_kg, run.thrust_limited)
 
     (label, alt_m, mach, lever, time_s, Ttot, D, Ps, mdot, dt_s, dFuel, cumFuel, limited) = _coerce_run(strategies_runs[s])

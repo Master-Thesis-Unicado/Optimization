@@ -1,0 +1,14 @@
+Lift and drag forces follow the standard aerodynamic formulations:
+
+\begin{equation}
+L = C_L q S
+\end{equation}
+
+\begin{equation}
+D = C_D q S
+\end{equation}
+
+In this formulation, \(C_L\) and \(C_D\) are the lift and drag coefficients, \(q\) is the dynamic pressure, and \(S\) denotes the wing reference area. The coefficients are determined from the trimmed flight condition by solving the longitudinal equilibrium equations.
+
+In the model, lift and drag are computed at each simulation step. The calculation of \(C_L\) and \(C_D\) uses the Mach number, altitude, and the aircraft CG position as inputs.
+

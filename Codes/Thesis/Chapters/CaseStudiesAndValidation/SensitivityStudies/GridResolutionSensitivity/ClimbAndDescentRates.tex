@@ -1,0 +1,49 @@
+Average climb rates demonstrate convergence behavior, ranging from 736 m/min at grid density 15 to 742 m/min at grid density 55, with intermediate values showing some variation. The climb rate remains relatively stable around 733-758 m/min across all grid resolutions as shown in the \ref{tab:climb_rate} , indicating that the optimal climb strategy maintains consistent vertical velocity profiles regardless of discretization density. This stability suggests that the fundamental climb energy management strategy is captured even at coarser grid resolutions, with finer grids providing only marginal improvements in climb rate optimization.
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \begin{tabular}{l c c}
+        \hline
+        Grid Size & Climb Rate & $\Delta$Climb Rate \\
+        $(K \times I \times L)$ & ROC (m/min) & (\%) \\
+        \hline
+        $15 \times 15 \times 15$ & 736 & -- \\
+        $20 \times 20 \times 20$ & 758 & 3.0 \\
+        $25 \times 25 \times 25$ & 753 & 2.3 \\
+        $30 \times 30 \times 30$ & 744 & 1.1 \\
+        $35 \times 35 \times 35$ & 739 & 0.4 \\
+        $40 \times 40 \times 40$ & 735 & -0.1 \\
+        $45 \times 45 \times 45$ & 733 & -0.4 \\
+        $50 \times 50 \times 50$ & 737 & 0.1 \\
+        $55 \times 55 \times 55$ & 742 & 0.8 \\
+        \hline
+    \end{tabular}
+    \caption{Climb Rate Across Different Grid Resolutions}
+    \label{tab:climb_rate}
+\end{table}
+
+Average descent rates exhibit greater sensitivity to grid resolution, ranging from 1808 m/min to 2428 m/min. The descent rate decreases from 2428 m/min at the coarsest grid to approximately 1800-1900 m/min for finer grids, representing up to a 25.5\% reduction as shown in the table \ref{tab:descent_rate}. This significant variation reflects the impact of grid discretization on descent trajectory optimization, where finer grids enable more precise energy management and throttle lever scheduling during descent. The convergence behavior shows descent rates stabilizing around 1800-1900 m/min for grid densities above 40, indicating that finer discretization captures the essential descent optimization characteristics.
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \begin{tabular}{l c c}
+        \hline
+        Grid Size & Descent Rate & $\Delta$Descent Rate \\
+        $(K \times I \times L)$ & DR (m/min) & (\%) \\
+        \hline
+        $15 \times 15 \times 15$ & 2428 & -- \\
+        $20 \times 20 \times 20$ & 2222 & -8.5 \\
+        $25 \times 25 \times 25$ & 2130 & -12.3 \\
+        $30 \times 30 \times 30$ & 1921 & -20.9 \\
+        $35 \times 35 \times 35$ & 1845 & -24.0 \\
+        $40 \times 40 \times 40$ & 1839 & -24.3 \\
+        $45 \times 45 \times 45$ & 1921 & -20.9 \\
+        $50 \times 50 \times 50$ & 1808 & -25.5 \\
+        $55 \times 55 \times 55$ & 1844 & -24.1 \\
+        \hline
+    \end{tabular}
+    \caption{Descent Rate Across Different Grid Resolutions}
+    \label{tab:descent_rate}
+\end{table}

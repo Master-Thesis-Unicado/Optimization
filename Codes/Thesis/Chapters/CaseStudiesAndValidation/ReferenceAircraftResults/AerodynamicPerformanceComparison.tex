@@ -1,0 +1,26 @@
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \caption{Aerodynamic performance comparison: lift-to-drag ratio and drag characteristics.}
+    \label{tab:aerodynamic_comparison}
+    \begin{tabular}{l c c c}
+        \hline
+        Metric & Reference & Optimized & Difference \\
+        Mission & Mission & Mission & (\%) \\
+        \hline
+        Average L/D Ratio & 11.4 & 14.5 & $+3.1$ & $+27.2$ \\
+        Maximum L/D Ratio & 18.3 & 20.5 & $+2.2$ & $+12.0$ \\
+        Average Drag Coefficient $C_D$ & 0.046 & 0.036 & $-0.010$ & $-21.7$ \\
+        Climb Average L/D & 10.8 & 16.0 & $+5.2$ & $+48.1$ \\
+        Cruise Average L/D & 11.8 & 15.0 & $+3.2$ & $+27.1$ \\
+        Descent Average L/D & 11.5 & 12.0 & $+0.5$ & $+4.3$ \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Table~\ref{tab:aerodynamic_comparison} compares aerodynamic performance characteristics between reference and optimized missions. The optimized mission achieves a $27.2\%$ improvement in average lift-to-drag ratio ($14.5$ versus $11.4$), reflecting the optimization algorithm's ability to exploit more efficient operating points throughout the mission. The maximum L/D ratio increases by $12.0\%$ ($20.5$ versus $18.3$), demonstrating that the optimized trajectory approaches the aircraft's maximum aerodynamic efficiency more closely than the reference mission.
+
+Phase-specific L/D improvements are most significant in the climb phase, where the optimized trajectory achieves a $48.1\%$ improvement ($16.0$ versus $10.8$). This substantial improvement reflects the optimization algorithm's recognition that certain altitude-speed combinations maximize aerodynamic efficiency during climb. The cruise phase shows a $27.1\%$ improvement ($15.0$ versus $11.8$), while the descent phase achieves a $4.3\%$ improvement ($12.0$ versus $11.5$).
+
+The average drag coefficient decreases by $21.7\%$ ($0.036$ versus $0.046$), reflecting the optimization algorithm's ability to select operating points that minimize drag through improved trim conditions and more efficient flight path angles. The drag coefficient reduction is most pronounced in the climb phase ($0.036$ versus $0.055$, a $34.5\%$ reduction), where the optimization algorithm selects trajectories that minimize drag while maintaining required climb performance. These aerodynamic improvements directly contribute to the fuel consumption reductions observed in the optimized mission.

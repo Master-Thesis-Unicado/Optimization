@@ -1,0 +1,49 @@
+
+The Mach trajectory guidance penalty formulation is described in Section~\ref{sssec:mach_trajectory_guidance_penalties}, where the penalty function structure employs guidance weight ($w_{guidance}$) parameter to control convergence behavior within the reachability corridor. Systematic variation of the guidance penalty weight parameter quantifies sensitivity of trajectory optimization to Mach guidance penalty magnitude. The analysis evaluates three guidance weight variations ($w_{guidance} = 0.1, 0.3, 0.5$) at grid density 35, maintaining consistent discretization across configurations.
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \caption{Mission performance metrics across Mach penalty weight variations (grid density 35).}
+    \label{tab:mach_penalty_weight_variation}
+    \begin{tabular}{l c c c c}
+        \hline
+        Configuration & $w_{guidance}$ & Total Fuel & Mission Duration & Cruise Mach \\
+        & [kg/Mach²] & (kg) & (min) & Achieved \\
+        \hline
+        Reduced & 0.1 & 13{,}071.4 & 293.3 & 0.776 \\
+        Baseline & 0.3 & 13{,}093.7 & 293.6 & 0.776 \\
+        Increased & 0.5 & 13{,}113.4 & 293.8 & 0.776 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/MachGuidanceWeight/0.1.png}
+        \caption{$w_{guidance} = 0.1$}
+        \label{fig:mach_guidance_0.1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/MachGuidanceWeight/0.3.png}
+        \caption{$w_{guidance} = 0.3$}
+        \label{fig:mach_guidance_0.3}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/MachGuidanceWeight/0.5.png}
+        \caption{$w_{guidance} = 0.5$}
+        \label{fig:mach_guidance_0.5}
+    \end{subfigure}
+    \caption{Mach number trajectories during climb phase for different guidance penalty weights.}
+    \label{fig:mach_guidance_weight_variation}
+\end{figure}
+
+Fuel consumption increases monotonically with guidance weight, rising from 13,071.4 kg at $w_{guidance} = 0.1$ to 13,113.4 kg at $w_{guidance} = 0.5$, representing a total increase of 42.0 kg (0.32\%). Mission duration shows minimal sensitivity, increasing from 293.3 minutes to 293.8 minutes (0.17\% increase). The cruise Mach number remains constant at 0.776 across all guidance weight variations, demonstrating that terminal Mach constraint satisfaction is independent of the guidance penalty system through the hard constraint mechanism.
+
+Figure~\ref{fig:mach_guidance_weight_variation} illustrates Mach number trajectories during climb phase. All trajectories start from approximately Mach 0.25 and converge to target Mach 0.78, exhibiting periods of gradual acceleration interspersed with plateaus. Lower guidance weight ($w_{guidance} = 0.1$) produces greater Mach variability, allowing the optimizer increased freedom to exploit fuel-efficient operating points. Higher guidance weights ($w_{guidance} = 0.3$ and $0.5$) yield progressively smoother trajectories with stronger convergence behavior during the final climb phase. The terminal constraint mechanism ensures target Mach achievement regardless of guidance weight, confirming that guidance primarily affects trajectory path and fuel consumption rather than terminal state selection.

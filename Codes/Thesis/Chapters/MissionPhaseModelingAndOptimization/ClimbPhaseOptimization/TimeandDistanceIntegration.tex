@@ -1,0 +1,17 @@
+Time and distance are computed through post-processing of the optimal state sequence following trajectory extraction. For each segment from $h_k$ to $h_{k+1}$, the time increment is:
+
+\begin{equation}
+\Delta t_k = \frac{\Delta h_k}{P_{s,k}}
+\end{equation}
+
+where $P_{s,k}$ denotes the specific excess power at the segment, computed using average conditions between states $k$ and $k+1$.
+
+Ground distance follows from integrating true airspeed over time. For each segment:
+
+\begin{equation}
+\Delta s_k = V_{TAS,k} \cdot \Delta t_k = M_k \cdot a(h_k) \cdot \Delta t_k
+\end{equation}
+
+The small-angle approximation assumes the horizontal velocity component approximately equals the true airspeed for typical climb angles. Summing segment distances throughout the climb profile yields the cumulative distance.
+
+The trajectory reconstruction phase performs this post-processing, computing time and fuel arrays from the optimal state sequence using segment-wise integration procedures.

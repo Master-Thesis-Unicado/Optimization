@@ -1,0 +1,34 @@
+Terminal Mach number constraint satisfaction demonstrates variation with grid resolution. Cruise Mach numbers converge toward the target value of 0.78, decreasing from 0.800 at grid density 15 to 0.770 at grid density 55. The cruise Mach error, expressed as a percentage relative to the target value, decreases from 2.56\% at the coarsest grid to a minimum of 0.13\% at grid density 30. However, errors increase for finer grids beyond density 30, reaching 1.28\% at grid density 55 as shown in Table \ref{tab:mach_errors_percent}. This behavior suggests that intermediate grid resolutions (approximately 25-35) provide optimal constraint satisfaction, with very fine discretization potentially introducing numerical sensitivity or converging to slightly different local optima that marginally deviate from the target.
+
+Descent ending Mach numbers demonstrate constraint satisfaction with percentage errors ranging from 0.40\% to 3.60\% relative to the target value of 0.25. The descent phase shows variable constraint satisfaction across grid resolutions, with the smallest error (0.40\%) achieved at grid density 40 and the largest error (3.60\%) observed at grid density 30  as shown in Table \ref{tab:mach_errors_percent}. Several configurations (densities 15, 20, and 55) achieve descent Mach numbers of 0.253, corresponding to an error of 1.20\%. The descent optimization demonstrates the ability to achieve target approach Mach numbers across all grid resolutions, though with varying degrees of precision that do not show a clear monotonic relationship with grid density.
+
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \begin{tabular}{l c c c c}
+        \hline
+        Grid Size & Cruise Mach & Cruise Error (\%) & Descent Mach & Descent Error (\%)\\
+        $(K \times I \times L)$ & $M_{cruise}$ & $|\Delta M_{cruise}|$ & $M_{descent}$ & $|\Delta M_{descent}|$  \\
+        \hline
+        $15 \times 15 \times 15$ & 0.800 & 2.56 & 0.253 & 1.20 \\
+        $20 \times 20 \times 20$ & 0.789 & 1.15 & 0.253 & 1.20 \\
+        $25 \times 25 \times 25$ & 0.783 & 0.38 & 0.257 & 2.80 \\
+        $30 \times 30 \times 30$ & 0.779 & 0.13 & 0.241 & 3.60 \\
+        $35 \times 35 \times 35$ & 0.776 & 0.51 & 0.256 & 2.40 \\
+        $40 \times 40 \times 40$ & 0.774 & 0.77 & 0.251 & 0.40 \\
+        $45 \times 45 \times 45$ & 0.773 & 0.90 & 0.247 & 1.20 \\
+        $50 \times 50 \times 50$ & 0.771 & 1.15 & 0.257 & 2.80 \\
+        $55 \times 55 \times 55$ & 0.770 & 1.28 & 0.253 & 1.20 \\
+        \hline
+    \end{tabular}
+    \caption{Terminal Mach Number Constraint Satisfaction Across Grid Resolutions}
+    \label{tab:mach_errors_percent}
+\end{table}
+
+
+
+
+
+The analysis reveals that grid density 40 provides the best overall constraint satisfaction, achieving cruise and descent Mach errors of 0.77\% and 0.40\% respectively. Intermediate grid resolutions (30-45) generally provide good constraint satisfaction for both phases, with percentage errors below 1.5\%. 
+

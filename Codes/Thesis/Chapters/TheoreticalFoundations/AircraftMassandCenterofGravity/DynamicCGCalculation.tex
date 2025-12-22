@@ -1,0 +1,10 @@
+The longitudinal center of gravity position depends on the distribution of fuel among tanks. At any point during flight, the CG location follows from the weighted average:
+
+\begin{equation}
+x_{CG} = \frac{m_{ZFW} x_{CG,ZFW} + \sum_{i} m_{fuel,i} x_i}{m_{ZFW} + \sum_{i} m_{fuel,i}}
+\end{equation}
+
+where $m_{ZFW}$ is zero fuel mass, $x_{CG,ZFW}$ is the CG position at zero fuel, $m_{fuel,i}$ is the fuel mass in tank $i$, and $x_i$ is the CG position of tank $i$.
+
+The calculation is carried out during the simulation. The method assigns fuel to the tanks according to the chosen burn scenario. It then computes the weighted CG from the zero-fuel aircraft and the remaining fuel at that step.
+

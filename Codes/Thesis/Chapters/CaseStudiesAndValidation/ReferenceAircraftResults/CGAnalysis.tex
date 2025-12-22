@@ -1,0 +1,84 @@
+
+The center of gravity (CG) analysis quantifies the longitudinal CG movement throughout the optimized mission, providing critical insight into aircraft stability and trim characteristics as fuel is consumed. The analysis employs the INNER\_FIRST fuel consumption scenario, where inner tanks are depleted before outer and center tanks, ensuring controlled CG movement and maintaining stability margins throughout the mission.
+
+\subsubsection{Aircraft Center of Gravity Evolution}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/OptimizedMission/CG/cg_analysis_cg_vs_fuel.png}
+    \caption{Aircraft longitudinal center of gravity evolution as a function of fuel consumed.}
+    \label{fig:cg_vs_fuel}
+\end{figure}
+
+The aircraft's longitudinal center of gravity evolution, illustrated in Figure~\ref{fig:cg_vs_fuel}, demonstrates a continuous aft shift as fuel is consumed throughout the mission. The initial CG position at mission start is $x_{\text{CG},0} = 16.057$ m, increasing linearly to $x_{\text{CG},f} = 16.200$ m at mission completion. This aft shift of $\Delta x_{\text{CG}} = 0.143$ m represents the total CG travel during the mission, reflecting the fuel consumption strategy's effect on aircraft balance.
+
+The linear relationship between fuel consumption and CG position indicates that the fuel management system maintains a consistent fuel CG location throughout consumption. The zero-fuel CG position, corresponding to complete fuel depletion, is $x_{\text{CG},\text{zero}} = 16.208$ m, providing a reference for the maximum possible aft CG position. The final mission CG ($16.200$ m) approaches but does not reach the zero-fuel CG, confirming that a fuel reserve ($566.8$ kg) remains at mission completion.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/OptimizedMission/CG/cg_analysis_cg_vs_mass.png}
+    \caption{Aircraft longitudinal center of gravity evolution as a function of total aircraft mass.}
+    \label{fig:cg_vs_mass}
+\end{figure}
+
+The CG evolution as a function of aircraft mass, shown in Figure~\ref{fig:cg_vs_mass}, demonstrates the relationship between mass reduction and CG movement. As aircraft mass decreases from $m_0 = 75,433$ kg to $m_{\text{final}} = 62,721$ kg, the CG shifts aft from $x_{\text{CG}} = 16.057$ m to $x_{\text{CG}} = 16.200$ m. This relationship confirms that fuel consumption, which is the primary source of mass reduction, drives the CG movement.
+
+The linear CG-mass relationship indicates that the fuel CG remains relatively constant throughout consumption, as the fuel management system maintains balanced consumption from multiple tanks. This strategy ensures predictable CG movement, enabling accurate trim predictions and stability margin calculations throughout the mission.
+
+\subsubsection{Fuel Tank Distribution and Evolution}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/OptimizedMission/CG/cg_analysis_tank_evolution.png}
+    \caption{Fuel tank group evolution showing fuel consumption from outer, inner, and center tanks.}
+    \label{fig:cg_tank_evolution}
+\end{figure}
+
+The fuel tank evolution, presented in Figure~\ref{fig:cg_tank_evolution}, demonstrates the INNER\_FIRST consumption strategy. Outer tanks begin with approximately $4,700$ kg of fuel, inner tanks with $4,500$ kg, and the center tank with $4,000$ kg, totaling $13,200$ kg initial fuel capacity. All tank groups exhibit linear fuel consumption, with fuel levels decreasing proportionally as the mission progresses.
+
+The simultaneous consumption from all tank groups, rather than sequential depletion, indicates a balanced fuel management approach that maintains aircraft symmetry and minimizes lateral CG shifts. The linear consumption rates for each tank group suggest that fuel is drawn proportionally to maintain the desired fuel CG location, ensuring controlled longitudinal CG movement.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/OptimizedMission/CG/cg_analysis_tank_levels.png}
+    \caption{Current fuel tank levels showing distribution across individual tanks.}
+    \label{fig:cg_tank_levels}
+\end{figure}
+
+The current tank fuel levels, illustrated in Figure~\ref{fig:cg_tank_levels}, show the fuel distribution at mission completion. The center tank contains $168.6$ kg, the largest remaining quantity, while outer tanks (left and right) each contain $102.4$ kg, and inner tanks (left and right) each contain $96.7$ kg. This distribution reflects the INNER\_FIRST strategy, where inner tanks are prioritized for consumption, leaving proportionally more fuel in outer and center tanks.
+
+The symmetrical distribution between left and right tanks (outer left = outer right, inner left = inner right) confirms that the fuel management system maintains lateral balance throughout the mission. This symmetry is critical for maintaining roll stability and minimizing lateral CG shifts that could affect aircraft handling characteristics.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/OptimizedMission/CG/cg_analysis_fuel_tank_cg.png}
+    \caption{Fuel tank center of gravity evolution showing constant fuel CG location.}
+    \label{fig:cg_fuel_tank_cg}
+\end{figure}
+
+The fuel tank CG evolution, shown in Figure~\ref{fig:cg_fuel_tank_cg}, demonstrates that the fuel's center of gravity remains constant at $x_{\text{CG},\text{fuel}} = 15.35$ m throughout the entire fuel consumption process. This constant fuel CG, despite varying fuel quantities in individual tanks, reflects the effectiveness of the INNER\_FIRST consumption strategy in maintaining a stable fuel CG location.
+
+The constant fuel CG is achieved through balanced consumption from tanks with different longitudinal positions. Inner tanks are located at $x_{\text{CG}} = 14.68$ m (forward), outer tanks at $x_{\text{CG}} = 16.60$ m (aft), and the center tank at $x_{\text{CG}} = 14.99$ m (forward). By consuming fuel from forward-positioned inner tanks first, the fuel CG remains relatively constant, as the reduction in forward fuel mass is balanced by the remaining fuel distribution.
+
+\subsubsection{Center of Gravity Range and Limits}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/OptimizedMission/CG/cg_analysis_cg_range.png}
+    \caption{Aircraft center of gravity range showing minimum, maximum, and zero-fuel CG positions.}
+    \label{fig:cg_range}
+\end{figure}
+
+The aircraft CG range analysis, presented in Figure~\ref{fig:cg_range}, quantifies the total CG travel and operational limits. The minimum CG position occurs at mission start, $x_{\text{CG},\min} = 16.056$ m, corresponding to maximum fuel loading. The maximum CG position occurs at mission completion, $x_{\text{CG},\max} = 16.200$ m, representing the aft-most CG position during the mission.
+
+The total CG travel is $\Delta x_{\text{CG}} = 0.143$ m, representing the aft shift from initial to final CG positions. The zero-fuel CG position, $x_{\text{CG},\text{zero}} = 16.208$ m, represents the theoretical maximum aft CG position if all fuel were consumed. The final mission CG ($16.200$ m) is $0.008$ m forward of the zero-fuel CG, reflecting the $566.8$ kg fuel reserve remaining at mission completion.
+
+The CG range of $0.143$ m represents a relatively small CG travel, indicating that the fuel management strategy effectively controls CG movement. This limited CG travel ensures that stability margins remain within acceptable limits throughout the mission, maintaining safe handling characteristics and minimizing trim drag variations.
+
+\subsubsection{CG Analysis Summary}
+
+The CG analysis confirms that the INNER\_FIRST fuel consumption strategy successfully maintains controlled CG movement throughout the mission, with a total aft shift of $\Delta x_{\text{CG}} = 0.143$ m over the $12,712.3$ kg fuel consumption. The analysis demonstrates that the optimized mission maintains CG positions within acceptable operational limits, with the final CG ($x_{\text{CG},f} = 16.200$ m) well within the aircraft's certified CG envelope.
+
+The constant fuel CG location ($x_{\text{CG},\text{fuel}} = 15.35$ m) throughout consumption reflects the effectiveness of the fuel management strategy in maintaining predictable CG evolution, enabling accurate stability and trim predictions. The CG movement analysis confirms that fuel consumption during the optimized mission does not compromise aircraft stability or handling characteristics. The controlled aft CG shift of $0.143$ m, combined with the fuel management system's ability to maintain constant fuel CG location, demonstrates that the optimization approach successfully balances fuel efficiency objectives with stability and control requirements.
+
+ 

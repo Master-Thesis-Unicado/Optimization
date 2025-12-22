@@ -1,0 +1,21 @@
+The descent optimization objective is to minimize total fuel consumption from cruise altitude $h_{cruise}$ to target approach altitude $h_{approach}$ while satisfying the terminal Mach constraint. The problem formulation is:
+
+\begin{equation}
+\min_{M(h), \delta(h)} \int_{h_{cruise}}^{h_{approach}} \frac{\dot{m}(h, M, \delta)}{|P_s(h, M, \delta)|} \, dh
+\end{equation}
+
+subject to constraints:
+
+\begin{equation}
+P_s(h, M, \delta) < 0
+\end{equation}
+
+\begin{equation}
+M(h_{approach}) \in [M_{target} - \epsilon, M_{target} + \epsilon]
+\end{equation}
+
+\begin{equation}
+M_{min}(h, m) \leq M(h) \leq M_{MMO}
+\end{equation}
+
+The absolute value $|P_s|$ appears in the cost function denominator since $P_s$ is negative for descent. This formulation maintains the same cost density interpretation as climb: fuel consumed per unit altitude change.

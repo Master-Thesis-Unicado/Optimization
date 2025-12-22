@@ -532,7 +532,7 @@ def _prepare_climb_data(climb_result, initial_mass_kg: float) -> pd.DataFrame:
     ld_ratio = lift_N / np.asarray(climb_result.D_N, float) if len(climb_result.D_N) > 0 else np.zeros(n_points)
     
     # Get T_per_engine_N directly from climb_result if available
-    thrust_per_engine_N = np.asarray(climb_result.T_per_engine_N, float) if hasattr(climb_result, 'T_per_engine_N') else np.asarray(climb_result.T_total_N, float) / 2.0
+    thrust_per_engine_N = np.asarray(climb_result.T_per_engine_N, float) if hasattr(climb_result, 'T_per_engine_N') else np.asarray(climb_result.thrust_total_N, float) / 2.0
     
     # Pressure (from atmospheric properties - already computed)
     pressure_Pa = np.array([p for _, p, _ in [isa_properties(float(h)) for h in climb_result.alt_m]])
@@ -555,11 +555,11 @@ def _prepare_climb_data(climb_result, initial_mass_kg: float) -> pd.DataFrame:
     # Calculate average metrics
     total_fuel = float(climb_result.cumFuel_kg[-1]) if len(climb_result.cumFuel_kg) > 0 else 0.0
     total_time = float(time_s[-1]) if len(time_s) > 0 else 0.0
-    avg_thrust = float(np.mean(climb_result.T_total_N)) if len(climb_result.T_total_N) > 0 else 0.0
+    avg_thrust = float(np.mean(climb_result.thrust_total_N)) if len(climb_result.thrust_total_N) > 0 else 0.0
     avg_fuel_flow = float(np.mean(fuel_flow_kgps)) if len(fuel_flow_kgps) > 0 else 0.0
     
     # TSFC: TSFC = ṁ/T [kg/(N·s)]
-    thrust_array = np.asarray(climb_result.T_total_N, float)
+    thrust_array = np.asarray(climb_result.thrust_total_N, float)
     tsfc_kg_per_N_s = np.zeros(n_points)
     for i in range(n_points):
         if thrust_array[i] > 0 and i < len(fuel_flow_kgps) and fuel_flow_kgps[i] > 0:
@@ -611,7 +611,7 @@ def _prepare_climb_data(climb_result, initial_mass_kg: float) -> pd.DataFrame:
         'Mass (kg)': np.asarray(climb_result.mass_kg, float) if hasattr(climb_result, 'mass_kg') else weight_kg,
         
         # Forces
-        'Thrust Total (N)': np.asarray(climb_result.T_total_N, float),
+        'Thrust Total (N)': np.asarray(climb_result.thrust_total_N, float),
         'Thrust Per Engine (N)': thrust_per_engine_N,
         'Average Thrust (N)': np.full(n_points, avg_thrust),
         'Drag (N)': np.asarray(climb_result.D_N, float),
@@ -652,11 +652,11 @@ def _prepare_climb_data(climb_result, initial_mass_kg: float) -> pd.DataFrame:
         'TSFC (g/(kN·s))': tsfc_kg_per_N_s * 1e6,  # Convert to g/(kN·s)
         
         # Force and power metrics
-        'Net Force (N)': np.asarray(climb_result.T_total_N, float) - np.asarray(climb_result.D_N, float),
-        'Thrust Power (W)': np.asarray(climb_result.T_total_N, float) * true_airspeed_mps,
+        'Net Force (N)': np.asarray(climb_result.thrust_total_N, float) - np.asarray(climb_result.D_N, float),
+        'Thrust Power (W)': np.asarray(climb_result.thrust_total_N, float) * true_airspeed_mps,
         'Drag Power (W)': np.asarray(climb_result.D_N, float) * true_airspeed_mps,
-        'Excess Power (W)': (np.asarray(climb_result.T_total_N, float) - np.asarray(climb_result.D_N, float)) * true_airspeed_mps,
-        'Thrust Power (kW)': (np.asarray(climb_result.T_total_N, float) * true_airspeed_mps) / 1000.0,
+        'Excess Power (W)': (np.asarray(climb_result.thrust_total_N, float) - np.asarray(climb_result.D_N, float)) * true_airspeed_mps,
+        'Thrust Power (kW)': (np.asarray(climb_result.thrust_total_N, float) * true_airspeed_mps) / 1000.0,
         'Drag Power (kW)': (np.asarray(climb_result.D_N, float) * true_airspeed_mps) / 1000.0,
         
         # Efficiency metrics
@@ -696,13 +696,13 @@ def _prepare_cruise_data(cruise_result) -> pd.DataFrame:
     
     # Climb/descent rates from specific excess power
     # Even in "level" flight, Ps shows slight climb/descent tendencies
-    Ps_array = np.asarray(cruise_result.specific_excess_power_mps, float)
+    Ps_array = np.asarray(cruise_result.Ps_mps, float)
     climb_rate_mps = np.where(Ps_array > 0, Ps_array, 0.0)      # Ps > 0: slight climb tendency
     descent_rate_mps = np.where(Ps_array < 0, np.abs(Ps_array), 0.0)  # Ps < 0: slight descent tendency
     
     # Extract performance arrays from cruise_result
     weight_array = np.asarray(cruise_result.mass_kg, float)            # m(t) [kg]
-    drag_array = np.asarray(cruise_result.drag_N, float)               # D(t) [N]
+    drag_array = np.asarray(cruise_result.D_N, float)               # D(t) [N]
     tas_array = np.asarray(cruise_result.true_airspeed_mps, float)     # V(t) [m/s]
     density_array = np.asarray(cruise_result.density_kgpm3, float)     # ρ(t) [kg/m³]
     thrust_array = np.asarray(cruise_result.thrust_total_N, float)     # T(t) [N]
@@ -730,8 +730,8 @@ def _prepare_cruise_data(cruise_result) -> pd.DataFrame:
     # TSFC: TSFC = ṁ/T [kg/(N·s)]
     tsfc_kg_per_N_s = np.zeros(n_points)
     for i in range(n_points):
-        if thrust_array[i] > 0 and i < len(cruise_result.fuel_flow_kgps):
-            tsfc_kg_per_N_s[i] = cruise_result.fuel_flow_kgps[i] / thrust_array[i] if thrust_array[i] > 0 else 0.0
+        if thrust_array[i] > 0 and i < len(cruise_result.mdot_kgps):
+            tsfc_kg_per_N_s[i] = cruise_result.mdot_kgps[i] / thrust_array[i] if thrust_array[i] > 0 else 0.0
     
     # Power metrics: P = F·V
     net_force_N = thrust_array - drag_array      # F_net = T - D [N]
@@ -758,7 +758,7 @@ def _prepare_cruise_data(cruise_result) -> pd.DataFrame:
     total_fuel = float(cruise_result.fuel_consumed_kg[-1]) if len(cruise_result.fuel_consumed_kg) > 0 else 0.0
     total_time = float(cruise_result.time_s[-1]) if len(cruise_result.time_s) > 0 else 0.0
     avg_thrust = float(cruise_result.average_thrust_N) if hasattr(cruise_result, 'average_thrust_N') else float(np.mean(thrust_array))
-    avg_fuel_flow = float(cruise_result.average_fuel_flow_kgps) if hasattr(cruise_result, 'average_fuel_flow_kgps') else float(np.mean(cruise_result.fuel_flow_kgps))
+    avg_fuel_flow = float(cruise_result.average_fuel_flow_kgps) if hasattr(cruise_result, 'average_fuel_flow_kgps') else float(np.mean(cruise_result.mdot_kgps))
     
     # Thrust per engine (2 engines assumed)
     thrust_per_engine_N = thrust_array / 2.0
@@ -813,9 +813,9 @@ def _prepare_cruise_data(cruise_result) -> pd.DataFrame:
         'Lever Position': np.asarray(cruise_result.lever_position, float),
         
         # Fuel data
-        'Fuel Flow (kg/s)': np.asarray(cruise_result.fuel_flow_kgps, float),
-        'Fuel Flow (kg/h)': np.asarray(cruise_result.fuel_flow_kgps, float) * 3600.0,
-        'Mass Flow Rate (kg/s)': np.asarray(cruise_result.fuel_flow_kgps, float),  # Same as fuel flow
+        'Fuel Flow (kg/s)': np.asarray(cruise_result.mdot_kgps, float),
+        'Fuel Flow (kg/h)': np.asarray(cruise_result.mdot_kgps, float) * 3600.0,
+        'Mass Flow Rate (kg/s)': np.asarray(cruise_result.mdot_kgps, float),  # Same as fuel flow
         'Average Fuel Flow (kg/s)': np.full(n_points, avg_fuel_flow),
         'Cumulative Fuel (kg)': np.asarray(cruise_result.fuel_consumed_kg, float),
         'Total Fuel Consumed (kg)': np.full(n_points, total_fuel),
@@ -828,7 +828,7 @@ def _prepare_cruise_data(cruise_result) -> pd.DataFrame:
         'Density (kg/m³)': density_array,
         
         # Performance metrics
-        'Specific Excess Power (m/s)': np.asarray(cruise_result.specific_excess_power_mps, float),
+        'Specific Excess Power (m/s)': np.asarray(cruise_result.Ps_mps, float),
         'Climb Rate (m/s)': climb_rate_mps,
         'Descent Rate (m/s)': descent_rate_mps,
         'Average Descent Rate (m/s)': np.full(n_points, float(np.mean(descent_rate_mps[descent_rate_mps > 0])) if np.any(descent_rate_mps > 0) else 0.0),
@@ -913,7 +913,7 @@ def _prepare_descent_data(descent_result) -> pd.DataFrame:
     
     # Extract performance arrays from descent_result
     weight_array = np.asarray(descent_result.mass_kg, float)            # m(t) [kg]
-    drag_array = np.asarray(descent_result.drag_N, float)               # D(t) [N]
+    drag_array = np.asarray(descent_result.D_N, float)               # D(t) [N]
     tas_array = np.asarray(descent_result.true_airspeed_mps, float)     # V(t) [m/s]
     density_array = np.asarray(descent_result.density_kgpm3, float)     # ρ(t) [kg/m³]
     thrust_array = np.asarray(descent_result.thrust_total_N, float)     # T(t) [N]
@@ -941,8 +941,8 @@ def _prepare_descent_data(descent_result) -> pd.DataFrame:
     # TSFC: TSFC = ṁ/T [kg/(N·s)]
     tsfc_kg_per_N_s = np.zeros(n_points)
     for i in range(n_points):
-        if thrust_array[i] > 0 and i < len(descent_result.fuel_flow_kgps):
-            tsfc_kg_per_N_s[i] = descent_result.fuel_flow_kgps[i] / thrust_array[i] if thrust_array[i] > 0 else 0.0
+        if thrust_array[i] > 0 and i < len(descent_result.mdot_kgps):
+            tsfc_kg_per_N_s[i] = descent_result.mdot_kgps[i] / thrust_array[i] if thrust_array[i] > 0 else 0.0
     
     # Power metrics: P = F·V
     net_force_N = thrust_array - drag_array      # F_net = T - D [N]
@@ -1021,9 +1021,9 @@ def _prepare_descent_data(descent_result) -> pd.DataFrame:
         'Lever Position': np.asarray(descent_result.lever, float),
         
         # Fuel data
-        'Fuel Flow (kg/s)': np.asarray(descent_result.fuel_flow_kgps, float),
-        'Fuel Flow (kg/h)': np.asarray(descent_result.fuel_flow_kgps, float) * 3600.0,
-        'Mass Flow Rate (kg/s)': np.asarray(descent_result.fuel_flow_kgps, float),  # Same as fuel flow
+        'Fuel Flow (kg/s)': np.asarray(descent_result.mdot_kgps, float),
+        'Fuel Flow (kg/h)': np.asarray(descent_result.mdot_kgps, float) * 3600.0,
+        'Mass Flow Rate (kg/s)': np.asarray(descent_result.mdot_kgps, float),  # Same as fuel flow
         'Average Fuel Flow (kg/s)': np.full(n_points, avg_fuel_flow),
         'Cumulative Fuel (kg)': np.asarray(descent_result.cumFuel_kg, float),
         'Total Fuel Consumed (kg)': np.full(n_points, total_fuel),
@@ -1036,9 +1036,9 @@ def _prepare_descent_data(descent_result) -> pd.DataFrame:
         'Density (kg/m³)': density_array,
         
         # Performance metrics
-        'Specific Excess Power (m/s)': np.asarray(descent_result.specific_excess_power_mps, float),
+        'Specific Excess Power (m/s)': np.asarray(descent_result.Ps_mps, float),
         'Climb Rate (m/s)': climb_rate_mps,
-        'Descent Rate (m/s)': np.asarray(descent_result.descent_rate_mps, float),
+        'Descent Rate (m/s)': np.asarray(descent_result.Ps_mps, float),
         'Average Descent Rate (m/s)': np.full(n_points, avg_descent_rate),
         'Average Descent Rate (m/min)': np.full(n_points, descent_summary.get('avg_descent_rate_mpm', avg_descent_rate * 60.0)),
         'J Cost (kg/m)': np.asarray(descent_result.J_kg_per_m, float) if hasattr(descent_result, 'J_kg_per_m') else np.zeros(n_points),  # Fuel cost density

@@ -1,0 +1,12 @@
+The fuel system consists of 5 tanks, each with its own capacity and center-of-gravity position. The setup includes the inner and outer tanks on both wings, as well as the center tank. Each tank has a defined longitudinal CG location $x_i$, measured from the aircraft nose as the reference.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.60\textwidth]{Images/FuelTankConfiguration/fuel_tank_configuration.png}
+    \caption{Fuel Tank Configuration}
+    \label{fig:FuelTankConfiguration}
+\end{figure}
+
+
+Initial fuel distribution among tanks is determined by tank volume capacities, with mass capacity $m_{max,i}$ calculated from volume $V_i$ and fuel density $\rho_{fuel}$ according to $m_{max,i} = (V_i / 1000) \times \rho_{fuel}$, where $\rho_{fuel} = 800$ kg/m$^3$ for kerosene. The center tank possesses the largest volume capacity at 7,286.0 L, while inner and outer wing tanks have volumes of 4,178.4 L and 4,426.5 L respectively. When total fuel mass is less than the theoretical capacity sum, a proportional scaling factor is applied uniformly across all tanks to match the available fuel quantity. At mission initialization, all tanks are filled to their respective capacity limits, ensuring maximum fuel utilization while maintaining volume-based distribution.
+

@@ -140,16 +140,16 @@ Grid structure: (M_i, h_k, δ_j) where:
 # ────────────────────────────────────────────────────────────────────────────
 # Climb Phase Grid: (M_i, h_k, δ_j)
 # ────────────────────────────────────────────────────────────────────────────
-N_MACH_SAMPLES_CLIMB = 50                           # I: number of Mach points
-N_ALTITUDE_STEPS_CLIMB = 50                         # K: number of altitude levels
-N_LEVER_SAMPLES_CLIMB = 50                         # L: number of throttle positions
+N_MACH_SAMPLES_CLIMB = 15                           # I: number of Mach points
+N_ALTITUDE_STEPS_CLIMB = 15                         # K: number of altitude levels
+N_LEVER_SAMPLES_CLIMB = 15                         # L: number of throttle positions
 
 # ────────────────────────────────────────────────────────────────────────────
 # Descent Phase Grid: (M_i, h_k, δ_j)
 # ────────────────────────────────────────────────────────────────────────────
-N_MACH_SAMPLES_DESCENT = 50                         # I: number of Mach points
-N_ALTITUDE_STEPS_DESCENT = 50                       # K: number of altitude levels
-N_LEVER_SAMPLES_DESCENT = 50                        # L: number of throttle positions
+N_MACH_SAMPLES_DESCENT = 15                         # I: number of Mach points
+N_ALTITUDE_STEPS_DESCENT = 15                       # K: number of altitude levels
+N_LEVER_SAMPLES_DESCENT = 15                        # L: number of throttle positions
 
 
 # ========================================================================
@@ -288,7 +288,7 @@ E_DOT_CMD_CLIMB = 14                                # Ė_cmd [m/s]: specific ene
 # ────────────────────────────────────────────────────────────────────────────
 # 8.2: Cruise Phase - Basic Mission Parameters
 # ────────────────────────────────────────────────────────────────────────────
-CRUISE_DISTANCE_KM = 3768                         # For 3768km cruise for 4000km range, s_cruise [km]: cruise distance
+CRUISE_DISTANCE_KM = 3757                         # For 50x50x50 grid, cruise for 4000km range, s_cruise [km]: cruise distance
 CRUISE_TIME_STEP_S = 0.1                            # Δt [s]: integration time step
 
 # ────────────────────────────────────────────────────────────────────────────
@@ -313,7 +313,7 @@ Includes range matching and fuel optimization convergence criteria.
 # 9.1: Range Optimization (Iterative Distance Matching)
 # ────────────────────────────────────────────────────────────────────────────
 TARGET_MISSION_RANGE_KM = 4000                    # s_target [km]: target total range
-INITIAL_CRUISE_DISTANCE_KM = 3200.0                 # s_cruise,0 [km]: initial cruise estimate
+INITIAL_CRUISE_DISTANCE_KM = 3400.0                 # s_cruise,0 [km]: initial cruise estimate
 RANGE_OPTIMIZATION_TOLERANCE_KM = 3.0               # ε_range [km]: convergence tolerance
 MAX_RANGE_OPTIMIZATION_ITERATIONS = 15              # N_iter,max: iteration limit
 RANGE_OPTIMIZATION_DAMPING_FACTOR = 0.75            # α_damp ∈ [0,1]: adjustment damping

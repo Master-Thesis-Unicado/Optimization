@@ -72,9 +72,9 @@ def plot_performance_2d(cruise_results: 'CruiseResults'):
     # ────────────────────────────────────────────────────────────────────
     cruise_time_min = cruise_results.time_s / 60.0                  # t [min]
     cruise_distance_km = cruise_results.distance_km                 # s [km]
-    cruise_fuel_flow_kgh = cruise_results.fuel_flow_kgps * 3600    # ṁ [kg/h]
+    cruise_fuel_flow_kgh = cruise_results.mdot_kgps * 3600    # ṁ [kg/h]
     cruise_thrust_kn = cruise_results.thrust_total_N / 1000         # T [kN]
-    cruise_drag_kn = cruise_results.drag_N / 1000                   # D [kN]
+    cruise_drag_kn = cruise_results.D_N / 1000                   # D [kN]
     cruise_mass_kg = cruise_results.mass_kg                         # m [kg]
     cruise_lever = cruise_results.lever_position * 100              # δ [%]
     cruise_fuel_consumed = cruise_results.fuel_consumed_kg          # Σm_fuel [kg]

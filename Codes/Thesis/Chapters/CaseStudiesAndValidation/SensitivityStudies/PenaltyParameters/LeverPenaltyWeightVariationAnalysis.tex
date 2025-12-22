@@ -1,0 +1,80 @@
+The lever position penalty formulation is described in Section~\ref{sssec:throttle_lever_penalties}, where the penalty function $P(\delta) = w_{lever} \cdot [P_{base}(\delta) + P_{critical}(\delta) + P_{ultra}(\delta)]$ is presented. The penalty weight parameter $w_{lever}$ appears as a multiplicative scaling factor that directly controls the magnitude of the penalty contribution to the augmented cost function. Systematic variation of the lever penalty weight parameter quantifies the sensitivity of trajectory optimization to penalty magnitude. This analysis evaluates five penalty weight values: $w_{lever} = 0$ (penalty disabled), $w_{lever} = 1$, $w_{lever} = 2$, $w_{lever} = 4$, and $w_{lever} = 6$, maintaining all other penalty parameters at baseline values ($p = 3.0$, $\delta_{MCT} = 0.75$, $\delta_{crit} = 0.90$, $\delta_{ultra} = 0.95$, $\alpha_{crit} = 5.0$, $\alpha_{ultra} = 20.0$). The analysis employs grid density 45 to ensure consistent discretization across all test cases, enabling direct comparison of penalty weight effects on mission performance metrics.
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \caption{Mission performance metrics across lever penalty weight variations (grid density 45).}
+    \label{tab:lever_penalty_weight_variation}
+    \begin{tabular}{l c c c c c}
+        \hline
+        Parameter & $w_{lever} = 0$ & $w_{lever} = 1$ & $w_{lever} = 2$ & $w_{lever} = 4$ & $w_{lever} = 6$ \\
+        \hline
+        \textbf{Fuel Consumption} & & & & & \\
+        Total Fuel (kg) & 12{,}990.1 & 13{,}026.4 & 13{,}040.0 & 13{,}057.1 & 13{,}069.5 \\
+        \hline
+        \textbf{Mission Duration} & & & & & \\
+        Total Duration (min) & 289.3 & 291.4 & 292.1 & 292.6 & 293.0 \\
+        \hline
+        \textbf{Vertical Rates} & & & & & \\
+        Average Climb Rate (m/min) & 913 & 778 & 746 & 735 & 722 \\
+        Average Descent Rate (m/min) & 1{,}844 & 1{,}845 & 1{,}845 & 1{,}845 & 1{,}846 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\newpage
+
+Table~\ref{tab:lever_penalty_weight_variation} presents mission performance metrics across the evaluated penalty weight range.
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/LeverPenaltyWeight/0.png}
+        \caption{$w_{lever} = 0$ (Penalty Disabled)}
+        \label{fig:lever_penalty_weight_0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/LeverPenaltyWeight/1.png}
+        \caption{$w_{lever} = 1$}
+        \label{fig:lever_penalty_weight_1}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/LeverPenaltyWeight/2.png}
+        \caption{$w_{lever} = 2$}
+        \label{fig:lever_penalty_weight_2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/LeverPenaltyWeight/4.png}
+        \caption{$w_{lever} = 4$}
+        \label{fig:lever_penalty_weight_4}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/LeverPenaltyWeight/6.png}
+        \caption{$w_{lever} = 6$}
+        \label{fig:lever_penalty_weight_6}
+    \end{subfigure}
+    \caption{Throttle lever position trajectories during climb phase for different lever penalty weights.}
+    \label{fig:lever_penalty_weight_variation}
+\end{figure}
+
+Fuel consumption increases monotonically with penalty weight, rising from 12,990.1 kg at $w_{lever} = 0$ to 13,069.5 kg at $w_{lever} = 6$, representing a total increase of 79.4 kg (0.61\%). The incremental fuel consumption increases diminish as penalty weight increases, with changes of 36.3 kg, 13.6 kg, 17.1 kg, and 12.4 kg for successive weight increments. This diminishing sensitivity indicates that moderate penalty weights ($w_{lever} = 1-2$) capture most of the penalty mechanism's influence, while higher weights provide only marginal additional moderation of throttle lever behavior.
+
+Mission duration exhibits a similar monotonic increase with penalty weight, extending from 289.3 minutes at $w_{lever} = 0$ to 293.0 minutes at $w_{lever} = 6$, representing a 3.7-minute increase (1.28\%). The duration increments decrease with increasing penalty weight, showing changes of 2.1 minutes, 0.7 minutes, 0.5 minutes, and 0.4 minutes for successive weight values. This behavior reflects the optimizer's adaptation to penalty constraints, where higher penalty weights force more conservative trajectories with extended climb durations to avoid high throttle settings, but with decreasing marginal impact as the penalty function saturates its influence.
+
+Average climb rate demonstrates significant sensitivity to penalty weight, decreasing from 913 m/min at $w_{lever} = 0$ to 722 m/min at $w_{lever} = 6$, representing a 191 m/min reduction (20.9\%). The largest reduction occurs between $w_{lever} = 0$ and $w_{lever} = 1$ (135 m/min decrease), indicating that even minimal penalty weighting substantially moderates climb aggressiveness. Subsequent increases in penalty weight produce smaller incremental reductions, with decreases of 32 m/min, 11 m/min, and 13 m/min for weights 1-2, 2-4, and 4-6 respectively. This pattern confirms that low to moderate penalty weights effectively limit maximum throttle lever usage, while higher weights provide diminishing returns in terms of climb rate moderation.
+
+
+Average descent rate remains essentially constant across all penalty weights, varying only from 1,844 m/min to 1,846 m/min, confirming that the lever position penalty mechanism primarily affects climb phase optimization. Descent phase operations maintain throttle lever positions at idle settings regardless of penalty configuration, resulting in consistent descent performance across the evaluated weight range.
+
+Throttle lever position trajectories during climb phase demonstrate distinct characteristics across penalty weight variations. Figure~\ref{fig:lever_penalty_weight_variation} illustrates lever position profiles for penalty weights $w_{lever} = 0$ (Figure~\ref{fig:lever_penalty_weight_0}), $w_{lever} = 1$ (Figure~\ref{fig:lever_penalty_weight_1}), $w_{lever} = 2$ (Figure~\ref{fig:lever_penalty_weight_2}), $w_{lever} = 4$ (Figure~\ref{fig:lever_penalty_weight_4}), and $w_{lever} = 6$ (Figure~\ref{fig:lever_penalty_weight_6}). The trajectory for $w_{lever} = 0$ (penalty disabled) exhibits sustained operation at maximum thrust settings, with lever positions reaching 100\% for extended periods during climb. As penalty weight increases, the trajectories demonstrate progressively reduced maximum lever positions and increased throttle modulation, with higher weights forcing operation below maximum continuous thrust (MCT) limits for larger portions of the climb phase. The visual progression confirms the quantitative trends observed in climb rate and fuel consumption, where increasing penalty weights moderate throttle aggressiveness while accepting modest fuel penalties.
+
+The systematic variation demonstrates that penalty weight selection represents a trade-off between fuel consumption and throttle lever moderation. Lower penalty weights ($w_{lever} = 1-2$) provide substantial control over throttle lever behavior with moderate fuel penalties (0.28-0.38\%), while higher weights ($w_{lever} = 4-6$) offer incremental improvements in throttle moderation at the cost of additional fuel consumption.  

@@ -1,0 +1,8 @@
+Following convergence, a safety buffer is applied to the converged minimum fuel capacity to account for operational uncertainties and provide margin for mission execution:
+
+\begin{equation}
+F_{optimal} = F_{converged} \times (1 + \beta_{safety})
+\end{equation}
+
+where $\beta_{safety}$ is the safety buffer percentage,  set to 5\%. This buffer accounts for factors that may increase actual fuel consumption beyond the nominal mission analysis predictions. 
+The buffer percentage is configurable through mission configuration parameters, allowing adjustment based on operational requirements and risk tolerance.

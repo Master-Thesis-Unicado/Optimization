@@ -107,13 +107,13 @@ class DescentResults:
     
     # Performance arrays
     thrust_total_N: np.ndarray                  # T(t) [N]: total thrust
-    drag_N: np.ndarray                          # D(t) [N]: drag
-    fuel_flow_kgps: np.ndarray                  # ṁ(t) [kg/s]: fuel flow rate
-    descent_rate_mps: np.ndarray                # Ps(t) [m/s]: specific excess power
+    T_per_engine_N: np.ndarray                  # T_eng(t) [N]: thrust per engine
+    D_N: np.ndarray                             # D(t) [N]: drag
+    mdot_kgps: np.ndarray                       # ṁ(t) [kg/s]: fuel flow rate
+    Ps_mps: np.ndarray                          # Ps(t) [m/s]: specific excess power
     temperature_K: np.ndarray                   # T_atm(t) [K]: atmospheric temperature
     density_kgpm3: np.ndarray                   # ρ(t) [kg/m³]: air density
     true_airspeed_mps: np.ndarray               # V(t) [m/s]: true airspeed
-    specific_excess_power_mps: np.ndarray       # Ps(t) [m/s]: specific excess power
     
     # Temporal array
     time_s: np.ndarray                          # t [s]: time array
@@ -125,8 +125,8 @@ class DescentResults:
     total_time_s: float                         # t_total [s]: total descent time
     total_fuel_consumed_kg: float               # m_fuel,total [kg]: total fuel consumed
     final_mass_kg: float                        # m_f [kg]: final mass
-    average_descent_rate_mps: float             # <Ps> [m/s]: mean descent rate
-    average_fuel_flow_kgps: float               # <ṁ> [kg/s]: mean fuel flow
+    average_descent_rate_mps: float             # <Ps> [m/s]: mean descent rate (kept for backward compatibility)
+    average_fuel_flow_kgps: float               # <ṁ> [kg/s]: mean fuel flow (kept for backward compatibility)
     
     # Boundary conditions
     initial_altitude_m: float                   # h_0 [m]: initial altitude
@@ -857,14 +857,15 @@ class DescentCore:
                 J_kg_per_m=np.array(path_costs),  # Use path costs from DP (consistent with climb)
                 thrust_total_N=np.array([engine.thrust_with_lever(lever, mach, alt) * N_ENGINES 
                                         for alt, mach, lever in zip(alt_array, mach_array, lever_array)]),
-                drag_N=np.array([aero.get_drag(mach, alt, weight) 
-                                for alt, mach, weight in zip(alt_array, mach_array, weight_array)]),
-                fuel_flow_kgps=np.gradient(fuel_array, time_array) if len(time_array) > 1 else np.zeros_like(alt_array),
-                descent_rate_mps=Ps_array,
+                T_per_engine_N=np.array([engine.thrust_with_lever(lever, mach, alt) 
+                                        for alt, mach, lever in zip(alt_array, mach_array, lever_array)]),
+                D_N=np.array([aero.get_drag(mach, alt, weight) 
+                             for alt, mach, weight in zip(alt_array, mach_array, weight_array)]),
+                mdot_kgps=np.gradient(fuel_array, time_array) if len(time_array) > 1 else np.zeros_like(alt_array),
+                Ps_mps=Ps_array,
                 temperature_K=np.array([isa_properties(h)[0] for h in alt_array]),
                 density_kgpm3=np.array([isa_properties(h)[2] for h in alt_array]),
                 true_airspeed_mps=np.array([M * a_from_altitude(h) for M, h in zip(mach_array, alt_array)]),
-                specific_excess_power_mps=Ps_array,
                 time_s=time_array,
                 mass_kg=weight_array,
                 total_time_s=total_time,

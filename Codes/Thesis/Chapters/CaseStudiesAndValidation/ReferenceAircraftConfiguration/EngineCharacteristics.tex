@@ -1,0 +1,24 @@
+
+Propulsion is provided by two turbofan engines, with thrust and fuel consumption characteristics modeled through the PW1127G-JM engine library. The engine model provides thrust $T(\delta, M, h)$ and thrust-specific fuel consumption TSFC as functions of throttle lever position, Mach number, and altitude across the operational envelope.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.80\textwidth]{Images/EngineCharacteristics/thrust_vs_altitude.png}
+    \caption{Variation of Engine Thrust with Altitude and Mach}
+    \label{fig:FuelTankConfiguration}
+\end{figure}
+
+Thrust characteristics demonstrate typical altitude and Mach number dependencies, with thrust degrading at high altitude due to reduced air density and at high Mach numbers due to ram drag effects.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.80\textwidth]{Images/EngineCharacteristics/tsfc_vs_altitude.png}
+    \caption{Variation of TSFC with Altitude and Mach}
+    \label{fig:FuelTankConfiguration}
+\end{figure}
+
+
+TSFC variations reflect thermodynamic cycle efficiency changes with operating conditions. High thrust settings typically exhibit elevated TSFC values, while cruise conditions at moderate thrust demonstrate improved fuel efficiency. The engine model captures these variations, enables user to monitor fuel consumption throughout the mission profile.
+
+
+ 

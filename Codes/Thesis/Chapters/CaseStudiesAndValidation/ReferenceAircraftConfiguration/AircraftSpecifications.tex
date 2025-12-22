@@ -1,0 +1,37 @@
+
+The reference aircraft represents a twin-engine commercial jet with operational empty weight $m_{OE} = 57,354$ kg, comprising airframe structure ($m_{airframe} = 35,850$ kg), propulsion system ($m_{propulsion} = 11,950$ kg), and systems components ($m_{systems} = 9,554$ kg). Payload capacity accommodates 60 passengers at 80 kg per passenger, yielding payload mass $m_{PL} = 4,800$ kg. Maximum fuel capacity is $m_{fuel,max} = 14,500$ kg, providing substantial range capability.
+
+The wing reference area is $S_{ref} = 118.36$ m$^2$, with maximum operating Mach number $M_{MMO} = 0.9392$. These parameters define the flight envelope boundaries that constrain trajectory optimization throughout mission phases.
+
+ \begin{table}[h]
+    \centering
+    \footnotesize
+    \caption{Reference Aircraft Configuration Parameters}
+    \begin{tabular}{l c c c}
+        \hline
+        Parameter & Symbol & Units & Value \\
+        \hline
+        \textbf{Geometry} & & & \\
+        Number of engines & $N_{\mathrm{eng}}$ & -- & 2 \\
+        Wing reference area & $S_{ref}$ & m$^2$ & 118.36 \\
+        \hline
+        \textbf{Mass breakdown} & & & \\
+        Airframe mass & $m_{\mathrm{airframe}}$ & kg & 33{,}450 \\
+        Propulsion mass & $m_{\mathrm{prop}}$ & kg & 11{,}950 \\
+        Systems mass & $m_{\mathrm{systems}}$ & kg & 9{,}554 \\
+        Operating empty mass & $m_{OE}$ & kg & 57{,}354 \\
+        Passenger mass (per pax) & $m_{\mathrm{pax}}$ & kg & 120 \\
+        Passenger count & $N_{\mathrm{pax}}$ & -- & 60 \\
+        Payload mass & $m_{PL}$ & kg & 4{,}800 \\
+        Maximum fuel mass & $m_{\mathrm{fuel,max}}$ & kg & 14{,}500 \\
+        Takeoff mass & $m_{TO}$ & kg & 76{,}654 \\
+
+        \hline
+        \textbf{Fuel and CG} & & & \\
+        Kerosene density & $\rho_{\mathrm{fuel}}$ & kg/m$^3$ & 800 \\
+        Tank volumes & $V_{i}$ & L & 4{,}178.4x2 / 4{,}426.5x2 / 7{,}286.0x1 \\
+        Tank CG locations & $x_{\mathrm{CG,tank}}$ & m & 14.88x2 / 16.09x2 / 14.99x1 \\
+        Zero-fuel CG (x-axis) & $x_{\mathrm{CG,ZFW}}$ & m & 16.208 \\
+        \hline
+    \end{tabular}
+\end{table}

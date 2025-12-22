@@ -1,0 +1,28 @@
+Center of gravity travel analysis quantifies fuel consumption scenario impacts across grid resolutions. The CG travel metric represents the total longitudinal displacement of the aircraft center of gravity throughout the mission, influenced by fuel tank depletion order and trajectory optimization quality. The analysis employs the proportional fuel consumption scenario, where fuel is depleted from all tanks simultaneously in proportion to their respective capacities throughout the mission. CG travel distances decrease from 0.162 m at grid density 15 to 0.138 m at grid density 55, representing a 14.8\% reduction. The decreasing CG travel with finer grid resolutions reflects more precise trajectory optimization, which affects fuel consumption timing and associated CG evolution patterns.
+
+The observed CG travel variations demonstrate clear convergence behavior, with values decreasing monotonically and stabilizing around 0.138-0.140 m for grid densities above 40. The relative change from the coarsest grid decreases from 4.9\% at density 20 to 14.8\% at density 55, with marginal improvements becoming less than 1\% for densities above 45. This convergence behavior indicates that grid densities above 40-45 capture the essential CG dynamics with acceptable accuracy, while finer grids provide only marginal improvements at significantly increased computational cost.
+
+CG movement sensitivity to grid resolution reflects trajectory optimization accuracy, as fuel consumption profiles determine depletion sequences and associated CG evolution. Finer grids enable more precise trajectory optimization, potentially affecting fuel consumption timing and CG trajectories through improved throttle lever scheduling and trajectory smoothness. The proportional fuel consumption scenario maintains relatively constant CG positions throughout the mission, while grid resolution affects the precision with which this constant CG position is maintained. The observed variations indicate convergence behavior, with CG travel converging toward an asymptotic value of approximately 0.138 m as grid resolution increases, suggesting that moderate grid densities (30-35) provide sufficient accuracy for CG analysis while maintaining computational efficiency.
+
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \begin{tabular}{l c c}
+        \hline
+        Grid Size & CG Travel & CG Change \\
+        $(K \times I \times L)$ & $\Delta x_{CG}$ (m) & $\Delta(\Delta x_{CG})$ (\%) \\
+        \hline
+        $15 \times 15 \times 15$ & 0.162 & -- \\
+        $20 \times 20 \times 20$ & 0.154 & $-4.9$ \\
+        $25 \times 25 \times 25$ & 0.149 & $-8.0$ \\
+        $30 \times 30 \times 30$ & 0.145 & $-10.5$ \\
+        $35 \times 35 \times 35$ & 0.143 & $-11.7$ \\
+        $40 \times 40 \times 40$ & 0.141 & $-13.0$ \\
+        $45 \times 45 \times 45$ & 0.140 & $-13.6$ \\
+        $50 \times 50 \times 50$ & 0.139 & $-14.2$ \\
+        $55 \times 55 \times 55$ & 0.138 & $-14.8$ \\
+        \hline
+    \end{tabular}
+    \caption{Center of Gravity Travel Analysis Across Grid Resolutions}
+\end{table}

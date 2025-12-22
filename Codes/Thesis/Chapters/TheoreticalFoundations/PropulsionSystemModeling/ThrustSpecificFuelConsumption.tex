@@ -1,0 +1,20 @@
+
+Fuel consumption is quantified through the thrust-specific fuel consumption parameter, defined as the fuel flow rate per unit thrust:
+
+\begin{equation}
+\text{TSFC} = \frac{\dot{m}}{T}
+\end{equation}
+
+where $\dot{m}$ is the mass flow rate of fuel [kg/s] and $T$ is thrust [N]. The fuel flow rate follows directly from:
+
+\begin{equation}
+\dot{m} = \text{TSFC} \cdot T
+\end{equation}
+
+For multi-engine configurations, the total fuel flow rate becomes:
+
+\begin{equation}
+\dot{m}_{total} = \text{TSFC} \cdot T_{per} \cdot N_{eng}
+\end{equation}
+
+TSFC varies with the engine operating point. It tends to rise at high thrust settings and also shifts with Mach number and altitude. In the simulation, both TSFC and thrust are taken from the engine model at the same operating point, and the fuel flow is then obtained from these values.

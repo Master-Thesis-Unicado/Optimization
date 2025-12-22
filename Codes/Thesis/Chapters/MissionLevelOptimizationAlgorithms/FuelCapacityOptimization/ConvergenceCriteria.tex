@@ -1,0 +1,9 @@
+When the maximum number of iterations is reached or the bounds converge within a predetermined tolerance, the optimization is terminated. The criterion for convergence is:
+
+\begin{equation}
+|F_{high} - F_{low}| < \epsilon_{tol}
+\end{equation}
+
+where $\epsilon_{tol}$ is set to 10 kg for fuel capacity optimization.  
+The maximum iteration limit prevents infinite loops, though the bisection method's guaranteed convergence properties typically ensure termination before this limit is reached. After every bound update, the implementation verifies convergence and ends right away if the tolerance condition is met.
+ 

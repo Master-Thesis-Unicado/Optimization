@@ -1,0 +1,25 @@
+The bisection method is used to determine the minimum fuel capacity required to complete the mission. The procedure operates by defining an interval bounded by a lower fuel value \(F_{low}\), for which the mission cannot be completed, and an upper fuel value \(F_{high}\), which is known to be sufficient. This interval is progressively reduced until the minimum feasible fuel quantity is identified.
+
+At each iteration, the algorithm evaluates the midpoint:
+
+\begin{equation}
+F_{mid} = \frac{F_{low} + F_{high}}{2}
+\end{equation}
+
+A complete mission simulation is executed with fuel capacity set to $F_{mid}$, yielding the actual fuel consumed $F_{consumed}$. The bisection logic updates the bounds:
+
+\begin{equation}
+\text{If } F_{consumed} > F_{mid}: \quad F_{low} = F_{mid} \quad \text{(need more fuel)}
+\end{equation}
+
+\begin{equation}
+\text{If } F_{consumed} \leq F_{mid}: \quad F_{high} = F_{mid} \quad \text{(have excess fuel)}
+\end{equation}
+
+This process continues until the bounds converge within tolerance:
+
+\begin{equation}
+|F_{high} - F_{low}| < \epsilon_{tol}
+\end{equation}
+
+The bisection method guarantees monotonic convergence, avoiding oscillation issues that can occur with fixed-point iteration approaches. 

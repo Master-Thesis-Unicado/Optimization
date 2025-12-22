@@ -1,0 +1,43 @@
+The ISA model divides the atmosphere into a set of layers, each described by its own thermodynamic behavior. The troposphere, extending from sea level to roughly 11,000 m, follows a linear temperature lapse rate. Between 11,000 m and 20,000 m lies the tropopause, where the temperature remains nearly constant. Above this region, the upper stratosphere begins, and the temperature increases with altitude, as shown in the following figure \ref{fig:ISAAtmosphericModel}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{Images/AtmosphericModeling/atmospheric_layers.png}
+    \caption{ISA Atmospheric Model}
+    \label{fig:ISAAtmosphericModel}
+\end{figure}
+
+\newpage
+
+Within the troposphere ($h \leq 11,000$ m), temperature follows the linear relationship:
+
+\begin{equation}
+T(h) = T_{MSL}\left(1 + \frac{\gamma_{tropo}}{T_{MSL}}h\right)
+\end{equation}
+
+where $T_{MSL} = 288.15$ K is the sea-level reference temperature and $\gamma_{tropo} = -0.0065$ K/m is the tropospheric lapse rate. Pressure and density obey polytropic relations with polytropic index $n_{trop} = 1.235$:
+
+\begin{equation}
+p(h) = p_{MSL}\left(1 + \frac{\gamma_{tropo}}{T_{MSL}}h\right)^{\frac{n_{trop}}{n_{trop}-1}}
+\end{equation}
+
+\begin{equation}
+\rho(h) = \rho_{MSL}\left(1 + \frac{\gamma_{tropo}}{T_{MSL}}h\right)^{\frac{1}{n_{trop}-1}}
+\end{equation}
+
+In the tropopause layer \((11\,000\,\text{m} < h \leq 20\,000\,\text{m})\), the temperature remains fixed at \(T = 216.65\,\text{K}\), while both pressure and density decrease exponentially with altitude:
+
+\begin{equation}
+p(h) = p_{11}\exp\left(-\frac{g}{RT_{11}}(h - 11,000)\right)
+\end{equation}
+
+\begin{equation}
+\rho(h) = \rho_{11}\exp\left(-\frac{g}{RT_{11}}(h - 11,000)\right)
+\end{equation}
+
+where $R = 287.05$ J/(kg·K) is the specific gas constant for air, and $p_{11}$ and $\rho_{11}$ represent the pressure and density at the tropopause boundary.
+
+
+These relations are implemented in the atmospheric model and used in the mission analysis. For any given flight altitude, the model selects the corresponding atmospheric layer and computes the associated values of \(T\), \(p\), and \(\rho\), which are then passed to the aerodynamic and propulsion calculations.
+

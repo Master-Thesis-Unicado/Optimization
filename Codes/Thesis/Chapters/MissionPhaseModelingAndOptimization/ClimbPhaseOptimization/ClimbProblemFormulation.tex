@@ -1,0 +1,21 @@
+The climb optimization minimizes total fuel consumption from initial altitude $h_0$ to target cruise altitude $h_{target}$ while reaching the target Mach number $M_{target}$ within a specified tolerance. The problem formulation is:
+
+\begin{equation}
+\min_{M(h), \delta(h)} \int_{h_0}^{h_{target}} \frac{\dot{m}(h, M, \delta)}{P_s(h, M, \delta)} \, dh
+\end{equation}
+
+subject to constraints:
+
+\begin{equation}
+M(h_0) = M_{start}, \quad M(h_{target}) \in [M_{target} - \epsilon, M_{target} + \epsilon]
+\end{equation}
+
+\begin{equation}
+M_{min}(h, m) \leq M(h) \leq M_{MMO}
+\end{equation}
+
+\begin{equation}
+P_s(h, M, \delta) > 0
+\end{equation}
+
+where $\epsilon$ represents the terminal Mach tolerance and $M_{min}(h, m)$ is the minimum safe Mach accounting for stall boundaries.

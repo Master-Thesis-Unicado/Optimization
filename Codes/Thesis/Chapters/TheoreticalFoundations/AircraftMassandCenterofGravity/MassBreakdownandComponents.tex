@@ -1,0 +1,22 @@
+Total aircraft weight comprises three principal components:
+
+\begin{equation}
+w_{TO} = w_{OE} + w_{PL} + w_{fuel}
+\end{equation}
+
+where $w_{TO}$ is a take off weight, $m_{OE}$ is the operating empty weight, $m_{PL}$ is payload weight, and $m_{fuel}$ is fuel weight.
+The operating empty weight further decomposes into airframe structure $w_{airframe}$, propulsion system $w_{propulsion}$, and systems components $w_{systems}$:
+
+\begin{equation}
+w_{OE} = w_{airframe} + w_{propulsion} + w_{systems}
+\end{equation}
+
+
+
+The zero-fuel weight is defined as the sum of the operating empty weight and the payload,
+\begin{equation}
+w_{ZFW} = w_{OE} + w_{PL}
+\end{equation}
+It represents the aircraft mass excluding usable fuel.
+
+These weight components are specified in the aircraft configuration module, providing the foundation for initial mass calculations and mass evolution tracking throughout the mission.

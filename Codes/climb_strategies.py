@@ -406,7 +406,7 @@ class StrategyManager:
                     dbg(f"[ERROR] Strategy '{label}' infeasible at initial state")
                     return StrategyRun(
                         label=label, alt_m=np.array([h0_m]), mach=np.array([V0_ms/max(a_from_altitude(h0_m), 1e-6)]),
-                        time_s=np.array([0.0]), lever=np.array([np.nan]), T_total_N=np.array([np.nan]),
+                        time_s=np.array([0.0]), lever=np.array([np.nan]), thrust_total_N=np.array([np.nan]),
                         D_N=np.array([np.nan]), Ps_mps=np.array([np.nan]), mdot_kgps=np.array([np.nan]),
                         dt_s=np.array([0.0]), dFuel_kg=np.array([0.0]), cumFuel_kg=np.array([0.0]),
                         thrust_limited=np.array([False]), fuel_total_kg=0.0
@@ -506,7 +506,7 @@ class StrategyManager:
             mach=mach,
             time_s=time,
             lever=lever,
-            T_total_N=Ttot,
+            thrust_total_N=Ttot,
             D_N=Darr,
             Ps_mps=Psarr,
             mdot_kgps=mdot,

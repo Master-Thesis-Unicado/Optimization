@@ -1,0 +1,10 @@
+The forward pass proceeds stage-by-stage from $k = 0$ to $k = K-1$. At each stage $k$, the algorithm considers all feasible states and evaluates transitions to states at stage $k+1$. The Bellman recursion is:
+
+\begin{equation}
+F[k+1, i', j'] = \min_{(i,j) \in \text{Feasible}(k)} \left\{ F[k, i, j] + J_{aug}(X_k \to X_{k+1}) \cdot \Delta h \right\}
+\end{equation}
+
+Here, $\text{Feasible}(k)$ is the set of feasible state indices at stage $k$ (those with finite cost-to-go values), and the transition cost $J_{aug}(X_k \to X_{k+1}) \cdot \Delta h$ equals the fuel consumed during the altitude step from $h_k$ to $h_{k+1}$.
+
+The algorithm processes all feasible states at each stage, identified by the condition $F[k, i, j] < \infty$. For each feasible state, transitions to all reachable states at the next stage are evaluated, and the minimum cost transition is selected according to the Bellman update.
+

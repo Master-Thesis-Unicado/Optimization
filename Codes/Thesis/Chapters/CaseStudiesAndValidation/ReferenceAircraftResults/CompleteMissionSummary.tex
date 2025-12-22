@@ -1,0 +1,92 @@
+The optimized mission, resulting from combined range and fuel capacity optimization, demonstrates the effectiveness of dynamic programming trajectory optimization across all flight phases. The complete mission achieves a total distance of $s_{\text{total}} = 3,993$ km over a duration of $t_{\text{total}} = 294.4$ minutes ($4.91$ hours), consuming $m_{\text{fuel,total}} = 12,712.3$ kg of fuel. This represents $16.9\%$ of the initial aircraft mass ($m_0 = 75,433$ kg) and yields an overall fuel efficiency of $m_{\text{fuel}}/s_{\text{total}} = 3.18$ kg/km.
+
+\subsubsection{Mission Profile and Phase Breakdown}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/OptimizedMission/MissionSummary/mission_summary_mission_profile.png}
+    \caption{Complete mission altitude profile showing climb, cruise, and descent phases for optimized mission.}
+    \label{fig:mission_profile}
+\end{figure}
+
+The mission profile, illustrated in Figure~\ref{fig:mission_profile}, demonstrates the characteristic three-phase structure: climb, cruise, and descent. The climb phase achieves an altitude gain of $\Delta h_{\text{climb}} = 10,050$ m over $t_{\text{climb}} = 15.9$ minutes, transitioning to cruise at $h_{\text{cruise}} = 10,060$ m. The cruise phase maintains this altitude for $t_{\text{cruise}} = 271.3$ minutes, representing $92.2\%$ of total mission duration. The descent phase reduces altitude by $\Delta h_{\text{descent}} = 9,760$ m over $t_{\text{descent}} = 7.2$ minutes, completing the mission profile.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/OptimizedMission/MissionSummary/mission_summary_phase_breakdown.png}
+    \caption{Phase breakdown showing duration and fuel consumption for each mission phase.}
+    \label{fig:phase_breakdown}
+\end{figure}
+
+The phase breakdown, presented in Figure~\ref{fig:phase_breakdown}, quantifies the relative contributions of each phase to overall mission performance. The cruise phase dominates both duration ($92.2\%$ of total time) and fuel consumption ($90.2\%$ of total fuel), consuming $m_{\text{fuel,cruise}} = 11,465.6$ kg over $271.3$ minutes. The climb phase, while consuming only $8.8\%$ of total fuel ($m_{\text{fuel,climb}} = 1,117.4$ kg), requires $5.4\%$ of total mission time ($15.9$ minutes) to achieve the target altitude. The descent phase is the most fuel-efficient, consuming only $0.9\%$ of total fuel ($m_{\text{fuel,descent}} = 117.3$ kg) over $2.4\%$ of total mission time ($7.2$ minutes).
+
+\subsubsection{Fuel Consumption Analysis}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/OptimizedMission/MissionSummary/mission_summary_fuel_consumption.png}
+    \caption{Cumulative fuel consumption throughout the complete mission.}
+    \label{fig:mission_fuel_consumption}
+\end{figure}
+
+The cumulative fuel consumption profile, shown in Figure~\ref{fig:mission_fuel_consumption}, demonstrates the phase-specific fuel consumption characteristics. The climb phase exhibits a relatively steep fuel consumption rate, reflecting the high thrust requirements for altitude gain. The cruise phase shows a linear, consistent fuel consumption rate over the extended duration, representing the dominant fuel consumption segment. The descent phase exhibits minimal fuel consumption, confirming the effectiveness of the idle descent strategy.
+
+The total fuel consumption of $12,712.3$ kg represents $95.7\%$ of the initial fuel capacity ($m_{\text{fuel,initial}} = 13,279.1$ kg), leaving $566.8$ kg ($4.3\%$) as fuel reserve. This fuel utilization demonstrates efficient mission planning, maximizing range capability while maintaining appropriate safety margins. The average fuel flow rate throughout the mission is $\bar{\dot{m}}_{\text{mission}} = 2,591.2$ kg/h, reflecting the weighted average of high fuel flow during climb, moderate fuel flow during cruise, and minimal fuel flow during descent.
+
+\subsubsection{Mass Evolution}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/OptimizedMission/MissionSummary/mission_summary_mass_evolution.png}
+    \caption{Aircraft mass evolution throughout the complete mission.}
+    \label{fig:mission_mass_evolution}
+\end{figure}
+
+The aircraft mass evolution, illustrated in Figure~\ref{fig:mission_mass_evolution}, demonstrates the continuous mass reduction due to fuel consumption throughout the mission. Initial mass at takeoff is $m_0 = 75,433$ kg, decreasing to $m_{\text{final}} = 62,721$ kg at mission completion. The mass reduction of $\Delta m = 12,712$ kg precisely matches the total fuel consumed, confirming the accuracy of the fuel consumption calculations.
+
+The mass evolution exhibits phase-specific characteristics: a gradual decrease during climb ($\Delta m_{\text{climb}} = 1,117.4$ kg), a linear decrease during cruise ($\Delta m_{\text{cruise}} = 11,465.6$ kg), and a minimal decrease during descent ($\Delta m_{\text{descent}} = 117.3$ kg). The cruise phase accounts for $90.2\%$ of total mass reduction, reflecting its dominance in fuel consumption. The final mass of $62,721$ kg represents $83.1\%$ of initial mass, indicating that $16.9\%$ of the initial aircraft mass was fuel consumed during the mission.
+
+\subsubsection{Aerodynamic Performance}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/OptimizedMission/MissionSummary/mission_summary_lift_coefficient.png}
+    \caption{Lift coefficient evolution during climb and descent phases.}
+    \label{fig:mission_lift_coefficient}
+\end{figure}
+
+The lift coefficient profiles, shown in Figure~\ref{fig:mission_lift_coefficient}, demonstrate the aerodynamic characteristics during altitude-changing phases. During climb, the lift coefficient begins at $C_L = 1.4$ at low altitude, decreasing to approximately $C_L = 0.88$ within the first $1,000$ m, then stabilizing around $C_L = 0.58$-$0.81$ at higher altitudes. This decreasing trend reflects the increasing true airspeed and decreasing air density as altitude increases, requiring lower lift coefficients to maintain the required lift force.
+
+During descent, the lift coefficient exhibits a different profile, starting at $C_L = 0.85$ at low altitude and decreasing to a minimum of $C_L = 0.18$ around $4,000$ m altitude, then increasing to $C_L = 0.44$ at high altitude. This profile reflects the high-speed descent strategy, where lower lift coefficients are maintained during the high-speed segment, then increased as airspeed decreases during the terminal descent phase.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/OptimizedMission/MissionSummary/mission_summary_drag_coefficient.png}
+    \caption{Drag coefficient evolution during climb and descent phases.}
+    \label{fig:mission_drag_coefficient}
+\end{figure}
+
+The drag coefficient profiles, illustrated in Figure~\ref{fig:mission_drag_coefficient}, show the aerodynamic efficiency characteristics. During climb, the drag coefficient decreases from $C_D = 0.12$ at low altitude to a minimum of $C_D = 0.032$ around $5,500$ m, then stabilizes around $C_D = 0.036$ at cruise altitude. This reduction reflects the optimization of the climb trajectory to minimize drag at higher altitudes, where the majority of the climb occurs.
+
+During descent, the drag coefficient exhibits more variability, ranging from $C_D = 0.037$ to $C_D = 0.043$ in the altitude range from $2,000$ m to $10,000$ m. The descent drag coefficient is generally higher than the climb drag coefficient at equivalent altitudes, reflecting the different speed and flight path angle strategies employed during descent compared to climb.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/OptimizedMission/MissionSummary/mission_summary_lift_drag_ratio.png}
+    \caption{Lift-to-drag ratio evolution during climb and descent phases.}
+    \label{fig:mission_lift_drag_ratio}
+\end{figure}
+
+The lift-to-drag ratio profiles, presented in Figure~\ref{fig:mission_lift_drag_ratio}, quantify the aerodynamic efficiency throughout altitude-changing phases. During climb, the lift-to-drag ratio increases from $L/D = 12$ at low altitude to a peak of $L/D > 20$ between $7,000$ and $8,000$ m, then decreases to $L/D = 16$ at cruise altitude. This peak efficiency at intermediate altitudes reflects the optimization algorithm's recognition that certain altitude-speed combinations maximize aerodynamic efficiency during climb.
+
+During descent, the lift-to-drag ratio exhibits lower values and more variability, ranging from $L/D = 4.3$ to $L/D = 12$. The minimum occurs around $4,200$ m altitude ($L/D = 4.3$), corresponding to the high-speed descent segment where drag is maximized for energy dissipation. The lower lift-to-drag ratios during descent reflect the different optimization objectives: fuel efficiency during climb versus rapid altitude loss with minimal thrust during descent.
+
+\subsubsection{Overall Mission Performance}
+
+The optimized mission demonstrates effective integration of phase-specific optimization strategies to achieve overall mission objectives. The fuel efficiency of $3.18$ kg/km represents the weighted average of phase-specific efficiencies: climb ($7.16$ kg/km), cruise ($3.05$ kg/km), and descent (minimal fuel consumption). The cruise phase efficiency dominates the overall metric due to its $94.1\%$ contribution to total mission distance.
+
+The mission achieves $95.7\%$ fuel capacity utilization, consuming $12,712.3$ kg of the available $13,279.1$ kg fuel capacity. This high utilization rate, combined with the $4.3\%$ fuel reserve ($566.8$ kg), demonstrates effective mission planning that maximizes range capability while maintaining appropriate safety margins. The fuel reserve provides contingency capability for unexpected conditions or mission extensions.
+
+The phase-specific contributions to overall mission performance highlight the importance of cruise phase optimization. The cruise phase consumes $90.2\%$ of total fuel while covering $94.1\%$ of total distance, making cruise efficiency improvements directly translate to significant overall mission benefits. The climb and descent phases, while consuming smaller fuel fractions, are optimized to minimize their contributions to total fuel consumption, enabling the mission to achieve maximum range within the available fuel capacity.
+
+The optimized mission successfully balances competing objectives: maximizing range ($3,993$ km), minimizing fuel consumption ($12,712.3$ kg), and maintaining operational constraints (altitude, speed, and time limits). The dynamic programming approach enables this balance by systematically exploring the three-dimensional state space (altitude, Mach number, throttle lever position) to identify globally optimal trajectories for each phase, then integrating these phase-optimal solutions into a complete mission profile that achieves the overall optimization objectives.

@@ -1,0 +1,34 @@
+The lever position penalty function penalizes throttle lever positions exceeding the maximum continuous thrust (MCT) threshold during climb phase optimization. The penalty formulation employs a piecewise structure that scales with excess thrust beyond progressively critical thresholds. The penalty function $P(\delta)$ takes the form:
+
+\begin{equation}
+P(\delta) = w_{lever} \cdot \left[ P_{base}(\delta) + P_{critical}(\delta) + P_{ultra}(\delta) \right]
+\end{equation}
+
+where $w_{lever}$ is the penalty weight parameter that scales the entire penalty contribution. The base penalty term applies for throttle lever positions exceeding the MCT threshold $\delta_{MCT} = 0.75$:
+
+\begin{equation}
+P_{base}(\delta) = \begin{cases}
+(\delta - \delta_{MCT})^p & \text{if } \delta > \delta_{MCT} \\
+0 & \text{if } \delta \leq \delta_{MCT}
+\end{cases}
+\end{equation}
+
+where $p = 3.0$ is the penalty exponent. For throttle lever positions exceeding the critical threshold $\delta_{crit} = 0.90$, an additional critical penalty term contributes:
+
+\begin{equation}
+P_{critical}(\delta) = \begin{cases}
+\alpha_{crit} \cdot (\delta - \delta_{crit})^{p+1} & \text{if } \delta > \delta_{crit} \\
+0 & \text{if } \delta \leq \delta_{crit}
+\end{cases}
+\end{equation}
+
+where $\alpha_{crit} = 5.0$ is the critical multiplier. For ultra-critical throttle lever positions exceeding $\delta_{ultra} = 0.95$, a further penalty term applies:
+
+\begin{equation}
+P_{ultra}(\delta) = \begin{cases}
+\alpha_{ultra} \cdot (\delta - \delta_{ultra})^{p+2} & \text{if } \delta > \delta_{ultra} \\
+0 & \text{if } \delta \leq \delta_{ultra}
+\end{cases}
+\end{equation}
+
+where $\alpha_{ultra} = 20.0$ is the ultra-critical multiplier. The penalty weight parameter $w_{lever}$ appears as a multiplicative scaling factor in the penalty function, directly controlling the magnitude of the penalty contribution to the augmented cost function. Larger values of $w_{lever}$ increase the penalty magnitude for any given throttle lever position, forcing the optimizer to more aggressively avoid high thrust settings.

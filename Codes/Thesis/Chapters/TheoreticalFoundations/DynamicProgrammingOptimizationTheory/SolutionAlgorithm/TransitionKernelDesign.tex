@@ -1,0 +1,19 @@
+The transition kernel defines the allowable state transitions between consecutive altitude stages. A $7 \times 7$ neighborhood structure ensures reachability and enables smooth trajectory evolution, permitting Mach and lever indices to shift by offsets $\Delta i$ and $\Delta j$ ranging from $-3$ to $+3$:
+
+\begin{equation}
+i' = i + \Delta i, \quad \Delta i \in \{-3, -2, -1, 0, 1, 2, 3\}
+\end{equation}
+\begin{equation}
+j' = j + \Delta j, \quad \Delta j \in \{-3, -2, -1, 0, 1, 2, 3\}
+\end{equation}
+
+The algorithm implemented in the model evaluates 49 candidate transitions from each current state $(h_k, M_i, \delta_j)$. This approach offers sufficient flexibility to capture optimal trajectory characteristics while maintaining computational efficiency. 
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{Images/SolutionAlgoritm/Kernel_transition.jpg}
+    \caption{Visualization of the Discretized State Transition Neighborhood}
+\label{fig:VisualizationOftheDiscretizedStateTransitionNeighborhood}
+\end{figure}
+
+For each state, the algorithm checks all combinations of $\Delta i$ and $\Delta j$ in the range $[-3, +3]$. Each option is assessed using the cost function $J$, the formulation of which is provided in Section \ref{sssec:cost_function}, and the transition with the lowest cumulative cost-to-go is selected. This gives the minimum fuel needed to move from the current altitude step to the next one. The transition kernel is structured to keep the computation manageable while still allowing local changes in Mach and throttle to be explored.

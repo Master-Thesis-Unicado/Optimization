@@ -1,0 +1,15 @@
+The speed of sound $a$ depends on temperature according to:
+
+\begin{equation}
+a = \sqrt{\gamma_{air}RT}
+\end{equation}
+
+where $\gamma_{air} = 1.4$ is the specific heat ratio for air. This relationship is implemented in the model, which first retrieves the temperature profile from the ISA model before computing the velocity.
+
+For trajectory optimization, the conversion between Mach number $M$ and true airspeed $V$ requires the speed of sound:
+
+\begin{equation}
+V = M \cdot a(h)
+\end{equation}
+
+This conversion is performed throughout the optimization process when evaluating states defined in terms of Mach number, as the aerodynamic and propulsion models typically operate in the Mach-altitude domain.

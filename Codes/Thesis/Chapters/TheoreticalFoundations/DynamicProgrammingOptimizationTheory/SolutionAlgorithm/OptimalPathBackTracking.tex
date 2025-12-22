@@ -1,0 +1,16 @@
+After the forward pass completes, the optimal trajectory is recovered by backtracking from the terminal state to the initial state. The matrix \(\text{prv}[k,i,j]\) stores the index pair of the state that leads to \((k,i,j)\) with the lowest cost of transition,  which allows the path to be traced back step by step. 
+
+The backtracking procedure begins at the terminal state $(K-1, i^*, j^*)$ determined by:
+
+\begin{equation}
+(i^*, j^*) = \arg\min_{(i,j)} F[K-1, i, j]
+\end{equation}
+
+
+Backtracking then follows predecessor links:
+
+\begin{equation}
+(k-1, i_{k-1}, j_{k-1}) = \text{prv}[k, i_k, j_k]
+\end{equation}
+
+continuing until reaching the initial stage $k = 0$. The sequence of states $(h_0, M_0, \delta_0) \to (h_1, M_1, \delta_1) \to \ldots \to (h_{K-1}, M_{K-1}, \delta_{K-1})$ represents the optimal trajectory.

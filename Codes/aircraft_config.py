@@ -46,7 +46,7 @@ class SystemConfiguration:
     DEFAULT_PASSENGERS = 60     # N_pax [-]: passenger capacity
     
     # Fuel capacity
-    W_FUEL_KG = 14500   # m_fuel [kg]: usable fuel capacity 
+    W_FUEL_KG = 13279.14   # 13279.14 Optimized fuel, for 4000km range, 50x50x50 grid, m_fuel [kg]: usable fuel capacity 
     
     # Computed mass properties
     @property

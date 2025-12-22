@@ -1,0 +1,73 @@
+This section presents the numerical and algorithmic realization of the trajectory optimization framework. While Chapter~\ref{chap:Theoretical_Foundations} introduced the physical models and optimization theory underpinning the problem, the emphasis here is on how these elements are assembled into a computable methodology. To avoid redundancy, theoretical formulations are not re-derived; instead, the relevant models and definitions are explicitly referenced and employed as building blocks for the implementation.
+
+\subsection{Implicit Allocation of Climb Rates}
+
+In classical trajectory optimization formulations, climb rate and longitudinal acceleration are often treated as explicit control variables. Within the present framework, however, these quantities arise implicitly from the optimal selection of Mach number and throttle lever position at each altitude stage.
+
+As established in Section~\ref{sssec:specific_excess_power}, the specific excess power governs the rate of change of the total specific energy. In the dynamic programming formulation introduced in Section~\ref{sec:problem_formulation}, the optimizer selects discrete states $(h_k, M_i, \delta_j)$ that minimize cumulative fuel consumption. This selection implicitly determines how the available excess power is distributed between altitude gain and acceleration, without prescribing either quantity directly.
+
+Consequently, the climb profile emerges as an outcome of the optimization process rather than as an imposed input. This implicit allocation avoids additional control dimensions and preserves computational tractability while retaining physically meaningful trajectory behavior.
+
+\subsection{State Space Discretization}
+
+The continuous state space defined in Section~\ref{sssec:three_dimensional_state_space} is transformed into a finite set of discrete states suitable for numerical optimization. This discretization step establishes the computational domain on which the dynamic programming algorithm operates.
+
+\subsubsection{Uniform Grid Generation}
+
+Altitude is discretized into $K$ uniformly spaced levels between the initial altitude $h_0$ and the target altitude $h_{K-1}$:
+\begin{equation}
+h_k = h_0 + k,\Delta h, \qquad \Delta h = \frac{h_{K-1}-h_0}{K-1}, \quad k = 0,1,\ldots,K-1.
+\end{equation}
+
+The Mach number range is discretized into $I$ uniformly spaced points between the operational bounds defined by the feasible region in Section~\ref{sssec:feasible_region_definition}:
+\begin{equation}
+M_i = M_{\min} + i,\frac{M_{\max}-M_{\min}}{I-1}, \quad i = 0,1,\ldots,I-1.
+\end{equation}
+
+Similarly, the throttle lever position $\delta$ is discretized uniformly over the interval $[0,1]$ into $L$ points:
+\begin{equation}
+\delta_j = \frac{j}{L-1}, \quad j = 0,1,\ldots,L-1.
+\end{equation}
+
+This procedure yields a three-dimensional grid of $K \times I \times L$ discrete states, with $I \times L$ candidate states available at each altitude level.
+
+\section{Optimization Objective and Cost Function}
+
+The optimization objective is to minimize total fuel consumption over the altitude interval of interest. The theoretical formulation of the cost function was introduced in Section~\ref{sssec:cost_function_formulation}. Here, the focus is on its practical evaluation within the discretized state space.
+
+\subsubsection{Cost Density Evaluation}
+
+For each feasible state, the cost density $J$ is computed according to
+\begin{equation}
+J = \frac{\dot{m}}{P_s},
+\end{equation}
+where the fuel flow rate $\dot{m}$ is obtained from the propulsion model described in Section~\ref{sec:propulsion_modeling}, and the specific excess power $P_s$ follows from the formulation in Section~\ref{sssec:specific_excess_power}.
+
+\subsection{Dynamic Programming Algorithm}
+
+The trajectory optimization problem is solved using a deterministic dynamic programming algorithm based on Bellman’s principle of optimality, introduced in Section~\ref{sssec:principle_of_optimality}.
+
+\subsection{Bellman Recursion Implementation}
+
+Let $F[k,i,j]$ denote the minimum cumulative cost-to-go associated with state $(h_k, M_i, \delta_j)$. The Bellman recursion is implemented following Section~\ref{sssec:bellman_recursion} as
+\begin{equation}
+F[k+1,i',j'] = \min_{(i,j)} \left{ F[k,i,j] + J(X_k \rightarrow X_{k+1}),\Delta h \right}.
+\end{equation}
+
+A predecessor matrix is maintained to store the indices of the optimal previous state, enabling reconstruction of the optimal trajectory by backtracking, as described in Section~\ref{par:optimal_path_backtracking}.
+
+\paragraph{Transition Kernel Evaluation}
+
+State transitions between consecutive altitude levels are restricted according to the transition kernel design introduced in Section~\ref{par:transition_kernel_design}. Mach and throttle indices are permitted to vary within a finite neighborhood, ensuring smooth trajectory evolution while maintaining computational efficiency.
+
+\section{Penalty Functions and Constraint Handling}
+
+Operational constraints and trajectory guidance objectives are enforced through penalty functions added to the transition cost. The general structure of these penalties is described in Section~\ref{sec:penalty_functions_and_constraints}.
+
+\subsubsection{Mach Trajectory Guidance}
+
+The Mach trajectory guidance penalty restricts the solution space to ensure reachability of the prescribed terminal Mach number. The implementation follows the formulation introduced in Section~\ref{sssec:mach_trajectory_guidance}.
+
+\subsubsection{Throttle Lever Penalties}
+
+Throttle lever penalties discourage prolonged operation at high thrust settings and promote realistic engine usage. The penalty structure and parameterization follow Section~\ref{sssec:throttle_lever_penalties}.

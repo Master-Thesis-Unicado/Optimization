@@ -1,0 +1,17 @@
+\subsection{Range Targeting Problem}
+
+The range targeting problem seeks to determine the cruise distance $s_{cruise}$ such that the total mission range equals the target value:
+
+\begin{equation}
+s_{total} = s_{climb} + s_{cruise} + s_{descent} = s_{target}
+\end{equation}
+
+The climb and descent distances are determined by the dynamic programming optimization procedures and cannot be directly adjusted. Therefore, the cruise distance serves as the control variable for achieving the target total range in the mission range optimization problem.
+
+The range error at iteration $k$ is:
+
+\begin{equation}
+e_k = s_{target} - s_{total,k}
+\end{equation}
+
+The optimization seeks to drive this error to predetermined tolerance value through iterative adjustment of cruise distance.

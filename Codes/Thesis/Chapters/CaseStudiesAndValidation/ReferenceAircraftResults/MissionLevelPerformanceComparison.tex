@@ -1,0 +1,41 @@
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \caption{Comparison of mission-level performance metrics: optimized versus reference mission.}
+    \label{tab:mission_comparison_summary}
+    \begin{tabular}{l c c c c}
+        \hline
+        Metric & Reference & Optimized & Difference & Improvement \\
+        & Mission & Mission & (Absolute) & (\%) \\
+        \hline
+        \textbf{Total Mission Distance} & & & & \\
+        Total Range $s_{total}$ (km) & 3,999.8 & 3,993.0 & $-6.8$ & $-0.17$ \\
+        Climb Distance $s_{climb}$ (km) & 786.7 & 156.1 & $-630.6$ & $-80.1$ \\
+        Cruise Distance $s_{cruise}$ (km) & 2,979.2 & 3,757.0 & $+777.8$ & $+26.1$ \\
+        Descent Distance $s_{descent}$ (km) & 233.9 & 79.9 & $-154.0$ & $-65.8$ \\
+        \hline
+        \textbf{Fuel Consumption} & & & & \\
+        Total Fuel $m_{fuel}$ (kg) & 14,192.1 & 12,712.3 & $-1,479.8$ & $-10.4$ \\
+        Climb Fuel $m_{fuel,climb}$ (kg) & 3,860.0 & 1,117.4 & $-2,742.6$ & $-71.0$ \\
+        Cruise Fuel $m_{fuel,cruise}$ (kg) & 9,752.8 & 11,465.6 & $+1,712.8$ & $+17.6$ \\
+        Descent Fuel $m_{fuel,descent}$ (kg) & 579.3 & 117.3 & $-462.0$ & $-79.7$ \\
+        \hline
+        \textbf{Mission Duration} & & & & \\
+        Total Duration $t_{mission}$ (min) & 315.0 & 294.4 & $-20.6$ & $-6.5$ \\
+        Climb Duration $t_{climb}$ (min) & 62.7 & 15.9 & $-46.8$ & $-74.6$ \\
+        Cruise Duration $t_{cruise}$ (min) & 213.6 & 271.3 & $+57.7$ & $+27.0$ \\
+        Descent Duration $t_{descent}$ (min) & 38.8 & 7.2 & $-31.6$ & $-81.4$ \\
+        \hline
+        \textbf{Terminal Conditions} & & & & \\
+        Cruise Velocity $V_{cruise}$ (m/s) & 233.6 & 240.0 & $+6.4$ & $+2.7$ \\
+        Cruise Mach $M_{cruise}$ & 0.78 & 0.80 & $+0.02$ & $+2.6$ \\
+        Descent Ending Velocity $V_{descent}$ (m/s) & 67.8 & 88.0 & $+20.2$ & $+29.8$ \\
+        Descent Ending Mach $M_{descent}$ & 0.20 & 0.26 & $+0.06$ & $+30.0$ \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Table~\ref{tab:mission_comparison_summary} presents comprehensive comparison of mission-level performance metrics between the reference and optimized missions. The optimized mission achieves a $10.4\%$ reduction in total fuel consumption ($12,712.3$ kg versus $14,192.1$ kg) while maintaining nearly identical total mission distance ($3,993.0$ km versus $3,999.8$ km). The optimization reduces total mission duration by $6.5\%$ ($294.4$ minutes versus $315.0$ minutes), demonstrating improved efficiency across all performance metrics.
+
+The phase-specific analysis reveals significant improvements in climb and descent phases, with climb fuel consumption reduced by $71.0\%$ ($1,117.4$ kg versus $3,860.0$ kg) and descent fuel consumption reduced by $79.7\%$ ($117.3$ kg versus $579.3$ kg). The cruise phase shows a $17.6\%$ increase in fuel consumption ($11,465.6$ kg versus $9,752.8$ kg), which is offset by a $26.1\%$ increase in cruise distance ($3,757.0$ km versus $2,979.2$ km), resulting in improved overall fuel efficiency. The optimized mission achieves a fuel efficiency of $3.18$ kg/km compared to the reference mission's $3.55$ kg/km, representing a $10.4\%$ improvement.

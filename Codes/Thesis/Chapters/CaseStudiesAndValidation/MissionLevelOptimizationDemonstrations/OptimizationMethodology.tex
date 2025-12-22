@@ -1,0 +1,7 @@
+The range optimization algorithm iteratively adjusts cruise distance $s_{cruise}$ to achieve target total mission range $s_{target}$. The total mission range is computed as $s_{total} = s_{climb} + s_{cruise} + s_{descent}$, where climb and descent distances are determined from dynamic programming optimization results. The iterative update scheme employs damped adjustment:
+
+\begin{equation}
+s_{cruise,k+1} = s_{cruise,k} + \alpha \cdot e_k
+\end{equation}
+
+where $e_k = s_{target} - s_{total,k}$ is the range error at iteration $k$, and $\alpha \in (0,1]$ is the damping factor that prevents overshoot and oscillations. Convergence is achieved when $|e_k| < \epsilon_{tol}$, where $\epsilon_{tol}$ is the specified tolerance.

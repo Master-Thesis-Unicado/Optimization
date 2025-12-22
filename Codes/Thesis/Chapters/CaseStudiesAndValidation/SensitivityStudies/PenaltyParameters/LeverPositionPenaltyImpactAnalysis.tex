@@ -1,0 +1,71 @@
+The lever position penalty function penalizes high throttle lever positions during climb phase optimization, discouraging sustained operation at maximum thrust settings. This analysis compares mission performance with the lever position penalty enabled against a baseline case with the penalty disabled, both evaluated at grid density 35x35x35. The comparison quantifies the trade-offs between fuel consumption, mission duration, lever usage characteristics, and constraint satisfaction when penalizing high throttle settings.
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \begin{tabular}{l c c c}
+        \hline
+        Parameter & Penalty Enabled & Penalty Disabled & Percentage \\
+        & (Case 1) & (Case 2) & Change (\%) \\
+        \hline
+        \textbf{Fuel Consumption} & & & \\
+        Total Fuel (kg) & 12{,}853.2 & 12{,}794.4 & $+0.46$ \\
+        Fuel Available (kg) & 14{,}500 & 14{,}500 & -- \\
+        \hline
+        \textbf{Mission Duration} & & & \\
+        Total Duration (min) & 294.0 & 290.0 & $+1.38$ \\
+        \hline
+        \textbf{Lever Characteristics} & & & \\
+        Maximum Lever $\delta_{max}$ & 0.97 & 1.00 & $-3.0$ \\
+        Minimum Lever $\delta_{min}$ & 0.81 & 0.84 & $-3.6$ \\
+        Lever Position Changes $N_{lever}$ & 11 & 8 & $+37.5$ \\
+        \hline
+        \textbf{Vertical Rates} & & & \\
+        Average Climb Rate (m/min) & 733 & 915 & $-19.9$ \\
+        Average Descent Rate (m/min) & 1{,}921 & 1{,}919 & $+0.10$ \\
+        \hline
+        \textbf{Terminal Mach Constraints} & & & \\
+        Cruise Mach $M_{cruise}$ (target: 0.78) & 0.773 & 0.773 & 0.00 \\
+        Descent Ending Mach $M_{descent}$ (target: 0.25) & 0.247 & 0.248 & $-0.40$ \\
+        \hline
+    \end{tabular}
+    \caption{Comparison of Mission Performance Metrics with Lever Position Penalty Enabled Versus Disabled}
+    \label{tab:lever_penalty_comparison}
+\end{table}
+
+Table~\ref{tab:lever_penalty_comparison} presents  comparison of mission performance metrics between penalty-enabled and penalty-disabled configurations. Fuel consumption increases by 58.8 kg (0.46\%) when the lever position penalty is active, reflecting the trade-off between fuel optimality and throttle lever usage patterns. This modest fuel penalty demonstrates that the lever position penalty effectively moderates throttle lever behavior without substantially compromising fuel efficiency. The penalty mechanism discourages sustained operation at maximum thrust, requiring the optimizer to find alternative trajectories that achieve mission objectives with more moderate throttle settings.
+
+Mission duration increases by 4.0 minutes (1.4\%) with the penalty enabled, consistent with the reduced climb rates and higher fuel consumption. The longer mission duration reflects the optimizer's selection of trajectories that avoid high throttle penalties, potentially requiring more time to achieve altitude gain and speed targets. This duration increase is modest relative to the total mission duration, suggesting that the penalty mechanism achieves its intended effect of moderating throttle usage without creating significant operational impacts.
+
+Throttle lever usage characteristics demonstrate clear differences between the two configurations. With the penalty enabled, maximum lever position reduces from 1.00 (full throttle) to 0.97, indicating that the penalty successfully prevents sustained operation at maximum thrust settings. The minimum lever position also decreases from 0.84 to 0.81, suggesting that the penalty influences the entire lever operating range. The number of lever position changes increases from 8 to 11 when the penalty is active, indicating that the optimizer navigates the penalty landscape through more frequent throttle adjustments. This increased lever activity may reflect the algorithm's attempt to balance fuel consumption against penalty costs, exploring trajectories that minimize the combined objective function through more granular throttle modulation.
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/LeverPenaltyEnableDisable/Disabled.png}
+        \caption{Lever Penalty Disabled}
+        \label{fig:lever_penalty_disabled}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/LeverPenaltyEnableDisable/Enabled.png}
+        \caption{Lever Penalty Enabled}
+        \label{fig:lever_penalty_enabled}
+    \end{subfigure}
+    \caption{Effect of enabling and disabling the lever penalty mechanism}
+    \label{fig:lever_penalty_comparison}
+\end{figure}
+
+Figure~\ref{fig:lever_penalty_comparison} illustrates the throttle lever position trajectories during climb phase for both configurations. The visual comparison demonstrates the reduced maximum lever positions and increased lever modulation frequency when the penalty is enabled, consistent with the quantitative metrics presented in Table~\ref{tab:lever_penalty_comparison}. The penalty-enabled trajectory (Figure~\ref{fig:lever_penalty_enabled}) shows smoother transitions and avoids sustained operation at maximum throttle settings, while the penalty-disabled trajectory (Figure~\ref{fig:lever_penalty_disabled}) exhibits periods of maximum thrust utilization. 
+
+Lever position results for cruise and descent phases are not presented separately, as the lever position penalty function applies exclusively to the climb phase optimization. During cruise, the optimization logic is not applied and the throttle lever positions decrease continuously with aircraft mass reduction, while descent phase operations maintain throttle lever positions at idle settings regardless of penalty configuration as a result of dynamic programming optimization.
+
+
+Climb rate analysis reveals substantial differences, with average climb rate decreasing from 915 m/min (penalty disabled) to 733 m/min (penalty enabled), representing a 19.9\% reduction. This reduction directly reflects the impact of limiting maximum throttle lever usage, as reduced available thrust constrains the achievable climb rate. The penalty mechanism forces the optimizer to accept lower climb rates to avoid high throttle penalties, demonstrating the trade-off between operational aggressiveness and penalty avoidance. Descent rates remain essentially unchanged (1,921 m/min versus 1,919 m/min), consistent with the limited throttle lever activity during descent phase where lever positions remain near idle settings regardless of penalty configuration.
+
+Terminal Mach constraint satisfaction demonstrates minimal sensitivity to the lever position penalty. Cruise Mach numbers are identical (0.773) for both configurations, while descent ending Mach numbers differ by only 0.001 (0.247 versus 0.248), both within acceptable tolerance of their respective targets. This behavior indicates that the lever position penalty primarily affects climb phase trajectory characteristics without compromising the optimizer's ability to satisfy terminal Mach constraints. The penalty mechanism successfully moderates throttle usage while maintaining mission constraint satisfaction, validating its effectiveness as a guidance tool.
+
+
+The analysis demonstrates that lever position penalty mechanisms provide effective control over throttle lever usage patterns with manageable impacts on overall mission performance. The penalty successfully limits maximum throttle lever positions and moderates climb rates while maintaining terminal constraint satisfaction and producing only modest increases in fuel consumption and mission duration. These trade-offs support the use of lever position penalties as guidance mechanisms for trajectory optimization, enabling operational control over throttle aggressiveness without significantly compromising fuel efficiency or mission feasibility.

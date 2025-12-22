@@ -1,0 +1,27 @@
+The state vector is $X = (h, M, \delta)$, where $h$ is altitude, $M$ is Mach number, and $\delta$ is throttle lever position. Discretizing the continuous state space produces a finite grid:
+
+\begin{equation}
+h_k = h_0 + k \cdot \Delta h, \quad \Delta h = \frac{h_{K-1} - h_0}{K-1}, \quad k = 0, 1, \ldots, K-1
+\end{equation}
+
+\begin{equation}
+M_i \in \{M_0, M_1, \ldots, M_{I-1}\}, \quad \text{uniformly spaced}
+\end{equation}
+
+\begin{equation}
+\delta_j \in \{\delta_0, \delta_1, \ldots, \delta_{L-1}\}, \quad \delta_j = \frac{j}{L-1}, \quad j = 0, 1, \ldots, L-1
+\end{equation}
+
+Here, $K$ denotes the number of altitude levels, $I$ the Mach grid points, and $L$ the throttle settings. The state space contains $K \times I \times L$ points in total, with $I \times L$ points defined at each altitude level.
+
+For the grid $K = 30$, $I = 30$, and $L = 30$, this gives $900$ points per altitude level and $27{,}000$ points overall (see Fig.~\ref{fig:3DStateSpace}).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{Images/DynamicProgrammingOptimizationTheory/State_space.png}
+    \caption{3D State Space}
+    \label{fig:3DStateSpace}
+\end{figure}
+
+The three-dimensional approach allows the optimizer to select the most fuel-efficient combination of Mach \(M\) and throttle \(\delta\) at each altitude.
+

@@ -190,7 +190,7 @@ def main():
             mach=mach,
             time_s=time_array,
             lever=np.asarray(dp_sched.lever, float),
-            T_total_N=np.asarray(dp_sched.T_total_N, float),
+            thrust_total_N=np.asarray(dp_sched.thrust_total_N, float),
             D_N=np.asarray(dp_sched.D_N, float),
             Ps_mps=np.asarray(dp_sched.Ps_mps, float),
             mdot_kgps=np.asarray(dp_sched.mdot_kgps, float),

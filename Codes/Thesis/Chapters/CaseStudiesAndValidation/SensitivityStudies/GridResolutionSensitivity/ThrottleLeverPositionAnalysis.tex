@@ -1,0 +1,31 @@
+Throttle lever position analysis focuses on the climb phase, where lever position variations have the most significant impact on trajectory optimization. During cruise, throttle lever position continuously decreases as aircraft mass reduces due to fuel consumption, while during descent, throttle lever positions remain at idle settings with no variation. The lever position penalty function therefore primarily affects climb phase optimization, where the algorithm must balance fuel efficiency against thrust requirements for altitude gain and acceleration.
+
+Minimum lever positions demonstrate convergence behavior, with values ranging from 0.78 to 0.83. Coarser grids (15-25) show minimum lever positions of 0.78-0.83, while finer grids (30-55) consistently show minimum lever positions of 0.81-0.82. This convergence indicates that the optimal minimum throttle setting stabilizes around 0.81-0.82 as grid resolution increases, representing the most fuel-efficient minimum throttle position for trajectory optimization.
+
+The number of throttle lever position changes exhibits significant variation, ranging from 4 to 16 across grid densities. Coarser grids (15-30) show relatively few lever changes (4-5), while finer grids (40-55) show more frequent changes (6-16), with the maximum occurring at grid density 50 (16 changes). This increased lever activity in finer grids reflects improved trajectory optimization granularity, allowing the optimizer to exploit more subtle fuel efficiency opportunities through continuous throttle lever adjustments. However, the variation also suggests that very fine discretization may introduce numerical sensitivity, as evidenced by the decrease from 16 changes at density 50 to 12 changes at density 55.
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \begin{tabular}{l c c c c}
+        \hline
+        Grid Size & Max Lever & Min Lever & Lever Range & Lever Changes \\
+        $(K \times I \times L)$ & $\delta_{max}$ & $\delta_{min}$ & $\Delta\delta$ & $N_{lever}$ \\
+        \hline
+        $15 \times 15 \times 15$ & 1.00 & 0.78 & 0.22 & 5 \\
+        $20 \times 20 \times 20$ & 1.00 & 0.78 & 0.22 & 5 \\
+        $25 \times 25 \times 25$ & 1.00 & 0.83 & 0.17 & 4 \\
+        $30 \times 30 \times 30$ & 1.00 & 0.82 & 0.18 & 5 \\
+        $35 \times 35 \times 35$ & 1.00 & 0.82 & 0.18 & 7 \\
+        $40 \times 40 \times 40$ & 0.97 & 0.82 & 0.15 & 6 \\
+        $45 \times 45 \times 45$ & 0.97 & 0.81 & 0.16 & 11 \\
+        $50 \times 50 \times 50$ & 0.97 & 0.81 & 0.16 & 16 \\
+        $55 \times 55 \times 55$ & 0.98 & 0.81 & 0.17 & 12 \\
+        \hline
+    \end{tabular}
+    \caption{Throttle Lever Position Characteristics Across Grid Resolutions}
+    \label{ThrottleLeverPositionCharacteristicsAcrossGridResolutions}
+\end{table}
+
+
+

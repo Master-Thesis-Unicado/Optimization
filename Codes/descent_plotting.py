@@ -109,10 +109,10 @@ def plot_performance_2d(descent_result: DescentResults,
     # Data Extraction and Unit Conversion
     # ────────────────────────────────────────────────────────────────────
     time_min = descent_result.time_s / 60.0                         # t [min]
-    descent_rate_mpm = descent_result.descent_rate_mps * 60.0       # Ps [m/min]
-    fuel_flow_kgh = descent_result.fuel_flow_kgps * 3600            # ṁ [kg/h]
+    descent_rate_mpm = descent_result.Ps_mps * 60.0       # Ps [m/min]
+    fuel_flow_kgh = descent_result.mdot_kgps * 3600            # ṁ [kg/h]
     thrust_kn = descent_result.thrust_total_N / 1000                 # T [kN]
-    drag_kn = descent_result.drag_N / 1000                           # D [kN]
+    drag_kn = descent_result.D_N / 1000                           # D [kN]
     mass_kg = descent_result.mass_kg                                 # m [kg]
     lever_pct = descent_result.lever * 100                           # δ [%]
     cum_fuel_kg = descent_result.cumFuel_kg                          # Σm_fuel [kg]

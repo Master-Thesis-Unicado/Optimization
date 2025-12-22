@@ -1,0 +1,12 @@
+The sequence of fuel depletion affects CG movement throughout the mission. Three primary scenarios are implemented: outer-first depletion, center-first depletion, and proportional depletion. Each scenario produces distinct CG trajectories due to the different longitudinal positions of tank groups relative to the aircraft center of gravity.
+
+The centers of gravity of the tanks are located at \( x = 14.88\,\mathrm{m} \) for the inner wing tanks, \( x = 16.09\,\mathrm{m} \) for the outer wing tanks, and \( x = 14.99\,\mathrm{m} \) for the center wing tank, all defined in the body reference frame and positioned forward of the zero-fuel center-of-gravity location.
+
+In the outer-first depletion scenario, fuel is consumed sequentially from outer tanks, then inner tanks, and finally the center tank. This depletion sequence moves the CG forward as aft-located outer tanks empty first, followed by forward-located inner and center tanks. 
+
+The center-first depletion scenario reverses the sequence, consuming fuel from the center tank first, followed by inner tanks, and finally outer tanks, resulting in aft CG movement as forward tanks deplete before aft tanks.
+
+The proportional depletion scenario maintains fuel distribution proportional to tank capacities throughout the mission, maintaining a constant CG position for the fuel tanks.
+
+The consumption scenario is configurable parameter in the simulation model, allowing analysis of CG behavior under different operational assumptions. This capability is incorporated into the model to evaluate how different fuel consumption strategies influence the total fuel consumption over the entire mission.
+

@@ -1,0 +1,33 @@
+With the state space defined, the optimization objective aims to minimize total fuel consumption by integrating the cost density function across the altitude profile.
+
+The cost density function $J$ is defined as the ratio of fuel flow rate to specific excess power:
+
+\begin{equation}
+J = \frac{\dot{m}}{P_s} \quad \text{[kg/m]}
+\end{equation}
+
+This metric represents the fuel mass consumed per unit of altitude change. During climb, $P_s = dh/dt$ is the climb rate and $\dot{m}$ is the fuel flow rate, so the ratio $\dot{m}/P_s$ gives the fuel used per unit of altitude gained. For descent, where $P_s < 0$, the absolute value $|P_s|$ is used in the denominator to keep the same interpretation. In both cases, $J = \dot{m}/|P_s|$ represents fuel consumed per unit altitude change.
+
+Total fuel consumed over the trajectory becomes:
+
+\begin{equation}
+m_{fuel,total} = \int_{h_0}^{h_{K-1}} J(h) \, dh = \int_{h_0}^{h_{K-1}} \frac{\dot{m}(h)}{P_s(h)} \, dh \quad \text{(for climb)}
+\end{equation}
+
+\begin{equation}
+m_{fuel,total} = \int_{h_{K-1}}^{h_0} J(h) \, dh = \int_{h_{K-1}}^{h_0} \frac{\dot{m}(h)}{|P_s(h)|} \, dh \quad \text{(for descent)}
+\end{equation}
+
+The optimization problem reduces to minimizing the integral $\int J(h) \, dh$ over the altitude range, which is equivalent to minimizing total fuel consumption.
+
+The integral is evaluated numerically using the trapezoidal rule. For each altitude segment from $h_k$ to $h_{k+1}$:
+
+\begin{equation}
+\Delta m_{fuel} = \int_{h_k}^{h_{k+1}} J(h) \, dh \approx \frac{1}{2}\left(J_k + J_{k+1}\right) \Delta h
+\end{equation}
+
+where $J_k = J(h_k, M_k, \delta_k, m_k)$, $J_{k+1} = J(h_{k+1}, M_{k+1}, \delta_{k+1}, m_{k+1})$, and $\Delta h = |h_{k+1} - h_k|$. The trapezoidal approximation provides second-order accuracy and is applied iteratively with mass updates to account for coupling effects.
+
+
+
+ 

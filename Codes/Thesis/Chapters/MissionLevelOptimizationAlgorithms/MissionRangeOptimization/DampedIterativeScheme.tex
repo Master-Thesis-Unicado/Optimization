@@ -1,0 +1,16 @@
+The cruise distance is adjusted using a damped iterative scheme to prevent oscillation and ensure stable convergence:
+
+\begin{equation}
+s_{cruise,k+1} = s_{cruise,k} + \alpha \cdot e_k
+\end{equation}
+
+where $\alpha \in (0,1]$ is the damping factor, set to 0.75. The damping factor prevents overshooting by limiting the adjustment magnitude to a fraction of the error.
+
+The iteration continues until the range error falls within tolerance:
+
+\begin{equation}
+|e_k| < \epsilon_{range}
+\end{equation}
+
+where $\epsilon_{range}$ is set to 3 km for mission range optimization.
+

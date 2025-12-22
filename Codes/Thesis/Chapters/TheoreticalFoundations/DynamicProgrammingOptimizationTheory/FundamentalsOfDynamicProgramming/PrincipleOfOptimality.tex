@@ -1,0 +1,8 @@
+
+Bellman's principle of optimality establishes the theoretical foundation for dynamic programming. An optimal policy exhibits the following property: regardless of the initial state and initial decision, the remaining decisions constitute an optimal policy with respect to the state resulting from the first decision.
+
+Formally, let $\pi^*$ denote an optimal policy for a problem with state space $X$ that can be decomposed into stages. For any state $x_k \in X$ reached under policy $\pi^*$, the continuation of $\pi^*$ from $x_k$ onward must be optimal for the subproblem starting at $x_k$. This recursive structure enables solution construction via backward or forward recursion, with the choice determined by the problem formulation.
+
+In the context of trajectory optimization, the principle requires that if an optimal trajectory passes through state $X_k = (h_k, M_k, \delta_k)$ at altitude level $k$, then the trajectory segment from $X_k$ to the terminal condition must be optimal among all trajectories originating at $X_k$.
+
+Sun, J., Xu, S., Liu, Y., & Zhang, H. Adaptive Dynamic Programming. https://doi.org/10.1007/978-981-99-5929-7 

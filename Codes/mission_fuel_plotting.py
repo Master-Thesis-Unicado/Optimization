@@ -27,6 +27,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import plotly.io as pio
 import os
+from pathlib import Path
 
 # Suppress non-critical browser communication warnings
 warnings.filterwarnings('ignore', category=UserWarning, module='choreographer')
@@ -254,7 +255,9 @@ def plot_convergence_trajectory(history: ConvergenceHistory, save_plots: bool = 
     
     if save_plots:
         run_dir = get_or_create_run_directory(phase="Optimized")
-        html_path = os.path.join(run_dir, 'fuel_convergence.html')
+        fuel_opt_path = Path(run_dir) / "Fuel_Optimization"
+        fuel_opt_path.mkdir(parents=True, exist_ok=True)
+        html_path = str(fuel_opt_path / 'fuel_convergence.html')
         fig.write_html(html_path)
         print(f"[EXPORT] Convergence analysis saved to: {html_path}")
     
@@ -411,7 +414,9 @@ def plot_optimization_comparison(history: ConvergenceHistory, save_plots: bool =
     
     if save_plots:
         run_dir = get_or_create_run_directory(phase="Optimized")
-        html_path = os.path.join(run_dir, 'optimization_results_summary.html')
+        fuel_opt_path = Path(run_dir) / "Fuel_Optimization"
+        fuel_opt_path.mkdir(parents=True, exist_ok=True)
+        html_path = str(fuel_opt_path / 'optimization_results_summary.html')
         fig.write_html(html_path)
         print(f"[EXPORT] Optimization results summary saved to: {html_path}")
     

@@ -1,0 +1,3 @@
+The dynamic programming implementation for descent follows the same algorithmic structure as climb, with descent-specific modifications. The altitude schedule progresses from high to low altitude, and the cost function uses $|P_s|$ in the denominator to handle negative specific excess power.
+
+Penalty system coefficients are tuned for descent-specific characteristics, accounting for the deceleration nature of the descent trajectory (target Mach typically lower than initial cruise Mach). The Mach trajectory guidance penalty ensures reachability of the approach Mach number through appropriate reachability corridors.

@@ -1,0 +1,13 @@
+Engine thrust depends on throttle lever position $\delta$, Mach number $M$, and altitude $h$:
+
+\begin{equation}
+T = T(\delta, M, h)
+\end{equation}
+
+The throttle lever position $\delta$ ranges from 0 (idle) to 1 (maximum thrust), providing continuous control over engine power output. At fixed Mach and altitude, thrust increases with lever position.
+
+The implementation in the model accesses thrust through the dedicated method, which interfaces with the engine library to evaluate the thrust at the specified operating point. The method returns per-engine thrust, which is multiplied by the number of engines $N_{eng}$ to obtain total thrust:
+
+\begin{equation}
+T_{total} = N_{eng} \cdot T_{per}(\delta, M, h)
+\end{equation}

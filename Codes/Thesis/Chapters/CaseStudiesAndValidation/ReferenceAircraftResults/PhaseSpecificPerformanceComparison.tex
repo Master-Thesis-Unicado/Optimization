@@ -1,0 +1,44 @@
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \caption{Phase-specific performance comparison: climb, cruise, and descent metrics.}
+    \label{tab:phase_comparison}
+    \begin{tabular}{l c c c}
+        \hline
+        Phase & Metric & Reference & Optimized \\
+        \hline
+        \textbf{Climb Phase} & & & \\
+        & Initial Mass $m_0$ (kg) & 73,500 & 75,433 \\
+        & Final Mass $m_f$ (kg) & 69,640 & 74,280 \\
+        & Climb Fuel $m_{fuel}$ (kg) & 3,860.0 & 1,117.4 \\
+        & Average Climb Rate $\dot{h}$ (m/min) & 279 & 632 \\
+        & Average Velocity $V$ (m/s) & 160 & 245 \\
+        & Average L/D Ratio & 10.8 & 16.0 \\
+        & Average Drag Coefficient $C_D$ & 0.055 & 0.036 \\
+        \hline
+        \textbf{Cruise Phase} & & & \\
+        & Cruise Altitude $h$ (m) & 10,000 & 10,060 \\
+        & Cruise Velocity $V$ (m/s) & 233.6 & 240.0 \\
+        & Cruise Mach $M$ & 0.78 & 0.80 \\
+        & Average L/D Ratio & 11.8 & 15.0 \\
+        & Average Drag Coefficient $C_D$ & 0.0385 & 0.036 \\
+        & Specific Range SR (m/kg) & 305.5 & 327.5 \\
+        \hline
+        \textbf{Descent Phase} & & & \\
+        & Initial Mass $m_0$ (kg) & 59,887 & 62,838 \\
+        & Final Mass $m_f$ (kg) & 59,308 & 62,721 \\
+        & Descent Fuel $m_{fuel}$ (kg) & 579.3 & 117.3 \\
+        & Average Descent Rate $\dot{h}$ (m/min) & 375 & 1,839 \\
+        & Average Velocity $V$ (m/s) & 150 & 180 \\
+        & Average L/D Ratio & 11.5 & 12.0 \\
+        & Average Drag Coefficient $C_D$ & 0.045 & 0.036 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Table~\ref{tab:phase_comparison} provides detailed phase-specific performance metrics for both reference and optimized missions. The climb phase demonstrates the most significant optimization benefits, with fuel consumption reduced by $71.0\%$ and climb rate increased by $126\%$ ($632$ m/min versus $279$ m/min), enabling faster altitude gain with substantially reduced fuel consumption. The optimized climb achieves a higher average lift-to-drag ratio ($16.0$ versus $10.8$) and lower average drag coefficient ($0.036$ versus $0.055$), reflecting improved aerodynamic efficiency through trajectory optimization. The optimized climb operates at a higher average velocity ($245$ m/s versus $160$ m/s) with lower average thrust ($95,000$ N versus $130,000$ N) and lower throttle setting ($77\%$ versus $85\%$), indicating that the optimization algorithm selects more efficient climb profiles that require less thrust while achieving better performance.
+
+The cruise phase shows increased fuel consumption ($11,465.6$ kg versus $9,752.8$ kg) but achieves a $26.1\%$ increase in cruise distance ($3,757.0$ km versus $2,979.2$ km). The optimized cruise operates at a higher velocity ($240.0$ m/s versus $233.6$ m/s) and Mach number ($0.80$ versus $0.78$) with lower average thrust ($42,000$ N versus $48,816$ N) and lower throttle setting ($72\%$ versus $85\%$), achieving a higher average lift-to-drag ratio ($15.0$ versus $11.8$) with lower drag coefficient ($0.036$ versus $0.0385$), demonstrating the optimization algorithm's ability to exploit more efficient operating points that require less thrust for the same or better performance.
+
+The descent phase achieves the largest relative fuel savings, with fuel consumption reduced by $79.7\%$ ($117.3$ kg versus $579.3$ kg). Both missions employ idle throttle ($0\%$) during descent, but the optimized descent achieves a significantly higher descent rate ($1,839$ m/min versus $375$ m/min), reducing descent duration by $81.4\%$ while maintaining fuel efficiency. The optimized descent operates at a higher average velocity ($180$ m/s versus $150$ m/s) with zero thrust ($0$ N versus $5,000$ N) and achieves improved aerodynamic characteristics with lower drag coefficient ($0.036$ versus $0.045$).

@@ -1,0 +1,14 @@
+The terminal state of the climb phase provides the initial state for cruise. Specifically, the climb terminal altitude $h_{climb,final}$, Mach number $M_{climb,final}$, and mass $m_{climb,final}$ define the cruise initial conditions:
+
+\begin{equation}
+h_{cruise,0} = h_{climb,final}, \quad M_{cruise,0} = M_{climb,final}, \quad m_{cruise,0} = m_{climb,final}
+\end{equation}
+
+Similarly, the cruise terminal state provides the descent initial state:
+
+\begin{equation}
+h_{descent,0} = h_{cruise,final}, \quad M_{descent,0} = M_{cruise,final}, \quad m_{descent,0} = m_{cruise,final}
+\end{equation}
+
+These state transitions ensure that altitude, speed, and mass are continuous across phase boundaries, maintaining physical consistency throughout the mission profile.
+
