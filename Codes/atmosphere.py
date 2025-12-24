@@ -92,6 +92,10 @@ class Atmosphere:
         
         return math.sqrt(1.4 * self.R * T)
 
+    def a_from_altitude(self, altitude_m: float) -> float:
+        """Alias for speed of sound a(h); retained for backward compatibility."""
+        return self.get_speed_of_sound(altitude_m)
+
 
 # =========================================================================
 # MODULE-LEVEL CONVENIENCE FUNCTIONS

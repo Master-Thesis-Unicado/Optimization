@@ -1,4 +1,4 @@
-The optimized cruise phase represents the primary mission segment, consuming the majority of fuel while covering the longest distance. The cruise profile, optimized for both range and fuel efficiency, achieves a distance of $s_{\text{cruise}} = 3,757$ km over a duration of $t_{\text{cruise}} = 271.3$ minutes ($4.52$ hours), consuming $m_{\text{fuel,cruise}} = 11,465.6$ kg of fuel. This represents $90.2\%$ of the total mission fuel consumption ($m_{\text{fuel,total}} = 12,712.3$ kg) while covering $94.1\%$ of the total mission distance ($s_{\text{total}} = 3,993$ km), demonstrating the cruise phase's dominance in overall mission performance.
+The cruise phase represents the primary mission segment, consuming the majority of fuel while covering the longest distance. The cruise profile, simulated using a forward time-stepping integration at constant Mach number and altitude, achieves a distance of $s_{\text{cruise}} = 3,757$ km over a duration of $t_{\text{cruise}} = 271.7$ minutes ($4.53$ hours), consuming $m_{\text{fuel,cruise}} = 11,405.6$ kg of fuel. This represents approximately $90\%$ of the total mission fuel consumption while covering approximately $94\%$ of the total mission distance, demonstrating the cruise phase's dominance in overall mission performance.
 
 \subsubsection{Fuel Flow Characteristics}
 
@@ -9,9 +9,9 @@ The optimized cruise phase represents the primary mission segment, consuming the
     \label{fig:cruise_fuel_flow}
 \end{figure}
 
-The fuel flow rate profile, illustrated in Figure~\ref{fig:cruise_fuel_flow}, exhibits a gradual decreasing trend characteristic of optimized constant-Mach cruise operations. Initial fuel flow at cruise entry is $\dot{m}_0 = 2,570$ kg/h, decreasing linearly to $\dot{m}_{\text{final}} = 2,470$ kg/h at cruise termination. This $100$ kg/h reduction over the $271.3$-minute cruise duration reflects the decreasing thrust requirements as aircraft mass reduces due to fuel consumption.
+The fuel flow rate profile, illustrated in Figure~\ref{fig:cruise_fuel_flow}, exhibits a gradual decreasing trend characteristic of constant-Mach cruise operations. Initial fuel flow at cruise entry is $\dot{m}_0 = 2,580$ kg/h, decreasing linearly to $\dot{m}_{\text{final}} = 2,460$ kg/h at cruise termination. This $120$ kg/h reduction over the $271.7$-minute cruise duration reflects the decreasing thrust requirements as aircraft mass reduces due to fuel consumption.
 
-The average fuel flow rate of $\bar{\dot{m}} = 2,536$ kg/h represents the mean consumption throughout the cruise phase. This value, combined with the cruise duration, yields the total fuel consumption: $m_{\text{fuel}} = \bar{\dot{m}} \times t_{\text{cruise}} = 2,536$ kg/h $\times 4.52$ h $= 11,465.6$ kg, confirming consistency with the mission summary data. The linear decrease in fuel flow rate is a direct consequence of the constant Mach number cruise strategy, where reducing aircraft mass enables lower thrust settings to maintain the target Mach number, resulting in proportionally reduced fuel consumption.
+The average fuel flow rate of $\bar{\dot{m}} = 2,519$ kg/h represents the mean consumption throughout the cruise phase. This value, combined with the cruise duration, yields the total fuel consumption: $m_{\text{fuel}} = \bar{\dot{m}} \times t_{\text{cruise}} = 2,519$ kg/h $\times 4.53$ h $= 11,405.6$ kg, confirming consistency with the mission summary data. The linear decrease in fuel flow rate is a direct consequence of the constant Mach number cruise strategy, where reducing aircraft mass enables lower thrust settings to maintain the target Mach number, resulting in proportionally reduced fuel consumption.
 
 \subsubsection{Thrust and Drag Equilibrium}
 
@@ -22,9 +22,9 @@ The average fuel flow rate of $\bar{\dot{m}} = 2,536$ kg/h represents the mean c
     \label{fig:cruise_thrust_drag}
 \end{figure}
 
-The thrust and drag profiles, presented in Figure~\ref{fig:cruise_thrust_drag}, demonstrate the fundamental equilibrium required for steady-state cruise flight. Both forces initiate at $F_0 = 50.35$ kN at cruise entry and decrease gradually to $F_{\text{final}} = 48.7$ kN at cruise termination. The close alignment of thrust and drag curves throughout the cruise phase confirms that the aircraft maintains aerodynamic equilibrium, with thrust precisely matching drag to sustain level flight.
+The thrust and drag profiles, presented in Figure~\ref{fig:cruise_thrust_drag}, demonstrate the fundamental equilibrium required for steady-state cruise flight. Both forces initiate at $F_0 = 50.1$ kN at cruise entry and decrease gradually to $F_{\text{final}} = 48.5$ kN at cruise termination. The close alignment of thrust and drag curves throughout the cruise phase confirms that the aircraft maintains aerodynamic equilibrium, with thrust precisely matching drag to sustain level flight.
 
-The $1.65$ kN reduction in both thrust and drag over the cruise duration reflects the mass reduction effect. As fuel is consumed ($\Delta m = 11,465.6$ kg), aircraft mass decreases from $m_0 = 74,300$ kg to $m_{\text{final}} = 62,834.4$ kg. This mass reduction decreases the lift requirement, which in turn reduces induced drag. The optimization algorithm responds by reducing thrust proportionally, maintaining the thrust-drag equilibrium while minimizing fuel consumption.
+The $1.6$ kN reduction in both thrust and drag over the cruise duration reflects the mass reduction effect. As fuel is consumed ($\Delta m = 11,405.6$ kg), aircraft mass decreases from $m_0 = 74,300$ kg to $m_{\text{final}} = 62,894$ kg. This mass reduction decreases the lift requirement, which in turn reduces induced drag. The simulation adjusts thrust proportionally at each time step, maintaining the thrust-drag equilibrium required for steady-state cruise flight.
 
 The stepped nature of the thrust profile, contrasted with the smoother drag curve, indicates discrete thrust adjustments at specific time intervals. This behavior reflects the simulation's time-stepping methodology, where thrust is recalculated based on current flight conditions and held constant for discrete time steps. Despite these discrete adjustments, the overall trend maintains close equilibrium with drag, ensuring sustained cruise conditions throughout the phase.
 
@@ -37,7 +37,7 @@ The stepped nature of the thrust profile, contrasted with the smoother drag curv
     \label{fig:cruise_airspeed}
 \end{figure}
 
-The true airspeed profile, shown in Figure~\ref{fig:cruise_airspeed}, demonstrates constant-speed cruise operation. True airspeed remains constant at $V_{\text{TAS}} = 230.8$ m/s throughout the entire $271.3$-minute cruise duration. This constant airspeed, combined with constant Mach number operation, indicates that the aircraft maintains optimal cruise conditions at the target altitude and Mach number.
+The true airspeed profile, shown in Figure~\ref{fig:cruise_airspeed}, demonstrates constant-speed cruise operation. True airspeed remains constant at $V_{\text{TAS}} = 230.5$ m/s throughout the entire $271.7$-minute cruise duration. This constant airspeed, combined with constant Mach number operation, indicates that the aircraft maintains optimal cruise conditions at the target altitude and Mach number.
 
 \begin{figure}[htbp]
     \centering
@@ -46,9 +46,9 @@ The true airspeed profile, shown in Figure~\ref{fig:cruise_airspeed}, demonstrat
     \label{fig:cruise_mach}
 \end{figure}
 
-The Mach number profile, illustrated in Figure~\ref{fig:cruise_mach}, confirms constant Mach number cruise at $M = 0.80$ throughout the phase. This Mach number selection represents a balance between fuel efficiency and operational constraints, operating below the maximum operating Mach number ($M_{\text{MMO}} = 0.9392$) while maintaining high cruise efficiency. The constant Mach number strategy is optimal for range maximization, as it maintains the aircraft at its most efficient operating point throughout the cruise phase, adapting thrust to compensate for mass reduction while preserving speed and altitude.
+The Mach number profile, illustrated in Figure~\ref{fig:cruise_mach}, confirms constant Mach number cruise at $M = 0.77$ throughout the phase. This Mach number, established at the end of the climb phase, represents a balance between fuel efficiency and operational constraints, operating below the maximum operating Mach number ($M_{\text{MMO}} = 0.9392$) while maintaining high cruise efficiency. The constant Mach number strategy is effective for range maximization, as the aircraft operates at a consistent speed throughout the cruise phase, with thrust adjusted to compensate for mass reduction while preserving speed and altitude.
 
-The combination of constant Mach number and constant true airspeed indicates that the cruise altitude remains essentially constant, with the aircraft maintaining level flight at the target cruise altitude. This altitude stability, combined with constant speed operation, represents the optimal cruise strategy for fuel efficiency, as it avoids the energy penalties associated with altitude or speed variations.
+The combination of constant Mach number and constant true airspeed indicates that the cruise altitude remains essentially constant, with the aircraft maintaining level flight at the target cruise altitude. This altitude stability, combined with constant speed operation, represents an effective cruise strategy for fuel efficiency, as it avoids the energy penalties associated with altitude or speed variations.
 
 \subsubsection{Throttle Lever Management}
 
@@ -59,11 +59,11 @@ The combination of constant Mach number and constant true airspeed indicates tha
     \label{fig:cruise_lever}
 \end{figure}
 
-The throttle lever position profile, presented in Figure~\ref{fig:cruise_lever}, demonstrates adaptive thrust management throughout the cruise phase. Initial throttle setting at cruise entry is $\delta_0 = 73.5\%$, decreasing gradually to $\delta_{\text{final}} = 70.5\%$ at cruise termination. This $3\%$ reduction reflects the decreasing thrust requirements as aircraft mass reduces.
+The throttle lever position profile, presented in Figure~\ref{fig:cruise_lever}, demonstrates adaptive thrust management throughout the cruise phase. Initial throttle setting at cruise entry is $\delta_0 = 73\%$, decreasing gradually to $\delta_{\text{final}} = 70.5\%$ at cruise termination. This $2.5\%$ reduction reflects the decreasing thrust requirements as aircraft mass reduces.
 
-Throughout the entire cruise phase, the throttle position remains well below both the maximum continuous thrust (MCT) limit of $85\%$ and the maximum thrust limit of $100\%$. The average throttle setting of approximately $72\%$ indicates substantial thrust reserves, demonstrating that the optimized cruise operates at efficient power settings rather than maximum available thrust. This conservative approach preserves engine life while maintaining optimal fuel efficiency.
+Throughout the entire cruise phase, the throttle position remains well below both the maximum continuous thrust (MCT) limit of $85\%$ and the maximum thrust limit of $100\%$. The average throttle setting of approximately $71$-$72\%$ indicates substantial thrust reserves, demonstrating that the cruise operates at efficient power settings rather than maximum available thrust. This conservative approach preserves engine life while maintaining fuel efficiency.
 
-The decreasing throttle trend is a direct consequence of the constant Mach number cruise strategy. As fuel is consumed and aircraft mass decreases, less thrust is required to maintain the target Mach number at constant altitude. The optimization algorithm correctly identifies this relationship, progressively reducing throttle settings to maintain the minimum thrust required for equilibrium flight, thereby minimizing fuel consumption.
+The decreasing throttle trend is a direct consequence of the constant Mach number cruise strategy. As fuel is consumed and aircraft mass decreases, less thrust is required to maintain the target Mach number at constant altitude. The simulation progressively reduces throttle settings at each time step to maintain the thrust required for equilibrium flight, thereby achieving efficient fuel consumption throughout the cruise phase.
 
 \subsubsection{Mass Evolution and Fuel Consumption}
 
@@ -74,9 +74,9 @@ The decreasing throttle trend is a direct consequence of the constant Mach numbe
     \label{fig:cruise_mass}
 \end{figure}
 
-Aircraft mass evolution, shown in Figure~\ref{fig:cruise_mass}, demonstrates the linear decrease expected from continuous fuel consumption during cruise. Initial mass at cruise entry is $m_0 = 74,300$ kg, decreasing linearly to $m_{\text{final}} = 62,834.4$ kg at cruise termination. The mass reduction of $\Delta m = 11,466$ kg closely matches the fuel consumed ($m_{\text{fuel}} = 11,465.6$ kg), confirming the accuracy of the fuel consumption calculations.
+Aircraft mass evolution, shown in Figure~\ref{fig:cruise_mass}, demonstrates the linear decrease expected from continuous fuel consumption during cruise. Initial mass at cruise entry is $m_0 = 74,300$ kg, decreasing linearly to $m_{\text{final}} = 62,894$ kg at cruise termination. The mass reduction of $\Delta m = 11,406$ kg closely matches the fuel consumed ($m_{\text{fuel}} = 11,405.6$ kg), confirming the accuracy of the fuel consumption calculations.
 
-The linear mass decrease indicates a relatively constant fuel consumption rate throughout the cruise phase, consistent with the constant Mach number and altitude operation. The slope of the mass curve, $\dot{m} = \Delta m / t_{\text{cruise}} = 11,465.6$ kg / $4.52$ h $= 2,536$ kg/h, matches the average fuel flow rate, confirming the consistency of the mass and fuel consumption calculations.
+The linear mass decrease indicates a relatively constant fuel consumption rate throughout the cruise phase, consistent with the constant Mach number and altitude operation. The slope of the mass curve, $\dot{m} = \Delta m / t_{\text{cruise}} = 11,405.6$ kg / $4.53$ h $= 2,519$ kg/h, matches the average fuel flow rate, confirming the consistency of the mass and fuel consumption calculations.
 
 \begin{figure}[htbp]
     \centering
@@ -85,20 +85,20 @@ The linear mass decrease indicates a relatively constant fuel consumption rate t
     \label{fig:cruise_cumulative_fuel}
 \end{figure}
 
-The cumulative fuel consumption profile, illustrated in Figure~\ref{fig:cruise_cumulative_fuel}, shows a linear increase from $0$ kg to $11,465.6$ kg over the cruise duration. The linearity of this curve confirms the constant fuel consumption rate, with the slope directly representing the average fuel flow rate. This linear behavior is characteristic of optimized constant-speed cruise operations, where fuel consumption remains relatively stable throughout the phase.
+The cumulative fuel consumption profile, illustrated in Figure~\ref{fig:cruise_cumulative_fuel}, shows a linear increase from $0$ kg to $11,405.6$ kg over the cruise duration. The linearity of this curve confirms the relatively constant fuel consumption rate, with the slope directly representing the average fuel flow rate. This linear behavior is characteristic of constant-speed cruise operations, where fuel consumption remains relatively stable throughout the phase.
 
 \subsubsection{Performance Metrics}
 
-The optimized cruise phase achieves a fuel efficiency of $m_{\text{fuel}}/s_{\text{cruise}} = 3.05$ kg/km, representing the fuel consumption per unit distance. This efficiency metric is significantly better than the climb phase efficiency ($7.16$ kg/km), reflecting the energy-efficient nature of level flight compared to altitude gain. The cruise efficiency of $3.05$ kg/km, combined with the cruise distance of $3,757$ km, demonstrates the optimization algorithm's effectiveness in achieving fuel-efficient long-range flight.
+The cruise phase achieves a fuel efficiency of $m_{\text{fuel}}/s_{\text{cruise}} = 3.04$ kg/km, representing the fuel consumption per unit distance. This efficiency metric is significantly better than the climb phase efficiency, reflecting the energy-efficient nature of level flight compared to altitude gain. The cruise efficiency of $3.04$ kg/km, combined with the cruise distance of $3,757$ km, demonstrates the effectiveness of constant Mach number cruise for long-range flight.
 
-The specific range, defined as distance per unit fuel, is $R_{\text{specific}} = s_{\text{cruise}} / m_{\text{fuel}} = 3,757$ km / $11,465.6$ kg $= 0.328$ km/kg. This metric quantifies the distance capability per kilogram of fuel consumed, providing a direct measure of cruise efficiency. The optimization successfully maximizes this parameter through constant Mach number operation and adaptive thrust management.
+The specific range, defined as distance per unit fuel, is $R_{\text{specific}} = s_{\text{cruise}} / m_{\text{fuel}} = 3,757$ km / $11,405.6$ kg $= 0.329$ km/kg. This metric quantifies the distance capability per kilogram of fuel consumed, providing a direct measure of cruise efficiency. The constant Mach number operation and adaptive thrust management throughout the cruise phase achieve this specific range performance.
 
-The average ground speed during cruise is $V_{\text{ground}} = s_{\text{cruise}} / t_{\text{cruise}} = 3,757$ km / $4.52$ h $= 831$ km/h, corresponding to the true airspeed of $230.8$ m/s ($831$ km/h) at the cruise altitude. This speed represents an optimal balance between fuel efficiency and mission time, operating at the target Mach number that maximizes range while maintaining operational constraints.
+The average ground speed during cruise is $V_{\text{ground}} = s_{\text{cruise}} / t_{\text{cruise}} = 3,757$ km / $4.53$ h $= 829$ km/h, corresponding to the true airspeed of $230.5$ m/s ($830$ km/h) at the cruise altitude. This speed represents an optimal balance between fuel efficiency and mission time, operating at the target Mach number that maximizes range while maintaining operational constraints.
 
-\subsubsection{Optimization Strategy Effectiveness}
+\subsubsection{Cruise Strategy Effectiveness}
 
-The cruise phase results demonstrate the effectiveness of the range and fuel optimization approach. The constant Mach number strategy, combined with adaptive thrust management, achieves efficient fuel consumption while covering the maximum possible distance. The $11,465.6$ kg fuel consumption for $3,757$ km represents an optimized solution that balances competing objectives: maximizing range while minimizing fuel consumption.
+The cruise phase results demonstrate the effectiveness of the constant Mach number cruise strategy. The steady-state cruise simulation, combined with adaptive thrust management, achieves efficient fuel consumption while covering the required distance. The $11,405.6$ kg fuel consumption for $3,757$ km represents the fuel requirements for maintaining constant altitude and Mach number throughout the extended cruise segment.
 
-The progressive reduction in thrust and fuel flow as mass decreases demonstrates the optimization algorithm's ability to adapt to changing flight conditions. Rather than maintaining constant thrust throughout cruise, the algorithm recognizes that reducing thrust as mass decreases maintains the same flight conditions while reducing fuel consumption. This adaptive strategy is a key feature of the optimized trajectory, enabling fuel savings that accumulate over the long cruise duration.
+The progressive reduction in thrust and fuel flow as mass decreases demonstrates the simulation's response to changing flight conditions. Rather than maintaining constant thrust throughout cruise, the simulation reduces thrust as mass decreases to maintain the required flight conditions while achieving efficient fuel consumption. This adaptive thrust management is a natural consequence of the equilibrium flight requirement, enabling fuel efficiency that accumulates over the long cruise duration.
 
-The cruise phase consumes $90.2\%$ of total mission fuel while covering $94.1\%$ of total mission distance, demonstrating that the optimization successfully focuses fuel efficiency improvements on the phase that dominates overall mission performance. This phase-specific optimization approach ensures that improvements in cruise efficiency translate directly to significant overall mission benefits.
+The cruise phase consumes approximately $90\%$ of total mission fuel while covering approximately $94\%$ of total mission distance, demonstrating that cruise efficiency dominates overall mission performance. The constant Mach number and altitude strategy provides a straightforward and operationally practical approach to long-range cruise, with fuel consumption determined primarily by the aircraft's aerodynamic characteristics and the required cruise distance.

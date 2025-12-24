@@ -258,7 +258,7 @@ Boolean flags to enable or disable optional features and comparison modes.
 # ────────────────────────────────────────────────────────────────────────────
 # Climb Phase Features
 # ────────────────────────────────────────────────────────────────────────────
-ENABLE_STRATEGY_COMPARISON = False                  # Boolean: enable strategy comparison
+ENABLE_STRATEGY_COMPARISON = True                  # Boolean: enable strategy comparison
 
 # ────────────────────────────────────────────────────────────────────────────
 # Cruise Phase Features
@@ -268,7 +268,7 @@ ENABLE_CRUISE_CLIMB = False                         # Boolean: enable cruise cli
 # ────────────────────────────────────────────────────────────────────────────
 # Export Features
 # ────────────────────────────────────────────────────────────────────────────
-ENABLE_EXCEL_EXPORT = True                         # Boolean: enable Excel export of mission data
+ENABLE_EXCEL_EXPORT = False                         # Boolean: enable Excel export of mission data
 
 
 # ========================================================================

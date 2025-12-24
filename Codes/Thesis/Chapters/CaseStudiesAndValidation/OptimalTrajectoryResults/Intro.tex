@@ -10,10 +10,10 @@ The optimal trajectory results presented in this section are obtained using a hi
         Parameter Category & Parameter & Value \\
         \hline
         \textbf{Grid Discretization} & & \\
-        Mach samples (climb/descent) & $N_{MACH}$ & 50 \\
-        Altitude steps (climb/descent) & $N_{ALT}$ & 50 \\
-        Lever samples (climb/descent) & $N_{LEVER}$ & 50 \\
-        Grid resolution & $(K \times I \times L)$ & $50 \times 50 \times 50$ \\
+        Mach samples (climb/descent) & $N_{MACH}$ & 55 \\
+        Altitude steps (climb/descent) & $N_{ALT}$ & 55 \\
+        Lever samples (climb/descent) & $N_{LEVER}$ & 55 \\
+        Grid resolution & $(K \times I \times L)$ & $55 \times 55 \times 55$ \\
         \hline
         \textbf{Mach Trajectory Guidance} & & \\
         Guidance enabled (climb/descent) & -- & Enabled \\
@@ -31,4 +31,4 @@ The optimal trajectory results presented in this section are obtained using a hi
     \end{tabular}
 \end{table}
 
-Table~\ref{tab:optimal_trajectory_configuration} summarizes the configuration parameters employed for the optimal trajectory analysis. The grid resolution of $50 \times 50 \times 50$ provides high-fidelity discretization of the three-dimensional state space (Mach number, altitude, throttle lever position), enabling the optimizer to exploit fuel-efficient trajectory segments with minimal discretization error. This grid density achieves fuel consumption within 2.9\% of the finest tested grid ($55 \times 55 \times 55$) while maintaining reasonable computational cost. The Mach trajectory guidance system employs baseline penalty weight $w_{guidance} = 0.3$ kg/Mach$^2$, providing effective trajectory guidance without excessive fuel penalties. The lever position penalty system utilizes weight $w_{lever} = 3.0$ kg to moderate throttle lever usage patterns. The inner-first fuel consumption scenario is selected to maximize fuel efficiency, achieving the lowest fuel consumption among the evaluated depletion strategies.
+Table~\ref{tab:optimal_trajectory_configuration} summarizes the configuration parameters employed for the optimal trajectory analysis. The grid resolution of $55 \times 55 \times 55$ provides the finest discretization of the three-dimensional state space (Mach number, altitude, throttle lever position), enabling the optimizer to exploit fuel-efficient trajectory segments with minimal discretization error. This grid density represents the highest resolution tested in the sensitivity analysis, achieving the lowest fuel consumption among all grid configurations. The Mach trajectory guidance system employs baseline penalty weight $w_{guidance} = 0.3$ kg/Mach$^2$, providing effective trajectory guidance without excessive fuel penalties. The lever position penalty system utilizes weight $w_{lever} = 3.0$ kg to moderate throttle lever usage patterns. The inner-first fuel consumption scenario is selected to maximize fuel efficiency, achieving the lowest fuel consumption among the evaluated depletion strategies.
