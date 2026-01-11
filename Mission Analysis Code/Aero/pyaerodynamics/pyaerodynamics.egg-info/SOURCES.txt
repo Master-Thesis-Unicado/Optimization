@@ -1,0 +1,6 @@
+pyproject.toml
+pyaerodynamics/__init__.py
+pyaerodynamics.egg-info/PKG-INFO
+pyaerodynamics.egg-info/SOURCES.txt
+pyaerodynamics.egg-info/dependency_links.txt
+pyaerodynamics.egg-info/top_level.txt

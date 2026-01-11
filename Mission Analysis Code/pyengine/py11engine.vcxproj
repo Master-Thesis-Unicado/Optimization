@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7844FC54-8C80-38A4-9B8A-52816E48DE98}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <VcpkgEnabled>false</VcpkgEnabled>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>py11engine</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>ClangCL</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>ClangCL</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>ClangCL</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>ClangCL</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="do_not_import_user.props" Condition="exists('do_not_import_user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\pyengine\pyengine\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">py11engine.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">py11engine.cp311-win_amd64</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.pyd</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\pyengine\pyengine\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">py11engine.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">py11engine.cp311-win_amd64</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.pyd</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\pyengine\pyengine\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">py11engine.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">py11engine.cp311-win_amd64</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.pyd</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\pyengine\pyengine\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">py11engine.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">py11engine.cp311-win_amd64</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.pyd</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\aixml\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\runtimeInfo\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\unitConversion\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\atmosphere\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\standardFiles\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\svl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -imsvc "C:/dev/vcpkg/installed/x64-windows/include/python3.11" -imsvc "C:/dev/rUNICADO-gitlab/unicado-package/libraries/extern/pybind11/include" -imsvc "C:/dev/vcpkg/installed/x64-windows/include" -imsvc "C:/dev/vcpkg/installed/x64-windows/include/eigen3" /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);NOMINMAX;Py_DEBUG;__CMATH__;CMAKE_INTDIR="Debug";py11engine_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;NOMINMAX;Py_DEBUG;__CMATH__;CMAKE_INTDIR=\"Debug\";py11engine_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\aixml\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\runtimeInfo\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\unitConversion\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\atmosphere\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\standardFiles\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\svl\include;C:\dev\vcpkg\installed\x64-windows\include\python3.11;C:\dev\rUNICADO-gitlab\unicado-package\libraries\extern\pybind11\include;C:\dev\vcpkg\installed\x64-windows\include;C:\dev\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\aixml\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\runtimeInfo\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\unitConversion\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\atmosphere\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\standardFiles\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\svl\include;C:\dev\vcpkg\installed\x64-windows\include\python3.11;C:\dev\rUNICADO-gitlab\unicado-package\libraries\extern\pybind11\include;C:\dev\vcpkg\installed\x64-windows\include;C:\dev\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message></Message>
+      <Command>setlocal
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/dev/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/dev/rUNICADO-gitlab/unicado-package/libraries/engine/pyengine/pyengine/py11engine.cp311-win_amd64.pyd -installedDir C:/dev/vcpkg/installed/x64-windows/debug/bin -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>C:\dev\vcpkg\installed\x64-windows\debug\lib\python311_d.lib;..\aixml\Debug\aixml.lib;..\runtimeInfo\Debug\runtimeInfo.lib;..\standardFiles\Debug\standardFiles.lib;..\atmosphere\Debug\atmosphere.lib;..\svl\Debug\svl.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/dev/rUNICADO-gitlab/unicado-package/libraries/build/engine/Debug/py11engine.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/dev/rUNICADO-gitlab/unicado-package/libraries/engine/pyengine/pyengine/py11engine.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\aixml\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\runtimeInfo\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\unitConversion\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\atmosphere\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\standardFiles\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\svl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -imsvc "C:/dev/vcpkg/installed/x64-windows/include/python3.11" -imsvc "C:/dev/rUNICADO-gitlab/unicado-package/libraries/extern/pybind11/include" -imsvc "C:/dev/vcpkg/installed/x64-windows/include" -imsvc "C:/dev/vcpkg/installed/x64-windows/include/eigen3" /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);NOMINMAX;__CMATH__;CMAKE_INTDIR="Release";py11engine_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;NOMINMAX;__CMATH__;CMAKE_INTDIR=\"Release\";py11engine_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\aixml\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\runtimeInfo\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\unitConversion\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\atmosphere\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\standardFiles\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\svl\include;C:\dev\vcpkg\installed\x64-windows\include\python3.11;C:\dev\rUNICADO-gitlab\unicado-package\libraries\extern\pybind11\include;C:\dev\vcpkg\installed\x64-windows\include;C:\dev\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\aixml\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\runtimeInfo\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\unitConversion\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\atmosphere\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\standardFiles\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\svl\include;C:\dev\vcpkg\installed\x64-windows\include\python3.11;C:\dev\rUNICADO-gitlab\unicado-package\libraries\extern\pybind11\include;C:\dev\vcpkg\installed\x64-windows\include;C:\dev\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message></Message>
+      <Command>setlocal
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/dev/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/dev/rUNICADO-gitlab/unicado-package/libraries/engine/pyengine/pyengine/py11engine.cp311-win_amd64.pyd -installedDir C:/dev/vcpkg/installed/x64-windows/bin -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>C:\dev\vcpkg\installed\x64-windows\lib\python311.lib;..\aixml\Release\aixml.lib;..\runtimeInfo\Release\runtimeInfo.lib;..\standardFiles\Release\standardFiles.lib;..\atmosphere\Release\atmosphere.lib;..\svl\Release\svl.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/dev/rUNICADO-gitlab/unicado-package/libraries/build/engine/Release/py11engine.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/dev/rUNICADO-gitlab/unicado-package/libraries/engine/pyengine/pyengine/py11engine.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\aixml\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\runtimeInfo\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\unitConversion\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\atmosphere\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\standardFiles\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\svl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -imsvc "C:/dev/vcpkg/installed/x64-windows/include/python3.11" -imsvc "C:/dev/rUNICADO-gitlab/unicado-package/libraries/extern/pybind11/include" -imsvc "C:/dev/vcpkg/installed/x64-windows/include" -imsvc "C:/dev/vcpkg/installed/x64-windows/include/eigen3" /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);NDEBUG;NOMINMAX;__CMATH__;CMAKE_INTDIR="MinSizeRel";py11engine_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;NDEBUG;NOMINMAX;__CMATH__;CMAKE_INTDIR=\"MinSizeRel\";py11engine_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\aixml\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\runtimeInfo\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\unitConversion\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\atmosphere\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\standardFiles\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\svl\include;C:\dev\vcpkg\installed\x64-windows\include\python3.11;C:\dev\rUNICADO-gitlab\unicado-package\libraries\extern\pybind11\include;C:\dev\vcpkg\installed\x64-windows\include;C:\dev\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\aixml\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\runtimeInfo\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\unitConversion\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\atmosphere\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\standardFiles\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\svl\include;C:\dev\vcpkg\installed\x64-windows\include\python3.11;C:\dev\rUNICADO-gitlab\unicado-package\libraries\extern\pybind11\include;C:\dev\vcpkg\installed\x64-windows\include;C:\dev\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message></Message>
+      <Command>setlocal
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/dev/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/dev/rUNICADO-gitlab/unicado-package/libraries/engine/pyengine/pyengine/py11engine.cp311-win_amd64.pyd -installedDir C:/dev/vcpkg/installed/x64-windows/bin -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>C:\dev\vcpkg\installed\x64-windows\lib\python311.lib;..\aixml\MinSizeRel\aixml.lib;..\runtimeInfo\MinSizeRel\runtimeInfo.lib;..\standardFiles\MinSizeRel\standardFiles.lib;..\atmosphere\MinSizeRel\atmosphere.lib;..\svl\MinSizeRel\svl.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/dev/rUNICADO-gitlab/unicado-package/libraries/build/engine/MinSizeRel/py11engine.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/dev/rUNICADO-gitlab/unicado-package/libraries/engine/pyengine/pyengine/py11engine.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\aixml\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\runtimeInfo\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\unitConversion\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\atmosphere\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\standardFiles\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\svl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -imsvc "C:/dev/vcpkg/installed/x64-windows/include/python3.11" -imsvc "C:/dev/rUNICADO-gitlab/unicado-package/libraries/extern/pybind11/include" -imsvc "C:/dev/vcpkg/installed/x64-windows/include" -imsvc "C:/dev/vcpkg/installed/x64-windows/include/eigen3" /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ConformanceMode>true</ConformanceMode>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);NDEBUG;NOMINMAX;__CMATH__;CMAKE_INTDIR="RelWithDebInfo";py11engine_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;NDEBUG;NOMINMAX;__CMATH__;CMAKE_INTDIR=\"RelWithDebInfo\";py11engine_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\aixml\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\runtimeInfo\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\unitConversion\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\atmosphere\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\standardFiles\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\svl\include;C:\dev\vcpkg\installed\x64-windows\include\python3.11;C:\dev\rUNICADO-gitlab\unicado-package\libraries\extern\pybind11\include;C:\dev\vcpkg\installed\x64-windows\include;C:\dev\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\aixml\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\runtimeInfo\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\unitConversion\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\atmosphere\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\standardFiles\include;C:\dev\rUNICADO-gitlab\unicado-package\libraries\svl\include;C:\dev\vcpkg\installed\x64-windows\include\python3.11;C:\dev\rUNICADO-gitlab\unicado-package\libraries\extern\pybind11\include;C:\dev\vcpkg\installed\x64-windows\include;C:\dev\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message></Message>
+      <Command>setlocal
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/dev/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/dev/rUNICADO-gitlab/unicado-package/libraries/engine/pyengine/pyengine/py11engine.cp311-win_amd64.pyd -installedDir C:/dev/vcpkg/installed/x64-windows/bin -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>C:\dev\vcpkg\installed\x64-windows\lib\python311.lib;..\aixml\RelWithDebInfo\aixml.lib;..\runtimeInfo\RelWithDebInfo\runtimeInfo.lib;..\standardFiles\RelWithDebInfo\standardFiles.lib;..\atmosphere\RelWithDebInfo\atmosphere.lib;..\svl\RelWithDebInfo\svl.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/dev/rUNICADO-gitlab/unicado-package/libraries/build/engine/RelWithDebInfo/py11engine.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/dev/rUNICADO-gitlab/unicado-package/libraries/engine/pyengine/pyengine/py11engine.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/dev/rUNICADO-gitlab/unicado-package/libraries/engine/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/dev/rUNICADO-gitlab/unicado-package/libraries -BC:/dev/rUNICADO-gitlab/unicado-package/libraries/build --check-stamp-file C:/dev/rUNICADO-gitlab/unicado-package/libraries/build/engine/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.30\Modules\FindBoost.cmake;C:\Program Files\CMake\share\cmake-3.30\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.30\Modules\FindPackageMessage.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost\BoostConfig.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost\BoostConfigVersion.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost\vcpkg-cmake-wrapper.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost_headers\boost_headers-config-version.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost_headers\boost_headers-config.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost_headers\boost_headers-targets.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\dev\rUNICADO-gitlab\unicado-package\libraries\build\engine\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/dev/rUNICADO-gitlab/unicado-package/libraries/engine/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/dev/rUNICADO-gitlab/unicado-package/libraries -BC:/dev/rUNICADO-gitlab/unicado-package/libraries/build --check-stamp-file C:/dev/rUNICADO-gitlab/unicado-package/libraries/build/engine/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.30\Modules\FindBoost.cmake;C:\Program Files\CMake\share\cmake-3.30\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.30\Modules\FindPackageMessage.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost\BoostConfig.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost\BoostConfigVersion.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost\vcpkg-cmake-wrapper.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost_headers\boost_headers-config-version.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost_headers\boost_headers-config.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost_headers\boost_headers-targets.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\dev\rUNICADO-gitlab\unicado-package\libraries\build\engine\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/dev/rUNICADO-gitlab/unicado-package/libraries/engine/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/dev/rUNICADO-gitlab/unicado-package/libraries -BC:/dev/rUNICADO-gitlab/unicado-package/libraries/build --check-stamp-file C:/dev/rUNICADO-gitlab/unicado-package/libraries/build/engine/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.30\Modules\FindBoost.cmake;C:\Program Files\CMake\share\cmake-3.30\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.30\Modules\FindPackageMessage.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost\BoostConfig.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost\BoostConfigVersion.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost\vcpkg-cmake-wrapper.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost_headers\boost_headers-config-version.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost_headers\boost_headers-config.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost_headers\boost_headers-targets.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\dev\rUNICADO-gitlab\unicado-package\libraries\build\engine\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/dev/rUNICADO-gitlab/unicado-package/libraries/engine/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/dev/rUNICADO-gitlab/unicado-package/libraries -BC:/dev/rUNICADO-gitlab/unicado-package/libraries/build --check-stamp-file C:/dev/rUNICADO-gitlab/unicado-package/libraries/build/engine/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.30\Modules\FindBoost.cmake;C:\Program Files\CMake\share\cmake-3.30\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.30\Modules\FindPackageMessage.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost\BoostConfig.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost\BoostConfigVersion.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost\vcpkg-cmake-wrapper.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost_headers\boost_headers-config-version.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost_headers\boost_headers-config.cmake;C:\dev\vcpkg\installed\x64-windows\share\boost_headers\boost_headers-targets.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\dev\rUNICADO-gitlab\unicado-package\libraries\build\engine\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\src\parser\csv.cpp" />
+    <ClCompile Include="C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\src\engine_data.cpp" />
+    <ClCompile Include="C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\src\engine_deck.cpp" />
+    <ClCompile Include="C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\src\engine.cpp" />
+    <ClCompile Include="C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\src\SI_units.cpp" />
+    <ClCompile Include="C:\dev\rUNICADO-gitlab\unicado-package\libraries\engine\src\py_engine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\dev\rUNICADO-gitlab\unicado-package\libraries\build\ZERO_CHECK.vcxproj">
+      <Project>{4141E952-12AC-3923-A52D-3292222BEB63}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\dev\rUNICADO-gitlab\unicado-package\libraries\build\aixml\aixml.vcxproj">
+      <Project>{D810AB9B-AC13-3BCF-AF65-8D950812195C}</Project>
+      <Name>aixml</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\dev\rUNICADO-gitlab\unicado-package\libraries\build\atmosphere\atmosphere.vcxproj">
+      <Project>{0D690A66-54F9-3015-920B-CEE24A802154}</Project>
+      <Name>atmosphere</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\dev\rUNICADO-gitlab\unicado-package\libraries\build\runtimeInfo\runtimeInfo.vcxproj">
+      <Project>{9D67486B-05CF-389F-8E55-7DEA6BAA235C}</Project>
+      <Name>runtimeInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\dev\rUNICADO-gitlab\unicado-package\libraries\build\svl\svl.vcxproj">
+      <Project>{F256BDF5-1EEF-310C-BDC8-BB26830B0D91}</Project>
+      <Name>svl</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\dev\rUNICADO-gitlab\unicado-package\libraries\build\unitConversion\unitConversion.vcxproj">
+      <Project>{483C5A89-8038-3AC4-9DC7-02F8444567A6}</Project>
+      <Name>unitConversion</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

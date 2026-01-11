@@ -1,0 +1,145 @@
+<module_configuration_file name="cpacsInterface2_conf.xml">
+	<control_settings description="General control settings for this tool">
+		<aircraft_exchange_file_name description="Specify the name of the exchange file">
+			<value>UNICADO-SMR-01.xml</value>
+		</aircraft_exchange_file_name>
+		<aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+			<value>C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/</value>
+		</aircraft_exchange_file_directory>
+		<own_tool_level description="Specify the tool level of this tool">
+			<value>3</value>
+		</own_tool_level>
+		<console_output description="Selector to specify the console output ('mode_0': Off, 'mode_1': only out/err/warn, 'mode_2': 1 + info, 'mode_3': 2 + debug)">
+			<value>mode_1</value>
+		</console_output>
+		<log_file_output description="Selector to specify the log file output ('mode_0': Off, 'mode_1': only out/err/warn, 'mode_2': 1 + info, 'mode_3': 2 + debug)">
+			<value>mode_1</value>
+		</log_file_output>
+		<plot_output description="Specify the way plotting shall be handled">
+			<enable description="Switch to enable plotting ('true': On, 'false': Off)">
+				<value>true</value>
+			</enable>
+			<copy_plotting_files description="Switch if plotting files shall be copied ('true': On, 'false': Off)">
+				<value>true</value>
+			</copy_plotting_files>
+			<delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder ('true': On, 'false': Off)">
+				<value>true</value>
+			</delete_plotting_files_from_tool_folder>
+		</plot_output>
+		<report_output description="Switch to generate an HTML report ('true': On, 'false': Off)">
+			<value>true</value>
+		</report_output>
+		<tex_report description="Switch to generate a Tex report ('true': On, 'false': Off)">
+			<value>true</value>
+		</tex_report>
+		<write_info_files description="Switch to generate info files ('true': On, 'false': Off)">
+			<value>false</value>
+		</write_info_files>
+		<gnuplot_script description="Specify the name of the plot file">
+			<value>cpacs_interface_plot.plt</value>
+		</gnuplot_script>
+		<log_file description="Specify the name of the log file">
+			<value>C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/cpacs_interface.log</value>
+		</log_file>
+		<inkscape_path description="Path to the inkscape application ('DEFAULT': Use inkscape from the UNICADO repo structure)">
+			<value>C:/Programs/UNICADOworkflow/inkscape/</value>
+		</inkscape_path>
+		<gnuplot_path description="Path to the gnuplot application ('DEFAULT': Use gnuplot from the UNICADO repo structure)">
+			<value>C:/Programs/UNICADOworkflow/gnuplot/</value>
+		</gnuplot_path>
+	</control_settings>
+	<program_settings description="programSettings">
+		<conversionDirection description="Selection of the conversion direction. Selector: mode_0(UNICADO2CPACS) / mode_1(CPACS2UNICADO)">
+			<value>mode_0</value>
+		</conversionDirection>
+        <mission_selection description="Selection of the mission. design_mission / study_mission">
+            <value>design_mission</value>
+        </mission_selection>
+		<cpacs_file_name description="Name of the file to convert">
+			<value>UNICADO-SMR-01_CPACS.xml</value>
+		</cpacs_file_name>
+        <cpacs_file_directory description="Path to CPACS file">
+			<value>C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01/</value>
+		</cpacs_file_directory>
+		<cpacsVersion description="Alles modular hier, entweder 3.2 (DLR) oder 3.4 (BHL)">
+			<value>3.4</value>
+		</cpacsVersion>   
+		<UNICADO2CPACS description="Sets settings for UNICADO2CPACS (Only if conversionDirection=0)">
+            <xml_blocks description="Selection of the XML blocks to be read from UNICADO-XML and translated to CPACS.">
+                <general description="Convert General from UNICADO to CPACS? Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </general>
+                <masses description="Convert masses from UNICADO to CPACS? Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </masses>
+                <geometry description="Convert complete aircraft geometry from UNICADO to CPACS? Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </geometry>
+				<wing_geometry description="Convert wing geometry from UNICADO to CPACS in case WriteGeometry=0? Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </wing_geometry>
+				<stabilizer_geometry description="Convert stabilizer geometry from UNICADO to CPACS in case WriteGeometry=0? Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </stabilizer_geometry>
+				<landing_gear_geometry description="Display Landing gear struts?(CPACS 3+) Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </landing_gear_geometry>
+				<propulsion_geometry description="Display propulsion Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </propulsion_geometry>
+                <accommodation description="Convert accommodation from UNICADO to CPACS? Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </accommodation>
+                <propulsion description="Convert propulsion from UNICADO to CPACS? Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </propulsion>
+                <systems description="Convert systems from UNICADO to CPACS? Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </systems>
+                <aerodynamics description="Convert aerodynamics from UNICADO to CPACS? Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </aerodynamics>
+                <stability_control description="Convert Stability and Control characteristics from UNICADO to CPACS? Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </stability_control>
+                <performance description="Convert Mission and trajectory from UNICADO to CPACS? Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </performance>
+                <monetary_values description="Convert monetary values from UNICADO to CPACS? Switch: true (yes) / false (no)">
+                    <value>false</value>
+                </monetary_values>
+                <ecological_values description="Convert ecological values from UNICADO to CPACS? Switch: true (yes) / false (no)">
+                    <value>false</value>
+                </ecological_values>
+                <requirements description="Convert requirements from UNICADO to CPACS? Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </requirements>
+                <design_specifications description="Convert design specifications from UNICADO to CPACS? Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </design_specifications>
+                <delete_empty_uID_trees description="Should empty uID-trees be deleted in CPACS? Switch: true (yes) / false (no)">
+                    <value>true</value>
+                </delete_empty_uID_trees>
+            </xml_blocks>
+        </UNICADO2CPACS>
+		<XMLBlocks>
+			<Geometry>
+			    <ReadWing description="Convert wing geometry from CPACS to UNICADO">
+					<value>true</value>
+				</ReadWing>
+                <ReadEmpennage description="Convert stabiliser geometry from CPACS to UNICADO">
+					<value>true</value>
+				</ReadEmpennage>
+                <ReadFuselage description="Convert fuselage geometry from CPACS to UNICADO">
+					<value>true</value>
+				</ReadFuselage>
+                <ReadGear description="Convert gear geometry from CPACS to UNICADO">
+					<value>true</value>
+				</ReadGear>
+                <ReadEngines description="Convert engine geometry from CPACS to UNICADO">
+					<value>true</value>
+				</ReadEngines>
+			</Geometry>
+		</XMLBlocks>
+	</program_settings>
+</module_configuration_file>

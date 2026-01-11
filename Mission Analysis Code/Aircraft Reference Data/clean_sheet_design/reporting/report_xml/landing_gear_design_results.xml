@@ -1,0 +1,257 @@
+<module_results_file Name="Landing gear design specific outputs">
+    <general_information description="General information on module execution">
+        <workflow_version description="Version number of the current workflow">
+            <value>not available</value>
+        </workflow_version>
+        <execution_date description="Execution date and time of the code">
+            <value>2025-10-16_09-26-22</value>
+        </execution_date>
+        <project_name description="Name of the current aircraft project">
+            <value>UNICADO-SMR-01</value>
+        </project_name>
+        <method_name description="Name of current module calculation method">
+            <value>landing_gear_design_tu_berlin</value>
+        </method_name>
+        <routing_layer description="Routing layer information">
+            <layer_1 description="Routing layer_1">
+                <value>wing_mounted</value>
+            </layer_1>
+            <layer_2 description="Routing layer_2">
+                <value>empirical</value>
+            </layer_2>
+            <layer_3 description="Routing layer_3">
+                <value>landing_gear_design_tu_berlin</value>
+            </layer_3>
+            <user_layer description="Routing user_layer">
+                <value>kerosene</value>
+            </user_layer>
+        </routing_layer>
+    </general_information>
+    <calculation_results description="Results of calculation method">
+        <landing_gear_design_tu_berlin description="Empirical method for landing gear design in accordance CS 25.733 and EASA ETSO-Tire-List based on the landing gear load estimation of N. Currey." />
+        <landing_gear description="Geometric description of the aircraft undercarriage.">
+            <position description="Position of one tire of current landing gear strut with regard to the landing gear strut position.">
+                <x description="Distance in x direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                    <value>0.0</value>
+                </x>
+                <y description="Distance in y direction with regard to the landing gear strut position. (center line of the landing gear strut">
+                    <value>0.0</value>
+                </y>
+                <z description="Distance in z direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                    <value>0.0</value>
+                </z>
+            </position>
+            <delta_tail_tipping_point description="Distance between last fuselage section in x direction and tail strike position.">
+                <value>-10.2747</value>
+            </delta_tail_tipping_point>
+            <specific description="Landing gear specific output parameter.">
+                <geometry description="Geometry description of the entire landing gear.">
+                    <landing_gear_assembly ID="0" description="Geometrical description of one entire landing gear leg.">
+                        <name description="Name of the tire type.">
+                            <value>nose_gear_assembly</value>
+                        </name>
+                        <position description="Position of one tire of current landing gear strut with regard to the landing gear strut position.">
+                            <x description="Distance in x direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                <value>7.05</value>
+                            </x>
+                            <y description="Distance in y direction with regard to the landing gear strut position. (center line of the landing gear strut">
+                                <value>0.0</value>
+                            </y>
+                            <z description="Distance in z direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                <value>-1.6572</value>
+                            </z>
+                        </position>
+                        <assembly_components description="Geometrical description of the assembly components of one landing gear strut.">
+                            <strut_diameter description="Diameter of the landing gear strut">
+                                <value>0.2248</value>
+                            </strut_diameter>
+                            <strut_length description="Length of the landing gear strut">
+                                <value>2.0089</value>
+                            </strut_length>
+                            <tire_description ID="0" description="Description of one tire of the wheel group.">
+                                <name description="Name of the tire type.">
+                                    <value>APS01203</value>
+                                </name>
+                                <position description="Position of one tire of current landing gear strut with regard to the landing gear strut position.">
+                                    <x description="Distance in x direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                        <value>0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the landing gear strut position. (center line of the landing gear strut">
+                                        <value>-0.3372</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                        <value>-2.0089</value>
+                                    </z>
+                                </position>
+                                <tire_diameter description="Diameter of one tire of the wheel group.">
+                                    <value>0.7699</value>
+                                </tire_diameter>
+                                <tire_section_width description="Width at the shoulder of a tire of the wheel group.">
+                                    <value>0.2248</value>
+                                </tire_section_width>
+                            </tire_description>
+                            <tire_description ID="1" description="Description of one tire of the wheel group.">
+                                <name description="Name of the tire type.">
+                                    <value>APS01203</value>
+                                </name>
+                                <position description="Position of one tire of current landing gear strut with regard to the landing gear strut position.">
+                                    <x description="Distance in x direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                        <value>0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the landing gear strut position. (center line of the landing gear strut">
+                                        <value>0.3372</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                        <value>-2.0089</value>
+                                    </z>
+                                </position>
+                                <tire_diameter description="Diameter of one tire of the wheel group.">
+                                    <value>0.7699</value>
+                                </tire_diameter>
+                                <tire_section_width description="Width at the shoulder of a tire of the wheel group.">
+                                    <value>0.2248</value>
+                                </tire_section_width>
+                            </tire_description>
+                        </assembly_components>
+                    </landing_gear_assembly>
+                    <landing_gear_assembly ID="1" description="Geometrical description of one entire landing gear leg.">
+                        <name description="Name of the tire type.">
+                            <value>right_main_gear_outer_strut</value>
+                        </name>
+                        <position description="Position of one tire of current landing gear strut with regard to the landing gear strut position.">
+                            <x description="Distance in x direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                <value>17.1876</value>
+                            </x>
+                            <y description="Distance in y direction with regard to the landing gear strut position. (center line of the landing gear strut">
+                                <value>4.4011</value>
+                            </y>
+                            <z description="Distance in z direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                <value>-0.8621</value>
+                            </z>
+                        </position>
+                        <assembly_components description="Geometrical description of the assembly components of one landing gear strut.">
+                            <strut_diameter description="Diameter of the landing gear strut">
+                                <value>0.2322</value>
+                            </strut_diameter>
+                            <strut_length description="Length of the landing gear strut">
+                                <value>2.804</value>
+                            </strut_length>
+                            <tire_description ID="0" description="Description of one tire of the wheel group.">
+                                <name description="Name of the tire type.">
+                                    <value>APS00524-E</value>
+                                </name>
+                                <position description="Position of one tire of current landing gear strut with regard to the landing gear strut position.">
+                                    <x description="Distance in x direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                        <value>0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the landing gear strut position. (center line of the landing gear strut">
+                                        <value>-0.4635</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                        <value>-2.804</value>
+                                    </z>
+                                </position>
+                                <tire_diameter description="Diameter of one tire of the wheel group.">
+                                    <value>1.1493</value>
+                                </tire_diameter>
+                                <tire_section_width description="Width at the shoulder of a tire of the wheel group.">
+                                    <value>0.4064</value>
+                                </tire_section_width>
+                            </tire_description>
+                            <tire_description ID="1" description="Description of one tire of the wheel group.">
+                                <name description="Name of the tire type.">
+                                    <value>APS00524-E</value>
+                                </name>
+                                <position description="Position of one tire of current landing gear strut with regard to the landing gear strut position.">
+                                    <x description="Distance in x direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                        <value>0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the landing gear strut position. (center line of the landing gear strut">
+                                        <value>0.4635</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                        <value>-2.804</value>
+                                    </z>
+                                </position>
+                                <tire_diameter description="Diameter of one tire of the wheel group.">
+                                    <value>1.1493</value>
+                                </tire_diameter>
+                                <tire_section_width description="Width at the shoulder of a tire of the wheel group.">
+                                    <value>0.4064</value>
+                                </tire_section_width>
+                            </tire_description>
+                        </assembly_components>
+                    </landing_gear_assembly>
+                    <landing_gear_assembly ID="2" description="Geometrical description of one entire landing gear leg.">
+                        <name description="Name of the tire type.">
+                            <value>left_main_gear_outer_strut</value>
+                        </name>
+                        <position description="Position of one tire of current landing gear strut with regard to the landing gear strut position.">
+                            <x description="Distance in x direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                <value>17.1876</value>
+                            </x>
+                            <y description="Distance in y direction with regard to the landing gear strut position. (center line of the landing gear strut">
+                                <value>-4.4011</value>
+                            </y>
+                            <z description="Distance in z direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                <value>-0.8621</value>
+                            </z>
+                        </position>
+                        <assembly_components description="Geometrical description of the assembly components of one landing gear strut.">
+                            <strut_diameter description="Diameter of the landing gear strut">
+                                <value>0.2322</value>
+                            </strut_diameter>
+                            <strut_length description="Length of the landing gear strut">
+                                <value>2.804</value>
+                            </strut_length>
+                            <tire_description ID="0" description="Description of one tire of the wheel group.">
+                                <name description="Name of the tire type.">
+                                    <value>APS00524-E</value>
+                                </name>
+                                <position description="Position of one tire of current landing gear strut with regard to the landing gear strut position.">
+                                    <x description="Distance in x direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                        <value>0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the landing gear strut position. (center line of the landing gear strut">
+                                        <value>-0.4635</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                        <value>-2.804</value>
+                                    </z>
+                                </position>
+                                <tire_diameter description="Diameter of one tire of the wheel group.">
+                                    <value>1.1493</value>
+                                </tire_diameter>
+                                <tire_section_width description="Width at the shoulder of a tire of the wheel group.">
+                                    <value>0.4064</value>
+                                </tire_section_width>
+                            </tire_description>
+                            <tire_description ID="1" description="Description of one tire of the wheel group.">
+                                <name description="Name of the tire type.">
+                                    <value>APS00524-E</value>
+                                </name>
+                                <position description="Position of one tire of current landing gear strut with regard to the landing gear strut position.">
+                                    <x description="Distance in x direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                        <value>0.0</value>
+                                    </x>
+                                    <y description="Distance in y direction with regard to the landing gear strut position. (center line of the landing gear strut">
+                                        <value>0.4635</value>
+                                    </y>
+                                    <z description="Distance in z direction with regard to the landing gear strut position. (center line of the landing gear strut)">
+                                        <value>-2.804</value>
+                                    </z>
+                                </position>
+                                <tire_diameter description="Diameter of one tire of the wheel group.">
+                                    <value>1.1493</value>
+                                </tire_diameter>
+                                <tire_section_width description="Width at the shoulder of a tire of the wheel group.">
+                                    <value>0.4064</value>
+                                </tire_section_width>
+                            </tire_description>
+                        </assembly_components>
+                    </landing_gear_assembly>
+                </geometry>
+            </specific>
+        </landing_gear>
+    </calculation_results>
+</module_results_file>

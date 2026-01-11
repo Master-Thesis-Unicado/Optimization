@@ -1,0 +1,232 @@
+<module_configuration_file name="constraint_analysis.xml">
+    <control_settings description="General control settings for this tool">
+        <aircraft_exchange_file_name description="Specify the name of the exchange file">
+			<value>UNICADO-SMR-01.xml</value>
+		</aircraft_exchange_file_name>
+        <aircraft_exchange_file_directory description="Specify the direction in which the aircraft exchange file can be found">
+            <value>../projects/UNICADO/UNICADO-SMR-01/</value>
+		</aircraft_exchange_file_directory>
+		<own_tool_level description="Specify the tool level of this tool">
+			<value>3</value>
+		</own_tool_level>
+        <console_output description="Selector to specify the console output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+			<value>mode_1</value>
+		</console_output>
+        <log_file_output description="Selector to specify the log file output. Selector: mode_0 (Off) / mode_1 (only out/err/warn) / mode_2 (1 + info) / mode_3 (2 + debug)">
+			<value>mode_1</value>
+		</log_file_output>
+        <plot_output description="Specify the way plotting shall be handled">
+			<enable description="Switch to enable plotting. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</enable>
+			<copy_plotting_files description="Switch if plotting files shall be copied. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</copy_plotting_files>
+			<delete_plotting_files_from_tool_folder description="Switch if plotting files shall be deleted from folder. Switch: true (On) / false (Off)">
+				<value>true</value>
+			</delete_plotting_files_from_tool_folder>
+			<directory description="directory to folder">
+				<value>./plt_files/</value>
+			</directory>
+		</plot_output>
+        <report_output description="Switch to generate an HTML report. Switch: true (On) / false (Off)">
+			<value>true</value>
+		</report_output>
+        <tex_report description="Switch to generate a Tex report. Switch: true (On) / false (Off)">
+			<value>true</value>
+		</tex_report>
+        <write_info_files description="Switch to generate info files. Switch: true (On) / false (Off)">
+			<value>false</value>
+		</write_info_files>
+        <log_file description="Specify the name of the log file">
+			<value>constraint_analysis.log</value>
+		</log_file>
+        <inkscape_path description="Path to the inkscape application ('DEFAULT': Use inkscape from the UNICADO repo structure)">
+			<value>C:/Programs/UNICADOworkflow/inkscape/</value>
+		</inkscape_path>
+        <gnuplot_path description="Path to the gnuplot application ('DEFAULT': Use gnuplot from the UNICADO repo structure)">
+			<value>C:/Programs/UNICADOworkflow/gnuplot/</value>
+		</gnuplot_path>
+    </control_settings>
+	<program_settings description="Settings specific to constraint_sizing.">
+		<method description="The method of constraint analysis, only Energy_Based is supported for now">
+			<value>Energy_Based</value>
+		</method>
+		<mode_selection description="The method of sizing, mode_0 changes both T/W and W/S, mode_1 changes only the T/W">
+			<value>mode_1</value>
+		</mode_selection>
+		<buffer_factor description="The buffer in percentage, if the rate of change of the design point parameters is less than this percentage, it remains constant">
+			<value>0.0</value>
+		</buffer_factor>
+		<safety_factor description="Additional safety factor">
+			<value>0.05</value>
+		</safety_factor>
+		<constraint_selection>
+			<standard_set description="The standard set of constraints, assembled using the requirements and certain assumptions">
+				<takeoff_ground_roll>
+					<active>
+						<value>true</value>
+					</active>
+					<Mach_TO description="Mach number at takeoff. Caution! It has to be the Mach number number of the polar of the takeoff configuration!">
+						<value>0.2</value>
+					</Mach_TO>
+				</takeoff_ground_roll>
+				<takeoff_climb>
+					<active>
+						<value>true</value>
+					</active>
+					<Mach_TO description="Mach number at takeoff. Caution! It has to be the Mach number number of the polar of the takeoff configuration!">
+						<value>0.2</value>
+					</Mach_TO>
+					<takeoff_climb_angle description="Takeoff climb angle">
+						<value>5</value>
+					</takeoff_climb_angle>
+				</takeoff_climb>
+				<OEI_climb>
+					<active>
+						<value>true</value>
+					</active>
+					<climb_gradient_OEI description="Minimal climb rate of 2.4% defined in CS25 for second segment climb">
+						<value>0.024</value>
+					</climb_gradient_OEI>
+				</OEI_climb>
+				<top_of_climb>
+					<active>
+						<value>false</value>
+					</active>
+				</top_of_climb>
+				<cruise>
+					<active>
+						<value>false</value>
+					</active>
+				</cruise>
+				<SEP>
+					<active>
+						<value>false</value>
+					</active>
+					<minimum_climb_rate description="Minimum climb rate out of CS 25: 100fpm -&gt; 0.508 m/s">
+						<value>0.508</value>
+					</minimum_climb_rate>
+				</SEP>
+				<landing_field_length>
+					<active>
+						<value>true</value>
+					</active>
+					<Mach>
+						<value>0.2</value>
+					</Mach>
+					<k_TD>
+						<value>1.15</value>
+					</k_TD>
+					<t_FR>
+						<value>3</value>
+					</t_FR>
+					<obstacle_height>
+						<value>15.4</value>
+					</obstacle_height>
+					<Mach>
+						<value>0.2</value>
+					</Mach>
+				</landing_field_length>
+				<gust>
+					<active>
+						<value>true</value>
+					</active>
+					<Mach>
+						<value>0.2</value>
+					</Mach>
+					<gust_speed description="Gust speed at takeoff and landing normally 20 m/s">
+						<value>20</value>
+					</gust_speed>
+					<gust_load_factor description="Additional gust load factor">
+						<value>1.5</value>
+					</gust_load_factor>
+				</gust>
+			</standard_set>
+			<extra_set description="The extra set of constraints, assembled with user input, use the templates">
+				<cruise>
+					<active>
+						<value>false</value>
+					</active>
+					<segment_ID>cruise_template</segment_ID>
+					<weight_fraction>0.98</weight_fraction>
+					<Mach>0.8</Mach>
+					<altitude>10000</altitude>
+				</cruise>
+				<climb>
+					<active>
+						<value>false</value>
+					</active>
+					<segment_ID>climb_template</segment_ID>
+					<weight_fraction>0.98</weight_fraction>
+					<Mach>0.8</Mach>
+					<altitude>10000</altitude>
+					<climb_rate>0.508</climb_rate>
+				</climb>
+				<constant_speed_turn>
+					<active>
+						<value>false</value>
+					</active>
+					<segment_ID>turn_template</segment_ID>
+					<weight_fraction>0.98</weight_fraction>
+					<Mach>0.8</Mach>
+					<altitude>10000</altitude>
+					<load_factor>2</load_factor>
+				</constant_speed_turn>
+				<horizontal_acceleration>
+					<active>
+						<value>false</value>
+					</active>
+					<segment_ID>acceleration_template</segment_ID>
+					<weight_fraction>0.98</weight_fraction>
+					<Mach>0.8</Mach>
+					<altitude>10000</altitude>
+					<acceleration>1.0</acceleration>
+				</horizontal_acceleration>
+				<takeoff_ground_roll>
+					<active>
+						<value>false</value>
+					</active>
+					<segment_ID>takeoff_ground_roll_template</segment_ID>
+					<weight_fraction>0.98</weight_fraction>
+					<Mach>0.8</Mach>
+					<altitude>0</altitude>
+					<takeoff_field_length>2000</takeoff_field_length>
+				</takeoff_ground_roll>
+				<braking_roll>
+					<active>
+						<value>false</value>
+					</active>
+					<segment_ID>landing_field_length_template</segment_ID>
+					<weight_fraction>0.98</weight_fraction>
+					<Mach>0.8</Mach>
+					<altitude>0</altitude>
+					<friction_coefficient>0.32</friction_coefficient>
+					<landing_field_length>2000</landing_field_length>
+				</braking_roll>
+				<takeoff_climb>
+					<active>
+						<value>false</value>
+					</active>
+					<segment_ID>takeoff_climb_angle_template</segment_ID>
+					<weight_fraction>0.98</weight_fraction>
+					<Mach>0.8</Mach>
+					<altitude>0</altitude>
+					<takeoff_climb_angle>0.32</takeoff_climb_angle>
+				</takeoff_climb>
+				<gust>
+					<active>
+						<value>false</value>
+					</active>
+					<segment_ID>gust_template</segment_ID>
+					<weight_fraction>0.98</weight_fraction>
+					<Mach>0.8</Mach>
+					<altitude>0</altitude>
+					<V_TO_L>200</V_TO_L>
+					<w_g>20</w_g>
+					<dn_G>1.5</dn_G>
+				</gust>
+			</extra_set>
+		</constraint_selection>
+	</program_settings>
+</module_configuration_file>

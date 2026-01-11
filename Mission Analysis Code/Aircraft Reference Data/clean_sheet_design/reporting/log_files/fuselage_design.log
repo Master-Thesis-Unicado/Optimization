@@ -1,0 +1,130 @@
+2025-10-16 09:20:22,437 - PRINT - Fuselage design started...
+2025-10-16 09:20:22,463 - PRINT - Import of fuselage design cs requirements xml-file and accommodation definition xml-file successfully.
+2025-10-16 09:20:22,464 - PRINT - Current iteration of fuselage design is: 1
+2025-10-16 09:20:22,468 - PRINT - Total length of fuselage is: 37.3652 meter.
+2025-10-16 09:20:22,468 - PRINT - Total width of fuselage is: 3.968 meter.
+2025-10-16 09:20:22,468 - PRINT - Total height of fuselage is: 4.143 meter.
+2025-10-16 09:20:22,468 - PRINT - Total length of cabin is: 27.0165 meter.
+2025-10-16 09:20:22,468 - PRINT - Total width of cabin is: 3.6932 meter.
+2025-10-16 09:20:22,468 - PRINT - Wall thickness of cabin is: 0.1374 meter.
+2025-10-16 09:20:22,468 - PRINT - Floor thickness of cabin is: 0.2062 meter.
+2025-10-16 09:20:22,468 - PRINT - Fuselage design successful after 1 iterations!
+2025-10-16 09:20:22,468 - WARNING - Attention! The design flight time is currently not available in the aircraft exchange file. The number of flight crew members is assumed to be 2.
+2025-10-16 09:20:22,546 - WARNING - Warning: "plot_output" switch in module configuration file set to "False". No plots generated.
+2025-10-16 09:20:22,547 - WARNING - Warning: "html_output" switch in module configuration file set to "False". No HTML report generated.
+2025-10-16 09:20:22,548 - PRINT - Method-specific data are written to 'fuselage_design_results.xml'...
+2025-10-16 09:20:22,555 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:20:22,555 - PRINT - Fuselage design finished.
+2025-10-16 09:20:43,468 - PRINT - Fuselage design started...
+2025-10-16 09:20:43,493 - PRINT - Import of fuselage design cs requirements xml-file and accommodation definition xml-file successfully.
+2025-10-16 09:20:43,494 - PRINT - Current iteration of fuselage design is: 1
+2025-10-16 09:20:43,496 - PRINT - Total length of fuselage is: 37.3652 meter.
+2025-10-16 09:20:43,496 - PRINT - Total width of fuselage is: 3.968 meter.
+2025-10-16 09:20:43,496 - PRINT - Total height of fuselage is: 4.143 meter.
+2025-10-16 09:20:43,496 - PRINT - Total length of cabin is: 27.0165 meter.
+2025-10-16 09:20:43,496 - PRINT - Total width of cabin is: 3.6932 meter.
+2025-10-16 09:20:43,496 - PRINT - Wall thickness of cabin is: 0.1374 meter.
+2025-10-16 09:20:43,496 - PRINT - Floor thickness of cabin is: 0.2062 meter.
+2025-10-16 09:20:43,496 - PRINT - Fuselage design successful after 1 iterations!
+2025-10-16 09:20:43,496 - WARNING - Attention! The design flight time is currently not available in the aircraft exchange file. The number of flight crew members is assumed to be 2.
+2025-10-16 09:20:43,773 - WARNING - Warning: "plot_output" switch in module configuration file set to "False". No plots generated.
+2025-10-16 09:20:43,773 - WARNING - Warning: "html_output" switch in module configuration file set to "False". No HTML report generated.
+2025-10-16 09:20:43,775 - PRINT - Method-specific data are written to 'fuselage_design_results.xml'...
+2025-10-16 09:20:43,782 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:20:43,782 - PRINT - Fuselage design finished.
+2025-10-16 09:21:21,772 - PRINT - Fuselage design started...
+2025-10-16 09:21:21,799 - PRINT - Import of fuselage design cs requirements xml-file and accommodation definition xml-file successfully.
+2025-10-16 09:21:21,800 - PRINT - Current iteration of fuselage design is: 1
+2025-10-16 09:21:21,801 - PRINT - Total length of fuselage is: 37.3652 meter.
+2025-10-16 09:21:21,801 - PRINT - Total width of fuselage is: 3.968 meter.
+2025-10-16 09:21:21,801 - PRINT - Total height of fuselage is: 4.143 meter.
+2025-10-16 09:21:21,801 - PRINT - Total length of cabin is: 27.0165 meter.
+2025-10-16 09:21:21,801 - PRINT - Total width of cabin is: 3.6932 meter.
+2025-10-16 09:21:21,801 - PRINT - Wall thickness of cabin is: 0.1374 meter.
+2025-10-16 09:21:21,801 - PRINT - Floor thickness of cabin is: 0.2062 meter.
+2025-10-16 09:21:21,802 - PRINT - Fuselage design successful after 1 iterations!
+2025-10-16 09:21:22,455 - WARNING - Warning: "plot_output" switch in module configuration file set to "False". No plots generated.
+2025-10-16 09:21:22,455 - WARNING - Warning: "html_output" switch in module configuration file set to "False". No HTML report generated.
+2025-10-16 09:21:22,457 - PRINT - Method-specific data are written to 'fuselage_design_results.xml'...
+2025-10-16 09:21:22,463 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:21:22,463 - PRINT - Fuselage design finished.
+2025-10-16 09:21:53,766 - PRINT - Fuselage design started...
+2025-10-16 09:21:53,792 - PRINT - Import of fuselage design cs requirements xml-file and accommodation definition xml-file successfully.
+2025-10-16 09:21:53,793 - PRINT - Current iteration of fuselage design is: 1
+2025-10-16 09:21:53,794 - PRINT - Total length of fuselage is: 37.3652 meter.
+2025-10-16 09:21:53,794 - PRINT - Total width of fuselage is: 3.968 meter.
+2025-10-16 09:21:53,795 - PRINT - Total height of fuselage is: 4.143 meter.
+2025-10-16 09:21:53,795 - PRINT - Total length of cabin is: 27.0165 meter.
+2025-10-16 09:21:53,795 - PRINT - Total width of cabin is: 3.6932 meter.
+2025-10-16 09:21:53,795 - PRINT - Wall thickness of cabin is: 0.1374 meter.
+2025-10-16 09:21:53,795 - PRINT - Floor thickness of cabin is: 0.2062 meter.
+2025-10-16 09:21:53,795 - PRINT - Fuselage design successful after 1 iterations!
+2025-10-16 09:21:54,463 - WARNING - Warning: "plot_output" switch in module configuration file set to "False". No plots generated.
+2025-10-16 09:21:54,463 - WARNING - Warning: "html_output" switch in module configuration file set to "False". No HTML report generated.
+2025-10-16 09:21:54,465 - PRINT - Method-specific data are written to 'fuselage_design_results.xml'...
+2025-10-16 09:21:54,473 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:21:54,473 - PRINT - Fuselage design finished.
+2025-10-16 09:22:33,616 - PRINT - Fuselage design started...
+2025-10-16 09:22:33,668 - PRINT - Import of fuselage design cs requirements xml-file and accommodation definition xml-file successfully.
+2025-10-16 09:22:33,669 - PRINT - Current iteration of fuselage design is: 1
+2025-10-16 09:22:33,673 - PRINT - Total length of fuselage is: 37.3652 meter.
+2025-10-16 09:22:33,673 - PRINT - Total width of fuselage is: 3.968 meter.
+2025-10-16 09:22:33,673 - PRINT - Total height of fuselage is: 4.143 meter.
+2025-10-16 09:22:33,673 - PRINT - Total length of cabin is: 27.0165 meter.
+2025-10-16 09:22:33,673 - PRINT - Total width of cabin is: 3.6932 meter.
+2025-10-16 09:22:33,673 - PRINT - Wall thickness of cabin is: 0.1374 meter.
+2025-10-16 09:22:33,673 - PRINT - Floor thickness of cabin is: 0.2062 meter.
+2025-10-16 09:22:33,673 - PRINT - Fuselage design successful after 1 iterations!
+2025-10-16 09:22:35,005 - WARNING - Warning: "plot_output" switch in module configuration file set to "False". No plots generated.
+2025-10-16 09:22:35,005 - WARNING - Warning: "html_output" switch in module configuration file set to "False". No HTML report generated.
+2025-10-16 09:22:35,008 - PRINT - Method-specific data are written to 'fuselage_design_results.xml'...
+2025-10-16 09:22:35,022 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:22:35,022 - PRINT - Fuselage design finished.
+2025-10-16 09:23:43,788 - PRINT - Fuselage design started...
+2025-10-16 09:23:43,837 - PRINT - Import of fuselage design cs requirements xml-file and accommodation definition xml-file successfully.
+2025-10-16 09:23:43,839 - PRINT - Current iteration of fuselage design is: 1
+2025-10-16 09:23:43,843 - PRINT - Total length of fuselage is: 37.3652 meter.
+2025-10-16 09:23:43,843 - PRINT - Total width of fuselage is: 3.968 meter.
+2025-10-16 09:23:43,844 - PRINT - Total height of fuselage is: 4.143 meter.
+2025-10-16 09:23:43,844 - PRINT - Total length of cabin is: 27.0165 meter.
+2025-10-16 09:23:43,844 - PRINT - Total width of cabin is: 3.6932 meter.
+2025-10-16 09:23:43,844 - PRINT - Wall thickness of cabin is: 0.1374 meter.
+2025-10-16 09:23:43,844 - PRINT - Floor thickness of cabin is: 0.2062 meter.
+2025-10-16 09:23:43,844 - PRINT - Fuselage design successful after 1 iterations!
+2025-10-16 09:23:45,197 - WARNING - Warning: "plot_output" switch in module configuration file set to "False". No plots generated.
+2025-10-16 09:23:45,197 - WARNING - Warning: "html_output" switch in module configuration file set to "False". No HTML report generated.
+2025-10-16 09:23:45,199 - PRINT - Method-specific data are written to 'fuselage_design_results.xml'...
+2025-10-16 09:23:45,210 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:23:45,210 - PRINT - Fuselage design finished.
+2025-10-16 09:24:54,711 - PRINT - Fuselage design started...
+2025-10-16 09:24:54,761 - PRINT - Import of fuselage design cs requirements xml-file and accommodation definition xml-file successfully.
+2025-10-16 09:24:54,763 - PRINT - Current iteration of fuselage design is: 1
+2025-10-16 09:24:54,766 - PRINT - Total length of fuselage is: 37.3652 meter.
+2025-10-16 09:24:54,767 - PRINT - Total width of fuselage is: 3.968 meter.
+2025-10-16 09:24:54,767 - PRINT - Total height of fuselage is: 4.143 meter.
+2025-10-16 09:24:54,767 - PRINT - Total length of cabin is: 27.0165 meter.
+2025-10-16 09:24:54,767 - PRINT - Total width of cabin is: 3.6932 meter.
+2025-10-16 09:24:54,767 - PRINT - Wall thickness of cabin is: 0.1374 meter.
+2025-10-16 09:24:54,767 - PRINT - Floor thickness of cabin is: 0.2062 meter.
+2025-10-16 09:24:54,767 - PRINT - Fuselage design successful after 1 iterations!
+2025-10-16 09:24:56,150 - WARNING - Warning: "plot_output" switch in module configuration file set to "False". No plots generated.
+2025-10-16 09:24:56,150 - WARNING - Warning: "html_output" switch in module configuration file set to "False". No HTML report generated.
+2025-10-16 09:24:56,152 - PRINT - Method-specific data are written to 'fuselage_design_results.xml'...
+2025-10-16 09:24:56,165 - WARNING - Warning: "tex_output" switch in module configuration file set to "False". No TeX report file generated.
+2025-10-16 09:24:56,165 - PRINT - Fuselage design finished.
+2025-10-16 09:26:01,722 - PRINT - Fuselage design started...
+2025-10-16 09:26:01,775 - PRINT - Import of fuselage design cs requirements xml-file and accommodation definition xml-file successfully.
+2025-10-16 09:26:01,777 - PRINT - Current iteration of fuselage design is: 1
+2025-10-16 09:26:01,780 - PRINT - Total length of fuselage is: 37.3652 meter.
+2025-10-16 09:26:01,780 - PRINT - Total width of fuselage is: 3.968 meter.
+2025-10-16 09:26:01,780 - PRINT - Total height of fuselage is: 4.143 meter.
+2025-10-16 09:26:01,780 - PRINT - Total length of cabin is: 27.0165 meter.
+2025-10-16 09:26:01,780 - PRINT - Total width of cabin is: 3.6932 meter.
+2025-10-16 09:26:01,780 - PRINT - Wall thickness of cabin is: 0.1374 meter.
+2025-10-16 09:26:01,780 - PRINT - Floor thickness of cabin is: 0.2062 meter.
+2025-10-16 09:26:01,780 - PRINT - Fuselage design successful after 1 iterations!
+2025-10-16 09:26:04,092 - PRINT - Plots for fuselage design are successfully generated and saved.
+2025-10-16 09:26:04,092 - PRINT - HTML report is generated and saved...
+2025-10-16 09:26:04,115 - PRINT - Method-specific data are written to 'fuselage_design_results.xml'...
+2025-10-16 09:26:04,133 - PRINT - Moin! This is the "method_tex_output" function from the fuselage_design tool speaking... [Imagine fancy reports are generated here (you can find me in the "methodtexoutput.py" file).]
+2025-10-16 09:26:04,133 - PRINT - Fuselage design finished.

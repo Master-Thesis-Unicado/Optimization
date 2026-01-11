@@ -1,0 +1,636 @@
+*******************************************************************************
+16.10.2025 09:20:22 - Start wing_design
+16.10.2025 09:20:22 - [MODULE RUNTIMEINFO] - wing_design
+16.10.2025 09:20:22 -    [CONSOLE  ] - [ON]
+16.10.2025 09:20:22 -    [LOG      ] - [ON]
+16.10.2025 09:20:22 -    [PLOT     ] - [OFF]
+16.10.2025 09:20:22 -       [COPY  ] - [ON]
+16.10.2025 09:20:22 -       [DELETE] - [ON]
+16.10.2025 09:20:22 -    [REPORT   ] - [OFF]
+16.10.2025 09:20:22 -    [TEX      ] - [OFF]
+16.10.2025 09:20:22 -    [INFOFILES] - [OFF]
+16.10.2025 09:20:22 -    [GNUPLOT]
+16.10.2025 09:20:22 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:20:22 -       [FILENAME] - 
+16.10.2025 09:20:22 -    [INKSCAPE]
+16.10.2025 09:20:22 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:20:22 -       [FILENAME] - 
+16.10.2025 09:20:22 -    [LOGFILE]
+16.10.2025 09:20:22 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:20:22 -       [FILENAME] - wing_design.log
+16.10.2025 09:20:22 -    [IO/ACXML]
+16.10.2025 09:20:22 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:20:22 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:20:22 -    [MODCONFIG]
+16.10.2025 09:20:22 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:20:22 -       [FILENAME] - wing_design_conf.xml
+16.10.2025 09:20:22 - Checking directory... [REPORT]
+16.10.2025 09:20:22 - Checking directory... [TEX]
+16.10.2025 09:20:22 - Checking directory... [LOGFILES]
+16.10.2025 09:20:22 - Wing design method ... cantilever (backward)
+16.10.2025 09:20:22 - Initializing wing design ... [START]
+16.10.2025 09:20:22 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:20:22 - Creating directory... [AIRFOILDATA]
+16.10.2025 09:20:22 - Using default values for engines if chiozzotto mass method is selected
+16.10.2025 09:20:22 - Assume engine + pylon + nacelle ~4000kg and postion between 0.35 and 0.8 eta, starting at 0.35 for first engine
+16.10.2025 09:20:22 - Initializing wing design ... [FINISHED]
+16.10.2025 09:20:22 - Run wing design ... [START]
+16.10.2025 09:20:22 - Selected design method ... [START]
+16.10.2025 09:20:22 - Wing Design ... [Start]
+16.10.2025 09:20:22 - Wing kink check ...
+16.10.2025 09:20:22 - Wing is kinked  ... [TRUE]
+16.10.2025 09:20:22 - ICAO EASA Aerodrome reference code: 3CIIIC
+	Limts for  : ICAO field length
+	Code       : 3
+	Lower limit: 1200
+	Upper limit: 1800
+	Limts for  : ICAO wing span
+	Code       : C
+	Lower limit: 24
+	Upper limit: 36
+	Limts for  : FAA ADG tail height
+	Code       : III
+	Lower limit: 9.144
+	Upper limit: 13.716
+	Limts for  : ICAO aircraft approach speed
+	Code       : C
+	Lower limit: 224
+	Upper limit: 261
+Current span: 28.68
+16.10.2025 09:20:22 - Wing kink check ...
+16.10.2025 09:20:22 - Wing is kinked  ... [TRUE]
+16.10.2025 09:20:22 - Wing kink check ...
+16.10.2025 09:20:22 - Wing is kinked  ... [TRUE]
+16.10.2025 09:20:22 - Selected design method ... [FINISHED]
+16.10.2025 09:20:22 - Selected mass method   ... [START]
+16.10.2025 09:20:22 - Calculating wing mass based on FLOPS... 
+16.10.2025 09:20:22 - Calculated main_wing wing mass ... 5234.87[kg]
+16.10.2025 09:20:22 -     main_wing W1 (Total Bending material) ...2686.38[kg]
+16.10.2025 09:20:22 -     main_wing W2 (Total shear material)  ...2096.67[kg]
+16.10.2025 09:20:22 -     main_wing W3 (Miscellaneous Items) ...451.821[kg]
+16.10.2025 09:20:22 - CG Position...
+16.10.2025 09:20:22 - x ... 17.083
+16.10.2025 09:20:22 - y ... 0
+16.10.2025 09:20:22 - z ... -0.793606
+16.10.2025 09:20:22 - Selected mass method   ... [FINISHED]
+16.10.2025 09:20:22 - Run wing design ... [FINISHED]
+16.10.2025 09:20:22 - Update designed wing ... [START]
+16.10.2025 09:20:22 - Update designed wing ... [FINISHED]
+16.10.2025 09:20:22 - Report designed wing ... [START]
+16.10.2025 09:20:22 - Report designed wing ... [FINISHED]
+16.10.2025 09:20:22 - Finish wing_design
+*******************************************************************************
+16.10.2025 09:20:43 - Start wing_design
+16.10.2025 09:20:43 - [MODULE RUNTIMEINFO] - wing_design
+16.10.2025 09:20:43 -    [CONSOLE  ] - [ON]
+16.10.2025 09:20:43 -    [LOG      ] - [ON]
+16.10.2025 09:20:43 -    [PLOT     ] - [OFF]
+16.10.2025 09:20:43 -       [COPY  ] - [ON]
+16.10.2025 09:20:43 -       [DELETE] - [ON]
+16.10.2025 09:20:43 -    [REPORT   ] - [OFF]
+16.10.2025 09:20:43 -    [TEX      ] - [OFF]
+16.10.2025 09:20:43 -    [INFOFILES] - [OFF]
+16.10.2025 09:20:43 -    [GNUPLOT]
+16.10.2025 09:20:43 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:20:43 -       [FILENAME] - 
+16.10.2025 09:20:43 -    [INKSCAPE]
+16.10.2025 09:20:43 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:20:43 -       [FILENAME] - 
+16.10.2025 09:20:43 -    [LOGFILE]
+16.10.2025 09:20:43 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:20:43 -       [FILENAME] - wing_design.log
+16.10.2025 09:20:43 -    [IO/ACXML]
+16.10.2025 09:20:43 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:20:43 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:20:43 -    [MODCONFIG]
+16.10.2025 09:20:43 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:20:43 -       [FILENAME] - wing_design_conf.xml
+16.10.2025 09:20:43 - Checking directory... [REPORT]
+16.10.2025 09:20:43 - Checking directory... [TEX]
+16.10.2025 09:20:43 - Checking directory... [LOGFILES]
+16.10.2025 09:20:43 - Wing design method ... cantilever (backward)
+16.10.2025 09:20:43 - Initializing wing design ... [START]
+16.10.2025 09:20:43 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:20:43 - Initializing wing design ... [FINISHED]
+16.10.2025 09:20:43 - Run wing design ... [START]
+16.10.2025 09:20:43 - Selected design method ... [START]
+16.10.2025 09:20:43 - Wing Design ... [Start]
+16.10.2025 09:20:43 - Wing kink check ...
+16.10.2025 09:20:43 - Wing is kinked  ... [TRUE]
+16.10.2025 09:20:43 - ICAO EASA Aerodrome reference code: 3CIIIC
+	Limts for  : ICAO field length
+	Code       : 3
+	Lower limit: 1200
+	Upper limit: 1800
+	Limts for  : ICAO wing span
+	Code       : C
+	Lower limit: 24
+	Upper limit: 36
+	Limts for  : FAA ADG tail height
+	Code       : III
+	Lower limit: 9.144
+	Upper limit: 13.716
+	Limts for  : ICAO aircraft approach speed
+	Code       : C
+	Lower limit: 224
+	Upper limit: 261
+Current span: 31.63
+16.10.2025 09:20:44 - Wing kink check ...
+16.10.2025 09:20:44 - Wing is kinked  ... [TRUE]
+16.10.2025 09:20:44 - Wing kink check ...
+16.10.2025 09:20:44 - Wing is kinked  ... [TRUE]
+16.10.2025 09:20:44 - Selected design method ... [FINISHED]
+16.10.2025 09:20:44 - Selected mass method   ... [START]
+16.10.2025 09:20:44 - Calculating wing mass based on FLOPS... 
+16.10.2025 09:20:44 - Calculated main_wing wing mass ... 6700.15[kg]
+16.10.2025 09:20:44 -     main_wing W1 (Total Bending material) ...3555.13[kg]
+16.10.2025 09:20:44 -     main_wing W2 (Total shear material)  ...2539.18[kg]
+16.10.2025 09:20:44 -     main_wing W3 (Miscellaneous Items) ...605.842[kg]
+16.10.2025 09:20:44 - CG Position...
+16.10.2025 09:20:44 - x ... 16.8326
+16.10.2025 09:20:44 - y ... 0
+16.10.2025 09:20:44 - z ... -0.75578
+16.10.2025 09:20:44 - Selected mass method   ... [FINISHED]
+16.10.2025 09:20:44 - Run wing design ... [FINISHED]
+16.10.2025 09:20:44 - Update designed wing ... [START]
+16.10.2025 09:20:44 - Update designed wing ... [FINISHED]
+16.10.2025 09:20:44 - Report designed wing ... [START]
+16.10.2025 09:20:44 - Report designed wing ... [FINISHED]
+16.10.2025 09:20:44 - Finish wing_design
+*******************************************************************************
+16.10.2025 09:21:22 - Start wing_design
+16.10.2025 09:21:22 - [MODULE RUNTIMEINFO] - wing_design
+16.10.2025 09:21:22 -    [CONSOLE  ] - [ON]
+16.10.2025 09:21:22 -    [LOG      ] - [ON]
+16.10.2025 09:21:22 -    [PLOT     ] - [OFF]
+16.10.2025 09:21:22 -       [COPY  ] - [ON]
+16.10.2025 09:21:22 -       [DELETE] - [ON]
+16.10.2025 09:21:22 -    [REPORT   ] - [OFF]
+16.10.2025 09:21:22 -    [TEX      ] - [OFF]
+16.10.2025 09:21:22 -    [INFOFILES] - [OFF]
+16.10.2025 09:21:22 -    [GNUPLOT]
+16.10.2025 09:21:22 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:21:22 -       [FILENAME] - 
+16.10.2025 09:21:22 -    [INKSCAPE]
+16.10.2025 09:21:22 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:21:22 -       [FILENAME] - 
+16.10.2025 09:21:22 -    [LOGFILE]
+16.10.2025 09:21:22 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:22 -       [FILENAME] - wing_design.log
+16.10.2025 09:21:22 -    [IO/ACXML]
+16.10.2025 09:21:22 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:21:22 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:21:22 -    [MODCONFIG]
+16.10.2025 09:21:22 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:22 -       [FILENAME] - wing_design_conf.xml
+16.10.2025 09:21:22 - Checking directory... [REPORT]
+16.10.2025 09:21:22 - Checking directory... [TEX]
+16.10.2025 09:21:22 - Checking directory... [LOGFILES]
+16.10.2025 09:21:22 - Wing design method ... cantilever (backward)
+16.10.2025 09:21:22 - Initializing wing design ... [START]
+16.10.2025 09:21:22 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:21:22 - Initializing wing design ... [FINISHED]
+16.10.2025 09:21:22 - Run wing design ... [START]
+16.10.2025 09:21:22 - Selected design method ... [START]
+16.10.2025 09:21:22 - Wing Design ... [Start]
+16.10.2025 09:21:22 - Wing kink check ...
+16.10.2025 09:21:22 - Wing is kinked  ... [TRUE]
+16.10.2025 09:21:22 - ICAO EASA Aerodrome reference code: 3CIIIC
+	Limts for  : ICAO field length
+	Code       : 3
+	Lower limit: 1200
+	Upper limit: 1800
+	Limts for  : ICAO wing span
+	Code       : C
+	Lower limit: 24
+	Upper limit: 36
+	Limts for  : FAA ADG tail height
+	Code       : III
+	Lower limit: 9.144
+	Upper limit: 13.716
+	Limts for  : ICAO aircraft approach speed
+	Code       : C
+	Lower limit: 224
+	Upper limit: 261
+Current span: 32.73
+16.10.2025 09:21:22 - Wing kink check ...
+16.10.2025 09:21:22 - Wing is kinked  ... [TRUE]
+16.10.2025 09:21:22 - Wing kink check ...
+16.10.2025 09:21:22 - Wing is kinked  ... [TRUE]
+16.10.2025 09:21:22 - Selected design method ... [FINISHED]
+16.10.2025 09:21:22 - Selected mass method   ... [START]
+16.10.2025 09:21:22 - Calculating wing mass based on FLOPS... 
+16.10.2025 09:21:22 - Calculated main_wing wing mass ... 7304.71[kg]
+16.10.2025 09:21:22 -     main_wing W1 (Total Bending material) ...3919.58[kg]
+16.10.2025 09:21:22 -     main_wing W2 (Total shear material)  ...2714.05[kg]
+16.10.2025 09:21:22 -     main_wing W3 (Miscellaneous Items) ...671.078[kg]
+16.10.2025 09:21:22 - CG Position...
+16.10.2025 09:21:22 - x ... 16.6715
+16.10.2025 09:21:22 - y ... 0
+16.10.2025 09:21:22 - z ... -0.74167
+16.10.2025 09:21:22 - Selected mass method   ... [FINISHED]
+16.10.2025 09:21:22 - Run wing design ... [FINISHED]
+16.10.2025 09:21:22 - Update designed wing ... [START]
+16.10.2025 09:21:22 - Update designed wing ... [FINISHED]
+16.10.2025 09:21:22 - Report designed wing ... [START]
+16.10.2025 09:21:22 - Report designed wing ... [FINISHED]
+16.10.2025 09:21:22 - Finish wing_design
+*******************************************************************************
+16.10.2025 09:21:54 - Start wing_design
+16.10.2025 09:21:54 - [MODULE RUNTIMEINFO] - wing_design
+16.10.2025 09:21:54 -    [CONSOLE  ] - [ON]
+16.10.2025 09:21:54 -    [LOG      ] - [ON]
+16.10.2025 09:21:54 -    [PLOT     ] - [OFF]
+16.10.2025 09:21:54 -       [COPY  ] - [ON]
+16.10.2025 09:21:54 -       [DELETE] - [ON]
+16.10.2025 09:21:54 -    [REPORT   ] - [OFF]
+16.10.2025 09:21:54 -    [TEX      ] - [OFF]
+16.10.2025 09:21:54 -    [INFOFILES] - [OFF]
+16.10.2025 09:21:54 -    [GNUPLOT]
+16.10.2025 09:21:54 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:21:54 -       [FILENAME] - 
+16.10.2025 09:21:54 -    [INKSCAPE]
+16.10.2025 09:21:54 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:21:54 -       [FILENAME] - 
+16.10.2025 09:21:54 -    [LOGFILE]
+16.10.2025 09:21:54 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:54 -       [FILENAME] - wing_design.log
+16.10.2025 09:21:54 -    [IO/ACXML]
+16.10.2025 09:21:54 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:21:54 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:21:54 -    [MODCONFIG]
+16.10.2025 09:21:54 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:21:54 -       [FILENAME] - wing_design_conf.xml
+16.10.2025 09:21:54 - Checking directory... [REPORT]
+16.10.2025 09:21:54 - Checking directory... [TEX]
+16.10.2025 09:21:54 - Checking directory... [LOGFILES]
+16.10.2025 09:21:54 - Wing design method ... cantilever (backward)
+16.10.2025 09:21:54 - Initializing wing design ... [START]
+16.10.2025 09:21:54 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:21:54 - Initializing wing design ... [FINISHED]
+16.10.2025 09:21:54 - Run wing design ... [START]
+16.10.2025 09:21:54 - Selected design method ... [START]
+16.10.2025 09:21:54 - Wing Design ... [Start]
+16.10.2025 09:21:54 - Wing kink check ...
+16.10.2025 09:21:54 - Wing is kinked  ... [TRUE]
+16.10.2025 09:21:54 - ICAO EASA Aerodrome reference code: 3CIIIC
+	Limts for  : ICAO field length
+	Code       : 3
+	Lower limit: 1200
+	Upper limit: 1800
+	Limts for  : ICAO wing span
+	Code       : C
+	Lower limit: 24
+	Upper limit: 36
+	Limts for  : FAA ADG tail height
+	Code       : III
+	Lower limit: 9.144
+	Upper limit: 13.716
+	Limts for  : ICAO aircraft approach speed
+	Code       : C
+	Lower limit: 224
+	Upper limit: 261
+Current span: 33.20
+16.10.2025 09:21:54 - Wing kink check ...
+16.10.2025 09:21:54 - Wing is kinked  ... [TRUE]
+16.10.2025 09:21:54 - Wing kink check ...
+16.10.2025 09:21:54 - Wing is kinked  ... [TRUE]
+16.10.2025 09:21:54 - Selected design method ... [FINISHED]
+16.10.2025 09:21:54 - Selected mass method   ... [START]
+16.10.2025 09:21:54 - Calculating wing mass based on FLOPS... 
+16.10.2025 09:21:54 - Calculated main_wing wing mass ... 7570.86[kg]
+16.10.2025 09:21:54 -     main_wing W1 (Total Bending material) ...4079.13[kg]
+16.10.2025 09:21:54 -     main_wing W2 (Total shear material)  ...2791.14[kg]
+16.10.2025 09:21:54 -     main_wing W3 (Miscellaneous Items) ...700.592[kg]
+16.10.2025 09:21:54 - CG Position...
+16.10.2025 09:21:54 - x ... 16.5618
+16.10.2025 09:21:54 - y ... 0
+16.10.2025 09:21:54 - z ... -0.735582
+16.10.2025 09:21:54 - Selected mass method   ... [FINISHED]
+16.10.2025 09:21:54 - Run wing design ... [FINISHED]
+16.10.2025 09:21:54 - Update designed wing ... [START]
+16.10.2025 09:21:54 - Update designed wing ... [FINISHED]
+16.10.2025 09:21:54 - Report designed wing ... [START]
+16.10.2025 09:21:54 - Report designed wing ... [FINISHED]
+16.10.2025 09:21:54 - Finish wing_design
+*******************************************************************************
+16.10.2025 09:22:35 - Start wing_design
+16.10.2025 09:22:35 - [MODULE RUNTIMEINFO] - wing_design
+16.10.2025 09:22:35 -    [CONSOLE  ] - [ON]
+16.10.2025 09:22:35 -    [LOG      ] - [ON]
+16.10.2025 09:22:35 -    [PLOT     ] - [OFF]
+16.10.2025 09:22:35 -       [COPY  ] - [ON]
+16.10.2025 09:22:35 -       [DELETE] - [ON]
+16.10.2025 09:22:35 -    [REPORT   ] - [OFF]
+16.10.2025 09:22:35 -    [TEX      ] - [OFF]
+16.10.2025 09:22:35 -    [INFOFILES] - [OFF]
+16.10.2025 09:22:35 -    [GNUPLOT]
+16.10.2025 09:22:35 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:22:35 -       [FILENAME] - 
+16.10.2025 09:22:35 -    [INKSCAPE]
+16.10.2025 09:22:35 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:22:35 -       [FILENAME] - 
+16.10.2025 09:22:35 -    [LOGFILE]
+16.10.2025 09:22:35 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:22:35 -       [FILENAME] - wing_design.log
+16.10.2025 09:22:35 -    [IO/ACXML]
+16.10.2025 09:22:35 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:22:35 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:22:35 -    [MODCONFIG]
+16.10.2025 09:22:35 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:22:35 -       [FILENAME] - wing_design_conf.xml
+16.10.2025 09:22:35 - Checking directory... [REPORT]
+16.10.2025 09:22:35 - Checking directory... [TEX]
+16.10.2025 09:22:35 - Checking directory... [LOGFILES]
+16.10.2025 09:22:35 - Wing design method ... cantilever (backward)
+16.10.2025 09:22:35 - Initializing wing design ... [START]
+16.10.2025 09:22:35 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:22:35 - Initializing wing design ... [FINISHED]
+16.10.2025 09:22:35 - Run wing design ... [START]
+16.10.2025 09:22:35 - Selected design method ... [START]
+16.10.2025 09:22:35 - Wing Design ... [Start]
+16.10.2025 09:22:35 - Wing kink check ...
+16.10.2025 09:22:35 - Wing is kinked  ... [TRUE]
+16.10.2025 09:22:35 - ICAO EASA Aerodrome reference code: 3CIIIC
+	Limts for  : ICAO field length
+	Code       : 3
+	Lower limit: 1200
+	Upper limit: 1800
+	Limts for  : ICAO wing span
+	Code       : C
+	Lower limit: 24
+	Upper limit: 36
+	Limts for  : FAA ADG tail height
+	Code       : III
+	Lower limit: 9.144
+	Upper limit: 13.716
+	Limts for  : ICAO aircraft approach speed
+	Code       : C
+	Lower limit: 224
+	Upper limit: 261
+Current span: 33.40
+16.10.2025 09:22:35 - Wing kink check ...
+16.10.2025 09:22:35 - Wing is kinked  ... [TRUE]
+16.10.2025 09:22:35 - Wing kink check ...
+16.10.2025 09:22:35 - Wing is kinked  ... [TRUE]
+16.10.2025 09:22:35 - Selected design method ... [FINISHED]
+16.10.2025 09:22:35 - Selected mass method   ... [START]
+16.10.2025 09:22:35 - Calculating wing mass based on FLOPS... 
+16.10.2025 09:22:35 - Calculated main_wing wing mass ... 7688.81[kg]
+16.10.2025 09:22:35 -     main_wing W1 (Total Bending material) ...4150.25[kg]
+16.10.2025 09:22:35 -     main_wing W2 (Total shear material)  ...2824.9[kg]
+16.10.2025 09:22:35 -     main_wing W3 (Miscellaneous Items) ...713.661[kg]
+16.10.2025 09:22:35 - CG Position...
+16.10.2025 09:22:35 - x ... 16.4945
+16.10.2025 09:22:35 - y ... 0
+16.10.2025 09:22:35 - z ... -0.73294
+16.10.2025 09:22:35 - Selected mass method   ... [FINISHED]
+16.10.2025 09:22:35 - Run wing design ... [FINISHED]
+16.10.2025 09:22:35 - Update designed wing ... [START]
+16.10.2025 09:22:35 - Update designed wing ... [FINISHED]
+16.10.2025 09:22:35 - Report designed wing ... [START]
+16.10.2025 09:22:35 - Report designed wing ... [FINISHED]
+16.10.2025 09:22:35 - Finish wing_design
+*******************************************************************************
+16.10.2025 09:23:45 - Start wing_design
+16.10.2025 09:23:45 - [MODULE RUNTIMEINFO] - wing_design
+16.10.2025 09:23:45 -    [CONSOLE  ] - [ON]
+16.10.2025 09:23:45 -    [LOG      ] - [ON]
+16.10.2025 09:23:45 -    [PLOT     ] - [OFF]
+16.10.2025 09:23:45 -       [COPY  ] - [ON]
+16.10.2025 09:23:45 -       [DELETE] - [ON]
+16.10.2025 09:23:45 -    [REPORT   ] - [OFF]
+16.10.2025 09:23:45 -    [TEX      ] - [OFF]
+16.10.2025 09:23:45 -    [INFOFILES] - [OFF]
+16.10.2025 09:23:45 -    [GNUPLOT]
+16.10.2025 09:23:45 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:23:45 -       [FILENAME] - 
+16.10.2025 09:23:45 -    [INKSCAPE]
+16.10.2025 09:23:45 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:23:45 -       [FILENAME] - 
+16.10.2025 09:23:45 -    [LOGFILE]
+16.10.2025 09:23:45 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:23:45 -       [FILENAME] - wing_design.log
+16.10.2025 09:23:45 -    [IO/ACXML]
+16.10.2025 09:23:45 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:23:45 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:23:45 -    [MODCONFIG]
+16.10.2025 09:23:45 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:23:45 -       [FILENAME] - wing_design_conf.xml
+16.10.2025 09:23:45 - Checking directory... [REPORT]
+16.10.2025 09:23:45 - Checking directory... [TEX]
+16.10.2025 09:23:45 - Checking directory... [LOGFILES]
+16.10.2025 09:23:45 - Wing design method ... cantilever (backward)
+16.10.2025 09:23:45 - Initializing wing design ... [START]
+16.10.2025 09:23:45 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:23:45 - Initializing wing design ... [FINISHED]
+16.10.2025 09:23:45 - Run wing design ... [START]
+16.10.2025 09:23:45 - Selected design method ... [START]
+16.10.2025 09:23:45 - Wing Design ... [Start]
+16.10.2025 09:23:45 - Wing kink check ...
+16.10.2025 09:23:45 - Wing is kinked  ... [TRUE]
+16.10.2025 09:23:45 - ICAO EASA Aerodrome reference code: 3CIIIC
+	Limts for  : ICAO field length
+	Code       : 3
+	Lower limit: 1200
+	Upper limit: 1800
+	Limts for  : ICAO wing span
+	Code       : C
+	Lower limit: 24
+	Upper limit: 36
+	Limts for  : FAA ADG tail height
+	Code       : III
+	Lower limit: 9.144
+	Upper limit: 13.716
+	Limts for  : ICAO aircraft approach speed
+	Code       : C
+	Lower limit: 224
+	Upper limit: 261
+Current span: 33.49
+16.10.2025 09:23:45 - Wing kink check ...
+16.10.2025 09:23:45 - Wing is kinked  ... [TRUE]
+16.10.2025 09:23:45 - Wing kink check ...
+16.10.2025 09:23:45 - Wing is kinked  ... [TRUE]
+16.10.2025 09:23:45 - Selected design method ... [FINISHED]
+16.10.2025 09:23:45 - Selected mass method   ... [START]
+16.10.2025 09:23:45 - Calculating wing mass based on FLOPS... 
+16.10.2025 09:23:45 - Calculated main_wing wing mass ... 7740.69[kg]
+16.10.2025 09:23:45 -     main_wing W1 (Total Bending material) ...4181.64[kg]
+16.10.2025 09:23:45 -     main_wing W2 (Total shear material)  ...2839.66[kg]
+16.10.2025 09:23:45 -     main_wing W3 (Miscellaneous Items) ...719.401[kg]
+16.10.2025 09:23:45 - CG Position...
+16.10.2025 09:23:45 - x ... 16.4558
+16.10.2025 09:23:45 - y ... 0
+16.10.2025 09:23:45 - z ... -0.73179
+16.10.2025 09:23:45 - Selected mass method   ... [FINISHED]
+16.10.2025 09:23:45 - Run wing design ... [FINISHED]
+16.10.2025 09:23:45 - Update designed wing ... [START]
+16.10.2025 09:23:45 - Update designed wing ... [FINISHED]
+16.10.2025 09:23:45 - Report designed wing ... [START]
+16.10.2025 09:23:45 - Report designed wing ... [FINISHED]
+16.10.2025 09:23:45 - Finish wing_design
+*******************************************************************************
+16.10.2025 09:24:56 - Start wing_design
+16.10.2025 09:24:56 - [MODULE RUNTIMEINFO] - wing_design
+16.10.2025 09:24:56 -    [CONSOLE  ] - [ON]
+16.10.2025 09:24:56 -    [LOG      ] - [ON]
+16.10.2025 09:24:56 -    [PLOT     ] - [OFF]
+16.10.2025 09:24:56 -       [COPY  ] - [ON]
+16.10.2025 09:24:56 -       [DELETE] - [ON]
+16.10.2025 09:24:56 -    [REPORT   ] - [OFF]
+16.10.2025 09:24:56 -    [TEX      ] - [OFF]
+16.10.2025 09:24:56 -    [INFOFILES] - [OFF]
+16.10.2025 09:24:56 -    [GNUPLOT]
+16.10.2025 09:24:56 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:24:56 -       [FILENAME] - 
+16.10.2025 09:24:56 -    [INKSCAPE]
+16.10.2025 09:24:56 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:24:56 -       [FILENAME] - 
+16.10.2025 09:24:56 -    [LOGFILE]
+16.10.2025 09:24:56 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:24:56 -       [FILENAME] - wing_design.log
+16.10.2025 09:24:56 -    [IO/ACXML]
+16.10.2025 09:24:56 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:24:56 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:24:56 -    [MODCONFIG]
+16.10.2025 09:24:56 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:24:56 -       [FILENAME] - wing_design_conf.xml
+16.10.2025 09:24:56 - Checking directory... [REPORT]
+16.10.2025 09:24:56 - Checking directory... [TEX]
+16.10.2025 09:24:56 - Checking directory... [LOGFILES]
+16.10.2025 09:24:56 - Wing design method ... cantilever (backward)
+16.10.2025 09:24:56 - Initializing wing design ... [START]
+16.10.2025 09:24:56 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:24:56 - Initializing wing design ... [FINISHED]
+16.10.2025 09:24:56 - Run wing design ... [START]
+16.10.2025 09:24:56 - Selected design method ... [START]
+16.10.2025 09:24:56 - Wing Design ... [Start]
+16.10.2025 09:24:56 - Wing kink check ...
+16.10.2025 09:24:56 - Wing is kinked  ... [TRUE]
+16.10.2025 09:24:56 - ICAO EASA Aerodrome reference code: 3CIIIC
+	Limts for  : ICAO field length
+	Code       : 3
+	Lower limit: 1200
+	Upper limit: 1800
+	Limts for  : ICAO wing span
+	Code       : C
+	Lower limit: 24
+	Upper limit: 36
+	Limts for  : FAA ADG tail height
+	Code       : III
+	Lower limit: 9.144
+	Upper limit: 13.716
+	Limts for  : ICAO aircraft approach speed
+	Code       : C
+	Lower limit: 224
+	Upper limit: 261
+Current span: 33.53
+16.10.2025 09:24:56 - Wing kink check ...
+16.10.2025 09:24:56 - Wing is kinked  ... [TRUE]
+16.10.2025 09:24:56 - Wing kink check ...
+16.10.2025 09:24:56 - Wing is kinked  ... [TRUE]
+16.10.2025 09:24:56 - Selected design method ... [FINISHED]
+16.10.2025 09:24:56 - Selected mass method   ... [START]
+16.10.2025 09:24:56 - Calculating wing mass based on FLOPS... 
+16.10.2025 09:24:56 - Calculated main_wing wing mass ... 7763.34[kg]
+16.10.2025 09:24:56 -     main_wing W1 (Total Bending material) ...4195.34[kg]
+16.10.2025 09:24:56 -     main_wing W2 (Total shear material)  ...2846.09[kg]
+16.10.2025 09:24:56 -     main_wing W3 (Miscellaneous Items) ...721.908[kg]
+16.10.2025 09:24:56 - CG Position...
+16.10.2025 09:24:56 - x ... 16.4345
+16.10.2025 09:24:56 - y ... 0
+16.10.2025 09:24:56 - z ... -0.73129
+16.10.2025 09:24:56 - Selected mass method   ... [FINISHED]
+16.10.2025 09:24:56 - Run wing design ... [FINISHED]
+16.10.2025 09:24:56 - Update designed wing ... [START]
+16.10.2025 09:24:56 - Update designed wing ... [FINISHED]
+16.10.2025 09:24:56 - Report designed wing ... [START]
+16.10.2025 09:24:57 - Report designed wing ... [FINISHED]
+16.10.2025 09:24:57 - Finish wing_design
+*******************************************************************************
+16.10.2025 09:26:04 - Start wing_design
+16.10.2025 09:26:04 - [MODULE RUNTIMEINFO] - wing_design
+16.10.2025 09:26:04 -    [CONSOLE  ] - [ON]
+16.10.2025 09:26:04 -    [LOG      ] - [ON]
+16.10.2025 09:26:04 -    [PLOT     ] - [ON]
+16.10.2025 09:26:04 -       [COPY  ] - [ON]
+16.10.2025 09:26:04 -       [DELETE] - [ON]
+16.10.2025 09:26:04 -    [REPORT   ] - [ON]
+16.10.2025 09:26:04 -    [TEX      ] - [ON]
+16.10.2025 09:26:04 -    [INFOFILES] - [OFF]
+16.10.2025 09:26:04 -    [GNUPLOT]
+16.10.2025 09:26:04 -       [PATH    ] - C:/Programs/UNICADOworkflow/gnuplot
+16.10.2025 09:26:04 -       [FILENAME] - 
+16.10.2025 09:26:04 -    [INKSCAPE]
+16.10.2025 09:26:04 -       [PATH    ] - C:/Programs/UNICADOworkflow/inkscape
+16.10.2025 09:26:04 -       [FILENAME] - 
+16.10.2025 09:26:04 -    [LOGFILE]
+16.10.2025 09:26:04 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:26:04 -       [FILENAME] - wing_design.log
+16.10.2025 09:26:04 -    [IO/ACXML]
+16.10.2025 09:26:04 -       [PATH    ] - C:/Programs/UNICADOworkflow/workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13/UNICADO-SMR-01
+16.10.2025 09:26:04 -       [FILENAME] - UNICADO-SMR-01.xml
+16.10.2025 09:26:04 -    [MODCONFIG]
+16.10.2025 09:26:04 -       [PATH    ] - ../workingDirectoryRCE/UNICADOworkflow_2025-10-16_09-20-18_13
+16.10.2025 09:26:04 -       [FILENAME] - wing_design_conf.xml
+16.10.2025 09:26:04 - Checking directory... [REPORT]
+16.10.2025 09:26:04 - Checking directory... [TEX]
+16.10.2025 09:26:04 - Checking directory... [HTML]
+16.10.2025 09:26:04 - Checking directory... [PLOT]
+16.10.2025 09:26:04 - Checking directory... [CSVFILES]
+16.10.2025 09:26:04 - Checking directory... [CSVFILESTOOL]
+16.10.2025 09:26:04 - Creating directory... [CSVFILESTOOL]
+16.10.2025 09:26:04 - Checking directory... [PLOTFILES]
+16.10.2025 09:26:04 - Checking directory... [PLOTFILESTOOL]
+16.10.2025 09:26:04 - Creating directory... [PLOTFILESTOOL]
+16.10.2025 09:26:04 - Checking directory... [LOGFILES]
+16.10.2025 09:26:04 - Wing design method ... cantilever (backward)
+16.10.2025 09:26:04 - Initializing wing design ... [START]
+16.10.2025 09:26:04 - Checking directory... [AIRFOILDATA]
+16.10.2025 09:26:04 - Initializing wing design ... [FINISHED]
+16.10.2025 09:26:04 - Run wing design ... [START]
+16.10.2025 09:26:04 - Selected design method ... [START]
+16.10.2025 09:26:04 - Wing Design ... [Start]
+16.10.2025 09:26:04 - Wing kink check ...
+16.10.2025 09:26:04 - Wing is kinked  ... [TRUE]
+16.10.2025 09:26:04 - ICAO EASA Aerodrome reference code: 3CIIIC
+	Limts for  : ICAO field length
+	Code       : 3
+	Lower limit: 1200
+	Upper limit: 1800
+	Limts for  : ICAO wing span
+	Code       : C
+	Lower limit: 24
+	Upper limit: 36
+	Limts for  : FAA ADG tail height
+	Code       : III
+	Lower limit: 9.144
+	Upper limit: 13.716
+	Limts for  : ICAO aircraft approach speed
+	Code       : C
+	Lower limit: 224
+	Upper limit: 261
+Current span: 33.53
+16.10.2025 09:26:04 - Wing kink check ...
+16.10.2025 09:26:04 - Wing is kinked  ... [TRUE]
+16.10.2025 09:26:04 - Wing kink check ...
+16.10.2025 09:26:04 - Wing is kinked  ... [TRUE]
+16.10.2025 09:26:04 - Selected design method ... [FINISHED]
+16.10.2025 09:26:04 - Selected mass method   ... [START]
+16.10.2025 09:26:04 - Calculating wing mass based on FLOPS... 
+16.10.2025 09:26:04 - Calculated main_wing wing mass ... 7763.34[kg]
+16.10.2025 09:26:04 -     main_wing W1 (Total Bending material) ...4195.34[kg]
+16.10.2025 09:26:04 -     main_wing W2 (Total shear material)  ...2846.09[kg]
+16.10.2025 09:26:04 -     main_wing W3 (Miscellaneous Items) ...721.908[kg]
+16.10.2025 09:26:04 - CG Position...
+16.10.2025 09:26:04 - x ... 16.4345
+16.10.2025 09:26:04 - y ... 0
+16.10.2025 09:26:04 - z ... -0.73129
+16.10.2025 09:26:04 - Selected mass method   ... [FINISHED]
+16.10.2025 09:26:04 - Run wing design ... [FINISHED]
+16.10.2025 09:26:04 - Update designed wing ... [START]
+16.10.2025 09:26:04 - Update designed wing ... [FINISHED]
+16.10.2025 09:26:04 - Report designed wing ... [START]
+16.10.2025 09:26:07 - CSS code written to style.css successfully.
+16.10.2025 09:26:07 - Report designed wing ... [FINISHED]
+16.10.2025 09:26:08 - Finish wing_design
